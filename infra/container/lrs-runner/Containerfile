@@ -1,11 +1,11 @@
 FROM docker.io/oven/bun:1.3.14
 WORKDIR /app
 
-# Copy only the LRS runner workspace and launcher script.
+COPY package.json bun.lock ./
+COPY packages/contracts ./packages/contracts
 COPY apps/lrs-runner ./apps/lrs-runner
 COPY scripts/run-lrs-runner-dual.sh ./scripts/run-lrs-runner-dual.sh
 
-# Install dependencies only for the LRS runner workspace.
 RUN bun install --cwd apps/lrs-runner
 
 ENTRYPOINT ["bash", "./scripts/run-lrs-runner-dual.sh"]
