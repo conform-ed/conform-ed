@@ -13,10 +13,15 @@ export const IriSchema = UriSchema;
 export const MediaTypeSchema = z.string().min(1);
 export const LanguageTagSchema = z.string().regex(/^[A-Za-z]{1,8}(?:-[A-Za-z0-9]{1,8})*$/u);
 export const XapiVersionSchema = z.string().regex(/^\d+\.\d+(?:\.\d+)?$/u);
-export const Iso8601TimestampSchema = z.string().datetime();
+export const Iso8601TimestampSchema = z
+  .string()
+  .datetime({ offset: true })
+  .refine((v) => !v.endsWith("-00:00"), {
+    message: "Negative zero offset (-00:00) is not a valid xAPI timestamp",
+  });
 export const Iso8601DurationSchema = z
   .string()
-  .regex(/^P(?=.+)(?:\d+Y)?(?:\d+M)?(?:\d+W)?(?:\d+D)?(?:T(?:\d+H)?(?:\d+M)?(?:\d+(?:\.\d+)?S)?)?$/u);
+  .regex(/^P(?=.)(?:(\d+W)|(?:(\d+Y)?(\d+M)?(\d+D)?(?:T(?=\d)(\d+H)?(\d+M)?(\d+(?:\.\d+)?S)?)?))$/u);
 
 export const LanguageMapSchema = z.record(LanguageTagSchema, z.string());
 export const ExtensionsSchema = z.record(UriSchema, z.unknown());
@@ -225,7 +230,7 @@ export const ContextActivitiesSchema = strictObject({
 export const ContextSchema = strictObject({
   registration: UuidSchema.optional(),
   instructor: z.union([AgentSchema, GroupSchema]).optional(),
-  team: z.union([AgentSchema, GroupSchema]).optional(),
+  team: GroupSchema.optional(),
   contextActivities: ContextActivitiesSchema.optional(),
   revision: NonEmptyStringSchema.optional(),
   platform: NonEmptyStringSchema.optional(),
