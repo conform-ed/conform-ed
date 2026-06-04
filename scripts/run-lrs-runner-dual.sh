@@ -41,8 +41,7 @@ for raw_version in "${version_list[@]}"; do
 
   command=(
     bun
-    run
-    apps/lrs-runner/src/cli.ts
+    dist/cli.js
     run
     --base-url
     "${LRS_BASE_URL}"

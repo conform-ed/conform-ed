@@ -165,18 +165,14 @@ async function run(): Promise<void> {
   let parsedResult: unknown = null;
 
   if (adapterReady) {
-    const runnerResult = spawnSync(
-      "bun",
-      ["--cwd", "apps/cmi5-runner", "src/index.ts", "run", "--config", configPath],
-      {
-        cwd: repoRoot,
-        env: {
-          ...process.env,
-          CONFORM_ED_ADAPTER_TOKEN: args.adapterToken,
-        },
-        encoding: "utf8",
+    const runnerResult = spawnSync("bun", ["dist/index.js", "run", "--config", configPath], {
+      cwd: repoRoot,
+      env: {
+        ...process.env,
+        CONFORM_ED_ADAPTER_TOKEN: args.adapterToken,
       },
-    );
+      encoding: "utf8",
+    });
 
     runnerStdout = runnerResult.stdout ?? "";
     runnerStderr = runnerResult.stderr ?? "";

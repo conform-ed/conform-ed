@@ -1,4 +1,4 @@
-FROM docker.io/oven/bun:1.3.14
+FROM docker.io/oven/bun:1.3.14 AS builder
 WORKDIR /app
 
 COPY package.json bun.lock ./
@@ -8,10 +8,16 @@ COPY packages/cli ./packages/cli
 COPY packages/core ./packages/core
 COPY packages/reporting ./packages/reporting
 COPY apps/cmi5-runner ./apps/cmi5-runner
+
+RUN bun install --cwd apps/cmi5-runner
+RUN bun build apps/cmi5-runner/src/index.ts --outdir dist --target bun
+
+FROM docker.io/oven/bun:1.3.14
+WORKDIR /app
+
+COPY --from=builder /app/dist ./dist
 COPY scripts/cmi5-lane-common.ts ./scripts/cmi5-lane-common.ts
 COPY scripts/run-cmi5-external-lane.ts ./scripts/run-cmi5-external-lane.ts
 COPY scripts/run-cmi5-catapult-style-lane.ts ./scripts/run-cmi5-catapult-style-lane.ts
 
-RUN bun install --cwd apps/cmi5-runner
-
-CMD ["bun", "run", "apps/cmi5-runner/src/index.ts"]
+CMD ["bun", "dist/index.js"]
