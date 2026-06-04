@@ -27,7 +27,8 @@
     "./qti/v2_1": "./src/qti/v2_1/index.ts",
     "./qti/v2_2": "./src/qti/v2_2/index.ts",
     "./qti/v3_0_1": "./src/qti/v3_0_1/index.ts",
-    "./vc-data-model/v2_0": "./src/vc-data-model/v2_0/index.ts"
+    "./vc-data-model/v2_0": "./src/vc-data-model/v2_0/index.ts",
+    "./h5p/v1": "./src/h5p/v1/index.ts"
   },
   "scripts": {
     "build": "tsgo --noEmit",

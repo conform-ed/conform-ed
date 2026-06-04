@@ -30,3 +30,5 @@ export * as ClrV2_0 from "./clr/v2_0";
 export * as OpenBadgesV3_0 from "./open-badges/v3_0";
 export * as OneRosterV1_2 from "./oneroster/v1_2";
 export * as VcDataModelV2_0 from "./vc-data-model/v2_0";
+export * as H5pV1 from "./h5p/v1";
+export { H5pV1DerivedZodTemplates } from "./h5p/v1";
