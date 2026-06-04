@@ -39,9 +39,9 @@ jobs:
           echo "VERSION_TAG=${EVENT_VERSION_TAG}" >> "$GITHUB_ENV"
       - name: Resolve latest tagging
         env:
-          SHOULD_PUBLISH_LATEST: ${{ github.ref_type == 'tag' || (github.event_name == 'workflow_dispatch' && inputs.publish_latest) }}
+          IS_RELEASE_EVENT: ${{ github.ref_type == 'tag' || (github.event_name == 'workflow_dispatch' && inputs.publish_latest) }}
         run: |
-          if [[ "${SHOULD_PUBLISH_LATEST}" == "true" ]]; then
+          if [[ "${IS_RELEASE_EVENT}" == "true" ]] && [[ "${VERSION_TAG}" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
             echo "IMAGE_TAG_LATEST=1" >> "$GITHUB_ENV"
           fi
       - name: Login to GHCR
