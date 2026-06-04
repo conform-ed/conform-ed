@@ -16,17 +16,25 @@ Never create temporary files in source directories or at repo root.
 
 ## Publishing Packages
 
-Before publishing any package to the npm registry:
+All packages and OCI images are released together using a single semver tag. Never publish
+individually or out-of-step. Use the unified release script:
 
-1. **Commit all changes** — every source change that is part of the release must be committed.
-2. **Create a git tag** — tag the commit with the version being published:
-   ```
-   git tag packages/contracts/v<version>
-   ```
-   Use the format `packages/<name>/v<version>` for individual package tags.
-3. **Then publish** — `bun publish --access public` from the package directory.
+```
+bun run release <version>
+# Example: bun run release 0.0.8
+# Dry-run:  DRY_RUN=1 bun run release 0.0.8
+```
 
-Never publish without a corresponding commit and tag. This ensures the registry artifact is always traceable to a specific revision.
+The script:
+
+1. Validates the version and checks the working tree is clean.
+2. Bumps `version` in every publishable package's `package.json`.
+3. Commits `chore: release <version>` and creates a bare semver git tag (`0.0.8`, not `v0.0.8`).
+4. Pushes the branch and tag — this triggers GitHub Actions to build and push OCI images.
+5. Runs `bun publish --access public` for all npm packages in parallel.
+
+**Never** publish an npm package or push an OCI image tag without going through this script.
+The bare semver tag is the single source of truth for all artifact versions.
 
 ## Type Checking
 

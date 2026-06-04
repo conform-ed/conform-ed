@@ -6,6 +6,7 @@
     "packages/*"
   ],
   "scripts": {
+    "release": "bun run scripts/release.ts",
     "build": "turbo run build",
     "test": "turbo run test",
     "typecheck": "turbo run typecheck",
@@ -17,7 +18,6 @@
     "validate:full": "bun run validate",
     "changeset": "changeset",
     "version-packages": "changeset version",
-    "release": "changeset publish",
     "images:build": "bun run scripts/build-images.ts",
     "images:publish:ghcr": "bun run scripts/publish-ghcr.ts",
     "images:manifest": "bun run scripts/write-release-manifest.ts",
