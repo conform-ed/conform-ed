@@ -36,6 +36,13 @@ The script:
 **Never** publish an npm package or push an OCI image tag without going through this script.
 The bare semver tag is the single source of truth for all artifact versions.
 
-## Type Checking
+## Package Scripts vs Direct Tool Invocation
 
-Use `bun run typecheck` — not `tsc` or `bunx tsgo --noEmit` directly.
+Always prefer package scripts over direct tool invocation:
+
+- `bun run typecheck` — not `tsgo`, `bunx tsgo`, or `tsc` directly
+- `bun run lint` — not `oxlint` directly
+- `bun run format` — not `oxfmt` directly
+- `bun run validate` for full validation if the script exists
+
+Package scripts encode project-specific flags, paths, and composite steps. Direct invocation silently bypasses them.
