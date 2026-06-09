@@ -44,6 +44,13 @@
         "zod": "^4.4.3",
       },
     },
+    "apps/lti13-adapter-emergent": {
+      "name": "@conform-ed/lti13-adapter-emergent",
+      "dependencies": {
+        "@conform-ed/contracts": "workspace:*",
+        "jose": "^5.10.0",
+      },
+    },
     "apps/lti13-adapter-reference": {
       "name": "@conform-ed/lti13-adapter-reference",
       "dependencies": {
@@ -68,7 +75,7 @@
     },
     "packages/contracts": {
       "name": "@conform-ed/contracts",
-      "version": "0.0.8",
+      "version": "0.0.11",
       "devDependencies": {
         "fast-xml-parser": "^5.3.1",
       },
@@ -141,6 +148,8 @@
     "@conform-ed/core": ["@conform-ed/core@workspace:packages/core"],
 
     "@conform-ed/lrs-runner": ["@conform-ed/lrs-runner@workspace:apps/lrs-runner"],
+
+    "@conform-ed/lti13-adapter-emergent": ["@conform-ed/lti13-adapter-emergent@workspace:apps/lti13-adapter-emergent"],
 
     "@conform-ed/lti13-adapter-reference": ["@conform-ed/lti13-adapter-reference@workspace:apps/lti13-adapter-reference"],
 
@@ -513,6 +522,8 @@
     "xsd2jsonschema": ["xsd2jsonschema@0.3.7", "", { "dependencies": { "clone": "^2.1.2", "debug": "^3.2.6", "deep-eql": "^4.0.0", "fs-extra": "^3.0.1", "get-uri": "^2.0.3", "urijs": "^1.19.1", "validator": "^9.4.1", "xml2js": "^0.4.19", "xmldom": "^0.1.27", "xpath": "0.0.24" } }, "sha512-pbozXtnzgTVU1XvRtel3Y0sRdAqRCsgsUoESJUIVd/PdeUzScMnPZyIq8QMFQoAi7pm0AWsEXVjdMnUEF/+CbQ=="],
 
     "zod": ["zod@4.4.3", "", {}, "sha512-ytENFjIJFl2UwYglde2jchW2Hwm4GJFLDiSXWdTrJQBIN9Fcyp7n4DhxJEiWNAJMV1/BqWfW/kkg71UDcHJyTQ=="],
+
+    "@conform-ed/lti13-adapter-emergent/jose": ["jose@5.10.0", "", {}, "sha512-s+3Al/p9g32Iq+oqXxkW//7jk2Vig6FF1CFqzVXoTUXt2qz89YWbL+OwS17NFYEvxC35n0FKeGO2LGYSxeM2Gg=="],
 
     "@manypkg/find-root/@types/node": ["@types/node@12.20.55", "", {}, "sha512-J8xLz7q2OFulZ2cyGTLE1TbbZcjpno7FaN6zdJNrgAdrJ+DZzh/uFR6YrTb4C+nXakvud8Q4+rbhoIWlYQbUFQ=="],
 

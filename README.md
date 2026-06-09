@@ -9,27 +9,23 @@ conform-ed is an open-source monorepo for standards conformance tooling.
 - LTI 1.3 conformance runner
 - Reference adapter services for cmi5 and LTI 1.3
 - Shared contracts, schemas, reporting, and CI workflows
+- QTI 2.x / 3.0 (Question & Test Interoperability)
+- cmi5 (Quartz course structure and keyword extension)
+- Caliper Analytics (https://github.com/1EdTech/caliper-spec)
+- IMS Common Cartridge (CC) + Thin CC
+- CLR 2.0 (Comprehensive Learner Record) / CLR Standard
+- LTI 1.3 / LTI Advantage (core launch, deep linking, AGS, NRPS, proctoring)
+- Open Badges 3.0 (1EdTech) (https://github.com/1EdTech/openbadges-specification, https://github.com/1EdTech/digital-credentials-public-validator and https://github.com/1EdTech/openbadges-validator-core)
+- OneRoster 1.2 (1EdTech) (https://www.imsglobal.org/spec/oneroster/v1p2/)
+- h5p
+- CASE (https://github.com/1EdTech/OpenCASE)
+- Verifiable Credentials Data Model 2.0 (W3C) (https://www.w3.org/TR/vc-data-model-2.0/)
 
 ### Standards under consideration
 
 - Accessibility (WCAG 2.1 Level AA, WCAG 2.2)
 - SCORM 1.2/2004
 - EDC / Europass
-- QTI 2.x / 3.0 (Question & Test Interoperability)
-- cmi5 (Quartz course structure and keyword extension)
-- LTI 1.3 / LTI Advantage (core launch, deep linking, AGS, NRPS, proctoring)
-- Open Badges 3.0 (1EdTech) (https://github.com/1EdTech/openbadges-specification, https://github.com/1EdTech/digital-credentials-public-validator and https://github.com/1EdTech/openbadges-validator-core)
-- Verifiable Credentials Data Model 2.0 (W3C) (https://www.w3.org/TR/vc-data-model-2.0/)
-- OneRoster 1.2 (1EdTech) (https://www.imsglobal.org/spec/oneroster/v1p2/)
-
-- caliper analytics (https://github.com/1EdTech/caliper-spec)
-- IMS Common Cartridge (CC) + Thin CC
-- CLR 2.0 (Comprehensive Learner Record) / CLR Standard
-
-### other formats/standards
-
-- h5p
-- CASE (https://github.com/1EdTech/OpenCASE)
 
 ## Implemented Zod Schemas
 
@@ -63,8 +59,7 @@ Import patterns and usage examples are documented in `packages/contracts/<standa
 First release train is OCI-only.
 
 - Primary registry: GHCR
-- Optional mirror: Docker Hub (disabled by default)
-- No npm publishing in v0.x
+- npm publishing: npmjs
 
 ## Quickstart
 
