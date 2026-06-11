@@ -51,6 +51,10 @@ export { createAttemptStore, type AttemptSnapshot, type AttemptStore, type Attem
 
 export {
   createTestController,
+  createTestSessionStore,
+  type TestSessionSnapshot,
+  type TestSessionStore,
+  type TestSessionStoreOptions,
   type AssessmentItemRefView,
   type AssessmentSectionView,
   type AssessmentTestView,
@@ -76,6 +80,7 @@ export {
   type CapabilityIssue,
   type CapabilityIssueType,
   type CapabilityReport,
+  type ContentRendererProps,
   type FeedbackView,
   type InteractionDescriptor,
   type InteractionNode,

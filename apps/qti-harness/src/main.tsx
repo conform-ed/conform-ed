@@ -1,15 +1,24 @@
 /**
  * The QTI harness (ADR-0001): renders the sample items through the headless runtime
- * with the Reference Skin, with attempt controls and the live Capability Report. This
- * is the in-repo way to see and exercise interactions without any downstream product.
+ * with the Reference Skin, with attempt controls and the live Capability Report, plus
+ * a whole-test mode driving the Test Session Store (ADR-0005) — seeded selection,
+ * navigation, test outcome processing, and at-end feedback. This is the in-repo way
+ * to see and exercise the stack without any downstream product.
  */
 
-import { useState } from "react";
+import { useMemo, useState, useSyncExternalStore } from "react";
 import { createRoot } from "react-dom/client";
 
-import { createQtiRuntime, qtiCoreInteractions, referenceSkin } from "@conform-ed/qti-react";
+import {
+  createQtiRuntime,
+  createTestController,
+  createTestSessionStore,
+  qtiCoreInteractions,
+  referenceSkin,
+} from "@conform-ed/qti-react";
 
 import { harnessItems } from "./items";
+import { sampleTest, sampleTestItems } from "./sample-test";
 
 const runtime = createQtiRuntime({ interactions: qtiCoreInteractions, skin: referenceSkin });
 
@@ -50,7 +59,7 @@ function AttemptControls() {
   );
 }
 
-function App() {
+function ItemPage() {
   const [selectedId, setSelectedId] = useState(harnessItems[0]?.id ?? "");
   const selected = harnessItems.find((entry) => entry.id === selectedId) ?? harnessItems[0];
 
@@ -61,8 +70,7 @@ function App() {
   const report = runtime.canDeliver(selected.item);
 
   return (
-    <main>
-      <h1>qti-react harness</h1>
+    <>
       <nav>
         <label>
           Item:{" "}
@@ -100,6 +108,113 @@ function App() {
           <AttemptControls />
         </runtime.ItemRenderer>
       </section>
+    </>
+  );
+}
+
+function TestPage() {
+  const [seed, setSeed] = useState(42);
+  const session = useMemo(() => {
+    const controller = createTestController(sampleTest, { seed });
+
+    return createTestSessionStore(controller, {
+      seed,
+      resolveItem: (ref) => sampleTestItems[ref.identifier] ?? null,
+    });
+  }, [seed]);
+  const snapshot = useSyncExternalStore(session.subscribe, session.getSnapshot, session.getSnapshot);
+  const { state, currentItem, currentItemView, visibleFeedbacks } = snapshot;
+  const planItems = session.controller.plan.parts.flatMap((part) => part.items);
+
+  return (
+    <section aria-label="Test session">
+      <p>
+        <label>
+          Seed (replay key — drives selection and item clones):{" "}
+          <input type="number" value={seed} onChange={(event) => setSeed(Number(event.target.value) || 0)} />
+        </label>
+      </p>
+
+      <nav aria-label="Test navigation">
+        {planItems.map((item) => {
+          const isCurrent = item.key === state.currentItemKey;
+          const attempted = state.attemptedItems.includes(item.key);
+
+          return (
+            <button
+              key={item.key}
+              type="button"
+              data-status={isCurrent ? "current" : attempted ? "attempted" : "idle"}
+              disabled={!isCurrent && !session.canMoveTo(item.key)}
+              onClick={() => session.moveTo(item.key)}
+            >
+              {item.key}
+              {attempted ? " ✓" : ""}
+            </button>
+          );
+        })}
+        <button type="button" onClick={() => session.next()} disabled={state.status === "ended"}>
+          Next
+        </button>
+        <button type="button" onClick={() => session.end()} disabled={state.status === "ended"}>
+          End test
+        </button>
+      </nav>
+
+      {state.status === "in-progress" && currentItem && currentItemView ? (
+        <section aria-label="Current item">
+          <h2>{currentItem.key}</h2>
+          <runtime.ItemRenderer
+            key={`${seed}:${currentItem.key}`}
+            item={currentItemView}
+            store={session.itemStore(currentItem.key) ?? undefined}
+          >
+            <AttemptControls />
+          </runtime.ItemRenderer>
+        </section>
+      ) : null}
+
+      {state.status === "in-progress" && currentItem && !currentItemView ? (
+        <p role="note">Item {currentItem.key} could not be resolved.</p>
+      ) : null}
+
+      {state.status === "ended" ? (
+        <section aria-label="Test result">
+          <h2>Test result</h2>
+          <dl data-testid="test-outcomes">
+            {Object.entries(state.testOutcomes).map(([identifier, value]) => (
+              <div key={identifier}>
+                <dt>{identifier}</dt>
+                <dd>{value === null ? "NULL" : Array.isArray(value) ? value.join(", ") : String(value)}</dd>
+              </div>
+            ))}
+          </dl>
+          {visibleFeedbacks.map((feedback) => (
+            <div key={feedback.identifier} data-qti-test-feedback={feedback.identifier}>
+              <runtime.ContentRenderer nodes={feedback.content} outcomes={state.testOutcomes} />
+            </div>
+          ))}
+        </section>
+      ) : null}
+    </section>
+  );
+}
+
+function App() {
+  const [mode, setMode] = useState<"items" | "test">("items");
+
+  return (
+    <main>
+      <h1>qti-react harness</h1>
+      <nav aria-label="Mode">
+        <button type="button" data-status={mode === "items" ? "current" : "idle"} onClick={() => setMode("items")}>
+          Items
+        </button>
+        <button type="button" data-status={mode === "test" ? "current" : "idle"} onClick={() => setMode("test")}>
+          Test
+        </button>
+      </nav>
+      {mode === "items" ? <ItemPage /> : <TestPage />}
     </main>
   );
 }

@@ -173,8 +173,19 @@ export interface ItemRendererProps {
   children?: ReactNode;
 }
 
+export interface ContentRendererProps {
+  nodes?: readonly BodyNode[];
+  /** Values for printedVariable (and showHide-gated feedback) inside the content. */
+  outcomes?: Readonly<Record<string, OutcomeValue>>;
+}
+
 export interface QtiRuntime {
   ItemRenderer: ComponentType<ItemRendererProps>;
+  /**
+   * Flow content outside an item attempt — test feedback, rubric copy. Same sanitizer
+   * and node walk as the item body, over caller-supplied outcome values.
+   */
+  ContentRenderer: ComponentType<ContentRendererProps>;
   useAttempt: () => AttemptController;
   /**
    * The Capability Report for an item against this runtime's injected descriptors,
@@ -260,6 +271,26 @@ function templateVisible(value: OutcomeValue, view: TemplateContentView): boolea
 
 /** Body node kinds that render without a descriptor, skin, or content-model entry. */
 const intrinsicLeafKinds = new Set(["text", "printedVariable"]);
+
+/** A read-only, already-"submitted" store: backs content rendered outside an attempt. */
+function createStaticStore(outcomes: Readonly<Record<string, OutcomeValue>>): AttemptStore {
+  const snapshot: AttemptSnapshot = {
+    responses: {},
+    submitted: true,
+    scores: [],
+    outcomes,
+    templateValues: {},
+    attemptCount: 1,
+  };
+
+  return {
+    getSnapshot: () => snapshot,
+    subscribe: () => () => {},
+    setResponse: () => {},
+    submit: () => [],
+    reset: () => {},
+  };
+}
 
 /** QTI showHide semantics: `show` reveals on a matched outcome, `hide` reveals on a miss. */
 function feedbackVisible(outcome: OutcomeValue, feedback: FeedbackView, submitted: boolean): boolean {
@@ -552,6 +583,17 @@ export function createQtiRuntime(config: QtiRuntimeConfig): QtiRuntime {
     });
   }
 
+  function ContentRenderer({ nodes, outcomes }: ContentRendererProps): ReactNode {
+    const store = useMemo(() => createStaticStore(outcomes ?? {}), [outcomes]);
+    const declarationsById = useMemo(() => new Map<string, ResponseDeclarationView>(), []);
+
+    return createElement(
+      RuntimeContext.Provider,
+      { value: { store, declarationsById } },
+      nodes?.map((node, index) => renderNode(node, index)),
+    );
+  }
+
   function ItemRenderer({ item, store: externalStore, seed, children }: ItemRendererProps): ReactNode {
     const store = useMemo(
       () =>
@@ -696,5 +738,5 @@ export function createQtiRuntime(config: QtiRuntimeConfig): QtiRuntime {
     return { deliverable: issues.length === 0, issues };
   }
 
-  return { ItemRenderer, useAttempt, canDeliver };
+  return { ItemRenderer, ContentRenderer, useAttempt, canDeliver };
 }
