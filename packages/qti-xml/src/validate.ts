@@ -6,6 +6,7 @@ import { normalizeQtiDocument } from "./normalize";
 import { parseXmlDocument } from "./parse-xml";
 import { isNormalizationImplemented, selectQtiSchema } from "./schema-selection";
 import type { QtiValidationIssue, QtiValidationResult } from "./types";
+import { resolveXIncludes } from "./xinclude";
 
 type SafeParseResult = {
   success: boolean;
@@ -64,7 +65,12 @@ export async function validateQtiXmlFile(filePath: string): Promise<QtiValidatio
 
   let normalizedDocument: unknown;
   try {
-    normalizedDocument = normalizeQtiDocument(schemaSelection.version, schemaSelection.key, parseXmlDocument(xml));
+    const documentRoot = parseXmlDocument(xml);
+
+    // Shared fragments (xi:include) splice in before normalization — this is the only
+    // layer that knows the file path the hrefs are relative to.
+    await resolveXIncludes(documentRoot, absolutePath);
+    normalizedDocument = normalizeQtiDocument(schemaSelection.version, schemaSelection.key, documentRoot);
   } catch (error) {
     return {
       filePath: absolutePath,

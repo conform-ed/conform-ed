@@ -106,10 +106,10 @@ corpusTest(
     expect(tests).toBeGreaterThanOrEqual(25);
 
     // The recorded floors (raise as the stack grows — they must never go down):
-    // items 306/312 (98.1%) after the corpus-deviation contracts fixes; the 6
-    // remaining are xi:include (3), drawingInteraction (2), customOperator (1).
+    // items 309/312 (99.0%) after the XInclude rung; the 3 remaining are
+    // drawingInteraction (2) and customOperator (1).
     // tests 30/30 (100%) after the number* aggregate rung.
-    expect(deliverable).toBeGreaterThanOrEqual(306);
+    expect(deliverable).toBeGreaterThanOrEqual(309);
     expect(deliverableTests).toBeGreaterThanOrEqual(30);
   },
   60000,
