@@ -44,6 +44,8 @@
     "test:lti13:interop:oss-tool:ltijs": "bun run scripts/run-lti13-interop-oss-tool-ltijs.ts",
     "test:lti13:interop:negative": "bun test scripts/run-lti13-interop-lane.test.ts",
     "test:cmi5:external": "bun run scripts/run-cmi5-external-lane.ts",
+    "qti:corpus:fetch": "bun run scripts/fetch-qti-corpus.ts",
+    "test:qti-corpus": "bun run qti:corpus:fetch && bun --cwd packages/qti-xml test qti-example-corpus && bun --cwd packages/qti-react test corpus.local",
     "qti:inventory:examples": "bun run scripts/generate-qti-example-inventory.ts",
     "qti:validate:file": "bun run scripts/qti-validate-file.ts",
     "qti:validate:folder": "bun run scripts/qti-validate-folder.ts",

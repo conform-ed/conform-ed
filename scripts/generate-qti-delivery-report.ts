@@ -6,6 +6,7 @@
  * with a histogram of what blocks the rest (normalization gaps vs capability issues).
  */
 
+import { existsSync } from "node:fs";
 import { mkdir, readdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 
@@ -172,6 +173,11 @@ async function main(): Promise<number> {
   const flagIndex = args.indexOf("--root");
   const rootPath = path.resolve(flagIndex === -1 ? "tmp/qti-examples" : (args[flagIndex + 1] ?? "tmp/qti-examples"));
   const outputPath = path.resolve("tmp/generated/qti/qti-delivery-report.json");
+
+  if (!existsSync(rootPath)) {
+    console.error(`Corpus missing at ${rootPath} — run: bun run qti:corpus:fetch`);
+    return 1;
+  }
 
   const files = await walkXmlFiles(rootPath);
   const entries: DeliveryEntry[] = [];

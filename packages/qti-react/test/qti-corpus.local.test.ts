@@ -58,6 +58,7 @@ corpusTest(
     let deliverable = 0;
     let tests = 0;
     let deliverableTests = 0;
+    const refusals: Array<{ readonly file: string; readonly blockers: readonly string[] }> = [];
 
     for (const file of files) {
       const result = await validateQtiXmlFile(file);
@@ -70,13 +71,26 @@ corpusTest(
         items += 1;
 
         if (result.status !== "valid") {
+          refusals.push({ file: path.basename(file), blockers: [`status:${result.status}`] });
           continue;
         }
 
         const view = assessmentItemViewFromNormalized(result.normalizedDocument);
 
-        if (view && runtime.canDeliver(view).deliverable) {
+        if (!view) {
+          refusals.push({ file: path.basename(file), blockers: ["normalization-gap"] });
+          continue;
+        }
+
+        const verdict = runtime.canDeliver(view);
+
+        if (verdict.deliverable) {
           deliverable += 1;
+        } else {
+          refusals.push({
+            file: path.basename(file),
+            blockers: verdict.issues.map((issue) => `${issue.type}:${issue.name}`),
+          });
         }
       }
 
@@ -106,13 +120,20 @@ corpusTest(
     expect(tests).toBeGreaterThanOrEqual(25);
 
     // The recorded floors (raise as the stack grows — they must never go down):
-    // items 311/312 (99.7%). The 1 remaining (SineRule-001) needs
-    // org.qtitools.mathassess.CasProcess — a Maxima CAS. The customOperator seam
-    // exists (register implementations via QtiRuntimeConfig.customOperators), but
-    // shipping a fake CAS to claim 312 would be dishonest; the gate reports it.
-    // tests 30/30 (100%) after the number* aggregate rung.
+    // items 311/312 delivered + the asserted refusal below = 312/312 handled
+    // correctly. tests 30/30 (100%).
     expect(deliverable).toBeGreaterThanOrEqual(311);
     expect(deliverableTests).toBeGreaterThanOrEqual(30);
+
+    // Refusal-as-success: the only item not delivered is the one that must not be.
+    // SineRule-001 binds its template maths to the GPL Maxima *product* via the
+    // third-party MathAssess profile (customOperator class
+    // org.qtitools.mathassess.CasProcess, ma:syntax="text/x-maxima"). QTI 3 leaves
+    // customOperator implementation-defined, so the conformant response to an
+    // unregistered class is exactly this loud refusal — guessing or faking a CAS to
+    // print 312/312 would be the non-conformant move. The seam for real
+    // implementations is QtiRuntimeConfig.customOperators.
+    expect(refusals).toEqual([{ file: "SineRule-001.xml", blockers: ["unsupported-rp:customOperator"] }]);
   },
   60000,
 );

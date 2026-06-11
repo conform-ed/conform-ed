@@ -21,6 +21,26 @@ Controller. Progress is measured as **Corpus coverage**: the share of the
 official `qtiv3-examples` Corpus that is deliverable per the Capability
 Report and correctly scored.
 
+## Corpus acquisition and the terminal state
+
+The Corpus is never committed: `bun run qti:corpus:fetch` materializes
+`tmp/qti-examples` at a pinned upstream commit (the floors assert exact counts,
+so the pin is load-bearing). Day-to-day validation skips the corpus lanes when
+the checkout is absent; the scheduled/manual `qti-corpus.yml` workflow runs the
+standard validation plus `test:qti-corpus` against the pin. Nothing committed
+may depend on pre-existing `tmp/` content — committed code either skips or
+fetches.
+
+The meter's terminal state is **311/312 items delivered plus 1 asserted
+refusal — 312/312 handled correctly**. SineRule-001 binds its template maths to
+the GPL Maxima _product_ through the third-party MathAssess profile
+(`customOperator` class `org.qtitools.mathassess.CasProcess`,
+`ma:syntax="text/x-maxima"`). QTI 3 leaves `customOperator`
+implementation-defined and no conformance target requires any particular
+class, so the loud refusal of an unregistered class **is** the conformant
+behavior; the floor test asserts that exact refusal as a positive outcome.
+Real implementations register through `QtiRuntimeConfig.customOperators`.
+
 ## Considered and rejected
 
 - **All interactions first, interpreter later** — maximum visible breadth, but

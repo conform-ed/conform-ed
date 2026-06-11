@@ -1,0 +1,22 @@
+name: QTI Corpus
+
+# The full-validation corpus lane (qti-react ADR-0002): fetches the official 1EdTech
+# qti-examples corpus at the pinned commit and runs the corpus floor suites on top of
+# the standard validation. Scheduled + manual — not part of the PR path, which skips
+# the corpus lanes when tmp/qti-examples is absent.
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 4 * * 1"
+
+jobs:
+  corpus:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.3.14
+      - run: bun install
+      - run: bun run validate
+      - run: bun run test:qti-corpus
