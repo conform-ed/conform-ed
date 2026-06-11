@@ -29,6 +29,8 @@ export interface EvalEnv {
   readonly normalization?: ResponseNormalization;
   /** Seeded PRNG in [0, 1); present only in template processing. */
   readonly random?: () => number;
+  /** `testVariables` aggregation; present only in test-level outcome processing. */
+  readonly testVariables?: (expression: RpExpressionView) => MaybeRpValue;
 }
 
 /** Expression kinds legal everywhere (deterministic). */
@@ -275,6 +277,14 @@ export function evaluateExpression(expression: RpExpressionView, env: EvalEnv): 
       const max = expression.max ?? min;
 
       return floatValue(min + env.random() * (max - min));
+    }
+
+    case "testVariables": {
+      if (!env.testVariables) {
+        throw new RpUnsupportedError(expression.kind);
+      }
+
+      return env.testVariables(expression);
     }
 
     case "random": {
