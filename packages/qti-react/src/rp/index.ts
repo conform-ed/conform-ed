@@ -13,6 +13,7 @@ export {
 export { resolveTemplate } from "./templates";
 export type {
   CustomOperatorImplementation,
+  MaybeRpValue,
   OutcomeDeclarationView,
   OutcomeValue,
   ResponseNormalization,
@@ -21,7 +22,9 @@ export type {
   ResponseProcessingView,
   RpConditionBranch,
   RpExpressionView,
+  RpRecordField,
   RpRuleView,
   RpScalar,
+  RpValue,
   TemplateDeclarationView,
 } from "./types";

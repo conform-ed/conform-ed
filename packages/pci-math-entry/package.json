@@ -15,6 +15,10 @@
     "./checker": {
       "types": "./src/checker.ts",
       "import": "./src/checker.ts"
+    },
+    "./operator": {
+      "types": "./src/operator.ts",
+      "import": "./src/operator.ts"
     }
   },
   "scripts": {
@@ -28,5 +32,13 @@
   },
   "devDependencies": {
     "@conform-ed/qti-react": "workspace:*"
+  },
+  "peerDependencies": {
+    "@conform-ed/qti-react": ">=0.0.12"
+  },
+  "peerDependenciesMeta": {
+    "@conform-ed/qti-react": {
+      "optional": true
+    }
   }
 }
