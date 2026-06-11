@@ -15,6 +15,33 @@ export interface BranchRuleView {
   readonly expression: RpExpressionView;
 }
 
+/**
+ * QTI `itemSessionControl`: per-level overrides cascading testPart → section → itemRef.
+ * The controller enforces `maxAttempts` and `allowSkipping`; the rest is surfaced for
+ * delivery chrome (review/solution/comment affordances are UI concerns).
+ */
+export interface ItemSessionControlView {
+  /** Attempts allowed per item; 0 means unlimited. Spec default: 1. */
+  readonly maxAttempts?: number;
+  readonly showFeedback?: boolean;
+  readonly allowReview?: boolean;
+  readonly showSolution?: boolean;
+  readonly allowComment?: boolean;
+  /** When false, the candidate must attempt the item before moving past it. */
+  readonly allowSkipping?: boolean;
+  readonly validateResponses?: boolean;
+}
+
+/**
+ * QTI `timeLimits` (seconds). The controller is clock-free by design (ADR-0005): these
+ * are data for the consumer's timers, which call `next()`/`end()` when time runs out.
+ */
+export interface TimeLimitsView {
+  readonly minTime?: number;
+  readonly maxTime?: number;
+  readonly allowLateSubmission?: boolean;
+}
+
 export interface AssessmentItemRefView {
   readonly kind: "assessmentItemRef";
   readonly identifier: string;
@@ -24,6 +51,8 @@ export interface AssessmentItemRefView {
   readonly required?: boolean;
   readonly preConditions?: readonly RpExpressionView[];
   readonly branchRules?: readonly BranchRuleView[];
+  readonly itemSessionControl?: ItemSessionControlView;
+  readonly timeLimits?: TimeLimitsView;
 }
 
 export interface AssessmentSectionView {
@@ -37,6 +66,8 @@ export interface AssessmentSectionView {
   readonly ordering?: { readonly shuffle?: boolean };
   readonly preConditions?: readonly RpExpressionView[];
   readonly branchRules?: readonly BranchRuleView[];
+  readonly itemSessionControl?: ItemSessionControlView;
+  readonly timeLimits?: TimeLimitsView;
   readonly children: ReadonlyArray<AssessmentSectionView | AssessmentItemRefView>;
 }
 
@@ -46,6 +77,8 @@ export interface TestPartView {
   readonly submissionMode: "individual" | "simultaneous";
   readonly preConditions?: readonly RpExpressionView[];
   readonly branchRules?: readonly BranchRuleView[];
+  readonly itemSessionControl?: ItemSessionControlView;
+  readonly timeLimits?: TimeLimitsView;
   readonly assessmentSections: readonly AssessmentSectionView[];
 }
 
@@ -76,6 +109,7 @@ export interface AssessmentTestView {
   readonly identifier: string;
   readonly title?: string;
   readonly outcomeDeclarations?: readonly OutcomeDeclarationView[];
+  readonly timeLimits?: TimeLimitsView;
   readonly testParts: readonly TestPartView[];
   readonly outcomeProcessing?: { readonly rules: readonly OutcomeRuleView[] };
   readonly testFeedbacks?: readonly TestFeedbackView[];
@@ -91,16 +125,22 @@ export interface TestPlanItem {
   readonly sectionPath: readonly string[];
   /** The item's own preconditions plus its ancestor sections' (all must pass). */
   readonly preConditions: readonly RpExpressionView[];
+  /** Effective session control: part → section → itemRef cascade over spec defaults. */
+  readonly sessionControl: Required<ItemSessionControlView>;
+  /** The item ref's own time limits (part/test limits live on their own levels). */
+  readonly timeLimits?: TimeLimitsView;
 }
 
 export interface TestPlanPart {
   readonly identifier: string;
   readonly navigationMode: "linear" | "nonlinear";
   readonly submissionMode: "individual" | "simultaneous";
+  readonly timeLimits?: TimeLimitsView;
   readonly items: readonly TestPlanItem[];
 }
 
 export interface TestPlan {
+  readonly timeLimits?: TimeLimitsView;
   readonly parts: readonly TestPlanPart[];
 }
 
@@ -108,6 +148,8 @@ export interface TestPlan {
 
 export interface TestItemResult {
   readonly outcomes: Readonly<Record<string, OutcomeValue>>;
+  /** Adaptive items manage their own attempt lifecycle, so maxAttempts is ignored (spec). */
+  readonly adaptive?: boolean;
 }
 
 export interface TestSessionState {
@@ -115,6 +157,7 @@ export interface TestSessionState {
   readonly currentItemKey: string | null;
   readonly itemOutcomes: Readonly<Record<string, Readonly<Record<string, OutcomeValue>>>>;
   readonly attemptedItems: readonly string[];
+  readonly attemptCounts: Readonly<Record<string, number>>;
   readonly testOutcomes: Readonly<Record<string, OutcomeValue>>;
 }
 
@@ -126,7 +169,12 @@ export interface TestController {
   readonly currentItem: (state: TestSessionState) => TestPlanItem | null;
   readonly canMoveTo: (state: TestSessionState, itemKey: string) => boolean;
   readonly moveTo: (state: TestSessionState, itemKey: string) => TestSessionState;
+  /** Whether `next()` would change state (false when allowSkipping blocks the move). */
+  readonly canNext: (state: TestSessionState) => boolean;
   readonly next: (state: TestSessionState) => TestSessionState;
+  /** Attempts left for the item under its effective maxAttempts (Infinity when unlimited). */
+  readonly remainingAttempts: (state: TestSessionState, itemKey: string) => number;
+  readonly canSubmitItem: (state: TestSessionState, itemKey: string) => boolean;
   readonly submitItem: (state: TestSessionState, itemKey: string, result: TestItemResult) => TestSessionState;
   readonly end: (state: TestSessionState) => TestSessionState;
   readonly visibleTestFeedbacks: (state: TestSessionState) => readonly TestFeedbackView[];

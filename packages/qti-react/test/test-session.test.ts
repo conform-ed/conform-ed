@@ -209,6 +209,25 @@ describe("test session store", () => {
     expect(session.itemStore("ITEM-1")).toBeNull();
   });
 
+  test("submissions beyond maxAttempts never reach the controller", () => {
+    const session = makeSession();
+    const store = session.itemStore("ITEM-1")!;
+
+    store.setResponse("RESPONSE", "A");
+    store.submit();
+    expect(session.getSnapshot().state.itemOutcomes["ITEM-1"]?.["SCORE"]).toBe(1);
+
+    // Re-attempt locally (reset + change + resubmit): the default maxAttempts of 1 is
+    // spent, so the controller keeps the first attempt's outcomes.
+    store.reset();
+    store.setResponse("RESPONSE", "B");
+    store.submit();
+
+    const snapshot = session.getSnapshot();
+    expect(snapshot.state.itemOutcomes["ITEM-1"]?.["SCORE"]).toBe(1);
+    expect(snapshot.state.attemptCounts["ITEM-1"]).toBe(1);
+  });
+
   test("snapshot identity is stable until state changes", () => {
     const session = makeSession();
     const before = session.getSnapshot();

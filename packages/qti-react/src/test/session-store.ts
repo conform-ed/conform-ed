@@ -131,13 +131,22 @@ export function createTestSessionStore(controller: TestController, options: Test
     );
 
     // Every new submission flows into the controller, which re-runs test outcome
-    // processing; adaptive items resubmit per attempt, keyed by attemptCount.
+    // processing; adaptive items resubmit per attempt, keyed by attemptCount. The
+    // controller may refuse (maxAttempts spent) — refused results never reach state.
     store.subscribe(() => {
       const attempt = store.getSnapshot();
 
       if (attempt.submitted && submittedAttempts.get(itemKey) !== attempt.attemptCount) {
         submittedAttempts.set(itemKey, attempt.attemptCount);
-        emit(controller.submitItem(state, itemKey, { outcomes: attempt.outcomes }));
+
+        const next = controller.submitItem(state, itemKey, {
+          outcomes: attempt.outcomes,
+          ...(view.adaptive === true ? { adaptive: true } : {}),
+        });
+
+        if (next !== state) {
+          emit(next);
+        }
       }
     });
 

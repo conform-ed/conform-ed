@@ -59,6 +59,7 @@ export {
   type AssessmentSectionView,
   type AssessmentTestView,
   type BranchRuleView,
+  type ItemSessionControlView,
   type OutcomeConditionBranch,
   type OutcomeRuleView,
   type TestController,
@@ -69,6 +70,7 @@ export {
   type TestPlanItem,
   type TestPlanPart,
   type TestSessionState,
+  type TimeLimitsView,
 } from "./test";
 
 export {

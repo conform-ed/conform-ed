@@ -280,6 +280,167 @@ describe("nonlinear navigation", () => {
   });
 });
 
+describe("itemSessionControl and timeLimits", () => {
+  const controlled: AssessmentTestView = {
+    identifier: "T-ISC",
+    timeLimits: { maxTime: 3600 },
+    testParts: [
+      {
+        identifier: "P1",
+        navigationMode: "linear",
+        submissionMode: "individual",
+        itemSessionControl: { maxAttempts: 3, allowSkipping: false },
+        timeLimits: { maxTime: 1800 },
+        assessmentSections: [
+          {
+            kind: "assessmentSection",
+            identifier: "S1",
+            itemSessionControl: { allowSkipping: true },
+            children: [
+              itemRef("I1", { itemSessionControl: { maxAttempts: 2 }, timeLimits: { maxTime: 60 } }),
+              itemRef("I2"),
+            ],
+          },
+        ],
+      },
+    ],
+  };
+
+  test("effective session control cascades part → section → item ref over spec defaults", () => {
+    const controller = createTestController(controlled, { seed: 1 });
+    const [first, second] = controller.plan.parts[0]!.items;
+
+    expect(first!.sessionControl).toEqual({
+      maxAttempts: 2, // item-ref override
+      allowSkipping: true, // section override of the part's false
+      showFeedback: false,
+      allowReview: true,
+      showSolution: false,
+      allowComment: false,
+      validateResponses: false,
+    });
+    expect(second!.sessionControl.maxAttempts).toBe(3); // part level
+    expect(second!.sessionControl.allowSkipping).toBe(true);
+  });
+
+  test("time limits surface on the plan at test, part, and item level", () => {
+    const controller = createTestController(controlled, { seed: 1 });
+
+    expect(controller.plan.timeLimits).toEqual({ maxTime: 3600 });
+    expect(controller.plan.parts[0]!.timeLimits).toEqual({ maxTime: 1800 });
+    expect(controller.plan.parts[0]!.items[0]!.timeLimits).toEqual({ maxTime: 60 });
+    expect(controller.plan.parts[0]!.items[1]!.timeLimits).toBeUndefined();
+  });
+
+  test("maxAttempts gates submissions; the default is a single attempt", () => {
+    const controller = createTestController(linearTest, { seed: 1 });
+    let state = controller.start();
+
+    expect(controller.remainingAttempts(state, "I1")).toBe(1);
+    expect(controller.canSubmitItem(state, "I1")).toBe(true);
+
+    state = controller.submitItem(state, "I1", { outcomes: { SCORE: 1 } });
+    expect(state.attemptCounts["I1"]).toBe(1);
+    expect(controller.remainingAttempts(state, "I1")).toBe(0);
+    expect(controller.canSubmitItem(state, "I1")).toBe(false);
+
+    const refused = controller.submitItem(state, "I1", { outcomes: { SCORE: 0 } });
+    expect(refused).toBe(state); // refused outright, not partially applied
+  });
+
+  test("maxAttempts above one allows re-attempts; zero means unlimited", () => {
+    const controller = createTestController(controlled, { seed: 1 });
+    let state = controller.start();
+
+    state = controller.submitItem(state, "I1", { outcomes: { SCORE: 0 } });
+    state = controller.submitItem(state, "I1", { outcomes: { SCORE: 1 } });
+    expect(state.attemptCounts["I1"]).toBe(2);
+    expect(controller.canSubmitItem(state, "I1")).toBe(false); // maxAttempts 2 spent
+
+    const unlimited: AssessmentTestView = {
+      ...linearTest,
+      testParts: [
+        {
+          ...linearTest.testParts[0]!,
+          itemSessionControl: { maxAttempts: 0 },
+        },
+      ],
+    };
+    const open = createTestController(unlimited, { seed: 1 });
+    let openState = open.start();
+
+    for (let attempt = 0; attempt < 5; attempt += 1) {
+      openState = open.submitItem(openState, "I1", { outcomes: { SCORE: attempt } });
+    }
+
+    expect(openState.attemptCounts["I1"]).toBe(5);
+    expect(open.remainingAttempts(openState, "I1")).toBe(Number.POSITIVE_INFINITY);
+  });
+
+  test("adaptive submissions ignore maxAttempts (spec)", () => {
+    const controller = createTestController(linearTest, { seed: 1 });
+    let state = controller.start();
+
+    state = controller.submitItem(state, "I1", { outcomes: { SCORE: 0 }, adaptive: true });
+    state = controller.submitItem(state, "I1", { outcomes: { SCORE: 1 }, adaptive: true });
+
+    expect(state.attemptCounts["I1"]).toBe(2);
+    expect(state.itemOutcomes["I1"]?.["SCORE"]).toBe(1);
+  });
+
+  test("allowSkipping=false blocks next() on an unattempted linear item", () => {
+    const strict: AssessmentTestView = {
+      ...linearTest,
+      testParts: [
+        {
+          ...linearTest.testParts[0]!,
+          itemSessionControl: { allowSkipping: false },
+        },
+      ],
+    };
+    const controller = createTestController(strict, { seed: 1 });
+    let state = controller.start();
+
+    expect(controller.canNext(state)).toBe(false);
+    expect(controller.next(state)).toBe(state); // refused, same reference
+
+    state = controller.submitItem(state, "I1", { outcomes: { SCORE: 1 } });
+    expect(controller.canNext(state)).toBe(true);
+
+    state = controller.next(state);
+    expect(controller.currentItem(state)?.key).toBe("I2");
+  });
+
+  test("allowSkipping=false blocks leaving a nonlinear part with unattempted items", () => {
+    const strict: AssessmentTestView = {
+      identifier: "T-NL",
+      testParts: [
+        {
+          identifier: "P1",
+          navigationMode: "nonlinear",
+          submissionMode: "individual",
+          itemSessionControl: { allowSkipping: false },
+          assessmentSections: [
+            { kind: "assessmentSection", identifier: "S1", children: [itemRef("I1"), itemRef("I2")] },
+          ],
+        },
+      ],
+    };
+    const controller = createTestController(strict, { seed: 1 });
+    let state = controller.start();
+
+    state = controller.moveTo(state, "I2");
+    state = controller.submitItem(state, "I2", { outcomes: { SCORE: 1 } });
+    expect(controller.next(state)).toBe(state); // I1 still unattempted → cannot leave the part
+
+    state = controller.moveTo(state, "I1");
+    state = controller.submitItem(state, "I1", { outcomes: { SCORE: 1 } });
+    state = controller.next(state); // I1 → I2 (still inside the part)
+    state = controller.next(state); // everything attempted → the part may end
+    expect(state.status).toBe("ended");
+  });
+});
+
 describe("outcome processing and test feedback", () => {
   test("testVariables aggregates item outcomes; feedback shows atEnd", () => {
     const scored: AssessmentTestView = {

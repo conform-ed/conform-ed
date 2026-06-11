@@ -30,6 +30,7 @@ import type {
   AssessmentItemRefView,
   AssessmentSectionView,
   AssessmentTestView,
+  ItemSessionControlView,
   OutcomeConditionBranch,
   OutcomeRuleView,
   TestController,
@@ -72,6 +73,22 @@ function liftFlat(value: OutcomeValue): MaybeRpValue {
 // ---------- Plan resolution (seeded selection + ordering) ----------
 
 type SectionChild = AssessmentSectionView | AssessmentItemRefView;
+
+/** QTI itemSessionControl defaults (spec): one attempt, skipping and review allowed. */
+const specSessionControlDefaults: Required<ItemSessionControlView> = {
+  maxAttempts: 1,
+  showFeedback: false,
+  allowReview: true,
+  showSolution: false,
+  allowComment: false,
+  allowSkipping: true,
+  validateResponses: false,
+};
+
+/** Only explicitly-set fields cascade; undefined entries never mask an outer level. */
+function definedControl(control: ItemSessionControlView | undefined): ItemSessionControlView {
+  return control ? Object.fromEntries(Object.entries(control).filter(([, value]) => value !== undefined)) : {};
+}
 
 function seededPick<T>(pool: readonly T[], count: number, random: () => number): T[] {
   const indices = pool.map((_, index) => index);
@@ -119,10 +136,12 @@ function resolveSection(
   partIdentifier: string,
   sectionPath: readonly string[],
   inheritedPreConditions: readonly RpExpressionView[],
+  inheritedControl: ItemSessionControlView,
   random: () => number,
 ): TestPlanItem[] {
   const path = [...sectionPath, section.identifier];
   const preConditions = [...inheritedPreConditions, ...(section.preConditions ?? [])];
+  const control = { ...inheritedControl, ...definedControl(section.itemSessionControl) };
 
   let children: readonly SectionChild[] = section.children;
 
@@ -138,7 +157,7 @@ function resolveSection(
 
   for (const child of children) {
     if (child.kind === "assessmentSection") {
-      items.push(...resolveSection(child, partIdentifier, path, preConditions, random));
+      items.push(...resolveSection(child, partIdentifier, path, preConditions, control, random));
     } else {
       items.push({
         key: child.identifier,
@@ -146,6 +165,8 @@ function resolveSection(
         partIdentifier,
         sectionPath: path,
         preConditions: [...preConditions, ...(child.preConditions ?? [])],
+        sessionControl: { ...specSessionControlDefaults, ...control, ...definedControl(child.itemSessionControl) },
+        ...(child.timeLimits ? { timeLimits: child.timeLimits } : {}),
       });
     }
   }
@@ -157,11 +178,15 @@ function resolvePlan(view: AssessmentTestView, seed: number): TestPlan {
   const random = mulberry32(seed);
 
   return {
+    ...(view.timeLimits ? { timeLimits: view.timeLimits } : {}),
     parts: view.testParts.map((part) => ({
       identifier: part.identifier,
       navigationMode: part.navigationMode,
       submissionMode: part.submissionMode,
-      items: part.assessmentSections.flatMap((section) => resolveSection(section, part.identifier, [], [], random)),
+      ...(part.timeLimits ? { timeLimits: part.timeLimits } : {}),
+      items: part.assessmentSections.flatMap((section) =>
+        resolveSection(section, part.identifier, [], [], definedControl(part.itemSessionControl), random),
+      ),
     })),
   };
 }
@@ -176,12 +201,30 @@ export function createTestController(view: AssessmentTestView, options: TestCont
   const plan = resolvePlan(view, options.seed);
   const allItems: TestPlanItem[] = plan.parts.flatMap((part) => [...part.items]);
   const partIndexByItemKey = new Map<string, number>();
+  const itemsByKey = new Map<string, TestPlanItem>();
 
   plan.parts.forEach((part, partIndex) => {
     for (const item of part.items) {
       partIndexByItemKey.set(item.key, partIndex);
+      itemsByKey.set(item.key, item);
     }
   });
+
+  function attemptsOf(state: TestSessionState, itemKey: string): number {
+    return (state.attemptCounts ?? {})[itemKey] ?? 0;
+  }
+
+  function remainingAttempts(state: TestSessionState, itemKey: string): number {
+    const item = itemsByKey.get(itemKey);
+
+    if (!item) {
+      return 0;
+    }
+
+    const max = item.sessionControl.maxAttempts;
+
+    return max === 0 ? Number.POSITIVE_INFINITY : Math.max(0, max - attemptsOf(state, itemKey));
+  }
 
   function defaultTestOutcomes(): Map<string, MaybeRpValue> {
     const outcomes = new Map<string, MaybeRpValue>();
@@ -380,6 +423,84 @@ export function createTestController(view: AssessmentTestView, options: TestCont
     return item === null ? ended(state) : { ...state, currentItemKey: item.key };
   }
 
+  function nextState(state: TestSessionState): TestSessionState {
+    if (state.status === "ended" || state.currentItemKey === null) {
+      return state;
+    }
+
+    const current = positionOf(state.currentItemKey);
+
+    if (!current) {
+      return ended(state);
+    }
+
+    const part = plan.parts[current.partIndex]!;
+    const currentItem = part.items[current.itemIndex]!;
+
+    // allowSkipping=false in linear mode: the current item must be attempted before
+    // moving past it (branch rules cannot fire off an unattempted, unskippable item).
+    if (
+      part.navigationMode === "linear" &&
+      !currentItem.sessionControl.allowSkipping &&
+      attemptsOf(state, currentItem.key) === 0
+    ) {
+      return state;
+    }
+
+    // Branch rules: first matching rule wins (author-explicit jumps bypass skip checks).
+    for (const branchRule of currentItem.ref.branchRules ?? []) {
+      if (!conditionPasses(branchRule.expression, state)) {
+        continue;
+      }
+
+      if (branchRule.target === "EXIT_TEST") {
+        return ended(state);
+      }
+
+      if (branchRule.target === "EXIT_TESTPART") {
+        return moveToItem(state, firstNavigable(state, current.partIndex + 1, 0));
+      }
+
+      if (branchRule.target === "EXIT_SECTION") {
+        const items = part.items;
+        const sectionKey = currentItem.sectionPath.join("/");
+        let index = current.itemIndex + 1;
+
+        while (index < items.length && items[index]!.sectionPath.join("/") === sectionKey) {
+          index += 1;
+        }
+
+        return moveToItem(state, firstNavigable(state, current.partIndex, index));
+      }
+
+      const target = positionOf(branchRule.target);
+
+      if (target && target.partIndex === current.partIndex) {
+        return moveToItem(state, firstNavigable(state, target.partIndex, target.itemIndex));
+      }
+    }
+
+    const destination = firstNavigable(state, current.partIndex, current.itemIndex + 1);
+
+    // allowSkipping=false in nonlinear mode bites at the part boundary: the part cannot
+    // be left while any reachable unskippable item is unattempted.
+    if (
+      part.navigationMode === "nonlinear" &&
+      (destination === null || partIndexByItemKey.get(destination.key) !== current.partIndex)
+    ) {
+      const blocked = part.items.some(
+        (item) =>
+          !item.sessionControl.allowSkipping && attemptsOf(state, item.key) === 0 && preConditionsPass(item, state),
+      );
+
+      if (blocked) {
+        return state;
+      }
+    }
+
+    return moveToItem(state, destination);
+  }
+
   // ---------- Static capability walk ----------
 
   const issues: CapabilityIssue[] = [];
@@ -440,6 +561,7 @@ export function createTestController(view: AssessmentTestView, options: TestCont
         currentItemKey: null,
         itemOutcomes: {},
         attemptedItems: [],
+        attemptCounts: {},
         testOutcomes: {},
       };
 
@@ -485,57 +607,17 @@ export function createTestController(view: AssessmentTestView, options: TestCont
       return { ...state, currentItemKey: itemKey };
     },
 
-    next: (state) => {
-      if (state.status === "ended" || state.currentItemKey === null) {
-        return state;
-      }
+    canNext: (state) => nextState(state) !== state,
 
-      const current = positionOf(state.currentItemKey);
+    next: nextState,
 
-      if (!current) {
-        return ended(state);
-      }
+    remainingAttempts,
 
-      const currentItem = plan.parts[current.partIndex]!.items[current.itemIndex]!;
-
-      // Branch rules: first matching rule wins.
-      for (const branchRule of currentItem.ref.branchRules ?? []) {
-        if (!conditionPasses(branchRule.expression, state)) {
-          continue;
-        }
-
-        if (branchRule.target === "EXIT_TEST") {
-          return ended(state);
-        }
-
-        if (branchRule.target === "EXIT_TESTPART") {
-          return moveToItem(state, firstNavigable(state, current.partIndex + 1, 0));
-        }
-
-        if (branchRule.target === "EXIT_SECTION") {
-          const items = plan.parts[current.partIndex]!.items;
-          const sectionKey = currentItem.sectionPath.join("/");
-          let index = current.itemIndex + 1;
-
-          while (index < items.length && items[index]!.sectionPath.join("/") === sectionKey) {
-            index += 1;
-          }
-
-          return moveToItem(state, firstNavigable(state, current.partIndex, index));
-        }
-
-        const target = positionOf(branchRule.target);
-
-        if (target && target.partIndex === current.partIndex) {
-          return moveToItem(state, firstNavigable(state, target.partIndex, target.itemIndex));
-        }
-      }
-
-      return moveToItem(state, firstNavigable(state, current.partIndex, current.itemIndex + 1));
-    },
+    canSubmitItem: (state, itemKey) => state.status !== "ended" && remainingAttempts(state, itemKey) > 0,
 
     submitItem: (state, itemKey, result) => {
-      if (state.status === "ended") {
+      // Adaptive items run their own attempt lifecycle, so maxAttempts is ignored (spec).
+      if (state.status === "ended" || (result.adaptive !== true && remainingAttempts(state, itemKey) <= 0)) {
         return state;
       }
 
@@ -545,6 +627,7 @@ export function createTestController(view: AssessmentTestView, options: TestCont
         attemptedItems: state.attemptedItems.includes(itemKey)
           ? state.attemptedItems
           : [...state.attemptedItems, itemKey],
+        attemptCounts: { ...(state.attemptCounts ?? {}), [itemKey]: attemptsOf(state, itemKey) + 1 },
       };
 
       return { ...next, testOutcomes: runOutcomeProcessing(next) };

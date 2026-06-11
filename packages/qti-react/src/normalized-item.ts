@@ -33,9 +33,11 @@ import type {
   AssessmentSectionView,
   AssessmentTestView,
   BranchRuleView,
+  ItemSessionControlView,
   OutcomeRuleView,
   TestFeedbackView,
   TestPartView,
+  TimeLimitsView,
 } from "./test";
 import type { ResponseDeclarationView } from "./types";
 
@@ -433,6 +435,19 @@ function convertOutcomeRule(rule: unknown): Record<string, unknown> {
   };
 }
 
+/** `itemSessionControl`/`timeLimits` keep their normalized field names verbatim. */
+function sessionControlAndTimeLimits(record: Record<string, unknown>): {
+  itemSessionControl?: ItemSessionControlView;
+  timeLimits?: TimeLimitsView;
+} {
+  return {
+    ...(isRecord(record["itemSessionControl"])
+      ? { itemSessionControl: record["itemSessionControl"] as ItemSessionControlView }
+      : {}),
+    ...(isRecord(record["timeLimits"]) ? { timeLimits: record["timeLimits"] as TimeLimitsView } : {}),
+  };
+}
+
 function convertItemRef(ref: Record<string, unknown>): AssessmentItemRefView {
   return {
     kind: "assessmentItemRef",
@@ -443,6 +458,7 @@ function convertItemRef(ref: Record<string, unknown>): AssessmentItemRefView {
     ...(typeof ref["required"] === "boolean" ? { required: ref["required"] } : {}),
     ...(ref["preConditions"] !== undefined ? { preConditions: convertPreConditions(ref["preConditions"]) } : {}),
     ...(ref["branchRules"] !== undefined ? { branchRules: convertBranchRules(ref["branchRules"]) } : {}),
+    ...sessionControlAndTimeLimits(ref),
   };
 }
 
@@ -471,6 +487,7 @@ function convertSection(section: Record<string, unknown>): AssessmentSectionView
       ? { preConditions: convertPreConditions(section["preConditions"]) }
       : {}),
     ...(section["branchRules"] !== undefined ? { branchRules: convertBranchRules(section["branchRules"]) } : {}),
+    ...sessionControlAndTimeLimits(section),
     children,
   };
 }
@@ -509,6 +526,7 @@ export function assessmentTestViewFromNormalized(document: unknown): AssessmentT
     submissionMode: part["submissionMode"] === "simultaneous" ? "simultaneous" : "individual",
     ...(part["preConditions"] !== undefined ? { preConditions: convertPreConditions(part["preConditions"]) } : {}),
     ...(part["branchRules"] !== undefined ? { branchRules: convertBranchRules(part["branchRules"]) } : {}),
+    ...sessionControlAndTimeLimits(part),
     assessmentSections: asRecords(part["children"]).map(convertSection),
   }));
 
@@ -516,6 +534,7 @@ export function assessmentTestViewFromNormalized(document: unknown): AssessmentT
     identifier: typeof testDocument["identifier"] === "string" ? testDocument["identifier"] : "",
     ...(typeof testDocument["title"] === "string" ? { title: testDocument["title"] } : {}),
     outcomeDeclarations: (testDocument["outcomeDeclarations"] as OutcomeDeclarationView[] | undefined) ?? [],
+    ...(isRecord(testDocument["timeLimits"]) ? { timeLimits: testDocument["timeLimits"] as TimeLimitsView } : {}),
     testParts,
     ...(Array.isArray(outcomeRules)
       ? { outcomeProcessing: { rules: outcomeRules.map(convertOutcomeRule) as unknown as readonly OutcomeRuleView[] } }

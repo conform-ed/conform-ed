@@ -10,6 +10,7 @@ export type {
   AssessmentSectionView,
   AssessmentTestView,
   BranchRuleView,
+  ItemSessionControlView,
   OutcomeConditionBranch,
   OutcomeRuleView,
   TestController,
@@ -20,4 +21,5 @@ export type {
   TestPlanItem,
   TestPlanPart,
   TestSessionState,
+  TimeLimitsView,
 } from "./types";

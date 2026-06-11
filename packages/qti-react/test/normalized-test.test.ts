@@ -19,18 +19,28 @@ const normalizedTest = {
       { identifier: "TOTAL", cardinality: "single", baseType: "float" },
       { identifier: "GRADE", cardinality: "single", baseType: "identifier" },
     ],
+    timeLimits: { maxTime: 3600 },
     testParts: [
       {
         identifier: "PART-1",
         navigationMode: "nonlinear",
         submissionMode: "individual",
+        itemSessionControl: { maxAttempts: 2, allowSkipping: false },
+        timeLimits: { maxTime: 1800, allowLateSubmission: true },
         children: [
           {
             identifier: "SECTION-1",
             title: "Main",
             visible: true,
+            itemSessionControl: { showFeedback: true },
             children: [
-              { identifier: "ITEM-1", href: "items/one.xml", category: ["easy", "practice"] },
+              {
+                identifier: "ITEM-1",
+                href: "items/one.xml",
+                category: ["easy", "practice"],
+                itemSessionControl: { maxAttempts: 0 },
+                timeLimits: { maxTime: 90 },
+              },
               {
                 identifier: "ITEM-2",
                 href: "items/two.xml",
@@ -144,6 +154,20 @@ describe("assessmentTestViewFromNormalized", () => {
     expect(condition?.outcomeElse?.rules).toHaveLength(1);
 
     expect(view!.testFeedbacks?.[0]?.content?.[0]).toMatchObject({ kind: "xml", name: "p" });
+  });
+
+  test("carries itemSessionControl and timeLimits at every level", () => {
+    const view = assessmentTestViewFromNormalized(normalizedTest)!;
+    const part = view.testParts[0]!;
+    const section = part.assessmentSections[0]!;
+    const refOne = section.children[0]!;
+
+    expect(view.timeLimits).toEqual({ maxTime: 3600 });
+    expect(part.itemSessionControl).toEqual({ maxAttempts: 2, allowSkipping: false });
+    expect(part.timeLimits).toEqual({ maxTime: 1800, allowLateSubmission: true });
+    expect(section.itemSessionControl).toEqual({ showFeedback: true });
+    expect(refOne.itemSessionControl).toEqual({ maxAttempts: 0 });
+    expect(refOne.timeLimits).toEqual({ maxTime: 90 });
   });
 
   test("a controller runs the converted view end to end", () => {
