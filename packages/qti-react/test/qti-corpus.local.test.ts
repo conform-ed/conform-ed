@@ -104,10 +104,9 @@ corpusTest(
     // items 293/312 (93.9%) after the CC2-template rung; the 19 remaining are
     // PCI/drawing (deferred), xi:include, random-in-RP (determinism policy),
     // customOperator, and 4 corpus authoring deviations.
-    // tests 29/30 (96.7%); the holdout needs the numberCorrect/number* family,
-    // which requires per-item correctness in the session model.
+    // tests 30/30 (100%) after the number* aggregate rung.
     expect(deliverable).toBeGreaterThanOrEqual(293);
-    expect(deliverableTests).toBeGreaterThanOrEqual(29);
+    expect(deliverableTests).toBeGreaterThanOrEqual(30);
   },
   60000,
 );

@@ -53,6 +53,8 @@ export interface AssessmentItemRefView {
   readonly branchRules?: readonly BranchRuleView[];
   readonly itemSessionControl?: ItemSessionControlView;
   readonly timeLimits?: TimeLimitsView;
+  /** Named weights for `testVariables`/aggregate weighting (missing names weigh 1). */
+  readonly weights?: ReadonlyArray<{ readonly identifier: string; readonly value: number }>;
 }
 
 export interface AssessmentSectionView {
@@ -148,6 +150,13 @@ export interface TestPlan {
 
 export interface TestItemResult {
   readonly outcomes: Readonly<Record<string, OutcomeValue>>;
+  /**
+   * Whether every scorable response variable matched (feeds numberCorrect /
+   * numberIncorrect). Omit when the item has nothing to be correct about.
+   */
+  readonly correct?: boolean;
+  /** The candidate gave at least one non-empty response (feeds numberResponded). */
+  readonly responded?: boolean;
   /** Adaptive items manage their own attempt lifecycle, so maxAttempts is ignored (spec). */
   readonly adaptive?: boolean;
 }
@@ -158,12 +167,19 @@ export interface TestSessionState {
   readonly itemOutcomes: Readonly<Record<string, Readonly<Record<string, OutcomeValue>>>>;
   readonly attemptedItems: readonly string[];
   readonly attemptCounts: Readonly<Record<string, number>>;
+  /** Items that have been the current item at least once (feeds numberPresented). */
+  readonly presentedItems: readonly string[];
+  /** Items whose latest attempt carried a response (feeds numberResponded). */
+  readonly respondedItems: readonly string[];
+  /** Items whose latest attempt was correct / incorrect (feeds numberCorrect/Incorrect). */
+  readonly correctItems: readonly string[];
+  readonly incorrectItems: readonly string[];
   /**
-   * Outcomes held back in simultaneous-submission parts (QTI: the part's responses are
-   * submitted together). They commit to `itemOutcomes` when the part is left or the
-   * test ends; until then they are invisible to outcome processing and feedback.
+   * Results held back in simultaneous-submission parts (QTI: the part's responses are
+   * submitted together). They commit when the part is left or the test ends; until
+   * then they are invisible to outcome processing and feedback.
    */
-  readonly pendingItemOutcomes: Readonly<Record<string, Readonly<Record<string, OutcomeValue>>>>;
+  readonly pendingItemResults: Readonly<Record<string, TestItemResult>>;
   readonly testOutcomes: Readonly<Record<string, OutcomeValue>>;
 }
 

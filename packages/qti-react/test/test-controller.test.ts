@@ -476,7 +476,7 @@ describe("simultaneous submission", () => {
     // (sum over an empty testVariables set stays NULL, exactly as at start).
     expect(state.attemptedItems).toEqual(["I1"]);
     expect(state.itemOutcomes["I1"]).toBeUndefined();
-    expect(state.pendingItemOutcomes["I1"]).toEqual({ SCORE: 1 });
+    expect(state.pendingItemResults["I1"]?.outcomes).toEqual({ SCORE: 1 });
     expect(state.testOutcomes["TOTAL"]).toBeNull();
 
     state = controller.next(state);
@@ -486,7 +486,7 @@ describe("simultaneous submission", () => {
     expect(state.status).toBe("ended");
     expect(state.itemOutcomes["I1"]).toEqual({ SCORE: 1 });
     expect(state.itemOutcomes["I2"]).toEqual({ SCORE: 2 });
-    expect(state.pendingItemOutcomes).toEqual({});
+    expect(state.pendingItemResults).toEqual({});
     expect(state.attemptCounts).toEqual({ I1: 1, I2: 1 });
     expect(state.testOutcomes["TOTAL"]).toBe(3);
   });
@@ -497,7 +497,7 @@ describe("simultaneous submission", () => {
 
     state = controller.submitItem(state, "I1", { outcomes: { SCORE: 0 } });
     state = controller.submitItem(state, "I1", { outcomes: { SCORE: 1 } }); // revision, not a new attempt
-    expect(state.pendingItemOutcomes["I1"]).toEqual({ SCORE: 1 });
+    expect(state.pendingItemResults["I1"]?.outcomes).toEqual({ SCORE: 1 });
     expect(state.attemptCounts["I1"]).toBeUndefined();
 
     state = controller.end(state); // ending flushes whatever is pending
@@ -531,7 +531,7 @@ describe("simultaneous submission", () => {
     expect(state.status).toBe("in-progress");
     expect(controller.currentItem(state)?.key).toBe("I3");
     expect(state.itemOutcomes["I1"]).toEqual({ SCORE: 1 });
-    expect(state.pendingItemOutcomes).toEqual({});
+    expect(state.pendingItemResults).toEqual({});
     expect(state.testOutcomes["TOTAL"]).toBe(3);
   });
 
@@ -551,6 +551,154 @@ describe("simultaneous submission", () => {
     expect(controller.canNext(state)).toBe(false);
     state = controller.submitItem(state, "I1", { outcomes: { SCORE: 1 } });
     expect(controller.canNext(state)).toBe(true);
+  });
+});
+
+describe("number* aggregates and weights", () => {
+  function aggregate(kind: string, extra: Record<string, unknown> = {}) {
+    return { kind, ...extra };
+  }
+
+  const aggregating: AssessmentTestView = {
+    identifier: "T-AGG",
+    outcomeDeclarations: [
+      { identifier: "N_SELECTED", cardinality: "single", baseType: "integer" },
+      { identifier: "N_SELECTED_EASY", cardinality: "single", baseType: "integer" },
+      { identifier: "N_PRESENTED", cardinality: "single", baseType: "integer" },
+      { identifier: "N_RESPONDED", cardinality: "single", baseType: "integer" },
+      { identifier: "N_CORRECT", cardinality: "single", baseType: "integer" },
+      { identifier: "N_INCORRECT", cardinality: "single", baseType: "integer" },
+      { identifier: "N_IN_S1", cardinality: "single", baseType: "integer" },
+      { identifier: "N_ELSEWHERE", cardinality: "single", baseType: "integer" },
+    ],
+    outcomeProcessing: {
+      rules: [
+        { kind: "setOutcomeValue", identifier: "N_SELECTED", expression: aggregate("numberSelected") },
+        {
+          kind: "setOutcomeValue",
+          identifier: "N_IN_S1",
+          expression: aggregate("numberSelected", { sectionIdentifier: "S1" }),
+        },
+        {
+          kind: "setOutcomeValue",
+          identifier: "N_ELSEWHERE",
+          expression: aggregate("numberSelected", { sectionIdentifier: "S9" }),
+        },
+        {
+          kind: "setOutcomeValue",
+          identifier: "N_SELECTED_EASY",
+          expression: aggregate("numberSelected", { includeCategory: ["easy"] }),
+        },
+        { kind: "setOutcomeValue", identifier: "N_PRESENTED", expression: aggregate("numberPresented") },
+        { kind: "setOutcomeValue", identifier: "N_RESPONDED", expression: aggregate("numberResponded") },
+        { kind: "setOutcomeValue", identifier: "N_CORRECT", expression: aggregate("numberCorrect") },
+        { kind: "setOutcomeValue", identifier: "N_INCORRECT", expression: aggregate("numberIncorrect") },
+      ],
+    },
+    testParts: [
+      {
+        identifier: "P1",
+        navigationMode: "nonlinear",
+        submissionMode: "individual",
+        assessmentSections: [
+          {
+            kind: "assessmentSection",
+            identifier: "S1",
+            children: [
+              itemRef("I1", { categories: ["easy"] }),
+              itemRef("I2", { categories: ["easy"] }),
+              itemRef("I3", { categories: ["hard"] }),
+            ],
+          },
+        ],
+      },
+    ],
+  };
+
+  test("the aggregates count selection, presentation, responses, and correctness", () => {
+    const controller = createTestController(aggregating, { seed: 1 });
+
+    expect(controller.issues).toEqual([]); // no longer unsupported-rp
+
+    let state = controller.start(); // I1 presented
+    state = controller.submitItem(state, "I1", { outcomes: { SCORE: 1 }, correct: true, responded: true });
+    state = controller.next(state); // I2 presented
+    state = controller.submitItem(state, "I2", { outcomes: { SCORE: 0 }, correct: false, responded: true });
+    state = controller.end(state); // I3 never presented, never attempted
+
+    expect(state.testOutcomes["N_SELECTED"]).toBe(3);
+    expect(state.testOutcomes["N_SELECTED_EASY"]).toBe(2);
+    expect(state.testOutcomes["N_PRESENTED"]).toBe(2);
+    expect(state.testOutcomes["N_RESPONDED"]).toBe(2);
+    expect(state.testOutcomes["N_CORRECT"]).toBe(1);
+    expect(state.testOutcomes["N_INCORRECT"]).toBe(1);
+    expect(state.testOutcomes["N_IN_S1"]).toBe(3);
+    expect(state.testOutcomes["N_ELSEWHERE"]).toBe(0);
+  });
+
+  test("a re-attempt can flip an item between correct and incorrect", () => {
+    const reattempts: AssessmentTestView = {
+      ...aggregating,
+      testParts: [
+        {
+          ...aggregating.testParts[0]!,
+          itemSessionControl: { maxAttempts: 0 },
+        },
+      ],
+    };
+    const controller = createTestController(reattempts, { seed: 1 });
+    let state = controller.start();
+
+    state = controller.submitItem(state, "I1", { outcomes: { SCORE: 0 }, correct: false, responded: true });
+    state = controller.submitItem(state, "I1", { outcomes: { SCORE: 1 }, correct: true, responded: true });
+    state = controller.end(state);
+
+    expect(state.testOutcomes["N_CORRECT"]).toBe(1);
+    expect(state.testOutcomes["N_INCORRECT"]).toBe(0);
+  });
+
+  test("testVariables multiplies numeric outcomes by the item's named weight", () => {
+    const weighted: AssessmentTestView = {
+      identifier: "T-W",
+      outcomeDeclarations: [{ identifier: "TOTAL", cardinality: "single", baseType: "float" }],
+      outcomeProcessing: {
+        rules: [
+          {
+            kind: "setOutcomeValue",
+            identifier: "TOTAL",
+            expression: {
+              kind: "sum",
+              expressions: [{ kind: "testVariables", identifier: "SCORE", weightIdentifier: "W" }],
+            },
+          },
+        ],
+      },
+      testParts: [
+        {
+          identifier: "P1",
+          navigationMode: "nonlinear",
+          submissionMode: "individual",
+          assessmentSections: [
+            {
+              kind: "assessmentSection",
+              identifier: "S1",
+              children: [
+                itemRef("I1", { weights: [{ identifier: "W", value: 2 }] }),
+                itemRef("I2"), // no weight named W → weight 1
+              ],
+            },
+          ],
+        },
+      ],
+    };
+    const controller = createTestController(weighted, { seed: 1 });
+    let state = controller.start();
+
+    state = controller.submitItem(state, "I1", { outcomes: { SCORE: 1 } });
+    state = controller.submitItem(state, "I2", { outcomes: { SCORE: 1 } });
+    state = controller.end(state);
+
+    expect(state.testOutcomes["TOTAL"]).toBe(3); // 1×2 + 1×1
   });
 });
 

@@ -238,6 +238,38 @@ describe("test session store", () => {
   });
 });
 
+describe("test session store: per-item correctness flags", () => {
+  test("submissions carry derived correct/responded flags into session state", () => {
+    const session = makeSession();
+
+    const one = session.itemStore("ITEM-1")!; // correct answer is A
+    one.setResponse("RESPONSE", "A");
+    one.submit();
+
+    const two = session.itemStore("ITEM-2")!; // correct answer is B
+    two.setResponse("RESPONSE", "A");
+    two.submit();
+
+    const { state } = session.getSnapshot();
+    expect(state.correctItems).toEqual(["ITEM-1"]);
+    expect(state.incorrectItems).toEqual(["ITEM-2"]);
+    expect(state.respondedItems).toEqual(["ITEM-1", "ITEM-2"]);
+    expect(state.presentedItems).toEqual(["ITEM-1"]); // only the start item was shown
+  });
+
+  test("an item with no scorable declaration is neither correct nor incorrect", () => {
+    const session = makeSession();
+    const store = session.itemStore("ITEM-3")!; // templated item without correctResponse
+
+    store.submit();
+
+    const { state } = session.getSnapshot();
+    expect(state.correctItems).toEqual([]);
+    expect(state.incorrectItems).toEqual([]);
+    expect(state.respondedItems).toEqual([]); // nothing was answered either
+  });
+});
+
 describe("test session store: simultaneous submission", () => {
   const simultaneousView: AssessmentTestView = {
     ...testView,
@@ -260,12 +292,12 @@ describe("test session store: simultaneous submission", () => {
 
     store.setResponse("RESPONSE", "B"); // wrong (correct is A)
     store.submit();
-    expect(session.getSnapshot().state.pendingItemOutcomes["ITEM-1"]?.["SCORE"]).toBe(0);
+    expect(session.getSnapshot().state.pendingItemResults["ITEM-1"]?.outcomes["SCORE"]).toBe(0);
 
     store.reset();
     store.setResponse("RESPONSE", "A");
     store.submit();
-    expect(session.getSnapshot().state.pendingItemOutcomes["ITEM-1"]?.["SCORE"]).toBe(1);
+    expect(session.getSnapshot().state.pendingItemResults["ITEM-1"]?.outcomes["SCORE"]).toBe(1);
 
     session.end();
 

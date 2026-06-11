@@ -55,6 +55,12 @@ export interface RpExpressionView {
   /** Area for `inside` (QTI shape + coords string). */
   readonly shape?: string;
   readonly coords?: string;
+  /** Test-level subset selection (`testVariables` and the `number*` aggregates). */
+  readonly variableIdentifier?: string;
+  readonly weightIdentifier?: string;
+  readonly sectionIdentifier?: string;
+  readonly includeCategory?: string | readonly string[];
+  readonly excludeCategory?: string | readonly string[];
 }
 
 export interface RpConditionBranch {

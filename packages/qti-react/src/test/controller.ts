@@ -34,6 +34,7 @@ import type {
   OutcomeConditionBranch,
   OutcomeRuleView,
   TestController,
+  TestItemResult,
   TestPlan,
   TestPlanItem,
   TestSessionState,
@@ -41,7 +42,15 @@ import type {
 
 const supportedOutcomeRuleKinds = new Set(["outcomeCondition", "setOutcomeValue", "exitTest"]);
 
-const testExpressionKinds = new Set([...deterministicExpressionKinds, "testVariables"]);
+const testExpressionKinds = new Set([
+  ...deterministicExpressionKinds,
+  "testVariables",
+  "numberCorrect",
+  "numberIncorrect",
+  "numberPresented",
+  "numberResponded",
+  "numberSelected",
+]);
 
 class ExitTestSignal extends Error {}
 
@@ -214,6 +223,28 @@ export function createTestController(view: AssessmentTestView, options: TestCont
     return (state.attemptCounts ?? {})[itemKey] ?? 0;
   }
 
+  /** The plan items a subset-selecting expression addresses (section + categories). */
+  function subsetItems(expression: RpExpressionView): TestPlanItem[] {
+    const asList = (value: string | readonly string[] | undefined): readonly string[] | undefined =>
+      typeof value === "string" ? [value] : value;
+    const includeCategory = asList(expression.includeCategory);
+    const excludeCategory = asList(expression.excludeCategory);
+
+    return allItems.filter((item) => {
+      if (expression.sectionIdentifier !== undefined && !item.sectionPath.includes(expression.sectionIdentifier)) {
+        return false;
+      }
+
+      const categories = item.ref.categories ?? [];
+
+      if (includeCategory !== undefined && !includeCategory.some((category) => categories.includes(category))) {
+        return false;
+      }
+
+      return !(excludeCategory !== undefined && excludeCategory.some((category) => categories.includes(category)));
+    });
+  }
+
   function remainingAttempts(state: TestSessionState, itemKey: string): number {
     const item = itemsByKey.get(itemKey);
 
@@ -266,32 +297,14 @@ export function createTestController(view: AssessmentTestView, options: TestCont
       responseDeclaration: () => undefined,
       responseValue: () => null,
       testVariables: (expression) => {
-        // Contracts spell the variable `variableIdentifier` and categories as lists;
-        // the bare `identifier`/string forms are accepted for hand-built views.
-        const loose = expression as {
-          variableIdentifier?: string;
-          includeCategory?: unknown;
-          excludeCategory?: unknown;
-        };
-        const variableName = loose.variableIdentifier ?? expression.identifier ?? "";
-        const asList = (value: unknown): readonly string[] | undefined =>
-          typeof value === "string" ? [value] : Array.isArray(value) ? (value as string[]) : undefined;
-        const includeCategory = asList(loose.includeCategory);
-        const excludeCategory = asList(loose.excludeCategory);
+        // Contracts spell the variable `variableIdentifier`; the bare `identifier`
+        // form is accepted for hand-built views.
+        const variableName = expression.variableIdentifier ?? expression.identifier ?? "";
+        const weightIdentifier = expression.weightIdentifier;
         const members: RpValue["values"][number][] = [];
         let baseType = expression.baseType;
 
-        for (const item of allItems) {
-          const categories = item.ref.categories ?? [];
-
-          if (includeCategory !== undefined && !includeCategory.some((category) => categories.includes(category))) {
-            continue;
-          }
-
-          if (excludeCategory !== undefined && excludeCategory.some((category) => categories.includes(category))) {
-            continue;
-          }
-
+        for (const item of subsetItems(expression)) {
           const value = state.itemOutcomes[item.key]?.[variableName];
 
           if (value === undefined || value === null) {
@@ -304,11 +317,49 @@ export function createTestController(view: AssessmentTestView, options: TestCont
             continue;
           }
 
+          // Weighted numeric values multiply by the item's named weight (missing
+          // names weigh 1) and the container becomes float (spec).
+          if (weightIdentifier !== undefined && isNumericBaseType(lifted.baseType)) {
+            const weight = item.ref.weights?.find((entry) => entry.identifier === weightIdentifier)?.value ?? 1;
+
+            baseType = "float";
+            members.push(...lifted.values.map((entry) => Number(entry) * weight));
+            continue;
+          }
+
           baseType ??= lifted.baseType;
           members.push(...lifted.values);
         }
 
         return members.length === 0 ? null : { cardinality: "multiple", baseType, values: members };
+      },
+      testAggregate: (expression) => {
+        const subset = subsetItems(expression);
+        const integer = (value: number): RpValue => ({
+          cardinality: "single",
+          baseType: "integer",
+          values: [value],
+        });
+        const countIn = (list: readonly string[] | undefined): number => {
+          const flagged = new Set(list ?? []);
+
+          return subset.filter((item) => flagged.has(item.key)).length;
+        };
+
+        switch (expression.kind) {
+          case "numberSelected":
+            return integer(subset.length);
+          case "numberPresented":
+            return integer(countIn(state.presentedItems));
+          case "numberResponded":
+            return integer(countIn(state.respondedItems));
+          case "numberCorrect":
+            return integer(countIn(state.correctItems));
+          case "numberIncorrect":
+            return integer(countIn(state.incorrectItems));
+          default:
+            throw new RpUnsupportedError(expression.kind);
+        }
       },
     };
   }
@@ -415,9 +466,35 @@ export function createTestController(view: AssessmentTestView, options: TestCont
     return itemIndex === -1 ? null : { partIndex, itemIndex };
   }
 
-  /** Commit pending simultaneous outcomes for one part (or all parts when null). */
+  function withFlag(list: readonly string[] | undefined, itemKey: string, present: boolean): readonly string[] {
+    const existing = list ?? [];
+
+    if (existing.includes(itemKey) === present) {
+      return existing;
+    }
+
+    return present ? [...existing, itemKey] : existing.filter((entry) => entry !== itemKey);
+  }
+
+  /** Latest-attempt semantics: a re-attempt can flip correct ↔ incorrect ↔ neither. */
+  function applyResultFlags(state: TestSessionState, itemKey: string, result: TestItemResult): TestSessionState {
+    return {
+      ...state,
+      respondedItems: withFlag(state.respondedItems, itemKey, result.responded === true),
+      correctItems: withFlag(state.correctItems, itemKey, result.correct === true),
+      incorrectItems: withFlag(state.incorrectItems, itemKey, result.correct === false),
+    };
+  }
+
+  function markPresented(state: TestSessionState, itemKey: string): TestSessionState {
+    return (state.presentedItems ?? []).includes(itemKey)
+      ? state
+      : { ...state, presentedItems: [...(state.presentedItems ?? []), itemKey] };
+  }
+
+  /** Commit pending simultaneous results for one part (or all parts when null). */
   function flushPending(state: TestSessionState, partIndex: number | null): TestSessionState {
-    const pending = state.pendingItemOutcomes ?? {};
+    const pending = state.pendingItemResults ?? {};
     const keys = Object.keys(pending).filter((key) => partIndex === null || partIndexByItemKey.get(key) === partIndex);
 
     if (keys.length === 0) {
@@ -427,14 +504,18 @@ export function createTestController(view: AssessmentTestView, options: TestCont
     const itemOutcomes = { ...state.itemOutcomes };
     const attemptCounts = { ...(state.attemptCounts ?? {}) };
     const remaining = { ...pending };
+    let flagged = state;
 
     for (const key of keys) {
-      itemOutcomes[key] = pending[key]!;
+      const result = pending[key]!;
+
+      itemOutcomes[key] = result.outcomes;
       attemptCounts[key] = (attemptCounts[key] ?? 0) + 1; // the part's single attempt
       delete remaining[key];
+      flagged = applyResultFlags(flagged, key, result);
     }
 
-    return { ...state, itemOutcomes, attemptCounts, pendingItemOutcomes: remaining };
+    return { ...flagged, itemOutcomes, attemptCounts, pendingItemResults: remaining };
   }
 
   function ended(state: TestSessionState): TestSessionState {
@@ -448,19 +529,20 @@ export function createTestController(view: AssessmentTestView, options: TestCont
       return ended(state);
     }
 
-    // Crossing a part boundary submits the departed part's pending outcomes.
+    // Crossing a part boundary submits the departed part's pending results.
     const fromPart = state.currentItemKey === null ? undefined : partIndexByItemKey.get(state.currentItemKey);
     const toPart = partIndexByItemKey.get(item.key);
+    let next = state;
 
     if (fromPart !== undefined && toPart !== fromPart) {
       const flushed = flushPending(state, fromPart);
 
       if (flushed !== state) {
-        return { ...flushed, currentItemKey: item.key, testOutcomes: runOutcomeProcessing(flushed) };
+        next = { ...flushed, testOutcomes: runOutcomeProcessing(flushed) };
       }
     }
 
-    return { ...state, currentItemKey: item.key };
+    return markPresented({ ...next, currentItemKey: item.key }, item.key);
   }
 
   function nextState(state: TestSessionState): TestSessionState {
@@ -605,7 +687,11 @@ export function createTestController(view: AssessmentTestView, options: TestCont
         itemOutcomes: {},
         attemptedItems: [],
         attemptCounts: {},
-        pendingItemOutcomes: {},
+        presentedItems: [],
+        respondedItems: [],
+        correctItems: [],
+        incorrectItems: [],
+        pendingItemResults: {},
         testOutcomes: {},
       };
 
@@ -648,7 +734,7 @@ export function createTestController(view: AssessmentTestView, options: TestCont
         return state;
       }
 
-      return { ...state, currentItemKey: itemKey };
+      return markPresented({ ...state, currentItemKey: itemKey }, itemKey);
     },
 
     canNext: (state) => nextState(state) !== state,
@@ -666,7 +752,7 @@ export function createTestController(view: AssessmentTestView, options: TestCont
 
       const partIndex = partIndexByItemKey.get(itemKey);
 
-      // Simultaneous parts hold outcomes pending and allow revision until the part is
+      // Simultaneous parts hold results pending and allow revision until the part is
       // left; the single attempt (spec) is only spent when the pending set flushes.
       if (partIndex !== undefined && plan.parts[partIndex]!.submissionMode === "simultaneous") {
         if (attemptsOf(state, itemKey) > 0) {
@@ -675,7 +761,7 @@ export function createTestController(view: AssessmentTestView, options: TestCont
 
         return {
           ...state,
-          pendingItemOutcomes: { ...(state.pendingItemOutcomes ?? {}), [itemKey]: result.outcomes },
+          pendingItemResults: { ...(state.pendingItemResults ?? {}), [itemKey]: result },
           attemptedItems: state.attemptedItems.includes(itemKey)
             ? state.attemptedItems
             : [...state.attemptedItems, itemKey],
@@ -688,7 +774,7 @@ export function createTestController(view: AssessmentTestView, options: TestCont
       }
 
       const next: TestSessionState = {
-        ...state,
+        ...applyResultFlags(state, itemKey, result),
         itemOutcomes: { ...state.itemOutcomes, [itemKey]: result.outcomes },
         attemptedItems: state.attemptedItems.includes(itemKey)
           ? state.attemptedItems

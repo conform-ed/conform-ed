@@ -458,6 +458,7 @@ function convertItemRef(ref: Record<string, unknown>): AssessmentItemRefView {
     ...(typeof ref["required"] === "boolean" ? { required: ref["required"] } : {}),
     ...(ref["preConditions"] !== undefined ? { preConditions: convertPreConditions(ref["preConditions"]) } : {}),
     ...(ref["branchRules"] !== undefined ? { branchRules: convertBranchRules(ref["branchRules"]) } : {}),
+    ...(Array.isArray(ref["weights"]) ? { weights: ref["weights"] as AssessmentItemRefView["weights"] } : {}),
     ...sessionControlAndTimeLimits(ref),
   };
 }

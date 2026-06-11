@@ -32,6 +32,8 @@ export interface EvalEnv {
   readonly random?: () => number;
   /** `testVariables` aggregation; present only in test-level outcome processing. */
   readonly testVariables?: (expression: RpExpressionView) => MaybeRpValue;
+  /** The `number*` item-session aggregates; present only in test-level outcome processing. */
+  readonly testAggregate?: (expression: RpExpressionView) => MaybeRpValue;
 }
 
 /** Expression kinds legal everywhere (deterministic). */
@@ -746,6 +748,18 @@ export function evaluateExpression(expression: RpExpressionView, env: EvalEnv): 
       }
 
       return env.testVariables(expression);
+    }
+
+    case "numberCorrect":
+    case "numberIncorrect":
+    case "numberPresented":
+    case "numberResponded":
+    case "numberSelected": {
+      if (!env.testAggregate) {
+        throw new RpUnsupportedError(expression.kind);
+      }
+
+      return env.testAggregate(expression);
     }
 
     case "random": {

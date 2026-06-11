@@ -7,9 +7,10 @@
  * persistence stays with the consumer (store the seed and `snapshot.state`).
  */
 
-import type { ResponseNormalization } from "../rp";
+import type { ResponseNormalization, TemplateRuleView } from "../rp";
 import type { AssessmentItemView } from "../runtime";
-import { createAttemptStore, type AttemptStore } from "../store";
+import { createAttemptStore, type AttemptSnapshot, type AttemptStore } from "../store";
+import type { ResponseValue } from "../types";
 
 import type { AssessmentItemRefView, TestController, TestFeedbackView, TestPlanItem, TestSessionState } from "./types";
 
@@ -45,6 +46,61 @@ export interface TestSessionStore {
   readonly canMoveTo: (itemKey: string) => boolean;
   readonly moveTo: (itemKey: string) => void;
   readonly end: () => void;
+}
+
+/** Identifiers whose correct response arrives via `setCorrectResponse` in templates. */
+function collectCorrectResponseTargets(rules: readonly TemplateRuleView[] | undefined, into: Set<string>): void {
+  for (const rule of rules ?? []) {
+    if (rule.kind === "setCorrectResponse" && rule.identifier !== undefined) {
+      into.add(rule.identifier);
+    }
+
+    for (const branch of [rule.templateIf, ...(rule.templateElseIfs ?? [])]) {
+      if (branch) {
+        collectCorrectResponseTargets(branch.rules, into);
+      }
+    }
+
+    if (rule.templateElse) {
+      collectCorrectResponseTargets(rule.templateElse.rules, into);
+    }
+  }
+}
+
+/** The response declarations an attempt can be "correct" about (incl. templated ones). */
+function scorableIdentifiers(view: AssessmentItemView): Set<string> {
+  const templated = new Set<string>();
+
+  collectCorrectResponseTargets(view.templateProcessing?.rules, templated);
+
+  return new Set(
+    view.responseDeclarations
+      .filter(
+        (declaration) =>
+          declaration.correctResponse !== undefined ||
+          declaration.mapping !== undefined ||
+          declaration.areaMapping !== undefined ||
+          templated.has(declaration.identifier),
+      )
+      .map((declaration) => declaration.identifier),
+  );
+}
+
+function hasResponse(value: ResponseValue): boolean {
+  return value !== null && value !== undefined && value !== "" && (!Array.isArray(value) || value.length > 0);
+}
+
+/** Derive the controller-facing correctness flags from a submitted attempt. */
+function resultFlags(
+  attempt: AttemptSnapshot,
+  scorable: ReadonlySet<string>,
+): { correct?: boolean; responded: boolean } {
+  const relevant = attempt.scores.filter((score) => scorable.has(score.identifier));
+
+  return {
+    ...(relevant.length > 0 ? { correct: relevant.every((score) => score.correct) } : {}),
+    responded: Object.values(attempt.responses).some(hasResponse),
+  };
 }
 
 /** FNV-1a over the item key, mixed with the test seed: stable per-item clone seeds. */
@@ -131,6 +187,8 @@ export function createTestSessionStore(controller: TestController, options: Test
       },
     );
 
+    const scorable = scorableIdentifiers(view);
+
     // Every submitted snapshot flows into the controller, which decides what it means:
     // an attempt (individual), a pending revision (simultaneous), or a refusal
     // (maxAttempts spent) — refused results never reach session state.
@@ -142,6 +200,7 @@ export function createTestSessionStore(controller: TestController, options: Test
 
         const next = controller.submitItem(state, itemKey, {
           outcomes: attempt.outcomes,
+          ...resultFlags(attempt, scorable),
           ...(view.adaptive === true ? { adaptive: true } : {}),
         });
 
