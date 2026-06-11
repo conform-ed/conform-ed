@@ -1,0 +1,32 @@
+{
+  "name": "@conform-ed/pci-math-entry",
+  "version": "0.0.1",
+  "files": [
+    "src",
+    "dist"
+  ],
+  "type": "module",
+  "module": "src/index.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "import": "./src/index.ts"
+    },
+    "./checker": {
+      "types": "./src/checker.ts",
+      "import": "./src/checker.ts"
+    }
+  },
+  "scripts": {
+    "typecheck": "tsgo --noEmit",
+    "lint": "oxlint --config ../../.oxlintrc.jsonc .",
+    "format": "oxfmt --config ../../.oxfmtrc.jsonc --check .",
+    "test": "bun test"
+  },
+  "dependencies": {
+    "@cortex-js/compute-engine": "^0.59.0"
+  },
+  "devDependencies": {
+    "@conform-ed/qti-react": "workspace:*"
+  }
+}

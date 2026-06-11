@@ -91,6 +91,16 @@
     "packages/core": {
       "name": "@conform-ed/core",
     },
+    "packages/pci-math-entry": {
+      "name": "@conform-ed/pci-math-entry",
+      "version": "0.0.1",
+      "dependencies": {
+        "@cortex-js/compute-engine": "^0.59.0",
+      },
+      "devDependencies": {
+        "@conform-ed/qti-react": "workspace:*",
+      },
+    },
     "packages/qti-react": {
       "name": "@conform-ed/qti-react",
       "version": "0.0.12",
@@ -122,6 +132,8 @@
     },
   },
   "packages": {
+    "@arnog/colors": ["@arnog/colors@0.5.0", "", {}, "sha512-NB7yqrO7qvInsqJdqz6C6mDU+2oiKmbBbk3czMS0E7KkGxLRy538tEHCsB5TKqmaxxXpi6/U120TnGl8NsDePg=="],
+
     "@babel/runtime": ["@babel/runtime@7.29.2", "", {}, "sha512-JiDShH45zKHWyGe4ZNVRrCjBz8Nh9TMmZG1kh4QTK8hCBTWBi8Da+i7s1fJw7/lYpM4ccepSNfqzZ/QvABBi5g=="],
 
     "@changesets/apply-release-plan": ["@changesets/apply-release-plan@7.1.1", "", { "dependencies": { "@changesets/config": "^3.1.4", "@changesets/get-version-range-type": "^0.4.0", "@changesets/git": "^3.0.4", "@changesets/should-skip-package": "^0.1.2", "@changesets/types": "^6.1.0", "@manypkg/get-packages": "^1.1.3", "detect-indent": "^6.0.0", "fs-extra": "^7.0.1", "lodash.startcase": "^4.4.0", "outdent": "^0.5.0", "prettier": "^2.7.1", "resolve-from": "^5.0.0", "semver": "^7.5.3" } }, "sha512-9qPCm/rLx/xoOFXIHGB229+4GOL76S4MC+7tyOuTsR6+1jYlfFDQORdvwR5hDA6y4FL2BPt3qpbcQIS+dW85LA=="],
@@ -174,6 +186,8 @@
 
     "@conform-ed/lti13-runner": ["@conform-ed/lti13-runner@workspace:apps/lti13-runner"],
 
+    "@conform-ed/pci-math-entry": ["@conform-ed/pci-math-entry@workspace:packages/pci-math-entry"],
+
     "@conform-ed/qti-harness": ["@conform-ed/qti-harness@workspace:apps/qti-harness"],
 
     "@conform-ed/qti-react": ["@conform-ed/qti-react@workspace:packages/qti-react"],
@@ -183,6 +197,8 @@
     "@conform-ed/reporting": ["@conform-ed/reporting@workspace:packages/reporting"],
 
     "@conform-ed/test-utils": ["@conform-ed/test-utils@workspace:packages/test-utils"],
+
+    "@cortex-js/compute-engine": ["@cortex-js/compute-engine@0.59.0", "", { "dependencies": { "@arnog/colors": "^0.5.0", "complex-esm": "^2.1.1-esm1" } }, "sha512-lfz/4Oa4VEeKiRREeQXalG6FTodYNkPmEaU76GdkoIncUeDOWNevo8zfWWcnrMPoYlif6qxT6xbZNuu5IFcPGQ=="],
 
     "@hono/node-server": ["@hono/node-server@2.0.4", "", { "peerDependencies": { "hono": "^4" } }, "sha512-Ut3y0dMMPWy6bZ2kVfx25EOVbZlm15dhF4mOsezMlhpNHy+4MkU1qN9Y6lnruYi4wPmFzimGX2X7LF/FwHli4A=="],
 
@@ -347,6 +363,8 @@
     "chardet": ["chardet@2.1.1", "", {}, "sha512-PsezH1rqdV9VvyNhxxOW32/d75r01NY7TQCmOqomRo15ZSOKbpTFVsfjghxo6JloQUCGnH4k1LGu0R4yCLlWQQ=="],
 
     "clone": ["clone@2.1.2", "", {}, "sha512-3Pe/CF1Nn94hyhIYpjtiLhdCoEoz0DqQ+988E9gmeEdQZlojxnOb74wctFyuwWQHzqyf9X7C7MG8juUpqBJT8w=="],
+
+    "complex-esm": ["complex-esm@2.1.1-esm1", "", {}, "sha512-IShBEWHILB9s7MnfyevqNGxV0A1cfcSnewL/4uPFiSxkcQL4Mm3FxJ0pXMtCXuWLjYz3lRRyk6OfkeDZcjD6nw=="],
 
     "core-util-is": ["core-util-is@1.0.3", "", {}, "sha512-ZQBvi1DcpJ4GDqanjucZ2Hj3wEO5pZDS89BWbkcrvdxksJorwUDDZamX9ldFkp9aw2lmBDLgkObEA4DWNJ9FYQ=="],
 
