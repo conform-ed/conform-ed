@@ -3,6 +3,7 @@ import { describe, expect, test } from "bun:test";
 import {
   createPciSkin,
   createQtiRuntime,
+  executeResponseProcessing,
   portableCustomInteraction,
   qtiCoreInteractions,
   referenceSkin,
@@ -41,6 +42,23 @@ describe("harness sample items", () => {
 
     expect(module).toBeDefined();
     expect(harnessPciRegistry.resolve("dice-roller")).toBe(module!);
+  });
+
+  test("the math-entry item scores through plain QTI fieldValue over the PCI record", () => {
+    const entry = harnessItems.find((candidate) => candidate.id === "pci-math-entry")!;
+    const score = (response: Record<string, string | boolean> | null) =>
+      executeResponseProcessing(entry.item.responseProcessing!, {
+        responseDeclarations: entry.item.responseDeclarations,
+        outcomeDeclarations: entry.item.outcomeDeclarations ?? [],
+        responses: response === null ? {} : { RESPONSE: response },
+      }).outcomes["SCORE"];
+
+    expect(score({ expression: "x+x", verdict: true })).toBe(1);
+    expect(score({ expression: "x+2", verdict: false })).toBe(0);
+    // Redacted delivery: no verdict field — the advisory path scores 0 and the
+    // platform's server-side re-score of the expression is the result of record.
+    expect(score({ expression: "x+x" })).toBe(0);
+    expect(score(null)).toBe(0);
   });
 
   test("the PCI sample is undeliverable without the opt-in host", () => {

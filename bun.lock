@@ -63,6 +63,7 @@
     "apps/qti-harness": {
       "name": "@conform-ed/qti-harness",
       "dependencies": {
+        "@conform-ed/pci-math-entry": "workspace:*",
         "@conform-ed/qti-react": "workspace:*",
         "react": "^19.2.7",
         "react-dom": "^19.2.7",

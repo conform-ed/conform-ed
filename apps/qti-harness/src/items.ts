@@ -799,6 +799,70 @@ export const harnessItems: readonly HarnessItem[] = [
     },
   },
   {
+    id: "pci-math-entry",
+    title: "portableCustomInteraction — math entry PCI (MathLive + compute-engine)",
+    item: {
+      responseDeclarations: [{ identifier: "RESPONSE", cardinality: "record" }],
+      outcomeDeclarations: [{ identifier: "SCORE", cardinality: "single", baseType: "float" }],
+      // Scored with plain QTI over the PCI's {expression, verdict} record: fieldValue
+      // reads the advisory verdict, so the item is portable to any conformant engine.
+      // Platforms re-score the expression field server-side for the authoritative
+      // result (org.conform-ed.mathEquivalent — same checker, different call site).
+      responseProcessing: {
+        rules: [
+          {
+            kind: "responseCondition",
+            responseIf: {
+              expression: {
+                kind: "match",
+                expressions: [
+                  {
+                    kind: "fieldValue",
+                    fieldIdentifier: "verdict",
+                    expressions: [{ kind: "variable", identifier: "RESPONSE" }],
+                  },
+                  { kind: "baseValue", baseType: "boolean", value: "true" },
+                ],
+              },
+              rules: [
+                {
+                  kind: "setOutcomeValue",
+                  identifier: "SCORE",
+                  expression: { kind: "baseValue", baseType: "float", value: 1 },
+                },
+              ],
+            },
+            responseElse: {
+              rules: [
+                {
+                  kind: "setOutcomeValue",
+                  identifier: "SCORE",
+                  expression: { kind: "baseValue", baseType: "float", value: 0 },
+                },
+              ],
+            },
+          },
+        ],
+      },
+      itemBody: {
+        content: [
+          {
+            kind: "xml",
+            name: "p",
+            value: "Enter an expression equivalent to 2x — any mathematically equal form is accepted.",
+          },
+          {
+            kind: "portableCustomInteraction",
+            responseIdentifier: "RESPONSE",
+            customInteractionTypeIdentifier: "urn:conform-ed:pci:math-entry",
+            module: "math-entry",
+            properties: { correct: "2x" },
+          } as never,
+        ],
+      },
+    },
+  },
+  {
     id: "drawing",
     title: "drawingInteraction — freehand canvas over a stage image",
     item: {

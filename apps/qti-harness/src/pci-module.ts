@@ -66,3 +66,14 @@ define(["qtiCustomInteractionContext"], function (ctx) {
 export const harnessPciRegistry = createPciModuleRegistry();
 
 harnessPciRegistry.evaluate(diceRollerSource, { id: "dice-roller" });
+
+// Install-model wiring (ADR-0007): the math-entry PCI is an installed package, not
+// content-loaded code. Its descriptor knowledge is eager (the type identifier in
+// items.ts gates deliverability); the heavy implementation (MathLive + compute-engine)
+// loads via lazy import() so non-math visitors never download it. Guarded because the
+// MathLive custom element requires a browser environment (tests import this file).
+if (typeof HTMLElement !== "undefined") {
+  void import("@conform-ed/pci-math-entry/module").then(({ mathEntryModule }) => {
+    harnessPciRegistry.registerModule("math-entry", mathEntryModule);
+  });
+}
