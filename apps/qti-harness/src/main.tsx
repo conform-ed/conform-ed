@@ -10,17 +10,24 @@ import { useMemo, useState, useSyncExternalStore } from "react";
 import { createRoot } from "react-dom/client";
 
 import {
+  createPciSkin,
   createQtiRuntime,
   createTestController,
   createTestSessionStore,
+  portableCustomInteraction,
   qtiCoreInteractions,
   referenceSkin,
 } from "@conform-ed/qti-react";
 
 import { harnessItems } from "./items";
+import { harnessPciRegistry } from "./pci-module";
 import { sampleTest, sampleTestItems } from "./sample-test";
 
-const runtime = createQtiRuntime({ interactions: qtiCoreInteractions, skin: referenceSkin });
+// PCI opt-in: the descriptor plus a host skin over the harness's module registry.
+const runtime = createQtiRuntime({
+  interactions: [...qtiCoreInteractions, portableCustomInteraction],
+  skin: { ...referenceSkin, portableCustomInteraction: createPciSkin({ registry: harnessPciRegistry }) },
+});
 
 function AttemptControls() {
   const attempt = runtime.useAttempt();

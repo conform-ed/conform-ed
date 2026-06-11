@@ -16,6 +16,7 @@ import { validateQtiXmlFile } from "@conform-ed/qti-xml";
 
 import { qtiCoreInteractions } from "../src/interactions";
 import { assessmentItemViewFromNormalized, assessmentTestViewFromNormalized } from "../src/normalized-item";
+import { createPciModuleRegistry, createPciSkin, portableCustomInteraction } from "../src/pci";
 import { referenceSkin } from "../src/reference-skin";
 import { createQtiRuntime } from "../src/runtime";
 import { createTestController } from "../src/test";
@@ -47,7 +48,11 @@ async function walkXmlFiles(rootPath: string): Promise<string[]> {
 corpusTest(
   "corpus delivery coverage stays at or above the recorded floors",
   async () => {
-    const runtime = createQtiRuntime({ interactions: qtiCoreInteractions, skin: referenceSkin });
+    // PCI enabled, matching the delivery meter (scripts/generate-qti-delivery-report.ts).
+    const runtime = createQtiRuntime({
+      interactions: [...qtiCoreInteractions, portableCustomInteraction],
+      skin: { ...referenceSkin, portableCustomInteraction: createPciSkin({ registry: createPciModuleRegistry() }) },
+    });
     const files = await walkXmlFiles(corpusRoot);
     let items = 0;
     let deliverable = 0;
@@ -101,11 +106,11 @@ corpusTest(
     expect(tests).toBeGreaterThanOrEqual(25);
 
     // The recorded floors (raise as the stack grows — they must never go down):
-    // items 293/312 (93.9%) after the CC2-template rung; the 19 remaining are
-    // PCI/drawing (deferred), xi:include, random-in-RP (determinism policy),
+    // items 298/312 (95.5%) after the PCI host rung; the 14 remaining are
+    // drawingInteraction (deferred), xi:include, random-in-RP (determinism policy),
     // customOperator, and 4 corpus authoring deviations.
     // tests 30/30 (100%) after the number* aggregate rung.
-    expect(deliverable).toBeGreaterThanOrEqual(293);
+    expect(deliverable).toBeGreaterThanOrEqual(298);
     expect(deliverableTests).toBeGreaterThanOrEqual(30);
   },
   60000,

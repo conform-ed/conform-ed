@@ -134,6 +134,11 @@ export interface InteractionRenderProps {
   resolveAsset: (href: string) => string;
   /** Set this interaction's response to true and submit the attempt (endAttemptInteraction). */
   endAttempt: () => void;
+  /**
+   * Register a submit-time response collector for this interaction (imperative
+   * interactions like PCI own their response state). Returns the unregister function.
+   */
+  registerResponseCollector: (collector: () => ResponseValue | undefined) => () => void;
 }
 
 /** Per-kind render overrides a skin passes to `renderContent` for nodes it owns. */
@@ -287,6 +292,7 @@ function createStaticStore(outcomes: Readonly<Record<string, OutcomeValue>>): At
     getSnapshot: () => snapshot,
     subscribe: () => () => {},
     setResponse: () => {},
+    registerResponseCollector: () => () => {},
     submit: () => [],
     reset: () => {},
   };
@@ -580,6 +586,7 @@ export function createQtiRuntime(config: QtiRuntimeConfig): QtiRuntime {
         store.setResponse(responseIdentifier, "true");
         store.submit();
       },
+      registerResponseCollector: (collector) => store.registerResponseCollector(responseIdentifier, collector),
     });
   }
 

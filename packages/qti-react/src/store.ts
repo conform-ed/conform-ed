@@ -56,6 +56,15 @@ export interface AttemptStore {
   readonly getSnapshot: () => AttemptSnapshot;
   readonly subscribe: (listener: () => void) => () => void;
   readonly setResponse: (responseIdentifier: string, value: ResponseValue) => void;
+  /**
+   * Imperative interactions (PCI) hold their response internally; a collector pulls it
+   * at submit time, before scoring. Returning undefined leaves the response unchanged.
+   * Returns the unregister function.
+   */
+  readonly registerResponseCollector: (
+    responseIdentifier: string,
+    collector: () => ResponseValue | undefined,
+  ) => () => void;
   readonly submit: () => readonly ScoreResult[];
   readonly reset: () => void;
 }
@@ -79,6 +88,7 @@ export function createAttemptStore(
     : declarations;
   const declarationsById = new Map(effectiveDeclarations.map((declaration) => [declaration.identifier, declaration]));
   const listeners = new Set<() => void>();
+  const responseCollectors = new Map<string, () => ResponseValue | undefined>();
 
   let snapshot: AttemptSnapshot = {
     responses: { ...initialResponses },
@@ -146,9 +156,34 @@ export function createAttemptStore(
       });
     },
 
+    registerResponseCollector: (responseIdentifier, collector) => {
+      responseCollectors.set(responseIdentifier, collector);
+
+      return () => {
+        if (responseCollectors.get(responseIdentifier) === collector) {
+          responseCollectors.delete(responseIdentifier);
+        }
+      };
+    },
+
     submit: () => {
       if (snapshot.submitted) {
         return snapshot.scores;
+      }
+
+      // Pull collector-held responses (PCI instances) before scoring.
+      let collected = snapshot.responses;
+
+      for (const [responseIdentifier, collector] of responseCollectors) {
+        const value = collector();
+
+        if (value !== undefined) {
+          collected = { ...collected, [responseIdentifier]: value };
+        }
+      }
+
+      if (collected !== snapshot.responses) {
+        snapshot = { ...snapshot, responses: collected };
       }
 
       const scores = computeScores(snapshot.responses);

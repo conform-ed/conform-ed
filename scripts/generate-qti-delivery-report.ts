@@ -10,10 +10,13 @@ import { mkdir, readdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 
 import {
+  createPciModuleRegistry,
+  createPciSkin,
   createQtiRuntime,
   assessmentItemViewFromNormalized,
   assessmentTestViewFromNormalized,
   createTestController,
+  portableCustomInteraction,
   qtiCoreInteractions,
   referenceSkin,
 } from "../packages/qti-react/src";
@@ -42,7 +45,12 @@ interface DeliveryReport {
   readonly entries: readonly DeliveryEntry[];
 }
 
-const runtime = createQtiRuntime({ interactions: qtiCoreInteractions, skin: referenceSkin });
+// The meter measures the stack with PCI enabled (it ships in qti-react; opt-in for
+// consumers because PCI executes item-supplied JavaScript — see src/pci).
+const runtime = createQtiRuntime({
+  interactions: [...qtiCoreInteractions, portableCustomInteraction],
+  skin: { ...referenceSkin, portableCustomInteraction: createPciSkin({ registry: createPciModuleRegistry() }) },
+});
 
 async function walkXmlFiles(rootPath: string): Promise<string[]> {
   const entries = await readdir(rootPath, { withFileTypes: true });

@@ -100,6 +100,25 @@ export {
 } from "./runtime";
 
 export {
+  createPciModuleRegistry,
+  createPciSkin,
+  mountPci,
+  pciResponseToValue,
+  portableCustomInteraction,
+  serializePciMarkup,
+  valueToPciResponse,
+  type PciConfiguration,
+  type PciInstance,
+  type PciInteractionNode,
+  type PciModule,
+  type PciModuleRegistry,
+  type PciModuleRegistryOptions,
+  type PciMountHandle,
+  type PciMountOptions,
+  type PciSkinOptions,
+} from "./pci";
+
+export {
   associateInteraction,
   choiceInteraction,
   endAttemptInteraction,

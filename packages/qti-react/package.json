@@ -24,6 +24,7 @@
     "@conform-ed/qti-xml": "workspace:*",
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19",
+    "happy-dom": "^20.10.2",
     "react": "^19.2.7",
     "react-dom": "^19"
   },

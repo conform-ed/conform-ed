@@ -935,12 +935,26 @@ function mapV3DomainNode(node: QtiXmlElementNode): unknown {
     case "qti-portable-custom-interaction": {
       const markup = firstChildElement(node, "qti-interaction-markup");
       const modules = firstChildElement(node, "qti-interaction-modules");
+      // PCI configuration properties: every data-* attribute except the reserved QTI
+      // ones (catalog/TTS/SSML), keyed by the name minus its "data-" prefix.
+      const reservedDataAttributes = new Set(["data-catalog-idref", "data-ssml"]);
+      const properties = Object.fromEntries(
+        Object.entries(node.attributes)
+          .filter(
+            ([name]) => name.startsWith("data-") && !reservedDataAttributes.has(name) && !name.startsWith("data-qti-"),
+          )
+          .map(([name, value]) => [name.slice("data-".length), value]),
+      );
+      const classTokens = (node.attributes["class"] ?? "").split(/\s+/u).filter((token) => token.length > 0);
 
       return {
         kind: "portableCustomInteraction",
         ...interactionBase(node),
         customInteractionTypeIdentifier: requireAttribute(node, "custom-interaction-type-identifier"),
         ...optionalString(node.attributes, "module", "module"),
+        ...(classTokens.length > 0 ? { class: classTokens } : {}),
+        ...optionalString(node.attributes, "data-catalog-idref", "dataCatalogIdref"),
+        ...(Object.keys(properties).length > 0 ? { properties } : {}),
         interactionMarkup: {
           kind: "interactionMarkup",
           ...(markup ? contentOf(markup) : {}),

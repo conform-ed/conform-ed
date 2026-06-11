@@ -659,6 +659,8 @@ export const QtiPortableCustomInteractionSchema: z.ZodTypeAny = z.lazy(() =>
     catalogInfo: QtiCatalogInfoSchema.optional(),
     customInteractionTypeIdentifier: z.string(),
     module: z.string().optional(),
+    /** PCI configuration properties: the element's data-* attributes, prefix stripped. */
+    properties: z.record(z.string(), z.string()).optional(),
   }),
 );
 

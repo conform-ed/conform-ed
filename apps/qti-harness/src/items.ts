@@ -739,6 +739,66 @@ export const harnessItems: readonly HarnessItem[] = [
     },
   },
   {
+    id: "pci-dice-roller",
+    title: "portableCustomInteraction — dice roller PCI (opt-in host)",
+    item: {
+      responseDeclarations: [{ identifier: "RESPONSE", cardinality: "single", baseType: "integer" }],
+      outcomeDeclarations: [{ identifier: "SCORE", cardinality: "single", baseType: "float" }],
+      // Scored by custom rules: any landed six counts (the roll count is the response).
+      responseProcessing: {
+        rules: [
+          {
+            kind: "responseCondition",
+            responseIf: {
+              expression: { kind: "isNull", expressions: [{ kind: "variable", identifier: "RESPONSE" }] },
+              rules: [
+                {
+                  kind: "setOutcomeValue",
+                  identifier: "SCORE",
+                  expression: { kind: "baseValue", baseType: "float", value: 0 },
+                },
+              ],
+            },
+            responseElse: {
+              rules: [
+                {
+                  kind: "setOutcomeValue",
+                  identifier: "SCORE",
+                  expression: { kind: "baseValue", baseType: "float", value: 1 },
+                },
+              ],
+            },
+          },
+        ],
+      },
+      itemBody: {
+        content: [
+          { kind: "xml", name: "p", value: "Roll the die until you land a six, then submit." },
+          {
+            kind: "portableCustomInteraction",
+            responseIdentifier: "RESPONSE",
+            customInteractionTypeIdentifier: "urn:conform-ed:pci:dice-roller",
+            module: "dice-roller",
+            properties: { target: "6" },
+            interactionMarkup: {
+              content: [
+                {
+                  kind: "xml",
+                  name: "section",
+                  attributes: { class: "dice" },
+                  children: [
+                    { kind: "xml", name: "button", attributes: { class: "roll", type: "button" }, value: "Roll" },
+                    { kind: "xml", name: "output", attributes: { class: "face" } },
+                  ],
+                },
+              ],
+            },
+          } as never,
+        ],
+      },
+    },
+  },
+  {
     id: "unsupported",
     title: "drawingInteraction — not yet supported (capability gate demo)",
     item: {

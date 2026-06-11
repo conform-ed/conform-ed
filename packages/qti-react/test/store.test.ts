@@ -51,3 +51,37 @@ describe("attempt store", () => {
     expect(store.getSnapshot().scores).toEqual([]);
   });
 });
+
+describe("response collectors (imperative interactions, e.g. PCI)", () => {
+  test("collectors flush into responses at submit and feed scoring", () => {
+    const store = createAttemptStore(declarations, {});
+
+    store.registerResponseCollector("RESPONSE", () => "B");
+
+    const scores = store.submit();
+
+    expect(store.getSnapshot().responses.RESPONSE).toBe("B");
+    expect(scores[0]?.correct).toBe(true);
+  });
+
+  test("a collector returning undefined leaves the response untouched", () => {
+    const store = createAttemptStore(declarations, {});
+
+    store.setResponse("RESPONSE", "A");
+    store.registerResponseCollector("RESPONSE", () => undefined);
+    store.submit();
+
+    expect(store.getSnapshot().responses.RESPONSE).toBe("A");
+  });
+
+  test("unregistering stops the collector from applying", () => {
+    const store = createAttemptStore(declarations, {});
+
+    const unregister = store.registerResponseCollector("RESPONSE", () => "B");
+    unregister();
+    store.setResponse("RESPONSE", "A");
+    store.submit();
+
+    expect(store.getSnapshot().responses.RESPONSE).toBe("A");
+  });
+});

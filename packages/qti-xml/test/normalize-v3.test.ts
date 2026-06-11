@@ -509,6 +509,47 @@ test("portable custom interaction maps to its contracts kind", async () => {
   });
 });
 
+test("portable custom interaction carries data-* properties, class, and modules", async () => {
+  const item = await normalizeItem(
+    wrapItem(`
+  <qti-response-declaration identifier="RESPONSE" cardinality="single" base-type="integer"/>
+  <qti-item-body>
+    <qti-portable-custom-interaction response-identifier="RESPONSE"
+        custom-interaction-type-identifier="urn:example:pci:shading"
+        class="hmh-tap-border-rounded compact" data-catalog-idref="cat-1"
+        data-toggle="true" data-tap-message="Tap to reveal" data-selected_color="red">
+      <qti-interaction-modules primary-configuration="modules/module_resolution.js">
+        <qti-interaction-module id="shading" primary-path="modules/shadingXX.js" fallback-path="modules/shading.js"/>
+      </qti-interaction-modules>
+      <qti-interaction-markup><div>stage</div></qti-interaction-markup>
+    </qti-portable-custom-interaction>
+  </qti-item-body>`),
+  );
+
+  expect(bodyContent(item)[0]).toMatchObject({
+    kind: "portableCustomInteraction",
+    customInteractionTypeIdentifier: "urn:example:pci:shading",
+    class: ["hmh-tap-border-rounded", "compact"],
+    dataCatalogIdref: "cat-1", // reserved QTI data- attribute, not a PCI property
+    properties: { toggle: "true", "tap-message": "Tap to reveal", selected_color: "red" },
+    interactionModules: {
+      kind: "interactionModules",
+      primaryConfiguration: "modules/module_resolution.js",
+      modules: [
+        {
+          kind: "interactionModule",
+          id: "shading",
+          primaryPath: "modules/shadingXX.js",
+          fallbackPath: "modules/shading.js",
+        },
+      ],
+    },
+  });
+
+  const pci = bodyContent(item)[0] as { properties: Record<string, string> };
+  expect(pci.properties["catalog-idref"]).toBeUndefined();
+});
+
 test("qti-equal carries its tolerance window", async () => {
   const item = await normalizeItem(
     wrapItem(`
