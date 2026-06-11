@@ -48,7 +48,8 @@
     "qti:validate:file": "bun run scripts/qti-validate-file.ts",
     "qti:validate:folder": "bun run scripts/qti-validate-folder.ts",
     "qti:validate:package": "bun run scripts/qti-validate-package.ts",
-    "qti:coverage:report": "bun run scripts/generate-qti-coverage-report.ts"
+    "qti:coverage:report": "bun run scripts/generate-qti-coverage-report.ts",
+    "qti:delivery:report": "bun run scripts/generate-qti-delivery-report.ts"
   },
   "dependencies": {
     "xsd2jsonschema": "^0.3.7"

@@ -56,15 +56,15 @@ describe("canDeliver (the Capability Report, ADR-0003)", () => {
   test("non-allowlisted content elements are reported (and deduplicated)", () => {
     const report = runtime.canDeliver(
       itemWith([
-        { kind: "xml", name: "table", children: [{ kind: "xml", name: "td", value: "x" }] },
-        { kind: "xml", name: "table", value: "again" },
+        { kind: "xml", name: "iframe", children: [{ kind: "xml", name: "canvas", value: "x" }] },
+        { kind: "xml", name: "iframe", value: "again" },
       ]),
     );
 
     expect(report.deliverable).toBe(false);
     expect(report.issues).toEqual([
-      { type: "unsupported-element", name: "table" },
-      { type: "unsupported-element", name: "td" },
+      { type: "unsupported-element", name: "iframe" },
+      { type: "unsupported-element", name: "canvas" },
     ]);
   });
 

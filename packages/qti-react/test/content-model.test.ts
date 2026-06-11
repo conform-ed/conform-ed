@@ -9,8 +9,13 @@ describe("content model allowlist", () => {
     expect(isAllowedFlowElement(v0ContentModel, "math")).toBe(true);
     expect(isAllowedFlowElement(v0ContentModel, "img")).toBe(true);
     expect(isAllowedFlowElement(v0ContentModel, "audio")).toBe(true);
+    expect(isAllowedFlowElement(v0ContentModel, "div")).toBe(true);
+    expect(isAllowedFlowElement(v0ContentModel, "table")).toBe(true);
+    expect(isAllowedFlowElement(v0ContentModel, "td")).toBe(true);
+    expect(isAllowedFlowElement(v0ContentModel, "h2")).toBe(true);
     expect(isAllowedFlowElement(v0ContentModel, "script")).toBe(false);
     expect(isAllowedFlowElement(v0ContentModel, "iframe")).toBe(false);
+    expect(isAllowedFlowElement(v0ContentModel, "qti-portable-custom-interaction")).toBe(false);
   });
 
   test("recognizes shipped interaction kinds", () => {

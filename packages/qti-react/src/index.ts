@@ -14,6 +14,8 @@ export {
 
 export { foldString, mapResponse, matchCorrect, mapResponsePoint, scoreResponse } from "./response-processing";
 
+export { assessmentItemViewFromNormalized } from "./normalized-item";
+
 export { formatPoint, parseCoords, parsePoint, pointInShape, type Point, type QtiShape } from "./graphic";
 
 export {

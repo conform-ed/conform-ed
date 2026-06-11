@@ -52,6 +52,7 @@ const v0FlowElements = new Set<string>([
   "li",
   // language-critical
   "ruby",
+  "rb",
   "rt",
   "rp",
   // media (the first media-milestone growth; src/poster route through the Asset Resolver)
@@ -61,6 +62,26 @@ const v0FlowElements = new Set<string>([
   "source",
   "figure",
   "figcaption",
+  // structural vocabulary the official corpus uses (fixture-driven growth, ADR-0002)
+  "div",
+  "section",
+  "h1",
+  "h2",
+  "h3",
+  "h4",
+  "h5",
+  "h6",
+  "blockquote",
+  "hr",
+  // tables (gradebook-style content; conservative semantics)
+  "table",
+  "caption",
+  "thead",
+  "tbody",
+  "tfoot",
+  "tr",
+  "th",
+  "td",
 ]);
 
 /** Element-specific attribute allowlists, additive to the global set. */
