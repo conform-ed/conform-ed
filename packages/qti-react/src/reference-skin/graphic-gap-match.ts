@@ -12,6 +12,8 @@ import { GraphicStage, shapeCenter, shapeElement, type HotspotView, type ObjectV
 interface GapImgView {
   identifier: string;
   object?: ObjectView;
+  /** Plain-text tray label for gapText choices (no image). */
+  label?: string;
   matchMax?: number;
 }
 
@@ -91,14 +93,15 @@ export function GraphicGapMatchReferenceSkin(props: InteractionRenderProps): Rea
                   height: gapImg.object.height,
                   alt: gapImg.identifier,
                 })
-              : gapImg.identifier,
+              : (gapImg.label ?? gapImg.identifier),
           ),
         ),
       ),
     ),
     overlay: (node.associableHotspots ?? []).map((hotspot) => {
       const placed = placedIn(hotspot.identifier);
-      const placedObject = placed === null ? undefined : gapImgsById.get(placed)?.object;
+      const placedEntry = placed === null ? undefined : gapImgsById.get(placed);
+      const placedObject = placedEntry?.object;
       const center = shapeCenter(hotspot.shape, hotspot.coords);
 
       return createElement(
@@ -121,7 +124,19 @@ export function GraphicGapMatchReferenceSkin(props: InteractionRenderProps): Rea
               height: placedObject.height,
               style: { pointerEvents: "none" },
             })
-          : null,
+          : placedEntry
+            ? createElement(
+                "text",
+                {
+                  x: center.x,
+                  y: center.y,
+                  textAnchor: "middle",
+                  dominantBaseline: "middle",
+                  style: { pointerEvents: "none" },
+                },
+                placedEntry.label ?? placedEntry.identifier,
+              )
+            : null,
       );
     }),
   });

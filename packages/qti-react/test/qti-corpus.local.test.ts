@@ -76,10 +76,12 @@ corpusTest(
 
     expect(items).toBeGreaterThanOrEqual(300);
 
-    // The recorded floor: 257/312 (82.4%) after the full-vocabulary normalizer rung
-    // (was 87 at the meter's introduction). Raise this floor as the normalizer and
-    // runtime grow — it must never go down.
-    expect(deliverable).toBeGreaterThanOrEqual(257);
+    // The recorded floor: 283/312 (90.7%) after the math-operator rung (87 at the
+    // meter's introduction, 257 after the normalizer rung). Raise this floor as the
+    // normalizer and runtime grow — it must never go down. The 29 remaining are
+    // PCI/drawing (deferred), CC2 profile templates, xi:include, random-in-RP
+    // (determinism policy), and 4 corpus authoring deviations.
+    expect(deliverable).toBeGreaterThanOrEqual(283);
   },
   60000,
 );

@@ -58,9 +58,32 @@ function numberValue(value: unknown): number | undefined {
   return undefined;
 }
 
-/** A contract media node (`object`/`img` xml node) as the runtime's stage-object shape. */
+/** The element carrying the image source: the node itself, or (for wrappers like `picture`) the first `img`/`object` descendant. */
+function findImageSource(node: unknown): Record<string, unknown> {
+  if (!isRecord(node)) {
+    return {};
+  }
+
+  const attributes = isRecord(node["attributes"]) ? node["attributes"] : {};
+
+  if (typeof attributes["data"] === "string" || typeof attributes["src"] === "string") {
+    return attributes;
+  }
+
+  for (const child of asRecords(node["children"])) {
+    const found = findImageSource(child);
+
+    if (typeof found["data"] === "string" || typeof found["src"] === "string") {
+      return found;
+    }
+  }
+
+  return attributes;
+}
+
+/** A contract media node (`object`/`img`/`picture` xml node) as the runtime's stage-object shape. */
 function toStageObject(node: unknown): Record<string, unknown> {
-  const attributes = isRecord(node) && isRecord(node["attributes"]) ? node["attributes"] : {};
+  const attributes = findImageSource(node);
   const data = attributes["data"] ?? attributes["src"];
   const width = numberValue(attributes["width"]);
   const height = numberValue(attributes["height"]);
@@ -71,6 +94,27 @@ function toStageObject(node: unknown): Record<string, unknown> {
     ...(height !== undefined ? { height } : {}),
     ...(typeof attributes["type"] === "string" ? { type: attributes["type"] } : {}),
   };
+}
+
+/** Plain text of converted content nodes (for gapText labels in graphic trays). */
+function flattenText(value: unknown): string {
+  if (typeof value === "string") {
+    return value;
+  }
+
+  if (Array.isArray(value)) {
+    return value.map(flattenText).join("");
+  }
+
+  if (!isRecord(value)) {
+    return "";
+  }
+
+  if (value["kind"] === "text") {
+    return typeof value["value"] === "string" ? value["value"] : "";
+  }
+
+  return flattenText(value["children"]) + flattenText(value["content"]) + flattenText(value["value"]);
 }
 
 function withNumericCoords(node: Record<string, unknown>): Record<string, unknown> {
@@ -105,9 +149,13 @@ function reshapeContentNode(node: Record<string, unknown>): Record<string, unkno
 
     case "graphicGapMatchInteraction": {
       const { image, gapChoices, ...rest } = node;
-      const gapImgs = asRecords(gapChoices)
-        .filter((choice) => choice["kind"] === "gapImg")
-        .map(({ media, ...gapImg }) => ({ ...gapImg, object: toStageObject(media) }));
+      // Both gap choice kinds become tray entries: gapImg carries an image object,
+      // gapText a plain-text label.
+      const gapImgs = asRecords(gapChoices).map(({ media, content, ...choice }) =>
+        choice["kind"] === "gapImg"
+          ? { ...choice, object: toStageObject(media) }
+          : { ...choice, label: flattenText(content) },
+      );
 
       return { ...rest, object: toStageObject(image), gapImgs };
     }

@@ -197,3 +197,53 @@ describe("template processing (seeded, deterministic)", () => {
     expect(result.issues[0]?.name).toBe("randomInteger");
   });
 });
+
+describe("templateConstraint (redraw until satisfied, ADR-0004)", () => {
+  const constrainedDeclarations = [
+    {
+      identifier: "X",
+      cardinality: "single" as const,
+      baseType: "integer",
+      defaultValue: { values: [{ value: 0 }] },
+    },
+  ];
+
+  function constrainedView(minimum: string): TemplateProcessingView {
+    return {
+      rules: [
+        { kind: "setTemplateValue", identifier: "X", expression: { kind: "randomInteger", min: 1, max: 6 } },
+        {
+          kind: "templateConstraint",
+          expression: {
+            kind: "gte",
+            expressions: [
+              { kind: "variable", identifier: "X" },
+              { kind: "baseValue", baseType: "integer", value: minimum },
+            ],
+          },
+        },
+      ],
+    };
+  }
+
+  test("redraws until the constraint holds, deterministically per seed", () => {
+    const context = { templateDeclarations: constrainedDeclarations, responseDeclarations: [], seed: 7 };
+    const first = executeTemplateProcessing(constrainedView("5"), context);
+    const second = executeTemplateProcessing(constrainedView("5"), context);
+
+    expect(first.issues).toEqual([]);
+    expect(first.templateValues["X"] as number).toBeGreaterThanOrEqual(5);
+    expect(second.templateValues["X"]).toBe(first.templateValues["X"]);
+  });
+
+  test("an unsatisfiable constraint falls back to declared defaults", () => {
+    const result = executeTemplateProcessing(constrainedView("99"), {
+      templateDeclarations: constrainedDeclarations,
+      responseDeclarations: [],
+      seed: 7,
+    });
+
+    expect(result.issues).toEqual([]);
+    expect(result.templateValues["X"]).toBe(0);
+  });
+});

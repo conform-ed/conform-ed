@@ -42,6 +42,19 @@ export interface RpExpressionView {
   readonly includeUpperBound?: boolean;
   /** 1-based position for `index`. */
   readonly n?: number | string;
+  /** Function/constant name for `mathOperator`, `mathConstant`, `statsOperator`. */
+  readonly name?: string;
+  /** Rounding controls for `roundTo` and `equalRounded`. */
+  readonly roundingMode?: "decimalPlaces" | "significantFigures";
+  readonly figures?: number | string;
+  /** Pass count for `repeat`. */
+  readonly numberRepeats?: number | string;
+  /** String comparison controls for `stringMatch` and `substring`. */
+  readonly caseSensitive?: boolean;
+  readonly substring?: boolean;
+  /** Area for `inside` (QTI shape + coords string). */
+  readonly shape?: string;
+  readonly coords?: string;
 }
 
 export interface RpConditionBranch {

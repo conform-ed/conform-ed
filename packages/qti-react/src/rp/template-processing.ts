@@ -54,6 +54,7 @@ export interface TemplateProcessingResult {
 const supportedTemplateRuleKinds = new Set([
   "setTemplateValue",
   "templateCondition",
+  "templateConstraint",
   "setCorrectResponse",
   "exitTemplate",
 ]);
@@ -61,6 +62,11 @@ const supportedTemplateRuleKinds = new Set([
 const templateExpressionKinds = new Set([...deterministicExpressionKinds, ...randomExpressionKinds]);
 
 class ExitTemplateSignal extends Error {}
+
+class TemplateConstraintSignal extends Error {}
+
+/** Redraw budget before an unsatisfied templateConstraint falls back to defaults. */
+const maxConstraintAttempts = 100;
 
 /** mulberry32: a tiny, fast, seeded PRNG — deterministic across platforms. */
 export function mulberry32(seed: number): () => number {
@@ -167,6 +173,13 @@ export function executeTemplateProcessing(
         continue;
       }
 
+      if (rule.kind === "templateConstraint") {
+        if (rule.expression !== undefined && singleBoolean(evaluateExpression(rule.expression, env)) !== true) {
+          throw new TemplateConstraintSignal();
+        }
+        continue;
+      }
+
       // templateCondition
       if (rule.templateIf && branchTaken(rule.templateIf)) {
         continue;
@@ -180,14 +193,32 @@ export function executeTemplateProcessing(
     }
   }
 
-  try {
-    executeRules(view?.rules ?? []);
-  } catch (error) {
-    if (error instanceof RpUnsupportedError) {
-      issues.push({ type: "unsupported-rp", name: error.kindName });
-      templateValues = initialValues(); // abort, never a partial clone
-    } else if (!(error instanceof ExitTemplateSignal)) {
-      throw error;
+  for (let attempt = 0; attempt < maxConstraintAttempts; attempt += 1) {
+    try {
+      executeRules(view?.rules ?? []);
+      break;
+    } catch (error) {
+      if (error instanceof TemplateConstraintSignal) {
+        // Unsatisfied constraint: discard the partial clone and redraw — the PRNG
+        // advances, so each attempt is a fresh deterministic draw. If the budget
+        // runs out, the declared defaults stand (the spec's fallback).
+        templateValues = initialValues();
+
+        for (const key of Object.keys(correctResponseOverrides)) {
+          delete correctResponseOverrides[key];
+        }
+
+        continue;
+      }
+
+      if (error instanceof RpUnsupportedError) {
+        issues.push({ type: "unsupported-rp", name: error.kindName });
+        templateValues = initialValues(); // abort, never a partial clone
+      } else if (!(error instanceof ExitTemplateSignal)) {
+        throw error;
+      }
+
+      break;
     }
   }
 

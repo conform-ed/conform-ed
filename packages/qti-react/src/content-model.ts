@@ -46,6 +46,8 @@ const v0FlowElements = new Set<string>([
   "em",
   "b",
   "i",
+  "sub",
+  "sup",
   "br",
   "ul",
   "ol",
@@ -61,6 +63,7 @@ const v0FlowElements = new Set<string>([
   "video",
   "source",
   "track",
+  "picture",
   "figure",
   "figcaption",
   // embedded media the corpus uses for stages and standalone assets

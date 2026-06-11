@@ -131,6 +131,70 @@ describe("content reshaping", () => {
     expect(runtime.canDeliver(view).issues).toEqual([]);
   });
 
+  test("a picture-wrapped stage image resolves through its img child", () => {
+    const view = viewOf({
+      responseDeclarations: [{ identifier: "RESPONSE", cardinality: "multiple", baseType: "pair" }],
+      itemBody: {
+        content: [
+          {
+            kind: "graphicAssociateInteraction",
+            responseIdentifier: "RESPONSE",
+            maxAssociations: 3,
+            image: {
+              kind: "xml",
+              name: "picture",
+              children: [
+                { kind: "xml", name: "source", attributes: { srcset: "map.svg", type: "image/svg" } },
+                { kind: "xml", name: "img", attributes: { src: "map.png", alt: "Map", width: "206", height: "280" } },
+              ],
+            },
+            associableHotspots: [
+              { kind: "associableHotspot", identifier: "A", shape: "circle", coords: "78,102,10", matchMax: 3 },
+              { kind: "associableHotspot", identifier: "B", shape: "circle", coords: "117,171,10", matchMax: 3 },
+            ],
+          },
+        ],
+      },
+    });
+
+    const interaction = view.itemBody.content?.[0] as Record<string, unknown>;
+    expect(interaction["object"]).toEqual({ data: "map.png", width: 206, height: 280 });
+    expect(runtime.canDeliver(view).issues).toEqual([]);
+  });
+
+  test("graphicGapMatch: gapText choices become labeled tray entries", () => {
+    const view = viewOf({
+      responseDeclarations: [{ identifier: "RESPONSE", cardinality: "multiple", baseType: "directedPair" }],
+      itemBody: {
+        content: [
+          {
+            kind: "graphicGapMatchInteraction",
+            responseIdentifier: "RESPONSE",
+            image: { kind: "xml", name: "object", attributes: { data: "tags.png", type: "image/png" } },
+            gapChoices: [
+              {
+                kind: "gapText",
+                identifier: "CBG",
+                matchMax: 1,
+                content: [{ kind: "xml", name: "strong", children: ["CBG"] }],
+              },
+            ],
+            associableHotspots: [
+              { kind: "associableHotspot", identifier: "A", matchMax: 1, shape: "rect", coords: "8,84,30,99" },
+            ],
+          },
+        ],
+      },
+    });
+
+    const interaction = view.itemBody.content?.[0] as Record<string, unknown>;
+    expect((interaction["gapImgs"] as Array<Record<string, unknown>>)[0]).toMatchObject({
+      identifier: "CBG",
+      label: "CBG",
+    });
+    expect(runtime.canDeliver(view).issues).toEqual([]);
+  });
+
   test("gapMatch: gapText choices become gapTexts", () => {
     const view = viewOf({
       responseDeclarations: [{ identifier: "RESPONSE", cardinality: "multiple", baseType: "directedPair" }],
