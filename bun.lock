@@ -60,6 +60,18 @@
         "@conform-ed/reporting": "workspace:*",
       },
     },
+    "apps/qti-harness": {
+      "name": "@conform-ed/qti-harness",
+      "dependencies": {
+        "@conform-ed/qti-react": "workspace:*",
+        "react": "^19.2.7",
+        "react-dom": "^19.2.7",
+      },
+      "devDependencies": {
+        "@types/react": "^19.2.17",
+        "@types/react-dom": "^19",
+      },
+    },
     "packages/cli": {
       "name": "@conform-ed/cli",
       "dependencies": {
@@ -68,7 +80,7 @@
     },
     "packages/contracts": {
       "name": "@conform-ed/contracts",
-      "version": "0.0.11",
+      "version": "0.0.12",
       "devDependencies": {
         "fast-xml-parser": "^5.3.1",
       },
@@ -81,7 +93,7 @@
     },
     "packages/qti-react": {
       "name": "@conform-ed/qti-react",
-      "version": "0.0.0",
+      "version": "0.0.12",
       "devDependencies": {
         "@types/react": "^19.2.17",
         "@types/react-dom": "^19",
@@ -159,6 +171,8 @@
     "@conform-ed/lti13-adapter-reference": ["@conform-ed/lti13-adapter-reference@workspace:apps/lti13-adapter-reference"],
 
     "@conform-ed/lti13-runner": ["@conform-ed/lti13-runner@workspace:apps/lti13-runner"],
+
+    "@conform-ed/qti-harness": ["@conform-ed/qti-harness@workspace:apps/qti-harness"],
 
     "@conform-ed/qti-react": ["@conform-ed/qti-react@workspace:packages/qti-react"],
 

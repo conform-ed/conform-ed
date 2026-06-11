@@ -1,0 +1,23 @@
+{
+  "name": "@conform-ed/qti-harness",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "bun --hot src/server.ts",
+    "start": "bun src/server.ts",
+    "build": "tsgo --noEmit",
+    "typecheck": "tsgo --noEmit",
+    "lint": "oxlint --config ../../.oxlintrc.jsonc .",
+    "format": "oxfmt --config ../../.oxfmtrc.jsonc --check .",
+    "test": "bun test"
+  },
+  "dependencies": {
+    "@conform-ed/qti-react": "workspace:*",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19"
+  }
+}

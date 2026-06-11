@@ -36,6 +36,40 @@ function valuesEqual(a: string, b: string, fold: boolean): boolean {
 }
 
 /**
+ * Pair values serialize as two space-separated identifiers ("A B"). A `pair` is
+ * unordered within the pair ("A B" ≡ "B A"); a `directedPair` is ordered.
+ */
+function pairsEqual(a: string, b: string, directed: boolean): boolean {
+  const [a1, a2] = a.trim().split(/\s+/u);
+  const [b1, b2] = b.trim().split(/\s+/u);
+
+  if (a1 === undefined || a2 === undefined || b1 === undefined || b2 === undefined) {
+    return false;
+  }
+
+  if (a1 === b1 && a2 === b2) {
+    return true;
+  }
+
+  return !directed && a1 === b2 && a2 === b1;
+}
+
+/** Value equality for one declared baseType, used by both match_correct and map_response. */
+function makeValueComparator(declaration: ResponseDeclarationView): (a: string, b: string) => boolean {
+  if (declaration.baseType === "pair") {
+    return (a, b) => pairsEqual(a, b, false);
+  }
+
+  if (declaration.baseType === "directedPair") {
+    return (a, b) => pairsEqual(a, b, true);
+  }
+
+  const fold = isStringBaseType(declaration);
+
+  return (a, b) => valuesEqual(a, b, fold);
+}
+
+/**
  * `match_correct`: true when the response exactly matches `correctResponse`, respecting
  * cardinality. String base types fold case/diacritics (textEntry friendliness);
  * identifier base types compare exactly. Returns false when no correctResponse exists.
@@ -47,7 +81,7 @@ export function matchCorrect(declaration: ResponseDeclarationView, response: Res
     return false;
   }
 
-  const fold = isStringBaseType(declaration);
+  const equals = makeValueComparator(declaration);
   const expected = correct.values.map((entry) => entry.value);
   const actual = asList(response);
 
@@ -56,14 +90,14 @@ export function matchCorrect(declaration: ResponseDeclarationView, response: Res
   }
 
   if (declaration.cardinality === "ordered") {
-    return expected.every((value, index) => valuesEqual(value, actual[index] ?? "", fold));
+    return expected.every((value, index) => equals(value, actual[index] ?? ""));
   }
 
   // single + multiple: order-independent set match
   const remaining = [...actual];
 
   for (const value of expected) {
-    const matchIndex = remaining.findIndex((candidate) => valuesEqual(candidate, value, fold));
+    const matchIndex = remaining.findIndex((candidate) => equals(candidate, value));
 
     if (matchIndex === -1) {
       return false;
@@ -103,11 +137,14 @@ export function mapResponse(declaration: ResponseDeclarationView, response: Resp
   }
 
   const defaultValue = mapping.defaultValue ?? 0;
+  const isPairType = declaration.baseType === "pair" || declaration.baseType === "directedPair";
   let total = 0;
 
   for (const member of asList(response)) {
     const entry = mapping.mapEntries.find((candidate) =>
-      valuesEqual(candidate.mapKey, member, !candidate.caseSensitive),
+      isPairType
+        ? pairsEqual(candidate.mapKey, member, declaration.baseType === "directedPair")
+        : valuesEqual(candidate.mapKey, member, !candidate.caseSensitive),
     );
 
     total += entry ? entry.mappedValue : defaultValue;

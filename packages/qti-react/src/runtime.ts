@@ -9,6 +9,7 @@
  */
 
 import {
+  Fragment,
   createContext,
   createElement,
   useContext,
@@ -19,13 +20,7 @@ import {
 } from "react";
 import type { ZodType } from "zod";
 
-import {
-  isAllowedFlowElement,
-  isInteractionKind,
-  sanitizeAttributes,
-  v0ContentModel,
-  type ContentModel,
-} from "./content-model";
+import { isAllowedFlowElement, sanitizeAttributes, v0ContentModel, type ContentModel } from "./content-model";
 import { createAttemptStore, type AttemptSnapshot, type AttemptStore } from "./store";
 import type { Cardinality, ResponseDeclarationView, ResponseValue, ScoreResult } from "./types";
 
@@ -96,9 +91,16 @@ export interface InteractionRenderProps {
   /** Whole-interaction status (drives feedback for option-less interactions). */
   status: InteractionStatus;
   getOptionProps: (optionIdentifier: string) => OptionProps;
-  /** Render body fragments (prompt, choice labels) through the core allowlist walk. */
-  renderContent: (nodes: readonly BodyNode[] | undefined) => ReactNode;
+  /**
+   * Render body fragments (prompt, choice labels) through the core allowlist walk.
+   * `overrides` lets a skin take over specific node kinds nested anywhere in the
+   * fragment (e.g. `hottext`, `gap`) while the core keeps walking everything else.
+   */
+  renderContent: (nodes: readonly BodyNode[] | undefined, overrides?: NodeOverrides) => ReactNode;
 }
+
+/** Per-kind render overrides a skin passes to `renderContent` for nodes it owns. */
+export type NodeOverrides = Readonly<Record<string, (node: BodyNode, key: number) => ReactNode>>;
 
 export type InteractionSkin = ComponentType<InteractionRenderProps>;
 export type SkinRegistry = Readonly<Record<string, InteractionSkin>>;
@@ -107,6 +109,25 @@ export interface QtiRuntimeConfig {
   readonly interactions: readonly InteractionDescriptor[];
   readonly skin: SkinRegistry;
   readonly contentModel?: ContentModel;
+  /** Replaces the default Unsupported Placeholder for interaction nodes this runtime cannot render. */
+  readonly renderUnsupported?: (node: InteractionNode) => ReactNode;
+}
+
+// ---------- Capability Report (ADR-0003) ----------
+
+export type CapabilityIssueType = "unsupported-interaction" | "invalid-interaction" | "unsupported-element";
+
+export interface CapabilityIssue {
+  readonly type: CapabilityIssueType;
+  /** The interaction kind or element name at issue. */
+  readonly name: string;
+  readonly responseIdentifier?: string;
+  readonly detail?: string;
+}
+
+export interface CapabilityReport {
+  readonly deliverable: boolean;
+  readonly issues: readonly CapabilityIssue[];
 }
 
 export interface ItemRendererProps {
@@ -120,6 +141,13 @@ export interface ItemRendererProps {
 export interface QtiRuntime {
   ItemRenderer: ComponentType<ItemRendererProps>;
   useAttempt: () => AttemptController;
+  /**
+   * The Capability Report for an item against this runtime's injected descriptors,
+   * skins, and content model. Consumers gate delivery on it (ADR-0003); the
+   * ItemRenderer placeholder is only the backstop for content that reaches
+   * rendering anyway.
+   */
+  canDeliver: (item: AssessmentItemView) => CapabilityReport;
 }
 
 export interface AttemptController extends AttemptSnapshot {
@@ -158,11 +186,21 @@ function isCorrectOption(declaration: ResponseDeclarationView | undefined, optio
   return Boolean(declaration?.correctResponse?.values.some((entry) => entry.value === optionIdentifier));
 }
 
+/**
+ * An interaction node is any non-xml node carrying a `responseIdentifier` — including
+ * kinds this runtime has never heard of (lagging consumers, foreign extensions). The
+ * discriminator must not depend on the injected descriptor set, or unknown interactions
+ * would be indistinguishable from text and silently dropped.
+ */
+function isInteractionNode(node: BodyNode): node is InteractionNode {
+  return node.kind !== "xml" && typeof (node as { responseIdentifier?: unknown }).responseIdentifier === "string";
+}
+
 export function createQtiRuntime(config: QtiRuntimeConfig): QtiRuntime {
   const model = config.contentModel ?? v0ContentModel;
   const descriptorsByKind = new Map(config.interactions.map((descriptor) => [descriptor.kind, descriptor]));
 
-  function renderFlow(node: XmlContentNode, key: number): ReactNode {
+  function renderFlow(node: XmlContentNode, key: number, overrides?: NodeOverrides): ReactNode {
     const isMath = node.name === model.mathRoot;
 
     if (!isMath && !isAllowedFlowElement(model, node.name)) {
@@ -170,18 +208,44 @@ export function createQtiRuntime(config: QtiRuntimeConfig): QtiRuntime {
     }
 
     const attributes = sanitizeAttributes(model, node.attributes);
-    const children = node.children?.map((child, index) => renderNode(child, index));
+    const children = node.children?.map((child, index) => renderNode(child, index, overrides));
 
     return createElement(node.name, { key, ...attributes }, node.value ?? children);
   }
 
-  function renderNode(node: BodyNode, key: number): ReactNode {
-    if (isInteractionKind(model, node.kind) && descriptorsByKind.has(node.kind) && config.skin[node.kind]) {
-      return createElement(InteractionHost, { key, node: node as InteractionNode });
+  function renderUnsupported(node: InteractionNode, key: number): ReactNode {
+    if (config.renderUnsupported) {
+      return createElement("span", { key }, config.renderUnsupported(node));
+    }
+
+    // The Unsupported Placeholder (ADR-0003): explicit and accessible, never a silent drop.
+    return createElement(
+      "div",
+      { key, role: "note", "data-qti-unsupported": node.kind },
+      `This content requires an interaction type (${node.kind}) this runtime does not support.`,
+    );
+  }
+
+  function renderNode(node: BodyNode, key: number, overrides?: NodeOverrides): ReactNode {
+    const override = overrides?.[node.kind];
+
+    if (override) {
+      return createElement(Fragment, { key }, override(node, key));
+    }
+
+    if (isInteractionNode(node)) {
+      // Dispatch is governed by the injected descriptor + skin sets alone (ADR-0001:
+      // the kind-union is the injected set), so consumer extension kinds render
+      // without being named in the content model.
+      if (descriptorsByKind.has(node.kind) && config.skin[node.kind]) {
+        return createElement(InteractionHost, { key, node });
+      }
+
+      return renderUnsupported(node, key);
     }
 
     if (node.kind === "xml") {
-      return renderFlow(node as XmlContentNode, key);
+      return renderFlow(node as XmlContentNode, key, overrides);
     }
 
     const value = (node as { value?: string }).value;
@@ -256,8 +320,8 @@ export function createQtiRuntime(config: QtiRuntimeConfig): QtiRuntime {
       };
     };
 
-    const renderContent = (nodes: readonly BodyNode[] | undefined): ReactNode =>
-      nodes ? nodes.map((child, index) => renderNode(child, index)) : null;
+    const renderContent = (nodes: readonly BodyNode[] | undefined, overrides?: NodeOverrides): ReactNode =>
+      nodes ? nodes.map((child, index) => renderNode(child, index, overrides)) : null;
 
     const Skin = config.skin[node.kind];
 
@@ -311,5 +375,69 @@ export function createQtiRuntime(config: QtiRuntimeConfig): QtiRuntime {
     };
   }
 
-  return { ItemRenderer, useAttempt };
+  function canDeliver(item: AssessmentItemView): CapabilityReport {
+    const issues: CapabilityIssue[] = [];
+    const seen = new Set<string>();
+
+    function report(issue: CapabilityIssue): void {
+      const dedupeKey = `${issue.type}:${issue.name}:${issue.responseIdentifier ?? ""}`;
+
+      if (!seen.has(dedupeKey)) {
+        seen.add(dedupeKey);
+        issues.push(issue);
+      }
+    }
+
+    function walk(node: BodyNode): void {
+      if (isInteractionNode(node)) {
+        const descriptor = descriptorsByKind.get(node.kind);
+
+        if (!descriptor || !config.skin[node.kind]) {
+          report({
+            type: "unsupported-interaction",
+            name: node.kind,
+            responseIdentifier: node.responseIdentifier,
+          });
+
+          return;
+        }
+
+        const parsed = descriptor.schema.safeParse(node);
+
+        if (!parsed.success) {
+          report({
+            type: "invalid-interaction",
+            name: node.kind,
+            responseIdentifier: node.responseIdentifier,
+            detail: parsed.error.issues[0]?.message,
+          });
+        }
+
+        // Interaction-internal content (prompt, choice bodies) is structurally
+        // validated by the descriptor schema; its flow elements are walked when the
+        // descriptor surfaces them. Generic field-sniffing is deliberately avoided.
+        return;
+      }
+
+      if (node.kind === "xml") {
+        const xmlNode = node as XmlContentNode;
+
+        if (!isAllowedFlowElement(model, xmlNode.name)) {
+          report({ type: "unsupported-element", name: xmlNode.name });
+        }
+
+        for (const child of xmlNode.children ?? []) {
+          walk(child);
+        }
+      }
+    }
+
+    for (const node of item.itemBody.content ?? []) {
+      walk(node);
+    }
+
+    return { deliverable: issues.length === 0, issues };
+  }
+
+  return { ItemRenderer, useAttempt, canDeliver };
 }

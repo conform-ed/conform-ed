@@ -13,8 +13,18 @@
  * HTML5 at once".
  */
 
-/** Interaction node kinds the v0 runtime can render. */
-export const v0InteractionKinds = ["choiceInteraction", "textEntryInteraction", "inlineChoiceInteraction"] as const;
+/** Interaction node kinds conform-ed ships descriptors and Reference Skins for. */
+export const v0InteractionKinds = [
+  "associateInteraction",
+  "choiceInteraction",
+  "extendedTextInteraction",
+  "gapMatchInteraction",
+  "hottextInteraction",
+  "inlineChoiceInteraction",
+  "matchInteraction",
+  "orderInteraction",
+  "textEntryInteraction",
+] as const;
 
 export type V0InteractionKind = (typeof v0InteractionKinds)[number];
 

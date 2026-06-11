@@ -22,12 +22,16 @@ export {
   type AssessmentItemView,
   type AttemptController,
   type BodyNode,
+  type CapabilityIssue,
+  type CapabilityIssueType,
+  type CapabilityReport,
   type InteractionDescriptor,
   type InteractionNode,
   type InteractionRenderProps,
   type InteractionSkin,
   type InteractionStatus,
   type ItemRendererProps,
+  type NodeOverrides,
   type OptionProps,
   type OptionStatus,
   type QtiRuntime,
@@ -36,7 +40,32 @@ export {
   type XmlContentNode,
 } from "./runtime";
 
-export { choiceInteraction, inlineChoiceInteraction, qtiCoreInteractions, textEntryInteraction } from "./interactions";
+export {
+  associateInteraction,
+  choiceInteraction,
+  extendedTextInteraction,
+  gapMatchInteraction,
+  hottextInteraction,
+  inlineChoiceInteraction,
+  matchInteraction,
+  orderInteraction,
+  qtiCoreInteractions,
+  textEntryInteraction,
+} from "./interactions";
+
+export {
+  AssociateReferenceSkin,
+  ChoiceReferenceSkin,
+  ExtendedTextReferenceSkin,
+  GapMatchReferenceSkin,
+  HottextReferenceSkin,
+  InlineChoiceReferenceSkin,
+  MatchReferenceSkin,
+  OrderReferenceSkin,
+  TextEntryReferenceSkin,
+  referenceSkin,
+  textOf,
+} from "./reference-skin";
 
 export type {
   Cardinality,
