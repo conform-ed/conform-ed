@@ -1,5 +1,5 @@
 /**
- * The headless runtime (ADR-0002): a factory that assembles a QTI item renderer from an
+ * The headless runtime (ADR-0001): a factory that assembles a QTI item renderer from an
  * injected set of interaction descriptors plus a skin registry. The kind-union is the
  * injected set — no global registry, no module augmentation. The core owns response
  * state and a11y wiring; skins are controlled components.
@@ -83,7 +83,7 @@ export interface OptionProps {
   onClick: () => void;
 }
 
-/** Controlled props every interaction skin receives by default (ADR-0002). */
+/** Controlled props every interaction skin receives by default (ADR-0001). */
 export interface InteractionRenderProps {
   node: InteractionNode;
   responseIdentifier: string;

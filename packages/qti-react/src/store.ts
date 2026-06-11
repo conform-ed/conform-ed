@@ -1,5 +1,5 @@
 /**
- * The response store the headless core owns (ADR-0002): it holds candidate responses
+ * The response store the headless core owns (ADR-0001): it holds candidate responses
  * keyed by `responseIdentifier`, the submitted flag, and the scored outcomes. Skins are
  * controlled against it; they never own response state (only ephemeral UI state).
  *

@@ -4,7 +4,9 @@
  * Implements `match_correct` and `map_response` (QTI's two standard RP templates),
  * which cover the v0 interactions (choice, textEntry, inlineChoice). Pure functions:
  * deterministic given (declaration, response), so scoring is replayable and runs
- * fully offline in the headless core (ADR-0003 / ADR-0006).
+ * fully offline in the headless core. Transitional: ADR-0004 replaces this with a
+ * staged RP interpreter, and the case/diacritic folding below moves behind the
+ * opt-in Response Normalization hook (spec-strict defaults).
  */
 
 import type { ResponseDeclarationView, ResponseValue, ScoreResult } from "./types";
