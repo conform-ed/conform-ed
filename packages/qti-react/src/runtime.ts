@@ -236,7 +236,9 @@ function responseIncludes(value: ResponseValue, optionIdentifier: string): boole
     return false;
   }
 
-  return typeof value === "string" ? value === optionIdentifier : value.includes(optionIdentifier);
+  return typeof value === "string"
+    ? value === optionIdentifier
+    : Array.isArray(value) && value.includes(optionIdentifier);
 }
 
 function isCorrectOption(declaration: ResponseDeclarationView | undefined, optionIdentifier: string): boolean {
@@ -558,7 +560,8 @@ export function createQtiRuntime(config: QtiRuntimeConfig): QtiRuntime {
             return;
           }
 
-          const current = value === null ? [] : typeof value === "string" ? [value] : [...value];
+          const current =
+            value === null ? [] : typeof value === "string" ? [value] : Array.isArray(value) ? [...value] : [];
           const next = selected
             ? current.filter((entry) => entry !== optionIdentifier)
             : [...current, optionIdentifier];

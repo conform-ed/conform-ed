@@ -39,12 +39,24 @@ describe("pciResponseToValue", () => {
     expect(pciResponseToValue({ list: { identifier: [] } })).toEqual([]);
   });
 
-  test("null bases, records, and junk are null", () => {
+  test("null bases and junk are null", () => {
     expect(pciResponseToValue({ base: null })).toBeNull();
     expect(pciResponseToValue(null)).toBeNull();
     expect(pciResponseToValue(undefined)).toBeNull();
-    expect(pciResponseToValue({ record: [{ name: "x", base: { string: "y" } }] })).toBeNull();
     expect(pciResponseToValue("nonsense")).toBeNull();
+  });
+
+  test("records become record response values with typed fields", () => {
+    expect(
+      pciResponseToValue({
+        record: [
+          { name: "expression", base: { string: "x+1" } },
+          { name: "verdict", base: { boolean: true } },
+          { name: "attempts", base: { integer: 2 } },
+          { name: "skipped", base: null },
+        ],
+      }),
+    ).toEqual({ expression: "x+1", verdict: true, attempts: 2, skipped: null });
   });
 });
 
@@ -70,5 +82,17 @@ describe("valueToPciResponse", () => {
 
   test("empty responses bind as a null base", () => {
     expect(valueToPciResponse(null, integerDeclaration)).toEqual({ base: null });
+  });
+
+  test("record cardinality binds as a PCI record", () => {
+    expect(
+      valueToPciResponse({ expression: "x+1", verdict: true, attempts: 2 }, { identifier: "R", cardinality: "record" }),
+    ).toEqual({
+      record: [
+        { name: "expression", base: { string: "x+1" } },
+        { name: "verdict", base: { boolean: true } },
+        { name: "attempts", base: { float: 2 } },
+      ],
+    });
   });
 });

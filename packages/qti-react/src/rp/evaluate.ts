@@ -47,6 +47,7 @@ export const deterministicExpressionKinds = new Set([
   "divide",
   "equal",
   "equalRounded",
+  "fieldValue",
   "gcd",
   "gt",
   "gte",
@@ -252,6 +253,16 @@ export function evaluateExpression(expression: RpExpressionView, env: EvalEnv): 
       const value = operand === undefined ? null : singleBoolean(evaluate(operand));
 
       return value === null ? null : booleanValue(!value);
+    }
+
+    case "fieldValue": {
+      const operand = expression.expressions?.[0];
+      const value = operand === undefined ? null : evaluate(operand);
+      const field = value?.fields?.find((entry) => entry.name === expression.fieldIdentifier);
+
+      return field === undefined
+        ? null
+        : { cardinality: "single", ...(field.baseType ? { baseType: field.baseType } : {}), values: [field.value] };
     }
 
     case "and":

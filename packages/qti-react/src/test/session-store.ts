@@ -10,6 +10,7 @@
 import type { CustomOperatorImplementation, ResponseNormalization, TemplateRuleView } from "../rp";
 import type { AssessmentItemView } from "../runtime";
 import { createAttemptStore, type AttemptSnapshot, type AttemptStore } from "../store";
+import { isResponseRecord } from "../types";
 import type { ResponseValue } from "../types";
 
 import type { AssessmentItemRefView, TestController, TestFeedbackView, TestPlanItem, TestSessionState } from "./types";
@@ -89,7 +90,15 @@ function scorableIdentifiers(view: AssessmentItemView): Set<string> {
 }
 
 function hasResponse(value: ResponseValue): boolean {
-  return value !== null && value !== undefined && value !== "" && (!Array.isArray(value) || value.length > 0);
+  if (value === null || value === undefined || value === "") {
+    return false;
+  }
+
+  if (isResponseRecord(value)) {
+    return Object.values(value).some((member) => member !== null && member !== "");
+  }
+
+  return !Array.isArray(value) || value.length > 0;
 }
 
 /** Derive the controller-facing correctness flags from a submitted attempt. */

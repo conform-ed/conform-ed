@@ -1,11 +1,13 @@
 /**
  * PCI JSON ↔ ResponseValue conversion (IMS PCI v1 "JSON representation of variable
- * values"). PCI instances exchange `{ base: { integer: 3 } }` / `{ list: ... }`
- * shapes; the attempt store speaks string / string[] / null. Records have no
- * ResponseValue shape and convert to null — record-bound PCIs are out of scope.
+ * values"). PCI instances exchange `{ base: { integer: 3 } }` / `{ list: ... }` /
+ * `{ record: [{ name, base }] }` shapes; the attempt store speaks string / string[] /
+ * record-object / null. Record fields keep their runtime type so `fieldValue` in
+ * response processing sees properly typed members.
  */
 
-import type { ResponseDeclarationView, ResponseValue } from "../types";
+import { isResponseRecord } from "../types";
+import type { ResponseDeclarationView, ResponseFieldValue, ResponseValue } from "../types";
 
 function scalarToString(value: unknown): string {
   if (Array.isArray(value)) {
@@ -28,12 +30,33 @@ function payloadEntry(payload: unknown): unknown {
   return values.length > 0 ? values[0] : undefined;
 }
 
+/** One `{ name, base }` record entry → a typed field, or null for malformed entries. */
+function recordField(entry: unknown): [string, ResponseFieldValue] | null {
+  if (typeof entry !== "object" || entry === null) {
+    return null;
+  }
+
+  const { name, base } = entry as { name?: unknown; base?: unknown };
+
+  if (typeof name !== "string") {
+    return null;
+  }
+
+  const raw = payloadEntry(base);
+
+  if (raw === undefined || raw === null) {
+    return [name, null];
+  }
+
+  return [name, typeof raw === "boolean" || typeof raw === "number" ? raw : scalarToString(raw)];
+}
+
 export function pciResponseToValue(json: unknown): ResponseValue {
   if (typeof json !== "object" || json === null) {
     return null;
   }
 
-  const shaped = json as { base?: unknown; list?: unknown };
+  const shaped = json as { base?: unknown; list?: unknown; record?: unknown };
 
   if (shaped.base !== undefined) {
     const entry = payloadEntry(shaped.base);
@@ -47,7 +70,22 @@ export function pciResponseToValue(json: unknown): ResponseValue {
     return Array.isArray(entry) ? entry.map(scalarToString) : null;
   }
 
-  return null; // records and unknown shapes
+  if (Array.isArray(shaped.record)) {
+    return Object.fromEntries(
+      shaped.record.flatMap((entry) => {
+        const field = recordField(entry);
+
+        return field === null ? [] : [field];
+      }),
+    );
+  }
+
+  return null; // unknown shapes
+}
+
+/** PCI JSON base key for a record field, derived from its runtime type. */
+function fieldPciType(value: string | number | boolean): string {
+  return typeof value === "boolean" ? "boolean" : typeof value === "number" ? "float" : "string";
 }
 
 const numericBaseTypes = new Set(["integer", "float"]);
@@ -78,6 +116,14 @@ export function valueToPciResponse(value: ResponseValue, declaration: ResponseDe
 
   if (value === null || value === undefined) {
     return { base: null };
+  }
+
+  if (isResponseRecord(value)) {
+    return {
+      record: Object.entries(value).map(([name, member]) =>
+        member === null ? { name, base: null } : { name, base: { [fieldPciType(member)]: member } },
+      ),
+    };
   }
 
   if (declaration.cardinality === "single") {

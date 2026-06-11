@@ -19,7 +19,14 @@ interface SelectPointNodeView {
 export function SelectPointReferenceSkin(props: InteractionRenderProps): ReactNode {
   const node = props.node as unknown as SelectPointNodeView;
   const maxChoices = node.maxChoices ?? 1;
-  const points = props.value === null ? [] : typeof props.value === "string" ? [props.value] : [...props.value];
+  const points =
+    props.value === null
+      ? []
+      : typeof props.value === "string"
+        ? [props.value]
+        : Array.isArray(props.value)
+          ? [...props.value]
+          : [];
 
   if (!node.object) {
     return null;

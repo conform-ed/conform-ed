@@ -7,6 +7,7 @@
  */
 
 import { parsePoint } from "../graphic";
+import { isResponseRecord } from "../types";
 import type { Cardinality, ResponseDeclarationView, ResponseValue } from "../types";
 import type { MaybeRpValue, OutcomeValue, ResponseNormalization, RpScalar, RpValue } from "./types";
 
@@ -35,10 +36,23 @@ export function coerceScalar(value: RpScalar, baseType: string | undefined): RpS
   return value;
 }
 
+/** A record field's base type is carried by its runtime type (no declaration exists). */
+function fieldBaseType(value: string | number | boolean): string {
+  return typeof value === "boolean" ? "boolean" : typeof value === "number" ? "float" : "string";
+}
+
 /** Lift a store ResponseValue into the typed model using its declaration. */
 export function fromResponse(declaration: ResponseDeclarationView, response: ResponseValue): MaybeRpValue {
   if (response === null) {
     return null;
+  }
+
+  if (isResponseRecord(response)) {
+    const fields = Object.entries(response).flatMap(([name, member]) =>
+      member === null ? [] : [{ name, baseType: fieldBaseType(member), value: member }],
+    );
+
+    return fields.length === 0 ? null : { cardinality: "record", fields, values: fields.map((field) => field.value) };
   }
 
   const raw = typeof response === "string" ? [response] : [...response];

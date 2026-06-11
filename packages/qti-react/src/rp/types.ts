@@ -14,11 +14,20 @@ export type RpScalar = string | number | boolean;
 /** An outcome variable's value as exposed to consumers after response processing. */
 export type OutcomeValue = RpScalar | readonly RpScalar[] | null;
 
+/** One named member of a record-cardinality value (QTI record containers). */
+export interface RpRecordField {
+  readonly name: string;
+  readonly baseType?: string;
+  readonly value: RpScalar;
+}
+
 /** The interpreter's typed value model: (baseType, cardinality, members); NULL is null. */
 export interface RpValue {
   readonly cardinality: Cardinality;
   readonly baseType?: string;
   readonly values: readonly RpScalar[];
+  /** Present only when cardinality is "record"; `values` mirrors the field values. */
+  readonly fields?: readonly RpRecordField[];
 }
 
 export type MaybeRpValue = RpValue | null;
@@ -73,6 +82,8 @@ export interface RpExpressionView {
   /** Vendor identification for `customOperator` (implementation registered by class). */
   readonly class?: string;
   readonly definition?: string;
+  /** Named-field selector for `fieldValue` over record-cardinality values. */
+  readonly fieldIdentifier?: string;
 }
 
 /**

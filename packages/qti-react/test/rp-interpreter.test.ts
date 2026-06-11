@@ -500,3 +500,88 @@ describe("custom operators (extension seam)", () => {
     expect(collectRpIssues(reverseRules, { customOperatorClasses: new Set(["other.class"]) })).toHaveLength(1);
   });
 });
+
+describe("record responses and fieldValue (PCI response contracts)", () => {
+  const recordDeclaration: ResponseDeclarationView = { identifier: "RESPONSE", cardinality: "record" };
+  const booleanOut: OutcomeDeclarationView = { identifier: "OUT", cardinality: "single", baseType: "boolean" };
+
+  const fieldRules = (fieldIdentifier: string): ResponseProcessingView => ({
+    rules: [
+      {
+        kind: "setOutcomeValue",
+        identifier: "OUT",
+        expression: {
+          kind: "fieldValue",
+          fieldIdentifier,
+          expressions: [{ kind: "variable", identifier: "RESPONSE" }],
+        },
+      },
+    ],
+  });
+
+  test("fieldValue extracts a typed boolean field from a record response", () => {
+    const result = run(
+      fieldRules("verdict"),
+      { RESPONSE: { expression: "x+1", verdict: true } },
+      [recordDeclaration],
+      [booleanOut],
+    );
+
+    expect(result.issues).toEqual([]);
+    expect(result.outcomes["OUT"]).toBe(true);
+  });
+
+  test("string fields extract with their own base type", () => {
+    const stringOut: OutcomeDeclarationView = { identifier: "OUT", cardinality: "single", baseType: "string" };
+    const result = run(
+      fieldRules("expression"),
+      { RESPONSE: { expression: "x+1", verdict: true } },
+      [recordDeclaration],
+      [stringOut],
+    );
+
+    expect(result.outcomes["OUT"]).toBe("x+1");
+  });
+
+  test("a missing field and an absent record are NULL", () => {
+    expect(
+      run(fieldRules("missing"), { RESPONSE: { verdict: false } }, [recordDeclaration], [booleanOut]).outcomes["OUT"],
+    ).toBeNull();
+    expect(run(fieldRules("verdict"), {}, [recordDeclaration], [booleanOut]).outcomes["OUT"]).toBeNull();
+  });
+
+  test("match scores an extracted boolean field against a base value", () => {
+    const matchRules: ResponseProcessingView = {
+      rules: [
+        {
+          kind: "setOutcomeValue",
+          identifier: "OUT",
+          expression: {
+            kind: "match",
+            expressions: [
+              {
+                kind: "fieldValue",
+                fieldIdentifier: "verdict",
+                expressions: [{ kind: "variable", identifier: "RESPONSE" }],
+              },
+              { kind: "baseValue", baseType: "boolean", value: "true" },
+            ],
+          },
+        },
+      ],
+    };
+    const result = run(
+      matchRules,
+      { RESPONSE: { expression: "x+1", verdict: true } },
+      [recordDeclaration],
+      [booleanOut],
+    );
+
+    expect(result.issues).toEqual([]);
+    expect(result.outcomes["OUT"]).toBe(true);
+  });
+
+  test("the capability walk accepts fieldValue", () => {
+    expect(collectRpIssues(fieldRules("verdict"))).toEqual([]);
+  });
+});

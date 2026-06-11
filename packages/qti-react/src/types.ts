@@ -5,8 +5,19 @@
  * schemas are `z.lazy` (statically `any`). No React or Mantine here.
  */
 
+/** One field of a record response; fields keep their runtime type (PCI JSON typing). */
+export type ResponseFieldValue = string | number | boolean | null;
+
+/** A record-cardinality response: named, individually-typed fields (PCI contracts). */
+export type ResponseRecordValue = Readonly<Record<string, ResponseFieldValue>>;
+
 /** A candidate response for one interaction, keyed in state by `responseIdentifier`. */
-export type ResponseValue = string | readonly string[] | null;
+export type ResponseValue = string | readonly string[] | ResponseRecordValue | null;
+
+/** Narrow a ResponseValue to its record variant. */
+export function isResponseRecord(value: ResponseValue): value is ResponseRecordValue {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+}
 
 export type Cardinality = "single" | "multiple" | "ordered" | "record";
 

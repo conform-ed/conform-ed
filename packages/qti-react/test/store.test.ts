@@ -74,6 +74,58 @@ describe("response collectors (imperative interactions, e.g. PCI)", () => {
     expect(store.getSnapshot().responses.RESPONSE).toBe("A");
   });
 
+  test("a collected record response scores through fieldValue", () => {
+    const store = createAttemptStore(
+      [{ identifier: "RESPONSE", cardinality: "record" }],
+      {},
+      {
+        outcomeDeclarations: [{ identifier: "SCORE", cardinality: "single", baseType: "float" }],
+        responseProcessing: {
+          rules: [
+            {
+              kind: "responseCondition",
+              responseIf: {
+                expression: {
+                  kind: "match",
+                  expressions: [
+                    {
+                      kind: "fieldValue",
+                      fieldIdentifier: "verdict",
+                      expressions: [{ kind: "variable", identifier: "RESPONSE" }],
+                    },
+                    { kind: "baseValue", baseType: "boolean", value: "true" },
+                  ],
+                },
+                rules: [
+                  {
+                    kind: "setOutcomeValue",
+                    identifier: "SCORE",
+                    expression: { kind: "baseValue", baseType: "float", value: "1" },
+                  },
+                ],
+              },
+              responseElse: {
+                rules: [
+                  {
+                    kind: "setOutcomeValue",
+                    identifier: "SCORE",
+                    expression: { kind: "baseValue", baseType: "float", value: "0" },
+                  },
+                ],
+              },
+            },
+          ],
+        },
+      },
+    );
+
+    store.registerResponseCollector("RESPONSE", () => ({ expression: "x+1", verdict: true }));
+    store.submit();
+
+    expect(store.getSnapshot().responses.RESPONSE).toEqual({ expression: "x+1", verdict: true });
+    expect(store.getSnapshot().outcomes["SCORE"]).toBe(1);
+  });
+
   test("unregistering stops the collector from applying", () => {
     const store = createAttemptStore(declarations, {});
 

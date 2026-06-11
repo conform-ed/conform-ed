@@ -21,7 +21,14 @@ interface PositionObjectNodeView {
 export function PositionObjectReferenceSkin(props: InteractionRenderProps): ReactNode {
   const node = props.node as unknown as PositionObjectNodeView;
   const maxChoices = node.maxChoices ?? 1;
-  const points = props.value === null ? [] : typeof props.value === "string" ? [props.value] : [...props.value];
+  const points =
+    props.value === null
+      ? []
+      : typeof props.value === "string"
+        ? [props.value]
+        : Array.isArray(props.value)
+          ? [...props.value]
+          : [];
 
   if (!node.stageObject || !node.object) {
     return null;

@@ -30,7 +30,8 @@ function asList(response: ResponseValue): string[] {
     return [];
   }
 
-  return typeof response === "string" ? [response] : [...response];
+  // Records are not list-shaped; heuristic scoring treats them as empty.
+  return typeof response === "string" ? [response] : Array.isArray(response) ? [...response] : [];
 }
 
 function isStringBaseType(declaration: ResponseDeclarationView): boolean {
