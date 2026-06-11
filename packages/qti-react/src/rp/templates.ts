@@ -83,10 +83,99 @@ const mapResponsePointRules: readonly RpRuleView[] = [
   },
 ];
 
+/**
+ * The Common Cartridge profile templates (CC2_*), transcribed from the published
+ * template XML shipped in CC packages. CC2_match is match_correct under another URI.
+ */
+const cc2MatchBasicRules: readonly RpRuleView[] = [
+  {
+    kind: "responseCondition",
+    responseIf: {
+      expression: {
+        kind: "match",
+        expressions: [
+          { kind: "variable", identifier: "RESPONSE" },
+          { kind: "correct", identifier: "RESPONSE" },
+        ],
+      },
+      rules: [
+        { kind: "setOutcomeValue", identifier: "SCORE", expression: { kind: "variable", identifier: "MAXSCORE" } },
+        {
+          kind: "setOutcomeValue",
+          identifier: "FEEDBACKBASIC",
+          expression: { kind: "baseValue", baseType: "identifier", value: "correct" },
+        },
+      ],
+    },
+    responseElse: {
+      rules: [
+        {
+          kind: "setOutcomeValue",
+          identifier: "FEEDBACKBASIC",
+          expression: { kind: "baseValue", baseType: "identifier", value: "incorrect" },
+        },
+      ],
+    },
+  },
+];
+
+const cc2MapResponseRules: readonly RpRuleView[] = [
+  {
+    kind: "responseCondition",
+    responseIf: {
+      expression: { kind: "isNull", expressions: [{ kind: "variable", identifier: "RESPONSE" }] },
+      rules: [
+        {
+          kind: "setOutcomeValue",
+          identifier: "SCORE",
+          expression: { kind: "baseValue", baseType: "float", value: 0 },
+        },
+      ],
+    },
+    responseElse: {
+      rules: [
+        { kind: "setOutcomeValue", identifier: "SCORE", expression: { kind: "mapResponse", identifier: "RESPONSE" } },
+      ],
+    },
+  },
+  {
+    kind: "responseCondition",
+    responseIf: {
+      expression: {
+        kind: "equal",
+        toleranceMode: "exact",
+        expressions: [
+          { kind: "variable", identifier: "MAXSCORE" },
+          { kind: "variable", identifier: "SCORE" },
+        ],
+      },
+      rules: [
+        {
+          kind: "setOutcomeValue",
+          identifier: "FEEDBACK",
+          expression: { kind: "baseValue", baseType: "identifier", value: "correct" },
+        },
+      ],
+    },
+    responseElse: {
+      rules: [
+        {
+          kind: "setOutcomeValue",
+          identifier: "FEEDBACK",
+          expression: { kind: "baseValue", baseType: "identifier", value: "incorrect" },
+        },
+      ],
+    },
+  },
+];
+
 const templatesBySegment: ReadonlyMap<string, readonly RpRuleView[]> = new Map([
   ["match_correct", matchCorrectRules],
   ["map_response", mapResponseRules],
   ["map_response_point", mapResponsePointRules],
+  ["CC2_match", matchCorrectRules],
+  ["CC2_match_basic", cc2MatchBasicRules],
+  ["CC2_map_response", cc2MapResponseRules],
 ]);
 
 /** Resolve a standard-template URI to its canonical rules, or null when unknown. */

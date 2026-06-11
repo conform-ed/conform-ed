@@ -223,20 +223,29 @@ export function createTestController(view: AssessmentTestView, options: TestCont
       responseDeclaration: () => undefined,
       responseValue: () => null,
       testVariables: (expression) => {
-        const variableName = expression.identifier ?? "";
-        const includeCategory = (expression as { includeCategory?: string }).includeCategory;
-        const excludeCategory = (expression as { excludeCategory?: string }).excludeCategory;
+        // Contracts spell the variable `variableIdentifier` and categories as lists;
+        // the bare `identifier`/string forms are accepted for hand-built views.
+        const loose = expression as {
+          variableIdentifier?: string;
+          includeCategory?: unknown;
+          excludeCategory?: unknown;
+        };
+        const variableName = loose.variableIdentifier ?? expression.identifier ?? "";
+        const asList = (value: unknown): readonly string[] | undefined =>
+          typeof value === "string" ? [value] : Array.isArray(value) ? (value as string[]) : undefined;
+        const includeCategory = asList(loose.includeCategory);
+        const excludeCategory = asList(loose.excludeCategory);
         const members: RpValue["values"][number][] = [];
         let baseType = expression.baseType;
 
         for (const item of allItems) {
           const categories = item.ref.categories ?? [];
 
-          if (includeCategory !== undefined && !categories.includes(includeCategory)) {
+          if (includeCategory !== undefined && !includeCategory.some((category) => categories.includes(category))) {
             continue;
           }
 
-          if (excludeCategory !== undefined && categories.includes(excludeCategory)) {
+          if (excludeCategory !== undefined && excludeCategory.some((category) => categories.includes(category))) {
             continue;
           }
 

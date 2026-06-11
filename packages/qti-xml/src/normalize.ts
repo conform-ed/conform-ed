@@ -1421,6 +1421,96 @@ function mapV3TimeLimits(element: QtiXmlElementNode) {
   };
 }
 
+function mapV3BranchRule(element: QtiXmlElementNode) {
+  const expressionElement = childElements(element)[0];
+  if (!expressionElement) {
+    throw new Error("<qti-branch-rule> must contain an expression.");
+  }
+
+  return {
+    kind: "branchRule",
+    target: requireAttribute(element, "target"),
+    expression: mapV3Expression(expressionElement),
+  };
+}
+
+function mapV3OutcomeRule(element: QtiXmlElementNode): unknown {
+  switch (element.localName) {
+    case "qti-outcome-condition": {
+      const outcomeIf = firstChildElement(element, "qti-outcome-if");
+      if (!outcomeIf) {
+        throw new Error("<qti-outcome-condition> must contain <qti-outcome-if>.");
+      }
+      const elseIfs = childElements(element, "qti-outcome-else-if");
+      const outcomeElse = firstChildElement(element, "qti-outcome-else");
+
+      return {
+        kind: "outcomeCondition",
+        outcomeIf: conditionBranch(outcomeIf, "outcomeIf", mapV3OutcomeRule),
+        ...(elseIfs.length
+          ? { outcomeElseIf: elseIfs.map((branch) => conditionBranch(branch, "outcomeIf", mapV3OutcomeRule)) }
+          : {}),
+        ...(outcomeElse ? { outcomeElse: elseBranch(outcomeElse, "outcomeElse", mapV3OutcomeRule) } : {}),
+      };
+    }
+    case "qti-set-outcome-value":
+    case "qti-lookup-outcome-value": {
+      const expressionElement = childElements(element)[0];
+      if (!expressionElement) {
+        throw new Error(`<${element.localName}> must contain an expression.`);
+      }
+
+      return {
+        kind: element.localName === "qti-set-outcome-value" ? "setOutcomeValue" : "lookupOutcomeValue",
+        identifier: requireAttribute(element, "identifier"),
+        expression: mapV3Expression(expressionElement),
+      };
+    }
+    case "qti-exit-test":
+      return { kind: "exitTest" };
+    case "qti-outcome-processing-fragment": {
+      const rules = childElements(element).map((rule) => mapV3OutcomeRule(rule));
+      return { kind: "outcomeProcessingFragment", ...(rules.length ? { rules } : {}) };
+    }
+    default:
+      throw new Error(`Unsupported QTI 3.0.1 outcome rule <${element.localName}> in normalization.`);
+  }
+}
+
+function mapV3TestFeedback(element: QtiXmlElementNode) {
+  return {
+    kind: "testFeedback",
+    access: requireAttribute(element, "access"),
+    outcomeIdentifier: requireAttribute(element, "outcome-identifier"),
+    showHide: requireAttribute(element, "show-hide"),
+    identifier: requireAttribute(element, "identifier"),
+    ...optionalString(element.attributes, "title", "title"),
+    ...contentOf(element),
+  };
+}
+
+function mapV3TestRubricBlock(element: QtiXmlElementNode) {
+  return {
+    kind: "testRubricBlock",
+    view: attributeList(requireAttribute(element, "view")) ?? [],
+    ...optionalString(element.attributes, "use", "use"),
+    ...contentOf(element),
+  };
+}
+
+function mapV3Selection(element: QtiXmlElementNode) {
+  return {
+    select: requireNumberAttribute(element, "select"),
+    ...optionalBoolean(element.attributes, "with-replacement", "withReplacement"),
+  };
+}
+
+function mapV3Ordering(element: QtiXmlElementNode) {
+  return {
+    ...optionalBoolean(element.attributes, "shuffle", "shuffle"),
+  };
+}
+
 function mapV3AssessmentItemRef(element: QtiXmlElementNode) {
   return {
     identifier: requireAttribute(element, "identifier"),
@@ -1430,6 +1520,51 @@ function mapV3AssessmentItemRef(element: QtiXmlElementNode) {
       : {}),
     ...(attributeBoolean(element.attributes, "fixed") !== undefined
       ? { fixed: attributeBoolean(element.attributes, "fixed") }
+      : {}),
+    ...(attributeList(element.attributes.category) ? { category: attributeList(element.attributes.category) } : {}),
+    ...(childElements(element, "qti-pre-condition").length
+      ? { preConditions: childElements(element, "qti-pre-condition").map((child) => mapV3PreCondition(child)) }
+      : {}),
+    ...(childElements(element, "qti-branch-rule").length
+      ? { branchRules: childElements(element, "qti-branch-rule").map((child) => mapV3BranchRule(child)) }
+      : {}),
+    ...(firstChildElement(element, "qti-item-session-control")
+      ? { itemSessionControl: mapV3ItemSessionControl(firstChildElement(element, "qti-item-session-control")!) }
+      : {}),
+    ...(firstChildElement(element, "qti-time-limits")
+      ? { timeLimits: mapV3TimeLimits(firstChildElement(element, "qti-time-limits")!) }
+      : {}),
+    ...(childElements(element, "qti-weight").length
+      ? {
+          weights: childElements(element, "qti-weight").map((weight) => ({
+            identifier: requireAttribute(weight, "identifier"),
+            value: requireNumberAttribute(weight, "value"),
+          })),
+        }
+      : {}),
+    ...(childElements(element, "qti-variable-mapping").length
+      ? {
+          variableMappings: childElements(element, "qti-variable-mapping").map((mapping) => ({
+            sourceIdentifier: requireAttribute(mapping, "source-identifier"),
+            targetIdentifier: requireAttribute(mapping, "target-identifier"),
+          })),
+        }
+      : {}),
+    ...(childElements(element, "qti-template-default").length
+      ? {
+          templateDefaults: childElements(element, "qti-template-default").map((templateDefault) => {
+            const expressionElement = childElements(templateDefault)[0];
+            if (!expressionElement) {
+              throw new Error("<qti-template-default> must contain an expression.");
+            }
+
+            return {
+              kind: "templateDefault",
+              templateIdentifier: requireAttribute(templateDefault, "template-identifier"),
+              expression: mapV3Expression(expressionElement),
+            };
+          }),
+        }
       : {}),
   };
 }
@@ -1441,11 +1576,21 @@ function mapV3AssessmentSection(element: QtiXmlElementNode): unknown {
         return [mapV3AssessmentItemRef(child)];
       case "qti-assessment-section":
         return [mapV3AssessmentSection(child)];
+      case "qti-assessment-section-ref":
+        return [
+          {
+            identifier: requireAttribute(child, "identifier"),
+            href: requireAttribute(child, "href"),
+          },
+        ];
       case "qti-pre-condition":
       case "qti-branch-rule":
       case "qti-item-session-control":
       case "qti-time-limits":
-        return [];
+      case "qti-selection":
+      case "qti-ordering":
+      case "qti-rubric-block":
+        return []; // mapped into dedicated fields below
       default:
         throw new Error(`Unsupported QTI 3.0.1 assessment section child <${child.localName}> in normalization.`);
     }
@@ -1467,11 +1612,23 @@ function mapV3AssessmentSection(element: QtiXmlElementNode): unknown {
     ...(childElements(element, "qti-pre-condition").length
       ? { preConditions: childElements(element, "qti-pre-condition").map((child) => mapV3PreCondition(child)) }
       : {}),
+    ...(childElements(element, "qti-branch-rule").length
+      ? { branchRules: childElements(element, "qti-branch-rule").map((child) => mapV3BranchRule(child)) }
+      : {}),
     ...(firstChildElement(element, "qti-item-session-control")
       ? { itemSessionControl: mapV3ItemSessionControl(firstChildElement(element, "qti-item-session-control")!) }
       : {}),
     ...(firstChildElement(element, "qti-time-limits")
       ? { timeLimits: mapV3TimeLimits(firstChildElement(element, "qti-time-limits")!) }
+      : {}),
+    ...(firstChildElement(element, "qti-selection")
+      ? { selection: mapV3Selection(firstChildElement(element, "qti-selection")!) }
+      : {}),
+    ...(firstChildElement(element, "qti-ordering")
+      ? { ordering: mapV3Ordering(firstChildElement(element, "qti-ordering")!) }
+      : {}),
+    ...(childElements(element, "qti-rubric-block").length
+      ? { rubricBlocks: childElements(element, "qti-rubric-block").map((child) => mapV3TestRubricBlock(child)) }
       : {}),
     ...(children.length ? { children } : {}),
   };
@@ -1727,30 +1884,67 @@ function normalizeQti301AssessmentItem(root: QtiXmlElementNode) {
 }
 
 function normalizeQti301AssessmentTest(root: QtiXmlElementNode) {
+  const outcomeProcessingElement = firstChildElement(root, "qti-outcome-processing");
+
   return {
     assessmentTest: {
       identifier: requireAttribute(root, "identifier"),
       title: requireAttribute(root, "title"),
+      ...optionalString(root.attributes, "tool-name", "toolName"),
+      ...optionalString(root.attributes, "tool-version", "toolVersion"),
+      ...(childElements(root, "qti-context-declaration").length
+        ? {
+            contextDeclarations: childElements(root, "qti-context-declaration").map((element) =>
+              mapV3ContextDeclaration(element),
+            ),
+          }
+        : {}),
       outcomeDeclarations: childElements(root, "qti-outcome-declaration").map((element) =>
         mapV3OutcomeDeclaration(element),
       ),
       ...(firstChildElement(root, "qti-time-limits")
         ? { timeLimits: mapV3TimeLimits(firstChildElement(root, "qti-time-limits")!) }
         : {}),
+      ...(childElements(root, "qti-stylesheet").length
+        ? { stylesheets: childElements(root, "qti-stylesheet").map((element) => mapV3StyleSheet(element)) }
+        : {}),
       testParts: childElements(root, "qti-test-part").map((testPart) => ({
         identifier: requireAttribute(testPart, "identifier"),
+        ...optionalString(testPart.attributes, "title", "title"),
         navigationMode: requireAttribute(testPart, "navigation-mode"),
         submissionMode: requireAttribute(testPart, "submission-mode"),
+        ...(childElements(testPart, "qti-pre-condition").length
+          ? { preConditions: childElements(testPart, "qti-pre-condition").map((child) => mapV3PreCondition(child)) }
+          : {}),
+        ...(childElements(testPart, "qti-branch-rule").length
+          ? { branchRules: childElements(testPart, "qti-branch-rule").map((child) => mapV3BranchRule(child)) }
+          : {}),
         ...(firstChildElement(testPart, "qti-item-session-control")
           ? { itemSessionControl: mapV3ItemSessionControl(firstChildElement(testPart, "qti-item-session-control")!) }
           : {}),
         ...(firstChildElement(testPart, "qti-time-limits")
           ? { timeLimits: mapV3TimeLimits(firstChildElement(testPart, "qti-time-limits")!) }
           : {}),
+        ...(childElements(testPart, "qti-rubric-block").length
+          ? { rubricBlocks: childElements(testPart, "qti-rubric-block").map((child) => mapV3TestRubricBlock(child)) }
+          : {}),
         children: childElements(testPart)
           .filter((child) => child.localName === "qti-assessment-section")
           .map((section) => mapV3AssessmentSection(section)),
+        ...(childElements(testPart, "qti-test-feedback").length
+          ? { testFeedbacks: childElements(testPart, "qti-test-feedback").map((child) => mapV3TestFeedback(child)) }
+          : {}),
       })),
+      ...(outcomeProcessingElement
+        ? {
+            outcomeProcessing: {
+              rules: childElements(outcomeProcessingElement).map((rule) => mapV3OutcomeRule(rule)),
+            },
+          }
+        : {}),
+      ...(childElements(root, "qti-test-feedback").length
+        ? { testFeedbacks: childElements(root, "qti-test-feedback").map((child) => mapV3TestFeedback(child)) }
+        : {}),
     },
   };
 }

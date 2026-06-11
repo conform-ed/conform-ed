@@ -28,6 +28,15 @@ import type {
   TemplateRuleView,
 } from "./rp";
 import type { AssessmentItemView, BodyNode, FeedbackView } from "./runtime";
+import type {
+  AssessmentItemRefView,
+  AssessmentSectionView,
+  AssessmentTestView,
+  BranchRuleView,
+  OutcomeRuleView,
+  TestFeedbackView,
+  TestPartView,
+} from "./test";
 import type { ResponseDeclarationView } from "./types";
 
 function isRecord(value: unknown): value is Record<string, unknown> {
@@ -375,5 +384,144 @@ export function assessmentItemViewFromNormalized(document: unknown): AssessmentI
       ? { modalFeedbacks: item["modalFeedbacks"].map(convertContentValue) as unknown as readonly FeedbackView[] }
       : {}),
     itemBody: { content: content as BodyNode[] },
+  };
+}
+
+// ---------- assessment tests (ADR-0005) ----------
+
+/** Normalized `{kind: "preCondition", expression}` wrappers as bare expressions. */
+function convertPreConditions(value: unknown): RpExpressionView[] {
+  return asRecords(value).map((wrapper) => convertExpression(wrapper["expression"]));
+}
+
+function convertBranchRules(value: unknown): BranchRuleView[] {
+  return asRecords(value).map((rule) => ({
+    target: typeof rule["target"] === "string" ? rule["target"] : "",
+    expression: convertExpression(rule["expression"]),
+  }));
+}
+
+function convertOutcomeRule(rule: unknown): Record<string, unknown> {
+  const record = isRecord(rule) ? rule : {};
+  const kind = typeof record["kind"] === "string" ? record["kind"] : "";
+
+  if (kind === "outcomeCondition") {
+    const elseIfs = Array.isArray(record["outcomeElseIf"])
+      ? record["outcomeElseIf"].map((branch) => convertBranch(branch, convertOutcomeRule))
+      : [];
+
+    return {
+      kind,
+      outcomeIf: convertBranch(record["outcomeIf"], convertOutcomeRule),
+      ...(elseIfs.length ? { outcomeElseIfs: elseIfs } : {}),
+      ...(isRecord(record["outcomeElse"])
+        ? {
+            outcomeElse: {
+              rules: (Array.isArray(record["outcomeElse"]["actions"]) ? record["outcomeElse"]["actions"] : []).map(
+                convertOutcomeRule,
+              ),
+            },
+          }
+        : {}),
+    };
+  }
+
+  return {
+    kind,
+    ...(typeof record["identifier"] === "string" ? { identifier: record["identifier"] } : {}),
+    ...(record["expression"] !== undefined ? { expression: convertExpression(record["expression"]) } : {}),
+  };
+}
+
+function convertItemRef(ref: Record<string, unknown>): AssessmentItemRefView {
+  return {
+    kind: "assessmentItemRef",
+    identifier: typeof ref["identifier"] === "string" ? ref["identifier"] : "",
+    ...(typeof ref["href"] === "string" ? { href: ref["href"] } : {}),
+    ...(Array.isArray(ref["category"]) ? { categories: ref["category"] as string[] } : {}),
+    ...(typeof ref["fixed"] === "boolean" ? { fixed: ref["fixed"] } : {}),
+    ...(typeof ref["required"] === "boolean" ? { required: ref["required"] } : {}),
+    ...(ref["preConditions"] !== undefined ? { preConditions: convertPreConditions(ref["preConditions"]) } : {}),
+    ...(ref["branchRules"] !== undefined ? { branchRules: convertBranchRules(ref["branchRules"]) } : {}),
+  };
+}
+
+function convertSection(section: Record<string, unknown>): AssessmentSectionView {
+  // No `kind` discriminator in the normalized shape: sections carry `visible`/`title`,
+  // item refs an `href`. (Unresolved section-refs share the item-ref shape; the corpus
+  // has none and external sections need a package loader anyway.)
+  const children = asRecords(section["children"]).map((child) =>
+    child["visible"] !== undefined || child["children"] !== undefined ? convertSection(child) : convertItemRef(child),
+  );
+
+  return {
+    kind: "assessmentSection",
+    identifier: typeof section["identifier"] === "string" ? section["identifier"] : "",
+    ...(typeof section["title"] === "string" ? { title: section["title"] } : {}),
+    ...(typeof section["visible"] === "boolean" ? { visible: section["visible"] } : {}),
+    ...(typeof section["fixed"] === "boolean" ? { fixed: section["fixed"] } : {}),
+    ...(typeof section["required"] === "boolean" ? { required: section["required"] } : {}),
+    ...(isRecord(section["selection"])
+      ? { selection: section["selection"] as unknown as AssessmentSectionView["selection"] }
+      : {}),
+    ...(isRecord(section["ordering"])
+      ? { ordering: section["ordering"] as unknown as AssessmentSectionView["ordering"] }
+      : {}),
+    ...(section["preConditions"] !== undefined
+      ? { preConditions: convertPreConditions(section["preConditions"]) }
+      : {}),
+    ...(section["branchRules"] !== undefined ? { branchRules: convertBranchRules(section["branchRules"]) } : {}),
+    children,
+  };
+}
+
+function convertTestFeedback(feedback: Record<string, unknown>): TestFeedbackView {
+  const converted = convertContentValue(feedback) as Record<string, unknown>;
+
+  return {
+    outcomeIdentifier: typeof converted["outcomeIdentifier"] === "string" ? converted["outcomeIdentifier"] : "",
+    identifier: typeof converted["identifier"] === "string" ? converted["identifier"] : "",
+    ...(converted["access"] === "atEnd" || converted["access"] === "during" ? { access: converted["access"] } : {}),
+    ...(converted["showHide"] === "show" || converted["showHide"] === "hide"
+      ? { showHide: converted["showHide"] }
+      : {}),
+    ...(Array.isArray(converted["content"]) ? { content: converted["content"] as BodyNode[] } : {}),
+  };
+}
+
+/**
+ * Reshape a normalized QTI document into the Test Controller's `AssessmentTestView`,
+ * or null when it is not an assessment test.
+ */
+export function assessmentTestViewFromNormalized(document: unknown): AssessmentTestView | null {
+  if (!isRecord(document) || !isRecord(document["assessmentTest"])) {
+    return null;
+  }
+
+  const testDocument = document["assessmentTest"];
+  const outcomeRules = isRecord(testDocument["outcomeProcessing"])
+    ? testDocument["outcomeProcessing"]["rules"]
+    : undefined;
+
+  const testParts: TestPartView[] = asRecords(testDocument["testParts"]).map((part) => ({
+    identifier: typeof part["identifier"] === "string" ? part["identifier"] : "",
+    navigationMode: part["navigationMode"] === "nonlinear" ? "nonlinear" : "linear",
+    submissionMode: part["submissionMode"] === "simultaneous" ? "simultaneous" : "individual",
+    ...(part["preConditions"] !== undefined ? { preConditions: convertPreConditions(part["preConditions"]) } : {}),
+    ...(part["branchRules"] !== undefined ? { branchRules: convertBranchRules(part["branchRules"]) } : {}),
+    assessmentSections: asRecords(part["children"]).map(convertSection),
+  }));
+
+  return {
+    identifier: typeof testDocument["identifier"] === "string" ? testDocument["identifier"] : "",
+    ...(typeof testDocument["title"] === "string" ? { title: testDocument["title"] } : {}),
+    outcomeDeclarations: (testDocument["outcomeDeclarations"] as OutcomeDeclarationView[] | undefined) ?? [],
+    testParts,
+    ...(Array.isArray(outcomeRules)
+      ? { outcomeProcessing: { rules: outcomeRules.map(convertOutcomeRule) as unknown as readonly OutcomeRuleView[] } }
+      : {}),
+    ...(Array.isArray(testDocument["testFeedbacks"])
+      ? { testFeedbacks: asRecords(testDocument["testFeedbacks"]).map(convertTestFeedback) }
+      : {}),
   };
 }

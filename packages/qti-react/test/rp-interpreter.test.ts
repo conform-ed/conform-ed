@@ -40,6 +40,68 @@ describe("standard template URIs resolve to built-in canonical trees", () => {
     expect(run(template, {}).outcomes["SCORE"]).toBe(0);
   });
 
+  test("CC2_match scores 1/0 like match_correct", () => {
+    const view: ResponseProcessingView = {
+      template: "https://www.imsglobal.org/question/qti_v3p0/rptemplates/CC2_match.xml",
+    };
+
+    expect(run(view, { RESPONSE: "B" }).outcomes["SCORE"]).toBe(1);
+    expect(run(view, { RESPONSE: "A" }).outcomes["SCORE"]).toBe(0);
+  });
+
+  test("CC2_match_basic awards MAXSCORE and sets FEEDBACKBASIC", () => {
+    const view: ResponseProcessingView = {
+      template: "https://www.imsglobal.org/question/qti_v3p0/rptemplates/CC2_match_basic.xml",
+    };
+    const outcomes: readonly OutcomeDeclarationView[] = [
+      scoreOutcome,
+      {
+        identifier: "MAXSCORE",
+        cardinality: "single",
+        baseType: "float",
+        defaultValue: { values: [{ value: 10 }] },
+      },
+      { identifier: "FEEDBACKBASIC", cardinality: "single", baseType: "identifier" },
+    ];
+
+    const correct = run(view, { RESPONSE: "B" }, [singleChoice], outcomes);
+    expect(correct.outcomes["SCORE"]).toBe(10);
+    expect(correct.outcomes["FEEDBACKBASIC"]).toBe("correct");
+
+    const wrong = run(view, { RESPONSE: "A" }, [singleChoice], outcomes);
+    expect(wrong.outcomes["FEEDBACKBASIC"]).toBe("incorrect");
+  });
+
+  test("CC2_map_response maps the response and derives FEEDBACK from MAXSCORE", () => {
+    const view: ResponseProcessingView = {
+      template: "https://www.imsglobal.org/question/qti_v3p0/rptemplates/CC2_map_response.xml",
+    };
+    const mapped: ResponseDeclarationView = {
+      identifier: "RESPONSE",
+      cardinality: "single",
+      baseType: "string",
+      mapping: { defaultValue: 0, mapEntries: [{ mapKey: "york", mappedValue: 1 }] },
+    };
+    const outcomes: readonly OutcomeDeclarationView[] = [
+      scoreOutcome,
+      {
+        identifier: "MAXSCORE",
+        cardinality: "single",
+        baseType: "float",
+        defaultValue: { values: [{ value: 1 }] },
+      },
+      { identifier: "FEEDBACK", cardinality: "single", baseType: "identifier" },
+    ];
+
+    const full = run(view, { RESPONSE: "york" }, [mapped], outcomes);
+    expect(full.outcomes["SCORE"]).toBe(1);
+    expect(full.outcomes["FEEDBACK"]).toBe("correct");
+
+    const empty = run(view, { RESPONSE: null }, [mapped], outcomes);
+    expect(empty.outcomes["SCORE"]).toBe(0);
+    expect(empty.outcomes["FEEDBACK"]).toBe("incorrect");
+  });
+
   test("map_response: maps members, null response scores 0", () => {
     const mapped: ResponseDeclarationView = {
       identifier: "RESPONSE",

@@ -14,7 +14,7 @@ export {
 
 export { foldString, mapResponse, matchCorrect, mapResponsePoint, scoreResponse } from "./response-processing";
 
-export { assessmentItemViewFromNormalized } from "./normalized-item";
+export { assessmentItemViewFromNormalized, assessmentTestViewFromNormalized } from "./normalized-item";
 
 export { formatPoint, parseCoords, parsePoint, pointInShape, type Point, type QtiShape } from "./graphic";
 
@@ -48,6 +48,24 @@ export type {
 } from "./rp";
 
 export { createAttemptStore, type AttemptSnapshot, type AttemptStore, type AttemptStoreOptions } from "./store";
+
+export {
+  createTestController,
+  type AssessmentItemRefView,
+  type AssessmentSectionView,
+  type AssessmentTestView,
+  type BranchRuleView,
+  type OutcomeConditionBranch,
+  type OutcomeRuleView,
+  type TestController,
+  type TestFeedbackView,
+  type TestItemResult,
+  type TestPartView,
+  type TestPlan,
+  type TestPlanItem,
+  type TestPlanPart,
+  type TestSessionState,
+} from "./test";
 
 export {
   createQtiRuntime,

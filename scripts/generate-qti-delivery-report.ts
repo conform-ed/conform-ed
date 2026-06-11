@@ -12,24 +12,32 @@ import path from "node:path";
 import {
   createQtiRuntime,
   assessmentItemViewFromNormalized,
+  assessmentTestViewFromNormalized,
+  createTestController,
   qtiCoreInteractions,
   referenceSkin,
 } from "../packages/qti-react/src";
 import { validateQtiXmlFile } from "../packages/qti-xml/src";
 
 type DeliveryStatus = "deliverable" | "undeliverable" | "schema-invalid" | "normalization-gap" | "unsupported-root";
+type DocumentType = "item" | "test";
 
 interface DeliveryEntry {
   readonly relativePath: string;
+  readonly documentType: DocumentType;
   readonly status: DeliveryStatus;
   readonly blockers: readonly string[];
 }
 
+type StatusTotals = Record<DeliveryStatus, number> & { items: number };
+
 interface DeliveryReport {
   readonly rootPath: string;
   readonly generatedAt: string;
-  readonly totals: Record<DeliveryStatus, number> & { items: number };
+  readonly totals: StatusTotals;
   readonly coverage: number;
+  readonly testTotals: StatusTotals;
+  readonly testCoverage: number;
   readonly blockerHistogram: ReadonlyArray<{ blocker: string; count: number }>;
   readonly entries: readonly DeliveryEntry[];
 }
@@ -68,41 +76,84 @@ async function classify(rootPath: string, filePath: string): Promise<DeliveryEnt
   const relativePath = path.relative(rootPath, filePath).split(path.sep).join("/");
   const result = await validateQtiXmlFile(filePath);
 
-  if (
-    result.rootDetection?.inferredVersion !== "3.0.1" ||
-    result.rootDetection.schemaSelectionKey !== "qtiAssessmentItemDocument"
-  ) {
-    return null; // the meter measures QTI 3 assessment items only
+  if (result.rootDetection?.inferredVersion !== "3.0.1") {
+    return null;
+  }
+
+  const documentType: DocumentType | null =
+    result.rootDetection.schemaSelectionKey === "qtiAssessmentItemDocument"
+      ? "item"
+      : result.rootDetection.schemaSelectionKey === "qtiAssessmentTestDocument"
+        ? "test"
+        : null;
+
+  if (documentType === null) {
+    return null; // the meter measures QTI 3 assessment items and tests
   }
 
   if (result.status === "unsupported") {
-    return { relativePath, status: "unsupported-root", blockers: [] };
+    return { relativePath, documentType, status: "unsupported-root", blockers: [] };
   }
 
   if (result.status === "parse-error") {
     const blockers = result.issues.map((issue) => normalizationBlocker(issue.message));
 
-    return { relativePath, status: "normalization-gap", blockers };
+    return { relativePath, documentType, status: "normalization-gap", blockers };
   }
 
   if (result.status === "invalid") {
-    return { relativePath, status: "schema-invalid", blockers: ["contracts-schema"] };
+    return { relativePath, documentType, status: "schema-invalid", blockers: ["contracts-schema"] };
+  }
+
+  if (documentType === "test") {
+    const view = assessmentTestViewFromNormalized(result.normalizedDocument);
+
+    if (!view) {
+      return { relativePath, documentType, status: "normalization-gap", blockers: ["normalize:no-assessment-test"] };
+    }
+
+    try {
+      const controller = createTestController(view, { seed: 1 });
+      const planItems = controller.plan.parts.reduce((count, part) => count + part.items.length, 0);
+
+      if (controller.issues.length === 0 && planItems > 0) {
+        return { relativePath, documentType, status: "deliverable", blockers: [] };
+      }
+
+      return {
+        relativePath,
+        documentType,
+        status: "undeliverable",
+        blockers:
+          planItems === 0
+            ? ["test-controller:empty-plan"]
+            : controller.issues.map((issue) => `${issue.type}:${issue.name}`),
+      };
+    } catch (error) {
+      return {
+        relativePath,
+        documentType,
+        status: "undeliverable",
+        blockers: [`test-controller:${error instanceof Error ? error.message.slice(0, 60) : String(error)}`],
+      };
+    }
   }
 
   const view = assessmentItemViewFromNormalized(result.normalizedDocument);
 
   if (!view) {
-    return { relativePath, status: "normalization-gap", blockers: ["normalize:no-assessment-item"] };
+    return { relativePath, documentType, status: "normalization-gap", blockers: ["normalize:no-assessment-item"] };
   }
 
   const report = runtime.canDeliver(view);
 
   if (report.deliverable) {
-    return { relativePath, status: "deliverable", blockers: [] };
+    return { relativePath, documentType, status: "deliverable", blockers: [] };
   }
 
   return {
     relativePath,
+    documentType,
     status: "undeliverable",
     blockers: report.issues.map((issue) => `${issue.type}:${issue.name}`),
   };
@@ -125,19 +176,31 @@ async function main(): Promise<number> {
     }
   }
 
-  const totals: DeliveryReport["totals"] = {
-    items: entries.length,
-    deliverable: 0,
-    undeliverable: 0,
-    "schema-invalid": 0,
-    "normalization-gap": 0,
-    "unsupported-root": 0,
-  };
+  function tally(documentType: DocumentType): StatusTotals {
+    const totals: StatusTotals = {
+      items: 0,
+      deliverable: 0,
+      undeliverable: 0,
+      "schema-invalid": 0,
+      "normalization-gap": 0,
+      "unsupported-root": 0,
+    };
+
+    for (const entry of entries) {
+      if (entry.documentType === documentType) {
+        totals.items += 1;
+        totals[entry.status] += 1;
+      }
+    }
+
+    return totals;
+  }
+
+  const totals = tally("item");
+  const testTotals = tally("test");
   const histogram = new Map<string, number>();
 
   for (const entry of entries) {
-    totals[entry.status] += 1;
-
     for (const blocker of entry.blockers) {
       histogram.set(blocker, (histogram.get(blocker) ?? 0) + 1);
     }
@@ -148,6 +211,8 @@ async function main(): Promise<number> {
     generatedAt: new Date().toISOString(),
     totals,
     coverage: totals.items === 0 ? 0 : totals.deliverable / totals.items,
+    testTotals,
+    testCoverage: testTotals.items === 0 ? 0 : testTotals.deliverable / testTotals.items,
     blockerHistogram: [...histogram].map(([blocker, count]) => ({ blocker, count })).sort((a, b) => b.count - a.count),
     entries,
   };
@@ -160,6 +225,11 @@ async function main(): Promise<number> {
     `QTI 3 items: ${totals.items} | deliverable: ${totals.deliverable} (${(report.coverage * 100).toFixed(1)}%) | ` +
       `undeliverable: ${totals.undeliverable} | normalization-gap: ${totals["normalization-gap"]} | ` +
       `schema-invalid: ${totals["schema-invalid"]} | unsupported-root: ${totals["unsupported-root"]}`,
+  );
+  console.log(
+    `QTI 3 tests: ${testTotals.items} | deliverable: ${testTotals.deliverable} (${(report.testCoverage * 100).toFixed(1)}%) | ` +
+      `undeliverable: ${testTotals.undeliverable} | normalization-gap: ${testTotals["normalization-gap"]} | ` +
+      `schema-invalid: ${testTotals["schema-invalid"]}`,
   );
   console.log("\nTop blockers:");
 

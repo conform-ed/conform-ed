@@ -538,6 +538,104 @@ test("qti-equal carries its tolerance window", async () => {
   });
 });
 
+test("assessment tests: outcome processing, feedback, branch rules, selection/ordering, itemRef metadata", async () => {
+  const directory = await mkdtemp(path.join(tmpdir(), "conform-ed-normalize-v3-"));
+  createdDirectories.push(directory);
+  const filePath = path.join(directory, "test.xml");
+  await writeFile(
+    filePath,
+    `<?xml version="1.0" encoding="UTF-8"?>
+<qti-assessment-test xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0" identifier="TEST-1" title="Unit Test">
+  <qti-outcome-declaration identifier="TOTAL" cardinality="single" base-type="float"/>
+  <qti-outcome-declaration identifier="GRADE" cardinality="single" base-type="identifier"/>
+  <qti-test-part identifier="PART-1" navigation-mode="nonlinear" submission-mode="individual">
+    <qti-assessment-section identifier="SECTION-1" title="Pool" visible="true">
+      <qti-selection select="2" with-replacement="false"/>
+      <qti-ordering shuffle="true"/>
+      <qti-rubric-block view="candidate" use="instructions"><p>Answer two questions.</p></qti-rubric-block>
+      <qti-assessment-item-ref identifier="ITEM-1" href="items/one.xml" category="easy practice">
+        <qti-weight identifier="W1" value="2"/>
+      </qti-assessment-item-ref>
+      <qti-assessment-item-ref identifier="ITEM-2" href="items/two.xml" fixed="true">
+        <qti-pre-condition>
+          <qti-match>
+            <qti-variable identifier="ITEM-1.SCORE"/>
+            <qti-base-value base-type="float">1</qti-base-value>
+          </qti-match>
+        </qti-pre-condition>
+        <qti-branch-rule target="EXIT_TEST">
+          <qti-is-null><qti-variable identifier="ITEM-1.RESPONSE"/></qti-is-null>
+        </qti-branch-rule>
+      </qti-assessment-item-ref>
+    </qti-assessment-section>
+  </qti-test-part>
+  <qti-outcome-processing>
+    <qti-set-outcome-value identifier="TOTAL">
+      <qti-sum><qti-test-variables variable-identifier="SCORE"/></qti-sum>
+    </qti-set-outcome-value>
+    <qti-outcome-condition>
+      <qti-outcome-if>
+        <qti-gte><qti-variable identifier="TOTAL"/><qti-base-value base-type="float">1</qti-base-value></qti-gte>
+        <qti-set-outcome-value identifier="GRADE"><qti-base-value base-type="identifier">pass</qti-base-value></qti-set-outcome-value>
+      </qti-outcome-if>
+      <qti-outcome-else>
+        <qti-set-outcome-value identifier="GRADE"><qti-base-value base-type="identifier">fail</qti-base-value></qti-set-outcome-value>
+      </qti-outcome-else>
+    </qti-outcome-condition>
+  </qti-outcome-processing>
+  <qti-test-feedback access="atEnd" outcome-identifier="GRADE" show-hide="show" identifier="pass" title="Done">
+    <qti-content-body><p>You passed.</p></qti-content-body>
+  </qti-test-feedback>
+</qti-assessment-test>
+`,
+    "utf8",
+  );
+
+  const result = await validateQtiXmlFile(filePath);
+  expect(result.issues).toEqual([]);
+  expect(result.status).toBe("valid");
+
+  const test = (result.normalizedDocument as { assessmentTest: Record<string, unknown> }).assessmentTest;
+  const part = (test["testParts"] as Array<Record<string, unknown>>)[0]!;
+  const section = (part["children"] as Array<Record<string, unknown>>)[0]!;
+
+  expect(section["selection"]).toEqual({ select: 2, withReplacement: false });
+  expect(section["ordering"]).toEqual({ shuffle: true });
+  expect((section["rubricBlocks"] as Array<Record<string, unknown>>)[0]).toMatchObject({
+    kind: "testRubricBlock",
+    view: ["candidate"],
+    use: "instructions",
+  });
+
+  const [refOne, refTwo] = section["children"] as Array<Record<string, unknown>>;
+  expect(refOne).toMatchObject({
+    identifier: "ITEM-1",
+    category: ["easy", "practice"],
+    weights: [{ identifier: "W1", value: 2 }],
+  });
+  expect(refTwo).toMatchObject({ identifier: "ITEM-2", fixed: true });
+  expect((refTwo!["preConditions"] as unknown[]).length).toBe(1);
+  expect((refTwo!["branchRules"] as Array<Record<string, unknown>>)[0]).toMatchObject({
+    kind: "branchRule",
+    target: "EXIT_TEST",
+  });
+
+  const outcomeProcessing = test["outcomeProcessing"] as { rules: Array<Record<string, unknown>> };
+  expect(outcomeProcessing.rules[0]).toMatchObject({ kind: "setOutcomeValue", identifier: "TOTAL" });
+  const condition = outcomeProcessing.rules[1]!;
+  expect(condition["kind"]).toBe("outcomeCondition");
+  expect((condition["outcomeIf"] as Record<string, unknown>)["kind"]).toBe("outcomeIf");
+  expect((condition["outcomeElse"] as Record<string, unknown>)["kind"]).toBe("outcomeElse");
+
+  expect((test["testFeedbacks"] as Array<Record<string, unknown>>)[0]).toMatchObject({
+    kind: "testFeedback",
+    access: "atEnd",
+    outcomeIdentifier: "GRADE",
+    identifier: "pass",
+    title: "Done",
+  });
+});
+
 test("outcome declarations carry lookup tables; stylesheets map on the item", async () => {
   const item = await normalizeItem(
     wrapItem(`
