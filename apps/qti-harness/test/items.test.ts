@@ -22,6 +22,6 @@ describe("harness sample items", () => {
 
     expect(report.deliverable).toBe(false);
     expect(report.issues[0]?.type).toBe("unsupported-interaction");
-    expect(report.issues[0]?.name).toBe("hotspotInteraction");
+    expect(report.issues[0]?.name).toBe("drawingInteraction");
   });
 });

@@ -11,6 +11,12 @@ import { AssociateReferenceSkin } from "./associate";
 import { ChoiceReferenceSkin } from "./choice";
 import { ExtendedTextReferenceSkin } from "./extended-text";
 import { GapMatchReferenceSkin } from "./gap-match";
+import { GraphicAssociateReferenceSkin } from "./graphic-associate";
+import { GraphicGapMatchReferenceSkin } from "./graphic-gap-match";
+import { GraphicOrderReferenceSkin } from "./graphic-order";
+import { HotspotReferenceSkin } from "./hotspot";
+import { PositionObjectReferenceSkin } from "./position-object";
+import { SelectPointReferenceSkin } from "./select-point";
 import { HottextReferenceSkin } from "./hottext";
 import { InlineChoiceReferenceSkin } from "./inline-choice";
 import { MatchReferenceSkin } from "./match";
@@ -25,6 +31,13 @@ export { AssociateReferenceSkin } from "./associate";
 export { ChoiceReferenceSkin } from "./choice";
 export { ExtendedTextReferenceSkin } from "./extended-text";
 export { GapMatchReferenceSkin } from "./gap-match";
+export { GraphicAssociateReferenceSkin } from "./graphic-associate";
+export { GraphicGapMatchReferenceSkin } from "./graphic-gap-match";
+export { GraphicOrderReferenceSkin } from "./graphic-order";
+export { GraphicStage, shapeCenter, shapeElement } from "./graphic-base";
+export { HotspotReferenceSkin } from "./hotspot";
+export { PositionObjectReferenceSkin } from "./position-object";
+export { SelectPointReferenceSkin } from "./select-point";
 export { HottextReferenceSkin } from "./hottext";
 export { InlineChoiceReferenceSkin } from "./inline-choice";
 export { MatchReferenceSkin } from "./match";
@@ -39,11 +52,17 @@ export const referenceSkin: SkinRegistry = {
   choiceInteraction: ChoiceReferenceSkin,
   extendedTextInteraction: ExtendedTextReferenceSkin,
   gapMatchInteraction: GapMatchReferenceSkin,
+  graphicAssociateInteraction: GraphicAssociateReferenceSkin,
+  graphicGapMatchInteraction: GraphicGapMatchReferenceSkin,
+  graphicOrderInteraction: GraphicOrderReferenceSkin,
+  hotspotInteraction: HotspotReferenceSkin,
   hottextInteraction: HottextReferenceSkin,
   inlineChoiceInteraction: InlineChoiceReferenceSkin,
   matchInteraction: MatchReferenceSkin,
   mediaInteraction: MediaReferenceSkin,
   orderInteraction: OrderReferenceSkin,
+  positionObjectStage: PositionObjectReferenceSkin,
+  selectPointInteraction: SelectPointReferenceSkin,
   sliderInteraction: SliderReferenceSkin,
   textEntryInteraction: TextEntryReferenceSkin,
   uploadInteraction: UploadReferenceSkin,

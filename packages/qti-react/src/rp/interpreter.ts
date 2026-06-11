@@ -6,7 +6,7 @@
  */
 
 import type { CapabilityIssue } from "../capability";
-import { mapResponse } from "../response-processing";
+import { mapResponse, mapResponsePoint } from "../response-processing";
 import type { ResponseDeclarationView } from "../types";
 
 import { resolveTemplate } from "./templates";
@@ -47,6 +47,7 @@ const supportedExpressionKinds = new Set([
   "lt",
   "lte",
   "mapResponse",
+  "mapResponsePoint",
   "match",
   "member",
   "multiple",
@@ -154,6 +155,17 @@ export function executeResponseProcessing(
         }
 
         return floatValue(mapResponse(declaration, context.responses[identifier] ?? null, context.normalization));
+      }
+
+      case "mapResponsePoint": {
+        const identifier = expression.identifier ?? "";
+        const declaration = declarationsById.get(identifier);
+
+        if (!declaration) {
+          return null;
+        }
+
+        return floatValue(mapResponsePoint(declaration, context.responses[identifier] ?? null));
       }
 
       case "match": {

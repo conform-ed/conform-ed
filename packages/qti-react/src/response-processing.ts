@@ -9,6 +9,7 @@
  * so scoring is replayable and runs fully offline in the headless core.
  */
 
+import { parsePoint, pointInShape } from "./graphic";
 import type { ResponseNormalization } from "./rp/types";
 import type { ResponseDeclarationView, ResponseValue, ScoreResult } from "./types";
 
@@ -72,6 +73,15 @@ function makeValueComparator(
 
   if (declaration.baseType !== undefined && numericBaseTypes.has(declaration.baseType)) {
     return (a, b) => a.trim() !== "" && b.trim() !== "" && Number(a) === Number(b);
+  }
+
+  if (declaration.baseType === "point") {
+    return (a, b) => {
+      const pointA = parsePoint(a);
+      const pointB = parsePoint(b);
+
+      return pointA !== null && pointB !== null && pointA.x === pointB.x && pointA.y === pointB.y;
+    };
   }
 
   if (normalize && isStringBaseType(declaration)) {
@@ -192,8 +202,47 @@ export function mapResponse(
 }
 
 /**
- * Apply the appropriate standard template: `map_response` when a mapping is declared,
- * otherwise `match_correct`. `maxScore` is the mapping upper bound (or the sum of
+ * `map_response_point`: sum the mapped values of the areas hit by the response's point
+ * members. Per spec each area counts at most once regardless of how many points land in
+ * it; points hitting no area add the mapping's `defaultValue`. Clamps to
+ * [lowerBound, upperBound]. Returns 0 when no areaMapping exists.
+ */
+export function mapResponsePoint(declaration: ResponseDeclarationView, response: ResponseValue): number {
+  const areaMapping = declaration.areaMapping;
+
+  if (!areaMapping) {
+    return 0;
+  }
+
+  const defaultValue = areaMapping.defaultValue ?? 0;
+  const usedAreas = new Set<number>();
+  let total = 0;
+
+  for (const member of asList(response)) {
+    const point = parsePoint(member);
+
+    if (!point) {
+      continue;
+    }
+
+    const areaIndex = areaMapping.areaMapEntries.findIndex(
+      (entry, index) => !usedAreas.has(index) && pointInShape(entry.shape, entry.coords, point),
+    );
+
+    if (areaIndex === -1) {
+      total += defaultValue;
+    } else {
+      usedAreas.add(areaIndex);
+      total += areaMapping.areaMapEntries[areaIndex]!.mappedValue;
+    }
+  }
+
+  return clamp(total, areaMapping.lowerBound, areaMapping.upperBound);
+}
+
+/**
+ * Apply the appropriate standard template: `map_response_point` when an areaMapping is
+ * declared, `map_response` when a mapping is declared, otherwise `match_correct`. `maxScore` is the mapping upper bound (or the sum of
  * positive mapped values) for mapped items, else 1 for match_correct. This heuristic
  * backs the per-interaction feedback chrome; item outcomes of record come from the RP
  * interpreter when the item declares `responseProcessing`.
@@ -203,6 +252,22 @@ export function scoreResponse(
   response: ResponseValue,
   normalize?: ResponseNormalization,
 ): ScoreResult {
+  if (declaration.areaMapping) {
+    const score = mapResponsePoint(declaration, response);
+    const positiveSum = declaration.areaMapping.areaMapEntries.reduce(
+      (sum, entry) => sum + Math.max(entry.mappedValue, 0),
+      0,
+    );
+    const maxScore = declaration.areaMapping.upperBound ?? positiveSum;
+
+    return {
+      identifier: declaration.identifier,
+      score,
+      maxScore,
+      correct: maxScore > 0 && score >= maxScore,
+    };
+  }
+
   if (declaration.mapping) {
     const score = mapResponse(declaration, response, normalize);
     const positiveSum = declaration.mapping.mapEntries.reduce((sum, entry) => sum + Math.max(entry.mappedValue, 0), 0);

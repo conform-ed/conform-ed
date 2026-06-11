@@ -58,9 +58,35 @@ const mapResponseRules: readonly RpRuleView[] = [
   },
 ];
 
+const mapResponsePointRules: readonly RpRuleView[] = [
+  {
+    kind: "responseCondition",
+    responseIf: {
+      expression: { kind: "isNull", expressions: [{ kind: "variable", identifier: "RESPONSE" }] },
+      rules: [
+        {
+          kind: "setOutcomeValue",
+          identifier: "SCORE",
+          expression: { kind: "baseValue", baseType: "float", value: 0 },
+        },
+      ],
+    },
+    responseElse: {
+      rules: [
+        {
+          kind: "setOutcomeValue",
+          identifier: "SCORE",
+          expression: { kind: "mapResponsePoint", identifier: "RESPONSE" },
+        },
+      ],
+    },
+  },
+];
+
 const templatesBySegment: ReadonlyMap<string, readonly RpRuleView[]> = new Map([
   ["match_correct", matchCorrectRules],
   ["map_response", mapResponseRules],
+  ["map_response_point", mapResponsePointRules],
 ]);
 
 /** Resolve a standard-template URI to its canonical rules, or null when unknown. */

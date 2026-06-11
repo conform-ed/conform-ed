@@ -16,7 +16,8 @@ describe("content model allowlist", () => {
   test("recognizes shipped interaction kinds", () => {
     expect(isInteractionKind(v0ContentModel, "choiceInteraction")).toBe(true);
     expect(isInteractionKind(v0ContentModel, "uploadInteraction")).toBe(true);
-    expect(isInteractionKind(v0ContentModel, "hotspotInteraction")).toBe(false);
+    expect(isInteractionKind(v0ContentModel, "hotspotInteraction")).toBe(true);
+    expect(isInteractionKind(v0ContentModel, "drawingInteraction")).toBe(false);
   });
 });
 

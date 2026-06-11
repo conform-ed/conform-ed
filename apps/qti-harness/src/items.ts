@@ -12,6 +12,15 @@ export interface HarnessItem {
   readonly item: AssessmentItemView;
 }
 
+/** An inline two-island "map" so graphic stages display without packaged assets. */
+const harnessStageImage = `data:image/svg+xml,${encodeURIComponent(
+  `<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300">
+    <rect width="400" height="300" fill="#bfdbfe"/>
+    <circle cx="110" cy="150" r="55" fill="#86efac"/>
+    <circle cx="290" cy="150" r="55" fill="#fcd34d"/>
+  </svg>`,
+)}`;
+
 export const harnessItems: readonly HarnessItem[] = [
   {
     id: "choice-single",
@@ -493,24 +502,78 @@ export const harnessItems: readonly HarnessItem[] = [
     },
   },
   {
-    id: "unsupported",
-    title: "hotspotInteraction — not yet supported (capability gate demo)",
+    id: "hotspot",
+    title: "hotspotInteraction — click a region",
     item: {
       responseDeclarations: [
         {
           identifier: "RESPONSE",
           cardinality: "single",
           baseType: "identifier",
-          correctResponse: { values: [{ value: "A" }] },
+          correctResponse: { values: [{ value: "EAST" }] },
         },
       ],
+      outcomeDeclarations: [{ identifier: "SCORE", cardinality: "single", baseType: "float" }],
+      responseProcessing: { template: "https://purl.imsglobal.org/spec/qti/v3p0/rptemplates/match_correct" },
       itemBody: {
         content: [
-          { kind: "xml", name: "p", value: "Click the region on the image." },
+          { kind: "xml", name: "p", value: "Click the eastern island." },
           {
             kind: "hotspotInteraction",
             responseIdentifier: "RESPONSE",
-            hotspotChoices: [{ identifier: "A" }, { identifier: "B" }],
+            object: { data: harnessStageImage, width: 400, height: 300 },
+            maxChoices: 1,
+            hotspotChoices: [
+              { identifier: "WEST", shape: "circle", coords: [110, 150, 60] },
+              { identifier: "EAST", shape: "circle", coords: [290, 150, 60] },
+            ],
+          },
+        ],
+      },
+    },
+  },
+  {
+    id: "select-point",
+    title: "selectPointInteraction — areaMapping scoring",
+    item: {
+      responseDeclarations: [
+        {
+          identifier: "RESPONSE",
+          cardinality: "single",
+          baseType: "point",
+          areaMapping: {
+            defaultValue: 0,
+            areaMapEntries: [{ shape: "circle", coords: [290, 150, 60], mappedValue: 1 }],
+          },
+        },
+      ],
+      outcomeDeclarations: [{ identifier: "SCORE", cardinality: "single", baseType: "float" }],
+      responseProcessing: { template: "https://purl.imsglobal.org/spec/qti/v3p0/rptemplates/map_response_point" },
+      itemBody: {
+        content: [
+          { kind: "xml", name: "p", value: "Mark the eastern island by clicking it." },
+          {
+            kind: "selectPointInteraction",
+            responseIdentifier: "RESPONSE",
+            object: { data: harnessStageImage, width: 400, height: 300 },
+            maxChoices: 1,
+          },
+        ],
+      },
+    },
+  },
+  {
+    id: "unsupported",
+    title: "drawingInteraction — not yet supported (capability gate demo)",
+    item: {
+      responseDeclarations: [{ identifier: "RESPONSE", cardinality: "single", baseType: "file" }],
+      itemBody: {
+        content: [
+          { kind: "xml", name: "p", value: "Sketch the kanji stroke order." },
+          {
+            kind: "drawingInteraction",
+            responseIdentifier: "RESPONSE",
+            object: { data: "images/grid.png", width: 200, height: 200 },
           },
         ],
       },

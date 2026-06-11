@@ -6,6 +6,7 @@
  * numerically.
  */
 
+import { parsePoint } from "../graphic";
 import type { Cardinality, ResponseDeclarationView, ResponseValue } from "../types";
 import type { OutcomeValue, ResponseNormalization, RpScalar } from "./types";
 
@@ -110,6 +111,17 @@ export function scalarsEqual(
 ): boolean {
   if (baseType === "pair" || baseType === "directedPair") {
     return typeof a === "string" && typeof b === "string" && pairsEqual(a, b, baseType === "directedPair");
+  }
+
+  if (baseType === "point") {
+    if (typeof a !== "string" || typeof b !== "string") {
+      return false;
+    }
+
+    const pointA = parsePoint(a);
+    const pointB = parsePoint(b);
+
+    return pointA !== null && pointB !== null && pointA.x === pointB.x && pointA.y === pointB.y;
   }
 
   if (typeof a === "number" || typeof b === "number") {

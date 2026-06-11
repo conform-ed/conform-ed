@@ -27,12 +27,27 @@ export interface MappingView {
   readonly defaultValue?: number;
 }
 
+/** One scored area for point responses (QTI `areaMapEntry`). */
+export interface AreaMapEntryView {
+  readonly shape: string;
+  readonly coords: readonly number[];
+  readonly mappedValue: number;
+}
+
+export interface AreaMappingView {
+  readonly areaMapEntries: readonly AreaMapEntryView[];
+  readonly lowerBound?: number;
+  readonly upperBound?: number;
+  readonly defaultValue?: number;
+}
+
 export interface ResponseDeclarationView {
   readonly identifier: string;
   readonly cardinality: Cardinality;
   readonly baseType?: string;
   readonly correctResponse?: CorrectResponseView;
   readonly mapping?: MappingView;
+  readonly areaMapping?: AreaMappingView;
 }
 
 /** The scored outcome for one response variable. */

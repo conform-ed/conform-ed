@@ -12,7 +12,9 @@ export {
   type V0InteractionKind,
 } from "./content-model";
 
-export { foldString, mapResponse, matchCorrect, scoreResponse } from "./response-processing";
+export { foldString, mapResponse, matchCorrect, mapResponsePoint, scoreResponse } from "./response-processing";
+
+export { formatPoint, parseCoords, parsePoint, pointInShape, type Point, type QtiShape } from "./graphic";
 
 export { collectRpIssues, executeResponseProcessing, resolveTemplate } from "./rp";
 
@@ -61,12 +63,18 @@ export {
   choiceInteraction,
   extendedTextInteraction,
   gapMatchInteraction,
+  graphicAssociateInteraction,
+  graphicGapMatchInteraction,
+  graphicOrderInteraction,
+  hotspotInteraction,
   hottextInteraction,
   inlineChoiceInteraction,
   matchInteraction,
   mediaInteraction,
   orderInteraction,
+  positionObjectStage,
   qtiCoreInteractions,
+  selectPointInteraction,
   sliderInteraction,
   textEntryInteraction,
   uploadInteraction,
@@ -77,11 +85,18 @@ export {
   ChoiceReferenceSkin,
   ExtendedTextReferenceSkin,
   GapMatchReferenceSkin,
+  GraphicAssociateReferenceSkin,
+  GraphicGapMatchReferenceSkin,
+  GraphicOrderReferenceSkin,
+  GraphicStage,
+  HotspotReferenceSkin,
   HottextReferenceSkin,
   InlineChoiceReferenceSkin,
   MatchReferenceSkin,
   MediaReferenceSkin,
   OrderReferenceSkin,
+  PositionObjectReferenceSkin,
+  SelectPointReferenceSkin,
   SliderReferenceSkin,
   TextEntryReferenceSkin,
   UploadReferenceSkin,
@@ -90,6 +105,8 @@ export {
 } from "./reference-skin";
 
 export type {
+  AreaMapEntryView,
+  AreaMappingView,
   Cardinality,
   CorrectResponseView,
   MapEntryView,
