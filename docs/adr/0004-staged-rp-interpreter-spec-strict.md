@@ -29,11 +29,12 @@ published runtime must score spec content correctly out of the box.
   consumers but mis-scores spec content by default; consumers keep the
   behavior via one Response Normalization config instead.
 
-## Status update (2026-06): operator vocabulary complete
+## Status update (2026-06): expression vocabulary complete
 
-The staged growth reached its terminal milestone: the interpreter implements
-the full QTI 3 expression vocabulary, with semantics cited from the 3.0.1 ASI
-information model (§2.11) in the operator tests. Notes from the final tranche:
+The staged growth reached a major milestone, scoped precisely: the
+interpreter implements the full QTI 3 **expression** (operator) vocabulary of
+§2.11, with semantics cited from the 3.0.1 ASI information model in the
+operator tests. Notes from the final tranche:
 
 - `and`/`or`/`anyN` use the spec's three-valued logic (an undecided NULL
   operand makes the result NULL; a decisive operand wins outright).
@@ -49,8 +50,21 @@ information model (§2.11) in the operator tests. Notes from the final tranche:
   `durationGte`/`durationLt` and adaptive re-attempt logic. Item level only;
   test-level duration aggregation is future controller work.
 
-The remaining refusals are principled and permanent. They are motivated
-individually below.
+Expressions are not all of response processing, and this section must not be
+over-read. The **rule** vocabulary is still incomplete: `lookupOutcomeValue`
+(matchTable/interpolationTable scoring) and `responseProcessingFragment` are
+normalized by qti-xml but refused by the interpreter, and the test controller
+likewise refuses `qti-lookup-outcome-value` and
+`qti-outcome-processing-fragment` in outcome processing. Together with the
+controller's `outcomeMinimum`/`outcomeMaximum` (below), these are ordinary
+unfinished coverage — follow-ups with zero corpus demand today, not
+principled refusals. Nor does any of this amount to engine-wide QTI 3
+conformance: rendering coverage, test navigation semantics, feedback, PNP,
+and packaging are separate workstreams, and conformance is ultimately the
+certification suite's verdict, not this corpus's.
+
+The remaining _operator_ refusals, by contrast, are principled and permanent.
+They are motivated individually below.
 
 ## Permanent refusals, motivated
 
