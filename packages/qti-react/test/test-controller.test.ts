@@ -90,6 +90,62 @@ describe("plan resolution (seeded, deterministic)", () => {
     expect(plans.size).toBeGreaterThan(1);
   });
 
+  test("an invisible keep-together=false section mixes its children into the parent shuffle", () => {
+    // "An invisible section with a parent that is subject to shuffling can specify
+    // whether or not its children, which will appear to the candidate as if they were
+    // part of the parent, are shuffled as a block or mixed up with the other children
+    // of the parent section." (§4.2.7, default true)
+    const mixing = (keepTogether: boolean | undefined): AssessmentTestView => ({
+      identifier: "T-KT",
+      testParts: [
+        {
+          identifier: "P1",
+          navigationMode: "linear",
+          submissionMode: "individual",
+          assessmentSections: [
+            {
+              kind: "assessmentSection",
+              identifier: "S1",
+              ordering: { shuffle: true },
+              children: [
+                itemRef("A"),
+                itemRef("B"),
+                {
+                  kind: "assessmentSection",
+                  identifier: "INV",
+                  visible: false,
+                  ...(keepTogether === undefined ? {} : { keepTogether }),
+                  children: [itemRef("X"), itemRef("Y")],
+                },
+                itemRef("C"),
+              ],
+            },
+          ],
+        },
+      ],
+    });
+
+    // Default (keep-together true): the block stays intact in document order.
+    for (let seed = 0; seed < 10; seed += 1) {
+      const keys = createTestController(mixing(undefined), { seed }).plan.parts[0]!.items.map((item) => item.key);
+
+      expect(keys[keys.indexOf("X") + 1]).toBe("Y");
+    }
+
+    // keep-together=false: the children join the parent's pool individually.
+    const separated = Array.from({ length: 12 }, (_, seed) =>
+      createTestController(mixing(false), { seed }).plan.parts[0]!.items.map((item) => item.key),
+    ).some((keys) => Math.abs(keys.indexOf("X") - keys.indexOf("Y")) > 1);
+
+    expect(separated).toBe(true);
+
+    // Hoisted items keep their section identity (durations, subsets, limits).
+    const plan = createTestController(mixing(false), { seed: 1 }).plan;
+
+    expect(plan.parts[0]!.items.find((item) => item.key === "X")!.sectionPath).toEqual(["S1", "INV"]);
+    expect(Object.keys(plan.sections)).toContain("INV");
+  });
+
   test("fixed items keep their position under shuffle", () => {
     const fixedTest: AssessmentTestView = {
       identifier: "T3",

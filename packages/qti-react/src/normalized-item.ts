@@ -505,6 +505,7 @@ function convertSection(section: Record<string, unknown>): AssessmentSectionView
     ...(typeof section["visible"] === "boolean" ? { visible: section["visible"] } : {}),
     ...(typeof section["fixed"] === "boolean" ? { fixed: section["fixed"] } : {}),
     ...(typeof section["required"] === "boolean" ? { required: section["required"] } : {}),
+    ...(typeof section["keepTogether"] === "boolean" ? { keepTogether: section["keepTogether"] } : {}),
     ...(isRecord(section["selection"])
       ? { selection: section["selection"] as unknown as NonNullable<AssessmentSectionView["selection"]> }
       : {}),

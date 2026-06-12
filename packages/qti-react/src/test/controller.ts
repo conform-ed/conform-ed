@@ -136,10 +136,17 @@ function applySelection(children: readonly SectionChild[], select: number, rando
   return children.filter((child) => picked.has(child));
 }
 
-function applyOrdering(children: readonly SectionChild[], random: () => number): SectionChild[] {
+/** One orderable unit of a section: a direct child, or a child hoisted out of an
+ * invisible keep-together=false descendant (`via` = the dissolved section chain). */
+interface SectionUnit {
+  readonly child: SectionChild;
+  readonly via: readonly AssessmentSectionView[];
+}
+
+function applyOrdering(units: readonly SectionUnit[], random: () => number): SectionUnit[] {
   // Fixed children keep their positions; the rest shuffle into the remaining slots.
-  const result: (SectionChild | null)[] = children.map((child) => (child.fixed === true ? child : null));
-  const movable = children.filter((child) => child.fixed !== true);
+  const result: (SectionUnit | null)[] = units.map((unit) => (unit.child.fixed === true ? unit : null));
+  const movable = units.filter((unit) => unit.child.fixed !== true);
   const shuffled = seededPick(movable, movable.length, random);
   // seededPick preserves document order after picking; re-shuffle for ordering.
   for (let i = shuffled.length - 1; i > 0; i -= 1) {
@@ -151,6 +158,34 @@ function applyOrdering(children: readonly SectionChild[], random: () => number):
   let cursor = 0;
 
   return result.map((slot) => slot ?? shuffled[cursor++]!);
+}
+
+/**
+ * Under a shuffling parent, an invisible keep-together=false section's children are
+ * "mixed up with the other children of the parent section" (§4.2.7): the section
+ * dissolves into individual units (its own selection still applies first), each
+ * remembering the dissolved chain so identity, preconditions, and session control
+ * survive the hoist.
+ */
+function mixedUnits(
+  children: readonly SectionChild[],
+  random: () => number,
+  sections: Record<string, TestPlanSection>,
+): SectionUnit[] {
+  return children.flatMap((child) => {
+    if (child.kind !== "assessmentSection" || child.visible !== false || child.keepTogether !== false) {
+      return [{ child, via: [] }];
+    }
+
+    sections[child.identifier] = {
+      identifier: child.identifier,
+      ...(child.timeLimits ? { timeLimits: child.timeLimits } : {}),
+    };
+
+    const inner = child.selection ? applySelection(child.children, child.selection.select, random) : child.children;
+
+    return mixedUnits(inner, random, sections).map((unit) => ({ child: unit.child, via: [child, ...unit.via] }));
+  });
 }
 
 function resolveSection(
@@ -177,23 +212,33 @@ function resolveSection(
     children = applySelection(children, section.selection.select, random);
   }
 
+  let units: SectionUnit[] = children.map((child) => ({ child, via: [] }));
+
   if (section.ordering?.shuffle) {
-    children = applyOrdering(children, random);
+    // Mixing applies only "with a parent that is subject to shuffling" (§4.2.7).
+    units = applyOrdering(mixedUnits(children, random, sections), random);
   }
 
   const items: TestPlanItem[] = [];
 
-  for (const child of children) {
+  for (const { child, via } of units) {
+    const viaPath = [...path, ...via.map((entry) => entry.identifier)];
+    const viaPreConditions = [...preConditions, ...via.flatMap((entry) => entry.preConditions ?? [])];
+    const viaControl = via.reduce(
+      (merged, entry) => ({ ...merged, ...definedControl(entry.itemSessionControl) }),
+      control,
+    );
+
     if (child.kind === "assessmentSection") {
-      items.push(...resolveSection(child, partIdentifier, path, preConditions, control, random, sections));
+      items.push(...resolveSection(child, partIdentifier, viaPath, viaPreConditions, viaControl, random, sections));
     } else {
       items.push({
         key: child.identifier,
         ref: child,
         partIdentifier,
-        sectionPath: path,
-        preConditions: [...preConditions, ...(child.preConditions ?? [])],
-        sessionControl: { ...specSessionControlDefaults, ...control, ...definedControl(child.itemSessionControl) },
+        sectionPath: viaPath,
+        preConditions: [...viaPreConditions, ...(child.preConditions ?? [])],
+        sessionControl: { ...specSessionControlDefaults, ...viaControl, ...definedControl(child.itemSessionControl) },
         ...(child.timeLimits ? { timeLimits: child.timeLimits } : {}),
       });
     }

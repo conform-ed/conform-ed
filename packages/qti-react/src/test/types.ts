@@ -66,6 +66,12 @@ export interface AssessmentSectionView {
   readonly visible?: boolean;
   readonly fixed?: boolean;
   readonly required?: boolean;
+  /**
+   * For an invisible section under a shuffling parent: whether its children are
+   * "shuffled as a block or mixed up with the other children of the parent section"
+   * (§4.2.7). Default true (block).
+   */
+  readonly keepTogether?: boolean;
   readonly selection?: { readonly select: number; readonly withReplacement?: boolean };
   readonly ordering?: { readonly shuffle?: boolean };
   readonly preConditions?: readonly RpExpressionView[];
