@@ -33,8 +33,10 @@ export interface ItemSessionControlView {
 }
 
 /**
- * QTI `timeLimits` (seconds). The controller is clock-free by design (ADR-0005): these
- * are data for the consumer's timers, which call `next()`/`end()` when time runs out.
+ * QTI `timeLimits` (seconds). The controller enforces these under an injectable clock
+ * (`TestControllerOptions.now`): expiry checks fold elapsed time at every transition,
+ * and consumers drive their own timers by calling `tick()` (ADR-0005, "Timing and
+ * time limits"). The values still surface on the plan for consumer-side countdowns.
  */
 export interface TimeLimitsView {
   readonly minTime?: number;
@@ -146,9 +148,17 @@ export interface TestPlanPart {
   readonly items: readonly TestPlanItem[];
 }
 
+/** A section that survived selection, keyed for duration tracking and time limits. */
+export interface TestPlanSection {
+  readonly identifier: string;
+  readonly timeLimits?: TimeLimitsView;
+}
+
 export interface TestPlan {
   readonly timeLimits?: TimeLimitsView;
   readonly parts: readonly TestPlanPart[];
+  /** Every planned section by identifier (spec-unique across parts/sections/refs). */
+  readonly sections: Readonly<Record<string, TestPlanSection>>;
 }
 
 // ---------- Session state (consumer-persisted, plain JSON) ----------
@@ -164,6 +174,48 @@ export interface TestItemResult {
   readonly responded?: boolean;
   /** Adaptive items manage their own attempt lifecycle, so maxAttempts is ignored (spec). */
   readonly adaptive?: boolean;
+  /**
+   * The item session's elapsed seconds (`AttemptSnapshot.durationSeconds`). Resolves
+   * the built-in `ITEM.duration` in outcome processing; unreported → NULL.
+   */
+  readonly durationSeconds?: number;
+}
+
+/**
+ * Wall-clock accounting folded at every controller transition (and `tick()`).
+ * Durations are always "as of" `lastTransitionAtMs` — scoring and enforcement read
+ * recorded state only (ADR-0004 determinism). Until a suspend/resume API exists,
+ * these include all wall time between transitions.
+ */
+export interface TestTimingState {
+  /** Injected-clock milliseconds at the last fold. */
+  readonly lastTransitionAtMs: number;
+  /** Whole-test seconds (the bare `duration` built-in, §2.8.5). */
+  readonly testSeconds: number;
+  /** Seconds per test-part identifier (`P1.duration`). */
+  readonly partSeconds: Readonly<Record<string, number>>;
+  /** Seconds per section identifier — a leaf accrues to every ancestor (`S2.duration`). */
+  readonly sectionSeconds: Readonly<Record<string, number>>;
+  /**
+   * Seconds each item has been the current item — the enforcement clock for item
+   * minTime/maxTime. The `ITEM.duration` variable reads the consumer report instead.
+   */
+  readonly itemSeconds: Readonly<Record<string, number>>;
+}
+
+export type TimingScopeRef =
+  | { readonly kind: "test" }
+  | { readonly kind: "part"; readonly identifier: string }
+  | { readonly kind: "section"; readonly identifier: string }
+  | { readonly kind: "item"; readonly key: string };
+
+/** A late submission the controller refused (ADR-0003: no silent drops). */
+export interface RejectedSubmission {
+  readonly itemKey: string;
+  /** The innermost exceeded scope whose allowLateSubmission did not permit it. */
+  readonly scope: TimingScopeRef;
+  /** Test-scope seconds at rejection (audit stamp on the session clock). */
+  readonly atTestSeconds: number;
 }
 
 export interface TestSessionState {
@@ -186,6 +238,11 @@ export interface TestSessionState {
    */
   readonly pendingItemResults: Readonly<Record<string, TestItemResult>>;
   readonly testOutcomes: Readonly<Record<string, OutcomeValue>>;
+  /** Timing accumulators; absent on pre-timing persisted states (initialized lazily). */
+  readonly timing?: TestTimingState;
+  /** Latest consumer-reported item-session duration per item key (feeds `ITEM.duration`). */
+  readonly itemDurationSeconds?: Readonly<Record<string, number>>;
+  readonly rejectedSubmissions?: readonly RejectedSubmission[];
 }
 
 export interface TestController {
@@ -204,5 +261,11 @@ export interface TestController {
   readonly canSubmitItem: (state: TestSessionState, itemKey: string) => boolean;
   readonly submitItem: (state: TestSessionState, itemKey: string, result: TestItemResult) => TestSessionState;
   readonly end: (state: TestSessionState) => TestSessionState;
+  /**
+   * Fold elapsed time into the recorded durations and apply any max-time expiries
+   * (forced moves / forced end). Consumers run their own timers and call this;
+   * identity once the session has ended (the clock stops at end).
+   */
+  readonly tick: (state: TestSessionState) => TestSessionState;
   readonly visibleTestFeedbacks: (state: TestSessionState) => readonly TestFeedbackView[];
 }

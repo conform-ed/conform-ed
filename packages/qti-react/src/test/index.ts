@@ -13,6 +13,7 @@ export type {
   ItemSessionControlView,
   OutcomeConditionBranch,
   OutcomeRuleView,
+  RejectedSubmission,
   TestController,
   TestFeedbackView,
   TestItemResult,
@@ -20,6 +21,9 @@ export type {
   TestPlan,
   TestPlanItem,
   TestPlanPart,
+  TestPlanSection,
   TestSessionState,
+  TestTimingState,
   TimeLimitsView,
+  TimingScopeRef,
 } from "./types";

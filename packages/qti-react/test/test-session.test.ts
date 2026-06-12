@@ -306,3 +306,29 @@ describe("test session store: simultaneous submission", () => {
     expect(state.testOutcomes["TOTAL"]).toBe(1);
   });
 });
+
+describe("test session store: timing", () => {
+  test("submitted attempts forward their item-session duration to the controller", () => {
+    const session = makeSession();
+    const store = session.itemStore("ITEM-1")!;
+
+    store.setResponse("RESPONSE", "A");
+    store.submit();
+
+    const reported = session.getSnapshot().state.itemDurationSeconds?.["ITEM-1"];
+
+    expect(typeof reported).toBe("number"); // AttemptSnapshot.durationSeconds, forwarded
+  });
+
+  test("tick() folds time through the controller and emits the new state", () => {
+    const session = makeSession();
+    const before = session.getSnapshot().state;
+
+    session.tick();
+
+    const after = session.getSnapshot().state;
+
+    expect(after).not.toBe(before);
+    expect(after.timing).toBeDefined();
+  });
+});

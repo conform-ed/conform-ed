@@ -47,8 +47,9 @@ operator tests. Notes from the final tranche:
   Invalid literal patterns are refused at the capability gate.
 - The built-in session variables `duration` (elapsed seconds under an
   injectable store clock) and `numAttempts` (current attempt inclusive) back
-  `durationGte`/`durationLt` and adaptive re-attempt logic. Item level only;
-  test-level duration aggregation is future controller work.
+  `durationGte`/`durationLt` and adaptive re-attempt logic. Test, part, and
+  section durations are the controller's (ADR-0005, "Timing and time
+  limits").
 
 The **rule** vocabulary closed in a follow-up tranche: the interpreter
 executes `lookupOutcomeValue` (matchTable/interpolationTable scoring,
@@ -57,11 +58,12 @@ executes `qti-lookup-outcome-value` and `qti-outcome-processing-fragment` in
 outcome processing, and `outcomeMinimum`/`outcomeMaximum` evaluate over the
 consumer-supplied `itemOutcomeDeclarations` controller option. A
 `lookupOutcomeValue` rule whose declaration carries no lookupTable refuses —
-statically and at runtime — rather than guessing. The only remaining named
-follow-up is test-level duration aggregation. None of this amounts to
-engine-wide QTI 3 conformance: rendering coverage, test navigation
-semantics, feedback, PNP, and packaging are separate workstreams, and
-conformance is ultimately the certification suite's verdict, not this
+statically and at runtime — rather than guessing. Test-level duration
+aggregation and timeLimits enforcement followed in the controller (ADR-0005,
+"Timing and time limits"), closing the last named follow-up. None of this
+amounts to engine-wide QTI 3 conformance: rendering coverage, test
+navigation semantics, feedback, PNP, and packaging are separate workstreams,
+and conformance is ultimately the certification suite's verdict, not this
 corpus's.
 
 The remaining _operator_ refusals, by contrast, are principled and permanent.

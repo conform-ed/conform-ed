@@ -48,6 +48,8 @@ export interface TestSessionStore {
   readonly canMoveTo: (itemKey: string) => boolean;
   readonly moveTo: (itemKey: string) => void;
   readonly end: () => void;
+  /** Fold elapsed time and apply time-limit expiries; consumers drive the cadence. */
+  readonly tick: () => void;
 }
 
 /** Identifiers whose correct response arrives via `setCorrectResponse` in templates. */
@@ -213,6 +215,8 @@ export function createTestSessionStore(controller: TestController, options: Test
           outcomes: attempt.outcomes,
           ...resultFlags(attempt, scorable),
           ...(view.adaptive === true ? { adaptive: true } : {}),
+          // The item session's elapsed seconds feed the built-in ITEM.duration.
+          ...(attempt.durationSeconds !== null ? { durationSeconds: attempt.durationSeconds } : {}),
         });
 
         if (next !== state) {
@@ -239,5 +243,6 @@ export function createTestSessionStore(controller: TestController, options: Test
     canMoveTo: (itemKey) => controller.canMoveTo(state, itemKey),
     moveTo: (itemKey) => emit(controller.moveTo(state, itemKey)),
     end: () => emit(controller.end(state)),
+    tick: () => emit(controller.tick(state)),
   };
 }

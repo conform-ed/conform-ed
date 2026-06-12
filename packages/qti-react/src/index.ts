@@ -73,12 +73,16 @@ export {
   type TestController,
   type TestFeedbackView,
   type TestItemResult,
+  type RejectedSubmission,
   type TestPartView,
   type TestPlan,
   type TestPlanItem,
   type TestPlanPart,
+  type TestPlanSection,
   type TestSessionState,
+  type TestTimingState,
   type TimeLimitsView,
+  type TimingScopeRef,
 } from "./test";
 
 export {

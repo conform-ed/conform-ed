@@ -38,7 +38,11 @@ import type {
   TestItemResult,
   TestPlan,
   TestPlanItem,
+  TestPlanSection,
   TestSessionState,
+  TestTimingState,
+  TimeLimitsView,
+  TimingScopeRef,
 } from "./types";
 
 const supportedOutcomeRuleKinds = new Set([
@@ -156,8 +160,14 @@ function resolveSection(
   inheritedPreConditions: readonly RpExpressionView[],
   inheritedControl: ItemSessionControlView,
   random: () => number,
+  sections: Record<string, TestPlanSection>,
 ): TestPlanItem[] {
   const path = [...sectionPath, section.identifier];
+
+  sections[section.identifier] = {
+    identifier: section.identifier,
+    ...(section.timeLimits ? { timeLimits: section.timeLimits } : {}),
+  };
   const preConditions = [...inheritedPreConditions, ...(section.preConditions ?? [])];
   const control = { ...inheritedControl, ...definedControl(section.itemSessionControl) };
 
@@ -175,7 +185,7 @@ function resolveSection(
 
   for (const child of children) {
     if (child.kind === "assessmentSection") {
-      items.push(...resolveSection(child, partIdentifier, path, preConditions, control, random));
+      items.push(...resolveSection(child, partIdentifier, path, preConditions, control, random, sections));
     } else {
       items.push({
         key: child.identifier,
@@ -194,6 +204,7 @@ function resolveSection(
 
 function resolvePlan(view: AssessmentTestView, seed: number): TestPlan {
   const random = mulberry32(seed);
+  const sections: Record<string, TestPlanSection> = {};
 
   return {
     ...(view.timeLimits ? { timeLimits: view.timeLimits } : {}),
@@ -203,9 +214,10 @@ function resolvePlan(view: AssessmentTestView, seed: number): TestPlan {
       submissionMode: part.submissionMode,
       ...(part.timeLimits ? { timeLimits: part.timeLimits } : {}),
       items: part.assessmentSections.flatMap((section) =>
-        resolveSection(section, part.identifier, [], [], definedControl(part.itemSessionControl), random),
+        resolveSection(section, part.identifier, [], [], definedControl(part.itemSessionControl), random, sections),
       ),
     })),
+    sections,
   };
 }
 
@@ -221,6 +233,12 @@ export interface TestControllerOptions {
    * can pass `assessmentItemViewFromNormalized(...).outcomeDeclarations` verbatim.
    */
   readonly itemOutcomeDeclarations?: Readonly<Record<string, readonly OutcomeDeclarationView[]>> | undefined;
+  /**
+   * Millisecond clock backing the built-in test/part/section `duration` variables and
+   * timeLimits enforcement. Injectable for deterministic tests and replays; defaults
+   * to Date.now.
+   */
+  readonly now?: (() => number) | undefined;
 }
 
 export function createTestController(view: AssessmentTestView, options: TestControllerOptions): TestController {
@@ -283,6 +301,129 @@ export function createTestController(view: AssessmentTestView, options: TestCont
     return max === 0 ? Number.POSITIVE_INFINITY : Math.max(0, max - attemptsOf(state, itemKey));
   }
 
+  // ---------- Timing (ADR-0005, "Timing and time limits") ----------
+
+  const now = options.now ?? Date.now;
+
+  /**
+   * Fold wall-clock time since the last transition into every active scope: the test,
+   * and — while an item is current — its part, every ancestor section, and the item
+   * itself. Durations include "any other time spent navigating that part of the test"
+   * (§2.8.5), so they accrue whenever the session is open, not just during attempts.
+   */
+  function touch(state: TestSessionState): TestSessionState {
+    if (state.status === "ended") {
+      return state; // the clock stops at end
+    }
+
+    const nowMs = now();
+    const timing: TestTimingState = state.timing ?? {
+      lastTransitionAtMs: nowMs, // pre-timing persisted states start accruing here
+      testSeconds: 0,
+      partSeconds: {},
+      sectionSeconds: {},
+      itemSeconds: {},
+    };
+    const elapsed = Math.max(0, nowMs - timing.lastTransitionAtMs) / 1000; // clamp clock skew
+    const bump = (record: Readonly<Record<string, number>>, key: string): Readonly<Record<string, number>> => ({
+      ...record,
+      [key]: (record[key] ?? 0) + elapsed,
+    });
+    const item = state.currentItemKey === null ? undefined : itemsByKey.get(state.currentItemKey);
+
+    return {
+      ...state,
+      timing: {
+        lastTransitionAtMs: nowMs,
+        testSeconds: timing.testSeconds + elapsed,
+        partSeconds: item ? bump(timing.partSeconds, item.partIdentifier) : timing.partSeconds,
+        sectionSeconds: item
+          ? item.sectionPath.reduce((record, identifier) => bump(record, identifier), timing.sectionSeconds)
+          : timing.sectionSeconds,
+        itemSeconds: item ? bump(timing.itemSeconds, item.key) : timing.itemSeconds,
+      },
+    };
+  }
+
+  function secondsOf(state: TestSessionState, scope: TimingScopeRef): number {
+    const timing = state.timing;
+
+    if (!timing) {
+      return 0;
+    }
+
+    switch (scope.kind) {
+      case "test":
+        return timing.testSeconds;
+      case "part":
+        return timing.partSeconds[scope.identifier] ?? 0;
+      case "section":
+        return timing.sectionSeconds[scope.identifier] ?? 0;
+      case "item":
+        return timing.itemSeconds[scope.key] ?? 0;
+    }
+  }
+
+  function timeLimitsOf(scope: TimingScopeRef): TimeLimitsView | undefined {
+    switch (scope.kind) {
+      case "test":
+        return plan.timeLimits;
+      case "part":
+        return plan.parts.find((part) => part.identifier === scope.identifier)?.timeLimits;
+      case "section":
+        return plan.sections[scope.identifier]?.timeLimits;
+      case "item":
+        return itemsByKey.get(scope.key)?.timeLimits;
+    }
+  }
+
+  /** "Beyond the max-time" (§7.40.3) is strictly beyond: exactly maxTime is in time. */
+  function scopeExpired(state: TestSessionState, scope: TimingScopeRef): boolean {
+    const maxTime = timeLimitsOf(scope)?.maxTime;
+
+    return maxTime !== undefined && secondsOf(state, scope) > maxTime;
+  }
+
+  /** The item's enclosing timing scopes, innermost first (item → sections → part → test). */
+  function enclosingScopes(item: TestPlanItem): TimingScopeRef[] {
+    return [
+      { kind: "item", key: item.key },
+      ...[...item.sectionPath].reverse().map((identifier): TimingScopeRef => ({ kind: "section", identifier })),
+      { kind: "part", identifier: item.partIdentifier },
+      { kind: "test" },
+    ];
+  }
+
+  /** Navigable in time: neither the item's own maxTime nor any enclosing scope's is spent. */
+  function navigableInTime(state: TestSessionState, item: TestPlanItem): boolean {
+    return !enclosingScopes(item).some((scope) => scopeExpired(state, scope));
+  }
+
+  /**
+   * minTime applies "to qti-assessment-sections and qti-assessment-items only when
+   * linear navigation mode is in effect" (§7.40.1); satisfied at exact equality.
+   * Sections gate only when the move would leave them.
+   */
+  function minTimeBlocked(state: TestSessionState, from: TestPlanItem, to: TestPlanItem | null): boolean {
+    const itemMin = from.timeLimits?.minTime;
+
+    if (itemMin !== undefined && secondsOf(state, { kind: "item", key: from.key }) < itemMin) {
+      return true;
+    }
+
+    const destinationSections = new Set(to?.sectionPath ?? []);
+
+    return from.sectionPath.some((identifier) => {
+      if (destinationSections.has(identifier)) {
+        return false; // staying inside the section
+      }
+
+      const minTime = plan.sections[identifier]?.timeLimits?.minTime;
+
+      return minTime !== undefined && secondsOf(state, { kind: "section", identifier }) < minTime;
+    });
+  }
+
   function defaultTestOutcomes(): Map<string, MaybeRpValue> {
     const outcomes = new Map<string, MaybeRpValue>();
 
@@ -305,14 +446,46 @@ export function createTestController(view: AssessmentTestView, options: TestCont
     return outcomes;
   }
 
+  const durationValue = (seconds: number): MaybeRpValue => rpValue("single", [seconds], "duration");
+
   function makeEnv(state: TestSessionState, outcomes?: Map<string, MaybeRpValue>): EvalEnv {
     return {
       lookupVariable: (identifier) => {
+        // Built-in session durations (§2.8.5) resolve before any declared variable —
+        // the name is reserved, so author declarations never shadow it.
+        if (identifier === "duration") {
+          return state.timing === undefined ? null : durationValue(state.timing.testSeconds);
+        }
+
         const dot = identifier.indexOf(".");
 
         if (dot !== -1) {
           const itemKey = identifier.slice(0, dot);
           const variableName = identifier.slice(dot + 1);
+
+          if (variableName === "duration") {
+            if (itemsByKey.has(itemKey)) {
+              // The item-session duration is the consumer's report (the attempt store
+              // owns it; the controller's per-item clock is enforcement-only).
+              const seconds = state.itemDurationSeconds?.[itemKey];
+
+              return seconds === undefined ? null : durationValue(seconds);
+            }
+
+            const partSeconds = state.timing?.partSeconds[itemKey];
+
+            if (plan.parts.some((part) => part.identifier === itemKey)) {
+              return partSeconds === undefined ? null : durationValue(partSeconds);
+            }
+
+            if (plan.sections[itemKey]) {
+              const seconds = state.timing?.sectionSeconds[itemKey];
+
+              return seconds === undefined ? null : durationValue(seconds);
+            }
+
+            return null;
+          }
 
           return liftFlat(state.itemOutcomes[itemKey]?.[variableName] ?? null);
         }
@@ -513,7 +686,7 @@ export function createTestController(view: AssessmentTestView, options: TestCont
     return Object.fromEntries([...outcomes].map(([identifier, value]) => [identifier, toOutcomeValue(value)]));
   }
 
-  /** The first item at or after (partIndex, itemIndex) whose preconditions pass. */
+  /** The first item at or after (partIndex, itemIndex) that is reachable: preconditions pass and no enclosing time limit is spent. */
   function firstNavigable(state: TestSessionState, partIndex: number, itemIndex: number): TestPlanItem | null {
     for (let p = partIndex; p < plan.parts.length; p += 1) {
       const items = plan.parts[p]!.items;
@@ -521,7 +694,7 @@ export function createTestController(view: AssessmentTestView, options: TestCont
       for (let i = p === partIndex ? itemIndex : 0; i < items.length; i += 1) {
         const item = items[i]!;
 
-        if (preConditionsPass(item, state)) {
+        if (preConditionsPass(item, state) && navigableInTime(state, item)) {
           return item;
         }
       }
@@ -579,6 +752,7 @@ export function createTestController(view: AssessmentTestView, options: TestCont
 
     const itemOutcomes = { ...state.itemOutcomes };
     const attemptCounts = { ...(state.attemptCounts ?? {}) };
+    const itemDurations = { ...(state.itemDurationSeconds ?? {}) };
     const remaining = { ...pending };
     let flagged = state;
 
@@ -588,10 +762,21 @@ export function createTestController(view: AssessmentTestView, options: TestCont
       itemOutcomes[key] = result.outcomes;
       attemptCounts[key] = (attemptCounts[key] ?? 0) + 1; // the part's single attempt
       delete remaining[key];
+
+      if (result.durationSeconds !== undefined) {
+        itemDurations[key] = result.durationSeconds;
+      }
+
       flagged = applyResultFlags(flagged, key, result);
     }
 
-    return { ...flagged, itemOutcomes, attemptCounts, pendingItemResults: remaining };
+    return {
+      ...flagged,
+      itemOutcomes,
+      attemptCounts,
+      itemDurationSeconds: itemDurations,
+      pendingItemResults: remaining,
+    };
   }
 
   function ended(state: TestSessionState): TestSessionState {
@@ -646,6 +831,15 @@ export function createTestController(view: AssessmentTestView, options: TestCont
       return state;
     }
 
+    // minTime (linear mode, sections and items only, §7.40.1) gates before branch
+    // rules — author-explicit jumps do not bypass the minimum either.
+    if (
+      part.navigationMode === "linear" &&
+      minTimeBlocked(state, currentItem, firstNavigable(state, current.partIndex, current.itemIndex + 1))
+    ) {
+      return state;
+    }
+
     // Branch rules: first matching rule wins (author-explicit jumps bypass skip checks).
     for (const branchRule of currentItem.ref.branchRules ?? []) {
       if (!conditionPasses(branchRule.expression, state)) {
@@ -691,7 +885,8 @@ export function createTestController(view: AssessmentTestView, options: TestCont
         (item) =>
           !item.sessionControl.allowSkipping &&
           !state.attemptedItems.includes(item.key) &&
-          preConditionsPass(item, state),
+          preConditionsPass(item, state) &&
+          navigableInTime(state, item), // an item whose time is spent can never be attempted
       );
 
       if (blocked) {
@@ -700,6 +895,101 @@ export function createTestController(view: AssessmentTestView, options: TestCont
     }
 
     return moveToItem(state, destination);
+  }
+
+  /** The submit mechanics shared by the timed path: pending (simultaneous) or committed. */
+  function submitBody(state: TestSessionState, itemKey: string, result: TestItemResult): TestSessionState {
+    const partIndex = partIndexByItemKey.get(itemKey);
+
+    // Simultaneous parts hold results pending and allow revision until the part is
+    // left; the single attempt (spec) is only spent when the pending set flushes.
+    if (partIndex !== undefined && plan.parts[partIndex]!.submissionMode === "simultaneous") {
+      if (attemptsOf(state, itemKey) > 0) {
+        return state; // the part was already submitted
+      }
+
+      return {
+        ...state,
+        pendingItemResults: { ...(state.pendingItemResults ?? {}), [itemKey]: result },
+        attemptedItems: state.attemptedItems.includes(itemKey)
+          ? state.attemptedItems
+          : [...state.attemptedItems, itemKey],
+      };
+    }
+
+    // Adaptive items run their own attempt lifecycle, so maxAttempts is ignored (spec).
+    if (result.adaptive !== true && remainingAttempts(state, itemKey) <= 0) {
+      return state;
+    }
+
+    const next: TestSessionState = {
+      ...applyResultFlags(state, itemKey, result),
+      itemOutcomes: { ...state.itemOutcomes, [itemKey]: result.outcomes },
+      attemptedItems: state.attemptedItems.includes(itemKey)
+        ? state.attemptedItems
+        : [...state.attemptedItems, itemKey],
+      attemptCounts: { ...(state.attemptCounts ?? {}), [itemKey]: attemptsOf(state, itemKey) + 1 },
+      ...(result.durationSeconds !== undefined
+        ? { itemDurationSeconds: { ...(state.itemDurationSeconds ?? {}), [itemKey]: result.durationSeconds } }
+        : {}),
+    };
+
+    return { ...next, testOutcomes: runOutcomeProcessing(next) };
+  }
+
+  /**
+   * Apply max-time consequences to recorded durations: an expired test ends (designed
+   * policy — the spec defines no expiry behavior beyond late-submission acceptance,
+   * see ADR-0005); a current item inside any expired scope advances to the first item
+   * still reachable, ending the test when none remains.
+   */
+  function applyExpiries(state: TestSessionState): TestSessionState {
+    if (state.status === "ended") {
+      return state;
+    }
+
+    if (scopeExpired(state, { kind: "test" })) {
+      return ended(state);
+    }
+
+    const currentKey = state.currentItemKey;
+    const item = currentKey === null ? undefined : itemsByKey.get(currentKey);
+
+    if (!item || navigableInTime(state, item)) {
+      return state;
+    }
+
+    const position = positionOf(item.key);
+
+    return position === null
+      ? ended(state)
+      : moveToItem(state, firstNavigable(state, position.partIndex, position.itemIndex + 1));
+  }
+
+  /**
+   * Every public transition folds the clock first, then settles expiries, then runs
+   * its operation. A blocked operation (identity) returns the ORIGINAL state — the
+   * stamp is unchanged, so no time is lost and `canNext`'s "would `next()` change
+   * state" contract stays meaningful.
+   */
+  function withTransition(
+    state: TestSessionState,
+    op: (settled: TestSessionState) => TestSessionState,
+  ): TestSessionState {
+    if (state.status === "ended") {
+      return state;
+    }
+
+    const touched = touch(state);
+    const settled = applyExpiries(touched);
+
+    if (settled !== touched) {
+      return settled; // the expiry consumed the action
+    }
+
+    const result = op(settled);
+
+    return result === settled ? state : result;
   }
 
   // ---------- Static capability walk ----------
@@ -781,6 +1071,13 @@ export function createTestController(view: AssessmentTestView, options: TestCont
         incorrectItems: [],
         pendingItemResults: {},
         testOutcomes: {},
+        timing: {
+          lastTransitionAtMs: now(),
+          testSeconds: 0,
+          partSeconds: {},
+          sectionSeconds: {},
+          itemSeconds: {},
+        },
       };
 
       return moveToItem({ ...initial, testOutcomes: runOutcomeProcessing(initial) }, firstNavigable(initial, 0, 0));
@@ -805,75 +1102,88 @@ export function createTestController(view: AssessmentTestView, options: TestCont
         return false;
       }
 
-      return preConditionsPass(plan.parts[target.partIndex]!.items[target.itemIndex]!, state);
+      const item = plan.parts[target.partIndex]!.items[target.itemIndex]!;
+
+      return preConditionsPass(item, state) && navigableInTime(state, item);
     },
 
-    moveTo: (state, itemKey) => {
-      const current = positionOf(state.currentItemKey ?? "");
-      const target = positionOf(itemKey);
+    moveTo: (state, itemKey) =>
+      withTransition(state, (settled) => {
+        const current = positionOf(settled.currentItemKey ?? "");
+        const target = positionOf(itemKey);
+        const item = itemsByKey.get(itemKey);
 
-      if (
-        state.status === "ended" ||
-        !current ||
-        !target ||
-        target.partIndex !== current.partIndex ||
-        plan.parts[current.partIndex]!.navigationMode !== "nonlinear"
-      ) {
-        return state;
-      }
+        if (
+          !current ||
+          !target ||
+          !item ||
+          target.partIndex !== current.partIndex ||
+          plan.parts[current.partIndex]!.navigationMode !== "nonlinear" ||
+          !navigableInTime(settled, item)
+        ) {
+          return settled;
+        }
 
-      return markPresented({ ...state, currentItemKey: itemKey }, itemKey);
-    },
+        return markPresented({ ...settled, currentItemKey: itemKey }, itemKey);
+      }),
 
     canNext: (state) => nextState(state) !== state,
 
-    next: nextState,
+    next: (state) => withTransition(state, nextState),
 
     remainingAttempts,
 
-    canSubmitItem: (state, itemKey) => state.status !== "ended" && remainingAttempts(state, itemKey) > 0,
-
-    submitItem: (state, itemKey, result) => {
-      if (state.status === "ended") {
-        return state;
+    canSubmitItem: (state, itemKey) => {
+      if (state.status === "ended" || remainingAttempts(state, itemKey) <= 0) {
+        return false;
       }
 
-      const partIndex = partIndexByItemKey.get(itemKey);
+      // Lateness is judged on recorded timing (as of the last transition/tick).
+      const item = itemsByKey.get(itemKey);
 
-      // Simultaneous parts hold results pending and allow revision until the part is
-      // left; the single attempt (spec) is only spent when the pending set flushes.
-      if (partIndex !== undefined && plan.parts[partIndex]!.submissionMode === "simultaneous") {
-        if (attemptsOf(state, itemKey) > 0) {
-          return state; // the part was already submitted
-        }
-
-        return {
-          ...state,
-          pendingItemResults: { ...(state.pendingItemResults ?? {}), [itemKey]: result },
-          attemptedItems: state.attemptedItems.includes(itemKey)
-            ? state.attemptedItems
-            : [...state.attemptedItems, itemKey],
-        };
-      }
-
-      // Adaptive items run their own attempt lifecycle, so maxAttempts is ignored (spec).
-      if (result.adaptive !== true && remainingAttempts(state, itemKey) <= 0) {
-        return state;
-      }
-
-      const next: TestSessionState = {
-        ...applyResultFlags(state, itemKey, result),
-        itemOutcomes: { ...state.itemOutcomes, [itemKey]: result.outcomes },
-        attemptedItems: state.attemptedItems.includes(itemKey)
-          ? state.attemptedItems
-          : [...state.attemptedItems, itemKey],
-        attemptCounts: { ...(state.attemptCounts ?? {}), [itemKey]: attemptsOf(state, itemKey) + 1 },
-      };
-
-      return { ...next, testOutcomes: runOutcomeProcessing(next) };
+      return (
+        item !== undefined &&
+        enclosingScopes(item).every(
+          (scope) => !scopeExpired(state, scope) || timeLimitsOf(scope)?.allowLateSubmission === true,
+        )
+      );
     },
 
-    end: (state) => (state.status === "ended" ? state : ended(state)),
+    submitItem: (state, itemKey, result) => {
+      const item = itemsByKey.get(itemKey);
+
+      if (state.status === "ended" || !item) {
+        return state;
+      }
+
+      const touched = touch(state);
+
+      // "The allow-late-submission attribute regulates whether a candidate's response
+      // that is beyond the max-time should still be accepted." (§7.40.3, default
+      // false). Every exceeded enclosing scope's own flag must permit it; a refusal
+      // is recorded, never silent (ADR-0003), and the expiry then applies.
+      const barring = enclosingScopes(item).find(
+        (scope) => scopeExpired(touched, scope) && timeLimitsOf(scope)?.allowLateSubmission !== true,
+      );
+
+      if (barring) {
+        return applyExpiries({
+          ...touched,
+          rejectedSubmissions: [
+            ...(touched.rejectedSubmissions ?? []),
+            { itemKey, scope: barring, atTestSeconds: touched.timing?.testSeconds ?? 0 },
+          ],
+        });
+      }
+
+      const accepted = submitBody(touched, itemKey, result);
+
+      return accepted === touched ? state : applyExpiries(accepted);
+    },
+
+    end: (state) => (state.status === "ended" ? state : ended(touch(state))),
+
+    tick: (state) => (state.status === "ended" ? state : applyExpiries(touch(state))),
 
     visibleTestFeedbacks: (state) =>
       (view.testFeedbacks ?? []).filter((feedback) => {

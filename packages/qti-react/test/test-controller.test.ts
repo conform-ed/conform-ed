@@ -1088,3 +1088,490 @@ describe("outcome processing and test feedback", () => {
     expect(createTestController(broken, { seed: 1 }).issues[0]?.name).toBe("weirdRule");
   });
 });
+
+describe("test-level duration tracking", () => {
+  // "The time spent on the test is recorded as if it were a built-in response variable
+  // called 'duration' declared at the test-level … time spent on test parts or
+  // sections are treated as built-in response variables declared within each
+  // respective scope … referred to during outcome-processing by using the variable
+  // name duration prefixed with the identifier of the part or section followed by the
+  // period character." (§2.8.5)
+  const setVar = (identifier: string, expression: Record<string, unknown>) => ({
+    kind: "setOutcomeValue",
+    identifier,
+    expression: expression as never,
+  });
+  const durationOf = (prefix?: string) => ({
+    kind: "variable",
+    identifier: prefix === undefined ? "duration" : `${prefix}.duration`,
+  });
+
+  const tracking: AssessmentTestView = {
+    identifier: "T-DUR",
+    outcomeDeclarations: [
+      // The name is reserved: an author-declared `duration` outcome never shadows the
+      // built-in (its declared default stays visible as a plain outcome).
+      {
+        identifier: "duration",
+        cardinality: "single",
+        baseType: "duration",
+        defaultValue: { values: [{ value: 999 }] },
+      },
+      { identifier: "D_TEST", cardinality: "single", baseType: "float" },
+      { identifier: "D_P1", cardinality: "single", baseType: "float" },
+      { identifier: "D_P2", cardinality: "single", baseType: "float" },
+      { identifier: "D_S1", cardinality: "single", baseType: "float" },
+      { identifier: "D_S2", cardinality: "single", baseType: "float" },
+      { identifier: "D_I1", cardinality: "single", baseType: "float" },
+      { identifier: "NULL_I2", cardinality: "single", baseType: "boolean" },
+      { identifier: "SLOW", cardinality: "single", baseType: "boolean" },
+    ],
+    outcomeProcessing: {
+      rules: [
+        setVar("D_TEST", durationOf()),
+        setVar("D_P1", durationOf("P1")),
+        setVar("D_P2", durationOf("P2")),
+        setVar("D_S1", durationOf("S1")),
+        setVar("D_S2", durationOf("S2")),
+        setVar("D_I1", durationOf("I1")),
+        setVar("NULL_I2", { kind: "isNull", expressions: [durationOf("I2")] }),
+        setVar("SLOW", {
+          kind: "durationGte",
+          expressions: [durationOf("P1"), { kind: "baseValue", baseType: "duration", value: 30 }],
+        }),
+      ],
+    },
+    testParts: [
+      {
+        identifier: "P1",
+        navigationMode: "linear",
+        submissionMode: "individual",
+        assessmentSections: [
+          {
+            kind: "assessmentSection",
+            identifier: "S1",
+            children: [
+              itemRef("I1"),
+              { kind: "assessmentSection", identifier: "S2", children: [itemRef("I2")] },
+              itemRef("I3"),
+            ],
+          },
+        ],
+      },
+      {
+        identifier: "P2",
+        navigationMode: "linear",
+        submissionMode: "individual",
+        assessmentSections: [{ kind: "assessmentSection", identifier: "S3", children: [itemRef("I4")] }],
+      },
+    ],
+  };
+
+  test("durations accrue per scope across transitions; nested sections feed every ancestor", () => {
+    let nowMs = 0;
+    const controller = createTestController(tracking, { seed: 1, now: () => nowMs });
+    let state = controller.start(); // I1 (S1)
+
+    nowMs += 10_000;
+    state = controller.next(state); // I2 (S1/S2)
+    nowMs += 5_000;
+    state = controller.next(state); // I3 (S1)
+    nowMs += 20_000;
+    state = controller.next(state); // I4 (P2/S3)
+    nowMs += 2_000;
+    state = controller.end(state);
+
+    expect(state.testOutcomes["D_TEST"]).toBe(37);
+    expect(state.testOutcomes["D_P1"]).toBe(35); // navigation time inside P1, not an item sum
+    expect(state.testOutcomes["D_P2"]).toBe(2);
+    expect(state.testOutcomes["D_S1"]).toBe(35); // S2's 5s accrued to its ancestor too
+    expect(state.testOutcomes["D_S2"]).toBe(5);
+    expect(state.testOutcomes["SLOW"]).toBe(true); // durationGte over P1.duration
+    expect(state.testOutcomes["duration"]).toBe(999); // the declared outcome is untouched
+  });
+
+  test("ITEM.duration resolves from the submitItem report; unreported is NULL", () => {
+    let nowMs = 0;
+    const controller = createTestController(tracking, { seed: 1, now: () => nowMs });
+    let state = controller.start();
+
+    // An item outcome literally named `duration` must not shadow the built-in either.
+    state = controller.submitItem(state, "I1", {
+      outcomes: { SCORE: 1, duration: 999 },
+      durationSeconds: 42,
+    });
+
+    expect(state.testOutcomes["D_I1"]).toBe(42);
+    expect(state.testOutcomes["NULL_I2"]).toBe(true);
+  });
+
+  test("the resolved plan carries a section table", () => {
+    const controller = createTestController(tracking, { seed: 1 });
+
+    expect(Object.keys(controller.plan.sections).sort()).toEqual(["S1", "S2", "S3"]);
+  });
+
+  test("a persisted pre-timing state flows through unchanged in behavior", () => {
+    let nowMs = 500_000;
+    const controller = createTestController(tracking, { seed: 1, now: () => nowMs });
+    const oldShape = {
+      status: "in-progress",
+      currentItemKey: "I1",
+      itemOutcomes: {},
+      attemptedItems: [],
+      attemptCounts: {},
+      presentedItems: ["I1"],
+      respondedItems: [],
+      correctItems: [],
+      incorrectItems: [],
+      pendingItemResults: {},
+      testOutcomes: {},
+    } as const;
+
+    let state = controller.next(oldShape); // timing initializes lazily; accrual starts here
+
+    expect(controller.currentItem(state)?.key).toBe("I2");
+
+    state = controller.submitItem(state, "I2", { outcomes: { SCORE: 1 } });
+
+    expect(state.testOutcomes["D_TEST"]).toBe(0); // no time credited before the first fold
+  });
+
+  test("a backwards clock clamps to zero elapsed", () => {
+    let nowMs = 100_000;
+    const controller = createTestController(tracking, { seed: 1, now: () => nowMs });
+    let state = controller.start();
+
+    nowMs = 50_000;
+    state = controller.submitItem(state, "I1", { outcomes: { SCORE: 1 } });
+
+    expect(state.testOutcomes["D_TEST"]).toBe(0);
+  });
+
+  test("the clock stops at end: tick on an ended session is identity", () => {
+    let nowMs = 0;
+    const controller = createTestController(tracking, { seed: 1, now: () => nowMs });
+    const state = controller.end(controller.start());
+
+    nowMs += 60_000;
+
+    expect(controller.tick(state)).toBe(state);
+  });
+});
+
+describe("timeLimits enforcement", () => {
+  // The only normative expiry behavior in the spec: "The allow-late-submission
+  // attribute regulates whether a candidate's response that is beyond the max-time
+  // should still be accepted." (§7.40.3, default false). Forced moves/end, the
+  // every-exceeded-scope rule, and minTime-vs-end() are designed delivery-engine
+  // policy, documented in ADR-0005.
+  interface SectionedOptions {
+    readonly testTimeLimits?: { maxTime?: number; minTime?: number; allowLateSubmission?: boolean };
+    readonly partTimeLimits?: { maxTime?: number; minTime?: number; allowLateSubmission?: boolean };
+    readonly navigationMode?: "linear" | "nonlinear";
+  }
+
+  const sectioned = (sectionOne: Record<string, unknown>, opts: SectionedOptions = {}): AssessmentTestView => ({
+    identifier: "T-LIMITS",
+    outcomeDeclarations: [{ identifier: "TOTAL", cardinality: "single", baseType: "float" }],
+    outcomeProcessing: {
+      rules: [
+        {
+          kind: "setOutcomeValue",
+          identifier: "TOTAL",
+          expression: { kind: "sum", expressions: [{ kind: "testVariables", identifier: "SCORE" }] },
+        },
+      ],
+    },
+    ...(opts.testTimeLimits ? { timeLimits: opts.testTimeLimits } : {}),
+    testParts: [
+      {
+        identifier: "P1",
+        navigationMode: opts.navigationMode ?? "linear",
+        submissionMode: "individual",
+        ...(opts.partTimeLimits ? { timeLimits: opts.partTimeLimits } : {}),
+        assessmentSections: [sectionOne as never],
+      },
+      {
+        identifier: "P2",
+        navigationMode: "linear",
+        submissionMode: "individual",
+        assessmentSections: [{ kind: "assessmentSection", identifier: "SZ", children: [itemRef("I9")] }],
+      },
+    ],
+  });
+
+  test("test maxTime: tick past it ends the session and runs outcome processing", () => {
+    let nowMs = 0;
+    const view = sectioned(
+      { kind: "assessmentSection", identifier: "S1", children: [itemRef("I1"), itemRef("I2")] },
+      { testTimeLimits: { maxTime: 100 } },
+    );
+    const controller = createTestController(view, { seed: 1, now: () => nowMs });
+    let state = controller.start();
+
+    state = controller.submitItem(state, "I1", { outcomes: { SCORE: 1 } });
+    nowMs += 101_000;
+    state = controller.tick(state);
+
+    expect(state.status).toBe("ended");
+    expect(state.currentItemKey).toBeNull();
+    expect(state.testOutcomes["TOTAL"]).toBe(1);
+  });
+
+  test("part maxTime: the expired part is closed and navigation lands in the next part", () => {
+    let nowMs = 0;
+    const view = sectioned(
+      { kind: "assessmentSection", identifier: "S1", children: [itemRef("I1"), itemRef("I2")] },
+      { partTimeLimits: { maxTime: 60 } },
+    );
+    const controller = createTestController(view, { seed: 1, now: () => nowMs });
+    let state = controller.start();
+
+    nowMs += 61_000;
+    state = controller.tick(state);
+
+    expect(controller.currentItem(state)?.key).toBe("I9"); // I2 skipped: inside expired P1
+  });
+
+  test("part maxTime in a simultaneous part flushes pending results at the forced exit", () => {
+    let nowMs = 0;
+    const view: AssessmentTestView = {
+      identifier: "T-SIM",
+      outcomeDeclarations: [{ identifier: "TOTAL", cardinality: "single", baseType: "float" }],
+      outcomeProcessing: {
+        rules: [
+          {
+            kind: "setOutcomeValue",
+            identifier: "TOTAL",
+            expression: { kind: "sum", expressions: [{ kind: "testVariables", identifier: "SCORE" }] },
+          },
+        ],
+      },
+      testParts: [
+        {
+          identifier: "P1",
+          navigationMode: "nonlinear",
+          submissionMode: "simultaneous",
+          timeLimits: { maxTime: 60 },
+          assessmentSections: [
+            { kind: "assessmentSection", identifier: "S1", children: [itemRef("I1"), itemRef("I2")] },
+          ],
+        },
+        {
+          identifier: "P2",
+          navigationMode: "linear",
+          submissionMode: "individual",
+          assessmentSections: [{ kind: "assessmentSection", identifier: "SZ", children: [itemRef("I9")] }],
+        },
+      ],
+    };
+    const controller = createTestController(view, { seed: 1, now: () => nowMs });
+    let state = controller.start();
+
+    state = controller.submitItem(state, "I1", { outcomes: { SCORE: 1 }, durationSeconds: 42 });
+    nowMs += 61_000;
+    state = controller.tick(state);
+
+    expect(controller.currentItem(state)?.key).toBe("I9");
+    expect(state.attemptCounts["I1"]).toBe(1); // the part's single attempt was spent
+    expect(state.testOutcomes["TOTAL"]).toBe(1); // deposited in time → counted
+    expect(state.itemDurationSeconds?.["I1"]).toBe(42); // report survived the pending flush
+  });
+
+  test("section maxTime: items inside are skipped and moveTo into it is blocked", () => {
+    let nowMs = 0;
+    const view = sectioned(
+      {
+        kind: "assessmentSection",
+        identifier: "S1",
+        timeLimits: { maxTime: 30 },
+        children: [itemRef("I1"), itemRef("I2")],
+      },
+      { navigationMode: "nonlinear" },
+    );
+    const controller = createTestController(view, { seed: 1, now: () => nowMs });
+    let state = controller.start();
+
+    nowMs += 31_000;
+    state = controller.tick(state);
+
+    expect(controller.currentItem(state)?.key).toBe("I9"); // both S1 items unnavigable
+    expect(controller.canMoveTo(state, "I1")).toBe(false);
+  });
+
+  test("item maxTime: the item becomes non-reenterable and unsubmittable", () => {
+    let nowMs = 0;
+    const view = sectioned(
+      {
+        kind: "assessmentSection",
+        identifier: "S1",
+        children: [itemRef("I1", { timeLimits: { maxTime: 20 } }), itemRef("I2")],
+      },
+      { navigationMode: "nonlinear" },
+    );
+    const controller = createTestController(view, { seed: 1, now: () => nowMs });
+    let state = controller.start();
+
+    nowMs += 21_000;
+    state = controller.tick(state);
+
+    expect(controller.currentItem(state)?.key).toBe("I2");
+    expect(controller.canSubmitItem(state, "I1")).toBe(false);
+    expect(controller.canMoveTo(state, "I1")).toBe(false);
+  });
+
+  test("a late submission is rejected, recorded, and the expiry then applies", () => {
+    let nowMs = 0;
+    const view = sectioned({
+      kind: "assessmentSection",
+      identifier: "S1",
+      children: [itemRef("I1", { timeLimits: { maxTime: 20 } }), itemRef("I2")],
+    });
+    const controller = createTestController(view, { seed: 1, now: () => nowMs });
+    let state = controller.start();
+
+    nowMs += 21_000;
+    state = controller.submitItem(state, "I1", { outcomes: { SCORE: 1 } });
+
+    expect(state.itemOutcomes["I1"]).toBeUndefined(); // not accepted (§7.40.3 default false)
+    expect(state.attemptCounts["I1"]).toBeUndefined();
+    expect(state.rejectedSubmissions).toEqual([
+      { itemKey: "I1", scope: { kind: "item", key: "I1" }, atTestSeconds: 21 },
+    ]);
+    expect(controller.currentItem(state)?.key).toBe("I2"); // expiry applied after recording
+  });
+
+  test("allowLateSubmission=true accepts the late response, then the expiry applies", () => {
+    let nowMs = 0;
+    const view = sectioned({
+      kind: "assessmentSection",
+      identifier: "S1",
+      children: [itemRef("I1", { timeLimits: { maxTime: 20, allowLateSubmission: true } }), itemRef("I2")],
+    });
+    const controller = createTestController(view, { seed: 1, now: () => nowMs });
+    let state = controller.start();
+
+    nowMs += 21_000;
+    state = controller.submitItem(state, "I1", { outcomes: { SCORE: 1 } });
+
+    expect(state.itemOutcomes["I1"]).toEqual({ SCORE: 1 });
+    expect(state.rejectedSubmissions ?? []).toEqual([]);
+    expect(controller.currentItem(state)?.key).toBe("I2");
+  });
+
+  test("every exceeded scope must allow lateness: an outer barring scope still rejects", () => {
+    // Interpretation (spec is silent on stacked expiries): each scope's own
+    // allow-late-submission governs its own bar.
+    let nowMs = 0;
+    const view = sectioned({
+      kind: "assessmentSection",
+      identifier: "S1",
+      timeLimits: { maxTime: 30 },
+      children: [itemRef("I1", { timeLimits: { maxTime: 20, allowLateSubmission: true } }), itemRef("I2")],
+    });
+    const controller = createTestController(view, { seed: 1, now: () => nowMs });
+    let state = controller.start();
+
+    nowMs += 31_000; // beyond both the item's 20s (allows late) and S1's 30s (bars)
+    state = controller.submitItem(state, "I1", { outcomes: { SCORE: 1 } });
+
+    expect(state.itemOutcomes["I1"]).toBeUndefined();
+    expect(state.rejectedSubmissions?.[0]?.scope).toEqual({ kind: "section", identifier: "S1" });
+  });
+
+  test("exact boundaries are candidate-favorable: == maxTime is not expired", () => {
+    let nowMs = 0;
+    const view = sectioned({
+      kind: "assessmentSection",
+      identifier: "S1",
+      children: [itemRef("I1", { timeLimits: { maxTime: 20 } }), itemRef("I2")],
+    });
+    const controller = createTestController(view, { seed: 1, now: () => nowMs });
+    let state = controller.start();
+
+    nowMs += 20_000; // exactly maxTime: "beyond the max-time" means strictly beyond
+    state = controller.tick(state);
+
+    expect(controller.currentItem(state)?.key).toBe("I1");
+    expect(controller.canSubmitItem(state, "I1")).toBe(true);
+
+    state = controller.submitItem(state, "I1", { outcomes: { SCORE: 1 } });
+
+    expect(state.itemOutcomes["I1"]).toEqual({ SCORE: 1 });
+  });
+
+  test("minTime gates next() in linear mode for items and sections; == minTime satisfies", () => {
+    // "Minimum times are applicable to qti-assessment-sections and qti-assessment-items
+    // only when linear navigation mode is in effect." (§7.40.1)
+    let nowMs = 0;
+    const view = sectioned({
+      kind: "assessmentSection",
+      identifier: "S1",
+      timeLimits: { minTime: 50 },
+      children: [itemRef("I1", { timeLimits: { minTime: 30 } }), itemRef("I2")],
+    });
+    const controller = createTestController(view, { seed: 1, now: () => nowMs });
+    let state = controller.start();
+
+    nowMs += 10_000;
+    expect(controller.canNext(state)).toBe(false); // I1's 30s unmet
+
+    state = controller.next(state);
+    expect(controller.currentItem(state)?.key).toBe("I1");
+
+    nowMs += 20_000; // exactly 30s on I1
+    state = controller.next(state);
+    expect(controller.currentItem(state)?.key).toBe("I2");
+
+    state = controller.next(state); // leaving S1 at 30s < its 50s minTime
+    expect(controller.currentItem(state)?.key).toBe("I2");
+
+    nowMs += 20_000; // S1 at exactly 50s
+    state = controller.next(state);
+    expect(controller.currentItem(state)?.key).toBe("I9");
+  });
+
+  test("minTime does not gate nonlinear parts or end()", () => {
+    let nowMs = 0;
+    const view = sectioned(
+      {
+        kind: "assessmentSection",
+        identifier: "S1",
+        children: [itemRef("I1", { timeLimits: { minTime: 30 } }), itemRef("I2")],
+      },
+      { navigationMode: "nonlinear" },
+    );
+    const controller = createTestController(view, { seed: 1, now: () => nowMs });
+    let state = controller.start();
+
+    state = controller.next(state);
+    expect(controller.currentItem(state)?.key).toBe("I2"); // nonlinear: ungated
+
+    const linear = createTestController(
+      sectioned({
+        kind: "assessmentSection",
+        identifier: "S1",
+        children: [itemRef("I1", { timeLimits: { minTime: 30 } })],
+      }),
+      { seed: 1, now: () => nowMs },
+    );
+
+    expect(linear.end(linear.start()).status).toBe("ended"); // end() is never gated
+  });
+
+  test("expiry is enforced on any transition, not only tick", () => {
+    let nowMs = 0;
+    const view = sectioned(
+      { kind: "assessmentSection", identifier: "S1", children: [itemRef("I1"), itemRef("I2")] },
+      { partTimeLimits: { maxTime: 60 } },
+    );
+    const controller = createTestController(view, { seed: 1, now: () => nowMs });
+    let state = controller.start();
+
+    nowMs += 61_000;
+    state = controller.next(state); // the fold at entry sees the expired part
+
+    expect(controller.currentItem(state)?.key).toBe("I9");
+  });
+});
