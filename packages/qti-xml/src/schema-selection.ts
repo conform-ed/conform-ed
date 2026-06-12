@@ -21,6 +21,8 @@ const registry: Record<string, SafeParseSchema> = {
   "2.2:qtiAssessmentTestDocument": QtiV2_2.QtiAssessmentTestDocumentSchema as SafeParseSchema,
   "2.2:qtiManifestDocument": QtiV2_2.QtiManifestDocumentSchema as SafeParseSchema,
   "2.2:qtiMetadataDocument": QtiV2_2.QtiMetadataDocumentSchema as SafeParseSchema,
+  "3.0.1:qtiAccessForAllPnpDocument": QtiV3_0_1.QtiAccessForAllPnpDocumentSchema as SafeParseSchema,
+  "3.0.1:qtiAccessForAllPnpRecordsDocument": QtiV3_0_1.QtiAccessForAllPnpRecordsDocumentSchema as SafeParseSchema,
   "3.0.1:qtiAssessmentItemDocument": QtiV3_0_1.QtiAssessmentItemDocumentSchema as SafeParseSchema,
   "3.0.1:qtiAssessmentResultDocument": QtiV3_0_1.QtiAssessmentResultDocumentSchema as SafeParseSchema,
   "3.0.1:qtiAssessmentSectionDocument": QtiV3_0_1.QtiAssessmentSectionDocumentSchema as SafeParseSchema,
@@ -31,6 +33,8 @@ const registry: Record<string, SafeParseSchema> = {
 
 const normalizationImplemented = new Set<string>([
   "2.2:qtiAssessmentItemDocument",
+  "3.0.1:qtiAccessForAllPnpDocument",
+  "3.0.1:qtiAccessForAllPnpRecordsDocument",
   "2.2:qtiManifestDocument",
   "3.0.1:qtiAssessmentItemDocument",
   "3.0.1:qtiAssessmentResultDocument",

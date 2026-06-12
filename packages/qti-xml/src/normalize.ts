@@ -509,10 +509,88 @@ function optionalBoolean(attributes: Record<string, string>, name: string, key: 
 function contentOf(node: QtiXmlElementNode): { content?: unknown[] } {
   // QTI 3 block containers (feedback/template/rubric blocks, modal feedback) wrap
   // their flow content in a <qti-content-body>; the normalized node carries the
-  // content directly.
+  // content directly. A sibling <qti-catalog-info> is dormant alternative content
+  // (§5.29) mapped by catalogInfoOf, never part of the flow content.
   const contentBody = firstChildElement(node, "qti-content-body");
-  const content = mapV3ContentFragments(contentBody ? contentBody.children : node.children);
+  const children = contentBody
+    ? contentBody.children
+    : node.children.filter((child) => child.type !== "element" || child.localName !== "qti-catalog-info");
+  const content = mapV3ContentFragments(children);
   return content.length ? { content } : {};
+}
+
+// ---------- Catalogs (CatalogInfo/Catalog/Card/CardEntry, §5.26–5.29) ----------
+
+/** data-* extension characteristics minus the prefix — the card-entry discriminators (§5.27.3). */
+function dataAttributesOf(element: QtiXmlElementNode): { dataAttributes?: Record<string, string> } {
+  const entries = Object.entries(element.attributes)
+    .filter(([name]) => name.startsWith("data-"))
+    .map(([name, value]) => [name.slice("data-".length), value] as const);
+
+  return entries.length ? { dataAttributes: Object.fromEntries(entries) } : {};
+}
+
+function mapV3CatalogHtmlContent(element: QtiXmlElementNode) {
+  const content = mapV3ContentFragments(element.children);
+
+  return {
+    ...optionalString(element.attributes, "xml:lang", "xmlLang"),
+    ...dataAttributesOf(element),
+    ...(content.length ? { content } : {}),
+  };
+}
+
+/** The CardSelection content (§6.6): direct HTML content and/or content-file links. */
+function cardContentOf(element: QtiXmlElementNode) {
+  const htmlContent = firstChildElement(element, "qti-html-content");
+  const fileHrefs = childElements(element, "qti-file-href");
+
+  return {
+    ...(htmlContent ? { htmlContent: mapV3CatalogHtmlContent(htmlContent) } : {}),
+    ...(fileHrefs.length
+      ? {
+          fileHrefs: fileHrefs.map((fileHref) => ({
+            href: textContent(fileHref) ?? "",
+            mimeType: requireAttribute(fileHref, "mime-type"),
+          })),
+        }
+      : {}),
+  };
+}
+
+function mapV3CardEntry(element: QtiXmlElementNode) {
+  return {
+    ...optionalString(element.attributes, "xml:lang", "xmlLang"),
+    ...optionalBoolean(element.attributes, "default", "default"),
+    ...dataAttributesOf(element),
+    ...cardContentOf(element),
+  };
+}
+
+function mapV3Card(element: QtiXmlElementNode) {
+  const entries = childElements(element, "qti-card-entry");
+
+  return {
+    support: requireAttribute(element, "support"),
+    ...optionalString(element.attributes, "xml:lang", "xmlLang"),
+    // The XSD choice: card entries, or direct content (qti-html-content/qti-file-href).
+    ...(entries.length ? { cardEntries: entries.map((entry) => mapV3CardEntry(entry)) } : cardContentOf(element)),
+  };
+}
+
+function mapV3CatalogInfo(element: QtiXmlElementNode) {
+  return {
+    catalogs: childElements(element, "qti-catalog").map((catalog) => ({
+      id: requireAttribute(catalog, "id"),
+      cards: childElements(catalog, "qti-card").map((card) => mapV3Card(card)),
+    })),
+  };
+}
+
+/** The dormant alternative content attached to catalog-bearing nodes (§5.29). */
+function catalogInfoOf(node: QtiXmlElementNode): { catalogInfo?: unknown } {
+  const catalogInfo = firstChildElement(node, "qti-catalog-info");
+  return catalogInfo ? { catalogInfo: mapV3CatalogInfo(catalogInfo) } : {};
 }
 
 /** Body fragments of `node` excluding the element names mapped into dedicated fields. */
@@ -893,6 +971,7 @@ function mapV3DomainNode(node: QtiXmlElementNode): unknown {
         identifier: requireAttribute(node, "identifier"),
         ...optionalString(node.attributes, "show-hide", "showHide"),
         ...contentOf(node),
+        ...catalogInfoOf(node),
       };
 
     case "qti-template-inline":
@@ -903,6 +982,7 @@ function mapV3DomainNode(node: QtiXmlElementNode): unknown {
         identifier: requireAttribute(node, "identifier"),
         ...optionalString(node.attributes, "show-hide", "showHide"),
         ...contentOf(node),
+        ...catalogInfoOf(node),
       };
 
     case "qti-printed-variable":
@@ -924,6 +1004,7 @@ function mapV3DomainNode(node: QtiXmlElementNode): unknown {
         view: attributeList(requireAttribute(node, "view")) ?? [],
         ...optionalString(node.attributes, "use", "use"),
         ...contentOf(node),
+        ...catalogInfoOf(node),
       };
 
     case "qti-include":
@@ -957,6 +1038,7 @@ function mapV3DomainNode(node: QtiXmlElementNode): unknown {
         ...(classTokens.length > 0 ? { class: classTokens } : {}),
         ...optionalString(node.attributes, "data-catalog-idref", "dataCatalogIdref"),
         ...(Object.keys(properties).length > 0 ? { properties } : {}),
+        ...catalogInfoOf(node),
         interactionMarkup: {
           kind: "interactionMarkup",
           ...(markup ? contentOf(markup) : {}),
@@ -1502,6 +1584,7 @@ function mapV3TestFeedback(element: QtiXmlElementNode) {
     identifier: requireAttribute(element, "identifier"),
     ...optionalString(element.attributes, "title", "title"),
     ...contentOf(element),
+    ...catalogInfoOf(element),
   };
 }
 
@@ -1511,6 +1594,7 @@ function mapV3TestRubricBlock(element: QtiXmlElementNode) {
     view: attributeList(requireAttribute(element, "view")) ?? [],
     ...optionalString(element.attributes, "use", "use"),
     ...contentOf(element),
+    ...catalogInfoOf(element),
   };
 }
 
@@ -1879,6 +1963,7 @@ function mapV3ModalFeedback(element: QtiXmlElementNode) {
     showHide: requireAttribute(element, "show-hide"),
     ...optionalString(element.attributes, "title", "title"),
     ...contentOf(element),
+    ...catalogInfoOf(element),
   };
 }
 
@@ -1944,6 +2029,7 @@ function normalizeQti301AssessmentItem(root: QtiXmlElementNode) {
             },
           }
         : {}),
+      ...catalogInfoOf(root),
       ...(responseProcessingElement ? { responseProcessing: mapV3ResponseProcessing(responseProcessingElement) } : {}),
       ...(childElements(root, "qti-modal-feedback").length
         ? { modalFeedbacks: childElements(root, "qti-modal-feedback").map((element) => mapV3ModalFeedback(element)) }
@@ -2033,6 +2119,7 @@ function normalizeQti301AssessmentStimulus(root: QtiXmlElementNode) {
       stimulusBody: {
         content: mapV3ContentFragments(firstChildElement(root, "qti-stimulus-body")?.children ?? []),
       },
+      ...catalogInfoOf(root),
     },
   };
 }
@@ -2049,6 +2136,307 @@ function normalizeQti301AssessmentResult(root: QtiXmlElementNode) {
       ...(childElements(root, "itemResult").length
         ? { itemResults: childElements(root, "itemResult").map((itemResult) => mapV3ItemResult(itemResult)) }
         : {}),
+    },
+  };
+}
+
+// ---------- AfA PNP (the QTI 3.0 profile of AfA PNP 3.0, imsqtiv3p0_afa3p0pnp_v1p0) ----------
+
+const pnpReplaceAccessModePrefix = "replace-access-mode-";
+
+/** ReplacesAccessModeDType: empty replace-access-mode-* children name the modes replaced. */
+function pnpReplaceAccessModesOf(element: QtiXmlElementNode): { replaceAccessModes?: string[] } {
+  const modes = childElements(element)
+    .filter((child) => child.localName.startsWith(pnpReplaceAccessModePrefix))
+    .map((child) => child.localName.slice(pnpReplaceAccessModePrefix.length));
+
+  return modes.length ? { replaceAccessModes: modes } : {};
+}
+
+function pnpChildText(element: QtiXmlElementNode, name: string, key: string): Record<string, string> {
+  const child = firstChildElement(element, name);
+  const value = child ? textContent(child) : undefined;
+  return value !== undefined && value !== "" ? { [key]: value } : {};
+}
+
+function pnpChildNumber(element: QtiXmlElementNode, name: string, key: string): Record<string, number> {
+  const child = firstChildElement(element, name);
+  const value = child ? textContent(child) : undefined;
+  if (value === undefined || value === "") {
+    return {};
+  }
+  const parsed = Number(value);
+  return Number.isNaN(parsed) ? {} : { [key]: parsed };
+}
+
+function pnpChildBoolean(element: QtiXmlElementNode, name: string, key: string): Record<string, boolean> {
+  const child = firstChildElement(element, name);
+  const value = child ? textContent(child) : undefined;
+  if (value === "true" || value === "1") {
+    return { [key]: true };
+  }
+  if (value === "false" || value === "0") {
+    return { [key]: false };
+  }
+  return {};
+}
+
+/** LanguageModeDType: a ReplacesAccessMode with a required xml:lang. */
+function mapV3PnpLanguageMode(element: QtiXmlElementNode) {
+  return {
+    ...pnpReplaceAccessModesOf(element),
+    xmlLang: requireAttribute(element, "xml:lang"),
+  };
+}
+
+/** FeatureSetDType: empty feature-named children list the controlled features. */
+function mapV3PnpFeatureSet(element: QtiXmlElementNode) {
+  const features = childElements(element).map((child) => child.localName);
+  return features.length ? { features } : {};
+}
+
+function mapV3PnpZoomTarget(element: QtiXmlElementNode) {
+  return optionalNumber(element.attributes, "zoom-amount", "zoomAmount");
+}
+
+function mapV3AccessForAllPnp(root: QtiXmlElementNode): Record<string, unknown> {
+  const pnp: Record<string, unknown> = {};
+
+  const feature = (name: string): QtiXmlElementNode | undefined => firstChildElement(root, name);
+  const replaceMode = (name: string, key: string): void => {
+    const element = feature(name);
+    if (element) {
+      pnp[key] = pnpReplaceAccessModesOf(element);
+    }
+  };
+  const languageMode = (name: string, key: string): void => {
+    const element = feature(name);
+    if (element) {
+      pnp[key] = mapV3PnpLanguageMode(element);
+    }
+  };
+  const onScreenFlag = (name: string, key: string): void => {
+    if (feature(name)) {
+      pnp[key] = true;
+    }
+  };
+  const featureSet = (name: string, key: string): void => {
+    const element = feature(name);
+    if (element) {
+      pnp[key] = mapV3PnpFeatureSet(element);
+    }
+  };
+
+  const hazards = childElements(root, "hazard-avoidance")
+    .map((element) => textContent(element))
+    .filter((value): value is string => value !== undefined && value !== "");
+  if (hazards.length) {
+    pnp["hazardAvoidance"] = hazards;
+  }
+
+  const inputRequirementsElement = feature("input-requirements");
+  const inputRequirements = inputRequirementsElement ? textContent(inputRequirementsElement) : undefined;
+  if (inputRequirements) {
+    pnp["inputRequirements"] = inputRequirements;
+  }
+
+  const interfaceLanguages = childElements(root, "language-of-interface").map((element) =>
+    mapV3PnpLanguageMode(element),
+  );
+  if (interfaceLanguages.length) {
+    pnp["languageOfInterface"] = interfaceLanguages;
+  }
+
+  replaceMode("linguistic-guidance", "linguisticGuidance");
+  replaceMode("keyword-emphasis", "keywordEmphasis");
+  languageMode("keyword-translation", "keywordTranslation");
+  replaceMode("simplified-language-portions", "simplifiedLanguagePortions");
+  replaceMode("simplified-graphics", "simplifiedGraphics");
+  languageMode("item-translation", "itemTranslation");
+  languageMode("sign-language", "signLanguage");
+  replaceMode("encouragement", "encouragement");
+
+  const additionalTestingTime = feature("additional-testing-time");
+  if (additionalTestingTime) {
+    pnp["additionalTestingTime"] = {
+      ...pnpReplaceAccessModesOf(additionalTestingTime),
+      ...pnpChildNumber(additionalTestingTime, "time-multiplier", "timeMultiplier"),
+      ...pnpChildNumber(additionalTestingTime, "fixed-minutes", "fixedMinutes"),
+      ...(firstChildElement(additionalTestingTime, "unlimited") ? { unlimited: true } : {}),
+    };
+  }
+
+  const lineReader = feature("line-reader");
+  if (lineReader) {
+    pnp["lineReader"] = {
+      ...pnpReplaceAccessModesOf(lineReader),
+      ...optionalString(lineReader.attributes, "highlight-color", "highlightColor"),
+    };
+  }
+
+  const invertDisplayPolarity = feature("invert-display-polarity");
+  if (invertDisplayPolarity) {
+    pnp["invertDisplayPolarity"] = {
+      ...pnpReplaceAccessModesOf(invertDisplayPolarity),
+      ...optionalString(invertDisplayPolarity.attributes, "foreground", "foreground"),
+      ...optionalString(invertDisplayPolarity.attributes, "background", "background"),
+    };
+  }
+
+  const magnification = feature("magnification");
+  if (magnification) {
+    const allContent = firstChildElement(magnification, "all-content");
+    const text = firstChildElement(magnification, "text");
+    const nonText = firstChildElement(magnification, "non-text");
+    pnp["magnification"] = {
+      ...pnpReplaceAccessModesOf(magnification),
+      ...(allContent ? { allContent: mapV3PnpZoomTarget(allContent) } : {}),
+      ...(text ? { text: mapV3PnpZoomTarget(text) } : {}),
+      ...(nonText ? { nonText: mapV3PnpZoomTarget(nonText) } : {}),
+    };
+  }
+
+  const spoken = feature("spoken");
+  if (spoken) {
+    const restrictionTypes = childElements(spoken, "restriction-type")
+      .map((element) => textContent(element))
+      .filter((value): value is string => value !== undefined && value !== "");
+    pnp["spoken"] = {
+      ...pnpReplaceAccessModesOf(spoken),
+      ...pnpChildText(spoken, "reading-type", "readingType"),
+      ...(restrictionTypes.length ? { restrictionTypes } : {}),
+      ...pnpChildNumber(spoken, "speech-rate", "speechRate"),
+      ...pnpChildNumber(spoken, "pitch", "pitch"),
+      ...pnpChildNumber(spoken, "volume", "volume"),
+      ...pnpChildText(spoken, "link-indication", "linkIndication"),
+      ...pnpChildText(spoken, "typing-echo", "typingEcho"),
+    };
+  }
+
+  replaceMode("tactile", "tactile");
+
+  const braille = feature("braille");
+  if (braille) {
+    pnp["braille"] = {
+      ...pnpReplaceAccessModesOf(braille),
+      ...pnpChildText(braille, "delivery-mode", "deliveryMode"),
+      ...pnpChildText(braille, "grade", "grade"),
+      ...pnpChildText(braille, "braille-type", "brailleType"),
+      ...pnpChildText(braille, "math-type", "mathType"),
+      ...optionalString(braille.attributes, "xml:lang", "xmlLang"),
+    };
+  }
+
+  replaceMode("answer-masking", "answerMasking");
+  replaceMode("keyboard-directions", "keyboardDirections");
+  replaceMode("additional-directions", "additionalDirections");
+
+  const longDescription = feature("long-description");
+  if (longDescription) {
+    pnp["longDescription"] = {
+      ...pnpReplaceAccessModesOf(longDescription),
+      ...optionalBoolean(longDescription.attributes, "hide-visually", "hideVisually"),
+    };
+  }
+
+  replaceMode("captions", "captions");
+
+  const environment = feature("environment");
+  if (environment) {
+    pnp["environment"] = {
+      ...pnpReplaceAccessModesOf(environment),
+      ...pnpChildText(environment, "description", "description"),
+      ...pnpChildText(environment, "medical", "medical"),
+      ...pnpChildText(environment, "software", "software"),
+      ...pnpChildText(environment, "hardware", "hardware"),
+      ...pnpChildBoolean(environment, "breaks", "breaks"),
+    };
+  }
+
+  replaceMode("transcript", "transcript");
+  replaceMode("alternative-text", "alternativeText");
+  replaceMode("audio-description", "audioDescription");
+  replaceMode("high-contrast", "highContrast");
+  replaceMode("layout-single-column", "layoutSingleColumn");
+
+  const textAppearance = feature("text-appearance");
+  if (textAppearance) {
+    const fontFace = firstChildElement(textAppearance, "font-face");
+    const fontNames = fontFace
+      ? childElements(fontFace, "font-name")
+          .map((element) => textContent(element))
+          .filter((value): value is string => value !== undefined && value !== "")
+      : [];
+    pnp["textAppearance"] = {
+      ...pnpReplaceAccessModesOf(textAppearance),
+      ...pnpChildText(textAppearance, "background-color", "backgroundColor"),
+      ...pnpChildText(textAppearance, "font-color", "fontColor"),
+      ...pnpChildNumber(textAppearance, "font-size", "fontSize"),
+      ...(fontFace
+        ? {
+            fontFace: {
+              ...(fontNames.length ? { fontName: fontNames } : {}),
+              ...pnpChildText(fontFace, "generic-font-face", "genericFontFace"),
+            },
+          }
+        : {}),
+      ...pnpChildNumber(textAppearance, "line-spacing", "lineSpacing"),
+      ...pnpChildNumber(textAppearance, "line-height", "lineHeight"),
+      ...pnpChildNumber(textAppearance, "letter-spacing", "letterSpacing"),
+      ...(firstChildElement(textAppearance, "uniform-font-sizing") ? { uniformFontSizing: true } : {}),
+      ...pnpChildNumber(textAppearance, "word-spacing", "wordSpacing"),
+      ...(firstChildElement(textAppearance, "word-wrapping") ? { wordWrapping: true } : {}),
+    };
+  }
+
+  const calculator = feature("calculator-on-screen");
+  if (calculator) {
+    pnp["calculatorOnScreen"] = optionalString(calculator.attributes, "calculator-type", "calculatorType");
+  }
+
+  onScreenFlag("dictionary-on-screen", "dictionaryOnScreen");
+  onScreenFlag("glossary-on-screen", "glossaryOnScreen");
+  onScreenFlag("thesaurus-on-screen", "thesaurusOnScreen");
+  onScreenFlag("homophone-checker-on-screen", "homophoneCheckerOnScreen");
+  onScreenFlag("note-taking-on-screen", "noteTakingOnScreen");
+  onScreenFlag("visual-organizer-on-screen", "visualOrganizerOnScreen");
+  onScreenFlag("outliner-on-screen", "outlinerOnScreen");
+  onScreenFlag("peer-interaction-on-screen", "peerInteractionOnScreen");
+  onScreenFlag("spell-checker-on-screen", "spellCheckerOnScreen");
+
+  featureSet("activate-at-initialization-set", "activateAtInitializationSet");
+  featureSet("activate-as-option-set", "activateAsOptionSet");
+  featureSet("prohibit-set", "prohibitSet");
+
+  return pnp;
+}
+
+function normalizeQti301AccessForAllPnp(root: QtiXmlElementNode) {
+  return { accessForAllPnp: mapV3AccessForAllPnp(root) };
+}
+
+function normalizeQti301AccessForAllPnpRecords(root: QtiXmlElementNode) {
+  return {
+    accessForAllPnpRecords: {
+      records: childElements(root, "access-for-all-pnp-record").map((record) => {
+        const personSourcedId = firstChildElement(record, "person-sourced-id");
+        if (!personSourcedId) {
+          throw new Error("An access-for-all-pnp-record requires a person-sourced-id.");
+        }
+        const pnp = firstChildElement(record, "access-for-all-pnp");
+        const appointmentIds = childElements(record, "appointment-id")
+          .map((element) => textContent(element))
+          .filter((value): value is string => value !== undefined && value !== "");
+
+        return {
+          personSourcedId: {
+            value: textContent(personSourcedId) ?? "",
+            sourceSystem: requireAttribute(personSourcedId, "source-system"),
+          },
+          ...(appointmentIds.length ? { appointmentId: appointmentIds } : {}),
+          accessForAllPnp: pnp ? mapV3AccessForAllPnp(pnp) : {},
+        };
+      }),
     },
   };
 }
@@ -2071,6 +2459,10 @@ export function normalizeQtiDocument(
       return normalizeQti301AssessmentTest(root);
     case "3.0.1:qtiAssessmentResultDocument":
       return normalizeQti301AssessmentResult(root);
+    case "3.0.1:qtiAccessForAllPnpDocument":
+      return normalizeQti301AccessForAllPnp(root);
+    case "3.0.1:qtiAccessForAllPnpRecordsDocument":
+      return normalizeQti301AccessForAllPnpRecords(root);
     default:
       throw new Error(`Normalization is not implemented for ${version} ${schemaSelectionKey}.`);
   }

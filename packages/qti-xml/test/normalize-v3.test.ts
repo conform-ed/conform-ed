@@ -738,3 +738,166 @@ test("qti-assessment-stimulus documents normalize and validate", async () => {
 
   expect(body.content.length).toBeGreaterThan(0);
 });
+
+// ---------- Catalogs (qti-catalog-info, §5.26–5.29) ----------
+
+test("item-level qti-catalog-info: entry cards and direct-content cards normalize", async () => {
+  // The CatalogWithMultipleSupports.xml shape: keyword-translation entries keyed by
+  // xml:lang plus a linguistic-guidance card with direct qti-html-content.
+  const item = await normalizeItem(
+    wrapItem(`
+  <qti-response-declaration identifier="RESPONSE" cardinality="single" base-type="identifier"/>
+  <qti-item-body>
+    <p>Indicate which statements are <span data-catalog-idref="catalog1">accurate.</span></p>
+  </qti-item-body>
+  <qti-catalog-info>
+    <qti-catalog id="catalog1">
+      <qti-card support="keyword-translation">
+        <qti-card-entry xml:lang="es"><qti-html-content>preciso</qti-html-content></qti-card-entry>
+        <qti-card-entry xml:lang="de"><qti-html-content>genau</qti-html-content></qti-card-entry>
+      </qti-card>
+      <qti-card support="linguistic-guidance">
+        <qti-html-content>Accurate means correct.</qti-html-content>
+      </qti-card>
+    </qti-catalog>
+  </qti-catalog-info>
+`),
+  );
+
+  expect(item["catalogInfo"]).toEqual({
+    catalogs: [
+      {
+        id: "catalog1",
+        cards: [
+          {
+            support: "keyword-translation",
+            cardEntries: [
+              { xmlLang: "es", htmlContent: { content: ["preciso"] } },
+              { xmlLang: "de", htmlContent: { content: ["genau"] } },
+            ],
+          },
+          { support: "linguistic-guidance", htmlContent: { content: ["Accurate means correct."] } },
+        ],
+      },
+    ],
+  });
+});
+
+test("catalog cards: data-* discriminators, defaults, and file references normalize", async () => {
+  const item = await normalizeItem(
+    wrapItem(`
+  <qti-response-declaration identifier="RESPONSE" cardinality="single" base-type="identifier"/>
+  <qti-item-body>
+    <p data-catalog-idref="content2">Put the sentences in order.</p>
+  </qti-item-body>
+  <qti-catalog-info>
+    <qti-catalog id="content2">
+      <qti-card support="spoken">
+        <qti-card-entry data-reading-type="computer-read-aloud">
+          <qti-html-content>Put the following sentences in order.</qti-html-content>
+        </qti-card-entry>
+        <qti-card-entry default="true">
+          <qti-file-href mime-type="audio/mpeg">audio/directions.mp3</qti-file-href>
+        </qti-card-entry>
+      </qti-card>
+    </qti-catalog>
+  </qti-catalog-info>
+`),
+  );
+
+  expect(item["catalogInfo"]).toEqual({
+    catalogs: [
+      {
+        id: "content2",
+        cards: [
+          {
+            support: "spoken",
+            cardEntries: [
+              {
+                dataAttributes: { "reading-type": "computer-read-aloud" },
+                htmlContent: { content: ["Put the following sentences in order."] },
+              },
+              {
+                default: true,
+                fileHrefs: [{ href: "audio/directions.mp3", mimeType: "audio/mpeg" }],
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  });
+});
+
+test("a rubric block carries its own qti-catalog-info alongside its content body", async () => {
+  // CatalogsAcrossContentNodes.xml: "A rubric block contains its own qti-catalog-info node".
+  const item = await normalizeItem(
+    wrapItem(`
+  <qti-response-declaration identifier="RESPONSE" cardinality="single" base-type="identifier"/>
+  <qti-item-body>
+    <qti-rubric-block view="candidate" use="instructions">
+      <qti-content-body>
+        <p data-catalog-idref="rb_cat1">Choose the best option.</p>
+      </qti-content-body>
+      <qti-catalog-info>
+        <qti-catalog id="rb_cat1">
+          <qti-card support="keyword-translation">
+            <qti-card-entry xml:lang="es"><qti-html-content>Elija la mejor.</qti-html-content></qti-card-entry>
+          </qti-card>
+        </qti-catalog>
+      </qti-catalog-info>
+    </qti-rubric-block>
+  </qti-item-body>
+`),
+  );
+
+  const rubric = bodyContent(item)[0] as Record<string, unknown>;
+
+  expect(rubric["kind"]).toBe("rubricBlock");
+  expect((rubric["catalogInfo"] as { catalogs: unknown[] }).catalogs).toHaveLength(1);
+  expect(rubric["content"]).toEqual([
+    {
+      kind: "xml",
+      namespace: "http://www.imsglobal.org/xsd/imsqtiasi_v3p0",
+      name: "p",
+      attributes: { "data-catalog-idref": "rb_cat1" },
+      children: ["Choose the best option."],
+    },
+  ]);
+});
+
+test("qti-catalog-info inside an unwrapped block never leaks into its content", async () => {
+  // Without a qti-content-body wrapper the catalog-info sibling must still map to
+  // catalogInfo, not into the flow content (where it would be an unsupported element).
+  const item = await normalizeItem(
+    wrapItem(`
+  <qti-response-declaration identifier="RESPONSE" cardinality="single" base-type="identifier"/>
+  <qti-outcome-declaration identifier="FEEDBACK" cardinality="single" base-type="identifier"/>
+  <qti-item-body>
+    <qti-feedback-block outcome-identifier="FEEDBACK" identifier="CORRECT" show-hide="show">
+      <p>Well done.</p>
+      <qti-catalog-info>
+        <qti-catalog id="fb_cat">
+          <qti-card support="keyword-translation">
+            <qti-card-entry xml:lang="es"><qti-html-content>Bien hecho.</qti-html-content></qti-card-entry>
+          </qti-card>
+        </qti-catalog>
+      </qti-catalog-info>
+    </qti-feedback-block>
+  </qti-item-body>
+`),
+  );
+
+  const feedback = bodyContent(item)[0] as Record<string, unknown>;
+
+  expect(feedback["kind"]).toBe("feedbackBlock");
+  expect((feedback["catalogInfo"] as { catalogs: unknown[] }).catalogs).toHaveLength(1);
+  expect(feedback["content"]).toEqual([
+    {
+      kind: "xml",
+      namespace: "http://www.imsglobal.org/xsd/imsqtiasi_v3p0",
+      name: "p",
+      children: ["Well done."],
+    },
+  ]);
+});

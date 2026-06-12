@@ -10,6 +10,8 @@ export type QtiSupportStatus =
 export type QtiValidationStatus = "invalid" | "parse-error" | "unsupported" | "valid";
 export type QtiVersion = "2.2" | "3.0.1";
 export type QtiSchemaSelectionKey =
+  | "qtiAccessForAllPnpDocument"
+  | "qtiAccessForAllPnpRecordsDocument"
   | "qtiAssessmentItemDocument"
   | "qtiAssessmentResultDocument"
   | "qtiAssessmentSectionDocument"

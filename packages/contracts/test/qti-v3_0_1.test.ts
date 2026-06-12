@@ -9,6 +9,7 @@ import {
   QtiAssessmentSectionDocumentSchema,
   QtiAssessmentStimulusDocumentSchema,
   QtiAssessmentTestDocumentSchema,
+  QtiCatalogInfoSchema,
   QtiMetadataDocumentSchema,
   QtiOutcomeDeclarationDocumentSchema,
   QtiOutcomeProcessingDocumentSchema,
@@ -682,4 +683,112 @@ test("maxChoices 0 means unbounded and never conflicts with minChoices", () => {
   });
 
   expect(parsed.success).toBe(true);
+});
+
+// ---------- Catalog (CatalogInfo/Catalog/Card/CardEntry, §5.26–5.29) ----------
+
+test("QtiCatalogInfoSchema parses cards with language-keyed entries and direct content", () => {
+  // Mirrors the official CatalogWithMultipleSupports.xml: a keyword-translation card
+  // with per-language entries plus a linguistic-guidance card carrying direct content.
+  const parsed = QtiCatalogInfoSchema.safeParse({
+    catalogs: [
+      {
+        id: "catalog1",
+        cards: [
+          {
+            support: "keyword-translation",
+            cardEntries: [
+              { xmlLang: "es", htmlContent: { content: ["preciso"] } },
+              { xmlLang: "de", htmlContent: { content: ["genau"] } },
+            ],
+          },
+          {
+            support: "linguistic-guidance",
+            htmlContent: { content: ["Accurate means correct."] },
+          },
+        ],
+      },
+    ],
+  });
+
+  expect(parsed.success).toBe(true);
+});
+
+test("QtiCatalogInfoSchema accepts data-* discriminators, defaults, and file references", () => {
+  // The sharedStimulus exemplars discriminate spoken entries by data-reading-type; the
+  // XSD allows file references with a required mime-type (FileHrefCard, §7.15).
+  const parsed = QtiCatalogInfoSchema.safeParse({
+    catalogs: [
+      {
+        id: "cat123_1",
+        cards: [
+          {
+            support: "spoken",
+            cardEntries: [
+              {
+                dataAttributes: { "reading-type": "computer-read-aloud" },
+                htmlContent: { content: ["Anina saw the crocodile."] },
+              },
+              {
+                default: true,
+                fileHrefs: [{ href: "audio/item123.mp3", mimeType: "audio/mpeg" }],
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  });
+
+  expect(parsed.success).toBe(true);
+});
+
+test("a card is either entries or direct content, never both (XSD choice)", () => {
+  const parsed = QtiCatalogInfoSchema.safeParse({
+    catalogs: [
+      {
+        id: "c1",
+        cards: [
+          {
+            support: "braille",
+            htmlContent: { content: ["text"] },
+            cardEntries: [{ htmlContent: { content: ["entry"] } }],
+          },
+        ],
+      },
+    ],
+  });
+
+  expect(parsed.success).toBe(false);
+});
+
+test("only one card entry may carry the default designation (§5.27.2)", () => {
+  const parsed = QtiCatalogInfoSchema.safeParse({
+    catalogs: [
+      {
+        id: "c1",
+        cards: [
+          {
+            support: "sign-language",
+            cardEntries: [
+              { xmlLang: "ase", default: true, htmlContent: { content: ["a"] } },
+              { xmlLang: "fsl", default: true, htmlContent: { content: ["b"] } },
+            ],
+          },
+        ],
+      },
+    ],
+  });
+
+  expect(parsed.success).toBe(false);
+});
+
+test("card supports are the SupportEnum tokens or ext: extension strings", () => {
+  const card = (support: string) => ({
+    catalogs: [{ id: "c1", cards: [{ support, htmlContent: { content: ["x"] } }] }],
+  });
+
+  expect(QtiCatalogInfoSchema.safeParse(card("glossary-on-screen")).success).toBe(true);
+  expect(QtiCatalogInfoSchema.safeParse(card("ext:my-program-support")).success).toBe(true);
+  expect(QtiCatalogInfoSchema.safeParse(card("not-a-support")).success).toBe(false);
 });

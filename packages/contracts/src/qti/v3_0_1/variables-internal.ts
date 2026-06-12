@@ -10,7 +10,7 @@ import {
   QtiShapeSchema,
   QtiViewSchema,
   addIssue,
-  looseObject,
+  createXmlNodeSchema,
   strictObject,
 } from "./shared";
 
@@ -84,9 +84,93 @@ export const QtiStyleSheetSchema = strictObject({
   title: z.string().optional(),
 });
 
-export const QtiCatalogSchema = looseObject({
-  kind: z.literal("catalog"),
-  content: z.array(z.unknown()).optional(),
+// ---------- Catalog (CatalogInfo/Catalog/Card/CardEntry, §5.26–5.29) ----------
+
+/**
+ * Card support names: "This attribute names either pre-defined supports or a
+ * custom-named support" (§5.26.1) — the SupportEnum tokens (§8.38) or the XSD's
+ * SupportExtString pattern `(ext:)[a-zA-Z0-9_.\-]+`.
+ */
+export const QtiSupportNameSchema = z.union([
+  z.enum([
+    "additional-directions",
+    "audio-description",
+    "braille",
+    "glossary-on-screen",
+    "high-contrast",
+    "keyboard-directions",
+    "keyword-translation",
+    "linguistic-guidance",
+    "long-description",
+    "sign-language",
+    "simplified-language-portions",
+    "simplified-graphics",
+    "spoken",
+    "tactile",
+    "transcript",
+  ]),
+  z.string().regex(/^ext:[a-zA-Z0-9_.-]+$/u),
+]);
+
+/** Generic mixed HTML flow inside catalog content (HTMLContentFlow has no QTI elements). */
+const QtiHtmlContentFragmentSchema: z.ZodType = z.lazy(() =>
+  z.union([z.string(), createXmlNodeSchema(QtiHtmlContentFragmentSchema)]),
+);
+
+/** FileHrefCard (§7.15): a content-file URI with its required mime-type. */
+export const QtiFileHrefCardSchema = strictObject({
+  href: z.string(),
+  mimeType: QtiMimeTypeSchema,
+});
+
+/** HTMLContent (§5.63): the dormant alternative content in HTML format. */
+export const QtiCatalogHtmlContentSchema = strictObject({
+  xmlLang: z.string().optional(),
+  /** data-* extension characteristics, keyed without the "data-" prefix. */
+  dataAttributes: z.record(z.string(), z.string()).optional(),
+  content: z.array(QtiHtmlContentFragmentSchema).optional(),
+});
+
+/**
+ * CardEntry (§5.27): "an attribute (often custom attributes) on the CardEntry element
+ * declares the difference between the resources, and where the attribute value aligns
+ * with a specific preference/need from the candidate's PNP".
+ */
+export const QtiCardEntrySchema = strictObject({
+  xmlLang: z.string().optional(),
+  default: z.boolean().optional(),
+  /** data-* discriminators (e.g. data-reading-type), keyed without the "data-" prefix. */
+  dataAttributes: z.record(z.string(), z.string()).optional(),
+  htmlContent: QtiCatalogHtmlContentSchema.optional(),
+  fileHrefs: z.array(QtiFileHrefCardSchema).optional(),
+});
+
+/**
+ * Card (§5.26): dormant content for one named support. The XSD is a choice — either
+ * direct content (qti-html-content/qti-file-href) or card entries, never both.
+ */
+export const QtiCardSchema = strictObject({
+  support: QtiSupportNameSchema,
+  xmlLang: z.string().optional(),
+  htmlContent: QtiCatalogHtmlContentSchema.optional(),
+  fileHrefs: z.array(QtiFileHrefCardSchema).optional(),
+  cardEntries: z.array(QtiCardEntrySchema).min(1).optional(),
+}).superRefine((value, context) => {
+  if (value.cardEntries && (value.htmlContent || value.fileHrefs)) {
+    addIssue(context, ["cardEntries"], "A card holds either card entries or direct content, not both.");
+  }
+
+  // "Only one of the CardEntry instances can have a default designation." (§5.27.2)
+  const defaults = (value.cardEntries ?? []).filter((entry) => entry.default === true).length;
+  if (defaults > 1) {
+    addIssue(context, ["cardEntries"], "Only one card entry may be designated as the default.");
+  }
+});
+
+/** Catalog (§5.28): "located … from a data-catalog-idref" via its unique id. */
+export const QtiCatalogSchema = strictObject({
+  id: z.string().min(1),
+  cards: z.array(QtiCardSchema).min(1),
 });
 
 export const QtiCatalogInfoSchema = strictObject({
@@ -260,6 +344,11 @@ export type QtiInterpolationTable = z.infer<typeof QtiInterpolationTableSchema>;
 export type QtiMatchTableEntry = z.infer<typeof QtiMatchTableEntrySchema>;
 export type QtiMatchTable = z.infer<typeof QtiMatchTableSchema>;
 export type QtiStyleSheet = z.infer<typeof QtiStyleSheetSchema>;
+export type QtiSupportName = z.infer<typeof QtiSupportNameSchema>;
+export type QtiFileHrefCard = z.infer<typeof QtiFileHrefCardSchema>;
+export type QtiCatalogHtmlContent = z.infer<typeof QtiCatalogHtmlContentSchema>;
+export type QtiCardEntry = z.infer<typeof QtiCardEntrySchema>;
+export type QtiCard = z.infer<typeof QtiCardSchema>;
 export type QtiCatalog = z.infer<typeof QtiCatalogSchema>;
 export type QtiCatalogInfo = z.infer<typeof QtiCatalogInfoSchema>;
 export type QtiItemSessionControl = z.infer<typeof QtiItemSessionControlSchema>;
