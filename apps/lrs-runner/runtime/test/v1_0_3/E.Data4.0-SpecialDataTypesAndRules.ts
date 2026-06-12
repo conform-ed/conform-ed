@@ -495,8 +495,9 @@ describe("Special Data Types and Rules (Data 4.0)", () => {
       let result = helper.parse(res.body as string, () => undefined) as Record<string, unknown>;
       let stmts = result.statements as Array<Record<string, unknown>>;
       let milliChecker = (num: number) => {
-        expect(stmts[num]).toHaveProperty("timestamp");
-        const milliseconds = parseMillisecondsFromIso(stmts[num].timestamp);
+        const indexedStatement = stmts[num];
+        expect(indexedStatement).toHaveProperty("timestamp");
+        const milliseconds = parseMillisecondsFromIso(indexedStatement?.timestamp);
         expect(milliseconds).not.toEqual(null);
         //precision to milliseconds
         if ((milliseconds as number) % 10 > 0) {
@@ -523,8 +524,9 @@ describe("Special Data Types and Rules (Data 4.0)", () => {
       let result = helper.parse(res.body as string, () => undefined) as Record<string, unknown>;
       let stmts = result.statements as Array<Record<string, unknown>>;
       let milliChecker = (num: number) => {
-        expect(stmts[num]).toHaveProperty("stored");
-        const milliseconds = parseMillisecondsFromIso(stmts[num].stored);
+        const indexedStatement = stmts[num];
+        expect(indexedStatement).toHaveProperty("stored");
+        const milliseconds = parseMillisecondsFromIso(indexedStatement?.stored);
         expect(milliseconds).not.toEqual(null);
         //precision to milliseconds
         if ((milliseconds as number) % 10 > 0) {

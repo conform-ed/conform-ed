@@ -121,8 +121,9 @@ describe("Stored Property Requirements (Data 2.4.8)", () => {
       let result = helper.parse(res.body as string, () => undefined) as Record<string, unknown>;
       let stmts = result.statements as Array<Record<string, unknown>>;
       let milliChecker = (num: number) => {
-        expect(stmts[num]).toHaveProperty("stored");
-        const milliseconds = parseMillisecondsFromIso(stmts[num].stored);
+        const indexedStatement = stmts[num];
+        expect(indexedStatement).toHaveProperty("stored");
+        const milliseconds = parseMillisecondsFromIso(indexedStatement?.stored);
         expect(milliseconds).not.toEqual(null);
         //precision to milliseconds
         if ((milliseconds as number) % 10 > 0) {

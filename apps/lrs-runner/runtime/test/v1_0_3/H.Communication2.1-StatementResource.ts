@@ -2665,7 +2665,7 @@ MUST have a "Content-Type" header
       expect(results).toHaveProperty("statements");
       expect(results.statements).toHaveLength(1);
       expect(results.statements[0]).toHaveProperty("id");
-      expect(results.statements[0].id).toEqual(statementRefId);
+      expect(results.statements[0]?.id).toEqual(statementRefId);
     });
 
     // i think this can be removed
@@ -2686,9 +2686,9 @@ MUST have a "Content-Type" header
       expect(results).toHaveProperty("statements");
       expect(results.statements).toHaveLength(2);
       expect(results.statements[0]).toHaveProperty("id");
-      expect(results.statements[0].id).toEqual(statementRefId);
+      expect(results.statements[0]?.id).toEqual(statementRefId);
       expect(results.statements[1]).toHaveProperty("id");
-      expect(results.statements[1].id).toEqual(voidingId);
+      expect(results.statements[1]?.id).toEqual(voidingId);
       // let pt = new Date(prevStmtTime - helper.getTimeMargin()).toISOString();
       // let st = new Date(stmtTime - helper.getTimeMargin()).toISOString();
       // console.log(sinceVoidingTime +'\n'+ pt +'\n'+ st +'\n'+ untilVoidingTime);
@@ -2969,7 +2969,7 @@ MUST have a "Content-Type" header
       expect(
         result.statements.every(
           (s: Statement, i: number, arr: Statement[]) =>
-            i === arr.length - 1 || new Date(s.stored ?? 0) <= new Date(arr[i + 1].stored ?? 0),
+            i === arr.length - 1 || new Date(s.stored ?? 0) <= new Date(arr[i + 1]?.stored ?? 0),
         ),
       ).toBe(true);
     });

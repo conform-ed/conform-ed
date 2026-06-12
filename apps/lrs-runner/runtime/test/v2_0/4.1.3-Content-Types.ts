@@ -11,6 +11,7 @@ import { expectAsync } from "../super-request.ts";
 import helperModule from "../helper.ts";
 
 import { beforeAll, describe, it } from "../bun-test.ts";
+import { requireAttachment } from "../typing-helpers.ts";
 import { createStatementV2 } from "../typing-helpers.ts";
 import type { StatementV2 } from "@conform-ed/contracts/xapi/v2_0";
 
@@ -155,10 +156,11 @@ describe("Content Type Requirements (Communication 1.5)", () => {
     it('should succeed when attachment is raw data and request content-type is "multipart/mixed"', async () => {
       let header = { "Content-Type": "multipart/mixed; boundary=-------314159265358979323846" };
 
-      delete (data.attachments! as Array<Record<string, unknown>>)[0].fileUrl;
-      (data.attachments! as Array<Record<string, unknown>>)[0].contentType = "image/jpeg";
-      (data.attachments! as Array<Record<string, unknown>>)[0].length = pattSize;
-      (data.attachments! as Array<Record<string, unknown>>)[0].sha2 = pattHash;
+      const attachment = requireAttachment(data);
+      delete attachment.fileUrl;
+      attachment.contentType = "image/jpeg";
+      attachment.length = pattSize;
+      attachment.sha2 = pattHash;
       let dashes = "--";
       let crlf = "\r\n";
       let boundary = "-------314159265358979323846";
@@ -169,7 +171,7 @@ describe("Content Type Requirements (Communication 1.5)", () => {
       msg += dashes + boundary + crlf;
       msg += "Content-Type: image/jpeg" + crlf;
       msg += "Content-Transfer-Encoding: binary" + crlf;
-      msg += "X-Experience-API-Hash: " + (data.attachments! as Array<Record<string, unknown>>)[0].sha2 + crlf + crlf;
+      msg += "X-Experience-API-Hash: " + attachment.sha2 + crlf + crlf;
       msg += pictureAtt + crlf;
       msg += dashes + boundary + dashes + crlf;
 
@@ -185,10 +187,11 @@ describe("Content Type Requirements (Communication 1.5)", () => {
     it('should fail when attachment is raw data and request content-type is "multipart/form-data"', async () => {
       let header = { "Content-Type": "multipart/form-data; boundary=-------314159265358979323846" };
 
-      delete (data.attachments! as Array<Record<string, unknown>>)[0].fileUrl;
-      (data.attachments! as Array<Record<string, unknown>>)[0].contentType = "image/jpeg";
-      (data.attachments! as Array<Record<string, unknown>>)[0].length = pattSize;
-      (data.attachments! as Array<Record<string, unknown>>)[0].sha2 = pattHash;
+      const attachment = requireAttachment(data);
+      delete attachment.fileUrl;
+      attachment.contentType = "image/jpeg";
+      attachment.length = pattSize;
+      attachment.sha2 = pattHash;
 
       let dashes = "--";
       let crlf = "\r\n";
@@ -200,7 +203,7 @@ describe("Content Type Requirements (Communication 1.5)", () => {
       msg += dashes + boundary + crlf;
       msg += "Content-Type: image/jpeg" + crlf;
       msg += "Content-Transfer-Encoding: binary" + crlf;
-      msg += "X-Experience-API-Hash: " + (data.attachments! as Array<Record<string, unknown>>)[0].sha2 + crlf + crlf;
+      msg += "X-Experience-API-Hash: " + attachment.sha2 + crlf + crlf;
       msg += pictureAtt + crlf;
       msg += dashes + boundary + dashes + crlf;
 
@@ -292,10 +295,12 @@ describe("Content Type Requirements (Communication 1.5)", () => {
       ];
       data = createStatementV2(helper, templates);
 
-      (data.attachments! as Array<Record<string, unknown>>)[0].length = t1attSize;
-      (data.attachments! as Array<Record<string, unknown>>)[0].sha2 = t1attHash;
-      (data.attachments! as Array<Record<string, unknown>>)[1].length = t2attSize;
-      (data.attachments! as Array<Record<string, unknown>>)[1].sha2 = t2attHash;
+      const attachment = requireAttachment(data);
+      attachment.length = t1attSize;
+      attachment.sha2 = t1attHash;
+      const secondAttachment = requireAttachment(data, 1);
+      secondAttachment.length = t2attSize;
+      secondAttachment.sha2 = t2attHash;
 
       let dashes = "--";
       let crlf = "\r\n";
@@ -307,13 +312,13 @@ describe("Content Type Requirements (Communication 1.5)", () => {
       msg += dashes + boundary + crlf;
       msg += "Content-Type: text/plain" + crlf;
       msg += "Content-Transfer-Encoding: binary" + crlf;
-      msg += "X-Experience-API-Hash: " + (data.attachments! as Array<Record<string, unknown>>)[0].sha2 + crlf + crlf;
+      msg += "X-Experience-API-Hash: " + attachment.sha2 + crlf + crlf;
       msg += txtAtt1 + crlf;
 
       msg += dashes + boundary + crlf;
       msg += "Content-Type: text/plain" + crlf;
       msg += "Content-Transfer-Encoding: binary" + crlf;
-      msg += "X-Experience-API-Hash: " + (data.attachments! as Array<Record<string, unknown>>)[1].sha2 + crlf + crlf;
+      msg += "X-Experience-API-Hash: " + secondAttachment.sha2 + crlf + crlf;
       msg += txtAtt2 + crlf;
 
       msg += dashes + boundary + crlf;
@@ -365,10 +370,12 @@ describe("Content Type Requirements (Communication 1.5)", () => {
       ];
       data = createStatementV2(helper, templates);
 
-      (data.attachments! as Array<Record<string, unknown>>)[0].length = t1attSize;
-      (data.attachments! as Array<Record<string, unknown>>)[0].sha2 = t1attHash;
-      (data.attachments! as Array<Record<string, unknown>>)[1].length = t2attSize;
-      (data.attachments! as Array<Record<string, unknown>>)[1].sha2 = t2attHash;
+      const attachment = requireAttachment(data);
+      attachment.length = t1attSize;
+      attachment.sha2 = t1attHash;
+      const secondAttachment = requireAttachment(data, 1);
+      secondAttachment.length = t2attSize;
+      secondAttachment.sha2 = t2attHash;
 
       let dashes = "--";
       let crlf = "\r\n";
@@ -380,7 +387,7 @@ describe("Content Type Requirements (Communication 1.5)", () => {
       msg += dashes + boundary + crlf;
       msg += "Content-Type: text/plain" + crlf;
       msg += "Content-Transfer-Encoding: binary" + crlf;
-      msg += "X-Experience-API-Hash: " + (data.attachments! as Array<Record<string, unknown>>)[0].sha2 + crlf + crlf;
+      msg += "X-Experience-API-Hash: " + attachment.sha2 + crlf + crlf;
       msg += txtAtt1 + crlf;
       msg += dashes + boundary + dashes + crlf;
 
@@ -418,8 +425,9 @@ describe("Content Type Requirements (Communication 1.5)", () => {
       ];
       data = createStatementV2(helper, templates);
 
-      (data.attachments! as Array<Record<string, unknown>>)[0].length = t1attSize;
-      (data.attachments! as Array<Record<string, unknown>>)[0].sha2 = t1attHash;
+      const attachment = requireAttachment(data);
+      attachment.length = t1attSize;
+      attachment.sha2 = t1attHash;
 
       let dashes = "--";
       let crlf = "\r\n";
@@ -430,7 +438,7 @@ describe("Content Type Requirements (Communication 1.5)", () => {
       msg += dashes + boundary + crlf;
       msg += "Content-Type: text/plain" + crlf;
       msg += "Content-Transfer-Encoding: binary" + crlf;
-      msg += "X-Experience-API-Hash: " + (data.attachments! as Array<Record<string, unknown>>)[0].sha2 + crlf + crlf;
+      msg += "X-Experience-API-Hash: " + attachment.sha2 + crlf + crlf;
       msg += txtAtt1 + crlf;
       msg += dashes + boundary + dashes + crlf;
 
@@ -467,8 +475,9 @@ describe("Content Type Requirements (Communication 1.5)", () => {
       ];
       data = createStatementV2(helper, templates);
 
-      (data.attachments! as Array<Record<string, unknown>>)[0].length = t1attSize;
-      (data.attachments! as Array<Record<string, unknown>>)[0].sha2 = t1attHash;
+      const attachment = requireAttachment(data);
+      attachment.length = t1attSize;
+      attachment.sha2 = t1attHash;
 
       let dashes = "--";
       let crlf = "\r\n";
@@ -479,7 +488,7 @@ describe("Content Type Requirements (Communication 1.5)", () => {
       msg += JSON.stringify(data) + crlf;
       msg += "Content-Type: text/plain" + crlf;
       msg += "Content-Transfer-Encoding: binary" + crlf;
-      msg += "X-Experience-API-Hash: " + (data.attachments! as Array<Record<string, unknown>>)[0].sha2 + crlf + crlf;
+      msg += "X-Experience-API-Hash: " + attachment.sha2 + crlf + crlf;
       msg += txtAtt1 + crlf;
       msg += dashes + boundary + dashes + crlf;
 
@@ -511,8 +520,9 @@ describe("Content Type Requirements (Communication 1.5)", () => {
       ];
       data = createStatementV2(helper, templates);
 
-      (data.attachments! as Array<Record<string, unknown>>)[0].length = t1attSize;
-      (data.attachments! as Array<Record<string, unknown>>)[0].sha2 = t1attHash;
+      const attachment = requireAttachment(data);
+      attachment.length = t1attSize;
+      attachment.sha2 = t1attHash;
 
       let dashes = "--";
       let crlf = "\r\n";
@@ -524,7 +534,7 @@ describe("Content Type Requirements (Communication 1.5)", () => {
       msg += dashes + boundary + crlf;
       msg += "Content-Type: text/plain" + crlf;
       msg += "Content-Transfer-Encoding: binary" + crlf;
-      msg += "X-Experience-API-Hash: " + (data.attachments! as Array<Record<string, unknown>>)[0].sha2 + crlf + crlf;
+      msg += "X-Experience-API-Hash: " + attachment.sha2 + crlf + crlf;
       msg += txtAtt1 + crlf;
       msg += dashes + boundary + dashes + crlf;
 
@@ -561,8 +571,9 @@ describe("Content Type Requirements (Communication 1.5)", () => {
       ];
       data = createStatementV2(helper, templates);
 
-      (data.attachments! as Array<Record<string, unknown>>)[0].length = t1attSize;
-      (data.attachments! as Array<Record<string, unknown>>)[0].sha2 = t1attHash;
+      const attachment = requireAttachment(data);
+      attachment.length = t1attSize;
+      attachment.sha2 = t1attHash;
 
       let dashes = "--";
       let crlf = "\r\n";
@@ -574,7 +585,7 @@ describe("Content Type Requirements (Communication 1.5)", () => {
       msg += dashes + boundary + crlf;
       msg += "Content-Type: text/plain" + crlf;
       msg += "Content-Transfer-Encoding: binary" + crlf;
-      msg += "X-Experience-API-Hash: " + (data.attachments! as Array<Record<string, unknown>>)[0].sha2 + crlf + crlf;
+      msg += "X-Experience-API-Hash: " + attachment.sha2 + crlf + crlf;
       msg += txtAtt1 + crlf;
       msg += dashes + boundary + dashes + crlf;
 
@@ -611,8 +622,9 @@ describe("Content Type Requirements (Communication 1.5)", () => {
       ];
       data = createStatementV2(helper, templates);
 
-      (data.attachments! as Array<Record<string, unknown>>)[0].length = t1attSize;
-      (data.attachments! as Array<Record<string, unknown>>)[0].sha2 = t1attHash;
+      const attachment = requireAttachment(data);
+      attachment.length = t1attSize;
+      attachment.sha2 = t1attHash;
 
       let dashes = "--";
       let crlf = "\r\n";
@@ -627,7 +639,7 @@ describe("Content Type Requirements (Communication 1.5)", () => {
       msg += dashes + boundary + crlf;
       msg += "Content-Type: text/plain" + crlf;
       msg += "Content-Transfer-Encoding: binary" + crlf;
-      msg += "X-Experience-API-Hash: " + (data.attachments! as Array<Record<string, unknown>>)[0].sha2 + crlf + crlf;
+      msg += "X-Experience-API-Hash: " + attachment.sha2 + crlf + crlf;
       msg += txtAtt1 + crlf;
       msg += dashes + boundary + dashes + crlf;
 
@@ -664,8 +676,9 @@ describe("Content Type Requirements (Communication 1.5)", () => {
       ];
       data = createStatementV2(helper, templates);
 
-      (data.attachments! as Array<Record<string, unknown>>)[0].length = t1attSize;
-      (data.attachments! as Array<Record<string, unknown>>)[0].sha2 = t1attHash;
+      const attachment = requireAttachment(data);
+      attachment.length = t1attSize;
+      attachment.sha2 = t1attHash;
 
       let dashes = "--";
       let crlf = "\r\n";
@@ -708,8 +721,9 @@ describe("Content Type Requirements (Communication 1.5)", () => {
       ];
       data = createStatementV2(helper, templates);
 
-      (data.attachments! as Array<Record<string, unknown>>)[0].length = t1attSize;
-      (data.attachments! as Array<Record<string, unknown>>)[0].sha2 = t1attHash;
+      const attachment = requireAttachment(data);
+      attachment.length = t1attSize;
+      attachment.sha2 = t1attHash;
 
       let dashes = "--";
       let crlf = "\r\n";
@@ -758,8 +772,9 @@ describe("Content Type Requirements (Communication 1.5)", () => {
     ];
     data = createStatementV2(helper, templates);
 
-    (data.attachments! as Array<Record<string, unknown>>)[0].length = t1attSize;
-    (data.attachments! as Array<Record<string, unknown>>)[0].sha2 = t1attHash;
+    const attachment = requireAttachment(data);
+    attachment.length = t1attSize;
+    attachment.sha2 = t1attHash;
 
     let dashes = "--";
     let crlf = "\r\n";
@@ -771,7 +786,7 @@ describe("Content Type Requirements (Communication 1.5)", () => {
     msg += dashes + boundary + crlf;
     msg += "Content-Type: text/plain" + crlf;
     msg += "Content-Transfer-Encoding: base64" + crlf;
-    msg += "X-Experience-API-Hash: " + (data.attachments! as Array<Record<string, unknown>>)[0].sha2 + crlf + crlf;
+    msg += "X-Experience-API-Hash: " + attachment.sha2 + crlf + crlf;
     msg += txtAtt1 + crlf;
     msg += dashes + boundary + dashes + crlf;
 

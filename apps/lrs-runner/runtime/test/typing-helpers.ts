@@ -137,3 +137,15 @@ export function createTemplateObject<T extends Record<string, unknown>>(
 ): T {
   return tHelper.createFromTemplate(templates as Array<Record<string, unknown>>) as T;
 }
+
+/** An attachment of a fixture statement by position; fixtures that lack it are test bugs. */
+export function requireAttachment(statement: { attachments?: unknown }, index = 0): Record<string, unknown> {
+  const attachments = statement.attachments as Array<Record<string, unknown>> | undefined;
+  const attachment = attachments?.[index];
+
+  if (!attachment) {
+    throw new Error(`Test fixture statement must include an attachment at position ${index}.`);
+  }
+
+  return attachment;
+}

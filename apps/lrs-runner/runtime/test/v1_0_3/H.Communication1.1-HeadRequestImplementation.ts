@@ -95,9 +95,9 @@ describe("HEAD Request Implementation Requirements (Communication 1.1)", () => {
     it("should succeed HEAD activities with no body", () => {
       let templates = [{ statement: "{{statements.default}}" }];
       let data = helper.createFromTemplate(templates) as Record<string, unknown>;
-      let statement = data["statement"] as Record<string, Record<string, unknown>>;
+      let statement = data["statement"] as { object: Record<string, unknown> };
       let parameters = {
-        activityId: statement["object"]["id"] as string,
+        activityId: statement.object["id"] as string,
       };
       return helper.sendRequest("post", helper.getEndpointStatements(), undefined, [statement], 200).then(() => {
         return helper.sendRequest("head", helper.getEndpointActivities(), parameters, undefined, 200).then((res) => {

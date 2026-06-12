@@ -3064,7 +3064,7 @@ describe("Statement Resource Requirements (Communication 2.1)", () => {
         if (index === 0) {
           return true;
         }
-        return new Date(statements[index - 1].stored ?? 0) <= new Date(statementItem.stored ?? 0);
+        return new Date(statements[index - 1]?.stored ?? 0) <= new Date(statementItem.stored ?? 0);
       });
       expect(ascending).toBe(true);
     });

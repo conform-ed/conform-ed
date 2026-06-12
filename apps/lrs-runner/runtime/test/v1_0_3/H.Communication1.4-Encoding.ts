@@ -50,7 +50,11 @@ describe("Encoding Requirements (Communication 1.4)", () => {
     let results = helper.parse(res.body as string, () => undefined) as {
       statements: Array<{ verb: { display: Record<string, string> } }>;
     };
-    let languages = results.statements[0].verb.display;
+    const [firstStatement] = results.statements;
+    if (!firstStatement) {
+      throw new Error("Expected at least one statement in the result.");
+    }
+    let languages = firstStatement.verb.display;
     let unicodeConformant = true;
     const unicodeDisplay = unicode.verb?.display ?? {};
     for (const key in languages) {

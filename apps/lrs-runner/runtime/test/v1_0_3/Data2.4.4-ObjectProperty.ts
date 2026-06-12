@@ -237,7 +237,7 @@ describe("Object Property Requirements (Data 2.4.4)", () => {
   describe('Statements that use an Agent or Group as an Object MUST specify an "objectType" property. (Data 2.4.4.2.s1.b1, XAPI-00065)', () => {
     it("should fail when using agent as object and no objectType", async () => {
       let templates = [{ statement: "{{statements.object_agent_default}}" }];
-      let data = helper.createFromTemplate(templates).statement as Record<string, Record<string, unknown>>;
+      let data = helper.createFromTemplate(templates).statement as { object: Record<string, unknown> };
       delete data.object.objectType;
 
       await expectAsync(
@@ -251,7 +251,7 @@ describe("Object Property Requirements (Data 2.4.4)", () => {
 
     it("should fail when using group as object and no objectType", async () => {
       let templates = [{ statement: "{{statements.object_group_default}}" }];
-      let data = helper.createFromTemplate(templates).statement as Record<string, Record<string, unknown>>;
+      let data = helper.createFromTemplate(templates).statement as { object: Record<string, unknown> };
       delete data.object.objectType;
 
       await expectAsync(
@@ -268,7 +268,7 @@ describe("Object Property Requirements (Data 2.4.4)", () => {
         { statement: "{{statements.object_substatement}}" },
         { object: "{{statements.object_agent_default}}" },
       ];
-      let data = helper.createFromTemplate(templates).statement as Record<string, Record<string, unknown>>;
+      let data = helper.createFromTemplate(templates).statement as { object: Record<string, unknown> };
       delete data.object.objectType;
 
       await expectAsync(
@@ -285,7 +285,7 @@ describe("Object Property Requirements (Data 2.4.4)", () => {
         { statement: "{{statements.object_substatement}}" },
         { object: "{{statements.object_group_default}}" },
       ];
-      let data = helper.createFromTemplate(templates).statement as Record<string, Record<string, unknown>>;
+      let data = helper.createFromTemplate(templates).statement as { object: Record<string, unknown> };
       delete data.object.objectType;
 
       await expectAsync(
