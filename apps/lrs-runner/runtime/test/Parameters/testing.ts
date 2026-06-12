@@ -117,7 +117,7 @@ describe("These are tests with specific parameters that need to be met", () => {
   describe('An LRS\'s State Resource rejects a PUT request with "activityId" as a parameter if it is not type "String" with error code 400 Bad Request (format, Communication 2.3.s3.table1.row1)', () => {
     const invalidTypes = [{ key: "value" }, 1, true, undefined];
     invalidTypes.forEach(function (type) {
-      // oxlint-disable-next-line typescript/no-base-to-string
+      // oxlint-disable-next-line typescript/no-base-to-string -- the test title names the deliberately invalid fixture type
       it("Should State Resource reject a PUT request with activityId type " + type, () => {
         const parameters = helper.buildState();
         const document = helper.buildDocument();
@@ -145,7 +145,7 @@ describe("These are tests with specific parameters that need to be met", () => {
     const document = helper.buildDocument();
     const invalidTypes = [1, true, { key: "value" }, undefined];
     invalidTypes.forEach(function (type) {
-      // oxlint-disable-next-line typescript/no-base-to-string
+      // oxlint-disable-next-line typescript/no-base-to-string -- the test title names the deliberately invalid fixture type
       it("Should reject PUT State with stateId type : " + type, () => {
         const parameters = helper.buildState();
         parameters.activityId = type;

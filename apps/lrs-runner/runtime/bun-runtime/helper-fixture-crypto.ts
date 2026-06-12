@@ -286,7 +286,7 @@ function createHelperFixtureCryptoSupport(context: FixtureCryptoContext) {
         if (typeof value === "undefined" || value === null) {
           return;
         }
-        // oxlint-disable-next-line typescript/no-base-to-string
+        // oxlint-disable-next-line typescript/no-base-to-string -- query params serialize whatever the suite supplies
         searchParams.set(key, String(value));
       });
       return searchParams.toString();

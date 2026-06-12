@@ -16,6 +16,7 @@
     "images:publish:ghcr": "bun run scripts/publish-ghcr.ts",
     "images:smoke": "bun run scripts/smoke-verify-published-images.ts",
     "lint": "oxlint --config .oxlintrc.jsonc . && turbo run lint",
+    "lint:fix": "oxlint --fix --config .oxlintrc.jsonc .",
     "lrsql:auth:check": "bash ./scripts/lrsql-auth-check.sh",
     "lrsql:down": "podman compose -f infra/compose/podman-compose.lrsql.yaml down",
     "lrsql:reset": "podman compose -f infra/compose/podman-compose.lrsql.yaml down -v && podman compose -f infra/compose/podman-compose.lrsql.yaml up -d",
