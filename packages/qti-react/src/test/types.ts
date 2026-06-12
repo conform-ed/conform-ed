@@ -322,6 +322,8 @@ export interface TestSessionState {
 }
 
 export interface TestController {
+  /** The assessment test view this controller was created from. */
+  readonly test: AssessmentTestView;
   readonly plan: TestPlan;
   /** Static capability issues found in outcome processing, preconditions, and branch rules. */
   readonly issues: readonly CapabilityIssue[];

@@ -1349,6 +1349,7 @@ export function createTestController(view: AssessmentTestView, options: TestCont
   // ---------- Public surface ----------
 
   return {
+    test: view,
     plan,
     issues,
 

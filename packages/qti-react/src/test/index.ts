@@ -1,5 +1,21 @@
 export { createTestController, type TestControllerOptions } from "./controller";
 export {
+  assessmentResultFromNormalized,
+  buildAssessmentResult,
+  type AssessmentResultDocumentView,
+  type AssessmentResultInput,
+  type AssessmentResultItemDetails,
+  type AssessmentResultView,
+  type ItemResultView,
+  type ResultContextView,
+  type ResultOutcomeVariableView,
+  type ResultResponseVariableView,
+  type ResultSessionIdentifierView,
+  type ResultSessionStatus,
+  type ResultValueView,
+  type TestResultView,
+} from "./results";
+export {
   createTestSessionStore,
   type TestSessionSnapshot,
   type TestSessionStore,
@@ -7,6 +23,7 @@ export {
 } from "./session-store";
 export type {
   AssessmentItemRefView,
+  RecordedAttempt,
   AssessmentSectionView,
   AssessmentTestView,
   BranchRuleView,

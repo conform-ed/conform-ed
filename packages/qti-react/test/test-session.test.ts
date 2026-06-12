@@ -602,3 +602,37 @@ describe("test session store: suspension and item-session clocks", () => {
     expect(first.getSnapshot().durationSeconds).toBe(20);
   });
 });
+
+describe("test session store: results reporting", () => {
+  test("assessmentResult() reports attempts with the clones' correct responses", async () => {
+    const { QtiAssessmentResultDocumentSchema } = await import("@conform-ed/contracts/qti/v3_0_1");
+    const session = makeSession(11);
+    const store = session.itemStore("ITEM-1")!; // choiceItem("A")
+
+    store.setResponse("RESPONSE", "A");
+    store.submit();
+    session.end();
+
+    const document = session.assessmentResult({ context: { sourcedId: "learner-7" }, nowMs: 50_000 });
+
+    expect(QtiAssessmentResultDocumentSchema.safeParse(document).success).toBe(true);
+    expect(document.assessmentResult.context.sourcedId).toBe("learner-7");
+    expect(document.assessmentResult.testResult?.identifier).toBe("TEST-1");
+
+    const first = document.assessmentResult.itemResults!.find(
+      (entry) => entry.identifier === "ITEM-1" && entry.sessionStatus === "final",
+    )!;
+    const response = first.responseVariables!.find((variable) => variable.identifier === "RESPONSE")!;
+
+    expect(response.candidateResponse).toEqual({ values: [{ value: "A" }] });
+    expect(response.correctResponse).toEqual({ values: [{ value: "A" }] });
+    expect(response.baseType).toBe("identifier");
+
+    // Items never attempted are still reported ("all items selected for
+    // presentation should be reported with a corresponding itemResult").
+    const statuses = document.assessmentResult.itemResults!.map((entry) => [entry.identifier, entry.sessionStatus]);
+
+    expect(statuses).toContainEqual(["ITEM-2", "initial"]);
+    expect(statuses).toContainEqual(["ITEM-3", "initial"]);
+  });
+});

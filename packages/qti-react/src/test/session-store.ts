@@ -13,6 +13,8 @@ import type { AssessmentItemView } from "../runtime";
 import { createAttemptStore, type AttemptSnapshot, type AttemptStore } from "../store";
 import { isResponseRecord } from "../types";
 import type { ResponseValue } from "../types";
+import { buildAssessmentResult } from "./results";
+import type { AssessmentResultDocumentView, ResultContextView } from "./results";
 import type { AssessmentItemRefView, TestController, TestFeedbackView, TestPlanItem, TestSessionState } from "./types";
 
 export interface TestSessionStoreOptions {
@@ -64,6 +66,16 @@ export interface TestSessionStore {
   readonly suspend: () => void;
   /** Resume a suspended session; the gap never accrues to any duration. */
   readonly resume: () => void;
+  /**
+   * Build the QTI Results Reporting document for the session as it stands:
+   * per-attempt final itemResults, pending submissions, initial entries for
+   * everything else, typed by the resolved item views and the clones' correct
+   * responses. Serialize with qti-xml's `serializeQtiAssessmentResult`.
+   */
+  readonly assessmentResult: (options?: {
+    readonly context?: ResultContextView;
+    readonly nowMs?: number;
+  }) => AssessmentResultDocumentView;
 }
 
 /** Identifiers whose correct response arrives via `setCorrectResponse` in templates. */
@@ -306,5 +318,27 @@ export function createTestSessionStore(controller: TestController, options: Test
     setItemComment: (itemKey, comment) => emit(controller.setItemComment(state, itemKey, comment)),
     suspend: () => emit(controller.suspend(state)),
     resume: () => emit(controller.resume(state)),
+    assessmentResult: (resultOptions) =>
+      buildAssessmentResult({
+        test: controller.test,
+        plan: controller.plan,
+        state,
+        ...(resultOptions?.context !== undefined ? { context: resultOptions.context } : {}),
+        nowMs: resultOptions?.nowMs ?? (options.now ?? Date.now)(),
+        itemDetails: (item) => {
+          const view = itemView(item.key);
+
+          if (!view) {
+            return null;
+          }
+
+          return {
+            responseDeclarations: view.responseDeclarations,
+            ...(view.outcomeDeclarations !== undefined ? { outcomeDeclarations: view.outcomeDeclarations } : {}),
+            // The clone's template-resolved correct responses back `correctResponse`.
+            correctResponses: itemStore(item.key)?.getSnapshot().correctResponses ?? {},
+          };
+        },
+      }),
   };
 }
