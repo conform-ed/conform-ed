@@ -91,10 +91,18 @@ export async function mountPci(options: PciMountOptions): Promise<PciMountHandle
   const { container, node, registry } = options;
   const module = await resolveModule(node, registry);
 
+  // Each mount owns a root element inside the container, and teardown removes only
+  // that root: mounts on a shared container must stay independent because React
+  // StrictMode double-invokes the host effect — the cancelled first mount's teardown
+  // ran concurrently with the second mount and must not destroy its DOM.
+  const mountRoot = container.ownerDocument!.createElement("div");
+  mountRoot.setAttribute("data-qti-pci-mount", "");
+  container.appendChild(mountRoot);
+
   const markupHost = container.ownerDocument!.createElement("div");
   markupHost.className = "qti-interaction-markup";
   markupHost.innerHTML = serializePciMarkup(node.interactionMarkup?.content);
-  container.appendChild(markupHost);
+  mountRoot.appendChild(markupHost);
 
   let resolveReady!: (instance: PciInstance) => void;
   const ready = new Promise<PciInstance>((resolve) => {
@@ -114,7 +122,7 @@ export async function mountPci(options: PciMountOptions): Promise<PciMountHandle
 
   // The spec delivers the instance via onready; implementations commonly also return
   // it from getInstance. Accept either, first one wins.
-  const returned = module.getInstance(container, configuration, options.state);
+  const returned = module.getInstance(mountRoot, configuration, options.state);
 
   if (returned) {
     resolveReady(returned);
@@ -128,7 +136,7 @@ export async function mountPci(options: PciMountOptions): Promise<PciMountHandle
     getState: () => instance.getState?.(),
     unmount: () => {
       instance.oncompleted?.();
-      container.replaceChildren();
+      mountRoot.remove();
     },
   };
 }

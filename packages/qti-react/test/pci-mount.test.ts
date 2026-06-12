@@ -141,6 +141,29 @@ describe("mountPci", () => {
     expect(config.boundTo["RESPONSE"]).toEqual({ base: { integer: 3 } });
   });
 
+  test("a cancelled mount's teardown leaves a concurrent mount intact (React StrictMode)", async () => {
+    const registry = createPciModuleRegistry();
+    registry.evaluate(tapLikeSource, { id: "tap-like" });
+
+    const container = makeContainer();
+
+    // StrictMode double-invokes the host effect: mount #1 is cancelled and torn down
+    // while mount #2 proceeds against the same container.
+    const first = mountPci({ container, node, registry });
+    const second = mountPci({ container, node, registry });
+
+    (await first).unmount();
+    const survivor = await second;
+
+    // The survivor's DOM is intact — exactly one markup host, working interaction.
+    expect(container.querySelectorAll(".qti-interaction-markup")).toHaveLength(1);
+    (container.querySelector("button.tap") as unknown as { click: () => void }).click();
+    expect(survivor.collectResponse()).toBe("1");
+
+    survivor.unmount();
+    expect(container.childNodes).toHaveLength(0);
+  });
+
   test("fails loudly when no module can be resolved", async () => {
     const registry = createPciModuleRegistry({
       fetchText: async () => {
