@@ -28,7 +28,7 @@ import {
   v0ContentModel,
   type ContentModel,
 } from "./content-model";
-import type { CatalogView } from "./pnp";
+import { resolveCatalogSupports, type CatalogView, type PnpView, type ResolvedCatalogSupport } from "./pnp";
 import { collectInteractionConstraints } from "./response-validity";
 import { collectRpIssues, collectTemplateIssues } from "./rp";
 import type {
@@ -192,6 +192,12 @@ export interface QtiRuntimeConfig {
    * document). Unresolved refs are capability issues, never silent drops (ADR-0003).
    */
   readonly resolveStimulus?: (ref: AssessmentStimulusRefView) => StimulusContentView | null;
+  /**
+   * Replaces the default rendering of an active catalog support (the note-role span
+   * appended beside the referenced content). The delivery engine owns presentation —
+   * tooltips, players, glossary panels — the runtime owns resolution.
+   */
+  readonly renderCatalogSupport?: (support: ResolvedCatalogSupport, catalogIdref: string) => ReactNode;
 }
 
 export interface ItemRendererProps {
@@ -219,6 +225,17 @@ export interface ItemRendererProps {
    * for adaptive items, per spec.
    */
   showFeedback?: boolean | undefined;
+  /**
+   * The candidate's AfA PNP. Activates the item's dormant catalog supports (§5.29):
+   * "A candidate's profile (or assessment program settings) will indicate whether the
+   * candidate should be presented any of the possible supports."
+   */
+  pnp?: PnpView | undefined;
+  /**
+   * Supports in effect beyond the PNP's initial activation — program settings and
+   * candidate-toggled options (activate-as-option-set). Prohibited supports stay out.
+   */
+  activeSupports?: readonly string[] | undefined;
   // Rendered inside the same runtime context as the item body, after it. Lets a consumer
   // drop controls (a Submit bar, a score panel) that call `useAttempt()` for this item —
   // the attempt store is per-item and scoped to this subtree.
@@ -229,6 +246,10 @@ export interface ContentRendererProps {
   nodes?: readonly BodyNode[] | undefined;
   /** Values for printedVariable (and showHide-gated feedback) inside the content. */
   outcomes?: Readonly<Record<string, OutcomeValue>> | undefined;
+  /** Catalogs referenced by this content (e.g. a test rubric block's catalogInfo). */
+  catalogs?: readonly CatalogView[] | undefined;
+  pnp?: PnpView | undefined;
+  activeSupports?: readonly string[] | undefined;
 }
 
 export interface QtiRuntime {
@@ -239,6 +260,13 @@ export interface QtiRuntime {
    */
   ContentRenderer: ComponentType<ContentRendererProps>;
   useAttempt: () => AttemptController;
+  /**
+   * The active supports resolved for a catalog idref — for skins whose own nodes
+   * carry data-catalog-idref (e.g. a choice label) and consumers building support
+   * UI (glossary panels, toggles). The core walk already decorates generic flow
+   * and block nodes; this is the same resolution by hand.
+   */
+  useCatalogSupports: (catalogIdref: string | undefined) => readonly ResolvedCatalogSupport[];
   /**
    * The Capability Report for an item against this runtime's injected descriptors,
    * skins, and content model. Consumers gate delivery on it (ADR-0003); the
@@ -268,6 +296,8 @@ interface RuntimeContextValue {
   solutionResponses: Readonly<Record<string, ResponseValue>>;
   /** Declared outcome defaults — feedback visibility "as at the start of each attempt". */
   defaultOutcomes: Readonly<Record<string, OutcomeValue>>;
+  /** Resolved active catalog supports by catalog id (§5.28 idref resolution). */
+  catalogSupports: ReadonlyMap<string, readonly ResolvedCatalogSupport[]>;
 }
 
 const RuntimeContext = createContext<RuntimeContextValue | null>(null);
@@ -417,7 +447,96 @@ export function createQtiRuntime(config: QtiRuntimeConfig): QtiRuntime {
     );
   }
 
-  function renderNode(node: BodyNode, key: number, overrides?: NodeOverrides, inMath = false): ReactNode {
+  /** The catalog reference a node carries: data-catalog-idref on generic xml nodes, the structured field on QTI nodes. */
+  function catalogIdrefOf(node: BodyNode): string | undefined {
+    const value =
+      node.kind === "xml"
+        ? (node as XmlContentNode).attributes?.["data-catalog-idref"]
+        : (node as { dataCatalogIdref?: unknown }).dataCatalogIdref;
+
+    return typeof value === "string" && value !== "" ? value : undefined;
+  }
+
+  /** The default support presentation: a note beside the referenced content. */
+  function renderSupportDefault(
+    support: ResolvedCatalogSupport,
+    catalogIdref: string,
+    key: number,
+    overrides?: NodeOverrides,
+  ): ReactNode {
+    return createElement(
+      "span",
+      {
+        key: `support-${key}`,
+        role: "note",
+        "data-qti-catalog-idref": catalogIdref,
+        "data-qti-support": support.support,
+        ...(support.xmlLang !== undefined ? { lang: support.xmlLang } : {}),
+      },
+      support.content?.map((child, index) => renderNode(child, index, overrides)),
+      // File-backed alternatives default to an accessible link through the Asset
+      // Resolver; players and panels are the delivery engine's (renderCatalogSupport).
+      support.fileHrefs?.map((file, index) =>
+        createElement(
+          "a",
+          { key: `file-${index}`, href: resolveAsset(file.href), type: file.mimeType, "data-qti-support-file": true },
+          support.support,
+        ),
+      ),
+    );
+  }
+
+  /**
+   * Renders a catalog-referencing node: the authored content as-is, then each active
+   * support's resolved alternative content. Dormant content stays dormant — no
+   * resolved supports means the original alone.
+   */
+  function CatalogSupportHost({
+    catalogIdref,
+    node,
+    overrides,
+    inMath,
+  }: {
+    catalogIdref: string;
+    node: BodyNode;
+    overrides?: NodeOverrides | undefined;
+    inMath: boolean;
+  }): ReactNode {
+    const { catalogSupports } = useRuntimeContext();
+    const supports = catalogSupports.get(catalogIdref) ?? [];
+    const original = renderNode(node, 0, overrides, inMath, true);
+
+    if (!supports.length) {
+      return original;
+    }
+
+    return createElement(
+      Fragment,
+      null,
+      original,
+      supports.map((support, index) =>
+        config.renderCatalogSupport
+          ? createElement(Fragment, { key: `support-${index}` }, config.renderCatalogSupport(support, catalogIdref))
+          : renderSupportDefault(support, catalogIdref, index, overrides),
+      ),
+    );
+  }
+
+  function renderNode(
+    node: BodyNode,
+    key: number,
+    overrides?: NodeOverrides,
+    inMath = false,
+    skipCatalog = false,
+  ): ReactNode {
+    if (!skipCatalog) {
+      const catalogIdref = catalogIdrefOf(node);
+
+      if (catalogIdref !== undefined) {
+        return createElement(CatalogSupportHost, { key, catalogIdref, node, overrides, inMath });
+      }
+    }
+
     const override = overrides?.[node.kind];
 
     if (override) {
@@ -678,9 +797,13 @@ export function createQtiRuntime(config: QtiRuntimeConfig): QtiRuntime {
     });
   }
 
-  function ContentRenderer({ nodes, outcomes }: ContentRendererProps): ReactNode {
+  function ContentRenderer({ nodes, outcomes, catalogs, pnp, activeSupports }: ContentRendererProps): ReactNode {
     const store = useMemo(() => createStaticStore(outcomes ?? {}), [outcomes]);
     const declarationsById = useMemo(() => new Map<string, ResponseDeclarationView>(), []);
+    const catalogSupports = useMemo(
+      () => resolveCatalogSupports({ catalogs, pnp, activeSupports }).byCatalogId,
+      [catalogs, pnp, activeSupports],
+    );
 
     return createElement(
       RuntimeContext.Provider,
@@ -692,6 +815,7 @@ export function createQtiRuntime(config: QtiRuntimeConfig): QtiRuntime {
           suppressFeedback: false,
           solutionResponses: {},
           defaultOutcomes: {},
+          catalogSupports,
         },
       },
       nodes?.map((node, index) => renderNode(node, index)),
@@ -704,6 +828,8 @@ export function createQtiRuntime(config: QtiRuntimeConfig): QtiRuntime {
     seed,
     mode = "interact",
     showFeedback,
+    pnp,
+    activeSupports,
     children,
   }: ItemRendererProps): ReactNode {
     const store = useMemo(
@@ -759,21 +885,32 @@ export function createQtiRuntime(config: QtiRuntimeConfig): QtiRuntime {
     // Shared stimulus content renders before the body through the same sanitized
     // walk; an unresolved ref gets the explicit placeholder (ADR-0003 backstop —
     // canDeliver already reported it).
-    const stimuli = (item.assessmentStimulusRefs ?? []).map((ref, index) => {
-      const stimulus = config.resolveStimulus?.(ref) ?? null;
+    const stimulusViews = (item.assessmentStimulusRefs ?? []).map((ref) => ({
+      ref,
+      view: config.resolveStimulus?.(ref) ?? null,
+    }));
 
-      return createElement(
+    // Catalog ids are document-unique; the item's pool and the resolved stimuli's
+    // pool resolve together so idrefs reach across both (§5.28).
+    const catalogSupports = resolveCatalogSupports({
+      catalogs: [...(item.catalogs ?? []), ...stimulusViews.flatMap(({ view }) => view?.catalogs ?? [])],
+      pnp,
+      activeSupports,
+    }).byCatalogId;
+
+    const stimuli = stimulusViews.map(({ ref, view }, index) =>
+      createElement(
         "section",
         { key: `stimulus-${index}`, "data-qti-stimulus": ref.identifier },
-        stimulus === null
+        view === null
           ? createElement(
               "div",
               { role: "note", "data-qti-unsupported": "assessmentStimulusRef" },
               `This content requires a shared stimulus (${ref.href}) this runtime cannot resolve.`,
             )
-          : stimulus.content.map((node, nodeIndex) => renderNode(node, nodeIndex)),
-      );
-    });
+          : view.content.map((node, nodeIndex) => renderNode(node, nodeIndex)),
+      ),
+    );
 
     const body = (item.itemBody.content ?? []).map((node, index) => renderNode(node, index));
     const modals = (item.modalFeedbacks ?? []).map((feedback, index) =>
@@ -790,6 +927,7 @@ export function createQtiRuntime(config: QtiRuntimeConfig): QtiRuntime {
           suppressFeedback,
           solutionResponses: store.getSnapshot().correctResponses,
           defaultOutcomes,
+          catalogSupports,
         },
       },
       stimuli,
@@ -808,6 +946,14 @@ export function createQtiRuntime(config: QtiRuntimeConfig): QtiRuntime {
       submit: store.submit,
       reset: store.reset,
     };
+  }
+
+  const noSupports: readonly ResolvedCatalogSupport[] = [];
+
+  function useCatalogSupports(catalogIdref: string | undefined): readonly ResolvedCatalogSupport[] {
+    const { catalogSupports } = useRuntimeContext();
+
+    return catalogIdref !== undefined ? (catalogSupports.get(catalogIdref) ?? noSupports) : noSupports;
   }
 
   function canDeliver(item: AssessmentItemView): CapabilityReport {
@@ -932,5 +1078,5 @@ export function createQtiRuntime(config: QtiRuntimeConfig): QtiRuntime {
     return { deliverable: issues.length === 0, issues };
   }
 
-  return { ItemRenderer, ContentRenderer, useAttempt, canDeliver };
+  return { ItemRenderer, ContentRenderer, useAttempt, useCatalogSupports, canDeliver };
 }
