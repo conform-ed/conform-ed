@@ -135,3 +135,69 @@ opening outcome-processing run, so start-time preconditions see declared
 outcome defaults — the drill pattern gates every instance on a boolean
 outcome that starts false, which previously read as NULL at the initial
 positioning and skipped the whole section.
+
+## Status update (2026-06): itemSessionControl enforcement and the review/solution states
+
+The remaining five ItemSessionControl constraints are now enforced end to end
+(maxAttempts and allowSkipping already were). Spec defaults all verified
+against the 3.0.1 characteristic tables: show-feedback false, allow-review
+true, show-solution false, allow-comment false, validate-responses false.
+
+**validate-responses** — "An invalid response is defined to be a response
+which does not satisfy the constraints imposed by the interaction with which
+it is associated. When validate-responses is turned on (true) then the
+candidates are not allowed to submit the item until they have provided valid
+responses for all interactions." Enforcement is layered: the new
+response-validity module collects the constraint attributes the views carry
+(min/max-choices, min/max-associations, min-strings, pattern-mask in the XSD
+regex dialect, min-plays) and the attempt store refuses submit() while
+violations exist — always visible through `AttemptSnapshot.responseViolations`
+(ADR-0003, never silent); the controller independently refuses
+`TestItemResult.valid === false` for direct consumers. Both are scoped
+"only … with individual submission mode" per spec. Designed readings,
+documented: only authored attributes are validated (rendering defaults are
+interaction behavior, not constraints); an unanswered interaction is governed
+by the min constraints, not the pattern; an uncompilable pattern never blocks
+the candidate.
+
+**allow-review and the review state** — "applies only after the end of the
+last attempt": mid-test, revisiting an item with attempts remaining is
+interaction, not review, so nothing changes; once the last attempt ends,
+allow-review=false bars canMoveTo/moveTo ("the candidate can not review the
+qti-item-body or their responses once they have submitted their last
+attempt"). After the test ends, the new canReview/review surface navigates
+presented, review-allowed items by moving only the current pointer — the
+ended status and the stopped clock stay put, and canSubmitItem stays false
+("can review … but cannot update or resubmit"). Designed policies: post-end
+review covers presented items only; the end of the last attempt is judged on
+the attempt count (adaptive items, which bypass maxAttempts via their
+consumer-driven flag, are the consumer's to manage).
+
+**show-feedback** — "affects the visibility of feedback after the end of the
+last attempt … This includes both Modal Feedback and Integrated Feedback even
+if the candidate has access to the review state." The renderer gained an
+`ItemRenderMode` ("interact" | "review" | "solution") plus the effective
+show-feedback value: outside interact, false suppresses modal feedback
+entirely and re-evaluates integrated feedback against declared outcome
+defaults — the spec's resolution of the hide-feedback ambiguity ("the absence
+of feedback is defined to be the version of the qti-item-body displayed to
+the candidate at the start of each attempt"). For adaptive items the setting
+is ignored in review and final outcome values are used, exactly as §
+prescribes. Correctness chrome (interaction statuses, option marks) is
+treated as feedback and withheld with it — a designed reading: the spec's
+feedback notion predates our skin-level score chrome, and showing "incorrect"
+marks while hiding feedback would leak what the constraint hides.
+
+**show-solution** — "controls whether or not the system may provide the
+candidate with a way of entering the solution state". The mechanism is the
+renderer's solution mode: the clone's resolved correct responses
+(`AttemptSnapshot.correctResponses`, template setCorrectResponse overrides
+applied) display read-only. The gate — whether to offer the entry point — is
+the consumer's, read from the plan item's effective session control.
+
+**allow-comment** — "controls whether or not the candidate is allowed to
+provide a comment on the item during the session" (default false). New
+canComment/setItemComment record per-item-key comments in session state,
+session-time only (designed policy: the test session, not the item session —
+a comment is metadata, not a response, so it stays open while the test runs
+and closes with it).
