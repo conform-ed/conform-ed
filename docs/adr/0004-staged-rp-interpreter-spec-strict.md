@@ -49,6 +49,98 @@ information model (§2.11) in the operator tests. Notes from the final tranche:
   `durationGte`/`durationLt` and adaptive re-attempt logic. Item level only;
   test-level duration aggregation is future controller work.
 
-The remaining refusals are the principled, permanent ones: unregistered
-`customOperator` classes, test-context operators outside the test controller,
-and random operators outside seeded contexts.
+The remaining refusals are principled and permanent. They are motivated
+individually below.
+
+## Permanent refusals, motivated
+
+The vocabulary being complete does not mean every expression always
+evaluates. Three refusal categories remain by design, and they share one
+shape: each targets an expression whose value depends on information the
+evaluator does not — and in two of the three cases _cannot_ — possess. The
+governing principle is the Capability Report's (ADR-0003): a score this
+engine emits must be the spec-defined value of the spec-defined computation;
+when that value is not computable, the engine says so visibly and scores
+nothing, because a plausible fabricated number recorded as authoritative is
+worse than a refusal anyone can see. Refusals never alter outcomes — runtime
+refusal aborts to the declared outcome defaults, static refusal happens
+before any candidate sees the item, and partial scoring never occurs.
+
+### Unregistered `customOperator` classes
+
+The spec defines no semantics to implement. `customOperator` "provides an
+extension mechanism for defining operations not currently supported by this
+specification" (§2.11.3.2); the `class` characteristic names sub-classes
+whose "definition ... is tool specific and may be inferred from toolName and
+toolVersion" (§5.37.1); `definition` is merely "a URI that identifies the
+definition of the custom operator in the global namespace" (§5.37.2).
+Evaluating an unknown class therefore means inventing another tool's
+semantics. The tempting fallback — evaluate it to NULL, as some engines do —
+is not inert in this algebra: `isNull` turns the fabricated NULL into a
+definite `true`, and a `responseCondition` guarded by it falls through to its
+else branch and records, say, a definite SCORE of 0 as if the item had been
+scored. That is silent mis-scoring with extra steps.
+
+Instead the operator is treated as the extension point the spec says it is:
+consumers register implementations by class (`customOperators` in the
+processing context), the capability gate accepts registered classes, and a
+registered item becomes fully deliverable — determinism then being the
+registered implementation's contract to keep. Unregistered classes are
+refused statically.
+
+Compliance, honestly: the spec is silent on what an engine lacking a class
+definition should do, so refusal is not mandated — but neither is any
+alternative, because there is no spec-defined value to be compliant _with_.
+The defensible claim is negative: by refusing, we never emit a score the
+spec does not license.
+
+### Test-context expressions outside the test controller
+
+`testVariables`, `outcomeMinimum`, `outcomeMaximum`, and the five `number*`
+aggregates all carry the same opening clause in the information model: "This
+expression, which can only be used in outcomes processing, ..." (§2.11.2).
+Their values are functions of test-session state — which items were
+selected, presented, responded, correct — and that state does not exist in
+an item-level RP run; any item-level value would fabricate a session. So the
+evaluator owns no semantics for them: the test controller injects the
+lookups (`testVariables`, `testAggregate`) when executing outcome processing
+over its session state, and outside that injection the expressions refuse.
+
+This is the strongest compliance claim of the three: the refusal _is_ the
+spec's own context restriction, applied verbatim. Content using these
+expressions in item RP is itself non-conformant.
+
+One carve-out so this heading does not hide it: `outcomeMinimum` and
+`outcomeMaximum` currently refuse even inside outcome processing. The
+controller implements the other six; these two aggregate the items' declared
+`normal-minimum`/`normal-maximum` (metadata the normalizer already carries)
+and have zero corpus demand. They are an ordinary controller follow-up, not
+a principled permanent refusal.
+
+### Random operators outside seeded contexts
+
+The spec asks only that `random` yield "a single value randomly selected
+from the container" (§2.11.3.36, likewise `randomInteger`/`randomFloat`) and
+says nothing about the randomness source. This ADR's hard property — same
+declarations + responses ⇒ same outcomes — collides with ambient entropy:
+client advisory scoring and server rescoring must agree, and a `Math.random`
+draw inside RP would let the same session score differently on replay,
+unauditable after the fact. The resolution is to make the draw part of the
+session's inputs: every clone carries a seed (the replay key, stored with
+the responses), template processing and RP draw from a seed-derived PRNG,
+and scoring is a pure function again. Variation across candidates — the
+evident intent of the operators — survives because each session draws a
+fresh seed.
+
+The refusal covers the remaining hole: a caller that invokes the evaluator
+without a seeded source gets a refusal rather than a silent fallback to
+entropy. In conform-ed's own runtime this never fires — the attempt store
+always supplies a seed-derived source, and `canDeliver` does not refuse
+random content. It is an invariant against integration mistakes, not a
+content gate.
+
+Compliance, honestly: the spec imposes no source or distribution
+requirement, so a seeded PRNG satisfies the text as written; what the
+seeding actually protects is our replayability property. An engine drawing
+true entropy would be equally spec-compliant — and incapable of honest
+rescoring.
