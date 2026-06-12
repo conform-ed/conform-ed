@@ -56,6 +56,7 @@ export interface ResponseDeclarationView {
   readonly identifier: string;
   readonly cardinality: Cardinality;
   readonly baseType?: string;
+  readonly defaultValue?: { readonly values: ReadonlyArray<{ readonly value: string | number | boolean }> };
   readonly correctResponse?: CorrectResponseView;
   readonly mapping?: MappingView;
   readonly areaMapping?: AreaMappingView;

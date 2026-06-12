@@ -36,6 +36,12 @@ export interface AttemptSnapshot {
   readonly templateValues: Readonly<Record<string, OutcomeValue>>;
   /** Completed attempts so far (only ever exceeds 1 for adaptive items). */
   readonly attemptCount: number;
+  /**
+   * Elapsed session seconds at the latest submit (the built-in `duration` response
+   * variable handed to RP); null before the first submit. Persist it alongside the
+   * responses for server-side replay parity (ADR-0004).
+   */
+  readonly durationSeconds: number | null;
 }
 
 /**
@@ -57,6 +63,12 @@ export interface AttemptStoreOptions {
   readonly adaptive?: boolean | undefined;
   /** Registered vendor `customOperator` implementations by class (opt-in). */
   readonly customOperators?: Readonly<Record<string, CustomOperatorImplementation>> | undefined;
+  /**
+   * Millisecond clock backing the built-in `duration` response variable (wall-clock
+   * from session start to submit). Injectable for deterministic tests and replays;
+   * defaults to Date.now.
+   */
+  readonly now?: (() => number) | undefined;
 }
 
 export interface AttemptStore {
@@ -102,6 +114,8 @@ export function createAttemptStore(
   // RP's random stream: seed-derived but independent of template processing's, and
   // continuous across attempts — seed + submission sequence replays exact outcomes.
   const rpRandom = mulberry32((seed ^ 0x9e3779b9) >>> 0);
+  const now = options?.now ?? Date.now;
+  let sessionStartedAtMs = now();
 
   let snapshot: AttemptSnapshot = {
     responses: { ...initialResponses },
@@ -110,6 +124,7 @@ export function createAttemptStore(
     outcomes: {},
     templateValues: templateResult?.templateValues ?? {},
     attemptCount: 0,
+    durationSeconds: null,
   };
 
   function emit(next: AttemptSnapshot): void {
@@ -128,6 +143,7 @@ export function createAttemptStore(
 
   function computeOutcomes(
     responses: Readonly<Record<string, ResponseValue>>,
+    durationSeconds: number,
     priorOutcomes?: Readonly<Record<string, OutcomeValue>>,
   ): Readonly<Record<string, OutcomeValue>> {
     if (!options?.responseProcessing) {
@@ -144,6 +160,10 @@ export function createAttemptStore(
       priorOutcomes,
       random: rpRandom,
       customOperators: options.customOperators,
+      // Built-in session variables: numAttempts "increases by 1 at the start of
+      // each attempt", so the attempt being scored is included.
+      duration: durationSeconds,
+      numAttempts: snapshot.attemptCount + 1,
     }).outcomes;
   }
 
@@ -202,8 +222,9 @@ export function createAttemptStore(
       }
 
       const scores = computeScores(snapshot.responses);
+      const durationSeconds = (now() - sessionStartedAtMs) / 1000;
       const priorOutcomes = options?.adaptive && snapshot.attemptCount > 0 ? snapshot.outcomes : undefined;
-      const outcomes = computeOutcomes(snapshot.responses, priorOutcomes);
+      const outcomes = computeOutcomes(snapshot.responses, durationSeconds, priorOutcomes);
       // completion_status: the corpus's snake_case authoring of the same built-in.
       const completionStatus = outcomes["completionStatus"] ?? outcomes["completion_status"];
       const completed = !options?.adaptive || completionStatus === "completed";
@@ -229,12 +250,15 @@ export function createAttemptStore(
         scores,
         outcomes,
         attemptCount: snapshot.attemptCount + 1,
+        durationSeconds,
       });
 
       return scores;
     },
 
     reset: () => {
+      sessionStartedAtMs = now();
+
       emit({
         responses: { ...initialResponses },
         submitted: false,
@@ -242,6 +266,7 @@ export function createAttemptStore(
         outcomes: {},
         templateValues: snapshot.templateValues,
         attemptCount: 0,
+        durationSeconds: null,
       });
     },
   };

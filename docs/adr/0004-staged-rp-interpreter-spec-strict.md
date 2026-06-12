@@ -28,3 +28,27 @@ published runtime must score spec content correctly out of the box.
 - **Keep lenient matching as the default** — backwards-compatible for existing
   consumers but mis-scores spec content by default; consumers keep the
   behavior via one Response Normalization config instead.
+
+## Status update (2026-06): operator vocabulary complete
+
+The staged growth reached its terminal milestone: the interpreter implements
+the full QTI 3 expression vocabulary, with semantics cited from the 3.0.1 ASI
+information model (§2.11) in the operator tests. Notes from the final tranche:
+
+- `and`/`or`/`anyN` use the spec's three-valued logic (an undecided NULL
+  operand makes the result NULL; a decisive operand wins outright).
+- Numeric attributes of type IntOrIdentifier/FloatOrVariableRef (`index` n,
+  `repeat` number-repeats, `roundTo`/`equalRounded` figures, `equal`
+  tolerances, `anyN`/random bounds) resolve variable references at runtime;
+  an unresolvable reference makes the operator NULL, never a refusal.
+- `patternMatch` evaluates the XSD regex dialect (Appendix F of XML Schema)
+  through the `xspattern` dependency — exact semantics, no translation subset.
+  Invalid literal patterns are refused at the capability gate.
+- The built-in session variables `duration` (elapsed seconds under an
+  injectable store clock) and `numAttempts` (current attempt inclusive) back
+  `durationGte`/`durationLt` and adaptive re-attempt logic. Item level only;
+  test-level duration aggregation is future controller work.
+
+The remaining refusals are the principled, permanent ones: unregistered
+`customOperator` classes, test-context operators outside the test controller,
+and random operators outside seeded contexts.

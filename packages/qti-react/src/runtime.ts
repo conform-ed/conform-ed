@@ -294,6 +294,7 @@ function createStaticStore(outcomes: Readonly<Record<string, OutcomeValue>>): At
     outcomes,
     templateValues: {},
     attemptCount: 1,
+    durationSeconds: null,
   };
 
   return {

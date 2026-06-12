@@ -110,6 +110,16 @@ export function executeResponseProcessing(
 
   const env: EvalEnv = {
     lookupVariable: (identifier) => {
+      // Built-in session variables (reserved identifiers; items must not declare
+      // them): duration in seconds, numAttempts including the current attempt.
+      if (identifier === "duration") {
+        return context.duration === undefined ? null : rpValue("single", [context.duration], "duration");
+      }
+
+      if (identifier === "numAttempts") {
+        return context.numAttempts === undefined ? null : rpValue("single", [context.numAttempts], "integer");
+      }
+
       const declaration = declarationsById.get(identifier);
 
       if (declaration) {
@@ -130,6 +140,22 @@ export function executeResponseProcessing(
     },
     responseDeclaration: (identifier) => declarationsById.get(identifier),
     responseValue: (identifier) => context.responses[identifier] ?? null,
+    variableDefault: (identifier) => {
+      const declaration =
+        declarationsById.get(identifier) ??
+        context.outcomeDeclarations.find((entry) => entry.identifier === identifier) ??
+        templateDeclarationsById.get(identifier);
+
+      if (!declaration?.defaultValue) {
+        return null; // "NULL if no default value was declared" (§2.11.1.3)
+      }
+
+      return rpValue(
+        declaration.cardinality,
+        declaration.defaultValue.values.map((entry) => coerceScalar(entry.value, declaration.baseType)),
+        declaration.baseType,
+      );
+    },
     normalization: context.normalization,
     random: context.random,
     customOperators: context.customOperators,

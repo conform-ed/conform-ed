@@ -49,11 +49,14 @@ export interface RpExpressionView {
   readonly baseType?: string;
   readonly value?: RpScalar;
   readonly expressions?: readonly RpExpressionView[];
-  /** Bounds/step for the random operators (template processing). */
-  readonly min?: number;
-  readonly max?: number;
-  readonly step?: number;
-  /** `equal` tolerance window; string entries are template references (unsupported). */
+  /**
+   * Bounds/step for the random operators and `anyN`; string values are variable
+   * references resolved at runtime (§2.11.3.6), bare or brace-enclosed (§7.13).
+   */
+  readonly min?: number | string;
+  readonly max?: number | string;
+  readonly step?: number | string;
+  /** `equal` tolerance window; string entries are variable references. */
   readonly toleranceMode?: "exact" | "absolute" | "relative";
   readonly tolerance?: ReadonlyArray<number | string>;
   readonly includeLowerBound?: boolean;
@@ -67,6 +70,8 @@ export interface RpExpressionView {
   readonly figures?: number | string;
   /** Pass count for `repeat`. */
   readonly numberRepeats?: number | string;
+  /** XSD-dialect pattern for `patternMatch`; "{ref}" resolves from a variable (§7.13). */
+  readonly pattern?: string;
   /** String comparison controls for `stringMatch` and `substring`. */
   readonly caseSensitive?: boolean;
   readonly substring?: boolean;
@@ -156,6 +161,13 @@ export interface ResponseProcessingContext {
    * submission sequence then replays the exact same outcomes (ADR-0004 determinism).
    */
   readonly random?: (() => number) | undefined;
+  /**
+   * Built-in session variables (reserved identifiers; items must not declare them).
+   * `duration` is the item session's elapsed seconds; `numAttempts` "increases by 1
+   * at the start of each attempt", so it includes the attempt being scored.
+   */
+  readonly duration?: number | undefined;
+  readonly numAttempts?: number | undefined;
   /** Registered vendor `customOperator` implementations by class (opt-in). */
   readonly customOperators?: Readonly<Record<string, CustomOperatorImplementation>> | undefined;
 }

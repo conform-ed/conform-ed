@@ -6,6 +6,8 @@
  * response processing must stay deterministic and replayable.
  */
 
+import { compile as compileXsdPattern } from "xspattern";
+
 import { parseCoords, parsePoint, pointInShape } from "../graphic";
 import { mapResponse, mapResponsePoint } from "../response-processing";
 import type { ResponseDeclarationView, ResponseValue } from "../types";
@@ -34,6 +36,8 @@ export interface EvalEnv {
   readonly testVariables?: (expression: RpExpressionView) => MaybeRpValue;
   /** The `number*` item-session aggregates; present only in test-level outcome processing. */
   readonly testAggregate?: (expression: RpExpressionView) => MaybeRpValue;
+  /** Declared default of any item variable, for the `default` expression (§2.11.1.3). */
+  readonly variableDefault?: (identifier: string) => MaybeRpValue;
   /** Registered vendor operators by class; unregistered classes stay unsupported. */
   readonly customOperators?: Readonly<Record<string, CustomOperatorImplementation>> | undefined;
 }
@@ -41,10 +45,16 @@ export interface EvalEnv {
 /** Expression kinds legal everywhere (deterministic). */
 export const deterministicExpressionKinds: ReadonlySet<string> = new Set([
   "and",
+  "anyN",
   "baseValue",
+  "containerSize",
+  "contains",
   "correct",
+  "default",
   "delete",
   "divide",
+  "durationGte",
+  "durationLt",
   "equal",
   "equalRounded",
   "fieldValue",
@@ -70,8 +80,11 @@ export const deterministicExpressionKinds: ReadonlySet<string> = new Set([
   "min",
   "multiple",
   "not",
+  "null",
   "or",
   "ordered",
+  "patternMatch",
+  "power",
   "product",
   "repeat",
   "round",
@@ -98,6 +111,36 @@ export class RpUnsupportedError extends Error {
 }
 
 const mathConstants: Readonly<Record<string, number>> = { pi: Math.PI, e: Math.E };
+
+/**
+ * Compiled XSD-dialect pattern matchers (`patternMatch` uses the regular expression
+ * language of Appendix F of XML Schema, not ECMAScript). null caches a pattern that
+ * failed to compile — invalid patterns are refused, never guessed.
+ */
+const xsdPatternMatchers = new Map<string, ((value: string) => boolean) | null>();
+
+function xsdPatternMatcher(pattern: string): ((value: string) => boolean) | null {
+  const cached = xsdPatternMatchers.get(pattern);
+
+  if (cached !== undefined) {
+    return cached;
+  }
+
+  let matcher: ((value: string) => boolean) | null;
+
+  try {
+    matcher = compileXsdPattern(pattern);
+  } catch {
+    matcher = null;
+  }
+
+  xsdPatternMatchers.set(pattern, matcher);
+
+  return matcher;
+}
+
+/** The brace-enclosed variable-reference form of string attributes (§7.13). */
+const encVariableStringPattern = /^\{[^{}]+\}$/u;
 
 /** The named functions of `mathOperator`; undefined means the name is unknown. */
 function applyMathOperator(name: string, x: number, y: number): number | undefined {
@@ -161,6 +204,28 @@ function applyMathOperator(name: string, x: number, y: number): number | undefin
     default:
       return undefined;
   }
+}
+
+/**
+ * A numeric attribute that is either a literal or a variable reference (the spec's
+ * IntOrIdentifier / FloatOrVariableRef): "If n is an identifier, it is the value of n
+ * at runtime that is used" (QTI 3 info model §2.11.3.6). The brace-enclosed
+ * EncVariableString form (§7.13) is accepted alongside bare identifiers. An
+ * unresolvable or NULL-valued reference yields null — the operator then results in
+ * NULL, never a refusal.
+ */
+function resolveNumericAttribute(raw: number | string | undefined, env: EvalEnv): number | null | undefined {
+  if (raw === undefined) {
+    return undefined;
+  }
+
+  if (typeof raw === "number") {
+    return raw;
+  }
+
+  const identifier = raw.startsWith("{") && raw.endsWith("}") ? raw.slice(1, -1) : raw;
+
+  return singleNumber(env.lookupVariable(identifier));
 }
 
 function roundToFigures(value: number, mode: "decimalPlaces" | "significantFigures", figures: number): number | null {
@@ -270,12 +335,21 @@ export function evaluateExpression(expression: RpExpressionView, env: EvalEnv): 
     case "or": {
       const members = (expression.expressions ?? []).map((child) => singleBoolean(evaluate(child)));
 
-      // NULL operands are treated as false; sufficient for the supported coverage.
-      return booleanValue(
-        expression.kind === "and"
-          ? members.every((member) => member === true)
-          : members.some((member) => member === true),
-      );
+      // Three-valued logic (§2.11.3.10/.15): a decisive operand wins outright; an
+      // undecided one ("NULL and all others are true/false") makes the result NULL.
+      if (expression.kind === "and") {
+        if (members.some((member) => member === false)) {
+          return booleanValue(false);
+        }
+
+        return members.some((member) => member === null) ? null : booleanValue(true);
+      }
+
+      if (members.some((member) => member === true)) {
+        return booleanValue(true);
+      }
+
+      return members.some((member) => member === null) ? null : booleanValue(false);
     }
 
     case "sum":
@@ -344,12 +418,12 @@ export function evaluateExpression(expression: RpExpressionView, env: EvalEnv): 
         return booleanValue(a === b);
       }
 
-      const t0 = expression.tolerance?.[0];
-      const t1 = expression.tolerance?.[1] ?? t0;
+      const t0 = resolveNumericAttribute(expression.tolerance?.[0], env);
+      const t1raw = expression.tolerance?.[1];
+      const t1 = t1raw === undefined ? t0 : resolveNumericAttribute(t1raw, env);
 
       if (typeof t0 !== "number" || typeof t1 !== "number") {
-        // Template-variable tolerances (and missing ones) are out of the staged scope.
-        throw new RpUnsupportedError("equal");
+        return null; // missing or unresolvable tolerance → NULL
       }
 
       const lower = mode === "absolute" ? a - t0 : a * (1 - t0 / 100);
@@ -376,8 +450,10 @@ export function evaluateExpression(expression: RpExpressionView, env: EvalEnv): 
     }
 
     case "index": {
-      if (typeof expression.n !== "number") {
-        throw new RpUnsupportedError("index"); // template-variable n is out of scope
+      const n = resolveNumericAttribute(expression.n, env);
+
+      if (typeof n !== "number") {
+        return null; // missing or unresolvable n → NULL
       }
 
       const operand = expression.expressions?.[0];
@@ -387,7 +463,7 @@ export function evaluateExpression(expression: RpExpressionView, env: EvalEnv): 
         return null;
       }
 
-      const member = container.values[expression.n - 1];
+      const member = container.values[n - 1];
 
       if (member === undefined) {
         return null; // out of range is null, per spec
@@ -503,8 +579,10 @@ export function evaluateExpression(expression: RpExpressionView, env: EvalEnv): 
     }
 
     case "roundTo": {
-      if (typeof expression.figures !== "number") {
-        throw new RpUnsupportedError("roundTo"); // template-variable figures
+      const figures = resolveNumericAttribute(expression.figures, env);
+
+      if (typeof figures !== "number") {
+        return null; // missing or unresolvable figures → NULL
       }
 
       const operand = expression.expressions?.[0];
@@ -514,14 +592,16 @@ export function evaluateExpression(expression: RpExpressionView, env: EvalEnv): 
         return null;
       }
 
-      const rounded = roundToFigures(value, expression.roundingMode ?? "significantFigures", expression.figures);
+      const rounded = roundToFigures(value, expression.roundingMode ?? "significantFigures", figures);
 
       return rounded === null ? null : floatValue(rounded);
     }
 
     case "equalRounded": {
-      if (typeof expression.figures !== "number") {
-        throw new RpUnsupportedError("equalRounded");
+      const figures = resolveNumericAttribute(expression.figures, env);
+
+      if (typeof figures !== "number") {
+        return null; // missing or unresolvable figures → NULL
       }
 
       const [a, b] = (expression.expressions ?? []).map((child) => singleNumber(evaluate(child)));
@@ -531,8 +611,8 @@ export function evaluateExpression(expression: RpExpressionView, env: EvalEnv): 
       }
 
       const mode = expression.roundingMode ?? "significantFigures";
-      const roundedA = roundToFigures(a, mode, expression.figures);
-      const roundedB = roundToFigures(b, mode, expression.figures);
+      const roundedA = roundToFigures(a, mode, figures);
+      const roundedB = roundToFigures(b, mode, figures);
 
       return roundedA === null || roundedB === null ? null : booleanValue(roundedA === roundedB);
     }
@@ -608,18 +688,18 @@ export function evaluateExpression(expression: RpExpressionView, env: EvalEnv): 
     }
 
     case "repeat": {
-      if (typeof expression.numberRepeats !== "number") {
-        throw new RpUnsupportedError("repeat"); // template-variable count
-      }
+      const numberRepeats = resolveNumericAttribute(expression.numberRepeats, env);
 
-      if (expression.numberRepeats < 1) {
+      // "If qti-number-repeats refers to a variable whose value is less than 1, the
+      // value of the whole expression is NULL" (§2.11.3.42); unresolvable refs too.
+      if (typeof numberRepeats !== "number" || numberRepeats < 1) {
         return null;
       }
 
       const members: RpValue["values"][number][] = [];
       let baseType: string | undefined;
 
-      for (let pass = 0; pass < expression.numberRepeats; pass += 1) {
+      for (let pass = 0; pass < numberRepeats; pass += 1) {
         for (const child of expression.expressions ?? []) {
           const value = evaluate(child);
 
@@ -633,6 +713,160 @@ export function evaluateExpression(expression: RpExpressionView, env: EvalEnv): 
       }
 
       return members.length === 0 ? null : rpValue("ordered", members, baseType);
+    }
+
+    case "null":
+      return null;
+
+    case "durationGte":
+    case "durationLt": {
+      // Durations are compared as elapsed seconds; "longer (or equal, within the
+      // limits imposed by truncation …)" (§2.11.3.20/.21). NULL operands propagate.
+      const [a, b] = (expression.expressions ?? []).map((child) => singleNumber(evaluate(child)));
+
+      if (a === undefined || b === undefined || a === null || b === null) {
+        return null;
+      }
+
+      return booleanValue(expression.kind === "durationGte" ? a >= b : a < b);
+    }
+
+    case "default":
+      // "Returns the associated qti-default-value or NULL if no default value was
+      // declared" (§2.11.1.3).
+      return env.variableDefault?.(expression.identifier ?? "") ?? null;
+
+    case "patternMatch": {
+      const operand = expression.expressions?.[0];
+      const value = operand === undefined ? null : evaluate(operand);
+      const member = value?.values[0];
+
+      if (value === null || typeof member !== "string") {
+        return null; // "If the sub-expression is NULL then the operator results in NULL" (§2.11.3.41)
+      }
+
+      if (expression.pattern === undefined) {
+        throw new RpUnsupportedError("patternMatch");
+      }
+
+      // EncVariableString (§7.13): a brace-enclosed reference resolves the pattern
+      // from a variable at runtime; anything else is a literal XSD pattern.
+      const pattern = encVariableStringPattern.test(expression.pattern)
+        ? env.lookupVariable(expression.pattern.slice(1, -1))?.values[0]
+        : expression.pattern;
+
+      if (typeof pattern !== "string") {
+        return null; // unresolvable pattern reference → NULL
+      }
+
+      const matcher = xsdPatternMatcher(pattern);
+
+      if (matcher === null) {
+        throw new RpUnsupportedError("patternMatch"); // invalid pattern: refuse, never guess
+      }
+
+      return booleanValue(matcher(member));
+    }
+
+    case "power": {
+      const [a, b] = (expression.expressions ?? []).map((child) => singleNumber(evaluate(child)));
+
+      if (a === undefined || b === undefined || a === null || b === null) {
+        return null;
+      }
+
+      const result = a ** b;
+
+      // "If the resulting value is outside the value set defined by float (not
+      // including positive and negative infinity) then the operator shall result in
+      // NULL" (§2.11.3.30).
+      return Number.isFinite(result) ? floatValue(result) : null;
+    }
+
+    case "containerSize": {
+      const operand = expression.expressions?.[0];
+      const container = operand === undefined ? null : evaluate(operand);
+
+      // "If the sub-expression is NULL the result is 0" (§2.11.3.32) — the spec's
+      // exception to NULL propagation; an empty container is NULL in this model.
+      return {
+        cardinality: "single",
+        baseType: "integer",
+        values: [container === null ? 0 : container.values.length],
+      };
+    }
+
+    case "contains": {
+      const [firstExpression, secondExpression] = expression.expressions ?? [];
+
+      if (firstExpression === undefined || secondExpression === undefined) {
+        return null;
+      }
+
+      const first = evaluate(firstExpression);
+      const second = evaluate(secondExpression);
+
+      if (first === null || second === null || first.cardinality === "record" || second.cardinality === "record") {
+        return null;
+      }
+
+      const baseType = first.baseType ?? second.baseType;
+
+      if (first.cardinality === "ordered") {
+        // "For ordered containers the second sub-expression must be a strict
+        // sub-sequence within the first" (§2.11.3.17): a contiguous in-order run.
+        const found = first.values.some(
+          (_, start) =>
+            start + second.values.length <= first.values.length &&
+            second.values.every((member, offset) =>
+              scalarsEqual(first.values[start + offset]!, member, baseType, env.normalization),
+            ),
+        );
+
+        return booleanValue(found);
+      }
+
+      // Unordered: multiset semantics — "[A,B,C] does not contain [B,B] but
+      // [A,B,B,C] does" (§2.11.3.17).
+      const remaining = [...first.values];
+
+      for (const member of second.values) {
+        const at = remaining.findIndex((candidate) => scalarsEqual(candidate, member, baseType, env.normalization));
+
+        if (at === -1) {
+          return booleanValue(false);
+        }
+
+        remaining.splice(at, 1);
+      }
+
+      return booleanValue(true);
+    }
+
+    case "anyN": {
+      const min = resolveNumericAttribute(expression.min, env);
+      const max = resolveNumericAttribute(expression.max, env);
+
+      if (typeof min !== "number" || typeof max !== "number") {
+        return null;
+      }
+
+      const members = (expression.expressions ?? []).map((child) => singleBoolean(evaluate(child)));
+      const trueCount = members.filter((member) => member === true).length;
+      const nullCount = members.filter((member) => member === null).length;
+
+      // The actual count of true lies in [trueCount, trueCount + nullCount]; the
+      // result is decided only when that whole interval is inside or outside
+      // [min, max] — this reproduces the spec's worked examples (§2.11.3, anyN).
+      if (trueCount >= min && trueCount + nullCount <= max) {
+        return booleanValue(true);
+      }
+
+      if (trueCount + nullCount < min || trueCount > max) {
+        return booleanValue(false);
+      }
+
+      return null;
     }
 
     case "stringMatch":
@@ -735,9 +969,9 @@ export function evaluateExpression(expression: RpExpressionView, env: EvalEnv): 
         throw new RpUnsupportedError(expression.kind);
       }
 
-      const min = expression.min ?? 0;
-      const max = expression.max ?? min;
-      const step = expression.step ?? 1;
+      const min = resolveNumericAttribute(expression.min, env) ?? 0;
+      const max = resolveNumericAttribute(expression.max, env) ?? min;
+      const step = resolveNumericAttribute(expression.step, env) ?? 1;
       const count = Math.max(1, Math.floor((max - min) / step) + 1);
 
       return { cardinality: "single", baseType: "integer", values: [min + Math.floor(env.random() * count) * step] };
@@ -748,8 +982,8 @@ export function evaluateExpression(expression: RpExpressionView, env: EvalEnv): 
         throw new RpUnsupportedError(expression.kind);
       }
 
-      const min = expression.min ?? 0;
-      const max = expression.max ?? min;
+      const min = resolveNumericAttribute(expression.min, env) ?? 0;
+      const max = resolveNumericAttribute(expression.max, env) ?? min;
 
       return floatValue(min + env.random() * (max - min));
     }
@@ -818,6 +1052,15 @@ export function collectExpressionIssues(
       report(expression.kind);
     }
   } else if (!allowedKinds.has(expression.kind)) {
+    report(expression.kind);
+  } else if (
+    expression.kind === "patternMatch" &&
+    expression.pattern !== undefined &&
+    !encVariableStringPattern.test(expression.pattern) &&
+    xsdPatternMatcher(expression.pattern) === null
+  ) {
+    // A literal pattern that does not compile can never evaluate: surface it at
+    // gate time instead of as a runtime abort.
     report(expression.kind);
   }
 

@@ -20,6 +20,9 @@
     "test": "bun test",
     "typecheck": "tsgo --noEmit"
   },
+  "dependencies": {
+    "xspattern": "^3.1.0"
+  },
   "devDependencies": {
     "@conform-ed/qti-xml": "workspace:*",
     "@types/react": "^19.2.17",

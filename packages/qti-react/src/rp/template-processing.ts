@@ -118,6 +118,19 @@ export function executeTemplateProcessing(
     lookupVariable: (identifier) => templateValues.get(identifier) ?? null,
     responseDeclaration: (identifier) => responseDeclarationsById.get(identifier),
     responseValue: () => null, // no candidate responses exist at template-processing time
+    variableDefault: (identifier) => {
+      const declaration = declarationsById.get(identifier) ?? responseDeclarationsById.get(identifier);
+
+      if (!declaration?.defaultValue) {
+        return null; // "NULL if no default value was declared" (§2.11.1.3)
+      }
+
+      return rpValue(
+        declaration.cardinality,
+        declaration.defaultValue.values.map((entry) => coerceScalar(entry.value, declaration.baseType)),
+        declaration.baseType,
+      );
+    },
     random: mulberry32(context.seed),
     customOperators: context.customOperators,
   };

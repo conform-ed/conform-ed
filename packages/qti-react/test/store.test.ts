@@ -137,3 +137,115 @@ describe("response collectors (imperative interactions, e.g. PCI)", () => {
     expect(store.getSnapshot().responses["RESPONSE"]).toBe("A");
   });
 });
+
+describe("attempt duration (built-in response variable)", () => {
+  // QTI: "the duration of the item session as defined by the builtin response
+  // variable duration" — wall-clock seconds from session start to submit, under an
+  // injectable clock so tests (and replays) stay deterministic.
+  const responseProcessing = {
+    rules: [
+      {
+        kind: "responseCondition",
+        responseIf: {
+          expression: {
+            kind: "durationGte",
+            expressions: [
+              { kind: "variable", identifier: "duration" },
+              { kind: "baseValue", baseType: "duration", value: "60" },
+            ],
+          },
+          rules: [
+            {
+              kind: "setOutcomeValue",
+              identifier: "SLOW",
+              expression: { kind: "baseValue", baseType: "boolean", value: "true" },
+            },
+          ],
+        },
+        responseElse: {
+          rules: [
+            {
+              kind: "setOutcomeValue",
+              identifier: "SLOW",
+              expression: { kind: "baseValue", baseType: "boolean", value: "false" },
+            },
+          ],
+        },
+      },
+    ],
+  };
+  const outcomeDeclarations = [{ identifier: "SLOW", cardinality: "single" as const, baseType: "boolean" }];
+
+  test("submit hands RP the elapsed seconds and exposes durationSeconds", () => {
+    let nowMs = 100_000;
+    const store = createAttemptStore(declarations, {}, { responseProcessing, outcomeDeclarations, now: () => nowMs });
+
+    expect(store.getSnapshot().durationSeconds).toBeNull();
+
+    nowMs += 90_000; // candidate takes 90s
+    store.setResponse("RESPONSE", "B");
+    store.submit();
+
+    expect(store.getSnapshot().durationSeconds).toBe(90);
+    expect(store.getSnapshot().outcomes["SLOW"]).toBe(true);
+  });
+
+  test("a fast attempt scores the other branch", () => {
+    let nowMs = 0;
+    const store = createAttemptStore(declarations, {}, { responseProcessing, outcomeDeclarations, now: () => nowMs });
+
+    nowMs += 5_000;
+    store.setResponse("RESPONSE", "B");
+    store.submit();
+
+    expect(store.getSnapshot().durationSeconds).toBe(5);
+    expect(store.getSnapshot().outcomes["SLOW"]).toBe(false);
+  });
+
+  test("reset restarts the session clock", () => {
+    let nowMs = 0;
+    const store = createAttemptStore(declarations, {}, { responseProcessing, outcomeDeclarations, now: () => nowMs });
+
+    nowMs += 70_000;
+    store.submit();
+    expect(store.getSnapshot().durationSeconds).toBe(70);
+
+    store.reset();
+    expect(store.getSnapshot().durationSeconds).toBeNull();
+
+    nowMs += 10_000;
+    store.submit();
+    expect(store.getSnapshot().durationSeconds).toBe(10);
+  });
+});
+
+describe("numAttempts built-in", () => {
+  test("RP sees the current attempt number (increments at attempt start, per spec)", () => {
+    const store = createAttemptStore(
+      declarations,
+      {},
+      {
+        adaptive: true,
+        outcomeDeclarations: [
+          { identifier: "TRIES", cardinality: "single" as const, baseType: "integer" },
+          { identifier: "completionStatus", cardinality: "single" as const, baseType: "identifier" },
+        ],
+        responseProcessing: {
+          rules: [
+            {
+              kind: "setOutcomeValue",
+              identifier: "TRIES",
+              expression: { kind: "variable", identifier: "numAttempts" },
+            },
+          ],
+        },
+      },
+    );
+
+    store.submit();
+    expect(store.getSnapshot().outcomes["TRIES"]).toBe(1);
+
+    store.submit();
+    expect(store.getSnapshot().outcomes["TRIES"]).toBe(2);
+  });
+});
