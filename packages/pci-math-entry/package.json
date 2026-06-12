@@ -1,6 +1,6 @@
 {
   "name": "@conform-ed/pci-math-entry",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "files": [
     "src",
     "dist"
