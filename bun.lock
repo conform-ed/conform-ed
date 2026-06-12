@@ -81,7 +81,7 @@
     },
     "packages/contracts": {
       "name": "@conform-ed/contracts",
-      "version": "0.0.12",
+      "version": "0.0.13",
       "devDependencies": {
         "fast-xml-parser": "^5.3.1",
       },
@@ -94,7 +94,7 @@
     },
     "packages/pci-math-entry": {
       "name": "@conform-ed/pci-math-entry",
-      "version": "0.0.1",
+      "version": "0.0.13",
       "dependencies": {
         "@cortex-js/compute-engine": "^0.59.0",
         "mathlive": "^0.110.0",
@@ -112,7 +112,7 @@
     },
     "packages/qti-react": {
       "name": "@conform-ed/qti-react",
-      "version": "0.0.12",
+      "version": "0.0.13",
       "devDependencies": {
         "@conform-ed/qti-xml": "workspace:*",
         "@types/react": "^19.2.17",
