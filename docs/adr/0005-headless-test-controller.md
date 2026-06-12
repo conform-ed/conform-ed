@@ -67,9 +67,12 @@ policy — consistent with, but not mandated by, the spec:
   §7.40.1). It never gates `end()`: the spec says nothing about preventing a
   candidate from ending the session.
 
-Out of scope, recorded: suspension/resume (until it exists, durations include
-all wall time between transitions — the spec's "minus any time the session
-was in the suspended state" is unimplementable); PNP duration adjustments
-(§2.8.5 note); test/part minTime (surfaced on the plan, unenforced per
-§7.40.1); explicit truncation-epsilon reporting (a millisecond clock keeps
-raw fractional seconds conformant).
+Deferred to later milestones — staging postponements on the way to full-spec
+support, not scope decisions: suspension/resume (until it lands, durations
+include all wall time between transitions; the spec's "minus any time the
+session was in the suspended state" cannot be honored before then); PNP
+duration adjustments (§2.8.5 note; arrives with the PNP/catalog subsystem,
+ADR-0002). Two non-gaps for the record: test/part minTime stays surfaced but
+unenforced because §7.40.1 restricts minTime applicability to sections and
+items, and a millisecond clock keeps raw fractional seconds within the
+spec's truncation-epsilon requirement without explicit truncation.
