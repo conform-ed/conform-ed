@@ -62,6 +62,14 @@ export type {
 export { createAttemptStore, type AttemptSnapshot, type AttemptStore, type AttemptStoreOptions } from "./store";
 
 export {
+  collectInteractionConstraints,
+  collectResponseViolations,
+  type InteractionConstraint,
+  type ResponseConstraintKind,
+  type ResponseViolation,
+} from "./response-validity";
+
+export {
   createTestController,
   createTestSessionStore,
   type TestSessionSnapshot,

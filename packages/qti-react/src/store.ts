@@ -13,6 +13,8 @@
  */
 
 import { scoreResponse } from "./response-processing";
+import { collectResponseViolations } from "./response-validity";
+import type { InteractionConstraint, ResponseViolation } from "./response-validity";
 import {
   applyCorrectResponseOverrides,
   applyTemplateDefaultOverrides,
@@ -48,6 +50,12 @@ export interface AttemptSnapshot {
    * responses for server-side replay parity (ADR-0004).
    */
   readonly durationSeconds: number | null;
+  /**
+   * Interaction constraints the current responses fail (see response-validity).
+   * Always visible so UIs can explain themselves; submission is blocked on them
+   * only under `validateResponses`.
+   */
+  readonly responseViolations: readonly ResponseViolation[];
 }
 
 /**
@@ -81,6 +89,14 @@ export interface AttemptStoreOptions {
    * defaults to Date.now.
    */
   readonly now?: (() => number) | undefined;
+  /** The item's interaction constraints (collectInteractionConstraints over the body). */
+  readonly constraints?: readonly InteractionConstraint[] | undefined;
+  /**
+   * ItemSessionControl validate-responses: "candidates are not allowed to submit the
+   * item until they have provided valid responses for all interactions". When set,
+   * submit() refuses while `responseViolations` is non-empty.
+   */
+  readonly validateResponses?: boolean | undefined;
 }
 
 export interface AttemptStore {
@@ -144,6 +160,9 @@ export function createAttemptStore(
   const maintainedOutcomes = (): Readonly<Record<string, OutcomeValue>> =>
     completionStatusDeclared ? {} : { completionStatus: "unknown" };
 
+  const violationsOf = (responses: Readonly<Record<string, ResponseValue>>): readonly ResponseViolation[] =>
+    options?.constraints ? collectResponseViolations(options.constraints, responses) : [];
+
   let snapshot: AttemptSnapshot = {
     responses: { ...initialResponses },
     submitted: false,
@@ -152,6 +171,7 @@ export function createAttemptStore(
     templateValues: templateResult?.templateValues ?? {},
     attemptCount: 0,
     durationSeconds: null,
+    responseViolations: violationsOf(initialResponses),
   };
 
   function emit(next: AttemptSnapshot): void {
@@ -215,9 +235,12 @@ export function createAttemptStore(
         return;
       }
 
+      const responses = { ...snapshot.responses, [responseIdentifier]: value };
+
       emit({
         ...snapshot,
-        responses: { ...snapshot.responses, [responseIdentifier]: value },
+        responses,
+        responseViolations: violationsOf(responses),
       });
     },
 
@@ -248,7 +271,16 @@ export function createAttemptStore(
       }
 
       if (collected !== snapshot.responses) {
-        snapshot = { ...snapshot, responses: collected };
+        snapshot = { ...snapshot, responses: collected, responseViolations: violationsOf(collected) };
+      }
+
+      // "candidates are not allowed to submit the item until they have provided
+      // valid responses for all interactions" — the refusal is visible through
+      // `responseViolations`, never silent (ADR-0003).
+      if (options?.validateResponses && snapshot.responseViolations.length > 0) {
+        emit(snapshot);
+
+        return snapshot.scores;
       }
 
       const scores = computeScores(snapshot.responses);
@@ -299,6 +331,7 @@ export function createAttemptStore(
         templateValues: snapshot.templateValues,
         attemptCount: 0,
         durationSeconds: null,
+        responseViolations: violationsOf(initialResponses),
       });
     },
   };

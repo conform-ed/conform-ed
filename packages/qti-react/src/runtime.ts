@@ -315,6 +315,7 @@ function createStaticStore(outcomes: Readonly<Record<string, OutcomeValue>>): At
     templateValues: {},
     attemptCount: 1,
     durationSeconds: null,
+    responseViolations: [],
   };
 
   return {
