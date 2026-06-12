@@ -28,6 +28,7 @@ import {
   v0ContentModel,
   type ContentModel,
 } from "./content-model";
+import { collectInteractionConstraints } from "./response-validity";
 import { collectRpIssues, collectTemplateIssues } from "./rp";
 import type {
   CustomOperatorImplementation,
@@ -198,6 +199,21 @@ export interface ItemRendererProps {
   store?: AttemptStore | undefined;
   /** Clone seed for template processing; store it to replay the same clone. */
   seed?: number | undefined;
+  /**
+   * The item-session state to render. `review` is read-only: "the candidate can
+   * review the qti-item-body along with the responses they gave, but cannot update
+   * or resubmit them". `solution` additionally swaps in the clone's resolved correct
+   * responses ("a way of entering the solution state"); the show-solution gate is
+   * the consumer's (effective ItemSessionControl). Default: "interact".
+   */
+  mode?: ItemRenderMode | undefined;
+  /**
+   * Effective ItemSessionControl show-feedback; consulted only outside `interact`.
+   * `false` withholds modal and integrated feedback — visibility is then
+   * "determined by the default values of the outcome variables" — and is ignored
+   * for adaptive items, per spec.
+   */
+  showFeedback?: boolean | undefined;
   // Rendered inside the same runtime context as the item body, after it. Lets a consumer
   // drop controls (a Submit bar, a score panel) that call `useAttempt()` for this item —
   // the attempt store is per-item and scoped to this subtree.
@@ -234,9 +250,19 @@ export interface AttemptController extends AttemptSnapshot {
 
 // ---------- Internal context ----------
 
+/** The item-session states the renderer knows (ItemSessionControl review/solution). */
+export type ItemRenderMode = "interact" | "review" | "solution";
+
 interface RuntimeContextValue {
   store: AttemptStore;
   declarationsById: ReadonlyMap<string, ResponseDeclarationView>;
+  mode: ItemRenderMode;
+  /** show-feedback=false outside interact: modal + integrated feedback withheld. */
+  suppressFeedback: boolean;
+  /** The clone's resolved correct responses — what the solution state displays. */
+  solutionResponses: Readonly<Record<string, ResponseValue>>;
+  /** Declared outcome defaults — feedback visibility "as at the start of each attempt". */
+  defaultOutcomes: Readonly<Record<string, OutcomeValue>>;
 }
 
 const RuntimeContext = createContext<RuntimeContextValue | null>(null);
@@ -316,6 +342,7 @@ function createStaticStore(outcomes: Readonly<Record<string, OutcomeValue>>): At
     attemptCount: 1,
     durationSeconds: null,
     responseViolations: [],
+    correctResponses: {},
   };
 
   return {
@@ -461,11 +488,17 @@ export function createQtiRuntime(config: QtiRuntimeConfig): QtiRuntime {
     element: "span" | "div";
     overrides?: NodeOverrides | undefined;
   }): ReactNode {
-    const { store } = useRuntimeContext();
+    const { store, suppressFeedback, defaultOutcomes } = useRuntimeContext();
     const snapshot = useSyncExternalStore(store.subscribe, store.getSnapshot, store.getSnapshot);
-    const outcome = snapshot.outcomes[feedback.outcomeIdentifier] ?? null;
+    // Withheld feedback shows "the version of the qti-item-body displayed to the
+    // candidate at the start of each attempt … with the visibility of any integrated
+    // feedback determined by the default values of the outcome variables and not the
+    // values … updated by the invocation of response processing".
+    const outcome = suppressFeedback
+      ? (defaultOutcomes[feedback.outcomeIdentifier] ?? null)
+      : (snapshot.outcomes[feedback.outcomeIdentifier] ?? null);
 
-    if (!feedbackVisible(outcome, feedback, snapshot.submitted)) {
+    if (!feedbackVisible(outcome, feedback, suppressFeedback || snapshot.submitted)) {
       return null;
     }
 
@@ -510,11 +543,14 @@ export function createQtiRuntime(config: QtiRuntimeConfig): QtiRuntime {
   }
 
   function ModalFeedbackHost({ feedback }: { feedback: FeedbackView }): ReactNode {
-    const { store } = useRuntimeContext();
+    const { store, suppressFeedback } = useRuntimeContext();
     const snapshot = useSyncExternalStore(store.subscribe, store.getSnapshot, store.getSnapshot);
     const outcome = snapshot.outcomes[feedback.outcomeIdentifier] ?? null;
 
-    if (!feedbackVisible(outcome, feedback, snapshot.submitted)) {
+    // "If it is 'false' then feedback is not shown. This includes both Modal
+    // Feedback and Integrated Feedback even if the candidate has access to the
+    // review state."
+    if (suppressFeedback || !feedbackVisible(outcome, feedback, snapshot.submitted)) {
       return null;
     }
 
@@ -526,14 +562,24 @@ export function createQtiRuntime(config: QtiRuntimeConfig): QtiRuntime {
   }
 
   function InteractionHost({ node }: { node: InteractionNode }): ReactNode {
-    const { store, declarationsById } = useRuntimeContext();
+    const { store, declarationsById, mode, suppressFeedback, solutionResponses } = useRuntimeContext();
     const snapshot = useSyncExternalStore(store.subscribe, store.getSnapshot, store.getSnapshot);
 
     const responseIdentifier = node.responseIdentifier;
     const declaration = declarationsById.get(responseIdentifier);
     const cardinality: Cardinality = declaration?.cardinality ?? "single";
-    const value = snapshot.responses[responseIdentifier] ?? null;
-    const disabled = snapshot.submitted;
+    // The solution state displays the clone's correct response in place of the
+    // candidate's ("a way of entering the solution state").
+    const value =
+      mode === "solution"
+        ? (solutionResponses[responseIdentifier] ?? null)
+        : (snapshot.responses[responseIdentifier] ?? null);
+    // Review and solution are read-only: "can review the qti-item-body along with
+    // the responses they gave, but cannot update or resubmit them".
+    const disabled = snapshot.submitted || mode !== "interact";
+    // Correctness chrome is feedback: shown after a submitted attempt unless
+    // show-feedback withholds it — and always in the solution state (its point).
+    const revealed = mode === "solution" || (snapshot.submitted && !suppressFeedback);
 
     const answered =
       value !== null &&
@@ -542,12 +588,16 @@ export function createQtiRuntime(config: QtiRuntimeConfig): QtiRuntime {
 
     let status: InteractionStatus = answered ? "answered" : "unanswered";
 
-    if (disabled) {
+    if (revealed) {
       const scored = snapshot.scores.find((score) => score.identifier === responseIdentifier);
-      status = scored?.correct ? "correct" : "incorrect";
+      status = mode === "solution" || scored?.correct ? "correct" : "incorrect";
     }
 
     const setValue = (next: ResponseValue): void => {
+      if (disabled) {
+        return;
+      }
+
       store.setResponse(responseIdentifier, next);
     };
 
@@ -556,7 +606,7 @@ export function createQtiRuntime(config: QtiRuntimeConfig): QtiRuntime {
 
       let status: OptionStatus = selected ? "selected" : "idle";
 
-      if (disabled) {
+      if (revealed) {
         if (isCorrectOption(declaration, optionIdentifier)) {
           status = "correct";
         } else if (selected) {
@@ -608,7 +658,7 @@ export function createQtiRuntime(config: QtiRuntimeConfig): QtiRuntime {
       value,
       setValue,
       disabled,
-      showFeedback: disabled,
+      showFeedback: revealed,
       status,
       getOptionProps,
       renderContent,
@@ -627,12 +677,28 @@ export function createQtiRuntime(config: QtiRuntimeConfig): QtiRuntime {
 
     return createElement(
       RuntimeContext.Provider,
-      { value: { store, declarationsById } },
+      {
+        value: {
+          store,
+          declarationsById,
+          mode: "interact",
+          suppressFeedback: false,
+          solutionResponses: {},
+          defaultOutcomes: {},
+        },
+      },
       nodes?.map((node, index) => renderNode(node, index)),
     );
   }
 
-  function ItemRenderer({ item, store: externalStore, seed, children }: ItemRendererProps): ReactNode {
+  function ItemRenderer({
+    item,
+    store: externalStore,
+    seed,
+    mode = "interact",
+    showFeedback,
+    children,
+  }: ItemRendererProps): ReactNode {
     const store = useMemo(
       () =>
         externalStore ??
@@ -648,6 +714,7 @@ export function createQtiRuntime(config: QtiRuntimeConfig): QtiRuntime {
             seed,
             normalization: config.normalization,
             customOperators: config.customOperators,
+            constraints: collectInteractionConstraints(item.itemBody.content),
           },
         ),
       [item, externalStore, seed],
@@ -657,6 +724,30 @@ export function createQtiRuntime(config: QtiRuntimeConfig): QtiRuntime {
       () => new Map(item.responseDeclarations.map((declaration) => [declaration.identifier, declaration])),
       [item],
     );
+
+    // "the setting of show-feedback should be ignored for adaptive items when
+    // allow-review is 'true'. When in the review state, the final values of the
+    // outcome variables should be used."
+    const suppressFeedback = mode !== "interact" && showFeedback === false && item.adaptive !== true;
+
+    // Declared outcome defaults, flat-encoded like snapshot outcomes: withheld
+    // feedback re-evaluates against these ("as at the start of each attempt").
+    const defaultOutcomes = useMemo(() => {
+      const defaults: Record<string, OutcomeValue> = {};
+
+      for (const declaration of item.outcomeDeclarations ?? []) {
+        const values = declaration.defaultValue?.values;
+
+        if (values !== undefined) {
+          defaults[declaration.identifier] =
+            declaration.cardinality === "single"
+              ? ((values[0]?.value ?? null) as OutcomeValue)
+              : (values.map((entry) => entry.value) as never);
+        }
+      }
+
+      return defaults;
+    }, [item]);
 
     // Shared stimulus content renders before the body through the same sanitized
     // walk; an unresolved ref gets the explicit placeholder (ADR-0003 backstop —
@@ -684,7 +775,16 @@ export function createQtiRuntime(config: QtiRuntimeConfig): QtiRuntime {
 
     return createElement(
       RuntimeContext.Provider,
-      { value: { store, declarationsById } },
+      {
+        value: {
+          store,
+          declarationsById,
+          mode,
+          suppressFeedback,
+          solutionResponses: store.getSnapshot().correctResponses,
+          defaultOutcomes,
+        },
+      },
       stimuli,
       body,
       modals,

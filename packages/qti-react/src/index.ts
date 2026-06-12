@@ -116,6 +116,7 @@ export {
   type InteractionSkin,
   type InteractionStatus,
   type ItemRendererProps,
+  type ItemRenderMode,
   type NodeOverrides,
   type OptionProps,
   type OptionStatus,

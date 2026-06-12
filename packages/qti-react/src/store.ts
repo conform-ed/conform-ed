@@ -56,6 +56,11 @@ export interface AttemptSnapshot {
    * only under `validateResponses`.
    */
   readonly responseViolations: readonly ResponseViolation[];
+  /**
+   * This clone's resolved correct responses (template `setCorrectResponse` overrides
+   * applied), keyed by response identifier. The solution state renders these.
+   */
+  readonly correctResponses: Readonly<Record<string, ResponseValue>>;
 }
 
 /**
@@ -163,6 +168,20 @@ export function createAttemptStore(
   const violationsOf = (responses: Readonly<Record<string, ResponseValue>>): readonly ResponseViolation[] =>
     options?.constraints ? collectResponseViolations(options.constraints, responses) : [];
 
+  // The clone's correct responses, flattened to response values for the solution state.
+  const correctResponses: Record<string, ResponseValue> = {};
+
+  for (const declaration of effectiveDeclarations) {
+    const values = declaration.correctResponse?.values;
+
+    if (values !== undefined) {
+      correctResponses[declaration.identifier] =
+        declaration.cardinality === "single"
+          ? ((values[0]?.value ?? null) as ResponseValue)
+          : (values.map((entry) => entry.value) as never);
+    }
+  }
+
   let snapshot: AttemptSnapshot = {
     responses: { ...initialResponses },
     submitted: false,
@@ -172,6 +191,7 @@ export function createAttemptStore(
     attemptCount: 0,
     durationSeconds: null,
     responseViolations: violationsOf(initialResponses),
+    correctResponses,
   };
 
   function emit(next: AttemptSnapshot): void {
@@ -332,6 +352,7 @@ export function createAttemptStore(
         attemptCount: 0,
         durationSeconds: null,
         responseViolations: violationsOf(initialResponses),
+        correctResponses,
       });
     },
   };
