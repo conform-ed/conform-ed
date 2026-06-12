@@ -7,6 +7,11 @@
 
 import { MathfieldElement } from "mathlive";
 
+// MathLive's documented bundler setup: the fonts ship through this stylesheet, and
+// without it the runtime probes a fonts/ directory relative to the bundled module
+// URL, which does not exist under bundlers (vite serves index.html fallbacks).
+import "mathlive/fonts.css";
+
 import type { MathInputFactory } from "./module";
 
 export const mathLiveInput: MathInputFactory = (container, options) => {
