@@ -1,7 +1,8 @@
 {
   "$schema": "https://raw.githubusercontent.com/oxc-project/oxlint/main/npm/oxlint/configuration_schema.json",
-  "plugins": ["eslint", "typescript", "import", "node", "oxc"],
+  "plugins": ["eslint", "typescript", "react", "import", "node", "oxc"],
   "env": {
+    "browser": true,
     "node": true,
     "es2026": true,
   },
@@ -11,11 +12,25 @@
     "typescript/ban-ts-comment": "error",
     "typescript/no-explicit-any": "error",
     "typescript/consistent-type-imports": "error",
+    "typescript/no-floating-promises": "error",
+    "typescript/no-misused-promises": [
+      "error",
+      {
+        "checksVoidReturn": {
+          "attributes": false,
+        },
+      },
+    ],
   },
   "options": {
     "denyWarnings": true,
     "reportUnusedDisableDirectives": "error",
     "typeAware": true,
+  },
+  "settings": {
+    "react": {
+      "version": "19.2.7",
+    },
   },
   "ignorePatterns": ["node_modules/", "dist/", "build/", ".turbo/", "coverage/"],
 }

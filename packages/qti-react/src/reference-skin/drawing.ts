@@ -5,7 +5,14 @@
  * Items using drawing are typically scored externally, not by client RP.
  */
 
-import { createElement, useEffect, useRef, type PointerEvent as ReactPointerEvent, type ReactNode } from "react";
+import {
+  createElement,
+  useCallback,
+  useEffect,
+  useRef,
+  type PointerEvent as ReactPointerEvent,
+  type ReactNode,
+} from "react";
 
 import type { BodyNode, InteractionRenderProps } from "../runtime";
 
@@ -30,28 +37,32 @@ export function DrawingReferenceSkin(props: InteractionRenderProps): ReactNode {
   propsRef.current = props;
 
   // Paint the stage image as the drawing background (and again after a clear).
-  const paintBackground = (canvas: HTMLCanvasElement): void => {
-    const context = canvas.getContext("2d");
+  const stageData = node.object.data;
+  const paintBackground = useCallback(
+    (canvas: HTMLCanvasElement): void => {
+      const context = canvas.getContext("2d");
 
-    if (!context) {
-      return;
-    }
+      if (!context) {
+        return;
+      }
 
-    context.clearRect(0, 0, canvas.width, canvas.height);
+      context.clearRect(0, 0, canvas.width, canvas.height);
 
-    const image = new Image();
+      const image = new Image();
 
-    image.onload = () => {
-      context.drawImage(image, 0, 0, canvas.width, canvas.height);
-    };
-    image.src = propsRef.current.resolveAsset(node.object.data);
-  };
+      image.onload = () => {
+        context.drawImage(image, 0, 0, canvas.width, canvas.height);
+      };
+      image.src = propsRef.current.resolveAsset(stageData);
+    },
+    [stageData],
+  );
 
   useEffect(() => {
     if (canvasRef.current) {
       paintBackground(canvasRef.current);
     }
-  }, [node.object.data]);
+  }, [paintBackground]);
 
   const pointerPosition = (event: ReactPointerEvent<HTMLCanvasElement>): { x: number; y: number } => {
     const canvas = event.currentTarget;
