@@ -128,6 +128,7 @@
     },
     "packages/qti-xml": {
       "name": "@conform-ed/qti-xml",
+      "version": "0.0.13",
       "dependencies": {
         "@conform-ed/contracts": "workspace:*",
         "fast-xml-parser": "^5.3.1",

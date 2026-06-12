@@ -1,5 +1,6 @@
 {
   "name": "@conform-ed/qti-xml",
+  "version": "0.0.13",
   "private": true,
   "type": "module",
   "module": "src/index.ts",
