@@ -894,6 +894,16 @@ function writeBodyContent(writer: XmlWriter, node: Node, ambient: string): void 
   writeContent(writer, fragments(node, "content"), ambient);
 }
 
+/**
+ * Block containers (feedback-block, modal-feedback, rubric-block, test-rubric-block,
+ * template-block, test-feedback) wrap their flow content in <qti-content-body> — the
+ * ASI XSD requires it for several of them. The normalizer unwraps it transparently,
+ * so this stays round-trip-faithful while satisfying the official schema.
+ */
+function writeContentBody(writer: XmlWriter, node: Node, ambient: string): void {
+  writer.element("qti-content-body", [], () => writeContent(writer, fragments(node, "content"), ambient));
+}
+
 function writeChoices(writer: XmlWriter, choices: Node[], ambient: string): void {
   for (const choice of choices) {
     writeDomainNode(writer, choice, ambient);
@@ -1236,14 +1246,18 @@ function writeDomainNode(writer: XmlWriter, node: Node, ambient: string): void {
       return;
 
     case "positionObjectInteraction":
-      // The stage image is emitted once by the enclosing stage; the interaction itself
-      // carries no media child (the normalizer copied the stage image into each).
-      writer.element("qti-position-object-interaction", [
-        ["response-identifier", str(node, "responseIdentifier")],
-        ["center-point", list(node, "centerPoint")],
-        ["min-choices", attr(node, "minChoices")],
-        ["max-choices", attr(node, "maxChoices")],
-      ]);
+      // The XSD requires the stage image on both the stage and each interaction; the
+      // normalizer copied the stage image onto each interaction, so emit it here too.
+      writer.element(
+        "qti-position-object-interaction",
+        [
+          ["response-identifier", str(node, "responseIdentifier")],
+          ["center-point", list(node, "centerPoint")],
+          ["min-choices", attr(node, "minChoices")],
+          ["max-choices", attr(node, "maxChoices")],
+        ],
+        () => writeXmlNode(writer, asNode(node["image"]), ambient),
+      );
       return;
 
     case "mediaInteraction":
@@ -1299,9 +1313,8 @@ function writeDomainNode(writer: XmlWriter, node: Node, ambient: string): void {
       return;
 
     case "feedbackInline":
-    case "feedbackBlock":
       writer.element(
-        kind === "feedbackInline" ? "qti-feedback-inline" : "qti-feedback-block",
+        "qti-feedback-inline",
         [
           ["outcome-identifier", str(node, "outcomeIdentifier")],
           ["identifier", str(node, "identifier")],
@@ -1314,10 +1327,24 @@ function writeDomainNode(writer: XmlWriter, node: Node, ambient: string): void {
       );
       return;
 
-    case "templateInline":
-    case "templateBlock":
+    case "feedbackBlock":
       writer.element(
-        kind === "templateInline" ? "qti-template-inline" : "qti-template-block",
+        "qti-feedback-block",
+        [
+          ["outcome-identifier", str(node, "outcomeIdentifier")],
+          ["identifier", str(node, "identifier")],
+          ["show-hide", str(node, "showHide")],
+        ],
+        () => {
+          writeContentBody(writer, node, ambient);
+          writeCatalogInfo(writer, node);
+        },
+      );
+      return;
+
+    case "templateInline":
+      writer.element(
+        "qti-template-inline",
         [
           ["template-identifier", str(node, "templateIdentifier")],
           ["identifier", str(node, "identifier")],
@@ -1325,6 +1352,21 @@ function writeDomainNode(writer: XmlWriter, node: Node, ambient: string): void {
         ],
         () => {
           writeBodyContent(writer, node, ambient);
+          writeCatalogInfo(writer, node);
+        },
+      );
+      return;
+
+    case "templateBlock":
+      writer.element(
+        "qti-template-block",
+        [
+          ["template-identifier", str(node, "templateIdentifier")],
+          ["identifier", str(node, "identifier")],
+          ["show-hide", str(node, "showHide")],
+        ],
+        () => {
+          writeContentBody(writer, node, ambient);
           writeCatalogInfo(writer, node);
         },
       );
@@ -1352,7 +1394,7 @@ function writeDomainNode(writer: XmlWriter, node: Node, ambient: string): void {
           ["use", str(node, "use")],
         ],
         () => {
-          writeBodyContent(writer, node, ambient);
+          writeContentBody(writer, node, ambient);
           writeCatalogInfo(writer, node);
         },
       );
@@ -1406,18 +1448,7 @@ function writePortableCustomInteraction(writer: XmlWriter, node: Node, ambient: 
       ...propertyAttributes,
     ],
     () => {
-      writeCatalogInfo(writer, node);
-
-      const markup = node["interactionMarkup"];
-      if (markup) {
-        const markupContent = fragments(asNode(markup), "content");
-        if (markupContent.length) {
-          writer.element("qti-interaction-markup", [], () => writeContent(writer, markupContent, ambient));
-        } else {
-          writer.element("qti-interaction-markup", []);
-        }
-      }
-
+      // XSD sequence: qti-interaction-modules?, qti-interaction-markup, …, qti-catalog-info?.
       const modules = node["interactionModules"];
       if (modules) {
         const modulesNode = asNode(modules);
@@ -1438,6 +1469,18 @@ function writePortableCustomInteraction(writer: XmlWriter, node: Node, ambient: 
           },
         );
       }
+
+      const markup = node["interactionMarkup"];
+      if (markup) {
+        const markupContent = fragments(asNode(markup), "content");
+        if (markupContent.length) {
+          writer.element("qti-interaction-markup", [], () => writeContent(writer, markupContent, ambient));
+        } else {
+          writer.element("qti-interaction-markup", []);
+        }
+      }
+
+      writeCatalogInfo(writer, node);
     },
   );
 }
@@ -1499,7 +1542,7 @@ function writeTestFeedback(writer: XmlWriter, feedback: Node, ambient: string): 
       ["title", str(feedback, "title")],
     ],
     () => {
-      writeBodyContent(writer, feedback, ambient);
+      writeContentBody(writer, feedback, ambient);
       writeCatalogInfo(writer, feedback);
     },
   );
@@ -1732,7 +1775,7 @@ export function serializeQtiAssessmentItem(document: unknown): string {
             ["title", str(feedback, "title")],
           ],
           () => {
-            writeBodyContent(writer, feedback, asiNamespace);
+            writeContentBody(writer, feedback, asiNamespace);
             writeCatalogInfo(writer, feedback);
           },
         );

@@ -139,6 +139,9 @@
         "fast-xml-validator": "^1.1.1",
         "fflate": "^0.8.3",
       },
+      "devDependencies": {
+        "xmllint-wasm": "^5.2.0",
+      },
     },
     "packages/reporting": {
       "name": "@conform-ed/reporting",
@@ -609,6 +612,8 @@
     "xmlbuilder": ["xmlbuilder@11.0.1", "", {}, "sha512-fDlsI/kFEx7gLvbecc0/ohLG50fugQp8ryHzMTuW9vSa1GJ0XYWKnhsUx7oie3G98+r56aTQIUB4kht42R3JvA=="],
 
     "xmldom": ["xmldom@0.1.31", "", {}, "sha512-yS2uJflVQs6n+CyjHoaBmVSqIDevTAWrzMmjG1Gc7h1qQ7uVozNhEPJAwZXWyGQ/Gafo3fCwrcaokezLPupVyQ=="],
+
+    "xmllint-wasm": ["xmllint-wasm@5.2.0", "", { "peerDependencies": { "@types/node": ">=16" } }, "sha512-GVMuR3ViU8R7sakcVm/4GClMtCV8p7xgjXZlc6GmvPpInIz4V41lmRnjSd4uKhVkf5MZj97wEZkPM4RMAhojuQ=="],
 
     "xpath": ["xpath@0.0.24", "", {}, "sha512-xUsra70vEDlxu0T90+qkg/8/KvPPm4KQbh25yMZCpBABBkdQLaOLNsgzRAUax7wlWZt7Ka5Q+itg/TPzzHieVQ=="],
 
