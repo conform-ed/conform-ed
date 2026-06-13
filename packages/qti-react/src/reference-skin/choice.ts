@@ -11,6 +11,8 @@ import type { BodyNode, InteractionRenderProps } from "../runtime";
 interface SimpleChoiceView {
   identifier: string;
   content?: readonly BodyNode[];
+  /** Catalog reference for dormant alternative content on this choice (§5.28). */
+  dataCatalogIdref?: string;
 }
 
 interface ChoiceNodeView {
@@ -38,6 +40,7 @@ export function ChoiceReferenceSkin(props: InteractionRenderProps): ReactNode {
         "button",
         { key: choice.identifier, type: "button", disabled: props.disabled, ...optionProps },
         props.renderContent(choice.content) ?? choice.identifier,
+        props.renderCatalogSupports(choice.dataCatalogIdref),
       );
     }),
   );

@@ -173,3 +173,52 @@ describe("catalog-aware rendering", () => {
     expect(html).toContain("Elija la mejor.");
   });
 });
+
+describe("skin-owned catalog idrefs (reference skin)", () => {
+  test("a choice carrying data-catalog-idref renders its active support beside its label", () => {
+    const { ItemRenderer } = runtime();
+    const choiceItem: AssessmentItemView = {
+      responseDeclarations: [{ identifier: "RESPONSE", cardinality: "single", baseType: "identifier" }],
+      outcomeDeclarations: [],
+      itemBody: {
+        content: [
+          {
+            kind: "choiceInteraction",
+            responseIdentifier: "RESPONSE",
+            maxChoices: 1,
+            simpleChoices: [
+              {
+                kind: "simpleChoice",
+                identifier: "A",
+                dataCatalogIdref: "choice_cat",
+                content: [{ kind: "text", value: "accurate" }],
+              },
+              { kind: "simpleChoice", identifier: "B", content: [{ kind: "text", value: "other" }] },
+            ],
+          } as never,
+        ],
+      },
+      catalogs: [
+        {
+          id: "choice_cat",
+          cards: [
+            {
+              support: "keyword-translation",
+              cardEntries: [{ xmlLang: "es", htmlContent: { content: [{ kind: "text", value: "preciso" }] } }],
+            },
+          ],
+        },
+      ],
+    };
+
+    const off = renderToStaticMarkup(createElement(ItemRenderer, { item: choiceItem }));
+    expect(off).not.toContain("preciso");
+
+    const on = renderToStaticMarkup(
+      createElement(ItemRenderer, { item: choiceItem, pnp: { keywordTranslation: { xmlLang: "es" } } }),
+    );
+    expect(on).toContain("accurate");
+    expect(on).toContain("preciso");
+    expect(on).toContain('data-qti-catalog-idref="choice_cat"');
+  });
+});

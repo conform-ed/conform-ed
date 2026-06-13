@@ -181,6 +181,12 @@ export interface InteractionRenderProps {
    * interactions like PCI own their response state). Returns the unregister function.
    */
   registerResponseCollector: (collector: () => ResponseValue | undefined) => () => void;
+  /**
+   * Render the active catalog supports for a skin-owned node's data-catalog-idref
+   * (e.g. a choice label) — the same resolution and presentation the core walk
+   * applies to generic flow nodes. Null when nothing is active.
+   */
+  renderCatalogSupports: (catalogIdref: string | undefined) => ReactNode;
 }
 
 /** Per-kind render overrides a skin passes to `renderContent` for nodes it owns. */
@@ -808,6 +814,21 @@ export function createQtiRuntime(config: QtiRuntimeConfig): QtiRuntime {
     const renderContent = (nodes: readonly BodyNode[] | undefined, overrides?: NodeOverrides): ReactNode =>
       nodes ? nodes.map((child, index) => renderNode(child, index, overrides)) : null;
 
+    const { catalogSupports } = useRuntimeContext();
+    const renderCatalogSupportsForSkin = (catalogIdref: string | undefined): ReactNode => {
+      const supports = catalogIdref !== undefined ? (catalogSupports.get(catalogIdref) ?? []) : [];
+
+      if (!supports.length) {
+        return null;
+      }
+
+      return supports.map((support, index) =>
+        config.renderCatalogSupport
+          ? createElement(Fragment, { key: `support-${index}` }, config.renderCatalogSupport(support, catalogIdref!))
+          : renderSupportDefault(support, catalogIdref!, index),
+      );
+    };
+
     const Skin = config.skin[node.kind];
 
     if (!Skin) {
@@ -819,6 +840,7 @@ export function createQtiRuntime(config: QtiRuntimeConfig): QtiRuntime {
       responseIdentifier,
       value,
       setValue,
+      renderCatalogSupports: renderCatalogSupportsForSkin,
       disabled,
       showFeedback: revealed,
       status,
