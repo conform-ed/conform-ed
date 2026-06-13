@@ -1,14 +1,21 @@
 {
   "name": "@conform-ed/qti-xml",
-  "version": "0.0.13",
-  "private": true,
+  "version": "0.0.16",
+  "files": [
+    "src",
+    "dist"
+  ],
   "type": "module",
   "module": "src/index.ts",
   "exports": {
-    ".": "./src/index.ts"
+    ".": {
+      "development": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
   },
   "scripts": {
-    "build": "tsgo --noEmit",
+    "build": "bun build ./src/index.ts --outdir dist --format esm --target node --external @conform-ed/contracts --external fast-xml-parser --external fast-xml-validator --external fflate && tsgo -p tsconfig.build.json",
     "format": "oxfmt --config ../../.oxfmtrc.jsonc --check .",
     "lint": "oxlint --config ../../.oxlintrc.jsonc .",
     "test": "bun test",

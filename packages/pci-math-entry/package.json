@@ -9,18 +9,22 @@
   "module": "src/index.ts",
   "exports": {
     ".": {
+      "development": "./src/index.ts",
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
     },
     "./checker": {
+      "development": "./src/checker.ts",
       "types": "./dist/checker.d.ts",
       "import": "./dist/checker.js"
     },
     "./operator": {
+      "development": "./src/operator.ts",
       "types": "./dist/operator.d.ts",
       "import": "./dist/operator.js"
     },
     "./module": {
+      "development": "./src/module-mathlive.ts",
       "types": "./dist/module-mathlive.d.ts",
       "import": "./dist/module-mathlive.js"
     }
