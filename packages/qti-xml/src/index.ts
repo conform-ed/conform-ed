@@ -7,3 +7,5 @@ export * from "./types";
 export * from "./validate";
 export * from "./validate-package";
 export * from "./serialize-result";
+export * from "./serialize-pnp";
+export * from "./serialize-usage-data";
