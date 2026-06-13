@@ -20,7 +20,7 @@ import {
 } from "react";
 import type { ZodType } from "zod";
 
-import type { CapabilityIssue, CapabilityReport } from "./capability";
+import type { CapabilityReport } from "./capability";
 import {
   isAllowedFlowElement,
   sanitizeAttributes,
@@ -28,9 +28,9 @@ import {
   v0ContentModel,
   type ContentModel,
 } from "./content-model";
+import { reportItemCapability } from "./item-capability";
 import { resolveCatalogSupports, type CatalogView, type PnpView, type ResolvedCatalogSupport } from "./pnp";
 import { collectInteractionConstraints } from "./response-validity";
-import { collectRpIssues, collectTemplateIssues } from "./rp";
 import type {
   CustomOperatorImplementation,
   OutcomeDeclarationView,
@@ -390,9 +390,6 @@ function templateVisible(value: OutcomeValue, view: TemplateContentView): boolea
 
   return matched !== (view.showHide === "hide");
 }
-
-/** Body node kinds that render without a descriptor, skin, or content-model entry. */
-const intrinsicLeafKinds = new Set(["text", "printedVariable"]);
 
 /** A read-only, already-"submitted" store: backs content rendered outside an attempt. */
 function createStaticStore(outcomes: Readonly<Record<string, OutcomeValue>>): AttemptStore {
@@ -1015,125 +1012,22 @@ export function createQtiRuntime(config: QtiRuntimeConfig): QtiRuntime {
   }
 
   function canDeliver(item: AssessmentItemView): CapabilityReport {
-    const issues: CapabilityIssue[] = [];
-    const seen = new Set<string>();
+    // Reduce this runtime's React config to the headless capability inputs: an interaction
+    // is supported when it has both a descriptor and a skin; descriptor schemas drive the
+    // stricter invalid-interaction check. The walk itself lives in ./item-capability so a
+    // server-side caller reaches the same verdict without importing React.
+    const supportedInteractions = new Set([...descriptorsByKind.keys()].filter((kind) => Boolean(config.skin[kind])));
+    const interactionSchemas = new Map(
+      [...descriptorsByKind].map(([kind, descriptor]) => [kind, descriptor.schema] as const),
+    );
 
-    function report(issue: CapabilityIssue): void {
-      const dedupeKey = `${issue.type}:${issue.name}:${issue.responseIdentifier ?? ""}`;
-
-      if (!seen.has(dedupeKey)) {
-        seen.add(dedupeKey);
-        issues.push(issue);
-      }
-    }
-
-    function walk(node: BodyNode): void {
-      if (isFeedbackNode(node) || isTemplateContentNode(node) || node.kind === "rubricBlock") {
-        for (const child of (node as unknown as { content?: readonly BodyNode[] }).content ?? []) {
-          walk(child);
-        }
-
-        return;
-      }
-
-      if (isInteractionNode(node)) {
-        const descriptor = descriptorsByKind.get(node.kind);
-
-        if (!descriptor || !config.skin[node.kind]) {
-          report({
-            type: "unsupported-interaction",
-            name: node.kind,
-            responseIdentifier: node.responseIdentifier,
-          });
-
-          return;
-        }
-
-        const parsed = descriptor.schema.safeParse(node);
-
-        if (!parsed.success) {
-          const detail = parsed.error.issues[0]?.message;
-
-          report({
-            type: "invalid-interaction",
-            name: node.kind,
-            responseIdentifier: node.responseIdentifier,
-            ...(detail !== undefined ? { detail } : {}),
-          });
-        }
-
-        // Interaction-internal content (prompt, choice bodies) is structurally
-        // validated by the descriptor schema; its flow elements are walked when the
-        // descriptor surfaces them. Generic field-sniffing is deliberately avoided.
-        return;
-      }
-
-      if (node.kind === "xml") {
-        const xmlNode = node as XmlContentNode;
-
-        if (xmlNode.name === model.mathRoot) {
-          return; // MathML renders structurally; its subtree is not flow content
-        }
-
-        if (!isAllowedFlowElement(model, xmlNode.name)) {
-          report({ type: "unsupported-element", name: xmlNode.name });
-        }
-
-        for (const child of xmlNode.children ?? []) {
-          walk(child);
-        }
-
-        return;
-      }
-
-      if (intrinsicLeafKinds.has(node.kind)) {
-        return;
-      }
-
-      // Any other kind (include, multi-stage groups, future vocabulary) has no
-      // rendering path: report it rather than let the renderer drop it (ADR-0003).
-      report({ type: "unsupported-element", name: node.kind });
-    }
-
-    for (const node of item.itemBody.content ?? []) {
-      walk(node);
-    }
-
-    // Shared stimulus refs must resolve to be deliverable; resolved content passes
-    // through the same content-model gate as the body.
-    for (const ref of item.assessmentStimulusRefs ?? []) {
-      const stimulus = config.resolveStimulus?.(ref) ?? null;
-
-      if (stimulus === null) {
-        report({ type: "unsupported-element", name: "assessmentStimulusRef", detail: ref.href });
-        continue;
-      }
-
-      for (const node of stimulus.content) {
-        walk(node);
-      }
-    }
-
-    for (const feedback of item.modalFeedbacks ?? []) {
-      for (const child of feedback.content ?? []) {
-        walk(child);
-      }
-    }
-
-    const customOperatorClasses = new Set(Object.keys(config.customOperators ?? {}));
-
-    for (const issue of collectRpIssues(item.responseProcessing, {
-      customOperatorClasses,
-      outcomeDeclarations: item.outcomeDeclarations ?? [],
-    })) {
-      report(issue);
-    }
-
-    for (const issue of collectTemplateIssues(item.templateProcessing, { customOperatorClasses })) {
-      report(issue);
-    }
-
-    return { deliverable: issues.length === 0, issues };
+    return reportItemCapability(item, {
+      supportedInteractions,
+      interactionSchemas,
+      model,
+      customOperatorClasses: new Set(Object.keys(config.customOperators ?? {})),
+      ...(config.resolveStimulus !== undefined ? { resolveStimulus: config.resolveStimulus } : {}),
+    });
   }
 
   return { ItemRenderer, ContentRenderer, useAttempt, useCatalogSupports, canDeliver };

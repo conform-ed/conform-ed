@@ -20,6 +20,8 @@ export {
   stimulusContentFromNormalized,
 } from "./normalized-item";
 
+export { referenceInteractionKinds, reportItemCapability, type ItemCapabilityOptions } from "./item-capability";
+
 export { formatPoint, parseCoords, parsePoint, pointInShape, type Point, type QtiShape } from "./graphic";
 
 export {

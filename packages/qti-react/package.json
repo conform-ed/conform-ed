@@ -12,10 +12,15 @@
       "development": "./src/index.ts",
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
+    },
+    "./headless": {
+      "development": "./src/headless.ts",
+      "types": "./dist/headless.d.ts",
+      "import": "./dist/headless.js"
     }
   },
   "scripts": {
-    "build": "bun build ./src/index.ts --outdir dist --format esm --target browser --external react --external react-dom --external zod && tsgo -p tsconfig.build.json",
+    "build": "bun build ./src/index.ts ./src/headless.ts --outdir dist --format esm --target browser --external react --external react-dom --external zod && tsgo -p tsconfig.build.json",
     "format": "oxfmt --config ../../.oxfmtrc.jsonc --check .",
     "lint": "oxlint --config ../../.oxlintrc.jsonc .",
     "test": "bun test",
