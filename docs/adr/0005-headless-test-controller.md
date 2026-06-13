@@ -67,10 +67,10 @@ policy — consistent with, but not mandated by, the spec:
   §7.40.1). It never gates `end()`: the spec says nothing about preventing a
   candidate from ending the session.
 
-Deferred to later milestones — staging postponements on the way to full-spec
-support, not scope decisions: PNP duration adjustments (§2.8.5 note; arrives
-with the PNP/catalog subsystem, ADR-0002). Suspension/resume, originally
-deferred here, has since landed (see the suspension status update below).
+Both staging postponements originally recorded here have since landed: PNP
+duration adjustments (§2.8.5 note) arrived with the PNP/catalog subsystem
+(ADR-0008 — additional-testing-time applied to max-time enforcement), and
+suspension/resume landed earlier (see the suspension status update below).
 Two non-gaps for the record: test/part minTime stays surfaced but
 unenforced because §7.40.1 restricts minTime applicability to sections and
 items, and a millisecond clock keeps raw fractional seconds within the
