@@ -260,3 +260,47 @@ describe("end-to-end: session → document → XML → re-validated", () => {
     expect(verdict.normalizedDocument).toEqual(document);
   });
 });
+
+describe("buildAssessmentResult: PNP supports", () => {
+  // RR Support (§2.6.4): "These features are aligned to the QTI profile of the
+  // 1EdTech Access for All Personal Needs and Preferences (AfA PNP)"; assignment is
+  // required and "A value MUST NOT be present when 'assignment=prohibited'".
+  const { controller, state } = runSession();
+  const document = buildAssessmentResult({
+    test: reported,
+    plan: controller.plan,
+    state,
+    nowMs: 20_000,
+    itemDetails,
+    pnp: {
+      keywordTranslation: { xmlLang: "es" },
+      additionalTestingTime: { timeMultiplier: 1.5 },
+      prohibitSet: { features: ["spell-checker-on-screen"] },
+    },
+  });
+
+  test("supports report assigned features with their language and value detail", () => {
+    const supports = document.assessmentResult.testResult?.supports ?? [];
+
+    expect(supports).toContainEqual({ name: "keyword-translation", assignment: "assigned", xmlLang: "es" });
+    expect(supports).toContainEqual({ name: "additional-testing-time", assignment: "assigned", value: "1.5" });
+  });
+
+  test("prohibited features report without a value", () => {
+    const supports = document.assessmentResult.testResult?.supports ?? [];
+
+    expect(supports).toContainEqual({ name: "spell-checker-on-screen", assignment: "prohibited" });
+  });
+
+  test("the document with supports still satisfies the strict schema and round-trips", async () => {
+    const parsed = QtiAssessmentResultDocumentSchema.safeParse(document);
+    expect(parsed.success ? [] : parsed.error.issues).toEqual([]);
+
+    const { serializeQtiAssessmentResult, validateQtiXmlContent } = await import("@conform-ed/qti-xml");
+    const xml = serializeQtiAssessmentResult(document as never);
+    const verdict = await validateQtiXmlContent(xml);
+
+    expect(verdict.status).toBe("valid");
+    expect(verdict.normalizedDocument).toEqual(document);
+  });
+});

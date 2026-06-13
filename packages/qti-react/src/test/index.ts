@@ -12,6 +12,7 @@ export {
   type ResultResponseVariableView,
   type ResultSessionIdentifierView,
   type ResultSessionStatus,
+  type ResultSupportView,
   type ResultValueView,
   type TestResultView,
 } from "./results";

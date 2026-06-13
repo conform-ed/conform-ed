@@ -7,6 +7,7 @@
  * persistence stays with the consumer (store the seed and `snapshot.state`).
  */
 
+import type { PnpView } from "../pnp";
 import { collectInteractionConstraints } from "../response-validity";
 import type { CustomOperatorImplementation, ResponseNormalization, TemplateRuleView } from "../rp";
 import type { AssessmentItemView } from "../runtime";
@@ -35,6 +36,11 @@ export interface TestSessionStoreOptions {
    * controller's `now` for coherent timing). Defaults to Date.now.
    */
   readonly now?: () => number;
+  /**
+   * The candidate's AfA PNP — pair it with the controller's `pnp` (time-limit
+   * accommodations live there). The store reports it as result supports.
+   */
+  readonly pnp?: PnpView;
 }
 
 export interface TestSessionSnapshot {
@@ -325,6 +331,7 @@ export function createTestSessionStore(controller: TestController, options: Test
         state,
         ...(resultOptions?.context !== undefined ? { context: resultOptions.context } : {}),
         nowMs: resultOptions?.nowMs ?? (options.now ?? Date.now)(),
+        ...(options.pnp !== undefined ? { pnp: options.pnp } : {}),
         itemDetails: (item) => {
           const view = itemView(item.key);
 

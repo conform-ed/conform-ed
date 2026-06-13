@@ -2435,3 +2435,139 @@ describe("attempt history (results reporting)", () => {
     expect(state.attemptHistory?.["I2"]?.[0]?.atMs).toBe(7_000);
   });
 });
+
+describe("PNP additional testing time (§2.8.5 + AfA additional-testing-time)", () => {
+  // "Note that the durations may be changed depending on the relevant accessibility
+  // values in the Personal Needs & Preferences settings for the learner." (§2.8.5)
+  // AfA: "The container for the set of additional testing time preferences. Only one
+  // of the available options can be selected."
+  const timed = (extra: { testMaxTime?: number; itemMaxTime?: number; itemMinTime?: number }): AssessmentTestView => ({
+    identifier: "T-PNP-TIME",
+    outcomeDeclarations: [],
+    ...(extra.testMaxTime !== undefined ? { timeLimits: { maxTime: extra.testMaxTime } } : {}),
+    testParts: [
+      {
+        identifier: "P1",
+        navigationMode: "linear",
+        submissionMode: "individual",
+        assessmentSections: [
+          {
+            kind: "assessmentSection",
+            identifier: "S1",
+            children: [
+              itemRef("I1", {
+                timeLimits: {
+                  ...(extra.itemMaxTime !== undefined ? { maxTime: extra.itemMaxTime } : {}),
+                  ...(extra.itemMinTime !== undefined ? { minTime: extra.itemMinTime } : {}),
+                },
+              }),
+              itemRef("I2"),
+            ],
+          },
+        ],
+      },
+    ],
+  });
+
+  test("a time multiplier scales every declared max-time proportionally", () => {
+    let nowMs = 0;
+    const controller = createTestController(timed({ testMaxTime: 100, itemMaxTime: 20 }), {
+      seed: 1,
+      now: () => nowMs,
+      pnp: { additionalTestingTime: { timeMultiplier: 1.5 } },
+    });
+    let state = controller.start();
+
+    // Item: declared 20s × 1.5 = 30s. Past 20s but under 30s the item is still live.
+    nowMs += 25_000;
+    state = controller.tick(state);
+    expect(controller.canSubmitItem(state, "I1")).toBe(true);
+
+    state = controller.submitItem(state, "I1", { outcomes: {} });
+
+    // Test: declared 100s × 1.5 = 150s. 120s is in time; past 150s ends the session.
+    nowMs += 100_000; // 125s total
+    state = controller.tick(state);
+    expect(state.status).toBe("in-progress");
+
+    nowMs += 30_000; // 155s total
+    state = controller.tick(state);
+    expect(state.status).toBe("ended");
+  });
+
+  test("fixed minutes extend the assessment window, not nested scopes", () => {
+    let nowMs = 0;
+    const controller = createTestController(timed({ testMaxTime: 100, itemMaxTime: 20 }), {
+      seed: 1,
+      now: () => nowMs,
+      pnp: { additionalTestingTime: { fixedMinutes: 1 } },
+    });
+    let state = controller.start();
+
+    // The item's own ceiling is untouched: past 20s it is no longer submittable.
+    nowMs += 21_000;
+    state = controller.tick(state);
+    expect(controller.canSubmitItem(state, "I1")).toBe(false);
+
+    // The test window is 100s + 60s: alive at 130s, over at 161s.
+    nowMs += 109_000; // 130s
+    state = controller.tick(state);
+    expect(state.status).toBe("in-progress");
+
+    nowMs += 31_000; // 161s
+    state = controller.tick(state);
+    expect(state.status).toBe("ended");
+  });
+
+  test("unlimited removes max-time ceilings entirely", () => {
+    let nowMs = 0;
+    const controller = createTestController(timed({ testMaxTime: 100, itemMaxTime: 20 }), {
+      seed: 1,
+      now: () => nowMs,
+      pnp: { additionalTestingTime: { unlimited: true } },
+    });
+    let state = controller.start();
+
+    nowMs += 10_000_000;
+    state = controller.tick(state);
+
+    expect(state.status).toBe("in-progress");
+    expect(controller.canSubmitItem(state, "I1")).toBe(true);
+  });
+
+  test("minimum times are floors, never adjusted by the accommodation", () => {
+    let nowMs = 0;
+    const controller = createTestController(timed({ itemMinTime: 30 }), {
+      seed: 1,
+      now: () => nowMs,
+      pnp: { additionalTestingTime: { timeMultiplier: 2 } },
+    });
+    let state = controller.start();
+
+    // The gate lifts at the declared 30s floor, not a doubled 60s.
+    nowMs += 29_000;
+    expect(controller.canNext(state)).toBe(false);
+
+    nowMs += 1_000;
+    state = controller.next(state);
+    expect(controller.currentItem(state)?.key).toBe("I2");
+  });
+
+  test("a prohibited additional-testing-time accommodation does not apply", () => {
+    let nowMs = 0;
+    const controller = createTestController(timed({ testMaxTime: 100 }), {
+      seed: 1,
+      now: () => nowMs,
+      pnp: {
+        additionalTestingTime: { timeMultiplier: 2 },
+        prohibitSet: { features: ["additional-testing-time"] },
+      },
+    });
+    let state = controller.start();
+
+    nowMs += 101_000;
+    state = controller.tick(state);
+
+    expect(state.status).toBe("ended");
+  });
+});

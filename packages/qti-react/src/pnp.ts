@@ -199,9 +199,12 @@ function camelCase(name: string): string {
   return name.replace(/-([a-z])/gu, (_, letter: string) => letter.toUpperCase());
 }
 
-/** The PNP preference object a card's entries discriminate against. */
-function featurePreference(pnp: PnpView | undefined, support: string): Record<string, unknown> | undefined {
-  const field = pnpFeatureFields[support];
+/**
+ * The PNP preference object stated for a feature — what card entries discriminate
+ * against, and what results reporting reads detail (language, time values) from.
+ */
+export function pnpFeaturePreference(pnp: PnpView | undefined, feature: string): Record<string, unknown> | undefined {
+  const field = pnpFeatureFields[feature];
   if (!pnp || !field) {
     return undefined;
   }
@@ -266,7 +269,7 @@ function resolveCard(card: CatalogCardView, pnp: PnpView | undefined): ResolvedC
     };
   }
 
-  const preference = featurePreference(pnp, card.support);
+  const preference = pnpFeaturePreference(pnp, card.support);
   // "If the CardEntry attribute values do not identify the proper content for a
   // candidate, use the content designated as default." (§5.27.2)
   const entry =

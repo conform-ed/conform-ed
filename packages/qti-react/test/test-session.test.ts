@@ -635,4 +635,22 @@ describe("test session store: results reporting", () => {
     expect(statuses).toContainEqual(["ITEM-2", "initial"]);
     expect(statuses).toContainEqual(["ITEM-3", "initial"]);
   });
+
+  test("a session run with a PNP reports its supports on the testResult", () => {
+    const pnp = { keywordTranslation: { xmlLang: "es" } };
+    const controller = createTestController(testView, { seed: 11, pnp });
+    const session = createTestSessionStore(controller, {
+      seed: 11,
+      resolveItem: (ref) => itemsByKey[ref.identifier] ?? null,
+      pnp,
+    });
+
+    session.end();
+
+    const document = session.assessmentResult({ nowMs: 50_000 });
+
+    expect(document.assessmentResult.testResult?.supports).toEqual([
+      { name: "keyword-translation", assignment: "assigned", xmlLang: "es" },
+    ]);
+  });
 });

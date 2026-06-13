@@ -6,6 +6,7 @@
  */
 
 import type { CapabilityIssue } from "../capability";
+import { resolvePnpActivation, type PnpView } from "../pnp";
 import {
   RpUnsupportedError,
   collectExpressionIssues,
@@ -336,6 +337,12 @@ export interface TestControllerOptions {
    * to Date.now.
    */
   readonly now?: (() => number) | undefined;
+  /**
+   * The candidate's AfA PNP. The controller consumes additional-testing-time:
+   * "the durations may be changed depending on the relevant accessibility values
+   * in the Personal Needs & Preferences settings for the learner" (§2.8.5).
+   */
+  readonly pnp?: PnpView | undefined;
 }
 
 export function createTestController(view: AssessmentTestView, options: TestControllerOptions): TestController {
@@ -484,9 +491,42 @@ export function createTestController(view: AssessmentTestView, options: TestCont
     }
   }
 
+  // The accommodation applies only while "additional-testing-time" is active for
+  // the candidate (a prohibit-set entry switches it off).
+  const additionalTestingTime = resolvePnpActivation(options.pnp).active.has("additional-testing-time")
+    ? options.pnp?.additionalTestingTime
+    : undefined;
+
+  /**
+   * The candidate's effective ceiling for a scope: a time-multiplier scales every
+   * declared max-time proportionally (a rate accommodation); fixed-minutes extend
+   * the assessment window (the test scope) by that absolute amount; unlimited
+   * removes ceilings. Minimum times are floors and are never adjusted.
+   */
+  function effectiveMaxTime(scope: TimingScopeRef): number | undefined {
+    if (additionalTestingTime?.unlimited === true) {
+      return undefined;
+    }
+
+    const declared = timeLimitsOf(scope)?.maxTime;
+    if (declared === undefined) {
+      return undefined;
+    }
+
+    if (additionalTestingTime?.timeMultiplier !== undefined) {
+      return declared * additionalTestingTime.timeMultiplier;
+    }
+
+    if (additionalTestingTime?.fixedMinutes !== undefined && scope.kind === "test") {
+      return declared + additionalTestingTime.fixedMinutes * 60;
+    }
+
+    return declared;
+  }
+
   /** "Beyond the max-time" (§7.40.3) is strictly beyond: exactly maxTime is in time. */
   function scopeExpired(state: TestSessionState, scope: TimingScopeRef): boolean {
-    const maxTime = timeLimitsOf(scope)?.maxTime;
+    const maxTime = effectiveMaxTime(scope);
 
     return maxTime !== undefined && secondsOf(state, scope) > maxTime;
   }

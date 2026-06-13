@@ -9,6 +9,7 @@
  * contracts result schema structurally; serialization to XML lives in qti-xml.
  */
 
+import { pnpFeaturePreference, resolvePnpActivation, type PnpView } from "../pnp";
 import type { OutcomeDeclarationView, OutcomeValue } from "../rp";
 import type { ResponseDeclarationView, ResponseValue } from "../types";
 import type { AssessmentTestView, RecordedAttempt, TestPlan, TestPlanItem, TestSessionState } from "./types";
@@ -52,11 +53,23 @@ export interface ItemResultView {
   readonly candidateComment?: string;
 }
 
+/**
+ * RR Support (§2.6.4): a feature "aligned to the QTI profile of the 1EdTech Access
+ * for All Personal Needs and Preferences (AfA PNP)".
+ */
+export interface ResultSupportView {
+  readonly name: string;
+  readonly assignment: "assigned" | "universal" | "prohibited" | "inherit";
+  readonly value?: string;
+  readonly xmlLang?: string;
+}
+
 export interface TestResultView {
   readonly identifier: string;
   readonly datestamp: string;
   readonly responseVariables?: readonly ResultResponseVariableView[];
   readonly outcomeVariables?: readonly ResultOutcomeVariableView[];
+  readonly supports?: readonly ResultSupportView[];
 }
 
 export interface ResultSessionIdentifierView {
@@ -96,10 +109,56 @@ export interface AssessmentResultInput {
   readonly nowMs?: number;
   /** Per-item typing and correct responses; omit (or return null) when unresolvable. */
   readonly itemDetails?: (item: TestPlanItem) => AssessmentResultItemDetails | null;
+  /** The candidate's AfA PNP the session ran with — reported as testResult supports. */
+  readonly pnp?: PnpView | undefined;
 }
 
 function iso(ms: number): string {
   return new Date(ms).toISOString();
+}
+
+/**
+ * The supports the session ran with, from the PNP's activation policy: assigned
+ * features carry their stated detail (language; the additional-testing-time value);
+ * prohibited features carry none — "A value MUST NOT be present when
+ * 'assignment=prohibited'" (RR §2.6.4.3).
+ */
+function pnpSupports(pnp: PnpView | undefined): ResultSupportView[] {
+  if (!pnp) {
+    return [];
+  }
+
+  const activation = resolvePnpActivation(pnp);
+  const names = [...new Set([...activation.active, ...activation.optional, ...activation.prohibited])].sort();
+
+  return names.map((name): ResultSupportView => {
+    if (activation.prohibited.has(name)) {
+      return { name, assignment: "prohibited" };
+    }
+
+    const preference = pnpFeaturePreference(pnp, name);
+    const xmlLang = typeof preference?.["xmlLang"] === "string" ? preference["xmlLang"] : undefined;
+
+    let value: string | undefined;
+    if (name === "additional-testing-time") {
+      const time = pnp.additionalTestingTime;
+      value =
+        time?.unlimited === true
+          ? "unlimited"
+          : time?.timeMultiplier !== undefined
+            ? String(time.timeMultiplier)
+            : time?.fixedMinutes !== undefined
+              ? String(time.fixedMinutes)
+              : undefined;
+    }
+
+    return {
+      name,
+      assignment: "assigned",
+      ...(value !== undefined ? { value } : {}),
+      ...(xmlLang !== undefined ? { xmlLang } : {}),
+    };
+  });
 }
 
 /** Flatten a stored value into result `value` entries (record members keep fields). */
@@ -218,11 +277,13 @@ export function buildAssessmentResult(input: AssessmentResultInput): AssessmentR
       ]
     : [];
   const testOutcomes = outcomeVariablesOf(state.testOutcomes, test.outcomeDeclarations);
+  const supports = pnpSupports(input.pnp);
   const testResult: TestResultView = {
     identifier: test.identifier,
     datestamp: iso(nowMs),
     ...(scopeDurations.length > 0 ? { responseVariables: scopeDurations } : {}),
     ...(testOutcomes.length > 0 ? { outcomeVariables: testOutcomes } : {}),
+    ...(supports.length > 0 ? { supports } : {}),
   };
 
   const itemResults: ItemResultView[] = [];
