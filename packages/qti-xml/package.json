@@ -1,6 +1,6 @@
 {
   "name": "@conform-ed/qti-xml",
-  "version": "0.0.21",
+  "version": "0.0.22",
   "files": [
     "src",
     "dist"
