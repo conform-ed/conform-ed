@@ -1,6 +1,6 @@
 {
   "name": "@conform-ed/contracts",
-  "version": "0.0.20",
+  "version": "0.0.21",
   "type": "module",
   "module": "src/index.ts",
   "exports": {
