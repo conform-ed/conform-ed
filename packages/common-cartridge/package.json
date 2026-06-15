@@ -1,0 +1,29 @@
+{
+  "name": "@conform-ed/common-cartridge",
+  "version": "0.0.20",
+  "files": [
+    "src",
+    "dist"
+  ],
+  "type": "module",
+  "module": "src/index.ts",
+  "exports": {
+    ".": {
+      "development": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "bun build ./src/index.ts --outdir dist --format esm --target node --external @conform-ed/contracts --external @conform-ed/qti-xml --external fflate && tsgo -p tsconfig.build.json",
+    "format": "oxfmt --config ../../.oxfmtrc.jsonc --check .",
+    "lint": "oxlint --config ../../.oxlintrc.jsonc .",
+    "test": "bun test",
+    "typecheck": "tsgo --noEmit"
+  },
+  "dependencies": {
+    "@conform-ed/contracts": "workspace:*",
+    "@conform-ed/qti-xml": "workspace:*",
+    "fflate": "^0.8.3"
+  }
+}

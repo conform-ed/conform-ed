@@ -79,6 +79,15 @@
         "@conform-ed/qti-xml": "workspace:*",
       },
     },
+    "packages/common-cartridge": {
+      "name": "@conform-ed/common-cartridge",
+      "version": "0.0.20",
+      "dependencies": {
+        "@conform-ed/contracts": "workspace:*",
+        "@conform-ed/qti-xml": "workspace:*",
+        "fflate": "^0.8.3",
+      },
+    },
     "packages/contracts": {
       "name": "@conform-ed/contracts",
       "version": "0.0.20",
@@ -194,6 +203,8 @@
     "@conform-ed/cmi5-adapter-reference": ["@conform-ed/cmi5-adapter-reference@workspace:apps/cmi5-adapter-reference"],
 
     "@conform-ed/cmi5-runner": ["@conform-ed/cmi5-runner@workspace:apps/cmi5-runner"],
+
+    "@conform-ed/common-cartridge": ["@conform-ed/common-cartridge@workspace:packages/common-cartridge"],
 
     "@conform-ed/contracts": ["@conform-ed/contracts@workspace:packages/contracts"],
 

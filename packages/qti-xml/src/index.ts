@@ -12,3 +12,4 @@ export * from "./serialize-usage-data";
 export * from "./serialize-asi";
 export * from "./serialize-manifest";
 export * from "./serialize-document";
+export * from "./cc-qti";
