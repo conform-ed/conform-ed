@@ -79,6 +79,12 @@ if (existingTag === version) {
   process.exit(1);
 }
 
+// Build every package so each publishable `dist/` is fresh before publishing. Without this a
+// package whose dist was never built locally (e.g. a brand-new package) ships src-only, leaving
+// its `exports.default`/`types` (which point at dist) dangling for consumers.
+console.log("Building all packages...");
+run(["bun", "run", "build"]);
+
 // --- discover publishable packages -------------------------------------------
 
 function findPublishablePackages(): { dir: string; pkgPath: string; pkg: Record<string, unknown> }[] {
