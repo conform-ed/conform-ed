@@ -229,3 +229,42 @@ export {
   type PnpView,
   type ResolvedCatalogSupport,
 } from "./pnp";
+
+// QTI validation surface (zod mirrors of the assessmentTest/RP views). Also exposed at
+// `@conform-ed/qti-react/headless` for server-side import/parse validation without React.
+export {
+  cardinalitySchema,
+  interpolationTableSchema,
+  matchTableSchema,
+  outcomeDeclarationSchema,
+  rpExpressionSchema,
+  rpScalarSchema,
+  type OutcomeDeclarationSchema,
+  type RpExpressionSchema,
+  type RpScalarSchema,
+} from "./rp/schema";
+export {
+  assessmentItemRefViewSchema,
+  assessmentTestViewSchema,
+  branchRuleSchema,
+  itemSessionControlSchema,
+  makeAssessmentTestSchema,
+  orderingSchema,
+  outcomeConditionBranchSchema,
+  outcomeProcessingSchema,
+  outcomeRuleSchema,
+  selectionSchema,
+  testFeedbackSchema,
+  timeLimitsSchema,
+  type AssessmentItemRefViewSchema,
+  type AssessmentSectionNode,
+  type AssessmentTestNode,
+  type AssessmentTestSchemas,
+  type AssessmentTestViewSchema,
+  type BranchRuleSchema,
+  type ItemSessionControlSchema,
+  type OrderingSchema,
+  type SelectionSchema,
+  type TestPartNode,
+  type TimeLimitsSchema,
+} from "./test/schema";

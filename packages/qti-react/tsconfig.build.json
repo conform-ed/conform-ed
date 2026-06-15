@@ -1,12 +1,14 @@
 {
   "extends": "./tsconfig.json",
+  // No `isolatedDeclarations`: the package now ships zod schemas (the QTI validation
+  // surface), whose types are checker-inferred and cannot be emitted file-by-file. dts is
+  // emitted via the full checker, matching the sibling qti-xml package.
   "compilerOptions": {
     "noEmit": false,
     "declaration": true,
     "emitDeclarationOnly": true,
     "outDir": "dist",
-    "rootDir": "src",
-    "isolatedDeclarations": true
+    "rootDir": "src"
   },
   "include": ["src"]
 }

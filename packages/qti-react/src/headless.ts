@@ -34,12 +34,20 @@ export {
 } from "./rp";
 export type {
   CustomOperatorImplementation,
+  InterpolationTableView,
+  MatchTableView,
+  MaybeRpValue,
   OutcomeDeclarationView,
   OutcomeValue,
   ResponseNormalization,
   ResponseProcessingContext,
   ResponseProcessingResult,
   ResponseProcessingView,
+  RpConditionBranch,
+  RpExpressionView,
+  RpRuleView,
+  RpScalar,
+  RpValue,
   TemplateDeclarationView,
 } from "./rp";
 export { createAttemptStore, type AttemptSnapshot, type AttemptStore, type AttemptStoreOptions } from "./store";
@@ -54,5 +62,45 @@ export type {
   StimulusContentView,
   XmlContentNode,
 } from "./runtime";
-export type { AssessmentTestView } from "./test";
+export type { AssessmentItemRefView, AssessmentSectionView, AssessmentTestView, TestPartView } from "./test";
 export type { Cardinality, ResponseDeclarationView, ResponseValue, ScoreResult } from "./types";
+
+// QTI validation surface (zod mirrors of the views above) — atoms, the recursive
+// rpExpression/outcome schemas, and the structure factory. React-free; reusable for
+// import/parse validation and parameterized for authoring deltas (emergent's itemVersionId).
+export {
+  cardinalitySchema,
+  interpolationTableSchema,
+  matchTableSchema,
+  outcomeDeclarationSchema,
+  rpExpressionSchema,
+  rpScalarSchema,
+  type OutcomeDeclarationSchema,
+  type RpExpressionSchema,
+  type RpScalarSchema,
+} from "./rp/schema";
+export {
+  assessmentItemRefViewSchema,
+  assessmentTestViewSchema,
+  branchRuleSchema,
+  itemSessionControlSchema,
+  makeAssessmentTestSchema,
+  orderingSchema,
+  outcomeConditionBranchSchema,
+  outcomeProcessingSchema,
+  outcomeRuleSchema,
+  selectionSchema,
+  testFeedbackSchema,
+  timeLimitsSchema,
+  type AssessmentItemRefViewSchema,
+  type AssessmentSectionNode,
+  type AssessmentTestNode,
+  type AssessmentTestSchemas,
+  type AssessmentTestViewSchema,
+  type BranchRuleSchema,
+  type ItemSessionControlSchema,
+  type OrderingSchema,
+  type SelectionSchema,
+  type TestPartNode,
+  type TimeLimitsSchema,
+} from "./test/schema";
