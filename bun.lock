@@ -81,7 +81,7 @@
     },
     "packages/common-cartridge": {
       "name": "@conform-ed/common-cartridge",
-      "version": "0.0.22",
+      "version": "0.0.23",
       "dependencies": {
         "@conform-ed/contracts": "workspace:*",
         "@conform-ed/qti-xml": "workspace:*",
@@ -90,7 +90,7 @@
     },
     "packages/contracts": {
       "name": "@conform-ed/contracts",
-      "version": "0.0.22",
+      "version": "0.0.23",
       "devDependencies": {
         "fast-xml-parser": "^5.3.1",
       },
@@ -103,7 +103,7 @@
     },
     "packages/pci-math-entry": {
       "name": "@conform-ed/pci-math-entry",
-      "version": "0.0.22",
+      "version": "0.0.23",
       "dependencies": {
         "@cortex-js/compute-engine": "^0.59.0",
         "mathlive": "^0.110.0",
@@ -121,7 +121,7 @@
     },
     "packages/qti-react": {
       "name": "@conform-ed/qti-react",
-      "version": "0.0.22",
+      "version": "0.0.23",
       "dependencies": {
         "xspattern": "^3.1.0",
       },
@@ -141,7 +141,7 @@
     },
     "packages/qti-xml": {
       "name": "@conform-ed/qti-xml",
-      "version": "0.0.22",
+      "version": "0.0.23",
       "dependencies": {
         "@conform-ed/contracts": "workspace:*",
         "fast-xml-parser": "^5.3.1",
