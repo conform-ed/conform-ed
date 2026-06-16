@@ -138,6 +138,45 @@ describe("response collectors (imperative interactions, e.g. PCI)", () => {
   });
 });
 
+describe("interaction state collectors (PCI getState persistence, ADR-0012)", () => {
+  test("suspend captures each registered collector's state into the snapshot", () => {
+    const store = createAttemptStore(declarations, {});
+
+    expect(store.getSnapshot().interactionStates).toEqual({});
+
+    store.registerStateCollector("RESPONSE", () => JSON.stringify({ taps: 3 }));
+    store.suspend();
+
+    expect(store.getSnapshot().interactionStates["RESPONSE"]).toBe(JSON.stringify({ taps: 3 }));
+  });
+
+  test("a collector returning undefined records no state for that interaction", () => {
+    const store = createAttemptStore(declarations, {});
+
+    store.registerStateCollector("RESPONSE", () => undefined);
+    store.suspend();
+
+    expect(store.getSnapshot().interactionStates).toEqual({});
+  });
+
+  test("initialInteractionStates seeds the snapshot for a resumed session", () => {
+    const store = createAttemptStore(declarations, {}, { initialInteractionStates: { RESPONSE: '{"taps":7}' } });
+
+    // The PCI host reads this as its mount-time `state` to restore the instance.
+    expect(store.getSnapshot().interactionStates["RESPONSE"]).toBe('{"taps":7}');
+  });
+
+  test("unregistering stops a collector from contributing at suspend", () => {
+    const store = createAttemptStore(declarations, {});
+
+    const unregister = store.registerStateCollector("RESPONSE", () => "stale");
+    unregister();
+    store.suspend();
+
+    expect(store.getSnapshot().interactionStates).toEqual({});
+  });
+});
+
 describe("attempt duration (built-in response variable)", () => {
   // QTI: "the duration of the item session as defined by the builtin response
   // variable duration" — wall-clock seconds from session start to submit, under an

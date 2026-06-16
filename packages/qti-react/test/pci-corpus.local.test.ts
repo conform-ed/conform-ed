@@ -7,7 +7,7 @@
 
 import { expect, test } from "bun:test";
 import { existsSync } from "node:fs";
-import { readFile } from "node:fs/promises";
+import { readdir, readFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -17,10 +17,30 @@ import { validateQtiXmlFile } from "@conform-ed/qti-xml";
 
 import { qtiCoreInteractions } from "../src/interactions";
 import { assessmentItemViewFromNormalized } from "../src/normalized-item";
-import { createPciModuleRegistry, createPciSkin, mountPci, portableCustomInteraction } from "../src/pci";
+import {
+  createPackagePciCatalog,
+  createPciModuleRegistry,
+  createPciSkin,
+  mountPci,
+  portableCustomInteraction,
+} from "../src/pci";
 import type { PciInteractionNode } from "../src/pci";
 import { referenceSkin } from "../src/reference-skin";
 import { createQtiRuntime, type BodyNode } from "../src/runtime";
+
+/** Read every file under `root` into a `packageRelativePath → bytes` map (what an unzip yields). */
+async function readPackageFiles(root: string): Promise<Record<string, Uint8Array>> {
+  const files: Record<string, Uint8Array> = {};
+
+  for (const entry of await readdir(root, { recursive: true, withFileTypes: true })) {
+    if (entry.isFile()) {
+      const absolute = path.join(entry.parentPath, entry.name);
+      files[path.relative(root, absolute).split(path.sep).join("/")] = new Uint8Array(await readFile(absolute));
+    }
+  }
+
+  return files;
+}
 
 const corpusRoot = fileURLToPath(new URL("../../../tmp/qti-examples", import.meta.url));
 const packageRoot = path.join(corpusRoot, "qtiv3-examples/packaging/pci-simple/src");
@@ -84,6 +104,43 @@ corpusTest("measuring_ph delivers and its real tap.js module runs the PCI lifecy
 
     (container.querySelector("button.hmh-tap-image") as unknown as { click: () => void }).click();
     expect(handle.collectResponse()).toBe("1");
+
+    handle.unmount();
+  } finally {
+    (globalThis as { document?: unknown }).document = previousDocument;
+  }
+});
+
+corpusTest("the package's module_resolution.js + bytes drive a hash-pinned package catalog", async () => {
+  const result = await validateQtiXmlFile(path.join(packageRoot, "measuring_ph.xml"));
+  const item = assessmentItemViewFromNormalized(result.normalizedDocument)!;
+  const pciNode = findPciNode(item.itemBody.content)!;
+
+  // Build the catalog from the real package (module_resolution.js maps "tap" →
+  // "modules/tap"); the registry loads the module through the catalog's integrity-
+  // checked seam — no manual evaluate(), no separate catalog entry.
+  const files = await readPackageFiles(packageRoot);
+  const catalog = await createPackagePciCatalog(files);
+
+  expect(catalog.has("tap")).toBe(true);
+  expect(catalog.paths["tap"]).toBe("modules/tap.js");
+
+  const registry = createPciModuleRegistry({ paths: catalog.paths, fetchText: catalog.fetchText });
+
+  const window = new Window();
+  const previousDocument = (globalThis as { document?: unknown }).document;
+  (globalThis as { document?: unknown }).document = window.document;
+
+  try {
+    const container = window.document.createElement("div");
+    window.document.body.appendChild(container);
+
+    // resolveModule loads `node.module` ("tap") via registry.load → catalog.fetchText
+    // (allowlist + sha256 verification) → evaluate.
+    const handle = await mountPci({ container: container as unknown as Element, node: pciNode, registry });
+
+    expect(handle.instance.typeIdentifier).toBe("urn:fdc:hmhco.com:pci:tapToReveal");
+    expect(container.querySelectorAll("button.hmh-tap-image").length).toBe(3);
 
     handle.unmount();
   } finally {

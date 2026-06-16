@@ -61,6 +61,15 @@ export interface AttemptSnapshot {
    * applied), keyed by response identifier. The solution state renders these.
    */
   readonly correctResponses: Readonly<Record<string, ResponseValue>>;
+  /**
+   * Per-interaction opaque UI state captured at `suspend()`, keyed by response
+   * identifier — currently the `getState()` of in-progress PCI instances (ADR-0012).
+   * Persist it with the responses; a resumed session re-creates the store with these
+   * as `initialInteractionStates`, and the PCI host re-mounts each instance with its
+   * `state` so in-progress custom interactions survive navigation. Empty when no
+   * interaction holds suspendable state.
+   */
+  readonly interactionStates: Readonly<Record<string, string>>;
 }
 
 /**
@@ -102,6 +111,12 @@ export interface AttemptStoreOptions {
    * submit() refuses while `responseViolations` is non-empty.
    */
   readonly validateResponses?: boolean | undefined;
+  /**
+   * Restore baseline for per-interaction suspendable UI state (a prior session's
+   * `AttemptSnapshot.interactionStates`), keyed by response identifier. The PCI host
+   * reads its entry from the snapshot and re-mounts the instance with that `state`.
+   */
+  readonly initialInteractionStates?: Readonly<Record<string, string>> | undefined;
 }
 
 export interface AttemptStore {
@@ -119,6 +134,13 @@ export interface AttemptStore {
     responseIdentifier: string,
     collector: () => ResponseValue | undefined,
   ) => () => void;
+  /**
+   * Register a `suspend()`-time state collector for an imperative interaction that owns
+   * opaque UI state (PCI `getState()`). On suspend the store pulls every collector into
+   * `AttemptSnapshot.interactionStates`; returning undefined records no state for that
+   * interaction. Returns the unregister function.
+   */
+  readonly registerStateCollector: (responseIdentifier: string, collector: () => string | undefined) => () => void;
   readonly submit: () => readonly ScoreResult[];
   readonly reset: () => void;
   /**
@@ -157,6 +179,8 @@ export function createAttemptStore(
   const declarationsById = new Map(effectiveDeclarations.map((declaration) => [declaration.identifier, declaration]));
   const listeners = new Set<() => void>();
   const responseCollectors = new Map<string, () => ResponseValue | undefined>();
+  const stateCollectors = new Map<string, () => string | undefined>();
+  const initialInteractionStates = options?.initialInteractionStates ?? {};
   // RP's random stream: seed-derived but independent of template processing's, and
   // continuous across attempts — seed + submission sequence replays exact outcomes.
   const rpRandom = mulberry32((seed ^ 0x9e3779b9) >>> 0);
@@ -207,6 +231,7 @@ export function createAttemptStore(
     durationSeconds: null,
     responseViolations: violationsOf(initialResponses),
     correctResponses,
+    interactionStates: { ...initialInteractionStates },
   };
 
   function emit(next: AttemptSnapshot): void {
@@ -289,6 +314,16 @@ export function createAttemptStore(
       };
     },
 
+    registerStateCollector: (responseIdentifier, collector) => {
+      stateCollectors.set(responseIdentifier, collector);
+
+      return () => {
+        if (stateCollectors.get(responseIdentifier) === collector) {
+          stateCollectors.delete(responseIdentifier);
+        }
+      };
+    },
+
     submit: () => {
       if (snapshot.submitted) {
         return snapshot.scores;
@@ -360,6 +395,25 @@ export function createAttemptStore(
         activeMs += now() - runningSinceMs;
         runningSinceMs = null;
       }
+
+      // Capture each imperative interaction's opaque UI state (PCI getState) so a
+      // resumed session can re-mount it. Only collectors that yield a string record
+      // state; an interaction with none leaves its prior entry untouched.
+      if (stateCollectors.size > 0) {
+        let interactionStates = snapshot.interactionStates;
+
+        for (const [responseIdentifier, collector] of stateCollectors) {
+          const state = collector();
+
+          if (state !== undefined) {
+            interactionStates = { ...interactionStates, [responseIdentifier]: state };
+          }
+        }
+
+        if (interactionStates !== snapshot.interactionStates) {
+          emit({ ...snapshot, interactionStates });
+        }
+      }
     },
 
     resume: () => {
@@ -380,6 +434,7 @@ export function createAttemptStore(
         durationSeconds: null,
         responseViolations: violationsOf(initialResponses),
         correctResponses,
+        interactionStates: { ...initialInteractionStates },
       });
     },
   };

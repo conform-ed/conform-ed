@@ -11,20 +11,24 @@ already made live in `docs/adr/`; this file holds the agreed-but-not-started.
   pure checker subpath, org.conform-ed.mathEquivalent operator, MathLive
   module behind lazy import(), harness demo via the install model. Brought
   record responses + fieldValue into qti-react core on the way.
+- **Generic PCI delivery — hash-pinned catalog + `getState` persistence + PCI
+  package module loading** (ADR-0012). `createPciCatalog` (default-deny
+  allowlist + `sha256` integrity over the registry's `paths`/`fetchText` seam);
+  attempt-store `registerStateCollector` / `interactionStates` /
+  `initialInteractionStates` threaded through the runtime + `createPciSkin` for
+  suspend/resume; `createPackagePciCatalog` + `parsePciModuleResolution` for
+  the PCI modules of a self-contained QTI/CC package (corpus-proven on HMH
+  `tap.js`). The emergent consumer opt-in (asset-pipeline-backed tier-2
+  catalog) is designed there, not yet built.
 
 ## Mid-term
 
-1. **Hash-pinned PCI module catalog** (ADR-0007) — platform-authoritative
-   `{ module id → url + integrity }` entries as a policy wrapper over the
-   registry's `load(id, candidates)`/`fetchText` seam. Graduates when a
-   consumer needs to deliver PCI content it didn't install.
-2. **PCI `getState` persistence** — thread PCI state through the session
-   model so suspend/resume restores in-progress custom interactions.
-3. **Review-mode semantics** — enforce `allowReview`/`showSolution`/
+1. **Review-mode semantics** — enforce `allowReview`/`showSolution`/
    `showFeedback` from itemSessionControl in delivery chrome.
-4. **Package/manifest loading** — `imsmanifest.xml` → resolve items, assets,
-   and PCI module declarations from a QTI package zip (CC 1.4 embeds QTI 3
-   packages as resources, so this is also the Common Cartridge entry point).
+2. **Package/manifest loading (items + assets)** — `imsmanifest.xml` → resolve
+   the package's items and asset references from a QTI package zip (the PCI
+   _module_ slice of this landed with ADR-0012). CC 1.4 embeds QTI 3 packages
+   as resources, so this is also the Common Cartridge entry point.
 
 ## Elsewhere
 

@@ -13,6 +13,10 @@ export {
   type PciModuleRegistryOptions,
 } from "./registry";
 
+export { createPciCatalog, type PciCatalog, type PciCatalogEntry, type PciCatalogOptions } from "./catalog";
+
+export { createPackagePciCatalog, parsePciModuleResolution, type PackagePciCatalogOptions } from "./package";
+
 export { serializePciMarkup } from "./markup";
 
 export { mountPci, type PciInteractionNode, type PciMountHandle, type PciMountOptions } from "./mount";

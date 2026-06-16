@@ -182,6 +182,18 @@ export interface InteractionRenderProps {
    */
   registerResponseCollector: (collector: () => ResponseValue | undefined) => () => void;
   /**
+   * The opaque UI state to restore for this interaction (a prior session's captured
+   * PCI `getState()`), or undefined for a fresh start. The PCI host re-mounts its
+   * instance with this `state` (ADR-0012 session resume).
+   */
+  initialState: string | undefined;
+  /**
+   * Register a `suspend()`-time state collector for an imperative interaction that owns
+   * opaque UI state (PCI `getState()`), captured into the persisted session state.
+   * Returns the unregister function.
+   */
+  registerStateCollector: (collector: () => string | undefined) => () => void;
+  /**
    * Render the active catalog supports for a skin-owned node's data-catalog-idref
    * (e.g. a choice label) — the same resolution and presentation the core walk
    * applies to generic flow nodes. Null when nothing is active.
@@ -403,6 +415,7 @@ function createStaticStore(outcomes: Readonly<Record<string, OutcomeValue>>): At
     durationSeconds: null,
     responseViolations: [],
     correctResponses: {},
+    interactionStates: {},
   };
 
   return {
@@ -410,6 +423,7 @@ function createStaticStore(outcomes: Readonly<Record<string, OutcomeValue>>): At
     subscribe: () => () => {},
     setResponse: () => {},
     registerResponseCollector: () => () => {},
+    registerStateCollector: () => () => {},
     submit: () => [],
     reset: () => {},
     suspend: () => {},
@@ -849,6 +863,8 @@ export function createQtiRuntime(config: QtiRuntimeConfig): QtiRuntime {
         store.submit();
       },
       registerResponseCollector: (collector) => store.registerResponseCollector(responseIdentifier, collector),
+      initialState: store.getSnapshot().interactionStates[responseIdentifier],
+      registerStateCollector: (collector) => store.registerStateCollector(responseIdentifier, collector),
     });
   }
 

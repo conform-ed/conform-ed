@@ -1,6 +1,31 @@
 # Generic PCI delivery: hash-pinned module catalog + state persistence
 
-Status: accepted (2026-06-16)
+Status: accepted (2026-06-16) — conform-ed side **built** (2026-06-16)
+
+## Built (conform-ed, all three rungs)
+
+The conform-ed seam is implemented in `@conform-ed/qti-react`; emergent (the named
+consumer) opt-in remains designed-not-built here (see "emergent as the consumer").
+
+- **Rung 1 — hash-pinned catalog.** `createPciCatalog({ entries, fetchBytes? })` →
+  `{ paths, fetchText, has }` (`src/pci/catalog.ts`). Default-deny allowlist + `sha256`
+  integrity (bare hex or SRI `sha256-<base64>`) verified _before_ the registry
+  evaluates. Injected as the registry's existing `paths` + `fetchText`; the registry's
+  `toUrl` was hardened to leave absolute/query-string URLs (vetted catalog + signed
+  asset URLs) verbatim while still appending `.js` to bare AMD module ids.
+- **Rung 2 — `getState` persistence.** The attempt store gained
+  `registerStateCollector` + an `interactionStates` snapshot field + an
+  `initialInteractionStates` restore option (`src/store.ts`); `suspend()` captures each
+  PCI's `getState()`, the runtime threads `initialState` + `registerStateCollector`
+  through `InteractionRenderProps`, and `createPciSkin` mounts with the restored `state`
+  and registers the collector. The test session store's existing per-item
+  suspend/resume drives it end to end with no further change.
+- **Rung 3 — package module loading.** `createPackagePciCatalog(files)` +
+  `parsePciModuleResolution` (`src/pci/package.ts`): a package's `module_resolution.js`
+  is parsed _as data_ (never executed), package-local modules are integrity-pinned to
+  their in-package bytes, and absolute-URL / not-shipped modules are omitted. Proven
+  against the real corpus `pci-simple` (HMH `tap.js`) through the integrity-checked
+  seam.
 
 The PCI host is **built and corpus-proven**. `@conform-ed/qti-react` parses a
 `portableCustomInteraction` node (module, `customInteractionTypeIdentifier`,

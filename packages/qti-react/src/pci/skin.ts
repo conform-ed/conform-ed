@@ -39,6 +39,9 @@ export function createPciSkin(options: PciSkinOptions): InteractionSkin {
         container,
         node: propsRef.current.node as unknown as PciInteractionNode,
         registry: options.registry,
+        // Resume in-progress state captured at a prior suspend (ADR-0012); undefined is
+        // a fresh mount. Read once at mount — the effect runs only on first paint.
+        ...(propsRef.current.initialState !== undefined ? { state: propsRef.current.initialState } : {}),
         ondone: (value) => propsRef.current.setValue(value),
       })
         .then((handle) => {
@@ -65,6 +68,10 @@ export function createPciSkin(options: PciSkinOptions): InteractionSkin {
 
     // The attempt store pulls the instance's response at submit time.
     useEffect(() => propsRef.current.registerResponseCollector(() => handleRef.current?.collectResponse()), []);
+
+    // …and its opaque getState() at suspend time, so a resumed session re-mounts the
+    // instance with its in-progress state (ADR-0012).
+    useEffect(() => propsRef.current.registerStateCollector(() => handleRef.current?.getState()), []);
 
     return createElement(
       "div",

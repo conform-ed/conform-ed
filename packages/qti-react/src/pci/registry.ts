@@ -190,7 +190,12 @@ export function createPciModuleRegistry(options: PciModuleRegistryOptions = {}):
   }
 
   function toUrl(path: string): string {
-    const withExtension = /\.[a-z]+$/iu.test(path) ? path : `${path}.js`;
+    // A bare AMD module id (the `module_resolution.js` convention, e.g. "modules/tap")
+    // gets the conventional `.js`; anything already complete — a file extension, an
+    // absolute URL scheme, or a query/fragment (vetted catalog URLs, signed asset URLs) —
+    // is taken verbatim so the registry requests exactly the string a catalog vetted.
+    const complete = /\.[a-z\d]+$/iu.test(path) || /^[a-z][a-z\d+.-]*:/iu.test(path) || /[?#]/u.test(path);
+    const withExtension = complete ? path : `${path}.js`;
 
     return options.baseUrl ? new URL(withExtension, options.baseUrl).toString() : withExtension;
   }

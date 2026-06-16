@@ -133,13 +133,20 @@ export {
 } from "./runtime";
 
 export {
+  createPackagePciCatalog,
+  createPciCatalog,
   createPciModuleRegistry,
   createPciSkin,
   mountPci,
+  parsePciModuleResolution,
   pciResponseToValue,
   portableCustomInteraction,
   serializePciMarkup,
   valueToPciResponse,
+  type PackagePciCatalogOptions,
+  type PciCatalog,
+  type PciCatalogEntry,
+  type PciCatalogOptions,
   type PciConfiguration,
   type PciInstance,
   type PciInteractionNode,

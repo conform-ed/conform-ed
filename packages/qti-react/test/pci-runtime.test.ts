@@ -100,6 +100,90 @@ describe("PCI capability gate", () => {
   });
 });
 
+// A state-bearing module: getState() serializes the tap count, and getInstance restores
+// it from the `state` argument — the corpus tap.js archetype.
+const statefulSource = `
+define(["qtiCustomInteractionContext"], function (ctx) {
+  var module = {
+    typeIdentifier: "urn:example:pci:counter",
+    getInstance: function (dom, configuration, state) {
+      var instance = Object.create(this);
+      instance._count = state ? JSON.parse(state).count : 0;
+      var button = dom.querySelector("button.count");
+      if (button) { button.addEventListener("click", function () { instance._count += 1; }); }
+      instance.getResponse = function () { return { base: { integer: instance._count } }; };
+      instance.getState = function () { return JSON.stringify({ count: instance._count }); };
+      if (configuration.onready) { configuration.onready(instance); }
+      return instance;
+    },
+  };
+  ctx.register(module);
+  return module;
+});
+`;
+
+// This drives mountPci + the store directly, exactly as createPciSkin's effects do
+// (initialState ← store.getSnapshot().interactionStates[responseIdentifier] → mount
+// `state`; registerStateCollector(() => handle.getState())). The package has no
+// client-render harness, so the skin's glue is verified through the same seam.
+describe("PCI getState persistence through the store (ADR-0012)", () => {
+  test("suspend captures the instance state; a resumed store re-mounts it", async () => {
+    const registry = createPciModuleRegistry();
+    registry.evaluate(statefulSource, { id: "counter" });
+
+    const window = new Window();
+    const firstContainer = window.document.createElement("div");
+    window.document.body.appendChild(firstContainer);
+
+    // First session: mount fresh (no prior state), interact, then suspend.
+    const store = createAttemptStore(item.responseDeclarations, {}, { outcomeDeclarations: item.outcomeDeclarations });
+    const initialState = store.getSnapshot().interactionStates["RESPONSE"];
+    expect(initialState).toBeUndefined();
+
+    const first = await mountPci({
+      container: firstContainer as unknown as Element,
+      node: pciNode,
+      registry,
+      ...(initialState !== undefined ? { state: initialState } : {}),
+    });
+    store.registerStateCollector("RESPONSE", () => first.getState());
+
+    const button = firstContainer.querySelector("button.count") as unknown as { click: () => void };
+    button.click();
+    button.click();
+    button.click();
+
+    store.suspend();
+    first.unmount();
+
+    const captured = store.getSnapshot().interactionStates["RESPONSE"];
+    expect(captured).toBe(JSON.stringify({ count: 3 }));
+
+    // Resume: a store re-created from the persisted snapshot seeds the restore state,
+    // and the re-mounted instance comes back with its in-progress count.
+    const resumed = createAttemptStore(
+      item.responseDeclarations,
+      {},
+      { outcomeDeclarations: item.outcomeDeclarations, initialInteractionStates: { RESPONSE: captured! } },
+    );
+    const secondContainer = window.document.createElement("div");
+    window.document.body.appendChild(secondContainer);
+
+    const restoreState = resumed.getSnapshot().interactionStates["RESPONSE"];
+    expect(restoreState).toBe(captured!);
+
+    const second = await mountPci({
+      container: secondContainer as unknown as Element,
+      node: pciNode,
+      registry,
+      ...(restoreState !== undefined ? { state: restoreState } : {}),
+    });
+
+    expect(second.collectResponse()).toBe("3");
+    second.unmount();
+  });
+});
+
 describe("PCI scoring through the response collector", () => {
   test("submit pulls the instance response and runs response processing", async () => {
     const registry = createPciModuleRegistry();
