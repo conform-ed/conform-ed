@@ -18,6 +18,7 @@ export { effectiveItemScore, type EffectiveItemScore } from "./item-score";
 
 export {
   assessmentItemViewFromNormalized,
+  assessmentTestDocumentFromView,
   assessmentTestViewFromNormalized,
   stimulusContentFromNormalized,
 } from "./normalized-item";

@@ -14,6 +14,7 @@
 
 export {
   assessmentItemViewFromNormalized,
+  assessmentTestDocumentFromView,
   assessmentTestViewFromNormalized,
   stimulusContentFromNormalized,
 } from "./normalized-item";

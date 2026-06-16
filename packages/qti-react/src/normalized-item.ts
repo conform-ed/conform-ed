@@ -663,3 +663,224 @@ export function assessmentTestViewFromNormalized(document: unknown): AssessmentT
       : {}),
   };
 }
+
+// ===========================================================================
+// assessmentTest VIEW → normalized DOCUMENT — the inverse of the projection above.
+//
+// `assessmentTestViewFromNormalized` is one-way; an authoring system that holds a view (or a
+// view-shaped authoring structure) cannot serialize it without re-deriving the document field
+// names. This is that inverse, exactly mirroring the `convert*` reshapes (children↔expressions,
+// actions↔rules, assessmentSections↔children, category↔categories, the preCondition `{expression}`
+// wrapper, dropped `kind` discriminators), so `serializeQtiAssessmentTest` can consume the result.
+// Proven by view→document→view idempotence over the corpus (normalized-test-document.test.ts).
+//
+// Scope: the structural assessmentTest surface an authoring system produces (parts, sections,
+// itemRefs, conditions over the RP expression union, test outcomes/processing, test feedback).
+// Item-level response/template processing and interaction content are item-document concerns,
+// not assessmentTest ones, so the content inverse here handles non-interactive feedback content.
+// ===========================================================================
+
+const reverseContentKindRenames: Readonly<Record<string, string>> = {
+  hottextInteraction: "hotTextInteraction",
+  hottext: "hotText",
+};
+
+function expressionToDocument(expression: unknown): Record<string, unknown> {
+  const record = isRecord(expression) ? expression : {};
+  const { expressions, ...rest } = record;
+
+  return {
+    ...rest,
+    ...(Array.isArray(expressions) ? { children: expressions.map(expressionToDocument) } : {}),
+  };
+}
+
+// View preConditions are bare expressions; the document wraps each in `{ expression }`.
+function preConditionsToDocument(value: readonly unknown[]): Record<string, unknown>[] {
+  return value.map((expression) => ({ expression: expressionToDocument(expression) }));
+}
+
+function branchRulesToDocument(value: readonly unknown[]): Record<string, unknown>[] {
+  return asRecords(value).map((rule) => ({
+    ...(typeof rule["target"] === "string" ? { target: rule["target"] } : {}),
+    expression: expressionToDocument(rule["expression"]),
+  }));
+}
+
+// View condition branch `{ expression, rules }` → document `{ expression, actions }`.
+function outcomeBranchToDocument(branch: unknown): Record<string, unknown> {
+  const record = isRecord(branch) ? branch : {};
+  return {
+    expression: expressionToDocument(record["expression"]),
+    actions: asRecords(record["rules"]).map(outcomeRuleToDocument),
+  };
+}
+
+function outcomeRuleToDocument(rule: unknown): Record<string, unknown> {
+  const record = isRecord(rule) ? rule : {};
+  const kind = typeof record["kind"] === "string" ? record["kind"] : "";
+
+  if (kind === "outcomeCondition") {
+    const elseIfs = asRecords(record["outcomeElseIfs"]).map(outcomeBranchToDocument);
+
+    return {
+      kind,
+      outcomeIf: outcomeBranchToDocument(record["outcomeIf"]),
+      ...(elseIfs.length ? { outcomeElseIf: elseIfs } : {}),
+      ...(isRecord(record["outcomeElse"])
+        ? { outcomeElse: { actions: asRecords(record["outcomeElse"]["rules"]).map(outcomeRuleToDocument) } }
+        : {}),
+    };
+  }
+
+  if (kind === "outcomeProcessingFragment") {
+    return { kind, rules: asRecords(record["rules"]).map(outcomeRuleToDocument) };
+  }
+
+  return {
+    kind,
+    ...(typeof record["identifier"] === "string" ? { identifier: record["identifier"] } : {}),
+    ...(record["expression"] !== undefined ? { expression: expressionToDocument(record["expression"]) } : {}),
+  };
+}
+
+function contentNodeToDocument(node: Record<string, unknown>): Record<string, unknown> {
+  const kind = node["kind"];
+  if (typeof kind === "string" && reverseContentKindRenames[kind] !== undefined) {
+    return { ...node, kind: reverseContentKindRenames[kind] };
+  }
+  return node;
+}
+
+// Inverse of `convertContentEntry`: a `{ kind: "text", value }` node in a children/content
+// array was a bare string in the document.
+function contentEntryToDocument(entry: unknown): unknown {
+  if (isRecord(entry) && entry["kind"] === "text" && typeof entry["value"] === "string") {
+    return entry["value"];
+  }
+  return contentValueToDocument(entry);
+}
+
+function contentValueToDocument(value: unknown): unknown {
+  if (Array.isArray(value)) {
+    return value.map(contentValueToDocument);
+  }
+  if (!isRecord(value)) {
+    return value;
+  }
+
+  const node = contentNodeToDocument(value);
+  return Object.fromEntries(
+    Object.entries(node).map(([key, entry]) =>
+      (key === "children" || key === "content") && Array.isArray(entry)
+        ? [key, entry.map(contentEntryToDocument)]
+        : [key, contentValueToDocument(entry)],
+    ),
+  );
+}
+
+function structureConditionsToDocument(record: Record<string, unknown>): Record<string, unknown> {
+  return {
+    ...(Array.isArray(record["preConditions"])
+      ? { preConditions: preConditionsToDocument(record["preConditions"]) }
+      : {}),
+    ...(Array.isArray(record["branchRules"]) ? { branchRules: branchRulesToDocument(record["branchRules"]) } : {}),
+    ...(isRecord(record["itemSessionControl"]) ? { itemSessionControl: record["itemSessionControl"] } : {}),
+    ...(isRecord(record["timeLimits"]) ? { timeLimits: record["timeLimits"] } : {}),
+  };
+}
+
+function itemRefToDocument(ref: Record<string, unknown>): Record<string, unknown> {
+  return {
+    ...(typeof ref["identifier"] === "string" ? { identifier: ref["identifier"] } : {}),
+    ...(typeof ref["href"] === "string" ? { href: ref["href"] } : {}),
+    // The view pluralises `category` → `categories`.
+    ...(Array.isArray(ref["categories"]) ? { category: ref["categories"] } : {}),
+    ...(typeof ref["fixed"] === "boolean" ? { fixed: ref["fixed"] } : {}),
+    ...(typeof ref["required"] === "boolean" ? { required: ref["required"] } : {}),
+    ...structureConditionsToDocument(ref),
+    ...(Array.isArray(ref["weights"]) ? { weights: ref["weights"] } : {}),
+    ...(Array.isArray(ref["templateDefaults"])
+      ? {
+          templateDefaults: asRecords(ref["templateDefaults"]).map((entry) => ({
+            ...(typeof entry["templateIdentifier"] === "string"
+              ? { templateIdentifier: entry["templateIdentifier"] }
+              : {}),
+            expression: expressionToDocument(entry["expression"]),
+          })),
+        }
+      : {}),
+  };
+}
+
+function sectionChildToDocument(child: Record<string, unknown>): Record<string, unknown> {
+  return child["kind"] === "assessmentSection" ? sectionToDocument(child) : itemRefToDocument(child);
+}
+
+function sectionToDocument(section: Record<string, unknown>): Record<string, unknown> {
+  const identifier = typeof section["identifier"] === "string" ? section["identifier"] : "";
+
+  return {
+    identifier,
+    // `title` and `visible` are required in the document (optional in the view); fall back to
+    // the QTI defaults (identifier as a non-empty title; visible sections).
+    title: typeof section["title"] === "string" ? section["title"] : identifier,
+    visible: typeof section["visible"] === "boolean" ? section["visible"] : true,
+    ...(typeof section["fixed"] === "boolean" ? { fixed: section["fixed"] } : {}),
+    ...(typeof section["required"] === "boolean" ? { required: section["required"] } : {}),
+    ...(typeof section["keepTogether"] === "boolean" ? { keepTogether: section["keepTogether"] } : {}),
+    ...(isRecord(section["selection"]) ? { selection: section["selection"] } : {}),
+    ...(isRecord(section["ordering"]) ? { ordering: section["ordering"] } : {}),
+    ...structureConditionsToDocument(section),
+    children: asRecords(section["children"]).map(sectionChildToDocument),
+  };
+}
+
+function testPartToDocument(part: Record<string, unknown>): Record<string, unknown> {
+  return {
+    ...(typeof part["identifier"] === "string" ? { identifier: part["identifier"] } : {}),
+    ...(typeof part["navigationMode"] === "string" ? { navigationMode: part["navigationMode"] } : {}),
+    ...(typeof part["submissionMode"] === "string" ? { submissionMode: part["submissionMode"] } : {}),
+    ...structureConditionsToDocument(part),
+    // The view names a part's sections `assessmentSections`; the document nests them under `children`.
+    children: asRecords(part["assessmentSections"]).map(sectionToDocument),
+  };
+}
+
+function testFeedbackToDocument(feedback: Record<string, unknown>): Record<string, unknown> {
+  return {
+    ...(typeof feedback["access"] === "string" ? { access: feedback["access"] } : {}),
+    ...(typeof feedback["outcomeIdentifier"] === "string" ? { outcomeIdentifier: feedback["outcomeIdentifier"] } : {}),
+    ...(typeof feedback["identifier"] === "string" ? { identifier: feedback["identifier"] } : {}),
+    ...(typeof feedback["showHide"] === "string" ? { showHide: feedback["showHide"] } : {}),
+    ...(Array.isArray(feedback["content"]) ? { content: feedback["content"].map(contentEntryToDocument) } : {}),
+  };
+}
+
+/**
+ * Project an `AssessmentTestView` back to the normalized `qti-assessment-test` document
+ * `serializeQtiAssessmentTest` consumes — the inverse of `assessmentTestViewFromNormalized`.
+ * Authoring systems that hold a view (or a view-shaped authoring structure) use this to export
+ * QTI XML without re-implementing the serializer.
+ */
+export function assessmentTestDocumentFromView(view: AssessmentTestView): unknown {
+  const test = view as unknown as Record<string, unknown>;
+  const outcomeDeclarations = Array.isArray(test["outcomeDeclarations"]) ? test["outcomeDeclarations"] : [];
+  const outcomeProcessing = isRecord(test["outcomeProcessing"]) ? test["outcomeProcessing"] : undefined;
+
+  return {
+    assessmentTest: {
+      ...(typeof test["identifier"] === "string" ? { identifier: test["identifier"] } : {}),
+      ...(typeof test["title"] === "string" ? { title: test["title"] } : {}),
+      ...(outcomeDeclarations.length ? { outcomeDeclarations } : {}),
+      ...(isRecord(test["timeLimits"]) ? { timeLimits: test["timeLimits"] } : {}),
+      testParts: asRecords(test["testParts"]).map(testPartToDocument),
+      ...(outcomeProcessing
+        ? { outcomeProcessing: { rules: asRecords(outcomeProcessing["rules"]).map(outcomeRuleToDocument) } }
+        : {}),
+      ...(Array.isArray(test["testFeedbacks"])
+        ? { testFeedbacks: asRecords(test["testFeedbacks"]).map(testFeedbackToDocument) }
+        : {}),
+    },
+  };
+}
