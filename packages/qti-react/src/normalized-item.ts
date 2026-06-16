@@ -43,6 +43,7 @@ import type {
   BranchRuleView,
   ItemSessionControlView,
   OutcomeRuleView,
+  RubricBlockView,
   TestFeedbackView,
   TestPartView,
   TimeLimitsView,
@@ -607,6 +608,7 @@ function convertSection(section: Record<string, unknown>): AssessmentSectionView
       : {}),
     ...(section["branchRules"] !== undefined ? { branchRules: convertBranchRules(section["branchRules"]) } : {}),
     ...sessionControlAndTimeLimits(section),
+    ...rubricBlocksView(section),
     children,
   };
 }
@@ -623,6 +625,19 @@ function convertTestFeedback(feedback: Record<string, unknown>): TestFeedbackVie
       : {}),
     ...(Array.isArray(converted["content"]) ? { content: converted["content"] as BodyNode[] } : {}),
   };
+}
+
+// A rubric block round-trips structurally: only its `content` body needs the document↔view
+// content reshape; every other field (`view`, `use`, `printedVariable`, `catalogInfo`, …) passes
+// through `convertContentValue`/`contentValueToDocument` (which are inverses) unchanged.
+function convertRubricBlock(block: Record<string, unknown>): RubricBlockView {
+  return convertContentValue(block) as unknown as RubricBlockView;
+}
+
+function rubricBlocksView(record: Record<string, unknown>): { rubricBlocks?: readonly RubricBlockView[] } {
+  return Array.isArray(record["rubricBlocks"])
+    ? { rubricBlocks: asRecords(record["rubricBlocks"]).map(convertRubricBlock) }
+    : {};
 }
 
 /**
@@ -646,6 +661,7 @@ export function assessmentTestViewFromNormalized(document: unknown): AssessmentT
     ...(part["preConditions"] !== undefined ? { preConditions: convertPreConditions(part["preConditions"]) } : {}),
     ...(part["branchRules"] !== undefined ? { branchRules: convertBranchRules(part["branchRules"]) } : {}),
     ...sessionControlAndTimeLimits(part),
+    ...rubricBlocksView(part),
     assessmentSections: asRecords(part["children"]).map(convertSection),
   }));
 
@@ -654,6 +670,7 @@ export function assessmentTestViewFromNormalized(document: unknown): AssessmentT
     ...(typeof testDocument["title"] === "string" ? { title: testDocument["title"] } : {}),
     outcomeDeclarations: (testDocument["outcomeDeclarations"] as OutcomeDeclarationView[] | undefined) ?? [],
     ...(isRecord(testDocument["timeLimits"]) ? { timeLimits: testDocument["timeLimits"] as TimeLimitsView } : {}),
+    ...rubricBlocksView(testDocument),
     testParts,
     ...(Array.isArray(outcomeRules)
       ? { outcomeProcessing: { rules: outcomeRules.map(convertOutcomeRule) as unknown as readonly OutcomeRuleView[] } }
@@ -779,6 +796,19 @@ function contentValueToDocument(value: unknown): unknown {
   );
 }
 
+// Inverse of `convertRubricBlock`: reshape the content body back to the document form and ensure
+// the `testRubricBlock` discriminator the serializer reads (an authoring view may omit it).
+function rubricBlockToDocument(block: unknown): Record<string, unknown> {
+  const record = contentValueToDocument(block);
+  return { ...(isRecord(record) ? record : {}), kind: "testRubricBlock" };
+}
+
+function rubricBlocksToDocument(record: Record<string, unknown>): { rubricBlocks?: Record<string, unknown>[] } {
+  return Array.isArray(record["rubricBlocks"])
+    ? { rubricBlocks: record["rubricBlocks"].map(rubricBlockToDocument) }
+    : {};
+}
+
 function structureConditionsToDocument(record: Record<string, unknown>): Record<string, unknown> {
   return {
     ...(Array.isArray(record["preConditions"])
@@ -832,6 +862,7 @@ function sectionToDocument(section: Record<string, unknown>): Record<string, unk
     ...(isRecord(section["selection"]) ? { selection: section["selection"] } : {}),
     ...(isRecord(section["ordering"]) ? { ordering: section["ordering"] } : {}),
     ...structureConditionsToDocument(section),
+    ...rubricBlocksToDocument(section),
     children: asRecords(section["children"]).map(sectionChildToDocument),
   };
 }
@@ -842,6 +873,7 @@ function testPartToDocument(part: Record<string, unknown>): Record<string, unkno
     ...(typeof part["navigationMode"] === "string" ? { navigationMode: part["navigationMode"] } : {}),
     ...(typeof part["submissionMode"] === "string" ? { submissionMode: part["submissionMode"] } : {}),
     ...structureConditionsToDocument(part),
+    ...rubricBlocksToDocument(part),
     // The view names a part's sections `assessmentSections`; the document nests them under `children`.
     children: asRecords(part["assessmentSections"]).map(sectionToDocument),
   };
@@ -874,6 +906,7 @@ export function assessmentTestDocumentFromView(view: AssessmentTestView): unknow
       ...(typeof test["title"] === "string" ? { title: test["title"] } : {}),
       ...(outcomeDeclarations.length ? { outcomeDeclarations } : {}),
       ...(isRecord(test["timeLimits"]) ? { timeLimits: test["timeLimits"] } : {}),
+      ...rubricBlocksToDocument(test),
       testParts: asRecords(test["testParts"]).map(testPartToDocument),
       ...(outcomeProcessing
         ? { outcomeProcessing: { rules: asRecords(outcomeProcessing["rules"]).map(outcomeRuleToDocument) } }

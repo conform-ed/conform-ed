@@ -131,6 +131,19 @@ export const testFeedbackSchema = z.object({
 
 export type TestFeedbackSchema = z.infer<typeof testFeedbackSchema>;
 
+/**
+ * `rubricBlock` (§4.2.4) — view-restricted rich content at test/part/section level. The `view`
+ * audiences are mirrored; `content` is accepted opaquely (the item runtime's BodyNode model, not
+ * authored at the test level), exactly like `testFeedback`.
+ */
+export const rubricBlockSchema = z.object({
+  view: z.array(z.string().trim().min(1)).min(1),
+  use: z.string().optional(),
+  content: z.array(z.unknown()).optional(),
+});
+
+export type RubricBlockSchema = z.infer<typeof rubricBlockSchema>;
+
 // ---------- The delivery itemRef (href identity) ----------
 
 /** The delivery `assessmentItemRef` (`href` identity) — the ready view itemRef. */
@@ -163,6 +176,7 @@ const assessmentSectionFlags = {
   branchRules: z.array(branchRuleSchema).optional(),
   itemSessionControl: itemSessionControlSchema.optional(),
   timeLimits: timeLimitsSchema.optional(),
+  rubricBlocks: z.array(rubricBlockSchema).optional(),
 } as const;
 
 const testPartLevel = {
@@ -170,6 +184,7 @@ const testPartLevel = {
   branchRules: z.array(branchRuleSchema).optional(),
   itemSessionControl: itemSessionControlSchema.optional(),
   timeLimits: timeLimitsSchema.optional(),
+  rubricBlocks: z.array(rubricBlockSchema).optional(),
 } as const;
 
 /**
@@ -192,6 +207,7 @@ export interface AssessmentSectionNode<TItemRef> {
   readonly branchRules?: readonly BranchRuleSchema[] | undefined;
   readonly itemSessionControl?: ItemSessionControlSchema | undefined;
   readonly timeLimits?: TimeLimitsSchema | undefined;
+  readonly rubricBlocks?: readonly RubricBlockSchema[] | undefined;
   readonly children: ReadonlyArray<AssessmentSectionNode<TItemRef> | TItemRef>;
 }
 
@@ -204,6 +220,7 @@ export interface TestPartNode<TItemRef> {
   readonly branchRules?: readonly BranchRuleSchema[] | undefined;
   readonly itemSessionControl?: ItemSessionControlSchema | undefined;
   readonly timeLimits?: TimeLimitsSchema | undefined;
+  readonly rubricBlocks?: readonly RubricBlockSchema[] | undefined;
   readonly assessmentSections: readonly AssessmentSectionNode<TItemRef>[];
 }
 
@@ -213,6 +230,7 @@ export interface AssessmentTestNode<TItemRef> {
   readonly title?: string | undefined;
   readonly outcomeDeclarations?: readonly OutcomeDeclarationSchema[] | undefined;
   readonly timeLimits?: TimeLimitsSchema | undefined;
+  readonly rubricBlocks?: readonly RubricBlockSchema[] | undefined;
   readonly testParts: readonly TestPartNode<TItemRef>[];
   readonly outcomeProcessing?: OutcomeProcessingSchema | undefined;
   readonly testFeedbacks?: readonly TestFeedbackSchema[] | undefined;
@@ -256,6 +274,7 @@ export function makeAssessmentTestSchema<ItemRef extends z.ZodType>(
     title: z.string().trim().min(1).optional(),
     outcomeDeclarations: z.array(outcomeDeclarationSchema).optional(),
     timeLimits: timeLimitsSchema.optional(),
+    rubricBlocks: z.array(rubricBlockSchema).optional(),
     testParts: z.array(testPartSchema),
     outcomeProcessing: outcomeProcessingSchema.optional(),
     testFeedbacks: z.array(testFeedbackSchema).optional(),

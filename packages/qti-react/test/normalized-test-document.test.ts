@@ -14,8 +14,8 @@ import { assessmentTestDocumentFromView, assessmentTestViewFromNormalized } from
  * expressions, actions↔rules, assessmentSections↔children, category↔categories, the
  * preCondition wrapper, dropped `kind`), and that the emitted XML is valid QTI.
  *
- * (Rubric blocks live outside the test view — `assessmentTestViewFromNormalized` does not read
- * them — so a source test's rubric blocks are absent on both sides; idempotence is unaffected.)
+ * Rubric blocks (test/part/section, §4.2.4) are carried on the view, so they round-trip too: a
+ * source test's rubric blocks survive view → document → XML → view unchanged.
  */
 
 async function assertViewRoundTrips(xml: string): Promise<void> {
@@ -102,4 +102,50 @@ corpusTest("view→document→view is idempotent across the official tests/ corp
     checked += 1;
   }
   expect(checked).toBeGreaterThan(0);
+});
+
+// A test carrying rubric blocks at test and section level — proves they survive the round trip
+// (they used to be dropped by `assessmentTestViewFromNormalized`).
+const RUBRIC_TEST_XML = `<?xml version="1.0" encoding="UTF-8"?>
+<qti-assessment-test xmlns="http://www.imsglobal.org/xsd/imsqtiasi_v3p0" identifier="RUBRIC-01" title="Rubric test">
+    <qti-rubric-block view="candidate">
+        <qti-content-body><p>Read every question carefully.</p></qti-content-body>
+    </qti-rubric-block>
+    <qti-test-part identifier="part-1" navigation-mode="nonlinear" submission-mode="simultaneous">
+        <qti-assessment-section identifier="section-1" title="Section one" visible="true">
+            <qti-rubric-block view="scorer" use="scoring">
+                <qti-content-body><p>Award one mark per correct answer.</p></qti-content-body>
+            </qti-rubric-block>
+            <qti-assessment-item-ref identifier="ref-1" href="items/q1.xml"/>
+        </qti-assessment-section>
+    </qti-test-part>
+</qti-assessment-test>`;
+
+test("rubric blocks at test and section level round-trip through the view", async () => {
+  await assertViewRoundTrips(RUBRIC_TEST_XML);
+
+  const view = assessmentTestViewFromNormalized((await validateQtiXmlContent(RUBRIC_TEST_XML)).normalizedDocument);
+  expect(view?.rubricBlocks?.[0]?.view).toEqual(["candidate"]);
+  expect(view?.testParts[0]?.assessmentSections[0]?.rubricBlocks?.[0]?.view).toEqual(["scorer"]);
+});
+
+test("an authored view (no kind discriminator) serializes its rubric blocks to valid QTI", async () => {
+  const view = {
+    identifier: "authored-rubric",
+    title: "Authored rubric",
+    rubricBlocks: [{ view: ["candidate"], content: [{ kind: "xml", name: "p", children: ["Read carefully."] }] }],
+    testParts: [
+      {
+        identifier: "p1",
+        navigationMode: "nonlinear" as const,
+        submissionMode: "simultaneous" as const,
+        assessmentSections: [{ kind: "assessmentSection" as const, identifier: "s1", children: [] }],
+      },
+    ],
+  };
+
+  const xml = serializeQtiAssessmentTest(assessmentTestDocumentFromView(view as never));
+  expect(xml).toContain("qti-rubric-block");
+  expect(xml).toContain("Read carefully.");
+  expect((await validateQtiXmlContent(xml)).status).toBe("valid");
 });

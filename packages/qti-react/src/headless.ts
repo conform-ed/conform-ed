@@ -63,7 +63,13 @@ export type {
   StimulusContentView,
   XmlContentNode,
 } from "./runtime";
-export type { AssessmentItemRefView, AssessmentSectionView, AssessmentTestView, TestPartView } from "./test";
+export type {
+  AssessmentItemRefView,
+  AssessmentSectionView,
+  AssessmentTestView,
+  RubricBlockView,
+  TestPartView,
+} from "./test";
 export type { Cardinality, ResponseDeclarationView, ResponseValue, ScoreResult } from "./types";
 
 // QTI validation surface (zod mirrors of the views above) — atoms, the recursive
@@ -90,6 +96,7 @@ export {
   outcomeConditionBranchSchema,
   outcomeProcessingSchema,
   outcomeRuleSchema,
+  rubricBlockSchema,
   selectionSchema,
   testFeedbackSchema,
   timeLimitsSchema,
@@ -101,6 +108,7 @@ export {
   type BranchRuleSchema,
   type ItemSessionControlSchema,
   type OrderingSchema,
+  type RubricBlockSchema,
   type SelectionSchema,
   type TestPartNode,
   type TimeLimitsSchema,

@@ -90,6 +90,7 @@ export interface AssessmentSectionView {
   readonly branchRules?: readonly BranchRuleView[];
   readonly itemSessionControl?: ItemSessionControlView;
   readonly timeLimits?: TimeLimitsView;
+  readonly rubricBlocks?: readonly RubricBlockView[];
   readonly children: ReadonlyArray<AssessmentSectionView | AssessmentItemRefView>;
 }
 
@@ -101,6 +102,7 @@ export interface TestPartView {
   readonly branchRules?: readonly BranchRuleView[];
   readonly itemSessionControl?: ItemSessionControlView;
   readonly timeLimits?: TimeLimitsView;
+  readonly rubricBlocks?: readonly RubricBlockView[];
   readonly assessmentSections: readonly AssessmentSectionView[];
 }
 
@@ -109,6 +111,18 @@ export interface TestFeedbackView {
   readonly outcomeIdentifier: string;
   readonly identifier: string;
   readonly showHide?: "show" | "hide";
+  readonly content?: readonly BodyNode[];
+}
+
+/**
+ * A rubric block (§4.2.4) carried on the test/part/section view: view-restricted rich content
+ * (instructions, scoring guidance) shown to the audiences named in `view`. The block round-trips
+ * structurally — any node fields beyond these (printedVariable, stylesheets, catalogInfo) pass
+ * through the content converter unchanged.
+ */
+export interface RubricBlockView {
+  readonly view: readonly string[];
+  readonly use?: string;
   readonly content?: readonly BodyNode[];
 }
 
@@ -137,6 +151,7 @@ export interface AssessmentTestView {
   readonly title?: string;
   readonly outcomeDeclarations?: readonly OutcomeDeclarationView[];
   readonly timeLimits?: TimeLimitsView;
+  readonly rubricBlocks?: readonly RubricBlockView[];
   readonly testParts: readonly TestPartView[];
   readonly outcomeProcessing?: { readonly rules: readonly OutcomeRuleView[] };
   readonly testFeedbacks?: readonly TestFeedbackView[];
