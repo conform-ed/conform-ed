@@ -70,7 +70,7 @@ the `Norm.` column counts the keys each map's `specRefOverrides` moved into `nor
 | `qti-v2.1`              | XSD         | 4971  | 186      | 385         | 64         | 12    | 3          |
 | `qti-v2.2`              | XSD         | 5378  | 208      | 541         | 78         | 14    | 3          |
 | `qti-v3.0.1`            | XSD         | 5344  | 224      | 358         | 78         | 12    | 2          |
-| `oneroster-v1.2`        | OpenAPI     | 410   | 248      | 0           | 0          | 0     | 5          |
+| `oneroster-v1.2`        | OpenAPI     | 410   | 248      | 0           | 0          | 0     | 12         |
 
 - **Open Badges 3.0 / CLR 2.0** share the OB/VC credential machinery; **CASE 1.1** (all
   13 entity schemas) reconciles `0/0`.
@@ -137,7 +137,12 @@ schema-validation requirement OB-ISS-8). The Badge Connect API **transport** req
 (endpoints, OAuth, pagination) are a separate surface with no L1 item in the data-model map and
 await an OpenAPI binding map. **CLR 2.0** is curated the same way (14 requirements across the
 same three roles; it shares OB's credential stack, so the displayer/host shapes match,
-`cited` 7/40). The remaining maps' catalogs are grounded **seeds** pending the same per-guide
+`cited` 7/40). **OneRoster 1.2** is curated by its four certified service modes (rostering /
+gradebook / resources / assessment-results, 12 requirements): the per-entity stable-identity
+rules (every object carries sourcedId + status + dateLastModified) cross-link the schema's own
+MUSTs across every service, so `cited` reaches 38/48 — the REST/CSV transport conformance
+(endpoints, OAuth, query mechanisms) is the out-of-scope surface a future OpenAPI-paths walker
+would model. The remaining maps' catalogs are grounded **seeds** pending the same per-guide
 curation.
 
 ### Rollout (emergent ADR-0028)

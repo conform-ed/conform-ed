@@ -50,15 +50,18 @@ describe("OneRoster 1.2 Coverage Map — OpenAPI walker, all three services", ()
     for (const edge of map.edges) expect(keys.has(edge.to)).toBe(true);
   });
 
-  test("conformance requirements span rostering, gradebook and resources profiles", () => {
+  test("the curated catalogue spans all four certified service modes", () => {
     const keys = new Set(map.items.map((i) => i.key));
-    expect(map.rollup.conformanceRequirements).toBe(5);
+    expect(map.rollup.conformanceRequirements).toBe(12);
     const profiles = new Set(map.conformance.map((r) => r.profile));
-    expect(profiles).toEqual(new Set(["rostering", "gradebook", "resources"]));
+    expect(profiles).toEqual(new Set(["rostering", "gradebook", "resources", "assessment-results"]));
     for (const req of map.conformance) {
       expect(req.constrains.length).toBeGreaterThan(0);
       for (const key of req.constrains) expect(keys.has(key)).toBe(true);
     }
+    // The per-entity stable-identity requirements cross-link the schema's own sourcedId/
+    // status/dateLastModified MUSTs across every service, so coverage is substantial.
+    expect(map.rollup.normativeStatementsCited).toBeGreaterThanOrEqual(30);
   });
 
   test("the committed map is in sync with the generator", () => {

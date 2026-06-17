@@ -52,10 +52,25 @@ const binding = (component: string, service: string, zod: SpecBindingSource["zod
 });
 
 /**
- * Conformance seed — a grounded slice of OneRoster 1.2 normative rules across the three
- * services, cross-linked to the literal L1 items they constrain. Requirement ids
- * synthesised (`OR-n`); full extraction from the published 1EdTech OneRoster 1.2
- * conformance & certification guide is the next hand-curation increment.
+ * Conformance catalogue — curated from the published 1EdTech OneRoster 1.2 Conformance &
+ * Certification guide (https://www.imsglobal.org/spec/oneroster/v1p2/cert/), which has no
+ * machine source. OneRoster certifies by operational MODE, used here as profiles: `rostering`
+ * (the base service — orgs/users/classes/courses/enrollments/academic sessions), `gradebook`
+ * (categories/line items/results/score scales), `resources`, and `assessment-results` (the
+ * OR 1.2 addition). Every other mode requires rostering.
+ *
+ * Scope vs this map's denominator: L1 is the **information model** (the OpenAPI
+ * `components.schemas` entity types across all three service documents), so the per-entity
+ * DATA-MODEL requirements are curated and cross-linked here — every object MUST carry a stable
+ * sourcedId, a status, and a dateLastModified (the last underpins delta sync), plus the
+ * references that bind the graph together. The REST/CSV **transport** conformance (the
+ * required GET/PUT endpoints per service, OAuth 2.0 Client Credentials, OpenAPI discovery, and
+ * the mandatory pagination / filtering / sorting / field-selection query mechanisms — guide §3
+ * and §4) is a separate surface with no L1 entity item in this map; it would be modelled by
+ * walking the OpenAPI *paths* (not done here) and is intentionally out of this catalogue.
+ * Requirement ids follow the spec's per-service scheme. Where a requirement constrains an item
+ * whose schema also embeds the rule, its `constrains` includes that item so
+ * `normativeStatementsCited` reflects the overlap.
  */
 const conformance: readonly ConformanceRequirement[] = [
   {
@@ -63,18 +78,68 @@ const conformance: readonly ConformanceRequirement[] = [
     profile: "rostering",
     reqId: "OR-1",
     level: "MUST",
-    statement: "Every OneRoster object MUST carry a sourcedId (its stable GUID) and a status (active / tobedeleted).",
-    constrains: ["or:1.2:def:UserDType/sourcedId", "or:1.2:def:UserDType/status"],
-    source: "OneRoster 1.2 §Base / GUIDRef — https://www.imsglobal.org/spec/oneroster/v1p2",
+    statement:
+      "Every rostering object MUST carry a stable sourcedId and a status (active / tobedeleted), and a dateLastModified — the watermark a delta exchange reconciles against.",
+    constrains: [
+      "or:1.2:def:OrgDType/sourcedId",
+      "or:1.2:def:OrgDType/status",
+      "or:1.2:def:OrgDType/dateLastModified",
+      "or:1.2:def:UserDType/sourcedId",
+      "or:1.2:def:UserDType/status",
+      "or:1.2:def:UserDType/dateLastModified",
+      "or:1.2:def:ClassDType/sourcedId",
+      "or:1.2:def:ClassDType/status",
+      "or:1.2:def:ClassDType/dateLastModified",
+      "or:1.2:def:CourseDType/sourcedId",
+      "or:1.2:def:CourseDType/status",
+      "or:1.2:def:CourseDType/dateLastModified",
+      "or:1.2:def:EnrollmentDType/sourcedId",
+      "or:1.2:def:EnrollmentDType/status",
+      "or:1.2:def:EnrollmentDType/dateLastModified",
+      "or:1.2:def:AcademicSessionDType/sourcedId",
+      "or:1.2:def:AcademicSessionDType/status",
+      "or:1.2:def:AcademicSessionDType/dateLastModified",
+    ],
+    source:
+      "OneRoster 1.2 Cert §4 (REST) / §3 (CSV) — Base entity — https://www.imsglobal.org/spec/oneroster/v1p2/cert/",
   },
   {
     key: "or:1.2:conf:rostering/OR-2",
     profile: "rostering",
     reqId: "OR-2",
     level: "MUST",
-    statement: "A User MUST declare at least one role binding the user to an organization.",
-    constrains: ["or:1.2:def:UserDType/roles"],
+    statement:
+      "A User MUST declare at least one role binding the user to an organization, each role carrying a roleType.",
+    constrains: [
+      "or:1.2:def:UserDType/roles",
+      "or:1.2:def:RoleDType/role",
+      "or:1.2:def:RoleDType/roleType",
+      "or:1.2:def:RoleDType/org",
+    ],
     source: "OneRoster 1.2 §User / Role — https://www.imsglobal.org/spec/oneroster/v1p2",
+  },
+  {
+    key: "or:1.2:conf:rostering/OR-3",
+    profile: "rostering",
+    reqId: "OR-3",
+    level: "MUST",
+    statement:
+      "An Enrollment MUST reference the user it enrols and the class it enrols them into, and declare the enrolment role.",
+    constrains: [
+      "or:1.2:def:EnrollmentDType/user",
+      "or:1.2:def:EnrollmentDType/class",
+      "or:1.2:def:EnrollmentDType/role",
+    ],
+    source: "OneRoster 1.2 §Enrollment — https://www.imsglobal.org/spec/oneroster/v1p2",
+  },
+  {
+    key: "or:1.2:conf:rostering/OR-4",
+    profile: "rostering",
+    reqId: "OR-4",
+    level: "MUST",
+    statement: "A Class MUST reference the course it instantiates and the school (org) that offers it.",
+    constrains: ["or:1.2:def:ClassDType/course", "or:1.2:def:ClassDType/school"],
+    source: "OneRoster 1.2 §Class — https://www.imsglobal.org/spec/oneroster/v1p2",
   },
   {
     key: "or:1.2:conf:gradebook/OR-GB-1",
@@ -100,6 +165,40 @@ const conformance: readonly ConformanceRequirement[] = [
     source: "OneRoster 1.2 Gradebook §Result — https://www.imsglobal.org/spec/oneroster/v1p2",
   },
   {
+    key: "or:1.2:conf:gradebook/OR-GB-3",
+    profile: "gradebook",
+    reqId: "OR-GB-3",
+    level: "MUST",
+    statement:
+      "Every gradebook object (LineItem, Result, Category, ScoreScale) MUST carry a sourcedId, a status and a dateLastModified.",
+    constrains: [
+      "or:1.2:def:LineItemDType/sourcedId",
+      "or:1.2:def:LineItemDType/status",
+      "or:1.2:def:LineItemDType/dateLastModified",
+      "or:1.2:def:ResultDType/sourcedId",
+      "or:1.2:def:ResultDType/status",
+      "or:1.2:def:ResultDType/dateLastModified",
+      "or:1.2:def:CategoryDType/sourcedId",
+      "or:1.2:def:CategoryDType/status",
+      "or:1.2:def:ScoreScaleDType/sourcedId",
+      "or:1.2:def:ScoreScaleDType/status",
+    ],
+    source: "OneRoster 1.2 Cert §4.1.2 (Gradebook entities) — https://www.imsglobal.org/spec/oneroster/v1p2/cert/",
+  },
+  {
+    key: "or:1.2:conf:gradebook/OR-GB-4",
+    profile: "gradebook",
+    reqId: "OR-GB-4",
+    level: "MUST",
+    statement: "A Result MUST carry the score value (or its scoreStatus rationale) and the date it was recorded.",
+    constrains: [
+      "or:1.2:def:ResultDType/score",
+      "or:1.2:def:ResultDType/scoreDate",
+      "or:1.2:def:ResultDType/scoreStatus",
+    ],
+    source: "OneRoster 1.2 Gradebook §Result (score/scoreDate) — https://www.imsglobal.org/spec/oneroster/v1p2",
+  },
+  {
     key: "or:1.2:conf:resources/OR-RES-1",
     profile: "resources",
     reqId: "OR-RES-1",
@@ -107,6 +206,51 @@ const conformance: readonly ConformanceRequirement[] = [
     statement: "A Resource MUST carry a title and a vendorResourceId identifying it within the providing vendor.",
     constrains: ["or:1.2:def:ResourceDType/title", "or:1.2:def:ResourceDType/vendorResourceId"],
     source: "OneRoster 1.2 Resources §Resource — https://www.imsglobal.org/spec/oneroster/v1p2",
+  },
+  {
+    key: "or:1.2:conf:resources/OR-RES-2",
+    profile: "resources",
+    reqId: "OR-RES-2",
+    level: "MUST",
+    statement: "A Resource MUST carry a sourcedId, a status and a dateLastModified like every other OneRoster object.",
+    constrains: [
+      "or:1.2:def:ResourceDType/sourcedId",
+      "or:1.2:def:ResourceDType/status",
+      "or:1.2:def:ResourceDType/dateLastModified",
+    ],
+    source: "OneRoster 1.2 Cert §4.1.4 (Resources) — https://www.imsglobal.org/spec/oneroster/v1p2/cert/",
+  },
+  {
+    key: "or:1.2:conf:assessment-results/OR-AR-1",
+    profile: "assessment-results",
+    reqId: "OR-AR-1",
+    level: "MUST",
+    statement:
+      "Every assessment-results object (AssessmentLineItem, AssessmentResult) MUST carry a sourcedId, a status and a dateLastModified.",
+    constrains: [
+      "or:1.2:def:AssessmentLineItemDType/sourcedId",
+      "or:1.2:def:AssessmentLineItemDType/status",
+      "or:1.2:def:AssessmentLineItemDType/dateLastModified",
+      "or:1.2:def:AssessmentResultDType/sourcedId",
+      "or:1.2:def:AssessmentResultDType/status",
+      "or:1.2:def:AssessmentResultDType/dateLastModified",
+    ],
+    source:
+      "OneRoster 1.2 Cert §4.1.3 (Assessment Results — OR 1.2) — https://www.imsglobal.org/spec/oneroster/v1p2/cert/",
+  },
+  {
+    key: "or:1.2:conf:assessment-results/OR-AR-2",
+    profile: "assessment-results",
+    reqId: "OR-AR-2",
+    level: "MUST",
+    statement:
+      "An AssessmentResult MUST reference its AssessmentLineItem and the student it scores, and carry a score status.",
+    constrains: [
+      "or:1.2:def:AssessmentResultDType/assessmentLineItem",
+      "or:1.2:def:AssessmentResultDType/student",
+      "or:1.2:def:AssessmentResultDType/scoreStatus",
+    ],
+    source: "OneRoster 1.2 §AssessmentResult — https://www.imsglobal.org/spec/oneroster/v1p2",
   },
 ];
 
