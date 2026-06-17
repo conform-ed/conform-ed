@@ -4,6 +4,8 @@ node_modules/
 dist/
 build/
 coverage/
+# ...but not the @conform-ed/coverage package (test-coverage output dirs only)
+!packages/coverage/
 .env
 .env.*
 !.env.example

@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/oxfmt/configuration_schema.json",
-  "ignorePatterns": ["**/tmp/**"],
+  "ignorePatterns": ["**/tmp/**", "packages/coverage/vendor/**", "packages/coverage/maps/**"],
   "printWidth": 120,
   "trailingComma": "all",
   "bracketSpacing": true,

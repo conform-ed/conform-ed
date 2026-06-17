@@ -101,6 +101,15 @@
     "packages/core": {
       "name": "@conform-ed/core",
     },
+    "packages/coverage": {
+      "name": "@conform-ed/coverage",
+      "dependencies": {
+        "@conform-ed/contracts": "workspace:*",
+      },
+      "peerDependencies": {
+        "zod": ">=4.4.0",
+      },
+    },
     "packages/pci-math-entry": {
       "name": "@conform-ed/pci-math-entry",
       "version": "0.0.25",
@@ -209,6 +218,8 @@
     "@conform-ed/contracts": ["@conform-ed/contracts@workspace:packages/contracts"],
 
     "@conform-ed/core": ["@conform-ed/core@workspace:packages/core"],
+
+    "@conform-ed/coverage": ["@conform-ed/coverage@workspace:packages/coverage"],
 
     "@conform-ed/lrs-runner": ["@conform-ed/lrs-runner@workspace:apps/lrs-runner"],
 

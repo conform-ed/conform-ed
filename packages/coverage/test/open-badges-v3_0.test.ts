@@ -1,0 +1,62 @@
+import { describe, expect, test } from "bun:test";
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
+
+import { openBadgesV3_0 } from "../specs/open-badges/v3_0";
+import { buildCoverageMap } from "../src/generate";
+import type { CoverageMap } from "../src/types";
+
+const map = buildCoverageMap(openBadgesV3_0, { now: "2026-01-01" });
+
+describe("Open Badges 3.0 Coverage Map", () => {
+  test("walks a non-trivial literal inventory", () => {
+    expect(map.items.length).toBeGreaterThan(300);
+    expect(map.meta.spec).toBe("ob");
+    expect(map.meta.version).toBe("3.0");
+  });
+
+  test("every item key is namespaced to the spec:version", () => {
+    for (const item of map.items) expect(item.key.startsWith("ob:3.0:")).toBe(true);
+  });
+
+  test("pins each vendored source with a sha256", () => {
+    expect(map.meta.sources).toHaveLength(5);
+    for (const source of map.meta.sources) expect(source.sha256).toMatch(/^[0-9a-f]{64}$/);
+  });
+
+  test("conform-ed's validated OB port has no silent gaps or extensions", () => {
+    expect(map.rollup.modelledNo).toBe(0);
+    expect(map.residues.silentGaps).toEqual([]);
+    expect(map.residues.extensions).toEqual([]);
+  });
+
+  test("captures normative items and the conformance seed", () => {
+    expect(map.rollup.normativeItems).toBeGreaterThan(0);
+    expect(map.rollup.conformanceRequirements).toBe(5);
+  });
+
+  test("every conformance requirement cross-links to a real item key", () => {
+    const keys = new Set(map.items.map((i) => i.key));
+    for (const req of map.conformance) {
+      expect(req.constrains.length).toBeGreaterThan(0);
+      for (const key of req.constrains) expect(keys.has(key)).toBe(true);
+    }
+  });
+
+  test("every usage edge targets a walked definition", () => {
+    const keys = new Set(map.items.map((i) => i.key));
+    for (const edge of map.edges) expect(keys.has(edge.to)).toBe(true);
+  });
+
+  test("generation is deterministic", () => {
+    const again = buildCoverageMap(openBadgesV3_0, { now: "2026-01-01" });
+    expect(JSON.stringify(again)).toBe(JSON.stringify(map));
+  });
+
+  test("the committed map is in sync with the generator", () => {
+    const committed = readFileSync(join(import.meta.dir, "..", "maps", "open-badges-v3.0.json"), "utf8");
+    const parsed = JSON.parse(committed) as CoverageMap;
+    const rebuilt = buildCoverageMap(openBadgesV3_0, { now: parsed.meta.generatedAt });
+    expect(`${JSON.stringify(rebuilt, null, 2)}\n`).toBe(committed);
+  });
+});
