@@ -9,8 +9,8 @@ import type { CoverageMap } from "../src/types";
 const map = buildCoverageMap(qtiV2_2, { now: "2026-01-01" });
 const byKey = new Map(map.items.map((i) => [i.key, i]));
 
-describe("QTI 2.2 Coverage Map — XSD walker + element-ref resolution", () => {
-  test("walks the literal ASI information model into the four assessment doc roots", () => {
+describe("QTI 2.2 Coverage Map — XSD walker, source-scoped document family", () => {
+  test("walks the ASI core (incl. stimulus) + Results / UsageData / Metadata / CP / CSM / APIP roots", () => {
     expect(map.meta.spec).toBe("qti");
     expect(map.meta.version).toBe("2.2");
     expect(map.items.length).toBeGreaterThan(4000);
@@ -19,30 +19,36 @@ describe("QTI 2.2 Coverage Map — XSD walker + element-ref resolution", () => {
       "qti:2.2:doc:assessmentTest",
       "qti:2.2:doc:assessmentSection",
       "qti:2.2:doc:assessmentStimulus",
+      "qti:2.2:doc:assessmentResult",
+      "qti:2.2:doc:usageData",
+      "qti:2.2:doc:qtiMetadata",
+      "qti:2.2:doc:manifest",
+      "qti:2.2:doc:curriculumStandardsMetadataSet",
+      "qti:2.2:doc:apipAccessibility",
     ]) {
       expect(byKey.get(root)?.kind).toBe("document");
     }
   });
 
-  test("the four bindings all pin the same vendored XSD", () => {
-    expect(map.meta.sources).toHaveLength(4);
+  test("pins one vendored XSD per binding, all source-scoped", () => {
+    expect(map.meta.sources).toHaveLength(10);
     for (const source of map.meta.sources) {
       expect(source.language).toBe("xsd");
-      expect(source.id).toBe("http://www.imsglobal.org/xsd/imsqti_v2p2");
+      expect(source.id).toMatch(/^http:\/\/www\.imsglobal\.org\//);
     }
   });
 
-  test("`<xs:element ref>` children + foreign imports leave no dangling edges", () => {
+  test("source-scoping + element-ref resolution + foreign imports leave no dangling edges", () => {
     const keys = new Set(map.items.map((i) => i.key));
     for (const edge of map.edges) expect(keys.has(edge.to)).toBe(true);
   });
 
   test("the core assessment-item model reconciles past the ref boundary (2.2 uses the DType suffix)", () => {
-    expect(byKey.get("qti:2.2:def:identifier.AssessmentItem.Attr/identifier")?.modelled).toBe("yes");
-    expect(byKey.get("qti:2.2:def:title.AssessmentItem.Attr/title")?.modelled).toBe("yes");
-    expect(byKey.get("qti:2.2:def:AssessmentItemDType/itemBody")?.modelled).toBe("yes");
-    expect(byKey.get("qti:2.2:def:AssessmentItemDType/responseDeclaration")?.modelled).toBe("yes");
-    expect(map.rollup.modelledYes).toBeGreaterThan(100);
+    expect(byKey.get("qti:2.2:def:imsqti_v2p2p4.identifier.AssessmentItem.Attr/identifier")?.modelled).toBe("yes");
+    expect(byKey.get("qti:2.2:def:imsqti_v2p2p4.AssessmentItemDType/itemBody")?.modelled).toBe("yes");
+    expect(byKey.get("qti:2.2:def:imsqti_v2p2p4.AssessmentItemDType/responseDeclaration")?.modelled).toBe("yes");
+    expect(byKey.get("qti:2.2:def:imsqti_result_v2p2.AssessmentResult.Type/context")?.modelled).toBe("yes");
+    expect(map.rollup.modelledYes).toBeGreaterThan(150);
   });
 
   test("genuine non-modelled structures surface as honest silent gaps", () => {
@@ -52,7 +58,7 @@ describe("QTI 2.2 Coverage Map — XSD walker + element-ref resolution", () => {
 
   test("every conformance requirement cross-links to a real item key", () => {
     const keys = new Set(map.items.map((i) => i.key));
-    expect(map.rollup.conformanceRequirements).toBe(2);
+    expect(map.rollup.conformanceRequirements).toBe(3);
     for (const req of map.conformance) {
       expect(req.constrains.length).toBeGreaterThan(0);
       for (const key of req.constrains) expect(keys.has(key)).toBe(true);

@@ -49,8 +49,8 @@ Nine `spec:version` maps across all three schema-language families:
 | `case-v1.1`             | JSON Schema | 344   | 264      | 0           | 0          | 3          |
 | `common-cartridge-v1.3` | XSD         | 676   | 410      | 3           | 190        | 7          |
 | `common-cartridge-v1.4` | XSD         | 143   | 81       | 3           | 35         | 5          |
-| `qti-v2.1`              | XSD         | 4629  | 116      | 347         | 35         | 2          |
-| `qti-v2.2`              | XSD         | 4991  | 125      | 501         | 44         | 2          |
+| `qti-v2.1`              | XSD         | 4971  | 186      | 385         | 76         | 3          |
+| `qti-v2.2`              | XSD         | 5378  | 208      | 541         | 92         | 3          |
 | `qti-v3.0.1`            | XSD         | 5344  | 223      | 359         | 89         | 2          |
 | `oneroster-v1.2`        | OpenAPI     | 410   | 248      | 0           | 0          | 5          |
 
@@ -71,16 +71,21 @@ Nine `spec:version` maps across all three schema-language families:
   → `value`; the foreign `xml:base` attribute → `xmlBase`, which pairs with the three
   `/base` silent gaps), plus the rich IEEE-LOM optional sub-trees conform-ed models that
   the literal LOM profiles leave to imported boundaries.
-- **QTI 2.1 / 2.2 / 3.0.1** — the full literal ASI information model (3–4 bindings each,
-  one self-contained XSD per version; their `xs:import`s are foreign vocab —
-  MathML/SSML/XML/XInclude/HTML5/APIP — left opaque, hence `0` dangling edges). QTI 2.x
-  declares every child as `<xs:element ref="…">` (modular style), which the walker
-  resolves to the referenced global element's named type to continue the descent; 3.0.1
-  uses it for a handful (resolving them deepened 3.0.1 from 205 → 223 modelled). The L2
-  join uses a singular(XML)↔plural(Zod) **name normaliser** (the XSD is the XML binding,
-  conform-ed models the JSON binding; for 3.0.1 it also bridges the `qti-`/kebab prefix).
-  The silent gaps are honest signal: ARIA attributes + content-model expression operators
-  that conform-ed models as Zod unions rather than named elements.
+- **QTI 2.1 / 2.2 / 3.0.1** — the literal ASI information model plus, for 2.1 / 2.2, the
+  rest of the document family (Results Reporting, Usage Data, item Metadata, the
+  content-package manifest, the APIP accessibility extension, and — 2.2 only — Curriculum
+  Standards Metadata), each from its own vendored schema. The 2.x maps therefore set
+  `scopeXsdDefsBySource` (the ASI and aux schemas reuse type names like `Value.Type` /
+  `Mapping.Type` for distinct types); 3.0.1 stays a single self-contained ASI file and
+  keeps bare keys. All `xs:import`s are foreign vocab (MathML/SSML/XML/XInclude/HTML5/APIP)
+  left opaque, hence `0` dangling edges. QTI 2.x declares every child as
+  `<xs:element ref="…">` (modular style), which the walker resolves to the referenced
+  global element's named type to continue the descent; 3.0.1 uses it for a handful
+  (resolving them deepened 3.0.1 from 205 → 223 modelled). The L2 join uses a
+  singular(XML)↔plural(Zod) **name normaliser** (the XSD is the XML binding, conform-ed
+  models the JSON binding; for 3.0.1 it also bridges the `qti-`/kebab prefix). The silent
+  gaps are honest signal: ARIA attributes + content-model expression operators that
+  conform-ed models as Zod unions rather than named elements.
 
 Conformance catalogs are grounded **seeds**; full extraction from the published 1EdTech
 guides is the next hand-curation increment.
@@ -103,8 +108,8 @@ All three schema-language walkers are built and proven:
   `LOM.Type` across the three LOM profiles; `Text.Type` / `Attachment.Type` in the CC 1.4
   `assignment` extension vs Discussion Topic). A binding may also set `rootElement` to
   walk a shared root element name (the three LOM profiles all root at `lom`) under a
-  distinct `doc:` label. Still to come: QTI 2.x results-reporting / metadata /
-  content-package bindings.
+  distinct `doc:` label. QTI 2.1 / 2.2 now also cover Results Reporting, Usage Data,
+  Metadata, the content-package manifest, APIP and (2.2) Curriculum Standards Metadata.
 - **OpenAPI** (`walkers/openapi.ts`) — OneRoster 1.2 ✓ across all three services —
   Rostering, Gradebook and Resources (walks `components.schemas`, reusing the
   JSON-Schema walker via `#/components/schemas/` refs).
