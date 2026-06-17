@@ -58,10 +58,12 @@ function indexSide(inv: Inventory): SideIndex {
  * resolves through to the property-bearing definition it ultimately points at.
  * Descent *into* those children is the alignment recursion's job, not this one's.
  */
-function shapeOf(side: SideIndex, nodeKey: string): ReadonlyMap<string, string> {
+function shapeOf(side: SideIndex, nodeKey: string, normalize: (name: string) => string): ReadonlyMap<string, string> {
   const shape = new Map<string, string>();
   const add = (childKey: string): void => {
-    const name = lastSegment(childKey);
+    const segment = lastSegment(childKey);
+    // `[]` is a structural array marker, never a property name — never normalise it.
+    const name = segment === "[]" ? segment : normalize(segment);
     if (!shape.has(name)) shape.set(name, childKey);
   };
   const seen = new Set<string>();
@@ -82,7 +84,12 @@ export interface ReconcileResult {
   readonly residues: ReconciliationResidues;
 }
 
-export function reconcile(literal: Inventory, zod: Inventory, documentRootKeys: readonly string[]): ReconcileResult {
+export function reconcile(
+  literal: Inventory,
+  zod: Inventory,
+  documentRootKeys: readonly string[],
+  normalize: (name: string) => string = (name) => name,
+): ReconcileResult {
   const lit = indexSide(literal);
   const zd = indexSide(zod);
 
@@ -106,7 +113,7 @@ export function reconcile(literal: Inventory, zod: Inventory, documentRootKeys: 
   const unwrapArray = (side: SideIndex, key: string): string => {
     let cur = key;
     for (let i = 0; i < 8; i += 1) {
-      const shape = shapeOf(side, cur);
+      const shape = shapeOf(side, cur, normalize);
       const elem = shape.size === 1 ? shape.get("[]") : undefined;
       if (elem === undefined) break;
       cur = elem;
@@ -121,8 +128,8 @@ export function reconcile(literal: Inventory, zod: Inventory, documentRootKeys: 
     if (visited.has(pairId)) return;
     visited.add(pairId);
 
-    const litShape = shapeOf(lit, litKey);
-    const zodShape = shapeOf(zd, zodKey);
+    const litShape = shapeOf(lit, litKey, normalize);
+    const zodShape = shapeOf(zd, zodKey, normalize);
 
     for (const [name, litChild] of litShape) {
       const zodChild = zodShape.get(name);

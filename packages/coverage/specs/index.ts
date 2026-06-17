@@ -8,6 +8,7 @@ import { caseV1_1 } from "./case/v1_1";
 import { clrV2_0 } from "./clr/v2_0";
 import { commonCartridgeV1_3 } from "./common-cartridge/v1_3";
 import { openBadgesV3_0 } from "./open-badges/v3_0";
+import { qtiV3_0_1 } from "./qti/v3_0_1";
 
 export interface CoverageMapEntry {
   readonly source: SpecSource;
@@ -19,4 +20,5 @@ export const COVERAGE_MAPS: readonly CoverageMapEntry[] = [
   { source: clrV2_0, file: "clr-v2.0.json" },
   { source: caseV1_1, file: "case-v1.1.json" },
   { source: commonCartridgeV1_3, file: "common-cartridge-v1.3.json" },
+  { source: qtiV3_0_1, file: "qti-v3.0.1.json" },
 ];

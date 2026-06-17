@@ -121,17 +121,6 @@
       "path": ""
     },
     {
-      "key": "cc:1.3:def:EmptyPrimitiveType.Type",
-      "kind": "definition",
-      "path": ""
-    },
-    {
-      "key": "cc:1.3:def:grpStrict.any",
-      "kind": "definition",
-      "path": "",
-      "description": "Any namespaced element from any namespace may be included within an \"any\" element. The namespace for the imported element must be defined in the instance, and the schema must be imported. The extension has a definition of \"strict\" i.e. they must have their own namespace."
-    },
-    {
       "key": "cc:1.3:def:grpStrict.any",
       "kind": "definition",
       "path": "",
@@ -417,7 +406,7 @@
     ]
   },
   "rollup": {
-    "items": 42,
+    "items": 40,
     "modelledYes": 21,
     "modelledPartial": 0,
     "modelledNo": 0,
