@@ -63,7 +63,7 @@ the `Norm.` column counts the keys each map's `specRefOverrides` moved into `nor
 | ----------------------- | ----------- | ----- | -------- | ----------- | ---------- | ----- | ---------- |
 | `open-badges-v3.0`      | JSON Schema | 340   | 241      | 0           | 0          | 0     | 16         |
 | `clr-v2.0`              | JSON Schema | 409   | 299      | 0           | 0          | 0     | 14         |
-| `case-v1.1`             | JSON Schema | 344   | 264      | 0           | 0          | 0     | 3          |
+| `case-v1.1`             | JSON Schema | 344   | 264      | 0           | 0          | 0     | 9          |
 | `caliper-v1.2`          | JSON Schema | 1957  | 78       | 136         | 26         | 0     | 3          |
 | `common-cartridge-v1.3` | XSD         | 676   | 413      | 0           | 96         | 97    | 7          |
 | `common-cartridge-v1.4` | XSD         | 143   | 84       | 0           | 23         | 15    | 5          |
@@ -73,7 +73,7 @@ the `Norm.` column counts the keys each map's `specRefOverrides` moved into `nor
 | `oneroster-v1.2`        | OpenAPI     | 410   | 248      | 0           | 0          | 0     | 12         |
 
 - **Open Badges 3.0 / CLR 2.0** share the OB/VC credential machinery; **CASE 1.1** (all
-  13 entity schemas) reconciles `0/0`.
+  13 entity schemas) reconciles `0/0` and is fully guide-curated (core / provider / consumer).
 - **Caliper 1.2** ⚠️ — the one map whose denominator is **not** a canonical 1EdTech
   release: 1EdTech ships no per-binding Caliper schema at a spec URL, so the literal
   denominator is the **CaliperBootcamp** GitHub repo (`schemas/v1_2`, pinned commit), a
@@ -142,8 +142,15 @@ gradebook / resources / assessment-results, 12 requirements): the per-entity sta
 rules (every object carries sourcedId + status + dateLastModified) cross-link the schema's own
 MUSTs across every service, so `cited` reaches 38/48 — the REST/CSV transport conformance
 (endpoints, OAuth, query mechanisms) is the out-of-scope surface a future OpenAPI-paths walker
-would model. The remaining maps' catalogs are grounded **seeds** pending the same per-guide
-curation.
+would model. **CASE 1.1** is curated by its two certified roles plus a `core` profile (9
+requirements): the `core` information-model invariants (a CFPackage has exactly one CFDocument,
+every CFItem a UUID, every CFAssociation a typed origin/destination, and `caseVersion` = '1.1'),
+then `provider` (supply every required field, be capable of every optional field, emit no
+extension fields) and `consumer` (handle/recover every required field, tolerate extensions).
+CASE-4 is the one curated rule that cross-links the spec's only embedded MUST — the
+`caseVersion` = '1.1' rule across the CFDocument variants — lifting `cited` to 3/3; the 11
+required GET endpoints and the `/ims/case/v1p1` base URL are the out-of-scope transport surface.
+The remaining maps' catalogs are grounded **seeds** pending the same per-guide curation.
 
 ### Rollout (emergent ADR-0028)
 

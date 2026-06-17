@@ -3008,6 +3008,36 @@
   ],
   "conformance": [
     {
+      "key": "case:1.1:conf:consumer/CASE-CONS-1",
+      "profile": "consumer",
+      "reqId": "CASE-CONS-1",
+      "level": "MUST",
+      "statement": "A Service Consumer MUST persistently store ('handle') every REQUIRED data field it receives and be able to recover it on retrieval.",
+      "constrains": [
+        "case:1.1:doc:cfdocument/identifier",
+        "case:1.1:doc:cfdocument/title",
+        "case:1.1:doc:cfitem/identifier",
+        "case:1.1:doc:cfitem/fullStatement",
+        "case:1.1:doc:cfassociation/associationType",
+        "case:1.1:doc:cfassociation/originNodeURI",
+        "case:1.1:doc:cfassociation/destinationNodeURI"
+      ],
+      "source": "CASE 1.1 Cert §Service Consumer (handle required fields) — https://www.imsglobal.org/spec/case/v1p1/cert/"
+    },
+    {
+      "key": "case:1.1:conf:consumer/CASE-CONS-2",
+      "profile": "consumer",
+      "reqId": "CASE-CONS-2",
+      "level": "MUST",
+      "statement": "A Service Consumer MUST tolerate the presence of extension data fields without failing the import.",
+      "constrains": [
+        "case:1.1:doc:cfitem/extensions",
+        "case:1.1:doc:cfdocument/extensions",
+        "case:1.1:doc:cfassociation/extensions"
+      ],
+      "source": "CASE 1.1 Cert §Service Consumer (tolerate extensions) — https://www.imsglobal.org/spec/case/v1p1/cert/"
+    },
+    {
       "key": "case:1.1:conf:core/CASE-1",
       "profile": "core",
       "reqId": "CASE-1",
@@ -3036,9 +3066,73 @@
       "level": "MUST",
       "statement": "Every CFAssociation MUST declare its associationType and both its origin and destination nodes.",
       "constrains": [
-        "case:1.1:doc:cfassociation/associationType"
+        "case:1.1:doc:cfassociation/associationType",
+        "case:1.1:doc:cfassociation/originNodeURI",
+        "case:1.1:doc:cfassociation/destinationNodeURI"
       ],
       "source": "CASE 1.1 §CFAssociation — https://www.imsglobal.org/spec/case/v1p1"
+    },
+    {
+      "key": "case:1.1:conf:core/CASE-4",
+      "profile": "core",
+      "reqId": "CASE-4",
+      "level": "MUST",
+      "statement": "The caseVersion attribute, when present on a CFDocument, MUST have the value '1.1'.",
+      "constrains": [
+        "case:1.1:doc:cfdocument/caseVersion",
+        "case:1.1:def:CFDocument/caseVersion",
+        "case:1.1:def:CFPckgDocument/caseVersion"
+      ],
+      "source": "CASE 1.1 §CFDocument (caseVersion) — https://www.imsglobal.org/spec/case/v1p1"
+    },
+    {
+      "key": "case:1.1:conf:provider/CASE-PROV-1",
+      "profile": "provider",
+      "reqId": "CASE-PROV-1",
+      "level": "MUST",
+      "statement": "A Service Provider MUST supply every REQUIRED data field in the JSON payload of each served entity (a CFDocument's identifier/uri/title/creator/lastChangeDateTime; a CFItem's identifier/uri/fullStatement; a CFAssociation's identifier/uri/associationType and origin/destination node references).",
+      "constrains": [
+        "case:1.1:doc:cfdocument/identifier",
+        "case:1.1:doc:cfdocument/uri",
+        "case:1.1:doc:cfdocument/title",
+        "case:1.1:doc:cfdocument/creator",
+        "case:1.1:doc:cfdocument/lastChangeDateTime",
+        "case:1.1:doc:cfitem/identifier",
+        "case:1.1:doc:cfitem/uri",
+        "case:1.1:doc:cfitem/fullStatement",
+        "case:1.1:doc:cfassociation/identifier",
+        "case:1.1:doc:cfassociation/uri",
+        "case:1.1:doc:cfassociation/associationType",
+        "case:1.1:doc:cfassociation/originNodeURI",
+        "case:1.1:doc:cfassociation/destinationNodeURI"
+      ],
+      "source": "CASE 1.1 Cert §Service Provider (required data fields) — https://www.imsglobal.org/spec/case/v1p1/cert/"
+    },
+    {
+      "key": "case:1.1:conf:provider/CASE-PROV-2",
+      "profile": "provider",
+      "reqId": "CASE-PROV-2",
+      "level": "MUST",
+      "statement": "A Service Provider MUST be capable of supplying every OPTIONAL data field defined for the entities it serves (e.g. a CFItem's humanCodingScheme and CFItemType, a CFDocument's officialSourceURL).",
+      "constrains": [
+        "case:1.1:doc:cfitem/humanCodingScheme",
+        "case:1.1:doc:cfitem/CFItemType",
+        "case:1.1:doc:cfdocument/officialSourceURL"
+      ],
+      "source": "CASE 1.1 Cert §Service Provider (optional data fields) — https://www.imsglobal.org/spec/case/v1p1/cert/"
+    },
+    {
+      "key": "case:1.1:conf:provider/CASE-PROV-3",
+      "profile": "provider",
+      "reqId": "CASE-PROV-3",
+      "level": "MUST",
+      "statement": "A Service Provider MUST NOT include extension data fields in conformance-tested payloads (the extensions point is forbidden for Provider certification).",
+      "constrains": [
+        "case:1.1:doc:cfdocument/extensions",
+        "case:1.1:doc:cfitem/extensions",
+        "case:1.1:doc:cfassociation/extensions"
+      ],
+      "source": "CASE 1.1 Cert §Service Provider (no extension fields) — https://www.imsglobal.org/spec/case/v1p1/cert/"
     }
   ],
   "normativeStatements": [
@@ -3046,19 +3140,19 @@
       "item": "case:1.1:def:CFDocument/caseVersion",
       "level": "MUST",
       "statement": "This is a new attribute added in version 1.1. Denotes the version of the CFDocument. If present it MUST have a value of '1.1'.",
-      "cited": false
+      "cited": true
     },
     {
       "item": "case:1.1:def:CFPckgDocument/caseVersion",
       "level": "MUST",
       "statement": "This is a new attribute added in version 1.1. Denotes the version of the CFDocument. If present it MUST have a value of '1.1'.",
-      "cited": false
+      "cited": true
     },
     {
       "item": "case:1.1:doc:cfdocument/caseVersion",
       "level": "MUST",
       "statement": "This is a new attribute added in version 1.1. Denotes the version of the CFDocument. If present it MUST have a value of '1.1'.",
-      "cited": false
+      "cited": true
     }
   ],
   "residues": {
@@ -3072,9 +3166,9 @@
     "modelledPartial": 0,
     "modelledNo": 0,
     "normativeItems": 3,
-    "conformanceRequirements": 3,
+    "conformanceRequirements": 9,
     "normativeStatements": 3,
-    "normativeStatementsCited": 0,
+    "normativeStatementsCited": 3,
     "normalisations": 0
   }
 }

@@ -39,11 +39,23 @@ describe("CASE 1.1 Coverage Map", () => {
 
   test("every conformance requirement cross-links to a real item key", () => {
     const keys = new Set(map.items.map((i) => i.key));
-    expect(map.rollup.conformanceRequirements).toBe(3);
+    expect(map.rollup.conformanceRequirements).toBe(9);
     for (const req of map.conformance) {
       expect(req.constrains.length).toBeGreaterThan(0);
       for (const key of req.constrains) expect(keys.has(key)).toBe(true);
     }
+  });
+
+  test("the curated catalogue spans the core / provider / consumer profiles", () => {
+    const profiles = new Set(map.conformance.map((req) => req.profile));
+    expect([...profiles].sort()).toEqual(["consumer", "core", "provider"]);
+  });
+
+  test("CASE-4 cites every embedded caseVersion MUST (the spec's only machine-readable norm)", () => {
+    // CASE embeds exactly the caseVersion='1.1' MUST across CFDocument variants; the
+    // curated rule constrains them, so all of them flip to cited.
+    expect(map.rollup.normativeStatements).toBe(3);
+    expect(map.rollup.normativeStatementsCited).toBe(3);
   });
 
   test("every usage edge targets a walked definition", () => {
