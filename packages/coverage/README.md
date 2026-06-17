@@ -40,28 +40,44 @@ Adding a spec: vendor its source schema under `vendor/<spec>/<version>/`, declar
 
 ## Status
 
-- **Open Badges 3.0** (JSON-Schema family) — pilot, complete. 5 bindings, 340 items;
-  conform-ed's `validated` port reconciles with **0 silent gaps / 0 extensions** (39
-  items `partial`, all recursive `Profile`/endorsement structures matched at varying
-  depths). Conformance catalog is a grounded **seed** (5 issuer-profile MUSTs).
-- **Common Cartridge 1.3 — Web Link** (XSD family) — pilot, complete. Proves the
-  **direct XSD walker** (`src/walkers/xsd.ts`) end-to-end over the literal
-  `ccv1p3_imswl_v1p3.xsd`: 10 items, **0 silent gaps**, 5 `modelled` (title / url /
-  href / target / windowFeatures), and exactly one `extension` residue — conform-ed's
-  named `extensions` field, which corresponds to the XSD's nameless `xs:any` open
-  extension point (a documented normalisation, to be bridged by a `specRef` override).
+Five `spec:version` maps, both schema-language families:
 
-Full conformance-catalog extraction from the published 1EdTech guides is the next
-hand-curation increment for both.
+| Map                     | Family      | Items | Silent gaps | Extensions | Conf. reqs |
+| ----------------------- | ----------- | ----- | ----------- | ---------- | ---------- |
+| `open-badges-v3.0`      | JSON Schema | 340   | 0           | 0          | 5          |
+| `clr-v2.0`              | JSON Schema | 409   | 0           | 0          | 4          |
+| `case-v1.1`             | JSON Schema | 344   | 0           | 0          | 3          |
+| `common-cartridge-v1.3` | XSD         | 42    | 0           | 3          | 4          |
+
+- **Open Badges 3.0 / CLR 2.0** share the OB/VC credential machinery — both reconcile
+  `0/0` (recursive `Profile`/endorsement structures matched at depth).
+- **CASE 1.1** — all 13 published entity schemas (CFPackage / CFItem / CFAssociation /
+  …) reconcile `0/0`.
+- **Common Cartridge 1.3** — three resource-type bindings (Web Link / Discussion Topic
+  / Curriculum Standards Metadata) via the **direct XSD walker** (`src/walkers/xsd.ts`).
+  `0` silent gaps; the three `extension` residues are all documented normalisations
+  (XSD `xs:any` → conform-ed's `extensions`; simpleContent text → `value`).
+
+Conformance catalogs are grounded **seeds**; full extraction from the published 1EdTech
+guides is the next hand-curation increment.
 
 ### Rollout (emergent ADR-0028)
 
-JSON-Schema family (OB ✓ → CLR / CASE / Caliper / VC) and the XSD family (CC 1.3 Web
-Link ✓ → QTI 3.0.1 / rest of CC / QTI 2.x) are both proven; OpenAPI (OneRoster) is
-last. The XSD family uses a **direct XSD walker** on `fast-xml-parser` rather than an
-XSD→JSON-Schema converter (converters proved dead, lossy — they drop `xs:documentation`
-— or non-reproducible in CI); it walks the literal `.xsd` and emits the same
-`CoverageItem`/`UsageEdge` model, so the reconciler and Coverage Map contract are
-reused unchanged. The reconciler's automated structural join is layered with explicit
-`specRef` overrides for conform-ed's documented normalisations (e.g. the CC `xs:any`
-→ `extensions` rename) as those are annotated upstream in `@conform-ed/contracts`.
+- **JSON-Schema family** — OB ✓, CLR ✓, CASE ✓. **VC 2.0** has no standalone published
+  per-binding JSON Schema (it is the W3C substrate already exercised through OB/CLR), so
+  it is not a separate map. **Caliper 1.2** ships its schemas in the GitHub
+  CaliperBootcamp repo (JSON-LD) — pending a literal-denominator provenance decision.
+- **XSD family** — CC 1.3 (3 bindings) ✓ via the direct XSD walker (chosen over
+  XSD→JSON-Schema converters, which proved dead, lossy — they drop `xs:documentation` —
+  or non-reproducible in CI). **QTI 3.0.1 / 2.x** are _walker-ready_ (QTI's ASI XSD is
+  self-contained; its 4 `xs:import`s are foreign vocabularies — MathML/SSML/XML/XInclude
+  — which the walker already treats as opaque). The open item is reconciliation: the QTI
+  _XML_ binding uses kebab element names (`qti-response-declaration`) while conform-ed's
+  Zod models the QTI **JSON** binding (camelCase `responseDeclaration`), so a meaningful
+  L2 join needs a **name-normalisation layer** (kebab-`qti-` ↔ camelCase) on the
+  reconciler before a QTI map is produced — without it every name would mismatch.
+- **OpenAPI family** — OneRoster 1.2 needs a third walker (`walkers/openapi.ts`).
+
+The reconciler's automated structural join is layered with explicit `specRef` overrides
+for conform-ed's documented normalisations (e.g. the CC `xs:any` → `extensions` rename)
+as those are annotated upstream in `@conform-ed/contracts`.
