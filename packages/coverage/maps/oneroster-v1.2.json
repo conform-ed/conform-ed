@@ -11,6 +11,24 @@
         "sha256": "06cafc2234ae1cdc58a2fe8ea03a8e0a5bf57d0e39830468d9adf7cc16acd26f"
       },
       {
+        "binding": "AssessmentLineItemDType",
+        "language": "openapi",
+        "id": "OneRoster Gradebook Service OpenAPI (JSON) Definition v1.2",
+        "sha256": "547131deef5d05b411cf49cfaea101fa91b0f9875bc45e06d48125fad3787a5f"
+      },
+      {
+        "binding": "AssessmentResultDType",
+        "language": "openapi",
+        "id": "OneRoster Gradebook Service OpenAPI (JSON) Definition v1.2",
+        "sha256": "547131deef5d05b411cf49cfaea101fa91b0f9875bc45e06d48125fad3787a5f"
+      },
+      {
+        "binding": "CategoryDType",
+        "language": "openapi",
+        "id": "OneRoster Gradebook Service OpenAPI (JSON) Definition v1.2",
+        "sha256": "547131deef5d05b411cf49cfaea101fa91b0f9875bc45e06d48125fad3787a5f"
+      },
+      {
         "binding": "ClassDType",
         "language": "openapi",
         "id": "OneRoster OpenAPI (JSON) Definition v1.2",
@@ -35,10 +53,40 @@
         "sha256": "06cafc2234ae1cdc58a2fe8ea03a8e0a5bf57d0e39830468d9adf7cc16acd26f"
       },
       {
+        "binding": "LearningObjectiveSetDType",
+        "language": "openapi",
+        "id": "OneRoster Gradebook Service OpenAPI (JSON) Definition v1.2",
+        "sha256": "547131deef5d05b411cf49cfaea101fa91b0f9875bc45e06d48125fad3787a5f"
+      },
+      {
+        "binding": "LineItemDType",
+        "language": "openapi",
+        "id": "OneRoster Gradebook Service OpenAPI (JSON) Definition v1.2",
+        "sha256": "547131deef5d05b411cf49cfaea101fa91b0f9875bc45e06d48125fad3787a5f"
+      },
+      {
         "binding": "OrgDType",
         "language": "openapi",
         "id": "OneRoster OpenAPI (JSON) Definition v1.2",
         "sha256": "06cafc2234ae1cdc58a2fe8ea03a8e0a5bf57d0e39830468d9adf7cc16acd26f"
+      },
+      {
+        "binding": "ResourceDType",
+        "language": "openapi",
+        "id": "OneRoster Resources OpenAPI (JSON) Definition v1.2",
+        "sha256": "92f9c351e774070bb8684b54251e60bc8d2496beb00f80b95ed5066081394503"
+      },
+      {
+        "binding": "ResultDType",
+        "language": "openapi",
+        "id": "OneRoster Gradebook Service OpenAPI (JSON) Definition v1.2",
+        "sha256": "547131deef5d05b411cf49cfaea101fa91b0f9875bc45e06d48125fad3787a5f"
+      },
+      {
+        "binding": "ScoreScaleDType",
+        "language": "openapi",
+        "id": "OneRoster Gradebook Service OpenAPI (JSON) Definition v1.2",
+        "sha256": "547131deef5d05b411cf49cfaea101fa91b0f9875bc45e06d48125fad3787a5f"
       },
       {
         "binding": "UserDType",
@@ -213,6 +261,489 @@
         "academicSession"
       ],
       "description": "The type of object being referenced i.e. an 'academicSession'.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:AssessmentLineItemDType",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "This is the container for the definition of an assessment lineItem. An assessment lineItem is a collection of results for a set of students who are completing an assignment."
+    },
+    {
+      "key": "or:1.2:def:AssessmentLineItemDType/class",
+      "kind": "property",
+      "path": "class",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:AssessmentLineItemDType/dateLastModified",
+      "kind": "property",
+      "path": "dateLastModified",
+      "jsonType": "string",
+      "required": true,
+      "normative": true,
+      "description": "Model Primitive Datatype = DateTime. All objects MUST be annotated with the dateTime upon which they were last modified. This enables requesters to query for just the latest objects. DateTimes MUST be expressed in W3C profile of [ISO 8601] and MUST contain the UTC timezone.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:AssessmentLineItemDType/description",
+      "kind": "property",
+      "path": "description",
+      "jsonType": "string",
+      "description": "Model Primitive Datatype = String. A human readable description of the usage of the assessment lineItem.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:AssessmentLineItemDType/learningObjectiveSet",
+      "kind": "property",
+      "path": "learningObjectiveSet",
+      "jsonType": "array",
+      "description": "The set of identifiers for the learning objectives to which this assessment is aligned. Any number groups of learning objectives can be assigned.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:AssessmentLineItemDType/learningObjectiveSet/[]",
+      "kind": "property",
+      "path": "learningObjectiveSet/[]"
+    },
+    {
+      "key": "or:1.2:def:AssessmentLineItemDType/metadata",
+      "kind": "property",
+      "path": "metadata",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:AssessmentLineItemDType/parentAssessmentLineItem",
+      "kind": "property",
+      "path": "parentAssessmentLineItem",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:AssessmentLineItemDType/resultValueMax",
+      "kind": "property",
+      "path": "resultValueMax",
+      "jsonType": "number",
+      "description": "Model Primitive Datatype = Float. The maximum value (numeric) that can be assigned to the score attribute in a result. The score scale mapping should be used to map to other scores.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:AssessmentLineItemDType/resultValueMin",
+      "kind": "property",
+      "path": "resultValueMin",
+      "jsonType": "number",
+      "description": "Model Primitive Datatype = Float. The minimum value (numeric) that can be assigned to the score attribute in a result. The score scale mapping should be used to map to other scores.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:AssessmentLineItemDType/scoreScale",
+      "kind": "property",
+      "path": "scoreScale",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:AssessmentLineItemDType/sourcedId",
+      "kind": "property",
+      "path": "sourcedId",
+      "jsonType": "string",
+      "required": true,
+      "normative": true,
+      "description": "Model Primitive Datatype = String. The sourcedId of the object. All objects MUST be identified by a Source Identifier. This is a GUID System ID for an object. This is the GUID that SYSTEMS will refer to when making API calls, or when needing to identify an object. It is RECOMMEN…",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:AssessmentLineItemDType/status",
+      "kind": "property",
+      "path": "status",
+      "jsonType": "string",
+      "required": true,
+      "enumValues": [
+        "active",
+        "tobedeleted"
+      ],
+      "normative": true,
+      "description": "All objects MUST BE either 'active' or 'tobedeleted'. Something which is flagged 'tobedeleted' is to be considered safe to delete. Systems can delete records that are flagged as such if they wish, but they are not under any compulsion to do so. In v1.1 the enumeration value of '…",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:AssessmentLineItemDType/title",
+      "kind": "property",
+      "path": "title",
+      "jsonType": "string",
+      "required": true,
+      "description": "Model Primitive Datatype = NormalizedString. The title, human readable, for the assessment lineItem. This should allow the assessment lineItem to be distinguished from its peer assessment lineItems.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:AssessmentLineItemGUIDRefDType",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "This is the container for reference to a OneRoster 'AssessmentLineItem' object that has an allocated sourcedId (GUID)."
+    },
+    {
+      "key": "or:1.2:def:AssessmentLineItemGUIDRefDType/href",
+      "kind": "property",
+      "path": "href",
+      "jsonType": "string",
+      "required": true,
+      "description": "Model Primitive Datatype = AnyURI. The URI for the type of object being referenced.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:AssessmentLineItemGUIDRefDType/sourcedId",
+      "kind": "property",
+      "path": "sourcedId",
+      "jsonType": "string",
+      "required": true,
+      "description": "Model Primitive Datatype = String. The globally unique identifier of the object being referenced.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:AssessmentLineItemGUIDRefDType/type",
+      "kind": "property",
+      "path": "type",
+      "jsonType": "string",
+      "required": true,
+      "enumValues": [
+        "assessmentLineItem"
+      ],
+      "description": "The type of object being referenced i.e. an 'assessmentLineItem'.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:AssessmentLineItemSetDType",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "This is the container for a collection of assessment lineItem instances for a message payload. This may be empty if no instances are found that sustain the applied query constraints. The order is not significant."
+    },
+    {
+      "key": "or:1.2:def:AssessmentLineItemSetDType/assessmentLineItems",
+      "kind": "property",
+      "path": "assessmentLineItems",
+      "jsonType": "array",
+      "description": "The collection of assessment lineItem instances. The order is not significant. The corresponding query constraints may result in no instances being returned."
+    },
+    {
+      "key": "or:1.2:def:AssessmentLineItemSetDType/assessmentLineItems/[]",
+      "kind": "property",
+      "path": "assessmentLineItems/[]"
+    },
+    {
+      "key": "or:1.2:def:AssessmentResultDType",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "This is the container for the AssessmentResult record. An assessment result consists of the assigned score plus the context for that score."
+    },
+    {
+      "key": "or:1.2:def:AssessmentResultDType/assessmentLineItem",
+      "kind": "property",
+      "path": "assessmentLineItem",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:AssessmentResultDType/comment",
+      "kind": "property",
+      "path": "comment",
+      "jsonType": "string",
+      "description": "Model Primitive Datatype = String. A human readable comment about the score.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:AssessmentResultDType/dateLastModified",
+      "kind": "property",
+      "path": "dateLastModified",
+      "jsonType": "string",
+      "required": true,
+      "normative": true,
+      "description": "Model Primitive Datatype = DateTime. All objects MUST be annotated with the dateTime upon which they were last modified. This enables requesters to query for just the latest objects. DateTimes MUST be expressed in W3C profile of [ISO 8601] and MUST contain the UTC timezone.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:AssessmentResultDType/incomplete",
+      "kind": "property",
+      "path": "incomplete",
+      "jsonType": "string",
+      "enumValues": [
+        "true",
+        "false"
+      ],
+      "description": "This is used to indicate that the student's work product has been submitted but it is deemed incomplete by the teacher.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:AssessmentResultDType/inProgress",
+      "kind": "property",
+      "path": "inProgress",
+      "jsonType": "string",
+      "enumValues": [
+        "true",
+        "false"
+      ],
+      "description": "This is used to indicate that the associated work activity has been assigned and student's work product is not yet expected to have been submitted.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:AssessmentResultDType/late",
+      "kind": "property",
+      "path": "late",
+      "jsonType": "string",
+      "enumValues": [
+        "true",
+        "false"
+      ],
+      "description": "This is used to indicate that the student's work product is either past due or it has been submitted past the due date. The score on this result may be impacted as as result of this flag.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:AssessmentResultDType/learningObjectiveSet",
+      "kind": "property",
+      "path": "learningObjectiveSet",
+      "jsonType": "array",
+      "description": "The set of identifiers for the learning objectives to which this result is aligned. Any number groups of learning objectives can be assigned.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:AssessmentResultDType/learningObjectiveSet/[]",
+      "kind": "property",
+      "path": "learningObjectiveSet/[]"
+    },
+    {
+      "key": "or:1.2:def:AssessmentResultDType/metadata",
+      "kind": "property",
+      "path": "metadata",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:AssessmentResultDType/missing",
+      "kind": "property",
+      "path": "missing",
+      "jsonType": "string",
+      "enumValues": [
+        "true",
+        "false"
+      ],
+      "description": "This is used to indicate that the student's work product as not been submitted.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:AssessmentResultDType/score",
+      "kind": "property",
+      "path": "score",
+      "jsonType": "number",
+      "description": "Model Primitive Datatype = Float. The score for the result. If a scoreScale is assigned then the value must align with the scale.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:AssessmentResultDType/scoreDate",
+      "kind": "property",
+      "path": "scoreDate",
+      "jsonType": "string",
+      "required": true,
+      "description": "Model Primitive Datatype = Date. The date at which the score is assigned or there is an update to the result e.g. change in the 'scoreStatus'.. The format is YYYY-MM-DD as defined in [ISO 8601].",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:AssessmentResultDType/scorePercentile",
+      "kind": "property",
+      "path": "scorePercentile",
+      "jsonType": "number",
+      "description": "Model Primitive Datatype = Float. The percentile rank of a score is the percentage of scores in its frequency distribution that are equal to or lower than it.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:AssessmentResultDType/scoreScale",
+      "kind": "property",
+      "path": "scoreScale",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:AssessmentResultDType/scoreStatus",
+      "kind": "property",
+      "path": "scoreStatus",
+      "required": true,
+      "description": "The status of the score. The value is from an extensible enumerated vocabulary.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:AssessmentResultDType/sourcedId",
+      "kind": "property",
+      "path": "sourcedId",
+      "jsonType": "string",
+      "required": true,
+      "normative": true,
+      "description": "Model Primitive Datatype = String. The sourcedId of the object. All objects MUST be identified by a Source Identifier. This is a GUID System ID for an object. This is the GUID that SYSTEMS will refer to when making API calls, or when needing to identify an object. It is RECOMMEN…",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:AssessmentResultDType/status",
+      "kind": "property",
+      "path": "status",
+      "jsonType": "string",
+      "required": true,
+      "enumValues": [
+        "active",
+        "tobedeleted"
+      ],
+      "normative": true,
+      "description": "All objects MUST BE either 'active' or 'tobedeleted'. Something which is flagged 'tobedeleted' is to be considered safe to delete. Systems can delete records that are flagged as such if they wish, but they are not under any compulsion to do so. In v1.1 the enumeration value of '…",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:AssessmentResultDType/student",
+      "kind": "property",
+      "path": "student",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:AssessmentResultDType/textScore",
+      "kind": "property",
+      "path": "textScore",
+      "jsonType": "string",
+      "description": "Model Primitive Datatype = NormalizedString. An optional non-numeric score value. If a scoreScale is assigned then the value must align with the scale.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:AssessmentResultSetDType",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "This is the container for a collection of assessment result instances for a message payload. This may be empty if no instances are found that sustain the applied query constraints. The order is not significant."
+    },
+    {
+      "key": "or:1.2:def:AssessmentResultSetDType/assessmentResults",
+      "kind": "property",
+      "path": "assessmentResults",
+      "jsonType": "array",
+      "description": "The collection of assessment result instances. The order is not significant. The corresponding query constraints may result in no instances being returned."
+    },
+    {
+      "key": "or:1.2:def:AssessmentResultSetDType/assessmentResults/[]",
+      "kind": "property",
+      "path": "assessmentResults/[]"
+    },
+    {
+      "key": "or:1.2:def:CategoriesSetDType",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "This is the container for a collection of category instances for a message payload. This may be empty if no instances are found that sustain the applied query constraints. The order is not significant."
+    },
+    {
+      "key": "or:1.2:def:CategoriesSetDType/categories",
+      "kind": "property",
+      "path": "categories",
+      "jsonType": "array",
+      "description": "The collection of category instances. The order is not significant. The corresponding query constraints may result in no instances being returned."
+    },
+    {
+      "key": "or:1.2:def:CategoriesSetDType/categories/[]",
+      "kind": "property",
+      "path": "categories/[]"
+    },
+    {
+      "key": "or:1.2:def:CategoryDType",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "A Category is the name given to a grouping of line items (line items being equivalent to assignments which students will complete)."
+    },
+    {
+      "key": "or:1.2:def:CategoryDType/dateLastModified",
+      "kind": "property",
+      "path": "dateLastModified",
+      "jsonType": "string",
+      "required": true,
+      "normative": true,
+      "description": "Model Primitive Datatype = DateTime. All objects MUST be annotated with the dateTime upon which they were last modified. This enables requesters to query for just the latest objects. DateTimes MUST be expressed in W3C profile of [ISO 8601] and MUST contain the UTC timezone.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:CategoryDType/metadata",
+      "kind": "property",
+      "path": "metadata",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:CategoryDType/sourcedId",
+      "kind": "property",
+      "path": "sourcedId",
+      "jsonType": "string",
+      "required": true,
+      "normative": true,
+      "description": "Model Primitive Datatype = String. The sourcedId of the object. All objects MUST be identified by a Source Identifier. This is a GUID System ID for an object. This is the GUID that SYSTEMS will refer to when making API calls, or when needing to identify an object. It is RECOMMEN…",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:CategoryDType/status",
+      "kind": "property",
+      "path": "status",
+      "jsonType": "string",
+      "required": true,
+      "enumValues": [
+        "active",
+        "tobedeleted"
+      ],
+      "normative": true,
+      "description": "All objects MUST BE either 'active' or 'tobedeleted'. Something which is flagged 'tobedeleted' is to be considered safe to delete. Systems can delete records that are flagged as such if they wish, but they are not under any compulsion to do so. In v1.1 the enumeration value of '…",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:CategoryDType/title",
+      "kind": "property",
+      "path": "title",
+      "jsonType": "string",
+      "required": true,
+      "description": "Model Primitive Datatype = NormalizedString. The human readable title for the category.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:CategoryDType/weight",
+      "kind": "property",
+      "path": "weight",
+      "jsonType": "number",
+      "description": "Model Primitive Datatype = Float. Total weight of this grading category in calculation of the course final score.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:CategoryGUIDRefDType",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "This is the container for reference to a OneRoster 'Category' object that has an allocated sourcedId (GUID)."
+    },
+    {
+      "key": "or:1.2:def:CategoryGUIDRefDType/href",
+      "kind": "property",
+      "path": "href",
+      "jsonType": "string",
+      "required": true,
+      "description": "Model Primitive Datatype = AnyURI. The URI for the type of object being referenced.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:CategoryGUIDRefDType/sourcedId",
+      "kind": "property",
+      "path": "sourcedId",
+      "jsonType": "string",
+      "required": true,
+      "description": "Model Primitive Datatype = String. The globally unique identifier of the object being referenced.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:CategoryGUIDRefDType/type",
+      "kind": "property",
+      "path": "type",
+      "jsonType": "string",
+      "required": true,
+      "enumValues": [
+        "category"
+      ],
+      "description": "The type of object being referenced i.e. a 'category'.",
       "modelled": "yes"
     },
     {
@@ -989,6 +1520,48 @@
       "path": "enrollments/[]"
     },
     {
+      "key": "or:1.2:def:GUIDPairDType",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "The container for the mapping between the supplied (assigned by the requesting system) and allocated (assigned by the responding system) sourcedIds i.e. GUIDs."
+    },
+    {
+      "key": "or:1.2:def:GUIDPairDType/allocatedSourcedId",
+      "kind": "property",
+      "path": "allocatedSourcedId",
+      "jsonType": "string",
+      "required": true,
+      "description": "Model Primitive Datatype = String. The sourcedId that has been allocated by the system on which the new record has been created."
+    },
+    {
+      "key": "or:1.2:def:GUIDPairDType/suppliedSourcedId",
+      "kind": "property",
+      "path": "suppliedSourcedId",
+      "jsonType": "string",
+      "required": true,
+      "description": "Model Primitive Datatype = String. The temporary sourcedId that has been allocated by the requesting system. This sourcedId is used to enable identification of the original record for which the new sourcedId has been allocated at the service provider."
+    },
+    {
+      "key": "or:1.2:def:GUIDPairSetDType",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "The container for the set of sourcedId pairs. This is used to provide the mapping between a set of original/new values allocated to a set of sourcedIds."
+    },
+    {
+      "key": "or:1.2:def:GUIDPairSetDType/sourcedIdPairs",
+      "kind": "property",
+      "path": "sourcedIdPairs",
+      "jsonType": "array",
+      "description": "The set of sourcedId pairs. The order is not significant as each pair contains the information between the original/new values."
+    },
+    {
+      "key": "or:1.2:def:GUIDPairSetDType/sourcedIdPairs/[]",
+      "kind": "property",
+      "path": "sourcedIdPairs/[]"
+    },
+    {
       "key": "or:1.2:def:imsx_CodeMinorDType",
       "kind": "definition",
       "path": "",
@@ -1087,6 +1660,306 @@
         "error"
       ],
       "description": "The severity value (from the corresponding enumerated vocabulary). See Appendix B for further information on the interpretation of this set of codes."
+    },
+    {
+      "key": "or:1.2:def:LearningObjectiveResultsDType",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "This is the container for a learning objective identifier. This also allows a mastery score to be aligned with the learning objective."
+    },
+    {
+      "key": "or:1.2:def:LearningObjectiveResultsDType/learningObjectiveId",
+      "kind": "property",
+      "path": "learningObjectiveId",
+      "jsonType": "string",
+      "required": true,
+      "normative": true,
+      "description": "Model Primitive Datatype = NormalizedString. The unique identifier for the associated learning objective. If this is a CASE identifier it MUST be a valid UUID.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:LearningObjectiveResultsDType/score",
+      "kind": "property",
+      "path": "score",
+      "jsonType": "number",
+      "description": "Model Primitive Datatype = Float. The optional mastery score supplied as a numeric value.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:LearningObjectiveResultsDType/textScore",
+      "kind": "property",
+      "path": "textScore",
+      "jsonType": "string",
+      "description": "Model Primitive Datatype = NormalizedString. The optional mastery score supplied in a non-numeric form.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:LearningObjectiveScoreSetDType",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "This is the container for the set of learning objective identifiers that are from a single source responsible for creating those identifiers. This also allows a mastery score to be aligned with a learning objective."
+    },
+    {
+      "key": "or:1.2:def:LearningObjectiveScoreSetDType/learningObjectiveResults",
+      "kind": "property",
+      "path": "learningObjectiveResults",
+      "jsonType": "array",
+      "required": true,
+      "normative": true,
+      "description": "The set of unique identifiers for the associated learning objectives (these may have alignment with a mastery score). If these are CASE identifiers they MUST be valid UUIDs.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:LearningObjectiveScoreSetDType/learningObjectiveResults/[]",
+      "kind": "property",
+      "path": "learningObjectiveResults/[]"
+    },
+    {
+      "key": "or:1.2:def:LearningObjectiveScoreSetDType/source",
+      "kind": "property",
+      "path": "source",
+      "required": true,
+      "description": "The source responsible for creating the learning objective identifiers. The permitted values are from an extensible vocabulary.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:LearningObjectiveSetDType",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "This is the container for the set of learning objective identifiers that are from a single source responsible for creating those identifiers."
+    },
+    {
+      "key": "or:1.2:def:LearningObjectiveSetDType/learningObjectiveIds",
+      "kind": "property",
+      "path": "learningObjectiveIds",
+      "jsonType": "array",
+      "required": true,
+      "normative": true,
+      "description": "Model Primitive Datatype = NormalizedString. The set of unique identifiers for the associated learning objectives. If these are CASE identifiers they MUST be valid UUIDs.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:LearningObjectiveSetDType/learningObjectiveIds/[]",
+      "kind": "property",
+      "path": "learningObjectiveIds/[]",
+      "jsonType": "string"
+    },
+    {
+      "key": "or:1.2:def:LearningObjectiveSetDType/source",
+      "kind": "property",
+      "path": "source",
+      "required": true,
+      "description": "The source responsible for creating the learning objective identifiers. The permitted values are from an extensible vocabulary.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:LineItemDType",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "This is the container for the definition of a lineItem. A lineItem is a collection of results for a set of students who are completing an assignment as part of a class at a school."
+    },
+    {
+      "key": "or:1.2:def:LineItemDType/academicSession",
+      "kind": "property",
+      "path": "academicSession",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:LineItemDType/assignDate",
+      "kind": "property",
+      "path": "assignDate",
+      "jsonType": "string",
+      "required": true,
+      "description": "Model Primitive Datatype = DateTime. The date/time the activity being addressed by the lineItem was assigned to the student. This has a format as defined in [ISO 8601].",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:LineItemDType/category",
+      "kind": "property",
+      "path": "category",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:LineItemDType/class",
+      "kind": "property",
+      "path": "class",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:LineItemDType/dateLastModified",
+      "kind": "property",
+      "path": "dateLastModified",
+      "jsonType": "string",
+      "required": true,
+      "normative": true,
+      "description": "Model Primitive Datatype = DateTime. All objects MUST be annotated with the dateTime upon which they were last modified. This enables requesters to query for just the latest objects. DateTimes MUST be expressed in W3C profile of [ISO 8601] and MUST contain the UTC timezone.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:LineItemDType/description",
+      "kind": "property",
+      "path": "description",
+      "jsonType": "string",
+      "description": "Model Primitive Datatype = String. A human readable description of the usage of the lineItem.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:LineItemDType/dueDate",
+      "kind": "property",
+      "path": "dueDate",
+      "jsonType": "string",
+      "required": true,
+      "description": "Model Primitive Datatype = DateTime. The date/time by which the assignment must be completed and submitted. This has the dateTime format as defined in [ISO 8601].",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:LineItemDType/gradingPeriod",
+      "kind": "property",
+      "path": "gradingPeriod",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:LineItemDType/learningObjectiveSet",
+      "kind": "property",
+      "path": "learningObjectiveSet",
+      "jsonType": "array",
+      "description": "The set of identifiers for the learning objectives to which this assessment is aligned. Any number groups of learning objectives can be assigned.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:LineItemDType/learningObjectiveSet/[]",
+      "kind": "property",
+      "path": "learningObjectiveSet/[]"
+    },
+    {
+      "key": "or:1.2:def:LineItemDType/metadata",
+      "kind": "property",
+      "path": "metadata",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:LineItemDType/resultValueMax",
+      "kind": "property",
+      "path": "resultValueMax",
+      "jsonType": "number",
+      "description": "Model Primitive Datatype = Float. The maximum value (numeric) that can be assigned to the score attribute in a result. The score scale mapping should be used to map to other scores.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:LineItemDType/resultValueMin",
+      "kind": "property",
+      "path": "resultValueMin",
+      "jsonType": "number",
+      "description": "Model Primitive Datatype = Float. The minimum value (numeric) that can be assigned to the score attribute in a result. The score scale mapping should be used to map to other scores.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:LineItemDType/school",
+      "kind": "property",
+      "path": "school",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:LineItemDType/scoreScale",
+      "kind": "property",
+      "path": "scoreScale",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:LineItemDType/sourcedId",
+      "kind": "property",
+      "path": "sourcedId",
+      "jsonType": "string",
+      "required": true,
+      "normative": true,
+      "description": "Model Primitive Datatype = String. The sourcedId of the object. All objects MUST be identified by a Source Identifier. This is a GUID System ID for an object. This is the GUID that SYSTEMS will refer to when making API calls, or when needing to identify an object. It is RECOMMEN…",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:LineItemDType/status",
+      "kind": "property",
+      "path": "status",
+      "jsonType": "string",
+      "required": true,
+      "enumValues": [
+        "active",
+        "tobedeleted"
+      ],
+      "normative": true,
+      "description": "All objects MUST BE either 'active' or 'tobedeleted'. Something which is flagged 'tobedeleted' is to be considered safe to delete. Systems can delete records that are flagged as such if they wish, but they are not under any compulsion to do so. In v1.1 the enumeration value of '…",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:LineItemDType/title",
+      "kind": "property",
+      "path": "title",
+      "jsonType": "string",
+      "required": true,
+      "description": "Model Primitive Datatype = NormalizedString. The title, human readable, for the lineItem. This should allow the lineItem to be distinguished from its peer lineItems.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:LineItemGUIDRefDType",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "This is the container for reference to a OneRoster 'LineItem' object that has an allocated sourcedId (GUID)."
+    },
+    {
+      "key": "or:1.2:def:LineItemGUIDRefDType/href",
+      "kind": "property",
+      "path": "href",
+      "jsonType": "string",
+      "required": true,
+      "description": "Model Primitive Datatype = AnyURI. The URI for the type of object being referenced.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:LineItemGUIDRefDType/sourcedId",
+      "kind": "property",
+      "path": "sourcedId",
+      "jsonType": "string",
+      "required": true,
+      "description": "Model Primitive Datatype = String. The globally unique identifier of the object being referenced.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:LineItemGUIDRefDType/type",
+      "kind": "property",
+      "path": "type",
+      "jsonType": "string",
+      "required": true,
+      "enumValues": [
+        "lineItem"
+      ],
+      "description": "The type of object being referenced i.e. a 'lineItem'.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:LineItemSetDType",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "This is the container for a collection of lineItem instances for a message payload. This may be empty if no instances are found that sustain the applied query constraints. The order is not significant."
+    },
+    {
+      "key": "or:1.2:def:LineItemSetDType/lineItems",
+      "kind": "property",
+      "path": "lineItems",
+      "jsonType": "array",
+      "description": "The collection of lineItem instances. The order is not significant. The corresponding query constraints may result in no instances being returned."
+    },
+    {
+      "key": "or:1.2:def:LineItemSetDType/lineItems/[]",
+      "kind": "property",
+      "path": "lineItems/[]"
     },
     {
       "key": "or:1.2:def:MetadataDType",
@@ -1244,6 +2117,112 @@
       "path": "orgs/[]"
     },
     {
+      "key": "or:1.2:def:ResourceDType",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "normative": true,
+      "description": "A resource is a description of learning content that is related to a course and/or a class and/or a user. This identifies a resource that is used by a teacher, learner, etc. as part of the learning experience. A resource MUST be associated to a course and/or a class."
+    },
+    {
+      "key": "or:1.2:def:ResourceDType/applicationId",
+      "kind": "property",
+      "path": "applicationId",
+      "jsonType": "string",
+      "description": "Model Primitive Datatype = String. Identifier for the application associated with the resource. The nature, and how this identifier is assigned is not defined by this specification.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:ResourceDType/dateLastModified",
+      "kind": "property",
+      "path": "dateLastModified",
+      "jsonType": "string",
+      "required": true,
+      "normative": true,
+      "description": "Model Primitive Datatype = DateTime. All objects MUST be annotated with the dateTime upon which they were last modified. This enables requesters to query for just the latest objects. DateTimes MUST be expressed in W3C profile of [ISO 8601] and MUST contain the UTC timezone.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:ResourceDType/importance",
+      "kind": "property",
+      "path": "importance",
+      "jsonType": "string",
+      "enumValues": [
+        "primary",
+        "secondary"
+      ],
+      "description": "This is an indicator of the significance of the resource i.e. primary or secondary.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:ResourceDType/metadata",
+      "kind": "property",
+      "path": "metadata",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:ResourceDType/roles",
+      "kind": "property",
+      "path": "roles",
+      "jsonType": "array",
+      "description": "The set of roles, types of users, who are expected to make use of the resource.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:ResourceDType/roles/[]",
+      "kind": "property",
+      "path": "roles/[]"
+    },
+    {
+      "key": "or:1.2:def:ResourceDType/sourcedId",
+      "kind": "property",
+      "path": "sourcedId",
+      "jsonType": "string",
+      "required": true,
+      "normative": true,
+      "description": "Model Primitive Datatype = String. All Objects MUST be identified by a Source Identifier. This is a GUID i.e. a unique system interoperability identifier for an object. This is the GUID that SYSTEMS will refer to when making API calls, or when needing to identify an object. It i…",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:ResourceDType/status",
+      "kind": "property",
+      "path": "status",
+      "jsonType": "string",
+      "required": true,
+      "enumValues": [
+        "active",
+        "tobedeleted"
+      ],
+      "normative": true,
+      "description": "All objects MUST BE either 'active' or 'tobedeleted'. Something which is flagged 'tobedeleted' is to be considered safe to delete. Systems can delete records that are flagged as such if they wish, but they are not under any compulsion to do so. NOTE: In v1.1 the enumeration valu…",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:ResourceDType/title",
+      "kind": "property",
+      "path": "title",
+      "jsonType": "string",
+      "description": "Model Primitive Datatype = NormalizedString. A human readable title/label for the resource.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:ResourceDType/vendorId",
+      "kind": "property",
+      "path": "vendorId",
+      "jsonType": "string",
+      "description": "Model Primitive Datatype = String. Identifier for the vendor who created the resource. This will be assigned by 1EdTech as part of Conformance Certification.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:ResourceDType/vendorResourceId",
+      "kind": "property",
+      "path": "vendorResourceId",
+      "jsonType": "string",
+      "required": true,
+      "description": "Model Primitive Datatype = String. This is a unique identifier for the resource allocated by the vendor.",
+      "modelled": "yes"
+    },
+    {
       "key": "or:1.2:def:ResourceGUIDRefDType",
       "kind": "definition",
       "path": "",
@@ -1279,6 +2258,219 @@
       ],
       "description": "The type of object being referenced i.e. a 'resource'.",
       "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:ResourceSetDType",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "The container for a collection of resource records. The order is not significant. This may be empty. The service provider may not have any resources or cannot identfiy any resources that fit the specified filter constraints."
+    },
+    {
+      "key": "or:1.2:def:ResourceSetDType/resources",
+      "kind": "property",
+      "path": "resources",
+      "jsonType": "array",
+      "description": "The set of contained resource identfiers."
+    },
+    {
+      "key": "or:1.2:def:ResourceSetDType/resources/[]",
+      "kind": "property",
+      "path": "resources/[]"
+    },
+    {
+      "key": "or:1.2:def:ResultDType",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "This is the container for the Result record. A result consists of the assigned score plus the context for that score."
+    },
+    {
+      "key": "or:1.2:def:ResultDType/class",
+      "kind": "property",
+      "path": "class",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:ResultDType/comment",
+      "kind": "property",
+      "path": "comment",
+      "jsonType": "string",
+      "description": "Model Primitive Datatype = String. A human readable comment about the score.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:ResultDType/dateLastModified",
+      "kind": "property",
+      "path": "dateLastModified",
+      "jsonType": "string",
+      "required": true,
+      "normative": true,
+      "description": "Model Primitive Datatype = DateTime. All objects MUST be annotated with the dateTime upon which they were last modified. This enables requesters to query for just the latest objects. DateTimes MUST be expressed in W3C profile of [ISO 8601] and MUST contain the UTC timezone.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:ResultDType/incomplete",
+      "kind": "property",
+      "path": "incomplete",
+      "jsonType": "string",
+      "enumValues": [
+        "true",
+        "false"
+      ],
+      "description": "This is used to indicate that the student's work product has been submitted but it is deemed incomplete by the teacher.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:ResultDType/inProgress",
+      "kind": "property",
+      "path": "inProgress",
+      "jsonType": "string",
+      "enumValues": [
+        "true",
+        "false"
+      ],
+      "description": "This is used to indicate that the associated work activity has been assigned and student's work product is not yet expected to have been submitted.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:ResultDType/late",
+      "kind": "property",
+      "path": "late",
+      "jsonType": "string",
+      "enumValues": [
+        "true",
+        "false"
+      ],
+      "description": "This is used to indicate that the student's work product is either past due or it has been submitted past the due date. The score on this result may be impacted as as result of this flag.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:ResultDType/learningObjectiveSet",
+      "kind": "property",
+      "path": "learningObjectiveSet",
+      "jsonType": "array",
+      "description": "The set of identifiers for the learning objectives to which this result is aligned. Any number groups of learning objectives can be assigned.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:ResultDType/learningObjectiveSet/[]",
+      "kind": "property",
+      "path": "learningObjectiveSet/[]"
+    },
+    {
+      "key": "or:1.2:def:ResultDType/lineItem",
+      "kind": "property",
+      "path": "lineItem",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:ResultDType/metadata",
+      "kind": "property",
+      "path": "metadata",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:ResultDType/missing",
+      "kind": "property",
+      "path": "missing",
+      "jsonType": "string",
+      "enumValues": [
+        "true",
+        "false"
+      ],
+      "description": "This is used to indicate that the student's work product as not been submitted.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:ResultDType/score",
+      "kind": "property",
+      "path": "score",
+      "jsonType": "number",
+      "description": "Model Primitive Datatype = Float. The score for the result. If a scoreScale is assigned then the value must align with the scale.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:ResultDType/scoreDate",
+      "kind": "property",
+      "path": "scoreDate",
+      "jsonType": "string",
+      "required": true,
+      "description": "Model Primitive Datatype = Date. The date at which the score is assigned or there is an update to the result e.g. change in the 'scoreStatus'. The format is YYYY-MM-DD as defined in [ISO 8601].",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:ResultDType/scoreScale",
+      "kind": "property",
+      "path": "scoreScale",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:ResultDType/scoreStatus",
+      "kind": "property",
+      "path": "scoreStatus",
+      "required": true,
+      "description": "The status of the score. The value is from an extensible enumerated vocabulary.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:ResultDType/sourcedId",
+      "kind": "property",
+      "path": "sourcedId",
+      "jsonType": "string",
+      "required": true,
+      "normative": true,
+      "description": "Model Primitive Datatype = String. The sourcedId of the object. All objects MUST be identified by a Source Identifier. This is a GUID System ID for an object. This is the GUID that SYSTEMS will refer to when making API calls, or when needing to identify an object. It is RECOMMEN…",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:ResultDType/status",
+      "kind": "property",
+      "path": "status",
+      "jsonType": "string",
+      "required": true,
+      "enumValues": [
+        "active",
+        "tobedeleted"
+      ],
+      "normative": true,
+      "description": "All objects MUST BE either 'active' or 'tobedeleted'. Something which is flagged 'tobedeleted' is to be considered safe to delete. Systems can delete records that are flagged as such if they wish, but they are not under any compulsion to do so. In v1.1 the enumeration value of '…",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:ResultDType/student",
+      "kind": "property",
+      "path": "student",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:ResultDType/textScore",
+      "kind": "property",
+      "path": "textScore",
+      "jsonType": "string",
+      "description": "Model Primitive Datatype = NormalizedString. An optional non-numeric score value. If a scoreScale is assigned then the value must align with the scale. This attribute was added in OR 1.2.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:ResultSetDType",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "This is the container for a collection of result instances for a message payload. This may be empty if no instances are found that sustain the applied query constraints. The order is not significant."
+    },
+    {
+      "key": "or:1.2:def:ResultSetDType/results",
+      "kind": "property",
+      "path": "results",
+      "jsonType": "array",
+      "description": "The collection of result instances. The order is not significant. The corresponding query constraints may result in no instances being returned."
+    },
+    {
+      "key": "or:1.2:def:ResultSetDType/results/[]",
+      "kind": "property",
+      "path": "results/[]"
     },
     {
       "key": "or:1.2:def:RoleDType",
@@ -1341,6 +2533,179 @@
       "modelled": "yes"
     },
     {
+      "key": "or:1.2:def:ScoreScaleDType",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "The container for the definition Score Scale mapping i.e. the relationship between two score scales."
+    },
+    {
+      "key": "or:1.2:def:ScoreScaleDType/class",
+      "kind": "property",
+      "path": "class",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:ScoreScaleDType/course",
+      "kind": "property",
+      "path": "course",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:ScoreScaleDType/dateLastModified",
+      "kind": "property",
+      "path": "dateLastModified",
+      "jsonType": "string",
+      "required": true,
+      "normative": true,
+      "description": "Model Primitive Datatype = DateTime. All objects MUST be annotated with the dateTime upon which they were last modified. This enables requesters to query for just the latest objects. DateTimes MUST be expressed in W3C profile of [ISO 8601] and MUST contain the UTC timezone.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:ScoreScaleDType/metadata",
+      "kind": "property",
+      "path": "metadata",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:ScoreScaleDType/scoreScaleValue",
+      "kind": "property",
+      "path": "scoreScaleValue",
+      "jsonType": "array",
+      "required": true,
+      "description": "The set of mappings for this score scale.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:ScoreScaleDType/scoreScaleValue/[]",
+      "kind": "property",
+      "path": "scoreScaleValue/[]"
+    },
+    {
+      "key": "or:1.2:def:ScoreScaleDType/sourcedId",
+      "kind": "property",
+      "path": "sourcedId",
+      "jsonType": "string",
+      "required": true,
+      "normative": true,
+      "description": "Model Primitive Datatype = String. The sourcedId of the object. All objects MUST be identified by a Source Identifier. This is a GUID System ID for an object. This is the GUID that SYSTEMS will refer to when making API calls, or when needing to identify an object. It is RECOMMEN…",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:ScoreScaleDType/status",
+      "kind": "property",
+      "path": "status",
+      "jsonType": "string",
+      "required": true,
+      "enumValues": [
+        "active",
+        "tobedeleted"
+      ],
+      "normative": true,
+      "description": "All objects MUST BE either 'active' or 'tobedeleted'. Something which is flagged 'tobedeleted' is to be considered safe to delete. Systems can delete records that are flagged as such if they wish, but they are not under any compulsion to do so. In v1.1 the enumeration value of '…",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:ScoreScaleDType/title",
+      "kind": "property",
+      "path": "title",
+      "jsonType": "string",
+      "required": true,
+      "description": "Model Primitive Datatype = NormalizedString. The human readable title for the score scale mapping.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:ScoreScaleDType/type",
+      "kind": "property",
+      "path": "type",
+      "jsonType": "string",
+      "required": true,
+      "description": "Model Primitive Datatype = NormalizedString. The type of score scale mapping. At present there is no predefined vocabulary. This should be used by an organization to differentiate between the score scales that it produces.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:ScoreScaleGUIDRefDType",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "This is the container for reference to a OneRoster 'ScoreScale' object that has an allocated sourcedId (GUID)."
+    },
+    {
+      "key": "or:1.2:def:ScoreScaleGUIDRefDType/href",
+      "kind": "property",
+      "path": "href",
+      "jsonType": "string",
+      "required": true,
+      "description": "Model Primitive Datatype = AnyURI. The URI for the type of object being referenced.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:ScoreScaleGUIDRefDType/sourcedId",
+      "kind": "property",
+      "path": "sourcedId",
+      "jsonType": "string",
+      "required": true,
+      "description": "Model Primitive Datatype = String. The globally unique identifier of the object being referenced.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:ScoreScaleGUIDRefDType/type",
+      "kind": "property",
+      "path": "type",
+      "jsonType": "string",
+      "required": true,
+      "enumValues": [
+        "scoreScale"
+      ],
+      "description": "The type of object being referenced i.e. a 'scoreScale'.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:ScoreScaleSetDType",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "This is the container for a collection of scoreScale instances for a message payload. This may be empty if no instances are found that sustain the applied query constraints. The order is not significant."
+    },
+    {
+      "key": "or:1.2:def:ScoreScaleSetDType/scoreScales",
+      "kind": "property",
+      "path": "scoreScales",
+      "jsonType": "array",
+      "description": "The collection of scoreScale instances. The order is not significant. The corresponding query constraints may result in no instances being returned."
+    },
+    {
+      "key": "or:1.2:def:ScoreScaleSetDType/scoreScales/[]",
+      "kind": "property",
+      "path": "scoreScales/[]"
+    },
+    {
+      "key": "or:1.2:def:ScoreScaleValueDType",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "A specific mapping of values between two score scales. The left hand side (LHS) value is the reference point. Examples of this mapping are: '7' maps to 'A', '7'-'10' maps to 'A', etc."
+    },
+    {
+      "key": "or:1.2:def:ScoreScaleValueDType/itemValueLHS",
+      "kind": "property",
+      "path": "itemValueLHS",
+      "jsonType": "string",
+      "required": true,
+      "description": "Model Primitive Datatype = NormalizedString. The left hand side value of the mapping relationship. The format is either a single value ('x') or a range ('x' - 'y'). In the case of a single value this is considered to be the inclusive lower value for the implied range. When a ran…",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:ScoreScaleValueDType/itemValueRHS",
+      "kind": "property",
+      "path": "itemValueRHS",
+      "jsonType": "string",
+      "required": true,
+      "description": "Model Primitive Datatype = NormalizedString. The right hand side value of the mapping relationship i.e. the equivalent value to the reference point defined in the LHS.",
+      "modelled": "yes"
+    },
+    {
       "key": "or:1.2:def:SingleAcademicSessionDType",
       "kind": "definition",
       "path": "",
@@ -1351,6 +2716,45 @@
       "key": "or:1.2:def:SingleAcademicSessionDType/academicSession",
       "kind": "property",
       "path": "academicSession",
+      "required": true
+    },
+    {
+      "key": "or:1.2:def:SingleAssessmentLineItemDType",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "This is the container for a single assessment lineItem instance for a message payload."
+    },
+    {
+      "key": "or:1.2:def:SingleAssessmentLineItemDType/assessmentLineItem",
+      "kind": "property",
+      "path": "assessmentLineItem",
+      "required": true
+    },
+    {
+      "key": "or:1.2:def:SingleAssessmentResultDType",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "This is the container for a single assessment result instance for a message payload."
+    },
+    {
+      "key": "or:1.2:def:SingleAssessmentResultDType/assessmentResult",
+      "kind": "property",
+      "path": "assessmentResult",
+      "required": true
+    },
+    {
+      "key": "or:1.2:def:SingleCategoryDType",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "This is the container for a single category instance for a message payload."
+    },
+    {
+      "key": "or:1.2:def:SingleCategoryDType/category",
+      "kind": "property",
+      "path": "category",
       "required": true
     },
     {
@@ -1406,6 +2810,19 @@
       "required": true
     },
     {
+      "key": "or:1.2:def:SingleLineItemDType",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "This is the container for a single lineItem instance for a message payload."
+    },
+    {
+      "key": "or:1.2:def:SingleLineItemDType/lineItem",
+      "kind": "property",
+      "path": "lineItem",
+      "required": true
+    },
+    {
       "key": "or:1.2:def:SingleOrgDType",
       "kind": "definition",
       "path": "",
@@ -1416,6 +2833,45 @@
       "key": "or:1.2:def:SingleOrgDType/org",
       "kind": "property",
       "path": "org",
+      "required": true
+    },
+    {
+      "key": "or:1.2:def:SingleResourceDType",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "The container for a single resource. This may be empty i.e. the resource has no properties that obey any of the specified selection criteria."
+    },
+    {
+      "key": "or:1.2:def:SingleResourceDType/resource",
+      "kind": "property",
+      "path": "resource",
+      "required": true
+    },
+    {
+      "key": "or:1.2:def:SingleResultDType",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "This is the container for a single result instance for a message payload."
+    },
+    {
+      "key": "or:1.2:def:SingleResultDType/result",
+      "kind": "property",
+      "path": "result",
+      "required": true
+    },
+    {
+      "key": "or:1.2:def:SingleScoreScaleDType",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "This is the container for a single scoreScale instance for a message payload."
+    },
+    {
+      "key": "or:1.2:def:SingleScoreScaleDType/scoreScale",
+      "kind": "property",
+      "path": "scoreScale",
       "required": true
     },
     {
@@ -1842,6 +3298,21 @@
       "path": ""
     },
     {
+      "key": "or:1.2:doc:AssessmentLineItemDType",
+      "kind": "document",
+      "path": ""
+    },
+    {
+      "key": "or:1.2:doc:AssessmentResultDType",
+      "kind": "document",
+      "path": ""
+    },
+    {
+      "key": "or:1.2:doc:CategoryDType",
+      "kind": "document",
+      "path": ""
+    },
+    {
       "key": "or:1.2:doc:ClassDType",
       "kind": "document",
       "path": ""
@@ -1862,7 +3333,32 @@
       "path": ""
     },
     {
+      "key": "or:1.2:doc:LearningObjectiveSetDType",
+      "kind": "document",
+      "path": ""
+    },
+    {
+      "key": "or:1.2:doc:LineItemDType",
+      "kind": "document",
+      "path": ""
+    },
+    {
       "key": "or:1.2:doc:OrgDType",
+      "kind": "document",
+      "path": ""
+    },
+    {
+      "key": "or:1.2:doc:ResourceDType",
+      "kind": "document",
+      "path": ""
+    },
+    {
+      "key": "or:1.2:doc:ResultDType",
+      "kind": "document",
+      "path": ""
+    },
+    {
+      "key": "or:1.2:doc:ScoreScaleDType",
       "kind": "document",
       "path": ""
     },
@@ -1888,6 +3384,62 @@
     {
       "from": "or:1.2:def:AcademicSessionSetDType/academicSessions/[]",
       "to": "or:1.2:def:AcademicSessionDType"
+    },
+    {
+      "from": "or:1.2:def:AssessmentLineItemDType/class",
+      "to": "or:1.2:def:ClassGUIDRefDType"
+    },
+    {
+      "from": "or:1.2:def:AssessmentLineItemDType/learningObjectiveSet/[]",
+      "to": "or:1.2:def:LearningObjectiveSetDType"
+    },
+    {
+      "from": "or:1.2:def:AssessmentLineItemDType/metadata",
+      "to": "or:1.2:def:MetadataDType"
+    },
+    {
+      "from": "or:1.2:def:AssessmentLineItemDType/parentAssessmentLineItem",
+      "to": "or:1.2:def:AssessmentLineItemGUIDRefDType"
+    },
+    {
+      "from": "or:1.2:def:AssessmentLineItemDType/scoreScale",
+      "to": "or:1.2:def:ScoreScaleGUIDRefDType"
+    },
+    {
+      "from": "or:1.2:def:AssessmentLineItemSetDType/assessmentLineItems/[]",
+      "to": "or:1.2:def:AssessmentLineItemDType"
+    },
+    {
+      "from": "or:1.2:def:AssessmentResultDType/assessmentLineItem",
+      "to": "or:1.2:def:AssessmentLineItemGUIDRefDType"
+    },
+    {
+      "from": "or:1.2:def:AssessmentResultDType/learningObjectiveSet/[]",
+      "to": "or:1.2:def:LearningObjectiveScoreSetDType"
+    },
+    {
+      "from": "or:1.2:def:AssessmentResultDType/metadata",
+      "to": "or:1.2:def:MetadataDType"
+    },
+    {
+      "from": "or:1.2:def:AssessmentResultDType/scoreScale",
+      "to": "or:1.2:def:ScoreScaleGUIDRefDType"
+    },
+    {
+      "from": "or:1.2:def:AssessmentResultDType/student",
+      "to": "or:1.2:def:UserGUIDRefDType"
+    },
+    {
+      "from": "or:1.2:def:AssessmentResultSetDType/assessmentResults/[]",
+      "to": "or:1.2:def:AssessmentResultDType"
+    },
+    {
+      "from": "or:1.2:def:CategoriesSetDType/categories/[]",
+      "to": "or:1.2:def:CategoryDType"
+    },
+    {
+      "from": "or:1.2:def:CategoryDType/metadata",
+      "to": "or:1.2:def:MetadataDType"
     },
     {
       "from": "or:1.2:def:ClassDType/course",
@@ -1962,12 +3514,56 @@
       "to": "or:1.2:def:EnrollmentDType"
     },
     {
+      "from": "or:1.2:def:GUIDPairSetDType/sourcedIdPairs/[]",
+      "to": "or:1.2:def:GUIDPairDType"
+    },
+    {
       "from": "or:1.2:def:imsx_CodeMinorDType/imsx_codeMinorField/[]",
       "to": "or:1.2:def:imsx_CodeMinorFieldDType"
     },
     {
       "from": "or:1.2:def:imsx_StatusInfoDType/imsx_CodeMinor",
       "to": "or:1.2:def:imsx_CodeMinorDType"
+    },
+    {
+      "from": "or:1.2:def:LearningObjectiveScoreSetDType/learningObjectiveResults/[]",
+      "to": "or:1.2:def:LearningObjectiveResultsDType"
+    },
+    {
+      "from": "or:1.2:def:LineItemDType/academicSession",
+      "to": "or:1.2:def:AcadSessionGUIDRefDType"
+    },
+    {
+      "from": "or:1.2:def:LineItemDType/category",
+      "to": "or:1.2:def:CategoryGUIDRefDType"
+    },
+    {
+      "from": "or:1.2:def:LineItemDType/class",
+      "to": "or:1.2:def:ClassGUIDRefDType"
+    },
+    {
+      "from": "or:1.2:def:LineItemDType/gradingPeriod",
+      "to": "or:1.2:def:AcadSessionGUIDRefDType"
+    },
+    {
+      "from": "or:1.2:def:LineItemDType/learningObjectiveSet/[]",
+      "to": "or:1.2:def:LearningObjectiveSetDType"
+    },
+    {
+      "from": "or:1.2:def:LineItemDType/metadata",
+      "to": "or:1.2:def:MetadataDType"
+    },
+    {
+      "from": "or:1.2:def:LineItemDType/school",
+      "to": "or:1.2:def:OrgGUIDRefDType"
+    },
+    {
+      "from": "or:1.2:def:LineItemDType/scoreScale",
+      "to": "or:1.2:def:ScoreScaleGUIDRefDType"
+    },
+    {
+      "from": "or:1.2:def:LineItemSetDType/lineItems/[]",
+      "to": "or:1.2:def:LineItemDType"
     },
     {
       "from": "or:1.2:def:OrgDType/children/[]",
@@ -1986,12 +3582,80 @@
       "to": "or:1.2:def:OrgDType"
     },
     {
+      "from": "or:1.2:def:ResourceDType/metadata",
+      "to": "or:1.2:def:MetadataDType"
+    },
+    {
+      "from": "or:1.2:def:ResourceSetDType/resources/[]",
+      "to": "or:1.2:def:ResourceDType"
+    },
+    {
+      "from": "or:1.2:def:ResultDType/class",
+      "to": "or:1.2:def:ClassGUIDRefDType"
+    },
+    {
+      "from": "or:1.2:def:ResultDType/learningObjectiveSet/[]",
+      "to": "or:1.2:def:LearningObjectiveScoreSetDType"
+    },
+    {
+      "from": "or:1.2:def:ResultDType/lineItem",
+      "to": "or:1.2:def:LineItemGUIDRefDType"
+    },
+    {
+      "from": "or:1.2:def:ResultDType/metadata",
+      "to": "or:1.2:def:MetadataDType"
+    },
+    {
+      "from": "or:1.2:def:ResultDType/scoreScale",
+      "to": "or:1.2:def:ScoreScaleGUIDRefDType"
+    },
+    {
+      "from": "or:1.2:def:ResultDType/student",
+      "to": "or:1.2:def:UserGUIDRefDType"
+    },
+    {
+      "from": "or:1.2:def:ResultSetDType/results/[]",
+      "to": "or:1.2:def:ResultDType"
+    },
+    {
       "from": "or:1.2:def:RoleDType/org",
       "to": "or:1.2:def:OrgGUIDRefDType"
     },
     {
+      "from": "or:1.2:def:ScoreScaleDType/class",
+      "to": "or:1.2:def:ClassGUIDRefDType"
+    },
+    {
+      "from": "or:1.2:def:ScoreScaleDType/course",
+      "to": "or:1.2:def:CourseGUIDRefDType"
+    },
+    {
+      "from": "or:1.2:def:ScoreScaleDType/metadata",
+      "to": "or:1.2:def:MetadataDType"
+    },
+    {
+      "from": "or:1.2:def:ScoreScaleDType/scoreScaleValue/[]",
+      "to": "or:1.2:def:ScoreScaleValueDType"
+    },
+    {
+      "from": "or:1.2:def:ScoreScaleSetDType/scoreScales/[]",
+      "to": "or:1.2:def:ScoreScaleDType"
+    },
+    {
       "from": "or:1.2:def:SingleAcademicSessionDType/academicSession",
       "to": "or:1.2:def:AcademicSessionDType"
+    },
+    {
+      "from": "or:1.2:def:SingleAssessmentLineItemDType/assessmentLineItem",
+      "to": "or:1.2:def:AssessmentLineItemDType"
+    },
+    {
+      "from": "or:1.2:def:SingleAssessmentResultDType/assessmentResult",
+      "to": "or:1.2:def:AssessmentResultDType"
+    },
+    {
+      "from": "or:1.2:def:SingleCategoryDType/category",
+      "to": "or:1.2:def:CategoryDType"
     },
     {
       "from": "or:1.2:def:SingleClassDType/class",
@@ -2010,8 +3674,24 @@
       "to": "or:1.2:def:EnrollmentDType"
     },
     {
+      "from": "or:1.2:def:SingleLineItemDType/lineItem",
+      "to": "or:1.2:def:LineItemDType"
+    },
+    {
       "from": "or:1.2:def:SingleOrgDType/org",
       "to": "or:1.2:def:OrgDType"
+    },
+    {
+      "from": "or:1.2:def:SingleResourceDType/resource",
+      "to": "or:1.2:def:ResourceDType"
+    },
+    {
+      "from": "or:1.2:def:SingleResultDType/result",
+      "to": "or:1.2:def:ResultDType"
+    },
+    {
+      "from": "or:1.2:def:SingleScoreScaleDType/scoreScale",
+      "to": "or:1.2:def:ScoreScaleDType"
     },
     {
       "from": "or:1.2:def:SingleUserDType/user",
@@ -2058,6 +3738,18 @@
       "to": "or:1.2:def:AcademicSessionDType"
     },
     {
+      "from": "or:1.2:doc:AssessmentLineItemDType",
+      "to": "or:1.2:def:AssessmentLineItemDType"
+    },
+    {
+      "from": "or:1.2:doc:AssessmentResultDType",
+      "to": "or:1.2:def:AssessmentResultDType"
+    },
+    {
+      "from": "or:1.2:doc:CategoryDType",
+      "to": "or:1.2:def:CategoryDType"
+    },
+    {
       "from": "or:1.2:doc:ClassDType",
       "to": "or:1.2:def:ClassDType"
     },
@@ -2074,8 +3766,28 @@
       "to": "or:1.2:def:EnrollmentDType"
     },
     {
+      "from": "or:1.2:doc:LearningObjectiveSetDType",
+      "to": "or:1.2:def:LearningObjectiveSetDType"
+    },
+    {
+      "from": "or:1.2:doc:LineItemDType",
+      "to": "or:1.2:def:LineItemDType"
+    },
+    {
       "from": "or:1.2:doc:OrgDType",
       "to": "or:1.2:def:OrgDType"
+    },
+    {
+      "from": "or:1.2:doc:ResourceDType",
+      "to": "or:1.2:def:ResourceDType"
+    },
+    {
+      "from": "or:1.2:doc:ResultDType",
+      "to": "or:1.2:def:ResultDType"
+    },
+    {
+      "from": "or:1.2:doc:ScoreScaleDType",
+      "to": "or:1.2:def:ScoreScaleDType"
     },
     {
       "from": "or:1.2:doc:UserDType",
@@ -2083,6 +3795,43 @@
     }
   ],
   "conformance": [
+    {
+      "key": "or:1.2:conf:gradebook/OR-GB-1",
+      "profile": "gradebook",
+      "reqId": "OR-GB-1",
+      "level": "MUST",
+      "statement": "A LineItem MUST reference the class it scores and the academic session it falls within.",
+      "constrains": [
+        "or:1.2:def:LineItemDType/class",
+        "or:1.2:def:LineItemDType/academicSession"
+      ],
+      "source": "OneRoster 1.2 Gradebook §LineItem — https://www.imsglobal.org/spec/oneroster/v1p2"
+    },
+    {
+      "key": "or:1.2:conf:gradebook/OR-GB-2",
+      "profile": "gradebook",
+      "reqId": "OR-GB-2",
+      "level": "MUST",
+      "statement": "A Result MUST reference the LineItem it scores and the student it belongs to, and carry a score status.",
+      "constrains": [
+        "or:1.2:def:ResultDType/lineItem",
+        "or:1.2:def:ResultDType/student",
+        "or:1.2:def:ResultDType/scoreStatus"
+      ],
+      "source": "OneRoster 1.2 Gradebook §Result — https://www.imsglobal.org/spec/oneroster/v1p2"
+    },
+    {
+      "key": "or:1.2:conf:resources/OR-RES-1",
+      "profile": "resources",
+      "reqId": "OR-RES-1",
+      "level": "MUST",
+      "statement": "A Resource MUST carry a title and a vendorResourceId identifying it within the providing vendor.",
+      "constrains": [
+        "or:1.2:def:ResourceDType/title",
+        "or:1.2:def:ResourceDType/vendorResourceId"
+      ],
+      "source": "OneRoster 1.2 Resources §Resource — https://www.imsglobal.org/spec/oneroster/v1p2"
+    },
     {
       "key": "or:1.2:conf:rostering/OR-1",
       "profile": "rostering",
@@ -2112,11 +3861,11 @@
     "extensions": []
   },
   "rollup": {
-    "items": 227,
-    "modelledYes": 137,
+    "items": 410,
+    "modelledYes": 248,
     "modelledPartial": 0,
     "modelledNo": 0,
-    "normativeItems": 23,
-    "conformanceRequirements": 2
+    "normativeItems": 48,
+    "conformanceRequirements": 5
   }
 }

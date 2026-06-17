@@ -1,49 +1,49 @@
 {
   "meta": {
     "spec": "cc",
-    "version": "1.3",
+    "version": "1.4",
     "generatedAt": "2026-06-17",
     "sources": [
       {
         "binding": "authorizations",
         "language": "xsd",
-        "id": "http://www.imsglobal.org/xsd/imsccv1p3/imsccauth_v1p3",
-        "sha256": "b47fd703287a2d1d10bb37f677f9704180abb633e9b41d856eb60985fa6228b9"
+        "id": "http://www.imsglobal.org/xsd/imsccv1p4/imsccauth_v1p4",
+        "sha256": "af86686365377d161cd30445726c2c6408def7dcceed41743cbfd3901bff25be"
       },
       {
         "binding": "curriculumStandardsMetadataSet",
         "language": "xsd",
-        "id": "http://www.imsglobal.org/xsd/imsccv1p3/imscsmd_v1p0",
-        "sha256": "364e2d5ebc274c03370ea3c5c82ef644bd9880a3499b9656096e48cda2638fb8"
+        "id": "http://www.imsglobal.org/xsd/imsccv1p4/imscsmd_v1p1",
+        "sha256": "3f14e562e9dfdcbd090e522440cade58197e1f709a36140753e183b6b79f9567"
       },
       {
         "binding": "manifest",
         "language": "xsd",
-        "id": "http://www.imsglobal.org/xsd/imsccv1p3/imscp_v1p1",
-        "sha256": "ad96ef19dfb66d2d22c20722a46a3c3b37b9ba8a155d496d18b425fa887b035f"
+        "id": "http://www.imsglobal.org/xsd/imsccv1p4/imscp_v1p1",
+        "sha256": "3bcf3330ed1d1cf43533128740ac08d219b55273bdc55038ccb550755097cdcf"
       },
       {
         "binding": "topic",
         "language": "xsd",
-        "id": "http://www.imsglobal.org/xsd/imsccv1p3/imsdt_v1p3",
-        "sha256": "6a10c20b556a0ed59d3cf18632e7ca0100d689f2634eeddbc039e2fd41846ab3"
+        "id": "http://www.imsglobal.org/xsd/imsccv1p4/imsdt_v1p4",
+        "sha256": "712df2f59666333e4fa2ed3310df128cfef141b49fa2545099b793fe8d7340f6"
       },
       {
         "binding": "webLink",
         "language": "xsd",
-        "id": "http://www.imsglobal.org/xsd/imsccv1p3/imswl_v1p3",
-        "sha256": "8aa100742d93ed5eff35387d62d767ecd160426a58efc2accb5c6cb7283a761e"
+        "id": "http://www.imsglobal.org/xsd/imsccv1p4/imswl_v1p4",
+        "sha256": "162d8fea3e1f920fbef89a291de9b6cf27278c90a63e42775bdfcfd5a47c2207"
       }
     ]
   },
   "items": [
     {
-      "key": "cc:1.3:def:Attachment.Type",
+      "key": "cc:1.4:def:Attachment.Type",
       "kind": "definition",
       "path": ""
     },
     {
-      "key": "cc:1.3:def:Attachment.Type/href",
+      "key": "cc:1.4:def:Attachment.Type/href",
       "kind": "property",
       "path": "href",
       "required": true,
@@ -51,12 +51,12 @@
       "modelled": "yes"
     },
     {
-      "key": "cc:1.3:def:Attachments.Type",
+      "key": "cc:1.4:def:Attachments.Type",
       "kind": "definition",
       "path": ""
     },
     {
-      "key": "cc:1.3:def:Attachments.Type/attachment",
+      "key": "cc:1.4:def:Attachments.Type/attachment",
       "kind": "property",
       "path": "attachment",
       "jsonType": "array",
@@ -64,18 +64,18 @@
       "modelled": "yes"
     },
     {
-      "key": "cc:1.3:def:Attachments.Type/attachment/[]",
+      "key": "cc:1.4:def:Attachments.Type/attachment/[]",
       "kind": "property",
       "path": "attachment/[]"
     },
     {
-      "key": "cc:1.3:def:Authorization.Type",
+      "key": "cc:1.4:def:Authorization.Type",
       "kind": "definition",
       "path": "",
       "description": "The authorization detail for the cartridge in terms of the web service."
     },
     {
-      "key": "cc:1.3:def:Authorization.Type/cartridgeId",
+      "key": "cc:1.4:def:Authorization.Type/cartridgeId",
       "kind": "property",
       "path": "cartridgeId",
       "required": true,
@@ -83,20 +83,20 @@
       "modelled": "yes"
     },
     {
-      "key": "cc:1.3:def:Authorization.Type/webservice",
+      "key": "cc:1.4:def:Authorization.Type/webservice",
       "kind": "property",
       "path": "webservice",
       "jsonType": "string",
       "modelled": "yes"
     },
     {
-      "key": "cc:1.3:def:Authorizations.Type",
+      "key": "cc:1.4:def:Authorizations.Type",
       "kind": "definition",
       "path": "",
       "description": "The set of authorizations for the associated object."
     },
     {
-      "key": "cc:1.3:def:Authorizations.Type/access",
+      "key": "cc:1.4:def:Authorizations.Type/access",
       "kind": "property",
       "path": "access",
       "required": true,
@@ -108,34 +108,34 @@
       "modelled": "yes"
     },
     {
-      "key": "cc:1.3:def:Authorizations.Type/authorization",
+      "key": "cc:1.4:def:Authorizations.Type/authorization",
       "kind": "property",
       "path": "authorization",
       "required": true,
       "modelled": "yes"
     },
     {
-      "key": "cc:1.3:def:Authorizations.Type/import",
+      "key": "cc:1.4:def:Authorizations.Type/import",
       "kind": "property",
       "path": "import",
       "jsonType": "boolean",
       "modelled": "yes"
     },
     {
-      "key": "cc:1.3:def:CurriculumStandardsMetadata.Type",
+      "key": "cc:1.4:def:CurriculumStandardsMetadata.Type",
       "kind": "definition",
       "path": "",
       "description": "The CurriculumStandardsMetadata data-type is the container for the specicial metadata for curriculum standards for a particular domain of GUID provider. The 'providerId' attribute is used to denote the originator of the GUID scheme."
     },
     {
-      "key": "cc:1.3:def:CurriculumStandardsMetadata.Type/providerId",
+      "key": "cc:1.4:def:CurriculumStandardsMetadata.Type/providerId",
       "kind": "property",
       "path": "providerId",
       "jsonType": "string",
       "modelled": "yes"
     },
     {
-      "key": "cc:1.3:def:CurriculumStandardsMetadata.Type/setOfGUIDs",
+      "key": "cc:1.4:def:CurriculumStandardsMetadata.Type/setOfGUIDs",
       "kind": "property",
       "path": "setOfGUIDs",
       "jsonType": "array",
@@ -143,18 +143,18 @@
       "modelled": "yes"
     },
     {
-      "key": "cc:1.3:def:CurriculumStandardsMetadata.Type/setOfGUIDs/[]",
+      "key": "cc:1.4:def:CurriculumStandardsMetadata.Type/setOfGUIDs/[]",
       "kind": "property",
       "path": "setOfGUIDs/[]"
     },
     {
-      "key": "cc:1.3:def:CurriculumStandardsMetadataSet.Type",
+      "key": "cc:1.4:def:CurriculumStandardsMetadataSet.Type",
       "kind": "definition",
       "path": "",
-      "description": "The CurriculumStandardsMetadataSet data-type is the container for the set of curriculum standards metadata. Each member of the set contains the curriculum standards metadata for a specific source of the GUIDs. The 'resourceLabel' attribute is a human readable label used to ident…"
+      "description": "The CurriculumStandardsMetadataSet data-type is the container for the set of curriculum s- tandards metadata. Each member of the set contains the curriculum standards metadata for a specific source of the GUIDs. The 'resourceLabel' attribute is a human readable label used to ide…"
     },
     {
-      "key": "cc:1.3:def:CurriculumStandardsMetadataSet.Type/curriculumStandardsMetadata",
+      "key": "cc:1.4:def:CurriculumStandardsMetadataSet.Type/curriculumStandardsMetadata",
       "kind": "property",
       "path": "curriculumStandardsMetadata",
       "jsonType": "array",
@@ -162,32 +162,32 @@
       "modelled": "yes"
     },
     {
-      "key": "cc:1.3:def:CurriculumStandardsMetadataSet.Type/curriculumStandardsMetadata/[]",
+      "key": "cc:1.4:def:CurriculumStandardsMetadataSet.Type/curriculumStandardsMetadata/[]",
       "kind": "property",
       "path": "curriculumStandardsMetadata/[]"
     },
     {
-      "key": "cc:1.3:def:CurriculumStandardsMetadataSet.Type/resourceLabel",
+      "key": "cc:1.4:def:CurriculumStandardsMetadataSet.Type/resourceLabel",
       "kind": "property",
       "path": "resourceLabel",
       "jsonType": "string",
       "modelled": "yes"
     },
     {
-      "key": "cc:1.3:def:CurriculumStandardsMetadataSet.Type/resourcePartId",
+      "key": "cc:1.4:def:CurriculumStandardsMetadataSet.Type/resourcePartId",
       "kind": "property",
       "path": "resourcePartId",
       "jsonType": "string",
       "modelled": "yes"
     },
     {
-      "key": "cc:1.3:def:Dependency.Type",
+      "key": "cc:1.4:def:Dependency.Type",
       "kind": "definition",
       "path": "",
       "description": "This identifies a resource whose files this resource depends upon. The reference to an identifier in the resources section is contained in the Identifierref attribute."
     },
     {
-      "key": "cc:1.3:def:Dependency.Type/identifierref",
+      "key": "cc:1.4:def:Dependency.Type/identifierref",
       "kind": "property",
       "path": "identifierref",
       "required": true,
@@ -195,18 +195,18 @@
       "modelled": "yes"
     },
     {
-      "key": "cc:1.3:def:EmptyPrimitiveType.Type",
+      "key": "cc:1.4:def:EmptyPrimitiveType.Type",
       "kind": "definition",
       "path": ""
     },
     {
-      "key": "cc:1.3:def:File.Type",
+      "key": "cc:1.4:def:File.Type",
       "kind": "definition",
       "path": "",
       "description": "A listing of file that this resource is dependent on. The href attribute identifies the location of the file. This may have some meta-data."
     },
     {
-      "key": "cc:1.3:def:File.Type/href",
+      "key": "cc:1.4:def:File.Type/href",
       "kind": "property",
       "path": "href",
       "required": true,
@@ -214,25 +214,25 @@
       "modelled": "yes"
     },
     {
-      "key": "cc:1.3:def:File.Type/metadata",
+      "key": "cc:1.4:def:File.Type/metadata",
       "kind": "property",
       "path": "metadata",
       "modelled": "yes"
     },
     {
-      "key": "cc:1.3:def:grpStrict.any",
+      "key": "cc:1.4:def:grpStrict.any",
       "kind": "definition",
       "path": "",
       "description": "Any namespaced element from any namespace may be included within an \"any\" element. The namespace for the imported element must be defined in the instance, and the schema must be imported. The extension has a definition of \"strict\" i.e. they must have their own namespace."
     },
     {
-      "key": "cc:1.3:def:Item.Type",
+      "key": "cc:1.4:def:Item.Type",
       "kind": "definition",
       "path": "",
       "description": "This is the structure that describes the shape of the organization. It is used in a hierarchical organizational scheme by ordering and nesting. Each Item has an identifier that is unique within the Manifest file. Identifierref acts as a reference to an identifier in the resource…"
     },
     {
-      "key": "cc:1.3:def:Item.Type/identifier",
+      "key": "cc:1.4:def:Item.Type/identifier",
       "kind": "property",
       "path": "identifier",
       "required": true,
@@ -240,32 +240,32 @@
       "modelled": "yes"
     },
     {
-      "key": "cc:1.3:def:Item.Type/identifierref",
+      "key": "cc:1.4:def:Item.Type/identifierref",
       "kind": "property",
       "path": "identifierref",
       "jsonType": "string",
       "modelled": "yes"
     },
     {
-      "key": "cc:1.3:def:Item.Type/item",
+      "key": "cc:1.4:def:Item.Type/item",
       "kind": "property",
       "path": "item",
       "jsonType": "array",
       "modelled": "yes"
     },
     {
-      "key": "cc:1.3:def:Item.Type/item/[]",
+      "key": "cc:1.4:def:Item.Type/item/[]",
       "kind": "property",
       "path": "item/[]"
     },
     {
-      "key": "cc:1.3:def:Item.Type/metadata",
+      "key": "cc:1.4:def:Item.Type/metadata",
       "kind": "property",
       "path": "metadata",
       "modelled": "yes"
     },
     {
-      "key": "cc:1.3:def:Item.Type/title",
+      "key": "cc:1.4:def:Item.Type/title",
       "kind": "property",
       "path": "title",
       "required": true,
@@ -273,13 +273,13 @@
       "modelled": "yes"
     },
     {
-      "key": "cc:1.3:def:ItemOrg.Type",
+      "key": "cc:1.4:def:ItemOrg.Type",
       "kind": "definition",
       "path": "",
       "description": "This is the structure that describes the top-level shape of the organization and so only a single Item is permitted. The top-level has an identifier that is unique within the Manifest file. It may have meta-data but it has not title. It can contain any number of Items. The param…"
     },
     {
-      "key": "cc:1.3:def:ItemOrg.Type/identifier",
+      "key": "cc:1.4:def:ItemOrg.Type/identifier",
       "kind": "property",
       "path": "identifier",
       "required": true,
@@ -287,31 +287,38 @@
       "modelled": "yes"
     },
     {
-      "key": "cc:1.3:def:ItemOrg.Type/item",
+      "key": "cc:1.4:def:ItemOrg.Type/item",
       "kind": "property",
       "path": "item",
       "jsonType": "array",
       "modelled": "yes"
     },
     {
-      "key": "cc:1.3:def:ItemOrg.Type/item/[]",
+      "key": "cc:1.4:def:ItemOrg.Type/item/[]",
       "kind": "property",
       "path": "item/[]"
     },
     {
-      "key": "cc:1.3:def:ItemOrg.Type/metadata",
+      "key": "cc:1.4:def:ItemOrg.Type/metadata",
       "kind": "property",
       "path": "metadata",
       "modelled": "yes"
     },
     {
-      "key": "cc:1.3:def:LabelledGUID.Type",
+      "key": "cc:1.4:def:LabelledGUID.Type",
       "kind": "definition",
       "path": "",
       "description": "The labelled curriculum standard GUID. The optional label provides a human readable string to provide a clue about the nature of the curriculum standard."
     },
     {
-      "key": "cc:1.3:def:LabelledGUID.Type/GUID",
+      "key": "cc:1.4:def:LabelledGUID.Type/caseItemURI",
+      "kind": "property",
+      "path": "caseItemURI",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "cc:1.4:def:LabelledGUID.Type/GUID",
       "kind": "property",
       "path": "GUID",
       "required": true,
@@ -319,33 +326,27 @@
       "modelled": "yes"
     },
     {
-      "key": "cc:1.3:def:LabelledGUID.Type/label",
+      "key": "cc:1.4:def:LabelledGUID.Type/label",
       "kind": "property",
       "path": "label",
       "jsonType": "string",
       "modelled": "yes"
     },
     {
-      "key": "cc:1.3:def:Manifest.Type",
+      "key": "cc:1.4:def:Manifest.Type",
       "kind": "definition",
       "path": "",
       "description": "A reusable unit of instruction. It encapsulates meta-data, organizations, resource references and authorization. It must have an identifier that is unique within the Manifest. The version and reference base is optional. The base provides the relative path offset for the content …"
     },
     {
-      "key": "cc:1.3:def:Manifest.Type/authorizations",
-      "kind": "property",
-      "path": "authorizations",
-      "modelled": "yes"
-    },
-    {
-      "key": "cc:1.3:def:Manifest.Type/base",
+      "key": "cc:1.4:def:Manifest.Type/base",
       "kind": "property",
       "path": "base",
       "jsonType": "string",
       "modelled": "no"
     },
     {
-      "key": "cc:1.3:def:Manifest.Type/identifier",
+      "key": "cc:1.4:def:Manifest.Type/identifier",
       "kind": "property",
       "path": "identifier",
       "required": true,
@@ -353,82 +354,84 @@
       "modelled": "yes"
     },
     {
-      "key": "cc:1.3:def:Manifest.Type/metadata",
+      "key": "cc:1.4:def:Manifest.Type/metadata",
       "kind": "property",
       "path": "metadata",
       "required": true,
       "modelled": "yes"
     },
     {
-      "key": "cc:1.3:def:Manifest.Type/organizations",
+      "key": "cc:1.4:def:Manifest.Type/organizations",
       "kind": "property",
       "path": "organizations",
       "required": true,
       "modelled": "yes"
     },
     {
-      "key": "cc:1.3:def:Manifest.Type/resources",
+      "key": "cc:1.4:def:Manifest.Type/resources",
       "kind": "property",
       "path": "resources",
       "required": true,
       "modelled": "yes"
     },
     {
-      "key": "cc:1.3:def:ManifestMetadata.Type",
+      "key": "cc:1.4:def:ManifestMetadata.Type",
       "kind": "definition",
       "path": "",
       "description": "This is the meta-data describing the Manifest. The schema describes the schema that defines and controls the Manifest. Schemaversion describes the version of the above schema (e.g. 1.0, 1.1, etc.). In Common Cartridge all of the meta-data is described using the IEEE LOM standard…"
     },
     {
-      "key": "cc:1.3:def:ManifestMetadata.Type/curriculumStandardsMetadataSet",
+      "key": "cc:1.4:def:ManifestMetadata.Type/curriculumStandardsMetadataSet",
       "kind": "property",
       "path": "curriculumStandardsMetadataSet",
       "modelled": "yes"
     },
     {
-      "key": "cc:1.3:def:ManifestMetadata.Type/lom",
+      "key": "cc:1.4:def:ManifestMetadata.Type/lom",
       "kind": "property",
       "path": "lom",
       "required": true,
       "modelled": "yes"
     },
     {
-      "key": "cc:1.3:def:ManifestMetadata.Type/schema",
+      "key": "cc:1.4:def:ManifestMetadata.Type/schema",
       "kind": "property",
       "path": "schema",
       "required": true,
       "jsonType": "string",
       "enumValues": [
         "IMS Common Cartridge",
-        "IMS Thin Common Cartridge"
+        "IMS K-12 Common Cartridge",
+        "IMS Thin Common Cartridge",
+        "IMS K-12 Thin Common Cartridge"
       ],
       "modelled": "yes"
     },
     {
-      "key": "cc:1.3:def:ManifestMetadata.Type/schemaversion",
+      "key": "cc:1.4:def:ManifestMetadata.Type/schemaversion",
       "kind": "property",
       "path": "schemaversion",
       "required": true,
       "jsonType": "string",
       "enumValues": [
-        "1.3.0"
+        "1.4.0"
       ],
       "modelled": "yes"
     },
     {
-      "key": "cc:1.3:def:Metadata.Type",
+      "key": "cc:1.4:def:Metadata.Type",
       "kind": "definition",
       "path": "",
       "description": "This is the meta-data describing the associated class (but not the manifest which has its own meta-data structure). In Common Cartridge all of the meta-data is described using the IEEE LOM standard format."
     },
     {
-      "key": "cc:1.3:def:Organization.Type",
+      "key": "cc:1.4:def:Organization.Type",
       "kind": "definition",
       "path": "",
       "description": "Describes a particular hierarchical organization in this profile; this is the only type of oranization that is permitted. The identifier, for the organization, that is unique within the Manifest file. The organization may have meta-data."
     },
     {
-      "key": "cc:1.3:def:Organization.Type/identifier",
+      "key": "cc:1.4:def:Organization.Type/identifier",
       "kind": "property",
       "path": "identifier",
       "required": true,
@@ -436,20 +439,20 @@
       "modelled": "yes"
     },
     {
-      "key": "cc:1.3:def:Organization.Type/item",
+      "key": "cc:1.4:def:Organization.Type/item",
       "kind": "property",
       "path": "item",
       "required": true,
       "modelled": "yes"
     },
     {
-      "key": "cc:1.3:def:Organization.Type/metadata",
+      "key": "cc:1.4:def:Organization.Type/metadata",
       "kind": "property",
       "path": "metadata",
       "modelled": "yes"
     },
     {
-      "key": "cc:1.3:def:Organization.Type/structure",
+      "key": "cc:1.4:def:Organization.Type/structure",
       "kind": "property",
       "path": "structure",
       "required": true,
@@ -457,82 +460,70 @@
       "modelled": "yes"
     },
     {
-      "key": "cc:1.3:def:Organization.Type/title",
+      "key": "cc:1.4:def:Organization.Type/title",
       "kind": "property",
       "path": "title",
       "jsonType": "string",
       "modelled": "yes"
     },
     {
-      "key": "cc:1.3:def:Organizations.Type",
+      "key": "cc:1.4:def:Organizations.Type",
       "kind": "definition",
       "path": "",
       "description": "Describes zero or one structures or organizations for the Cartridge. Only one organization is permitted so the default attribute has been removed for this Profile."
     },
     {
-      "key": "cc:1.3:def:Organizations.Type/organization",
+      "key": "cc:1.4:def:Organizations.Type/organization",
       "kind": "property",
       "path": "organization",
       "modelled": "yes"
     },
     {
-      "key": "cc:1.3:def:protected.Resource.Attr",
-      "kind": "definition",
-      "path": ""
-    },
-    {
-      "key": "cc:1.3:def:protected.Resource.Attr/protected",
-      "kind": "property",
-      "path": "protected",
-      "jsonType": "string",
-      "modelled": "yes"
-    },
-    {
-      "key": "cc:1.3:def:Resource.Type",
+      "key": "cc:1.4:def:Resource.Type",
       "kind": "definition",
       "path": "",
       "description": "A reference to a resource which consists of one or more physical files. The Identifer of the resource is unique within the scope of its containing Manifest file. The Type attribute indicates the type of resource - for the Cartridge this is an enumerated set. The resource may hav…"
     },
     {
-      "key": "cc:1.3:def:Resource.Type/base",
+      "key": "cc:1.4:def:Resource.Type/base",
       "kind": "property",
       "path": "base",
       "jsonType": "string",
       "modelled": "no"
     },
     {
-      "key": "cc:1.3:def:Resource.Type/dependency",
+      "key": "cc:1.4:def:Resource.Type/dependency",
       "kind": "property",
       "path": "dependency",
       "jsonType": "array",
       "modelled": "yes"
     },
     {
-      "key": "cc:1.3:def:Resource.Type/dependency/[]",
+      "key": "cc:1.4:def:Resource.Type/dependency/[]",
       "kind": "property",
       "path": "dependency/[]"
     },
     {
-      "key": "cc:1.3:def:Resource.Type/file",
+      "key": "cc:1.4:def:Resource.Type/file",
       "kind": "property",
       "path": "file",
       "jsonType": "array",
       "modelled": "yes"
     },
     {
-      "key": "cc:1.3:def:Resource.Type/file/[]",
+      "key": "cc:1.4:def:Resource.Type/file/[]",
       "kind": "property",
       "path": "file/[]"
     },
     {
-      "key": "cc:1.3:def:Resource.Type/href",
+      "key": "cc:1.4:def:Resource.Type/href",
       "kind": "property",
       "path": "href",
       "jsonType": "string",
       "modelled": "yes"
     },
     {
-      "key": "cc:1.3:def:Resource.Type/identifier",
+      "key": "cc:1.4:def:Resource.Type/identifier",
       "kind": "property",
       "path": "identifier",
       "required": true,
@@ -540,7 +531,7 @@
       "modelled": "yes"
     },
     {
-      "key": "cc:1.3:def:Resource.Type/intendeduse",
+      "key": "cc:1.4:def:Resource.Type/intendeduse",
       "kind": "property",
       "path": "intendeduse",
       "jsonType": "string",
@@ -553,103 +544,106 @@
       "modelled": "yes"
     },
     {
-      "key": "cc:1.3:def:Resource.Type/metadata",
+      "key": "cc:1.4:def:Resource.Type/metadata",
       "kind": "property",
       "path": "metadata",
       "modelled": "yes"
     },
     {
-      "key": "cc:1.3:def:Resource.Type/type",
+      "key": "cc:1.4:def:Resource.Type/type",
       "kind": "property",
       "path": "type",
       "required": true,
       "jsonType": "string",
       "enumValues": [
         "webcontent",
-        "imsqti_xmlv1p2/imscc_xmlv1p3/assessment",
-        "imsqti_xmlv1p2/imscc_xmlv1p3/question-bank",
-        "associatedcontent/imscc_xmlv1p3/learning-application-resource",
-        "imsdt_xmlv1p3",
-        "imswl_xmlv1p3",
-        "imsbasiclti_xmlv1p3",
+        "imsqti_xmlv1p2/imscc_xmlv1p4/assessment",
+        "imsqti_xmlv1p2/imscc_xmlv1p4/question-bank",
+        "associatedcontent/imscc_xmlv1p4/learning-application-resource",
+        "imsdt_xmlv1p4",
+        "imswl_xmlv1p4",
+        "imsbasiclti_xmlv1p4",
         "idpfepub_epubv3p0",
         "imsapip_zipv1p0",
         "imsiwb_iwbv1p0",
-        "assignment_xmlv1p0"
+        "assignment_xmlv1p0",
+        "imsov_xmlv1p0",
+        "imsov_zipv1p0",
+        "imsqti_zipv3p0"
       ],
       "modelled": "yes"
     },
     {
-      "key": "cc:1.3:def:ResourceMetadata.Type",
+      "key": "cc:1.4:def:ResourceMetadata.Type",
       "kind": "definition",
       "path": "",
       "description": "This is the container for resource specific metadata. It may contain GUIDs that identify the curriculum standards which are associated with the resource."
     },
     {
-      "key": "cc:1.3:def:ResourceMetadata.Type/curriculumStandardsMetadataSet",
+      "key": "cc:1.4:def:ResourceMetadata.Type/curriculumStandardsMetadataSet",
       "kind": "property",
       "path": "curriculumStandardsMetadataSet",
       "jsonType": "array",
       "modelled": "yes"
     },
     {
-      "key": "cc:1.3:def:ResourceMetadata.Type/curriculumStandardsMetadataSet/[]",
+      "key": "cc:1.4:def:ResourceMetadata.Type/curriculumStandardsMetadataSet/[]",
       "kind": "property",
       "path": "curriculumStandardsMetadataSet/[]"
     },
     {
-      "key": "cc:1.3:def:ResourceMetadata.Type/lom",
+      "key": "cc:1.4:def:ResourceMetadata.Type/lom",
       "kind": "property",
       "path": "lom",
       "modelled": "yes"
     },
     {
-      "key": "cc:1.3:def:ResourceMetadata.Type/schema",
+      "key": "cc:1.4:def:ResourceMetadata.Type/schema",
       "kind": "property",
       "path": "schema",
       "jsonType": "string",
       "modelled": "yes"
     },
     {
-      "key": "cc:1.3:def:ResourceMetadata.Type/schemaversion",
+      "key": "cc:1.4:def:ResourceMetadata.Type/schemaversion",
       "kind": "property",
       "path": "schemaversion",
       "jsonType": "string",
       "modelled": "yes"
     },
     {
-      "key": "cc:1.3:def:Resources.Type",
+      "key": "cc:1.4:def:Resources.Type",
       "kind": "definition",
       "path": "",
       "description": "A collection of references to resources. There is no assumption of order or hierarchy. The base attribute provides the relative path offset for the content file(s)."
     },
     {
-      "key": "cc:1.3:def:Resources.Type/base",
+      "key": "cc:1.4:def:Resources.Type/base",
       "kind": "property",
       "path": "base",
       "jsonType": "string",
       "modelled": "no"
     },
     {
-      "key": "cc:1.3:def:Resources.Type/resource",
+      "key": "cc:1.4:def:Resources.Type/resource",
       "kind": "property",
       "path": "resource",
       "jsonType": "array",
       "modelled": "yes"
     },
     {
-      "key": "cc:1.3:def:Resources.Type/resource/[]",
+      "key": "cc:1.4:def:Resources.Type/resource/[]",
       "kind": "property",
       "path": "resource/[]"
     },
     {
-      "key": "cc:1.3:def:SetOfGUIDs.Type",
+      "key": "cc:1.4:def:SetOfGUIDs.Type",
       "kind": "definition",
       "path": "",
-      "description": "The SetofGUIDs data-type is the container for the set of GUIDs that are to annotate a resource for a particular geographical/socio-political/etc. region. The region is denote using the 'region' attribute. The 'version' attribute is used to denote any relevant versioning informat…"
+      "description": "The SetofGUIDs data-type is the container for the set of GUIDs that are to annotate a res- ource for a particular geographical/socio-political/etc. region. The region is denote usi- ng the 'region' attribute. The 'version' attribute is used to denote any relevant version- ing in…"
     },
     {
-      "key": "cc:1.3:def:SetOfGUIDs.Type/labelledGUID",
+      "key": "cc:1.4:def:SetOfGUIDs.Type/labelledGUID",
       "kind": "property",
       "path": "labelledGUID",
       "jsonType": "array",
@@ -657,32 +651,32 @@
       "modelled": "yes"
     },
     {
-      "key": "cc:1.3:def:SetOfGUIDs.Type/labelledGUID/[]",
+      "key": "cc:1.4:def:SetOfGUIDs.Type/labelledGUID/[]",
       "kind": "property",
       "path": "labelledGUID/[]"
     },
     {
-      "key": "cc:1.3:def:SetOfGUIDs.Type/region",
+      "key": "cc:1.4:def:SetOfGUIDs.Type/region",
       "kind": "property",
       "path": "region",
       "jsonType": "string",
       "modelled": "yes"
     },
     {
-      "key": "cc:1.3:def:SetOfGUIDs.Type/version",
+      "key": "cc:1.4:def:SetOfGUIDs.Type/version",
       "kind": "property",
       "path": "version",
       "jsonType": "string",
       "modelled": "yes"
     },
     {
-      "key": "cc:1.3:def:Text.Type",
+      "key": "cc:1.4:def:Text.Type",
       "kind": "definition",
       "path": "",
       "description": "The Text for the discussion topic."
     },
     {
-      "key": "cc:1.3:def:Text.Type/texttype",
+      "key": "cc:1.4:def:Text.Type/texttype",
       "kind": "property",
       "path": "texttype",
       "required": true,
@@ -694,26 +688,38 @@
       "modelled": "yes"
     },
     {
-      "key": "cc:1.3:def:Topic.Type",
+      "key": "cc:1.4:def:Topic.Type",
       "kind": "definition",
       "path": "",
       "description": "The Topic complexType for the discussion topic object."
     },
     {
-      "key": "cc:1.3:def:Topic.Type/attachments",
+      "key": "cc:1.4:def:Topic.Type/attachments",
       "kind": "property",
       "path": "attachments",
       "modelled": "yes"
     },
     {
-      "key": "cc:1.3:def:Topic.Type/text",
+      "key": "cc:1.4:def:Topic.Type/extensions",
+      "kind": "property",
+      "path": "extensions",
+      "jsonType": "array",
+      "modelled": "yes"
+    },
+    {
+      "key": "cc:1.4:def:Topic.Type/extensions/[]",
+      "kind": "property",
+      "path": "extensions/[]"
+    },
+    {
+      "key": "cc:1.4:def:Topic.Type/text",
       "kind": "property",
       "path": "text",
       "required": true,
       "modelled": "yes"
     },
     {
-      "key": "cc:1.3:def:Topic.Type/title",
+      "key": "cc:1.4:def:Topic.Type/title",
       "kind": "property",
       "path": "title",
       "required": true,
@@ -721,13 +727,13 @@
       "modelled": "yes"
     },
     {
-      "key": "cc:1.3:def:URL.Type",
+      "key": "cc:1.4:def:URL.Type",
       "kind": "definition",
       "path": "",
       "description": "The URL for the web link."
     },
     {
-      "key": "cc:1.3:def:URL.Type/href",
+      "key": "cc:1.4:def:URL.Type/href",
       "kind": "property",
       "path": "href",
       "required": true,
@@ -735,27 +741,39 @@
       "modelled": "yes"
     },
     {
-      "key": "cc:1.3:def:URL.Type/target",
+      "key": "cc:1.4:def:URL.Type/target",
       "kind": "property",
       "path": "target",
       "jsonType": "string",
       "modelled": "yes"
     },
     {
-      "key": "cc:1.3:def:URL.Type/windowFeatures",
+      "key": "cc:1.4:def:URL.Type/windowFeatures",
       "kind": "property",
       "path": "windowFeatures",
       "jsonType": "string",
       "modelled": "yes"
     },
     {
-      "key": "cc:1.3:def:WebLink.Type",
+      "key": "cc:1.4:def:WebLink.Type",
       "kind": "definition",
       "path": "",
       "description": "The WebLink complexType for the associated object."
     },
     {
-      "key": "cc:1.3:def:WebLink.Type/title",
+      "key": "cc:1.4:def:WebLink.Type/extensions",
+      "kind": "property",
+      "path": "extensions",
+      "jsonType": "array",
+      "modelled": "yes"
+    },
+    {
+      "key": "cc:1.4:def:WebLink.Type/extensions/[]",
+      "kind": "property",
+      "path": "extensions/[]"
+    },
+    {
+      "key": "cc:1.4:def:WebLink.Type/title",
       "kind": "property",
       "path": "title",
       "required": true,
@@ -763,299 +781,278 @@
       "modelled": "yes"
     },
     {
-      "key": "cc:1.3:def:WebLink.Type/url",
+      "key": "cc:1.4:def:WebLink.Type/url",
       "kind": "property",
       "path": "url",
       "required": true,
       "modelled": "yes"
     },
     {
-      "key": "cc:1.3:doc:authorizations",
+      "key": "cc:1.4:doc:authorizations",
       "kind": "document",
       "path": ""
     },
     {
-      "key": "cc:1.3:doc:curriculumStandardsMetadataSet",
+      "key": "cc:1.4:doc:curriculumStandardsMetadataSet",
       "kind": "document",
       "path": ""
     },
     {
-      "key": "cc:1.3:doc:manifest",
+      "key": "cc:1.4:doc:manifest",
       "kind": "document",
       "path": ""
     },
     {
-      "key": "cc:1.3:doc:topic",
+      "key": "cc:1.4:doc:topic",
       "kind": "document",
       "path": ""
     },
     {
-      "key": "cc:1.3:doc:webLink",
+      "key": "cc:1.4:doc:webLink",
       "kind": "document",
       "path": ""
     }
   ],
   "edges": [
     {
-      "from": "cc:1.3:def:Attachment.Type",
-      "to": "cc:1.3:def:EmptyPrimitiveType.Type"
+      "from": "cc:1.4:def:Attachment.Type",
+      "to": "cc:1.4:def:EmptyPrimitiveType.Type"
     },
     {
-      "from": "cc:1.3:def:Attachments.Type/attachment/[]",
-      "to": "cc:1.3:def:Attachment.Type"
+      "from": "cc:1.4:def:Attachments.Type/attachment/[]",
+      "to": "cc:1.4:def:Attachment.Type"
     },
     {
-      "from": "cc:1.3:def:Authorizations.Type",
-      "to": "cc:1.3:def:grpStrict.any"
+      "from": "cc:1.4:def:Authorizations.Type",
+      "to": "cc:1.4:def:grpStrict.any"
     },
     {
-      "from": "cc:1.3:def:Authorizations.Type/authorization",
-      "to": "cc:1.3:def:Authorization.Type"
+      "from": "cc:1.4:def:Authorizations.Type/authorization",
+      "to": "cc:1.4:def:Authorization.Type"
     },
     {
-      "from": "cc:1.3:def:CurriculumStandardsMetadata.Type/setOfGUIDs/[]",
-      "to": "cc:1.3:def:SetOfGUIDs.Type"
+      "from": "cc:1.4:def:CurriculumStandardsMetadata.Type/setOfGUIDs/[]",
+      "to": "cc:1.4:def:SetOfGUIDs.Type"
     },
     {
-      "from": "cc:1.3:def:CurriculumStandardsMetadataSet.Type/curriculumStandardsMetadata/[]",
-      "to": "cc:1.3:def:CurriculumStandardsMetadata.Type"
+      "from": "cc:1.4:def:CurriculumStandardsMetadataSet.Type/curriculumStandardsMetadata/[]",
+      "to": "cc:1.4:def:CurriculumStandardsMetadata.Type"
     },
     {
-      "from": "cc:1.3:def:File.Type/metadata",
-      "to": "cc:1.3:def:Metadata.Type"
+      "from": "cc:1.4:def:File.Type/metadata",
+      "to": "cc:1.4:def:Metadata.Type"
     },
     {
-      "from": "cc:1.3:def:Item.Type/item/[]",
-      "to": "cc:1.3:def:Item.Type"
+      "from": "cc:1.4:def:Item.Type/item/[]",
+      "to": "cc:1.4:def:Item.Type"
     },
     {
-      "from": "cc:1.3:def:Item.Type/metadata",
-      "to": "cc:1.3:def:Metadata.Type"
+      "from": "cc:1.4:def:Item.Type/metadata",
+      "to": "cc:1.4:def:Metadata.Type"
     },
     {
-      "from": "cc:1.3:def:ItemOrg.Type/item/[]",
-      "to": "cc:1.3:def:Item.Type"
+      "from": "cc:1.4:def:ItemOrg.Type/item/[]",
+      "to": "cc:1.4:def:Item.Type"
     },
     {
-      "from": "cc:1.3:def:ItemOrg.Type/metadata",
-      "to": "cc:1.3:def:Metadata.Type"
+      "from": "cc:1.4:def:ItemOrg.Type/metadata",
+      "to": "cc:1.4:def:Metadata.Type"
     },
     {
-      "from": "cc:1.3:def:Manifest.Type/metadata",
-      "to": "cc:1.3:def:ManifestMetadata.Type"
+      "from": "cc:1.4:def:Manifest.Type/metadata",
+      "to": "cc:1.4:def:ManifestMetadata.Type"
     },
     {
-      "from": "cc:1.3:def:Manifest.Type/organizations",
-      "to": "cc:1.3:def:Organizations.Type"
+      "from": "cc:1.4:def:Manifest.Type/organizations",
+      "to": "cc:1.4:def:Organizations.Type"
     },
     {
-      "from": "cc:1.3:def:Manifest.Type/resources",
-      "to": "cc:1.3:def:Resources.Type"
+      "from": "cc:1.4:def:Manifest.Type/resources",
+      "to": "cc:1.4:def:Resources.Type"
     },
     {
-      "from": "cc:1.3:def:Metadata.Type",
-      "to": "cc:1.3:def:grpStrict.any"
+      "from": "cc:1.4:def:Metadata.Type",
+      "to": "cc:1.4:def:grpStrict.any"
     },
     {
-      "from": "cc:1.3:def:Organization.Type/item",
-      "to": "cc:1.3:def:ItemOrg.Type"
+      "from": "cc:1.4:def:Organization.Type/item",
+      "to": "cc:1.4:def:ItemOrg.Type"
     },
     {
-      "from": "cc:1.3:def:Organization.Type/metadata",
-      "to": "cc:1.3:def:Metadata.Type"
+      "from": "cc:1.4:def:Organization.Type/metadata",
+      "to": "cc:1.4:def:Metadata.Type"
     },
     {
-      "from": "cc:1.3:def:Organizations.Type/organization",
-      "to": "cc:1.3:def:Organization.Type"
+      "from": "cc:1.4:def:Organizations.Type/organization",
+      "to": "cc:1.4:def:Organization.Type"
     },
     {
-      "from": "cc:1.3:def:Resource.Type",
-      "to": "cc:1.3:def:grpStrict.any"
+      "from": "cc:1.4:def:Resource.Type",
+      "to": "cc:1.4:def:grpStrict.any"
     },
     {
-      "from": "cc:1.3:def:Resource.Type",
-      "to": "cc:1.3:def:protected.Resource.Attr"
+      "from": "cc:1.4:def:Resource.Type/dependency/[]",
+      "to": "cc:1.4:def:Dependency.Type"
     },
     {
-      "from": "cc:1.3:def:Resource.Type/dependency/[]",
-      "to": "cc:1.3:def:Dependency.Type"
+      "from": "cc:1.4:def:Resource.Type/file/[]",
+      "to": "cc:1.4:def:File.Type"
     },
     {
-      "from": "cc:1.3:def:Resource.Type/file/[]",
-      "to": "cc:1.3:def:File.Type"
+      "from": "cc:1.4:def:Resource.Type/metadata",
+      "to": "cc:1.4:def:ResourceMetadata.Type"
     },
     {
-      "from": "cc:1.3:def:Resource.Type/metadata",
-      "to": "cc:1.3:def:ResourceMetadata.Type"
+      "from": "cc:1.4:def:Resources.Type/resource/[]",
+      "to": "cc:1.4:def:Resource.Type"
     },
     {
-      "from": "cc:1.3:def:Resources.Type/resource/[]",
-      "to": "cc:1.3:def:Resource.Type"
+      "from": "cc:1.4:def:SetOfGUIDs.Type/labelledGUID/[]",
+      "to": "cc:1.4:def:LabelledGUID.Type"
     },
     {
-      "from": "cc:1.3:def:SetOfGUIDs.Type/labelledGUID/[]",
-      "to": "cc:1.3:def:LabelledGUID.Type"
+      "from": "cc:1.4:def:Topic.Type",
+      "to": "cc:1.4:def:grpStrict.any"
     },
     {
-      "from": "cc:1.3:def:Topic.Type",
-      "to": "cc:1.3:def:grpStrict.any"
+      "from": "cc:1.4:def:Topic.Type/attachments",
+      "to": "cc:1.4:def:Attachments.Type"
     },
     {
-      "from": "cc:1.3:def:Topic.Type/attachments",
-      "to": "cc:1.3:def:Attachments.Type"
+      "from": "cc:1.4:def:Topic.Type/text",
+      "to": "cc:1.4:def:Text.Type"
     },
     {
-      "from": "cc:1.3:def:Topic.Type/text",
-      "to": "cc:1.3:def:Text.Type"
+      "from": "cc:1.4:def:URL.Type",
+      "to": "cc:1.4:def:EmptyPrimitiveType.Type"
     },
     {
-      "from": "cc:1.3:def:URL.Type",
-      "to": "cc:1.3:def:EmptyPrimitiveType.Type"
+      "from": "cc:1.4:def:WebLink.Type",
+      "to": "cc:1.4:def:grpStrict.any"
     },
     {
-      "from": "cc:1.3:def:WebLink.Type",
-      "to": "cc:1.3:def:grpStrict.any"
+      "from": "cc:1.4:def:WebLink.Type/url",
+      "to": "cc:1.4:def:URL.Type"
     },
     {
-      "from": "cc:1.3:def:WebLink.Type/url",
-      "to": "cc:1.3:def:URL.Type"
+      "from": "cc:1.4:doc:authorizations",
+      "to": "cc:1.4:def:Authorizations.Type"
     },
     {
-      "from": "cc:1.3:doc:authorizations",
-      "to": "cc:1.3:def:Authorizations.Type"
+      "from": "cc:1.4:doc:curriculumStandardsMetadataSet",
+      "to": "cc:1.4:def:CurriculumStandardsMetadataSet.Type"
     },
     {
-      "from": "cc:1.3:doc:curriculumStandardsMetadataSet",
-      "to": "cc:1.3:def:CurriculumStandardsMetadataSet.Type"
+      "from": "cc:1.4:doc:manifest",
+      "to": "cc:1.4:def:Manifest.Type"
     },
     {
-      "from": "cc:1.3:doc:manifest",
-      "to": "cc:1.3:def:Manifest.Type"
+      "from": "cc:1.4:doc:topic",
+      "to": "cc:1.4:def:Topic.Type"
     },
     {
-      "from": "cc:1.3:doc:topic",
-      "to": "cc:1.3:def:Topic.Type"
-    },
-    {
-      "from": "cc:1.3:doc:webLink",
-      "to": "cc:1.3:def:WebLink.Type"
+      "from": "cc:1.4:doc:webLink",
+      "to": "cc:1.4:def:WebLink.Type"
     }
   ],
   "conformance": [
     {
-      "key": "cc:1.3:conf:authorization/CC-AUTH-1",
+      "key": "cc:1.4:conf:authorization/CC14-AUTH-1",
       "profile": "authorization",
-      "reqId": "CC-AUTH-1",
+      "reqId": "CC14-AUTH-1",
       "level": "MUST",
       "statement": "An authorizations document MUST contain at least one authorization describing how to access a resource.",
       "constrains": [
-        "cc:1.3:def:Authorizations.Type/authorization"
+        "cc:1.4:def:Authorizations.Type/authorization"
       ],
-      "source": "IMS CC 1.3 — Authorization (imsccauth_v1p3) — https://www.imsglobal.org/cc/CCv1p3/imscc_profilev1p3-Final.html"
+      "source": "IMS CC 1.4 — Authorization (imsccauth_v1p4) — https://www.imsglobal.org/spec/cc/v1p4"
     },
     {
-      "key": "cc:1.3:conf:curriculum-standards-metadata/CC-CSM-1",
-      "profile": "curriculum-standards-metadata",
-      "reqId": "CC-CSM-1",
-      "level": "MUST",
-      "statement": "A CurriculumStandardsMetadataSet MUST contain at least one curriculumStandardsMetadata, each with at least one setOfGUIDs.",
-      "constrains": [
-        "cc:1.3:def:CurriculumStandardsMetadataSet.Type/curriculumStandardsMetadata",
-        "cc:1.3:def:CurriculumStandardsMetadata.Type/setOfGUIDs"
-      ],
-      "source": "IMS CC 1.3 — Curriculum Standards Metadata (imscsmd_v1p0) — https://www.imsglobal.org/cc/CCv1p3/imscc_profilev1p3-Final.html"
-    },
-    {
-      "key": "cc:1.3:conf:discussion-topic/CC-DT-1",
+      "key": "cc:1.4:conf:discussion-topic/CC14-DT-1",
       "profile": "discussion-topic",
-      "reqId": "CC-DT-1",
+      "reqId": "CC14-DT-1",
       "level": "MUST",
       "statement": "A Discussion Topic resource MUST carry exactly one title and exactly one text body.",
       "constrains": [
-        "cc:1.3:def:Topic.Type/title",
-        "cc:1.3:def:Topic.Type/text"
+        "cc:1.4:def:Topic.Type/title",
+        "cc:1.4:def:Topic.Type/text"
       ],
-      "source": "IMS CC 1.3 — Discussion Topic resource (imsdt_v1p3) — https://www.imsglobal.org/cc/CCv1p3/imscc_profilev1p3-Final.html#DiscussionTopics"
+      "source": "IMS CC 1.4 — Discussion Topic resource (imsdt_v1p4) — https://www.imsglobal.org/spec/cc/v1p4"
     },
     {
-      "key": "cc:1.3:conf:manifest/CC-MAN-1",
+      "key": "cc:1.4:conf:manifest/CC14-MAN-1",
       "profile": "manifest",
-      "reqId": "CC-MAN-1",
+      "reqId": "CC14-MAN-1",
       "level": "MUST",
-      "statement": "A Common Cartridge manifest MUST carry an identifier and exactly one organizations and one resources element.",
+      "statement": "A Common Cartridge 1.4 manifest MUST carry an identifier and exactly one organizations and one resources element.",
       "constrains": [
-        "cc:1.3:def:Manifest.Type/identifier",
-        "cc:1.3:def:Manifest.Type/organizations",
-        "cc:1.3:def:Manifest.Type/resources"
+        "cc:1.4:def:Manifest.Type/identifier",
+        "cc:1.4:def:Manifest.Type/organizations",
+        "cc:1.4:def:Manifest.Type/resources"
       ],
-      "source": "IMS CC 1.3 — Content Packaging manifest (imscp_v1p2) — https://www.imsglobal.org/cc/CCv1p3/imscc_profilev1p3-Final.html"
+      "source": "IMS CC 1.4 — Content Packaging manifest (imscp_v1p2) — https://www.imsglobal.org/spec/cc/v1p4"
     },
     {
-      "key": "cc:1.3:conf:web-link/CC-WL-1",
+      "key": "cc:1.4:conf:web-link/CC14-WL-1",
       "profile": "web-link",
-      "reqId": "CC-WL-1",
+      "reqId": "CC14-WL-1",
       "level": "MUST",
       "statement": "A Web Link resource MUST contain a webLink element carrying exactly one title and exactly one url.",
       "constrains": [
-        "cc:1.3:def:WebLink.Type/title",
-        "cc:1.3:def:WebLink.Type/url"
+        "cc:1.4:def:WebLink.Type/title",
+        "cc:1.4:def:WebLink.Type/url"
       ],
-      "source": "IMS CC 1.3 — Web Link resource (imswl_v1p3) — https://www.imsglobal.org/cc/CCv1p3/imscc_profilev1p3-Final.html#WebLinks"
-    },
-    {
-      "key": "cc:1.3:conf:web-link/CC-WL-2",
-      "profile": "web-link",
-      "reqId": "CC-WL-2",
-      "level": "MUST",
-      "statement": "The url element MUST carry an href attribute identifying the link target.",
-      "constrains": [
-        "cc:1.3:def:URL.Type/href"
-      ],
-      "source": "IMS CC 1.3 — Web Link resource (imswl_v1p3) URL.Type — https://www.imsglobal.org/cc/CCv1p3/imscc_profilev1p3-Final.html#WebLinks"
+      "source": "IMS CC 1.4 — Web Link resource (imswl_v1p4) — https://www.imsglobal.org/spec/cc/v1p4"
     }
   ],
   "residues": {
     "silentGaps": [
-      "cc:1.3:def:Manifest.Type/base",
-      "cc:1.3:def:Resource.Type/base",
-      "cc:1.3:def:Resources.Type/base"
+      "cc:1.4:def:Manifest.Type/base",
+      "cc:1.4:def:Resource.Type/base",
+      "cc:1.4:def:Resources.Type/base"
     ],
     "extensions": [
-      "cc:1.3:def:manifest.__schema1/annotation",
-      "cc:1.3:def:manifest.__schema1/classification",
-      "cc:1.3:def:manifest.__schema1/educational",
-      "cc:1.3:def:manifest.__schema1/extensions",
-      "cc:1.3:def:manifest.__schema1/foreignAttributes",
-      "cc:1.3:def:manifest.__schema1/general",
-      "cc:1.3:def:manifest.__schema1/lifeCycle",
-      "cc:1.3:def:manifest.__schema1/metaMetadata",
-      "cc:1.3:def:manifest.__schema1/relation",
-      "cc:1.3:def:manifest.__schema1/rights",
-      "cc:1.3:def:manifest.__schema1/technical",
-      "cc:1.3:def:manifest.__schema20/curriculumStandardsMetadata",
-      "cc:1.3:def:manifest.__schema20/resourceLabel",
-      "cc:1.3:def:manifest.__schema20/resourcePartId",
-      "cc:1.3:def:manifest.__schema25/extensions",
-      "cc:1.3:doc:authorizations/extensions",
-      "cc:1.3:doc:manifest/authorizations/access",
-      "cc:1.3:doc:manifest/authorizations/authorization",
-      "cc:1.3:doc:manifest/authorizations/extensions",
-      "cc:1.3:doc:manifest/authorizations/import",
-      "cc:1.3:doc:manifest/resources/resource/[]/extensions",
-      "cc:1.3:doc:manifest/resources/resource/[]/xmlBase",
-      "cc:1.3:doc:manifest/resources/xmlBase",
-      "cc:1.3:doc:manifest/xmlBase",
-      "cc:1.3:doc:topic/extensions",
-      "cc:1.3:doc:topic/text/value",
-      "cc:1.3:doc:webLink/extensions"
+      "cc:1.4:def:manifest.__schema1/annotation",
+      "cc:1.4:def:manifest.__schema1/classification",
+      "cc:1.4:def:manifest.__schema1/educational",
+      "cc:1.4:def:manifest.__schema1/extensions",
+      "cc:1.4:def:manifest.__schema1/foreignAttributes",
+      "cc:1.4:def:manifest.__schema1/general",
+      "cc:1.4:def:manifest.__schema1/lifeCycle",
+      "cc:1.4:def:manifest.__schema1/metaMetadata",
+      "cc:1.4:def:manifest.__schema1/relation",
+      "cc:1.4:def:manifest.__schema1/rights",
+      "cc:1.4:def:manifest.__schema1/technical",
+      "cc:1.4:def:manifest.__schema20/curriculumStandardsMetadata",
+      "cc:1.4:def:manifest.__schema20/resourceLabel",
+      "cc:1.4:def:manifest.__schema20/resourcePartId",
+      "cc:1.4:def:manifest.__schema26/extensions",
+      "cc:1.4:doc:authorizations/extensions",
+      "cc:1.4:doc:manifest/authorizations",
+      "cc:1.4:doc:manifest/resources/resource/[]/extensions",
+      "cc:1.4:doc:manifest/resources/resource/[]/protected",
+      "cc:1.4:doc:manifest/resources/resource/[]/xmlBase",
+      "cc:1.4:doc:manifest/resources/xmlBase",
+      "cc:1.4:doc:manifest/xmlBase",
+      "cc:1.4:doc:topic/extensions/[]/attributes",
+      "cc:1.4:doc:topic/extensions/[]/children",
+      "cc:1.4:doc:topic/extensions/[]/name",
+      "cc:1.4:doc:topic/extensions/[]/namespace",
+      "cc:1.4:doc:topic/extensions/[]/value",
+      "cc:1.4:doc:topic/text/value",
+      "cc:1.4:doc:webLink/extensions/[]/attributes",
+      "cc:1.4:doc:webLink/extensions/[]/children",
+      "cc:1.4:doc:webLink/extensions/[]/name",
+      "cc:1.4:doc:webLink/extensions/[]/namespace",
+      "cc:1.4:doc:webLink/extensions/[]/value"
     ]
   },
   "rollup": {
-    "items": 110,
-    "modelledYes": 65,
+    "items": 112,
+    "modelledYes": 66,
     "modelledPartial": 0,
     "modelledNo": 3,
     "normativeItems": 0,
-    "conformanceRequirements": 6
+    "conformanceRequirements": 4
   }
 }

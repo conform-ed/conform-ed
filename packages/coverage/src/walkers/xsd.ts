@@ -305,11 +305,20 @@ export function walkXsd(xsdText: string, binding: string, ctx: XsdWalkContext): 
     const maxOccurs = attr(el, "maxOccurs");
     const isArray = maxOccurs === "unbounded" || (maxOccurs !== undefined && Number(maxOccurs) > 1);
 
+    // `<xs:element ref="g">` points at a global element; cardinality stays local but
+    // the *type* (and any inline complexType/simpleType) comes from that global
+    // declaration. QTI 2.x declares every child this way (modular style); 3.0.1 uses
+    // it for a handful. A foreign-namespace ref (e.g. `apip:…`, MathML) resolves to no
+    // local element, so it stays an opaque untyped property — no dangling edge.
+    const refName = attr(el, "ref");
+    const refTarget = refName !== undefined ? elements.get(localPart(refName)) : undefined;
+    const typeSource = refTarget ?? el;
+
     // The value node is the element itself, or its array element when repeatable.
     const valuePath = isArray ? `${childPath}/[]` : childPath;
     const valueKey = `${rootKey}/${valuePath}`;
-    const ref = resolveTypeRef(attr(el, "type"), valueKey);
-    const inline = inlineSimpleInfo(el);
+    const ref = resolveTypeRef(attr(typeSource, "type"), valueKey);
+    const inline = inlineSimpleInfo(typeSource);
     const jsonType = ref.jsonType ?? inline.jsonType;
     const enumValues = ref.enumValues ?? inline.enumValues;
     if (ref.edgeTo !== undefined) pending.add(ref.edgeTo);
@@ -341,8 +350,9 @@ export function walkXsd(xsdText: string, binding: string, ctx: XsdWalkContext): 
       );
     }
 
-    // anonymous inline complexType → its members hang off the value path
-    for (const inlineCt of toArray(el["complexType"])) collectMembers(inlineCt, rootKey, valuePath);
+    // anonymous inline complexType → its members hang off the value path (resolved
+    // through a `ref` to the global element's own inline complexType when present).
+    for (const inlineCt of toArray(typeSource["complexType"])) collectMembers(inlineCt, rootKey, valuePath);
   };
 
   const emitAttribute = (att: XmlNode, rootKey: string, path: string): void => {

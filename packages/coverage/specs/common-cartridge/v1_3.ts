@@ -20,6 +20,8 @@
 import { join } from "node:path";
 
 import {
+  CommonCartridgeAuthorizationsSchema,
+  CommonCartridgeManifestRawSchema,
   CurriculumStandardsMetadataSetSchema,
   DiscussionTopicSchema,
   WebLinkSchema,
@@ -82,6 +84,32 @@ const conformance: readonly ConformanceRequirement[] = [
     source:
       "IMS CC 1.3 — Curriculum Standards Metadata (imscsmd_v1p0) — https://www.imsglobal.org/cc/CCv1p3/imscc_profilev1p3-Final.html",
   },
+  {
+    key: "cc:1.3:conf:manifest/CC-MAN-1",
+    profile: "manifest",
+    reqId: "CC-MAN-1",
+    level: "MUST",
+    statement:
+      "A Common Cartridge manifest MUST carry an identifier and exactly one organizations and one resources element.",
+    constrains: [
+      "cc:1.3:def:Manifest.Type/identifier",
+      "cc:1.3:def:Manifest.Type/organizations",
+      "cc:1.3:def:Manifest.Type/resources",
+    ],
+    source:
+      "IMS CC 1.3 — Content Packaging manifest (imscp_v1p2) — https://www.imsglobal.org/cc/CCv1p3/imscc_profilev1p3-Final.html",
+  },
+  {
+    key: "cc:1.3:conf:authorization/CC-AUTH-1",
+    profile: "authorization",
+    reqId: "CC-AUTH-1",
+    level: "MUST",
+    statement:
+      "An authorizations document MUST contain at least one authorization describing how to access a resource.",
+    constrains: ["cc:1.3:def:Authorizations.Type/authorization"],
+    source:
+      "IMS CC 1.3 — Authorization (imsccauth_v1p3) — https://www.imsglobal.org/cc/CCv1p3/imscc_profilev1p3-Final.html",
+  },
 ];
 
 export const commonCartridgeV1_3: SpecSource = {
@@ -105,6 +133,18 @@ export const commonCartridgeV1_3: SpecSource = {
       schemaPath: vendor("ccv1p3_imscsmd_v1p0.xsd"),
       language: "xsd",
       zod: CurriculumStandardsMetadataSetSchema,
+    },
+    {
+      binding: "manifest",
+      schemaPath: vendor("ccv1p3_imscp_v1p2_v1p0.xsd"),
+      language: "xsd",
+      zod: CommonCartridgeManifestRawSchema,
+    },
+    {
+      binding: "authorizations",
+      schemaPath: vendor("ccv1p3_imsccauth_v1p3.xsd"),
+      language: "xsd",
+      zod: CommonCartridgeAuthorizationsSchema,
     },
   ],
   conformance,

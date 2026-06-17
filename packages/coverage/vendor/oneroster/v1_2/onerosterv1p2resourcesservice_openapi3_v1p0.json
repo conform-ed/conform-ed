@@ -1,0 +1,1305 @@
+{
+    "openapi" : "3.0.0",
+    "info" : {
+        "version" : "1.2",
+        "title" : "OneRoster Resources OpenAPI (JSON) Definition",
+        "description" : "The OneRoster 1.2 Resources service binding is available in REST/JSON and described using OpenAPI. The model is based upon the IMS PSM modelling approach.",
+        "termsOfService" : "https://www.imsglobal.org/license.html",
+        "contact" : {
+            "name" : "Vice President of Operations, 1EdTech",
+            "url" : "https://www.1edtech.org",
+            "email" : "operations@1edtech.org"
+        },
+        "license" : {
+            "name" : "1EdTech",
+            "url" : "https://www.1edtech.org/license.html"
+        }
+    },
+    "servers" : [
+        {
+            "url" : "https://{hostName}{basePath}",
+            "description" : "The pattern for the Server URL should be configured for the actual server location.",
+            "variables" : {
+                "hostName" : {
+                    "description" : "This is the hostname for the server and MUST be set to the actual service provider (the 1EdTech url is given as a default value).",
+                    "default" : "www.1edtech.org"
+                },
+                "basePath" : {
+                    "description" : "This is the base-path for the full URL and MUST be a part of the service endpoints.",
+                    "enum" : ["/ims/oneroster/resources/v1p2"],
+                    "default" : "/ims/oneroster/resources/v1p2"
+                }
+            }
+        }
+    ],
+    "tags" : [
+        {
+            "name" : "ClassesManagement",
+            "description" : "This enables the management of information about resources i.e. the allocation of resources to classes. "
+        },
+        {
+            "name" : "CoursesManagement",
+            "description" : "This enables the management of information about resources i.e. the allocation of resources to courses. "
+        },
+        {
+            "name" : "ResourcesManagement",
+            "description" : "This enables the management of information about resources."
+        },
+        {
+            "name" : "UsersManagement",
+            "description" : "This enables the management of information about resources i.e. the allocation of resources to courses. "
+        }
+    ],
+    "paths" : {
+        "/classes/{classSourcedId}/resources" : {
+            "get" : {
+                "operationId" : "getResourcesForClass",
+                "summary" : "The REST read request message for the getResourcesForClass() API call.",
+                "tags" : [ "ClassesManagement" ],
+                "description" : "To read, get, the collection of resources associated to the specified class. This is the OneRoster description of the resources and not the actual resources. If the specified class cannot be identified within the service provider then a status code of 'unknownobject' must be reported. ",
+                "parameters" : [
+                    {
+                        "name" : "classSourcedId",
+                        "in" : "path",
+                        "description" : "The unique identifier, GUID, for this class.",
+                        "required" : true,
+                        "schema" : {
+                            "type" : "string"
+                        },
+                        "style" : "simple"
+                    },
+                    {
+                        "name" : "limit",
+                        "in" : "query",
+                        "description" : "To define the download segmentation value i.e. the maximum number of records to be contained in the response.",
+                        "required" : false,
+                        "schema" : {
+                            "type" : "integer",
+                            "format" : "int32",
+                            "default" : 100,
+                            "minimum" : 1
+                        },
+                        "style" : "form",
+                        "allowEmptyValue" : false
+                    },
+                    {
+                        "name" : "offset",
+                        "in" : "query",
+                        "description" : "The number of the first record to be supplied in the segmented response message.",
+                        "required" : false,
+                        "schema" : {
+                            "type" : "integer",
+                            "format" : "int32",
+                            "default" : 0,
+                            "minimum" : 0
+                        },
+                        "style" : "form",
+                        "allowEmptyValue" : false
+                    },
+                    {
+                        "name" : "sort",
+                        "in" : "query",
+                        "description" : "Identifies the sort criteria to be used for the records in the response message. Use with the orderBy parameter. The sort order should follow the [UNICODE, 16] standard.",
+                        "required" : false,
+                        "schema" : {
+                            "type" : "string"
+                        },
+                        "style" : "form",
+                        "allowEmptyValue" : false
+                    },
+                    {
+                        "name" : "orderBy",
+                        "in" : "query",
+                        "description" : "The form of ordering for response to the sorted request i.e. ascending (asc) or descending (desc). The sort order should follow the [UNICODE, 16] standard.",
+                        "required" : false,
+                        "schema" : {
+                            "type" : "string",
+                            "enum" : [ "asc","desc" ]
+                        },
+                        "style" : "form",
+                        "allowEmptyValue" : false
+                    },
+                    {
+                        "name" : "filter",
+                        "in" : "query",
+                        "description" : "The filtering rules to be applied when identifying the records to be supplied in the response message.",
+                        "required" : false,
+                        "schema" : {
+                            "type" : "string"
+                        },
+                        "style" : "form",
+                        "allowEmptyValue" : false
+                    },
+                    {
+                        "name" : "fields",
+                        "in" : "query",
+                        "description" : "To identify the range of fields that should be supplied in the response message.",
+                        "required" : false,
+                        "schema" : {
+                            "type" : "array",
+                            "items" : {
+                                "type" : "string"
+                            }
+                        },
+                        "style" : "form",
+                        "allowEmptyValue" : false
+                    }
+                ],
+                "security" : [
+                    {
+                        "OAuth2CC" : [
+                            "https://purl.imsglobal.org/spec/or/v1p2/scope/resource.readonly"
+                        ]
+                    }
+                ],
+                "responses" : {
+                    "200" : {
+                        "description" : "The requested read has been fully serviced and all of the required data returned.",
+                        "content" : {
+                            "application/json" : {
+                                "schema" : {
+                                    "$ref" : "#/components/schemas/ResourceSetDType"
+                                }
+                            }
+                        },
+                        "headers" : {
+                            "X-Total-Count" : {
+                                "description" : "The total number of resources that are available to be returned",
+                                "schema" : {
+                                    "type" : "integer"
+                                }
+                            }
+                        },
+                        "links" : {
+                            "next" : {
+                                "description" : "Get the next set of resources i.e. from offset to offset+limit",
+                                "operationId" : "getResourcesForClass",
+                                "parameters" : {
+                                    "limit" : "$request.path.limit",
+                                    "offset" : "$request.path.offset"
+                                }
+                            },
+                            "last" : {
+                                "description" : "Get the last set of resources i.e. from offset to end",
+                                "operationId" : "getResourcesForClass",
+                                "parameters" : {
+                                    "limit" : "$request.path.limit",
+                                    "offset" : "$request.path.offset"
+                                }
+                            },
+                            "first" : {
+                                "description" : "Get the first set of resources i.e. from first to limit",
+                                "operationId" : "getResourcesForClass",
+                                "parameters" : {
+                                    "limit" : "$request.path.limit",
+                                    "offset" : "$request.path.offset"
+                                }
+                            },
+                            "prev" : {
+                                "description" : "Get the previous set of resources i.e. from last_offset to last_offset+limit",
+                                "operationId" : "getResourcesForClass",
+                                "parameters" : {
+                                    "limit" : "$request.path.limit",
+                                    "offset" : "$request.path.offset"
+                                }
+                            }
+                        }
+                    },
+                    "400" : {
+                        "description" : "Either an invalid selection field or invalid filter field was supplied and data filtering on the specified criteria was not possible i.e. 'invalid_selection_field' or 'invalid_filter_field' respectively. This is accompanied by the 'codeMajor/severity' values of 'failure/error'. ",
+                        "content" : {
+                            "application/json" : {
+                                "schema" : {
+                                    "$ref" : "#/components/schemas/imsx_StatusInfoDType"
+                                }
+                            }
+                        }
+                    },
+                    "401" : {
+                        "description" : "The request was not correctly authorised i.e. 'unauthorisedrequest'. This would be accompanied by the 'codeMajor/severity' values of 'failure/error'. ",
+                        "content" : {
+                            "application/json" : {
+                                "schema" : {
+                                    "$ref" : "#/components/schemas/imsx_StatusInfoDType"
+                                }
+                            }
+                        }
+                    },
+                    "403" : {
+                        "description" : "This is used to indicate that the server can be reached and process the request but refuses to take any further action i.e. 'forbidden'. This would be accompanied by the 'codeMajor/severity' values of 'failure/error'. ",
+                        "content" : {
+                            "application/json" : {
+                                "schema" : {
+                                    "$ref" : "#/components/schemas/imsx_StatusInfoDType"
+                                }
+                            }
+                        }
+                    },
+                    "404" : {
+                        "description" : "Either the supplied identifier is unknown in the Service Provider and so the object could not be changed or an invalid GUID has been supplied. This would be accompanied by the 'codeMajor/severity' values of 'failure/error'. The statement 'Unknown Object' should also be presented. ",
+                        "content" : {
+                            "application/json" : {
+                                "schema" : {
+                                    "$ref" : "#/components/schemas/imsx_StatusInfoDType"
+                                }
+                            }
+                        }
+                    },
+                    "422" : {
+                        "description" : "This error condition may occur if a JSON request body contains well-formed (i.e., syntactically correct), but semantically erroneous, JSON instructions. This would be accompanied by the 'codeMajor/severity' values of 'failure/error'.",
+                        "content" : {
+                            "application/json" : {
+                                "schema" : {
+                                    "$ref" : "#/components/schemas/imsx_StatusInfoDType"
+                                }
+                            }
+                        }
+                    },
+                    "429" : {
+                        "description" : "The server is receiving too many requests i.e. 'server_busy'. Retry at a later time. This would be accompanied by the 'codeMajor/severity' values of 'failure/error'. ",
+                        "content" : {
+                            "application/json" : {
+                                "schema" : {
+                                    "$ref" : "#/components/schemas/imsx_StatusInfoDType"
+                                }
+                            }
+                        }
+                    },
+                    "500" : {
+                        "description" : "This code should be used only if there is catastrophic error and there is not a more appropriate code i.e. 'internal_server_error'. This would be accompanied by the 'codeMajor/severity' values of 'failure/error'.",
+                        "content" : {
+                            "application/json" : {
+                                "schema" : {
+                                    "$ref" : "#/components/schemas/imsx_StatusInfoDType"
+                                }
+                            }
+                        }
+                    },
+                    "default" : {
+                        "description" : "This is the default payload when none of the other HTTP codes are to be supplied.",
+                        "content" : {
+                            "application/json" : {
+                                "schema" : {
+                                    "$ref" : "#/components/schemas/imsx_StatusInfoDType"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/courses/{courseSourcedId}/resources" : {
+            "get" : {
+                "operationId" : "getResourcesForCourse",
+                "summary" : "The REST read request message for the getResourcesForCourse() API call.",
+                "tags" : [ "CoursesManagement" ],
+                "description" : "To read, get, the collection of resources associated to the specified course. This is the OneRoster description of the resources and not the actual resources. If the specified class cannot be identified within the service provider then a status code of 'unknownobject' must be reported. ",
+                "parameters" : [
+                    {
+                        "name" : "courseSourcedId",
+                        "in" : "path",
+                        "description" : "The unique identifier, GUID, for the course.",
+                        "required" : true,
+                        "schema" : {
+                            "type" : "string"
+                        },
+                        "style" : "simple"
+                    },
+                    {
+                        "name" : "limit",
+                        "in" : "query",
+                        "description" : "To define the download segmentation value i.e. the maximum number of records to be contained in the response.",
+                        "required" : false,
+                        "schema" : {
+                            "type" : "integer",
+                            "format" : "int32",
+                            "default" : 100,
+                            "minimum" : 1
+                        },
+                        "style" : "form",
+                        "allowEmptyValue" : false
+                    },
+                    {
+                        "name" : "offset",
+                        "in" : "query",
+                        "description" : "The number of the first record to be supplied in the segmented response message.",
+                        "required" : false,
+                        "schema" : {
+                            "type" : "integer",
+                            "format" : "int32",
+                            "default" : 0,
+                            "minimum" : 0
+                        },
+                        "style" : "form",
+                        "allowEmptyValue" : false
+                    },
+                    {
+                        "name" : "sort",
+                        "in" : "query",
+                        "description" : "Identifies the sort criteria to be used for the records in the response message. Use with the orderBy parameter. The sort order should follow the [UNICODE, 16] standard.",
+                        "required" : false,
+                        "schema" : {
+                            "type" : "string"
+                        },
+                        "style" : "form",
+                        "allowEmptyValue" : false
+                    },
+                    {
+                        "name" : "orderBy",
+                        "in" : "query",
+                        "description" : "The form of ordering for response to the sorted request i.e. ascending (asc) or descending (desc). The sort order should follow the [UNICODE, 16] standard.",
+                        "required" : false,
+                        "schema" : {
+                            "type" : "string",
+                            "enum" : [ "asc","desc" ]
+                        },
+                        "style" : "form",
+                        "allowEmptyValue" : false
+                    },
+                    {
+                        "name" : "filter",
+                        "in" : "query",
+                        "description" : "The filtering rules to be applied when identifying the records to be supplied in the response message.",
+                        "required" : false,
+                        "schema" : {
+                            "type" : "string"
+                        },
+                        "style" : "form",
+                        "allowEmptyValue" : false
+                    },
+                    {
+                        "name" : "fields",
+                        "in" : "query",
+                        "description" : "To identify the range of fields that should be supplied in the response message.",
+                        "required" : false,
+                        "schema" : {
+                            "type" : "array",
+                            "items" : {
+                                "type" : "string"
+                            }
+                        },
+                        "style" : "form",
+                        "allowEmptyValue" : false
+                    }
+                ],
+                "security" : [
+                    {
+                        "OAuth2CC" : [
+                            "https://purl.imsglobal.org/spec/or/v1p2/scope/resource.readonly"
+                        ]
+                    }
+                ],
+                "responses" : {
+                    "200" : {
+                        "description" : "The requested read has been fully serviced and all of the required data returned.",
+                        "content" : {
+                            "application/json" : {
+                                "schema" : {
+                                    "$ref" : "#/components/schemas/ResourceSetDType"
+                                }
+                            }
+                        },
+                        "headers" : {
+                            "X-Total-Count" : {
+                                "description" : "The total number of resources that are available to be returned",
+                                "schema" : {
+                                    "type" : "integer"
+                                }
+                            }
+                        },
+                        "links" : {
+                            "next" : {
+                                "description" : "Get the next set of resources i.e. from offset to offset+limit",
+                                "operationId" : "getResourcesForCourse",
+                                "parameters" : {
+                                    "limit" : "$request.path.limit",
+                                    "offset" : "$request.path.offset"
+                                }
+                            },
+                            "last" : {
+                                "description" : "Get the last set of resources i.e. from offset to end",
+                                "operationId" : "getResourcesForCourse",
+                                "parameters" : {
+                                    "limit" : "$request.path.limit",
+                                    "offset" : "$request.path.offset"
+                                }
+                            },
+                            "first" : {
+                                "description" : "Get the first set of resources i.e. from first to limit",
+                                "operationId" : "getResourcesForCourse",
+                                "parameters" : {
+                                    "limit" : "$request.path.limit",
+                                    "offset" : "$request.path.offset"
+                                }
+                            },
+                            "prev" : {
+                                "description" : "Get the previous set of resources i.e. from last_offset to last_offset+limit",
+                                "operationId" : "getResourcesForCourse",
+                                "parameters" : {
+                                    "limit" : "$request.path.limit",
+                                    "offset" : "$request.path.offset"
+                                }
+                            }
+                        }
+                    },
+                    "400" : {
+                        "description" : "Either an invalid selection field or invalid filter field was supplied and data filtering on the specified criteria was not possible i.e. 'invalid_selection_field' or 'invalid_filter_field' respectively. This is accompanied by the 'codeMajor/severity' values of 'failure/error'. ",
+                        "content" : {
+                            "application/json" : {
+                                "schema" : {
+                                    "$ref" : "#/components/schemas/imsx_StatusInfoDType"
+                                }
+                            }
+                        }
+                    },
+                    "401" : {
+                        "description" : "The request was not correctly authorised i.e. 'unauthorisedrequest'. This would be accompanied by the 'codeMajor/severity' values of 'failure/error'. ",
+                        "content" : {
+                            "application/json" : {
+                                "schema" : {
+                                    "$ref" : "#/components/schemas/imsx_StatusInfoDType"
+                                }
+                            }
+                        }
+                    },
+                    "403" : {
+                        "description" : "This is used to indicate that the server can be reached and process the request but refuses to take any further action i.e. 'forbidden'. This would be accompanied by the 'codeMajor/severity' values of 'failure/error'. ",
+                        "content" : {
+                            "application/json" : {
+                                "schema" : {
+                                    "$ref" : "#/components/schemas/imsx_StatusInfoDType"
+                                }
+                            }
+                        }
+                    },
+                    "404" : {
+                        "description" : "Either the supplied identifier is unknown in the Service Provider and so the object could not be changed or an invalid GUID has been supplied. This would be accompanied by the 'codeMajor/severity' values of 'failure/error'. The statement 'Unknown Object' should also be presented. ",
+                        "content" : {
+                            "application/json" : {
+                                "schema" : {
+                                    "$ref" : "#/components/schemas/imsx_StatusInfoDType"
+                                }
+                            }
+                        }
+                    },
+                    "422" : {
+                        "description" : "This error condition may occur if a JSON request body contains well-formed (i.e., syntactically correct), but semantically erroneous, JSON instructions. This would be accompanied by the 'codeMajor/severity' values of 'failure/error'.",
+                        "content" : {
+                            "application/json" : {
+                                "schema" : {
+                                    "$ref" : "#/components/schemas/imsx_StatusInfoDType"
+                                }
+                            }
+                        }
+                    },
+                    "429" : {
+                        "description" : "The server is receiving too many requests i.e. 'server_busy'. Retry at a later time. This would be accompanied by the 'codeMajor/severity' values of 'failure/error'. ",
+                        "content" : {
+                            "application/json" : {
+                                "schema" : {
+                                    "$ref" : "#/components/schemas/imsx_StatusInfoDType"
+                                }
+                            }
+                        }
+                    },
+                    "500" : {
+                        "description" : "This code should be used only if there is catastrophic error and there is not a more appropriate code i.e. 'internal_server_error'. This would be accompanied by the 'codeMajor/severity' values of 'failure/error'.",
+                        "content" : {
+                            "application/json" : {
+                                "schema" : {
+                                    "$ref" : "#/components/schemas/imsx_StatusInfoDType"
+                                }
+                            }
+                        }
+                    },
+                    "default" : {
+                        "description" : "This is the default payload when none of the other HTTP codes are to be supplied.",
+                        "content" : {
+                            "application/json" : {
+                                "schema" : {
+                                    "$ref" : "#/components/schemas/imsx_StatusInfoDType"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/resources" : {
+            "get" : {
+                "operationId" : "getAllResources",
+                "summary" : "The REST read request message for the getAllResources() API call.",
+                "tags" : [ "ResourcesManagement" ],
+                "description" : "To read, get, a collection of resources i.e. all resources. This is the OneRoster description of the resources and not the actual resources.",
+                "parameters" : [
+                    {
+                        "name" : "limit",
+                        "in" : "query",
+                        "description" : "To define the download segmentation value i.e. the maximum number of records to be contained in the response.",
+                        "required" : false,
+                        "schema" : {
+                            "type" : "integer",
+                            "format" : "int32",
+                            "default" : 100,
+                            "minimum" : 1
+                        },
+                        "style" : "form",
+                        "allowEmptyValue" : false
+                    },
+                    {
+                        "name" : "offset",
+                        "in" : "query",
+                        "description" : "The number of the first record to be supplied in the segmented response message.",
+                        "required" : false,
+                        "schema" : {
+                            "type" : "integer",
+                            "format" : "int32",
+                            "default" : 0,
+                            "minimum" : 0
+                        },
+                        "style" : "form",
+                        "allowEmptyValue" : false
+                    },
+                    {
+                        "name" : "sort",
+                        "in" : "query",
+                        "description" : "Identifies the sort criteria to be used for the records in the response message. Use with the orderBy parameter. The sort order should follow the [UNICODE, 16] standard.",
+                        "required" : false,
+                        "schema" : {
+                            "type" : "string"
+                        },
+                        "style" : "form",
+                        "allowEmptyValue" : false
+                    },
+                    {
+                        "name" : "orderBy",
+                        "in" : "query",
+                        "description" : "The form of ordering for response to the sorted request i.e. ascending (asc) or descending (desc). The sort order should follow the [UNICODE, 16] standard.",
+                        "required" : false,
+                        "schema" : {
+                            "type" : "string",
+                            "enum" : [ "asc","desc" ]
+                        },
+                        "style" : "form",
+                        "allowEmptyValue" : false
+                    },
+                    {
+                        "name" : "filter",
+                        "in" : "query",
+                        "description" : "The filtering rules to be applied when identifying the records to be supplied in the response message.",
+                        "required" : false,
+                        "schema" : {
+                            "type" : "string"
+                        },
+                        "style" : "form",
+                        "allowEmptyValue" : false
+                    },
+                    {
+                        "name" : "fields",
+                        "in" : "query",
+                        "description" : "To identify the range of fields that should be supplied in the response message.",
+                        "required" : false,
+                        "schema" : {
+                            "type" : "array",
+                            "items" : {
+                                "type" : "string"
+                            }
+                        },
+                        "style" : "form",
+                        "allowEmptyValue" : false
+                    }
+                ],
+                "security" : [
+                    {
+                        "OAuth2CC" : [
+                            "https://purl.imsglobal.org/spec/or/v1p2/scope/resource.readonly",
+                            "https://purl.imsglobal.org/spec/or/v1p2/scope/resource-core.readonly"
+                        ]
+                    }
+                ],
+                "responses" : {
+                    "200" : {
+                        "description" : "The requested read has been fully serviced and all of the required data returned.",
+                        "content" : {
+                            "application/json" : {
+                                "schema" : {
+                                    "$ref" : "#/components/schemas/ResourceSetDType"
+                                }
+                            }
+                        },
+                        "headers" : {
+                            "X-Total-Count" : {
+                                "description" : "The total number of resources that are available to be returned",
+                                "schema" : {
+                                    "type" : "integer"
+                                }
+                            }
+                        },
+                        "links" : {
+                            "next" : {
+                                "description" : "Get the next set of resources i.e. from offset to offset+limit",
+                                "operationId" : "getAllResources",
+                                "parameters" : {
+                                    "limit" : "$request.path.limit",
+                                    "offset" : "$request.path.offset"
+                                }
+                            },
+                            "last" : {
+                                "description" : "Get the last set of resources i.e. from offset to end",
+                                "operationId" : "getAllResources",
+                                "parameters" : {
+                                    "limit" : "$request.path.limit",
+                                    "offset" : "$request.path.offset"
+                                }
+                            },
+                            "first" : {
+                                "description" : "Get the first set of resources i.e. from first to limit",
+                                "operationId" : "getAllResources",
+                                "parameters" : {
+                                    "limit" : "$request.path.limit",
+                                    "offset" : "$request.path.offset"
+                                }
+                            },
+                            "prev" : {
+                                "description" : "Get the previous set of resources i.e. from last_offset to last_offset+limit",
+                                "operationId" : "getAllResources",
+                                "parameters" : {
+                                    "limit" : "$request.path.limit",
+                                    "offset" : "$request.path.offset"
+                                }
+                            }
+                        }
+                    },
+                    "400" : {
+                        "description" : "Either an invalid selection field or invalid filter field was supplied and data filtering on the specified criteria was not possible i.e. 'invalid_selection_field' or 'invalid_filter_field' respectively. This is accompanied by the 'codeMajor/severity' values of 'failure/error'. ",
+                        "content" : {
+                            "application/json" : {
+                                "schema" : {
+                                    "$ref" : "#/components/schemas/imsx_StatusInfoDType"
+                                }
+                            }
+                        }
+                    },
+                    "401" : {
+                        "description" : "The request was not correctly authorised i.e. 'unauthorisedrequest'. This would be accompanied by the 'codeMajor/severity' values of 'failure/error'. ",
+                        "content" : {
+                            "application/json" : {
+                                "schema" : {
+                                    "$ref" : "#/components/schemas/imsx_StatusInfoDType"
+                                }
+                            }
+                        }
+                    },
+                    "403" : {
+                        "description" : "This is used to indicate that the server can be reached and process the request but refuses to take any further action i.e. 'forbidden'. This would be accompanied by the 'codeMajor/severity' values of 'failure/error'. ",
+                        "content" : {
+                            "application/json" : {
+                                "schema" : {
+                                    "$ref" : "#/components/schemas/imsx_StatusInfoDType"
+                                }
+                            }
+                        }
+                    },
+                    "404" : {
+                        "description" : "Either the supplied identifier is unknown in the Service Provider and so the object could not be changed or an invalid GUID has been supplied. This would be accompanied by the 'codeMajor/severity' values of 'failure/error'. The statement 'Unknown Object' should also be presented. ",
+                        "content" : {
+                            "application/json" : {
+                                "schema" : {
+                                    "$ref" : "#/components/schemas/imsx_StatusInfoDType"
+                                }
+                            }
+                        }
+                    },
+                    "422" : {
+                        "description" : "This error condition may occur if a JSON request body contains well-formed (i.e., syntactically correct), but semantically erroneous, JSON instructions. This would be accompanied by the 'codeMajor/severity' values of 'failure/error'.",
+                        "content" : {
+                            "application/json" : {
+                                "schema" : {
+                                    "$ref" : "#/components/schemas/imsx_StatusInfoDType"
+                                }
+                            }
+                        }
+                    },
+                    "429" : {
+                        "description" : "The server is receiving too many requests i.e. 'server_busy'. Retry at a later time. This would be accompanied by the 'codeMajor/severity' values of 'failure/error'. ",
+                        "content" : {
+                            "application/json" : {
+                                "schema" : {
+                                    "$ref" : "#/components/schemas/imsx_StatusInfoDType"
+                                }
+                            }
+                        }
+                    },
+                    "500" : {
+                        "description" : "This code should be used only if there is catastrophic error and there is not a more appropriate code i.e. 'internal_server_error'. This would be accompanied by the 'codeMajor/severity' values of 'failure/error'.",
+                        "content" : {
+                            "application/json" : {
+                                "schema" : {
+                                    "$ref" : "#/components/schemas/imsx_StatusInfoDType"
+                                }
+                            }
+                        }
+                    },
+                    "default" : {
+                        "description" : "This is the default payload when none of the other HTTP codes are to be supplied.",
+                        "content" : {
+                            "application/json" : {
+                                "schema" : {
+                                    "$ref" : "#/components/schemas/imsx_StatusInfoDType"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/resources/{sourcedId}" : {
+            "get" : {
+                "operationId" : "getResource",
+                "summary" : "The REST read request message for the getResource() API call.",
+                "tags" : [ "ResourcesManagement" ],
+                "description" : "To read, get, a specific OneRoster resource description. If the specified class cannot be identified within the service provider then a status code of 'unknownobject' must be reported. ",
+                "parameters" : [
+                    {
+                        "name" : "sourcedId",
+                        "in" : "path",
+                        "description" : "The unique identifier, GUID, for the resource.",
+                        "required" : true,
+                        "schema" : {
+                            "type" : "string"
+                        },
+                        "style" : "simple"
+                    },
+                    {
+                        "name" : "fields",
+                        "in" : "query",
+                        "description" : "To identify the range of fields that should be supplied in the response message.",
+                        "required" : false,
+                        "schema" : {
+                            "type" : "array",
+                            "items" : {
+                                "type" : "string"
+                            }
+                        },
+                        "style" : "form",
+                        "allowEmptyValue" : false
+                    }
+                ],
+                "security" : [
+                    {
+                        "OAuth2CC" : [
+                            "https://purl.imsglobal.org/spec/or/v1p2/scope/resource.readonly",
+                            "https://purl.imsglobal.org/spec/or/v1p2/scope/resource-core.readonly"
+                        ]
+                    }
+                ],
+                "responses" : {
+                    "200" : {
+                        "description" : "The requested read has been fully serviced and all of the required data returned.",
+                        "content" : {
+                            "application/json" : {
+                                "schema" : {
+                                    "$ref" : "#/components/schemas/SingleResourceDType"
+                                }
+                            }
+                        }
+                    },
+                    "400" : {
+                        "description" : "Either an invalid selection field or invalid filter field was supplied and data filtering on the specified criteria was not possible i.e. 'invalid_selection_field' or 'invalid_filter_field' respectively. This is accompanied by the 'codeMajor/severity' values of 'failure/error'. ",
+                        "content" : {
+                            "application/json" : {
+                                "schema" : {
+                                    "$ref" : "#/components/schemas/imsx_StatusInfoDType"
+                                }
+                            }
+                        }
+                    },
+                    "401" : {
+                        "description" : "The request was not correctly authorised i.e. 'unauthorisedrequest'. This would be accompanied by the 'codeMajor/severity' values of 'failure/error'. ",
+                        "content" : {
+                            "application/json" : {
+                                "schema" : {
+                                    "$ref" : "#/components/schemas/imsx_StatusInfoDType"
+                                }
+                            }
+                        }
+                    },
+                    "403" : {
+                        "description" : "This is used to indicate that the server can be reached and process the request but refuses to take any further action i.e. 'forbidden'. This would be accompanied by the 'codeMajor/severity' values of 'failure/error'. ",
+                        "content" : {
+                            "application/json" : {
+                                "schema" : {
+                                    "$ref" : "#/components/schemas/imsx_StatusInfoDType"
+                                }
+                            }
+                        }
+                    },
+                    "404" : {
+                        "description" : "Either the supplied identifier is unknown in the Service Provider and so the object could not be changed or an invalid GUID has been supplied. This would be accompanied by the 'codeMajor/severity' values of 'failure/error'. The statement 'Unknown Object' should also be presented. ",
+                        "content" : {
+                            "application/json" : {
+                                "schema" : {
+                                    "$ref" : "#/components/schemas/imsx_StatusInfoDType"
+                                }
+                            }
+                        }
+                    },
+                    "422" : {
+                        "description" : "This error condition may occur if a JSON request body contains well-formed (i.e., syntactically correct), but semantically erroneous, JSON instructions. This would be accompanied by the 'codeMajor/severity' values of 'failure/error'.",
+                        "content" : {
+                            "application/json" : {
+                                "schema" : {
+                                    "$ref" : "#/components/schemas/imsx_StatusInfoDType"
+                                }
+                            }
+                        }
+                    },
+                    "429" : {
+                        "description" : "The server is receiving too many requests i.e. 'server_busy'. Retry at a later time. This would be accompanied by the 'codeMajor/severity' values of 'failure/error'. ",
+                        "content" : {
+                            "application/json" : {
+                                "schema" : {
+                                    "$ref" : "#/components/schemas/imsx_StatusInfoDType"
+                                }
+                            }
+                        }
+                    },
+                    "500" : {
+                        "description" : "This code should be used only if there is catastrophic error and there is not a more appropriate code i.e. 'internal_server_error'. This would be accompanied by the 'codeMajor/severity' values of 'failure/error'.",
+                        "content" : {
+                            "application/json" : {
+                                "schema" : {
+                                    "$ref" : "#/components/schemas/imsx_StatusInfoDType"
+                                }
+                            }
+                        }
+                    },
+                    "default" : {
+                        "description" : "This is the default payload when none of the other HTTP codes are to be supplied.",
+                        "content" : {
+                            "application/json" : {
+                                "schema" : {
+                                    "$ref" : "#/components/schemas/imsx_StatusInfoDType"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/{userSourcedId}/resources" : {
+            "get" : {
+                "operationId" : "getResourcesForUser",
+                "summary" : "The REST read request message for the getResourcesForUser() API call.",
+                "tags" : [ "UsersManagement" ],
+                "description" : "To read, get, the collection of resources available to the specified user. This is the OneRoster description of the resources and not the actual resources. If the specified user cannot be identified within the service provider then a status code of 'unknownobject' must be reported. ",
+                "parameters" : [
+                    {
+                        "name" : "userSourcedId",
+                        "in" : "path",
+                        "description" : "The unique identifier, GUID, for the user.",
+                        "required" : true,
+                        "schema" : {
+                            "type" : "string"
+                        },
+                        "style" : "simple"
+                    },
+                    {
+                        "name" : "limit",
+                        "in" : "query",
+                        "description" : "To define the download segmentation value i.e. the maximum number of records to be contained in the response.",
+                        "required" : false,
+                        "schema" : {
+                            "type" : "integer",
+                            "format" : "int32",
+                            "default" : 100,
+                            "minimum" : 1
+                        },
+                        "style" : "form",
+                        "allowEmptyValue" : false
+                    },
+                    {
+                        "name" : "offset",
+                        "in" : "query",
+                        "description" : "The number of the first record to be supplied in the segmented response message.",
+                        "required" : false,
+                        "schema" : {
+                            "type" : "integer",
+                            "format" : "int32",
+                            "default" : 0,
+                            "minimum" : 0
+                        },
+                        "style" : "form",
+                        "allowEmptyValue" : false
+                    },
+                    {
+                        "name" : "sort",
+                        "in" : "query",
+                        "description" : "Identifies the sort criteria to be used for the records in the response message. Use with the orderBy parameter. The sort order should follow the [UNICODE, 16] standard.",
+                        "required" : false,
+                        "schema" : {
+                            "type" : "string"
+                        },
+                        "style" : "form",
+                        "allowEmptyValue" : false
+                    },
+                    {
+                        "name" : "orderBy",
+                        "in" : "query",
+                        "description" : "The form of ordering for response to the sorted request i.e. ascending (asc) or descending (desc). The sort order should follow the [UNICODE, 16] standard.",
+                        "required" : false,
+                        "schema" : {
+                            "type" : "string",
+                            "enum" : [ "asc","desc" ]
+                        },
+                        "style" : "form",
+                        "allowEmptyValue" : false
+                    },
+                    {
+                        "name" : "filter",
+                        "in" : "query",
+                        "description" : "The filtering rules to be applied when identifying the records to be supplied in the response message.",
+                        "required" : false,
+                        "schema" : {
+                            "type" : "string"
+                        },
+                        "style" : "form",
+                        "allowEmptyValue" : false
+                    },
+                    {
+                        "name" : "fields",
+                        "in" : "query",
+                        "description" : "To identify the range of fields that should be supplied in the response message.",
+                        "required" : false,
+                        "schema" : {
+                            "type" : "array",
+                            "items" : {
+                                "type" : "string"
+                            }
+                        },
+                        "style" : "form",
+                        "allowEmptyValue" : false
+                    }
+                ],
+                "security" : [
+                    {
+                        "OAuth2CC" : [
+                            "https://purl.imsglobal.org/spec/or/v1p2/scope/resource.readonly"
+                        ]
+                    }
+                ],
+                "responses" : {
+                    "200" : {
+                        "description" : "The requested read has been fully serviced and all of the required data returned.",
+                        "content" : {
+                            "application/json" : {
+                                "schema" : {
+                                    "$ref" : "#/components/schemas/ResourceSetDType"
+                                }
+                            }
+                        },
+                        "headers" : {
+                            "X-Total-Count" : {
+                                "description" : "The total number of resources that are available to be returned",
+                                "schema" : {
+                                    "type" : "integer"
+                                }
+                            }
+                        },
+                        "links" : {
+                            "next" : {
+                                "description" : "Get the next set of resources i.e. from offset to offset+limit",
+                                "operationId" : "getResourcesForUser",
+                                "parameters" : {
+                                    "limit" : "$request.path.limit",
+                                    "offset" : "$request.path.offset"
+                                }
+                            },
+                            "last" : {
+                                "description" : "Get the last set of resources i.e. from offset to end",
+                                "operationId" : "getResourcesForUser",
+                                "parameters" : {
+                                    "limit" : "$request.path.limit",
+                                    "offset" : "$request.path.offset"
+                                }
+                            },
+                            "first" : {
+                                "description" : "Get the first set of resources i.e. from first to limit",
+                                "operationId" : "getResourcesForUser",
+                                "parameters" : {
+                                    "limit" : "$request.path.limit",
+                                    "offset" : "$request.path.offset"
+                                }
+                            },
+                            "prev" : {
+                                "description" : "Get the previous set of resources i.e. from last_offset to last_offset+limit",
+                                "operationId" : "getResourcesForUser",
+                                "parameters" : {
+                                    "limit" : "$request.path.limit",
+                                    "offset" : "$request.path.offset"
+                                }
+                            }
+                        }
+                    },
+                    "400" : {
+                        "description" : "Either an invalid selection field or invalid filter field was supplied and data filtering on the specified criteria was not possible i.e. 'invalid_selection_field' or 'invalid_filter_field' respectively. This is accompanied by the 'codeMajor/severity' values of 'failure/error'. ",
+                        "content" : {
+                            "application/json" : {
+                                "schema" : {
+                                    "$ref" : "#/components/schemas/imsx_StatusInfoDType"
+                                }
+                            }
+                        }
+                    },
+                    "401" : {
+                        "description" : "The request was not correctly authorised i.e. 'unauthorisedrequest'. This would be accompanied by the 'codeMajor/severity' values of 'failure/error'. ",
+                        "content" : {
+                            "application/json" : {
+                                "schema" : {
+                                    "$ref" : "#/components/schemas/imsx_StatusInfoDType"
+                                }
+                            }
+                        }
+                    },
+                    "403" : {
+                        "description" : "This is used to indicate that the server can be reached and process the request but refuses to take any further action i.e. 'forbidden'. This would be accompanied by the 'codeMajor/severity' values of 'failure/error'. ",
+                        "content" : {
+                            "application/json" : {
+                                "schema" : {
+                                    "$ref" : "#/components/schemas/imsx_StatusInfoDType"
+                                }
+                            }
+                        }
+                    },
+                    "404" : {
+                        "description" : "Either the supplied identifier is unknown in the Service Provider and so the object could not be changed or an invalid GUID has been supplied. This would be accompanied by the 'codeMajor/severity' values of 'failure/error'. The statement 'Unknown Object' should also be presented. ",
+                        "content" : {
+                            "application/json" : {
+                                "schema" : {
+                                    "$ref" : "#/components/schemas/imsx_StatusInfoDType"
+                                }
+                            }
+                        }
+                    },
+                    "422" : {
+                        "description" : "This error condition may occur if a JSON request body contains well-formed (i.e., syntactically correct), but semantically erroneous, JSON instructions. This would be accompanied by the 'codeMajor/severity' values of 'failure/error'.",
+                        "content" : {
+                            "application/json" : {
+                                "schema" : {
+                                    "$ref" : "#/components/schemas/imsx_StatusInfoDType"
+                                }
+                            }
+                        }
+                    },
+                    "429" : {
+                        "description" : "The server is receiving too many requests i.e. 'server_busy'. Retry at a later time. This would be accompanied by the 'codeMajor/severity' values of 'failure/error'. ",
+                        "content" : {
+                            "application/json" : {
+                                "schema" : {
+                                    "$ref" : "#/components/schemas/imsx_StatusInfoDType"
+                                }
+                            }
+                        }
+                    },
+                    "500" : {
+                        "description" : "This code should be used only if there is catastrophic error and there is not a more appropriate code i.e. 'internal_server_error'. This would be accompanied by the 'codeMajor/severity' values of 'failure/error'.",
+                        "content" : {
+                            "application/json" : {
+                                "schema" : {
+                                    "$ref" : "#/components/schemas/imsx_StatusInfoDType"
+                                }
+                            }
+                        }
+                    },
+                    "default" : {
+                        "description" : "This is the default payload when none of the other HTTP codes are to be supplied.",
+                        "content" : {
+                            "application/json" : {
+                                "schema" : {
+                                    "$ref" : "#/components/schemas/imsx_StatusInfoDType"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components" : {
+        "securitySchemes" : {
+            "OAuth2CC" : {
+                "type" : "oauth2",
+                "description" : "OAuth 2 Client Credentials (as per the requirements in the IMS Security Framework) is to be used.",
+                "flows" : {
+                    "clientCredentials" : {
+                        "tokenUrl" : "https://www.imsglobal.org",
+                        "scopes" : {
+                            "https://purl.imsglobal.org/spec/or/v1p2/scope/resource.readonly" : "To enable access to ALL of the endpoints for the resources service.",
+                            "https://purl.imsglobal.org/spec/or/v1p2/scope/resource-core.readonly" : "The core set of scopes to enable information about all resources or a single resource to be obtained."
+                        }
+                    }
+                }
+            }
+        },
+        "schemas" : {
+            "MetadataDType" : {
+                "description" : "This is the container for the data model extensions that may be assigned to the associated class of objects.",
+                "type" : "object",
+                "properties" : {
+
+                },
+                "additionalProperties" : true
+            },
+            "ResourceDType" : {
+                "description" : "A resource is a description of learning content that is related to a course and/or a class and/or a user. This identifies a resource that is used by a teacher, learner, etc. as part of the learning experience.  A resource MUST be associated to a course and/or a class.",
+                "type" : "object",
+                "properties" : {
+                    "sourcedId" : {
+                        "description" : "Model Primitive Datatype = String. All Objects MUST be identified by a Source Identifier. This is a GUID i.e. a unique system interoperability  identifier for an object. This is the GUID that SYSTEMS will refer to when making API calls, or when needing to identify an object. It is RECOMMENDED that systems are able to map whichever local identifiers (e.g. database key fields) they use to the corresponding SourcedId. The sourcedId of an object is considered an addressable property of an entity and as such will not be treated as Personally Identifiable Information (PII) by certified products. Therefore, as a part of certification, vendors will be required to declare that they will notify customers via documentation or other formal and documented agreement that sourcedIds should never contain PII in general, but particularly users. This means that if a customer includes a student name in an enrollment.sourcedId, it will not fall to any certified product to protect the enrollment.sourcedId as PII, or even the userSourcedId field in the enrollment record.",
+                        "type" : "string"
+                    },
+                    "status" : {
+                        "description" : "All objects MUST BE either 'active' or 'tobedeleted'.  Something which is flagged 'tobedeleted' is to be considered safe to delete. Systems can delete records that are flagged as such if they wish, but they are not under any compulsion to do so. NOTE: In v1.1 the enumeration value of 'inactive' was removed and so for backwards compatibility all such marked objects should be interpreted as 'tobedeleted'.",
+                        "type" : "string",
+                        "enum" : [ "active","tobedeleted" ]
+                    },
+                    "dateLastModified" : {
+                        "description" : "Model Primitive Datatype = DateTime. All objects MUST be annotated with the dateTime upon which they were last modified. This enables requesters to query for just the latest objects. DateTimes MUST be expressed in W3C profile of [ISO 8601] and MUST contain the UTC timezone.",
+                        "type" : "string",
+                        "format" : "date-time"
+                    },
+                    "metadata" : {
+                        "$ref" : "#/components/schemas/MetadataDType"
+                    },
+                    "title" : {
+                        "description" : "Model Primitive Datatype = NormalizedString. A human readable title/label for the resource.",
+                        "type" : "string"
+                    },
+                    "roles" : {
+                        "description" : "The set of roles, types of users, who are expected to make use of the resource.",
+                        "type" : "array",
+                        "minItems" : 0,
+                        "items" : {
+                            "anyOf" : [
+                                {
+                                    "type" : "string",
+                                    "enum" : [ "administrator","aide","guardian","parent","proctor","relative","student","teacher" ]
+                                },
+                                {
+                                    "description" : "Model Primitive Datatype = NormalizedString.",
+                                    "type" : "string",
+                                    "pattern" : "(ext:)[a-zA-Z0-9\\.\\-_]+"
+                                }
+                            ]
+                        }
+                    },
+                    "importance" : {
+                        "description" : "This is an indicator of the significance of the resource i.e. primary or secondary.",
+                        "type" : "string",
+                        "enum" : [ "primary","secondary" ]
+                    },
+                    "vendorResourceId" : {
+                        "description" : "Model Primitive Datatype = String. This is a unique identifier for the resource allocated by the vendor.",
+                        "type" : "string"
+                    },
+                    "vendorId" : {
+                        "description" : "Model Primitive Datatype = String. Identifier for the vendor who created the resource. This will be assigned by 1EdTech as part of Conformance Certification.",
+                        "type" : "string"
+                    },
+                    "applicationId" : {
+                        "description" : "Model Primitive Datatype = String. Identifier for the application associated with the resource. The nature, and how this identifier is assigned is not defined by this specification.",
+                        "type" : "string"
+                    }
+                },
+                "required" : [ "sourcedId","status","dateLastModified","vendorResourceId" ],
+                "additionalProperties" : false
+            },
+            "ResourceSetDType" : {
+                "description" : "The container for a collection of resource records. The order is not significant. This may be empty. The service provider may not have any resources or cannot identfiy any resources that fit the specified filter constraints.",
+                "type" : "object",
+                "properties" : {
+                    "resources" : {
+                        "description" : "The set of contained resource identfiers.",
+                        "type" : "array",
+                        "minItems" : 0,
+                        "items" : {
+                            "$ref" : "#/components/schemas/ResourceDType"
+                        }
+                    }
+                },
+                "additionalProperties" : false
+            },
+            "SingleResourceDType" : {
+                "description" : "The container for a single resource. This may be empty i.e. the resource has no properties that obey any of the specified selection criteria.",
+                "type" : "object",
+                "properties" : {
+                    "resource" : {
+                        "$ref" : "#/components/schemas/ResourceDType"
+                    }
+                },
+                "required" : [ "resource" ],
+                "additionalProperties" : false
+            },
+            "imsx_CodeMinorDType" : {
+                "description" : "This is the container for the set of code minor status codes reported in the responses from the Service Provider.",
+                "type" : "object",
+                "properties" : {
+                    "imsx_codeMinorField" : {
+                        "description" : "Each reported code minor status code.",
+                        "type" : "array",
+                        "minItems" : 1,
+                        "items" : {
+                            "$ref" : "#/components/schemas/imsx_CodeMinorFieldDType"
+                        }
+                    }
+                },
+                "required" : [ "imsx_codeMinorField" ],
+                "additionalProperties" : false
+            },
+            "imsx_CodeMinorFieldDType" : {
+                "description" : "This is the container for a single code minor status code.",
+                "type" : "object",
+                "properties" : {
+                    "imsx_codeMinorFieldName" : {
+                        "description" : "Model Primitive Datatype = NormalizedString. This should contain the identity of the system that has produced the code minor status code report. In most cases this will be the target service provider denoted as 'TargetEndSystem'.",
+                        "type" : "string",
+                        "default" : "TargetEndSystem"
+                    },
+                    "imsx_codeMinorFieldValue" : {
+                        "description" : "The code minor status code (this is a value from the corresponding enumerated vocabulary).",
+                        "type" : "string",
+                        "enum" : [ "fullsuccess","invalid_filter_field","invalid_selection_field","forbidden","unauthorisedrequest","internal_server_error",
+                                    "server_busy","unknownobject","invaliddata","invalid_sort_field","unsupported" ]
+                    }
+                },
+                "required" : [ "imsx_codeMinorFieldName","imsx_codeMinorFieldValue" ],
+                "additionalProperties" : false
+            },
+            "imsx_StatusInfoDType" : {
+                "description" : "This is the container for the status code and associated information returned within the HTTP messages received from the Service Provider. For the OneRoster Resources service this object will only be returned to provide information about a failed request i.e. it will NOT be in the payload for a successful request. See Appendix B for further information on the interpretation of the information contained within this class.",
+                "type" : "object",
+                "properties" : {
+                    "imsx_codeMajor" : {
+                        "description" : "The code major value (from the corresponding enumerated vocabulary). See Appendix B for further information on the interpretation of this set of codes. The permitted vocabulary for the values for the CodeMajor field.",
+                        "type" : "string",
+                        "enum" : [ "success","processing","failure","unsupported" ]
+                    },
+                    "imsx_severity" : {
+                        "description" : "The severity value (from the corresponding enumerated vocabulary). See Appendix B for further information on the interpretation of this set of codes.",
+                        "type" : "string",
+                        "enum" : [ "status","warning","error" ]
+                    },
+                    "imsx_description" : {
+                        "description" : "Model Primitive Datatype = String. A human readable description supplied by the entity creating the status code information.",
+                        "type" : "string"
+                    },
+                    "imsx_CodeMinor" : {
+                        "$ref" : "#/components/schemas/imsx_CodeMinorDType"
+                    }
+                },
+                "required" : [ "imsx_codeMajor","imsx_severity" ],
+                "additionalProperties" : false
+            }
+        }
+    }
+}
