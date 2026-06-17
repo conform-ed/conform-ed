@@ -61,7 +61,7 @@ the `Norm.` column counts the keys each map's `specRefOverrides` moved into `nor
 
 | Map                     | Family      | Items | Modelled | Silent gaps | Extensions | Norm. | Conf. reqs |
 | ----------------------- | ----------- | ----- | -------- | ----------- | ---------- | ----- | ---------- |
-| `open-badges-v3.0`      | JSON Schema | 340   | 241      | 0           | 0          | 0     | 6          |
+| `open-badges-v3.0`      | JSON Schema | 340   | 241      | 0           | 0          | 0     | 16         |
 | `clr-v2.0`              | JSON Schema | 409   | 299      | 0           | 0          | 0     | 4          |
 | `case-v1.1`             | JSON Schema | 344   | 264      | 0           | 0          | 0     | 3          |
 | `caliper-v1.2`          | JSON Schema | 1957  | 78       | 136         | 26         | 0     | 3          |
@@ -126,9 +126,17 @@ is fully extracted and regenerated on every build: 228 MUST-level statements acr
 JSON-family maps (Caliper 99, OneRoster 48, CLR 40, OB 36, CASE 3, QTI 3.0.1 2; the
 XSD-family CC / QTI 2.x embed none — those norms exist only in prose guides). The
 **hand-curated** half — the `conformance` catalog drawn from the published certification
-guides — remains a grounded **seed**; each map's `rollup.normativeStatementsCited` reports
-how much of the extracted surface the curated catalog already references, so the curation
-backlog is measurable rather than guessed.
+**guides** — is being grown per spec. Each map's `rollup.normativeStatementsCited` reports how
+much of the extracted surface the curated catalog already references, so the curation backlog
+is measurable rather than guessed. **Open Badges 3.0 is the first fully guide-curated map**: 16
+requirements across the three certified product roles the OB 3.0 Conformance & Certification
+guide defines — `issuer` (§3), `displayer` (§4) and `host` (§5) — cross-linked to the L1 items
+they constrain, lifting `normativeStatementsCited` to 9/36 (the credential-content MUSTs the
+guide tests; the remaining sub-entity type-set MUSTs are enforced holistically by the
+schema-validation requirement OB-ISS-8). The Badge Connect API **transport** requirements
+(endpoints, OAuth, pagination) are a separate surface with no L1 item in the data-model map and
+await an OpenAPI binding map. The other maps' catalogs remain grounded **seeds** pending the
+same per-guide curation.
 
 ### Rollout (emergent ADR-0028)
 

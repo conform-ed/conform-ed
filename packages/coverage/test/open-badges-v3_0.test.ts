@@ -30,9 +30,12 @@ describe("Open Badges 3.0 Coverage Map", () => {
     expect(map.residues.extensions).toEqual([]);
   });
 
-  test("captures normative items and the conformance seed", () => {
+  test("captures normative items and the curated catalogue across the three cert profiles", () => {
     expect(map.rollup.normativeItems).toBeGreaterThan(0);
-    expect(map.rollup.conformanceRequirements).toBe(6);
+    expect(map.rollup.conformanceRequirements).toBe(16);
+    // The catalogue is curated from the OB 3.0 cert guide's three product roles.
+    const profiles = new Set(map.conformance.map((c) => c.profile));
+    expect(profiles).toEqual(new Set(["issuer", "displayer", "host"]));
   });
 
   test("extracts the schema's embedded normative statements + tracks curated coverage", () => {
@@ -40,10 +43,15 @@ describe("Open Badges 3.0 Coverage Map", () => {
     expect(map.normativeStatements.length).toBe(map.rollup.normativeItems);
     expect(map.rollup.normativeStatements).toBe(map.normativeStatements.length);
     for (const s of map.normativeStatements) expect(s.level === "MUST" || s.level === "MUST NOT").toBe(true);
-    // OB-ISS-6 cites the schema's own type-set MUSTs, so coverage is non-zero.
-    expect(map.rollup.normativeStatementsCited).toBeGreaterThan(0);
+    // The curated catalogue cross-links the schema's own MUSTs where requirements coincide
+    // (type sets, proofPurpose, AchievementSubject.id, CredentialStatus.id, the JWS list, …),
+    // so coverage of the extracted surface is materially above the demonstrative seed.
+    expect(map.rollup.normativeStatementsCited).toBeGreaterThanOrEqual(9);
     const cited = map.normativeStatements.find((s) => s.item === "ob:3.0:def:Achievement/type/[]");
     expect(cited?.cited).toBe(true);
+    // A displayer requirement cites the credential-status MUST.
+    const status = map.normativeStatements.find((s) => s.item === "ob:3.0:def:CredentialStatus/id");
+    expect(status?.cited).toBe(true);
   });
 
   test("every conformance requirement cross-links to a real item key", () => {
