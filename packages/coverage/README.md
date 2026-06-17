@@ -40,13 +40,14 @@ Adding a spec: vendor its source schema under `vendor/<spec>/<version>/`, declar
 
 ## Status
 
-Nine `spec:version` maps across all three schema-language families:
+Ten `spec:version` maps across all three schema-language families:
 
 | Map                     | Family      | Items | Modelled | Silent gaps | Extensions | Conf. reqs |
 | ----------------------- | ----------- | ----- | -------- | ----------- | ---------- | ---------- |
 | `open-badges-v3.0`      | JSON Schema | 340   | 241      | 0           | 0          | 5          |
 | `clr-v2.0`              | JSON Schema | 409   | 299      | 0           | 0          | 4          |
 | `case-v1.1`             | JSON Schema | 344   | 264      | 0           | 0          | 3          |
+| `caliper-v1.2`          | JSON Schema | 1957  | 78       | 136         | 26         | 2          |
 | `common-cartridge-v1.3` | XSD         | 676   | 410      | 3           | 190        | 7          |
 | `common-cartridge-v1.4` | XSD         | 143   | 81       | 3           | 35         | 5          |
 | `qti-v2.1`              | XSD         | 4971  | 186      | 385         | 76         | 3          |
@@ -56,6 +57,15 @@ Nine `spec:version` maps across all three schema-language families:
 
 - **Open Badges 3.0 / CLR 2.0** share the OB/VC credential machinery; **CASE 1.1** (all
   13 entity schemas) reconciles `0/0`.
+- **Caliper 1.2** ⚠️ — the one map whose denominator is **not** a canonical 1EdTech
+  release: 1EdTech ships no per-binding Caliper schema at a spec URL, so the literal
+  denominator is the **CaliperBootcamp** GitHub repo (`schemas/v1_2`, pinned commit), a
+  developer-education distribution accepted as the denominator deliberately (see
+  `vendor/caliper/v1_2/PROVENANCE.md`; the weaker provenance is recorded in
+  `meta.sources`). `walkers/caliper.ts` bundles its 110 cross-referencing draft-04 files
+  into one `$defs` map so the JSON-Schema walker applies unchanged. The Envelope transport
+  and the full Event property set reconcile; the silent gaps are conform-ed's deliberately
+  focused entity surface (it models the entry points, not every property of all 110 types).
 - **OneRoster 1.2** spans all three services in one map — Rostering (7 entities),
   Gradebook (LineItem / Result / Category / ScoreScale / AssessmentLineItem /
   AssessmentResult / LearningObjectiveSet) and Resources (Resource) — and reconciles `0/0`.
@@ -94,10 +104,11 @@ guides is the next hand-curation increment.
 
 All three schema-language walkers are built and proven:
 
-- **JSON Schema** (`walkers/json-schema.ts`) — OB ✓, CLR ✓, CASE ✓. **VC 2.0** has no
-  standalone published per-binding JSON Schema (it is the W3C substrate already exercised
-  through OB/CLR), so it is not a separate map. **Caliper 1.2** ships its schemas in the
-  GitHub CaliperBootcamp repo (JSON-LD) — pending a literal-denominator provenance call.
+- **JSON Schema** (`walkers/json-schema.ts`) — OB ✓, CLR ✓, CASE ✓, and **Caliper 1.2** ✓
+  via `walkers/caliper.ts`, which bundles the CaliperBootcamp multi-file distribution
+  (accepted as the denominator despite its weaker, non-spec-URL provenance — see the map's
+  note). **VC 2.0** has no standalone published per-binding JSON Schema (it is the W3C
+  substrate already exercised through OB/CLR), so it is not a separate map.
 - **XSD** (`walkers/xsd.ts`) — CC 1.3 ✓, CC 1.4 ✓, QTI 2.1 ✓, QTI 2.2 ✓, QTI 3.0.1 ✓
   (chosen over XSD→JSON-Schema converters, which proved dead, lossy — they drop
   `xs:documentation` — or non-reproducible in CI). Two walker features make modular,

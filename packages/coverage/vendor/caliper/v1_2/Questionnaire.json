@@ -1,0 +1,50 @@
+{
+  "schema": "http://json-schema.org/draft-04/schema#",
+  "id": "Questionnaire",
+  "metaFormat": "http://purl.imsglobal.org/caliper/",
+  "type": [
+    "object",
+    "string"
+  ],
+  "properties": {
+    "extensions": {
+      "$ref": "CaliperTypeDefinitions#/extensions"
+    },
+    "id": {
+      "type": "string",
+      "definedBy": "http://www.w3.org/2001/XMLSchema#string",
+      "title": "id",
+      "description": "The Event or Entity identifier.  For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122.  For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returning a representation of the resource.  An Entity MAY be provisioned with a URI employing the URN scheme in cases where a Linked Data friendly HTTP URI is either unavailable or inappropriate.",
+      "translations": {
+        "title": [
+          {
+            "en": "id"
+          }
+        ],
+        "description": [
+          {
+            "en": "The Event or Entity identifier.  For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122.  For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returning a representation of the resource.  An Entity MAY be provisioned with a URI employing the URN scheme in cases where a Linked Data friendly HTTP URI is either unavailable or inappropriate."
+          }
+        ]
+      }
+    },
+    "type": {
+      "type": "string",
+      "pattern": "^Questionnaire$"
+    }
+  },
+  "title": "Questionnaire",
+  "description": "A Caliper Questionnaire represents a collection of QuestionnaireItem entities that is designed to elicit information from one or more respondents.",
+  "translations": {
+    "title": [
+      {
+        "en": "Questionnaire"
+      }
+    ],
+    "description": [
+      {
+        "en": "A Caliper Questionnaire represents a collection of QuestionnaireItem entities that is designed to elicit information from one or more respondents."
+      }
+    ]
+  }
+}

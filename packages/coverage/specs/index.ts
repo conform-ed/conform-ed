@@ -4,6 +4,7 @@
  */
 
 import type { SpecSource } from "../src/source";
+import { caliperV1_2 } from "./caliper/v1_2";
 import { caseV1_1 } from "./case/v1_1";
 import { clrV2_0 } from "./clr/v2_0";
 import { commonCartridgeV1_3 } from "./common-cartridge/v1_3";
@@ -29,4 +30,5 @@ export const COVERAGE_MAPS: readonly CoverageMapEntry[] = [
   { source: qtiV2_2, file: "qti-v2.2.json" },
   { source: qtiV3_0_1, file: "qti-v3.0.1.json" },
   { source: oneRosterV1_2, file: "oneroster-v1.2.json" },
+  { source: caliperV1_2, file: "caliper-v1.2.json" },
 ];

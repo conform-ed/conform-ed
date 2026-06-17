@@ -1,0 +1,24 @@
+{
+  "schema": "http://json-schema.org/draft-04/schema#",
+  "id": "Profile",
+  "metaFormat": "http://purl.imsglobal.org/caliper/",
+  "type": "string",
+  "properties": {},
+  "enum": [
+    "AnnotationProfile",
+    "AssessmentProfile",
+    "AssignableProfile",
+    "FeedbackProfile",
+    "ForumProfile",
+    "GeneralProfile",
+    "GradingProfile",
+    "MediaProfile",
+    "ReadingProfile",
+    "ResourceManagementProfile",
+    "SearchProfile",
+    "SessionProfile",
+    "SurveyProfile",
+    "ToolLaunchProfile",
+    "ToolUseProfile"
+  ]
+}

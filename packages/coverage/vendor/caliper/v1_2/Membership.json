@@ -1,0 +1,557 @@
+{
+  "schema": "http://json-schema.org/draft-04/schema#",
+  "id": "Membership",
+  "metaFormat": "http://purl.imsglobal.org/caliper/",
+  "type": [
+    "object",
+    "string"
+  ],
+  "properties": {
+    "extensions": {
+      "$ref": "CaliperTypeDefinitions#/extensions"
+    },
+    "member": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "Organization"
+        },
+        {
+          "$ref": "CourseOffering"
+        },
+        {
+          "$ref": "CourseSection"
+        },
+        {
+          "$ref": "Group"
+        },
+        {
+          "$ref": "Person"
+        },
+        {
+          "$ref": "SoftwareApplication"
+        },
+        {
+          "$ref": "Agent"
+        }
+      ],
+      "title": "member",
+      "description": "The Person associated with a Membership.",
+      "translations": {
+        "title": [
+          {
+            "en": "member"
+          }
+        ],
+        "description": [
+          {
+            "en": "The Person associated with a Membership."
+          }
+        ]
+      }
+    },
+    "organization": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "CourseOffering"
+        },
+        {
+          "$ref": "CourseSection"
+        },
+        {
+          "$ref": "Group"
+        },
+        {
+          "$ref": "Organization"
+        }
+      ],
+      "title": "organization",
+      "description": "The Organization associated with a Membership.",
+      "translations": {
+        "title": [
+          {
+            "en": "organization"
+          }
+        ],
+        "description": [
+          {
+            "en": "The Organization associated with a Membership."
+          }
+        ]
+      }
+    },
+    "roles": {
+      "items": {
+        "type": "string",
+        "definedBy": "http://www.w3.org/2001/XMLSchema#string",
+        "enum": [
+          "Administrator",
+          "ContentDeveloper",
+          "Instructor",
+          "Learner",
+          "Manager",
+          "Member",
+          "Mentor",
+          "Officer",
+          "Administrator#Administrator",
+          "Administrator#Developer",
+          "Administrator#ExternalDeveloper",
+          "Administrator#ExternalSupport",
+          "Administrator#ExternalSystemAdministrator",
+          "Administrator#Support",
+          "Administrator#SystemAdministrator",
+          "ContentDeveloper#ContentDeveloper",
+          "ContentDeveloper#ContentExpert",
+          "ContentDeveloper#ExternalContentExpert",
+          "ContentDeveloper#Librarian",
+          "Instructor#ExternalInstructor",
+          "Instructor#Grader",
+          "Instructor#GuestInstructor",
+          "Instructor#Instructor",
+          "Instructor#Lecturer",
+          "Instructor#PrimaryInstructor",
+          "Instructor#SecondaryInstructor",
+          "Instructor#TeachingAssistant",
+          "Instructor#TeachingAssistantGroup",
+          "Instructor#TeachingAssistantOffering",
+          "Instructor#TeachingAssistantSection",
+          "Instructor#TeachingAssistantTemplate",
+          "Learner#ExternalLearner",
+          "Learner#GuestLearner",
+          "Learner#Learner",
+          "Learner#NonCreditLearner",
+          "Manager#AreaManager",
+          "Manager#CourseCoordinator",
+          "Manager#Observer",
+          "Manager#ExternalObserver",
+          "Member#Member",
+          "Mentor#Advisor",
+          "Mentor#Auditor",
+          "Mentor#ExternalAdvisor",
+          "Mentor#ExternalAuditor",
+          "Mentor#ExternalLearningFacilitator",
+          "Mentor#ExternalMentor",
+          "Mentor#ExternalReviewer",
+          "Mentor#ExternalTutor",
+          "Mentor#LearningFacilitator",
+          "Mentor#Mentor",
+          "Mentor#Reviewer",
+          "Mentor#Tutor",
+          "Officer#Chair",
+          "Officer#Secretary",
+          "Officer#Treasurer",
+          "Officer#Vice-Chair"
+        ],
+        "maxLength": 256
+      },
+      "type": "array",
+      "title": "roles",
+      "description": "An ordered collection of organizational roles assigned to a member.",
+      "translations": {
+        "title": [
+          {
+            "en": "roles"
+          }
+        ],
+        "description": [
+          {
+            "en": "An ordered collection of organizational roles assigned to a member."
+          }
+        ]
+      }
+    },
+    "status": {
+      "$ref": "Status",
+      "title": "status",
+      "description": "The current standing of a member.",
+      "translations": {
+        "title": [
+          {
+            "en": "status"
+          }
+        ],
+        "description": [
+          {
+            "en": "The current standing of a member."
+          }
+        ]
+      }
+    },
+    "id": {
+      "type": "string",
+      "definedBy": "http://www.w3.org/2001/XMLSchema#string",
+      "title": "id",
+      "description": "The Event or Entity identifier.  For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122.  For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returning a representation of the resource.  An Entity MAY be provisioned with a URI employing the URN scheme in cases where a Linked Data friendly HTTP URI is either unavailable or inappropriate.",
+      "translations": {
+        "title": [
+          {
+            "en": "id"
+          }
+        ],
+        "description": [
+          {
+            "en": "The Event or Entity identifier.  For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122.  For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returning a representation of the resource.  An Entity MAY be provisioned with a URI employing the URN scheme in cases where a Linked Data friendly HTTP URI is either unavailable or inappropriate."
+          }
+        ]
+      }
+    },
+    "type": {
+      "type": "string",
+      "pattern": "^Membership$"
+    },
+    "isPartOf": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "Agent"
+        },
+        {
+          "$ref": "Organization"
+        },
+        {
+          "$ref": "CourseOffering"
+        },
+        {
+          "$ref": "CourseSection"
+        },
+        {
+          "$ref": "Group"
+        },
+        {
+          "$ref": "Person"
+        },
+        {
+          "$ref": "SoftwareApplication"
+        },
+        {
+          "$ref": "AggregateMeasure"
+        },
+        {
+          "$ref": "Annotation"
+        },
+        {
+          "$ref": "BookmarkAnnotation"
+        },
+        {
+          "$ref": "HighlightAnnotation"
+        },
+        {
+          "$ref": "SharedAnnotation"
+        },
+        {
+          "$ref": "TagAnnotation"
+        },
+        {
+          "$ref": "Attempt"
+        },
+        {
+          "$ref": "Collection"
+        },
+        {
+          "$ref": "AggregateMeasureCollection"
+        },
+        {
+          "$ref": "DigitalResourceCollection"
+        },
+        {
+          "$ref": "Assessment"
+        },
+        {
+          "$ref": "Forum"
+        },
+        {
+          "$ref": "Questionnaire"
+        },
+        {
+          "$ref": "Thread"
+        },
+        {
+          "$ref": "Survey"
+        },
+        {
+          "$ref": "Comment"
+        },
+        {
+          "$ref": "DigitalResource"
+        },
+        {
+          "$ref": "AssignableDigitalResource"
+        },
+        {
+          "$ref": "AssessmentItem"
+        },
+        {
+          "$ref": "Chapter"
+        },
+        {
+          "$ref": "Document"
+        },
+        {
+          "$ref": "Frame"
+        },
+        {
+          "$ref": "LtiLink"
+        },
+        {
+          "$ref": "MediaLocation"
+        },
+        {
+          "$ref": "MediaObject"
+        },
+        {
+          "$ref": "AudioObject"
+        },
+        {
+          "$ref": "ImageObject"
+        },
+        {
+          "$ref": "VideoObject"
+        },
+        {
+          "$ref": "Message"
+        },
+        {
+          "$ref": "Page"
+        },
+        {
+          "$ref": "Question"
+        },
+        {
+          "$ref": "DateTimeQuestion"
+        },
+        {
+          "$ref": "MultiselectQuestion"
+        },
+        {
+          "$ref": "OpenEndedQuestion"
+        },
+        {
+          "$ref": "RatingScaleQuestion"
+        },
+        {
+          "$ref": "QuestionnaireItem"
+        },
+        {
+          "$ref": "Reading"
+        },
+        {
+          "$ref": "SurveyInvitation"
+        },
+        {
+          "$ref": "WebPage"
+        },
+        {
+          "$ref": "epubChapter"
+        },
+        {
+          "$ref": "epubPart"
+        },
+        {
+          "$ref": "epubSubChapter"
+        },
+        {
+          "$ref": "epubVolume"
+        },
+        {
+          "$ref": "LearningObjective"
+        },
+        {
+          "$ref": "Link"
+        },
+        {
+          "$ref": "Membership"
+        },
+        {
+          "$ref": "Query"
+        },
+        {
+          "$ref": "Rating"
+        },
+        {
+          "$ref": "Response"
+        },
+        {
+          "$ref": "DateTimeResponse"
+        },
+        {
+          "$ref": "FillinBlankResponse"
+        },
+        {
+          "$ref": "MultiselectResponse"
+        },
+        {
+          "$ref": "MultipleChoiceResponse"
+        },
+        {
+          "$ref": "MultipleResponseResponse"
+        },
+        {
+          "$ref": "OpenEndedResponse"
+        },
+        {
+          "$ref": "RatingScaleResponse"
+        },
+        {
+          "$ref": "SelectTextResponse"
+        },
+        {
+          "$ref": "TrueFalseResponse"
+        },
+        {
+          "$ref": "Result"
+        },
+        {
+          "$ref": "Scale"
+        },
+        {
+          "$ref": "LikertScale"
+        },
+        {
+          "$ref": "MultiselectScale"
+        },
+        {
+          "$ref": "NumericScale"
+        },
+        {
+          "$ref": "Score"
+        },
+        {
+          "$ref": "SearchResponse"
+        },
+        {
+          "$ref": "Session"
+        },
+        {
+          "$ref": "LtiSession"
+        }
+      ],
+      "title": "isPartOf",
+      "description": "A related Entity that includes or incorporates the resource as a part of its whole.",
+      "translations": {
+        "title": [
+          {
+            "en": "isPartOf"
+          }
+        ],
+        "description": [
+          {
+            "en": "A related Entity that includes or incorporates the resource as a part of its whole."
+          }
+        ]
+      }
+    },
+    "dateCreated": {
+      "type": "string",
+      "definedBy": "http://www.w3.org/2001/XMLSchema#dateTime",
+      "format": "date-time",
+      "title": "dateCreated",
+      "description": "A date and time value expressed with millisecond precision that describes when an Entity was created.",
+      "translations": {
+        "title": [
+          {
+            "en": "dateCreated"
+          }
+        ],
+        "description": [
+          {
+            "en": "A date and time value expressed with millisecond precision that describes when an Entity was created."
+          }
+        ]
+      }
+    },
+    "dateModified": {
+      "type": "string",
+      "definedBy": "http://www.w3.org/2001/XMLSchema#dateTime",
+      "format": "date-time",
+      "title": "dateModified",
+      "description": "A date and time value expressed with millisecond precision that describes when an Entity was last changed or modified.",
+      "translations": {
+        "title": [
+          {
+            "en": "dateModified"
+          }
+        ],
+        "description": [
+          {
+            "en": "A date and time value expressed with millisecond precision that describes when an Entity was last changed or modified."
+          }
+        ]
+      }
+    },
+    "description": {
+      "type": "string",
+      "definedBy": "http://www.w3.org/2001/XMLSchema#string",
+      "title": "description",
+      "description": "A brief, plain-text representation of the resource.",
+      "translations": {
+        "title": [
+          {
+            "en": "description"
+          }
+        ],
+        "description": [
+          {
+            "en": "A brief, plain-text representation of the resource."
+          }
+        ]
+      }
+    },
+    "name": {
+      "type": "string",
+      "definedBy": "http://www.w3.org/2001/XMLSchema#string",
+      "title": "name",
+      "description": "A string value comprising a word or phrase by which the resource is known.",
+      "translations": {
+        "title": [
+          {
+            "en": "name"
+          }
+        ],
+        "description": [
+          {
+            "en": "A string value comprising a word or phrase by which the resource is known."
+          }
+        ]
+      }
+    },
+    "@context": {
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^http://purl.imsglobal.org/ctx/caliper/v1p2$"
+        },
+        {
+          "type": "array"
+        },
+        {
+          "type": "object"
+        }
+      ]
+    }
+  },
+  "title": "Membership",
+  "description": "A Caliper Membership describes the relationship between an Organization and a Person (i.e., a member) in terms of the roles assigned and current status.",
+  "translations": {
+    "title": [
+      {
+        "en": "Membership"
+      }
+    ],
+    "description": [
+      {
+        "en": "A Caliper Membership describes the relationship between an Organization and a Person (i.e., a member) in terms of the roles assigned and current status."
+      }
+    ]
+  },
+  "required": [
+    "id",
+    "type"
+  ]
+}

@@ -1,0 +1,463 @@
+{
+  "schema": "http://json-schema.org/draft-04/schema#",
+  "id": "Organization",
+  "metaFormat": "http://purl.imsglobal.org/caliper/",
+  "type": [
+    "object",
+    "string"
+  ],
+  "properties": {
+    "extensions": {
+      "$ref": "CaliperTypeDefinitions#/extensions"
+    },
+    "members": {
+      "items": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "$ref": "Organization"
+          },
+          {
+            "$ref": "CourseOffering"
+          },
+          {
+            "$ref": "CourseSection"
+          },
+          {
+            "$ref": "Group"
+          },
+          {
+            "$ref": "Person"
+          },
+          {
+            "$ref": "SoftwareApplication"
+          },
+          {
+            "$ref": "Agent"
+          }
+        ]
+      },
+      "type": "array",
+      "title": "members",
+      "description": "An ordered collection of entities of type Agent that belong to a particular group.",
+      "translations": {
+        "title": [
+          {
+            "en": "members"
+          }
+        ],
+        "description": [
+          {
+            "en": "An ordered collection of entities of type Agent that belong to a particular group."
+          }
+        ]
+      }
+    },
+    "subOrganizationOf": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "CourseOffering"
+        },
+        {
+          "$ref": "CourseSection"
+        },
+        {
+          "$ref": "Group"
+        },
+        {
+          "$ref": "Organization"
+        }
+      ],
+      "title": "subOrganizationOf",
+      "description": "The parent Organization of an Organization.",
+      "translations": {
+        "title": [
+          {
+            "en": "subOrganizationOf"
+          }
+        ],
+        "description": [
+          {
+            "en": "The parent Organization of an Organization."
+          }
+        ]
+      }
+    },
+    "id": {
+      "type": "string",
+      "definedBy": "http://www.w3.org/2001/XMLSchema#string",
+      "title": "id",
+      "description": "The Event or Entity identifier.  For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122.  For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returning a representation of the resource.  An Entity MAY be provisioned with a URI employing the URN scheme in cases where a Linked Data friendly HTTP URI is either unavailable or inappropriate.",
+      "translations": {
+        "title": [
+          {
+            "en": "id"
+          }
+        ],
+        "description": [
+          {
+            "en": "The Event or Entity identifier.  For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122.  For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returning a representation of the resource.  An Entity MAY be provisioned with a URI employing the URN scheme in cases where a Linked Data friendly HTTP URI is either unavailable or inappropriate."
+          }
+        ]
+      }
+    },
+    "type": {
+      "type": "string",
+      "pattern": "^Organization$"
+    },
+    "isPartOf": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "Agent"
+        },
+        {
+          "$ref": "Organization"
+        },
+        {
+          "$ref": "CourseOffering"
+        },
+        {
+          "$ref": "CourseSection"
+        },
+        {
+          "$ref": "Group"
+        },
+        {
+          "$ref": "Person"
+        },
+        {
+          "$ref": "SoftwareApplication"
+        },
+        {
+          "$ref": "AggregateMeasure"
+        },
+        {
+          "$ref": "Annotation"
+        },
+        {
+          "$ref": "BookmarkAnnotation"
+        },
+        {
+          "$ref": "HighlightAnnotation"
+        },
+        {
+          "$ref": "SharedAnnotation"
+        },
+        {
+          "$ref": "TagAnnotation"
+        },
+        {
+          "$ref": "Attempt"
+        },
+        {
+          "$ref": "Collection"
+        },
+        {
+          "$ref": "AggregateMeasureCollection"
+        },
+        {
+          "$ref": "DigitalResourceCollection"
+        },
+        {
+          "$ref": "Assessment"
+        },
+        {
+          "$ref": "Forum"
+        },
+        {
+          "$ref": "Questionnaire"
+        },
+        {
+          "$ref": "Thread"
+        },
+        {
+          "$ref": "Survey"
+        },
+        {
+          "$ref": "Comment"
+        },
+        {
+          "$ref": "DigitalResource"
+        },
+        {
+          "$ref": "AssignableDigitalResource"
+        },
+        {
+          "$ref": "AssessmentItem"
+        },
+        {
+          "$ref": "Chapter"
+        },
+        {
+          "$ref": "Document"
+        },
+        {
+          "$ref": "Frame"
+        },
+        {
+          "$ref": "LtiLink"
+        },
+        {
+          "$ref": "MediaLocation"
+        },
+        {
+          "$ref": "MediaObject"
+        },
+        {
+          "$ref": "AudioObject"
+        },
+        {
+          "$ref": "ImageObject"
+        },
+        {
+          "$ref": "VideoObject"
+        },
+        {
+          "$ref": "Message"
+        },
+        {
+          "$ref": "Page"
+        },
+        {
+          "$ref": "Question"
+        },
+        {
+          "$ref": "DateTimeQuestion"
+        },
+        {
+          "$ref": "MultiselectQuestion"
+        },
+        {
+          "$ref": "OpenEndedQuestion"
+        },
+        {
+          "$ref": "RatingScaleQuestion"
+        },
+        {
+          "$ref": "QuestionnaireItem"
+        },
+        {
+          "$ref": "Reading"
+        },
+        {
+          "$ref": "SurveyInvitation"
+        },
+        {
+          "$ref": "WebPage"
+        },
+        {
+          "$ref": "epubChapter"
+        },
+        {
+          "$ref": "epubPart"
+        },
+        {
+          "$ref": "epubSubChapter"
+        },
+        {
+          "$ref": "epubVolume"
+        },
+        {
+          "$ref": "LearningObjective"
+        },
+        {
+          "$ref": "Link"
+        },
+        {
+          "$ref": "Membership"
+        },
+        {
+          "$ref": "Query"
+        },
+        {
+          "$ref": "Rating"
+        },
+        {
+          "$ref": "Response"
+        },
+        {
+          "$ref": "DateTimeResponse"
+        },
+        {
+          "$ref": "FillinBlankResponse"
+        },
+        {
+          "$ref": "MultiselectResponse"
+        },
+        {
+          "$ref": "MultipleChoiceResponse"
+        },
+        {
+          "$ref": "MultipleResponseResponse"
+        },
+        {
+          "$ref": "OpenEndedResponse"
+        },
+        {
+          "$ref": "RatingScaleResponse"
+        },
+        {
+          "$ref": "SelectTextResponse"
+        },
+        {
+          "$ref": "TrueFalseResponse"
+        },
+        {
+          "$ref": "Result"
+        },
+        {
+          "$ref": "Scale"
+        },
+        {
+          "$ref": "LikertScale"
+        },
+        {
+          "$ref": "MultiselectScale"
+        },
+        {
+          "$ref": "NumericScale"
+        },
+        {
+          "$ref": "Score"
+        },
+        {
+          "$ref": "SearchResponse"
+        },
+        {
+          "$ref": "Session"
+        },
+        {
+          "$ref": "LtiSession"
+        }
+      ],
+      "title": "isPartOf",
+      "description": "A related Entity that includes or incorporates the resource as a part of its whole.",
+      "translations": {
+        "title": [
+          {
+            "en": "isPartOf"
+          }
+        ],
+        "description": [
+          {
+            "en": "A related Entity that includes or incorporates the resource as a part of its whole."
+          }
+        ]
+      }
+    },
+    "dateCreated": {
+      "type": "string",
+      "definedBy": "http://www.w3.org/2001/XMLSchema#dateTime",
+      "format": "date-time",
+      "title": "dateCreated",
+      "description": "A date and time value expressed with millisecond precision that describes when an Entity was created.",
+      "translations": {
+        "title": [
+          {
+            "en": "dateCreated"
+          }
+        ],
+        "description": [
+          {
+            "en": "A date and time value expressed with millisecond precision that describes when an Entity was created."
+          }
+        ]
+      }
+    },
+    "dateModified": {
+      "type": "string",
+      "definedBy": "http://www.w3.org/2001/XMLSchema#dateTime",
+      "format": "date-time",
+      "title": "dateModified",
+      "description": "A date and time value expressed with millisecond precision that describes when an Entity was last changed or modified.",
+      "translations": {
+        "title": [
+          {
+            "en": "dateModified"
+          }
+        ],
+        "description": [
+          {
+            "en": "A date and time value expressed with millisecond precision that describes when an Entity was last changed or modified."
+          }
+        ]
+      }
+    },
+    "description": {
+      "type": "string",
+      "definedBy": "http://www.w3.org/2001/XMLSchema#string",
+      "title": "description",
+      "description": "A brief, plain-text representation of the resource.",
+      "translations": {
+        "title": [
+          {
+            "en": "description"
+          }
+        ],
+        "description": [
+          {
+            "en": "A brief, plain-text representation of the resource."
+          }
+        ]
+      }
+    },
+    "name": {
+      "type": "string",
+      "definedBy": "http://www.w3.org/2001/XMLSchema#string",
+      "title": "name",
+      "description": "A string value comprising a word or phrase by which the resource is known.",
+      "translations": {
+        "title": [
+          {
+            "en": "name"
+          }
+        ],
+        "description": [
+          {
+            "en": "A string value comprising a word or phrase by which the resource is known."
+          }
+        ]
+      }
+    },
+    "@context": {
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^http://purl.imsglobal.org/ctx/caliper/v1p2$"
+        },
+        {
+          "type": "array"
+        },
+        {
+          "type": "object"
+        }
+      ]
+    }
+  },
+  "title": "Organization",
+  "description": "A Caliper Organization represents a formal collection of people organized for some common educational, social or administrative purpose. An Organization can act as an Agent. It can be linked both to a parent Organization and to its members.",
+  "translations": {
+    "title": [
+      {
+        "en": "Organization"
+      }
+    ],
+    "description": [
+      {
+        "en": "A Caliper Organization represents a formal collection of people organized for some common educational, social or administrative purpose. An Organization can act as an Agent. It can be linked both to a parent Organization and to its members."
+      }
+    ]
+  },
+  "required": [
+    "id",
+    "type"
+  ]
+}

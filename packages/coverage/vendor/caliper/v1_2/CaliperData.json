@@ -1,0 +1,30 @@
+{
+  "schema": "http://json-schema.org/draft-04/schema#",
+  "id": "CaliperData",
+  "metaFormat": "http://purl.imsglobal.org/caliper/",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^urn:uuid:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+    },
+    "context": {
+      "oneOf": [{
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      }, {
+        "type": "string"
+      }, {
+        "type": "object"
+      }]
+    }
+  },
+  "title": "CaliperData",
+  "translations": {
+    "title": [{
+      "en": "Pre caliper data validator."
+    }]
+  }
+}

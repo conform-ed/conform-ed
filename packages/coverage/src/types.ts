@@ -6,7 +6,7 @@
  */
 
 /** Which schema language a vendored source artifact is written in. */
-export type SchemaLanguage = "json-schema" | "xsd" | "openapi";
+export type SchemaLanguage = "json-schema" | "xsd" | "openapi" | "caliper";
 
 /** The kind of node an information-model inventory item represents. */
 export type ItemKind = "document" | "definition" | "property";

@@ -1,0 +1,25 @@
+{
+  "schema": "http://json-schema.org/draft-04/schema#",
+  "id": "Status",
+  "metaFormat": "http://purl.imsglobal.org/caliper/",
+  "type": "string",
+  "properties": {},
+  "title": "Status",
+  "description": "Indicates if a member is active or inactive in the collection. This allows the source system to specifically tell the target system that a member is now active or inactive.  Another view is that the absence of a Membership object when membership data is passed implies inactivity and the existence of an object implies active membership.  This will logically work for a ‘snap-shot’ interface where all members are passed every time objects are sent from one system to another but it will not support an interface where individual Membership objects are passed.",
+  "translations": {
+    "title": [
+      {
+        "en": "Status"
+      }
+    ],
+    "description": [
+      {
+        "en": "Indicates if a member is active or inactive in the collection. This allows the source system to specifically tell the target system that a member is now active or inactive.  Another view is that the absence of a Membership object when membership data is passed implies inactivity and the existence of an object implies active membership.  This will logically work for a ‘snap-shot’ interface where all members are passed every time objects are sent from one system to another but it will not support an interface where individual Membership objects are passed."
+      }
+    ]
+  },
+  "enum": [
+    "Active",
+    "Inactive"
+  ]
+}

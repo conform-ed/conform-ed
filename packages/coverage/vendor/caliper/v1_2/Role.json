@@ -1,0 +1,21 @@
+{
+  "schema": "http://json-schema.org/draft-04/schema#",
+  "id": "Role",
+  "metaFormat": "http://purl.imsglobal.org/caliper/",
+  "type": "object",
+  "properties": {},
+  "title": "Role",
+  "description": "A member can have multiple roles in a Membership.  These different roles would be reflected in separate instances of the Role.",
+  "translations": {
+    "title": [
+      {
+        "en": "Role"
+      }
+    ],
+    "description": [
+      {
+        "en": "A member can have multiple roles in a Membership.  These different roles would be reflected in separate instances of the Role."
+      }
+    ]
+  }
+}

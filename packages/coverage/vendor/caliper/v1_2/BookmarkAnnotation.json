@@ -1,0 +1,215 @@
+{
+  "schema": "http://json-schema.org/draft-04/schema#",
+  "id": "BookmarkAnnotation",
+  "metaFormat": "http://purl.imsglobal.org/caliper/",
+  "type": [
+    "object",
+    "string"
+  ],
+  "properties": {
+    "extensions": {
+      "$ref": "CaliperTypeDefinitions#/extensions"
+    },
+    "bookmarkNotes": {
+      "type": "string",
+      "definedBy": "http://www.w3.org/2001/XMLSchema#string",
+      "title": "bookmarkNotes",
+      "description": "A plain text rendering of the note associated with a BookmarkAnnotation.",
+      "translations": {
+        "title": [
+          {
+            "en": "bookmarkNotes"
+          }
+        ],
+        "description": [
+          {
+            "en": "A plain text rendering of the note associated with a BookmarkAnnotation."
+          }
+        ]
+      }
+    },
+    "id": {
+      "type": "string",
+      "definedBy": "http://www.w3.org/2001/XMLSchema#string",
+      "title": "id",
+      "description": "The Event or Entity identifier.  For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122.  For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returning a representation of the resource.  An Entity MAY be provisioned with a URI employing the URN scheme in cases where a Linked Data friendly HTTP URI is either unavailable or inappropriate.",
+      "translations": {
+        "title": [
+          {
+            "en": "id"
+          }
+        ],
+        "description": [
+          {
+            "en": "The Event or Entity identifier.  For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122.  For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returning a representation of the resource.  An Entity MAY be provisioned with a URI employing the URN scheme in cases where a Linked Data friendly HTTP URI is either unavailable or inappropriate."
+          }
+        ]
+      }
+    },
+    "type": {
+      "type": "string",
+      "pattern": "^BookmarkAnnotation$"
+    },
+    "annotated": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "AssignableDigitalResource"
+        },
+        {
+          "$ref": "Assessment"
+        },
+        {
+          "$ref": "AssessmentItem"
+        },
+        {
+          "$ref": "Chapter"
+        },
+        {
+          "$ref": "Document"
+        },
+        {
+          "$ref": "Frame"
+        },
+        {
+          "$ref": "LtiLink"
+        },
+        {
+          "$ref": "MediaLocation"
+        },
+        {
+          "$ref": "MediaObject"
+        },
+        {
+          "$ref": "AudioObject"
+        },
+        {
+          "$ref": "ImageObject"
+        },
+        {
+          "$ref": "VideoObject"
+        },
+        {
+          "$ref": "Message"
+        },
+        {
+          "$ref": "Page"
+        },
+        {
+          "$ref": "Question"
+        },
+        {
+          "$ref": "DateTimeQuestion"
+        },
+        {
+          "$ref": "MultiselectQuestion"
+        },
+        {
+          "$ref": "OpenEndedQuestion"
+        },
+        {
+          "$ref": "RatingScaleQuestion"
+        },
+        {
+          "$ref": "QuestionnaireItem"
+        },
+        {
+          "$ref": "Reading"
+        },
+        {
+          "$ref": "SurveyInvitation"
+        },
+        {
+          "$ref": "WebPage"
+        },
+        {
+          "$ref": "epubChapter"
+        },
+        {
+          "$ref": "epubPart"
+        },
+        {
+          "$ref": "epubSubChapter"
+        },
+        {
+          "$ref": "epubVolume"
+        },
+        {
+          "$ref": "DigitalResource"
+        }
+      ],
+      "title": "annotated",
+      "description": "The DigitalResource that was annotated by the annotator.",
+      "translations": {
+        "title": [
+          {
+            "en": "annotated"
+          }
+        ],
+        "description": [
+          {
+            "en": "The DigitalResource that was annotated by the annotator."
+          }
+        ]
+      }
+    },
+    "annotator": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "Organization"
+        },
+        {
+          "$ref": "CourseOffering"
+        },
+        {
+          "$ref": "CourseSection"
+        },
+        {
+          "$ref": "Group"
+        },
+        {
+          "$ref": "Person"
+        },
+        {
+          "$ref": "SoftwareApplication"
+        },
+        {
+          "$ref": "Agent"
+        }
+      ],
+      "title": "annotator",
+      "description": "The Person who created the Annotation.",
+      "translations": {
+        "title": [
+          {
+            "en": "annotator"
+          }
+        ],
+        "description": [
+          {
+            "en": "The Person who created the Annotation."
+          }
+        ]
+      }
+    }
+  },
+  "title": "BookmarkAnnotation",
+  "description": "A Caliper BookmarkAnnotation represents the act of marking a DigitalResource at a particular location.",
+  "translations": {
+    "title": [
+      {
+        "en": "BookmarkAnnotation"
+      }
+    ],
+    "description": [
+      {
+        "en": "A Caliper BookmarkAnnotation represents the act of marking a DigitalResource at a particular location."
+      }
+    ]
+  }
+}

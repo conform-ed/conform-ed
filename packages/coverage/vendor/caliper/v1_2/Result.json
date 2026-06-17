@@ -1,0 +1,561 @@
+{
+  "schema": "http://json-schema.org/draft-04/schema#",
+  "id": "Result",
+  "metaFormat": "http://purl.imsglobal.org/caliper/",
+  "type": [
+    "object",
+    "string"
+  ],
+  "properties": {
+    "attempt": {
+      "$ref": "CaliperTypeDefinitions#/attempt"
+    },
+    "extensions": {
+      "$ref": "CaliperTypeDefinitions#/extensions"
+    },
+    "scoredBy": {
+      "$ref": "CaliperTypeDefinitions#/scoredBy"
+    },
+    "comment": {
+      "type": "string",
+      "definedBy": "http://www.w3.org/2001/XMLSchema#string",
+      "title": "comment",
+      "description": "Plain text feedback provided by the scorer of a Result.",
+      "translations": {
+        "title": [
+          {
+            "en": "comment"
+          }
+        ],
+        "description": [
+          {
+            "en": "Plain text feedback provided by the scorer of a Result."
+          }
+        ]
+      }
+    },
+    "curveFactor": {
+      "type": "number",
+      "definedBy": "http://www.w3.org/2001/XMLSchema#decimal",
+      "format": "float",
+      "title": "curveFactor",
+      "description": "A scale factor to be used in adjusting the totalScore.",
+      "translations": {
+        "title": [
+          {
+            "en": "curveFactor"
+          }
+        ],
+        "description": [
+          {
+            "en": "A scale factor to be used in adjusting the totalScore."
+          }
+        ]
+      }
+    },
+    "curvedTotalScore": {
+      "type": "number",
+      "definedBy": "http://www.w3.org/2001/XMLSchema#decimal",
+      "format": "float",
+      "title": "curvedTotalScore",
+      "description": "The total score earned by the learner after applying a curveFactor to a method for computing a scaled score; e.g., adjusting the score equal to the sum of 100 - curvedFactor(100 - totalScore).",
+      "translations": {
+        "title": [
+          {
+            "en": "curvedTotalScore"
+          }
+        ],
+        "description": [
+          {
+            "en": "The total score earned by the learner after applying a curveFactor to a method for computing a scaled score; e.g., adjusting the score equal to the sum of 100 - curvedFactor(100 - totalScore)."
+          }
+        ]
+      }
+    },
+    "extraCreditScore": {
+      "type": "number",
+      "definedBy": "http://www.w3.org/2001/XMLSchema#decimal",
+      "format": "float",
+      "title": "extraCreditScore",
+      "description": "The number of extra credit points earned by the learner.",
+      "translations": {
+        "title": [
+          {
+            "en": "extraCreditScore"
+          }
+        ],
+        "description": [
+          {
+            "en": "The number of extra credit points earned by the learner."
+          }
+        ]
+      }
+    },
+    "id": {
+      "type": "string",
+      "definedBy": "http://www.w3.org/2001/XMLSchema#string",
+      "title": "id",
+      "description": "The Event or Entity identifier.  For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122.  For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returning a representation of the resource.  An Entity MAY be provisioned with a URI employing the URN scheme in cases where a Linked Data friendly HTTP URI is either unavailable or inappropriate.",
+      "translations": {
+        "title": [
+          {
+            "en": "id"
+          }
+        ],
+        "description": [
+          {
+            "en": "The Event or Entity identifier.  For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122.  For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returning a representation of the resource.  An Entity MAY be provisioned with a URI employing the URN scheme in cases where a Linked Data friendly HTTP URI is either unavailable or inappropriate."
+          }
+        ]
+      }
+    },
+    "maxResultScore": {
+      "type": "number",
+      "definedBy": "http://www.w3.org/2001/XMLSchema#decimal",
+      "format": "float",
+      "title": "maxResultScore",
+      "description": "The maximum score permitted for a Result.",
+      "translations": {
+        "title": [
+          {
+            "en": "maxResultScore"
+          }
+        ],
+        "description": [
+          {
+            "en": "The maximum score permitted for a Result."
+          }
+        ]
+      }
+    },
+    "normalScore": {
+      "type": "number",
+      "definedBy": "http://www.w3.org/2001/XMLSchema#decimal",
+      "format": "float",
+      "title": "normalScore",
+      "description": "The score earned by the learner before adding the extraCreditScore, subtracting the penaltyScore or applying the curveFactor, if any.",
+      "translations": {
+        "title": [
+          {
+            "en": "normalScore"
+          }
+        ],
+        "description": [
+          {
+            "en": "The score earned by the learner before adding the extraCreditScore, subtracting the penaltyScore or applying the curveFactor, if any."
+          }
+        ]
+      }
+    },
+    "penaltyScore": {
+      "type": "number",
+      "definedBy": "http://www.w3.org/2001/XMLSchema#decimal",
+      "format": "float",
+      "title": "penaltyScore",
+      "description": "The number of points deducted from the normalScore due to an infraction such as submitting an Attempt after the due date.",
+      "translations": {
+        "title": [
+          {
+            "en": "penaltyScore"
+          }
+        ],
+        "description": [
+          {
+            "en": "The number of points deducted from the normalScore due to an infraction such as submitting an Attempt after the due date."
+          }
+        ]
+      }
+    },
+    "resultScore": {
+      "type": "number",
+      "definedBy": "http://www.w3.org/2001/XMLSchema#decimal",
+      "format": "float",
+      "title": "resultScore",
+      "description": "The result score awarded to the learner.  A result score can be updated.",
+      "translations": {
+        "title": [
+          {
+            "en": "resultScore"
+          }
+        ],
+        "description": [
+          {
+            "en": "The result score awarded to the learner.  A result score can be updated."
+          }
+        ]
+      }
+    },
+    "totalScore": {
+      "type": "number",
+      "definedBy": "http://www.w3.org/2001/XMLSchema#decimal",
+      "format": "float",
+      "title": "totalScore",
+      "description": "A score earned by the learner equal to the sum of normalScore + extraCreditScore - penaltyScore. This value does not take into account the effects of curving.",
+      "translations": {
+        "title": [
+          {
+            "en": "totalScore"
+          }
+        ],
+        "description": [
+          {
+            "en": "A score earned by the learner equal to the sum of normalScore + extraCreditScore - penaltyScore. This value does not take into account the effects of curving."
+          }
+        ]
+      }
+    },
+    "type": {
+      "type": "string",
+      "pattern": "^Result$"
+    },
+    "isPartOf": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "Agent"
+        },
+        {
+          "$ref": "Organization"
+        },
+        {
+          "$ref": "CourseOffering"
+        },
+        {
+          "$ref": "CourseSection"
+        },
+        {
+          "$ref": "Group"
+        },
+        {
+          "$ref": "Person"
+        },
+        {
+          "$ref": "SoftwareApplication"
+        },
+        {
+          "$ref": "AggregateMeasure"
+        },
+        {
+          "$ref": "Annotation"
+        },
+        {
+          "$ref": "BookmarkAnnotation"
+        },
+        {
+          "$ref": "HighlightAnnotation"
+        },
+        {
+          "$ref": "SharedAnnotation"
+        },
+        {
+          "$ref": "TagAnnotation"
+        },
+        {
+          "$ref": "Attempt"
+        },
+        {
+          "$ref": "Collection"
+        },
+        {
+          "$ref": "AggregateMeasureCollection"
+        },
+        {
+          "$ref": "DigitalResourceCollection"
+        },
+        {
+          "$ref": "Assessment"
+        },
+        {
+          "$ref": "Forum"
+        },
+        {
+          "$ref": "Questionnaire"
+        },
+        {
+          "$ref": "Thread"
+        },
+        {
+          "$ref": "Survey"
+        },
+        {
+          "$ref": "Comment"
+        },
+        {
+          "$ref": "DigitalResource"
+        },
+        {
+          "$ref": "AssignableDigitalResource"
+        },
+        {
+          "$ref": "AssessmentItem"
+        },
+        {
+          "$ref": "Chapter"
+        },
+        {
+          "$ref": "Document"
+        },
+        {
+          "$ref": "Frame"
+        },
+        {
+          "$ref": "LtiLink"
+        },
+        {
+          "$ref": "MediaLocation"
+        },
+        {
+          "$ref": "MediaObject"
+        },
+        {
+          "$ref": "AudioObject"
+        },
+        {
+          "$ref": "ImageObject"
+        },
+        {
+          "$ref": "VideoObject"
+        },
+        {
+          "$ref": "Message"
+        },
+        {
+          "$ref": "Page"
+        },
+        {
+          "$ref": "Question"
+        },
+        {
+          "$ref": "DateTimeQuestion"
+        },
+        {
+          "$ref": "MultiselectQuestion"
+        },
+        {
+          "$ref": "OpenEndedQuestion"
+        },
+        {
+          "$ref": "RatingScaleQuestion"
+        },
+        {
+          "$ref": "QuestionnaireItem"
+        },
+        {
+          "$ref": "Reading"
+        },
+        {
+          "$ref": "SurveyInvitation"
+        },
+        {
+          "$ref": "WebPage"
+        },
+        {
+          "$ref": "epubChapter"
+        },
+        {
+          "$ref": "epubPart"
+        },
+        {
+          "$ref": "epubSubChapter"
+        },
+        {
+          "$ref": "epubVolume"
+        },
+        {
+          "$ref": "LearningObjective"
+        },
+        {
+          "$ref": "Link"
+        },
+        {
+          "$ref": "Membership"
+        },
+        {
+          "$ref": "Query"
+        },
+        {
+          "$ref": "Rating"
+        },
+        {
+          "$ref": "Response"
+        },
+        {
+          "$ref": "DateTimeResponse"
+        },
+        {
+          "$ref": "FillinBlankResponse"
+        },
+        {
+          "$ref": "MultiselectResponse"
+        },
+        {
+          "$ref": "MultipleChoiceResponse"
+        },
+        {
+          "$ref": "MultipleResponseResponse"
+        },
+        {
+          "$ref": "OpenEndedResponse"
+        },
+        {
+          "$ref": "RatingScaleResponse"
+        },
+        {
+          "$ref": "SelectTextResponse"
+        },
+        {
+          "$ref": "TrueFalseResponse"
+        },
+        {
+          "$ref": "Result"
+        },
+        {
+          "$ref": "Scale"
+        },
+        {
+          "$ref": "LikertScale"
+        },
+        {
+          "$ref": "MultiselectScale"
+        },
+        {
+          "$ref": "NumericScale"
+        },
+        {
+          "$ref": "Score"
+        },
+        {
+          "$ref": "SearchResponse"
+        },
+        {
+          "$ref": "Session"
+        },
+        {
+          "$ref": "LtiSession"
+        }
+      ],
+      "title": "isPartOf",
+      "description": "A related Entity that includes or incorporates the resource as a part of its whole.",
+      "translations": {
+        "title": [
+          {
+            "en": "isPartOf"
+          }
+        ],
+        "description": [
+          {
+            "en": "A related Entity that includes or incorporates the resource as a part of its whole."
+          }
+        ]
+      }
+    },
+    "dateCreated": {
+      "type": "string",
+      "definedBy": "http://www.w3.org/2001/XMLSchema#dateTime",
+      "format": "date-time",
+      "title": "dateCreated",
+      "description": "A date and time value expressed with millisecond precision that describes when an Entity was created.",
+      "translations": {
+        "title": [
+          {
+            "en": "dateCreated"
+          }
+        ],
+        "description": [
+          {
+            "en": "A date and time value expressed with millisecond precision that describes when an Entity was created."
+          }
+        ]
+      }
+    },
+    "dateModified": {
+      "type": "string",
+      "definedBy": "http://www.w3.org/2001/XMLSchema#dateTime",
+      "format": "date-time",
+      "title": "dateModified",
+      "description": "A date and time value expressed with millisecond precision that describes when an Entity was last changed or modified.",
+      "translations": {
+        "title": [
+          {
+            "en": "dateModified"
+          }
+        ],
+        "description": [
+          {
+            "en": "A date and time value expressed with millisecond precision that describes when an Entity was last changed or modified."
+          }
+        ]
+      }
+    },
+    "description": {
+      "type": "string",
+      "definedBy": "http://www.w3.org/2001/XMLSchema#string",
+      "title": "description",
+      "description": "A brief, plain-text representation of the resource.",
+      "translations": {
+        "title": [
+          {
+            "en": "description"
+          }
+        ],
+        "description": [
+          {
+            "en": "A brief, plain-text representation of the resource."
+          }
+        ]
+      }
+    },
+    "name": {
+      "type": "string",
+      "definedBy": "http://www.w3.org/2001/XMLSchema#string",
+      "title": "name",
+      "description": "A string value comprising a word or phrase by which the resource is known.",
+      "translations": {
+        "title": [
+          {
+            "en": "name"
+          }
+        ],
+        "description": [
+          {
+            "en": "A string value comprising a word or phrase by which the resource is known."
+          }
+        ]
+      }
+    },
+    "@context": {
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^http://purl.imsglobal.org/ctx/caliper/v1p2$"
+        },
+        {
+          "type": "array"
+        },
+        {
+          "type": "object"
+        }
+      ]
+    }
+  },
+  "title": "Result",
+  "description": "A Caliper Result represents a grade applied to an assignment submission.",
+  "translations": {
+    "title": [
+      {
+        "en": "Result"
+      }
+    ],
+    "description": [
+      {
+        "en": "A Caliper Result represents a grade applied to an assignment submission."
+      }
+    ]
+  },
+  "required": [
+    "id",
+    "type"
+  ]
+}

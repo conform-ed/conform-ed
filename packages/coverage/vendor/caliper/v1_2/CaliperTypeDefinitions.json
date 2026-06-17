@@ -1,0 +1,470 @@
+{
+  "schema": "http://json-schema.org/draft-04/schema#",
+  "id": "CaliperTypeDefinitions",
+  "type": "object",
+  "attempt": {
+    "$ref": "Attempt",
+    "title": "attempt",
+    "description": "The associated Attempt.",
+    "translations": {
+      "title": [
+        {
+          "en": "attempt"
+        }
+      ],
+      "description": [
+        {
+          "en": "The associated Attempt."
+        }
+      ]
+    }
+  },
+  "itemLabels": {
+    "type": "array",
+    "items": {
+      "type": "string"
+    },
+    "title": "itemLabels",
+    "description": "The ordered list of labels for each point on the Likert scale.",
+    "translations": {
+      "title": [
+        {
+          "en": "itemLabels"
+        }
+      ],
+      "description": [
+        {
+          "en": "The ordered list of labels for each point on the Likert scale."
+        }
+      ]
+    }
+  },
+  "itemValues": {
+    "type": "array",
+    "items": {
+      "type": "string"
+    },
+    "title": "itemValues",
+    "description": "The ordered list of values for each point on the Likert scale.",
+    "translations": {
+      "title": [
+        {
+          "en": "itemValues"
+        }
+      ],
+      "description": [
+        {
+          "en": "The ordered list of values for each point on the Likert scale."
+        }
+      ]
+    }
+  },
+  "question": {
+    "anyOf": [
+      {
+        "type": "string"
+      },
+      {
+        "$ref": "DateTimeQuestion"
+      },
+      {
+        "$ref": "MultiselectQuestion"
+      },
+      {
+        "$ref": "OpenEndedQuestion"
+      },
+      {
+        "$ref": "RatingScaleQuestion"
+      },
+      {
+        "$ref": "Question"
+      }
+    ],
+    "title": "question",
+    "description": "The Question used for the Rating.",
+    "translations": {
+      "title": [
+        {
+          "en": "question"
+        }
+      ],
+      "description": [
+        {
+          "en": "The Question used for the Rating."
+        }
+      ]
+    }
+  },
+  "rater": {
+    "$ref": "Person",
+    "title": "rater",
+    "description": "The Person who provided the Rating.",
+    "translations": {
+      "title": [
+        {
+          "en": "rater"
+        }
+      ],
+      "description": [
+        {
+          "en": "The Person who provided the Rating."
+        }
+      ]
+    }
+  },
+  "scale": {
+    "anyOf": [
+      {
+        "type": "string"
+      },
+      {
+        "$ref": "LikertScale"
+      },
+      {
+        "$ref": "MultiselectScale"
+      },
+      {
+        "$ref": "NumericScale"
+      },
+      {
+        "$ref": "Scale"
+      }
+    ],
+    "title": "scale",
+    "description": "The Scale associated with the Rating or RatingScaleQuestion.",
+    "translations": {
+      "title": [
+        {
+          "en": "scale"
+        }
+      ],
+      "description": [
+        {
+          "en": "The Scale associated with the Rating or RatingScaleQuestion."
+        }
+      ]
+    }
+  },
+  "scoredBy": {
+    "anyOf": [
+      {
+        "type": "string"
+      },
+      {
+        "$ref": "Organization"
+      },
+      {
+        "$ref": "CourseOffering"
+      },
+      {
+        "$ref": "CourseSection"
+      },
+      {
+        "$ref": "Group"
+      },
+      {
+        "$ref": "Person"
+      },
+      {
+        "$ref": "SoftwareApplication"
+      },
+      {
+        "$ref": "Agent"
+      }
+    ],
+    "title": "scoredBy",
+    "description": "The Agent who scored or graded an Attempt.",
+    "translations": {
+      "title": [
+        {
+          "en": "scoredBy"
+        }
+      ],
+      "description": [
+        {
+          "en": "The Agent who scored or graded an Attempt."
+        }
+      ]
+    }
+  },
+  "searchTarget": {
+    "anyOf": [
+      {
+        "type": "string"
+      },
+      {
+        "$ref": "Agent"
+      },
+      {
+        "$ref": "Organization"
+      },
+      {
+        "$ref": "CourseOffering"
+      },
+      {
+        "$ref": "CourseSection"
+      },
+      {
+        "$ref": "Group"
+      },
+      {
+        "$ref": "Person"
+      },
+      {
+        "$ref": "SoftwareApplication"
+      },
+      {
+        "$ref": "AggregateMeasure"
+      },
+      {
+        "$ref": "Annotation"
+      },
+      {
+        "$ref": "BookmarkAnnotation"
+      },
+      {
+        "$ref": "HighlightAnnotation"
+      },
+      {
+        "$ref": "SharedAnnotation"
+      },
+      {
+        "$ref": "TagAnnotation"
+      },
+      {
+        "$ref": "Attempt"
+      },
+      {
+        "$ref": "Collection"
+      },
+      {
+        "$ref": "AggregateMeasureCollection"
+      },
+      {
+        "$ref": "DigitalResourceCollection"
+      },
+      {
+        "$ref": "Assessment"
+      },
+      {
+        "$ref": "Forum"
+      },
+      {
+        "$ref": "Questionnaire"
+      },
+      {
+        "$ref": "Thread"
+      },
+      {
+        "$ref": "Survey"
+      },
+      {
+        "$ref": "Comment"
+      },
+      {
+        "$ref": "DigitalResource"
+      },
+      {
+        "$ref": "AssignableDigitalResource"
+      },
+      {
+        "$ref": "AssessmentItem"
+      },
+      {
+        "$ref": "Chapter"
+      },
+      {
+        "$ref": "Document"
+      },
+      {
+        "$ref": "Frame"
+      },
+      {
+        "$ref": "LtiLink"
+      },
+      {
+        "$ref": "MediaLocation"
+      },
+      {
+        "$ref": "MediaObject"
+      },
+      {
+        "$ref": "AudioObject"
+      },
+      {
+        "$ref": "ImageObject"
+      },
+      {
+        "$ref": "VideoObject"
+      },
+      {
+        "$ref": "Message"
+      },
+      {
+        "$ref": "Page"
+      },
+      {
+        "$ref": "Question"
+      },
+      {
+        "$ref": "DateTimeQuestion"
+      },
+      {
+        "$ref": "MultiselectQuestion"
+      },
+      {
+        "$ref": "OpenEndedQuestion"
+      },
+      {
+        "$ref": "RatingScaleQuestion"
+      },
+      {
+        "$ref": "QuestionnaireItem"
+      },
+      {
+        "$ref": "Reading"
+      },
+      {
+        "$ref": "SurveyInvitation"
+      },
+      {
+        "$ref": "WebPage"
+      },
+      {
+        "$ref": "epubChapter"
+      },
+      {
+        "$ref": "epubPart"
+      },
+      {
+        "$ref": "epubSubChapter"
+      },
+      {
+        "$ref": "epubVolume"
+      },
+      {
+        "$ref": "LearningObjective"
+      },
+      {
+        "$ref": "Link"
+      },
+      {
+        "$ref": "Membership"
+      },
+      {
+        "$ref": "Query"
+      },
+      {
+        "$ref": "Rating"
+      },
+      {
+        "$ref": "Response"
+      },
+      {
+        "$ref": "DateTimeResponse"
+      },
+      {
+        "$ref": "FillinBlankResponse"
+      },
+      {
+        "$ref": "MultiselectResponse"
+      },
+      {
+        "$ref": "MultipleChoiceResponse"
+      },
+      {
+        "$ref": "MultipleResponseResponse"
+      },
+      {
+        "$ref": "OpenEndedResponse"
+      },
+      {
+        "$ref": "RatingScaleResponse"
+      },
+      {
+        "$ref": "SelectTextResponse"
+      },
+      {
+        "$ref": "TrueFalseResponse"
+      },
+      {
+        "$ref": "Result"
+      },
+      {
+        "$ref": "Scale"
+      },
+      {
+        "$ref": "LikertScale"
+      },
+      {
+        "$ref": "MultiselectScale"
+      },
+      {
+        "$ref": "NumericScale"
+      },
+      {
+        "$ref": "Score"
+      },
+      {
+        "$ref": "SearchResponse"
+      },
+      {
+        "$ref": "Session"
+      },
+      {
+        "$ref": "LtiSession"
+      }
+    ],
+    "title": "searchTarget",
+    "description": "The Entity, typically a DigitalResource or  SoftwareApplication, that is the target of the search.",
+    "translations": {
+      "title": [
+        {
+          "en": "searchTarget"
+        }
+      ],
+      "description": [
+        {
+          "en": "The Entity, typically a DigitalResource or  SoftwareApplication, that is the target of the search."
+        }
+      ]
+    }
+  },
+  "selections": {
+    "type": "array",
+    "items": {
+      "type": "string"
+    },
+    "title": "selections",
+    "description": "An array of the values representing the rater's selected response.",
+    "translations": {
+      "title": [
+        {
+          "en": "selections"
+        }
+      ],
+      "description": [
+        {
+          "en": "An array of the values representing the rater's selected response."
+        }
+      ]
+    }
+  },
+  "extensions": {
+    "type": "object",
+    "title": "extensions",
+    "description": "An ordered collection of objects not defined by the Caliper Information Model.",
+    "translations": {
+      "title": [
+        {
+          "en": "extensions"
+        }
+      ],
+      "description": [
+        {
+          "en": "An ordered collection of objects not defined by the Caliper Information Model."
+        }
+      ]
+    }
+  }
+}

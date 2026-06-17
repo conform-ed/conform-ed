@@ -1,0 +1,84 @@
+{
+  "schema": "http://json-schema.org/draft-04/schema#",
+  "id": "Envelope",
+  "metaFormat": "http://purl.imsglobal.org/caliper/",
+  "type": "object",
+  "properties": {
+    "data": {
+      "type": "array",
+      "items": {},
+      "title": "data",
+      "description": "Envelope data array."
+    },
+    "dataVersion": {
+      "type": "string",
+      "definedBy": "http://www.w3.org/2001/XMLSchema#string",
+      "pattern": "^http://purl.imsglobal.org/ctx/caliper/v1p2$",
+      "title": "dataVersion",
+      "description": "Envelope data payload Caliper version.",
+      "translations": {
+        "title": [
+          {
+            "en": "dataVersion"
+          }
+        ],
+        "description": [
+          {
+            "en": "Envelope data payload Caliper version."
+          }
+        ]
+      }
+    },
+    "sendTime": {
+      "type": "string",
+      "definedBy": "http://www.w3.org/2001/XMLSchema#dateTime",
+      "format": "date-time",
+      "title": "sendTime",
+      "description": "Envelope send time.",
+      "translations": {
+        "title": [
+          {
+            "en": "sendTime"
+          }
+        ],
+        "description": [
+          {
+            "en": "Envelope send time."
+          }
+        ]
+      }
+    },
+    "sensor": {
+      "type": "string",
+      "definedBy": "http://www.w3.org/2001/XMLSchema#string",
+      "title": "sensor",
+      "description": "Sensor identifier.",
+      "translations": {
+        "title": [
+          {
+            "en": "sensor"
+          }
+        ],
+        "description": [
+          {
+            "en": "Sensor identifier."
+          }
+        ]
+      }
+    }
+  },
+  "title": "Envelope",
+  "description": "A Caliper Envelope is a container that is used to transmit one or more Caliper Events and/or Caliper Entity describes.",
+  "translations": {
+    "title": [
+      {
+        "en": "Envelope"
+      }
+    ],
+    "description": [
+      {
+        "en": "A Caliper Envelope is a container that is used to transmit one or more Caliper Events and/or Caliper Entity describes."
+      }
+    ]
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "schema": "http://json-schema.org/draft-04/schema#",
+  "id": "SystemIdentifier",
+  "metaFormat": "http://purl.imsglobal.org/caliper/",
+  "type": "object",
+  "properties": {
+    "extensions": {
+      "$ref": "CaliperTypeDefinitions#/extensions"
+    },
+    "identifier": {
+      "type": "string",
+      "definedBy": "http://www.w3.org/2001/XMLSchema#string",
+      "title": "identifier"
+    },
+    "identifierType": {
+      "type": "string",
+      "definedBy": "http://www.w3.org/2001/XMLSchema#string",
+      "enum": ["LtiUserId"]
+    },
+    "source": {
+      "type": "object",
+      "definedBy": "http://www.w3.org/2001/XMLSchema#string",
+      "title": "source"
+    },
+    "type": {
+      "type": "string",
+      "pattern": "^SystemIdentifier$"
+    },
+    "@context": {
+      "oneOf": [
+        {
+          "type": "string",
+          "pattern": "^http://purl.imsglobal.org/ctx/caliper/v1p2$"
+        },
+        {
+          "type": "array"
+        }
+      ]
+    }
+  },
+  "title": "SystemIdentifier"
+,
+  "required": [
+    "type",
+    "identifier",
+    "identifierType"
+  ]
+}

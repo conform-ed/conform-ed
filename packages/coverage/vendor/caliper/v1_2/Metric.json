@@ -1,0 +1,31 @@
+{
+  "schema": "http://json-schema.org/draft-04/schema#",
+  "id": "Metric",
+  "metaFormat": "http://purl.imsglobal.org/caliper/",
+  "type": "string",
+  "properties": {},
+  "title": "Metric",
+  "description": "The AggregateMeasure entity includes a required metric property for denoting the metric related to the ToolUseEvent.",
+  "translations": {
+    "title": [
+      {
+        "en": "Metric"
+      }
+    ],
+    "description": [
+      {
+        "en": "The AggregateMeasure entity includes a required metric property for denoting the metric related to the ToolUseEvent."
+      }
+    ]
+  },
+  "enum": [
+    "AssessmentsPassed",
+    "AssessmentsSubmitted",
+    "MinutesOnTask",
+    "SkillsMastered",
+    "StandardsMastered",
+    "UnitsCompleted",
+    "UnitsPassed",
+    "WordsRead"
+  ]
+}

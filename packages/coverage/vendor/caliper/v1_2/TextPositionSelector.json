@@ -1,0 +1,60 @@
+{
+  "schema": "http://json-schema.org/draft-04/schema#",
+  "id": "TextPositionSelector",
+  "metaFormat": "http://purl.imsglobal.org/caliper/",
+  "type": "object",
+  "properties": {
+    "end": {
+      "type": "number",
+      "definedBy": "http://www.w3.org/2001/XMLSchema#nonNegativeInteger",
+      "format": "uint32",
+      "title": "end",
+      "description": "The end position of a segment of text. The first character in the full text is position 0. The character that represents the end position is NOT included within the selected segment.",
+      "translations": {
+        "title": [
+          {
+            "en": "end"
+          }
+        ],
+        "description": [
+          {
+            "en": "The end position of a segment of text. The first character in the full text is position 0. The character that represents the end position is NOT included within the selected segment."
+          }
+        ]
+      }
+    },
+    "start": {
+      "type": "number",
+      "definedBy": "http://www.w3.org/2001/XMLSchema#nonNegativeInteger",
+      "format": "uint32",
+      "title": "start",
+      "description": "The starting position of a segment of text. The first character in the full text is position 0. The character that represents the start position is included within the selected segment.",
+      "translations": {
+        "title": [
+          {
+            "en": "start"
+          }
+        ],
+        "description": [
+          {
+            "en": "The starting position of a segment of text. The first character in the full text is position 0. The character that represents the start position is included within the selected segment."
+          }
+        ]
+      }
+    }
+  },
+  "title": "TextPositionSelector",
+  "description": "A Caliper TextPositionSelector represents a fragment or selection of textual content, the starting and ending positions of which are determined by the distance in characters from the initial character (position 0) of the enclosing full text.",
+  "translations": {
+    "title": [
+      {
+        "en": "TextPositionSelector"
+      }
+    ],
+    "description": [
+      {
+        "en": "A Caliper TextPositionSelector represents a fragment or selection of textual content, the starting and ending positions of which are determined by the distance in characters from the initial character (position 0) of the enclosing full text."
+      }
+    ]
+  }
+}

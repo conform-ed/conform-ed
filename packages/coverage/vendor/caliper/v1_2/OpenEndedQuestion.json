@@ -1,0 +1,733 @@
+{
+  "schema": "http://json-schema.org/draft-04/schema#",
+  "id": "OpenEndedQuestion",
+  "metaFormat": "http://purl.imsglobal.org/caliper/",
+  "type": [
+    "object",
+    "string"
+  ],
+  "properties": {
+    "extensions": {
+      "$ref": "CaliperTypeDefinitions#/extensions"
+    },
+    "id": {
+      "type": "string",
+      "definedBy": "http://www.w3.org/2001/XMLSchema#string",
+      "title": "id",
+      "description": "The Event or Entity identifier.  For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122.  For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returning a representation of the resource.  An Entity MAY be provisioned with a URI employing the URN scheme in cases where a Linked Data friendly HTTP URI is either unavailable or inappropriate.",
+      "translations": {
+        "title": [
+          {
+            "en": "id"
+          }
+        ],
+        "description": [
+          {
+            "en": "The Event or Entity identifier.  For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122.  For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returning a representation of the resource.  An Entity MAY be provisioned with a URI employing the URN scheme in cases where a Linked Data friendly HTTP URI is either unavailable or inappropriate."
+          }
+        ]
+      }
+    },
+    "maxScore": {
+      "type": "number",
+      "definedBy": "http://www.w3.org/2001/XMLSchema#decimal",
+      "format": "float",
+      "title": "maxScore",
+      "description": "A non-negative integer indicating the maximum score permitted.",
+      "translations": {
+        "title": [
+          {
+            "en": "maxScore"
+          }
+        ],
+        "description": [
+          {
+            "en": "A non-negative integer indicating the maximum score permitted."
+          }
+        ]
+      }
+    },
+    "type": {
+      "type": "string",
+      "pattern": "^OpenEndedQuestion$"
+    },
+    "version": {
+      "type": "string",
+      "definedBy": "http://www.w3.org/2001/XMLSchema#string",
+      "title": "version",
+      "description": "A string value that designates the current form or version of the resource.",
+      "translations": {
+        "title": [
+          {
+            "en": "version"
+          }
+        ],
+        "description": [
+          {
+            "en": "A string value that designates the current form or version of the resource."
+          }
+        ]
+      }
+    },
+    "questionPosed": {
+      "type": "string",
+      "definedBy": "http://www.w3.org/2001/XMLSchema#string",
+      "title": "questionPosed",
+      "description": "A string value comprising the question posed.",
+      "translations": {
+        "title": [
+          {
+            "en": "questionPosed"
+          }
+        ],
+        "description": [
+          {
+            "en": "A string value comprising the question posed."
+          }
+        ]
+      }
+    },
+    "alignedLearningObjective": {
+      "items": {
+        "$ref": "LearningObjective"
+      },
+      "type": "array",
+      "title": "alignedLearningObjective",
+      "description": "An ordered collection of one or more LearningObjective entities that describe what a learner is expected to comprehend or accomplish after engaging with the resource.  Deprecated.  Use learningObjectives.",
+      "translations": {
+        "title": [
+          {
+            "en": "alignedLearningObjective"
+          }
+        ],
+        "description": [
+          {
+            "en": "An ordered collection of one or more LearningObjective entities that describe what a learner is expected to comprehend or accomplish after engaging with the resource.  Deprecated.  Use learningObjectives."
+          }
+        ]
+      }
+    },
+    "creators": {
+      "items": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "$ref": "Organization"
+          },
+          {
+            "$ref": "CourseOffering"
+          },
+          {
+            "$ref": "CourseSection"
+          },
+          {
+            "$ref": "Group"
+          },
+          {
+            "$ref": "Person"
+          },
+          {
+            "$ref": "SoftwareApplication"
+          },
+          {
+            "$ref": "Agent"
+          }
+        ]
+      },
+      "type": "array",
+      "title": "creators",
+      "description": "An ordered collection of Agent entities, typically of type Person, that are responsible for bringing resource into being",
+      "translations": {
+        "title": [
+          {
+            "en": "creators"
+          }
+        ],
+        "description": [
+          {
+            "en": "An ordered collection of Agent entities, typically of type Person, that are responsible for bringing resource into being"
+          }
+        ]
+      }
+    },
+    "learningObjectives": {
+      "items": {
+        "$ref": "LearningObjective"
+      },
+      "type": "array",
+      "title": "learningObjectives",
+      "description": "An ordered collection of one or more LearningObjective entities that describe what a learner is expected to comprehend or accomplish after engaging with the resource.",
+      "translations": {
+        "title": [
+          {
+            "en": "learningObjectives"
+          }
+        ],
+        "description": [
+          {
+            "en": "An ordered collection of one or more LearningObjective entities that describe what a learner is expected to comprehend or accomplish after engaging with the resource."
+          }
+        ]
+      }
+    },
+    "datePublished": {
+      "type": "string",
+      "definedBy": "http://www.w3.org/2001/XMLSchema#dateTime",
+      "format": "date-time",
+      "title": "datePublished",
+      "description": "A date and time value expressed with millisecond precision that provides the publication date of a resource.",
+      "translations": {
+        "title": [
+          {
+            "en": "datePublished"
+          }
+        ],
+        "description": [
+          {
+            "en": "A date and time value expressed with millisecond precision that provides the publication date of a resource."
+          }
+        ]
+      }
+    },
+    "dateToActivate": {
+      "type": "string",
+      "definedBy": "http://www.w3.org/2001/XMLSchema#dateTime",
+      "format": "date-time",
+      "title": "dateToActivate",
+      "description": "A date and time value expressed with millisecond precision that describes when a resource was activated.",
+      "translations": {
+        "title": [
+          {
+            "en": "dateToActivate"
+          }
+        ],
+        "description": [
+          {
+            "en": "A date and time value expressed with millisecond precision that describes when a resource was activated."
+          }
+        ]
+      }
+    },
+    "dateToShow": {
+      "type": "string",
+      "definedBy": "http://www.w3.org/2001/XMLSchema#dateTime",
+      "format": "date-time",
+      "title": "dateToShow",
+      "description": "A date and time value expressed with millisecond precision that describes when a resource should be shown or made available.",
+      "translations": {
+        "title": [
+          {
+            "en": "dateToShow"
+          }
+        ],
+        "description": [
+          {
+            "en": "A date and time value expressed with millisecond precision that describes when a resource should be shown or made available."
+          }
+        ]
+      }
+    },
+    "dateToStartOn": {
+      "type": "string",
+      "definedBy": "http://www.w3.org/2001/XMLSchema#dateTime",
+      "format": "date-time",
+      "title": "dateToStartOn",
+      "description": "A date and time value expressed with millisecond precision that describes when the resource can be started.",
+      "translations": {
+        "title": [
+          {
+            "en": "dateToStartOn"
+          }
+        ],
+        "description": [
+          {
+            "en": "A date and time value expressed with millisecond precision that describes when the resource can be started."
+          }
+        ]
+      }
+    },
+    "dateToSubmit": {
+      "type": "string",
+      "definedBy": "http://www.w3.org/2001/XMLSchema#dateTime",
+      "format": "date-time",
+      "title": "dateToSubmit",
+      "description": "A date and time value expressed with millisecond precision that describes when the resource is to be submitted for evaluation.",
+      "translations": {
+        "title": [
+          {
+            "en": "dateToSubmit"
+          }
+        ],
+        "description": [
+          {
+            "en": "A date and time value expressed with millisecond precision that describes when the resource is to be submitted for evaluation."
+          }
+        ]
+      }
+    },
+    "keywords": {
+      "items": {
+        "type": "string",
+        "definedBy": "http://www.w3.org/2001/XMLSchema#string"
+      },
+      "type": "array",
+      "title": "keywords",
+      "description": "An ordered collection of one or more string values that represent tags or labels used to identify the resource.",
+      "translations": {
+        "title": [
+          {
+            "en": "keywords"
+          }
+        ],
+        "description": [
+          {
+            "en": "An ordered collection of one or more string values that represent tags or labels used to identify the resource."
+          }
+        ]
+      }
+    },
+    "maxAttempts": {
+      "type": "number",
+      "definedBy": "http://www.w3.org/2001/XMLSchema#nonNegativeInteger",
+      "format": "uint32",
+      "title": "maxAttempts",
+      "description": "A non-negative integer indicating the number of permitted attempts.",
+      "translations": {
+        "title": [
+          {
+            "en": "maxAttempts"
+          }
+        ],
+        "description": [
+          {
+            "en": "A non-negative integer indicating the number of permitted attempts."
+          }
+        ]
+      }
+    },
+    "maxSubmits": {
+      "type": "number",
+      "definedBy": "http://www.w3.org/2001/XMLSchema#nonNegativeInteger",
+      "format": "uint32",
+      "title": "maxSubmits",
+      "description": "A non-negative integer indicating the number of permitted submissions.",
+      "translations": {
+        "title": [
+          {
+            "en": "maxSubmits"
+          }
+        ],
+        "description": [
+          {
+            "en": "A non-negative integer indicating the number of permitted submissions."
+          }
+        ]
+      }
+    },
+    "mediaType": {
+      "type": "string",
+      "definedBy": "http://www.w3.org/2001/XMLSchema#string",
+      "title": "mediaType",
+      "description": "A string value drawn from the list of IANA approved media types and subtypes that identifies the file format of a resource.",
+      "translations": {
+        "title": [
+          {
+            "en": "mediaType"
+          }
+        ],
+        "description": [
+          {
+            "en": "A string value drawn from the list of IANA approved media types and subtypes that identifies the file format of a resource."
+          }
+        ]
+      }
+    },
+    "objectType": {
+      "type": "boolean",
+      "definedBy": "http://www.w3.org/2001/XMLSchema#boolean",
+      "title": "objectType",
+      "description": "A string value that designates the resource type.",
+      "translations": {
+        "title": [
+          {
+            "en": "objectType"
+          }
+        ],
+        "description": [
+          {
+            "en": "A string value that designates the resource type."
+          }
+        ]
+      }
+    },
+    "storageName": {
+      "type": "string",
+      "definedBy": "http://www.w3.org/2001/XMLSchema#string",
+      "title": "storageName",
+      "description": "The name of resource when stored in a file system.",
+      "translations": {
+        "title": [
+          {
+            "en": "storageName"
+          }
+        ],
+        "description": [
+          {
+            "en": "The name of resource when stored in a file system."
+          }
+        ]
+      }
+    },
+    "isPartOf": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "Agent"
+        },
+        {
+          "$ref": "Organization"
+        },
+        {
+          "$ref": "CourseOffering"
+        },
+        {
+          "$ref": "CourseSection"
+        },
+        {
+          "$ref": "Group"
+        },
+        {
+          "$ref": "Person"
+        },
+        {
+          "$ref": "SoftwareApplication"
+        },
+        {
+          "$ref": "AggregateMeasure"
+        },
+        {
+          "$ref": "Annotation"
+        },
+        {
+          "$ref": "BookmarkAnnotation"
+        },
+        {
+          "$ref": "HighlightAnnotation"
+        },
+        {
+          "$ref": "SharedAnnotation"
+        },
+        {
+          "$ref": "TagAnnotation"
+        },
+        {
+          "$ref": "Attempt"
+        },
+        {
+          "$ref": "Collection"
+        },
+        {
+          "$ref": "AggregateMeasureCollection"
+        },
+        {
+          "$ref": "DigitalResourceCollection"
+        },
+        {
+          "$ref": "Assessment"
+        },
+        {
+          "$ref": "Forum"
+        },
+        {
+          "$ref": "Questionnaire"
+        },
+        {
+          "$ref": "Thread"
+        },
+        {
+          "$ref": "Survey"
+        },
+        {
+          "$ref": "Comment"
+        },
+        {
+          "$ref": "DigitalResource"
+        },
+        {
+          "$ref": "AssignableDigitalResource"
+        },
+        {
+          "$ref": "AssessmentItem"
+        },
+        {
+          "$ref": "Chapter"
+        },
+        {
+          "$ref": "Document"
+        },
+        {
+          "$ref": "Frame"
+        },
+        {
+          "$ref": "LtiLink"
+        },
+        {
+          "$ref": "MediaLocation"
+        },
+        {
+          "$ref": "MediaObject"
+        },
+        {
+          "$ref": "AudioObject"
+        },
+        {
+          "$ref": "ImageObject"
+        },
+        {
+          "$ref": "VideoObject"
+        },
+        {
+          "$ref": "Message"
+        },
+        {
+          "$ref": "Page"
+        },
+        {
+          "$ref": "Question"
+        },
+        {
+          "$ref": "DateTimeQuestion"
+        },
+        {
+          "$ref": "MultiselectQuestion"
+        },
+        {
+          "$ref": "OpenEndedQuestion"
+        },
+        {
+          "$ref": "RatingScaleQuestion"
+        },
+        {
+          "$ref": "QuestionnaireItem"
+        },
+        {
+          "$ref": "Reading"
+        },
+        {
+          "$ref": "SurveyInvitation"
+        },
+        {
+          "$ref": "WebPage"
+        },
+        {
+          "$ref": "epubChapter"
+        },
+        {
+          "$ref": "epubPart"
+        },
+        {
+          "$ref": "epubSubChapter"
+        },
+        {
+          "$ref": "epubVolume"
+        },
+        {
+          "$ref": "LearningObjective"
+        },
+        {
+          "$ref": "Link"
+        },
+        {
+          "$ref": "Membership"
+        },
+        {
+          "$ref": "Query"
+        },
+        {
+          "$ref": "Rating"
+        },
+        {
+          "$ref": "Response"
+        },
+        {
+          "$ref": "DateTimeResponse"
+        },
+        {
+          "$ref": "FillinBlankResponse"
+        },
+        {
+          "$ref": "MultiselectResponse"
+        },
+        {
+          "$ref": "MultipleChoiceResponse"
+        },
+        {
+          "$ref": "MultipleResponseResponse"
+        },
+        {
+          "$ref": "OpenEndedResponse"
+        },
+        {
+          "$ref": "RatingScaleResponse"
+        },
+        {
+          "$ref": "SelectTextResponse"
+        },
+        {
+          "$ref": "TrueFalseResponse"
+        },
+        {
+          "$ref": "Result"
+        },
+        {
+          "$ref": "Scale"
+        },
+        {
+          "$ref": "LikertScale"
+        },
+        {
+          "$ref": "MultiselectScale"
+        },
+        {
+          "$ref": "NumericScale"
+        },
+        {
+          "$ref": "Score"
+        },
+        {
+          "$ref": "SearchResponse"
+        },
+        {
+          "$ref": "Session"
+        },
+        {
+          "$ref": "LtiSession"
+        }
+      ],
+      "title": "isPartOf",
+      "description": "A related Entity that includes or incorporates the resource as a part of its whole.",
+      "translations": {
+        "title": [
+          {
+            "en": "isPartOf"
+          }
+        ],
+        "description": [
+          {
+            "en": "A related Entity that includes or incorporates the resource as a part of its whole."
+          }
+        ]
+      }
+    },
+    "dateCreated": {
+      "type": "string",
+      "definedBy": "http://www.w3.org/2001/XMLSchema#dateTime",
+      "format": "date-time",
+      "title": "dateCreated",
+      "description": "A date and time value expressed with millisecond precision that describes when an Entity was created.",
+      "translations": {
+        "title": [
+          {
+            "en": "dateCreated"
+          }
+        ],
+        "description": [
+          {
+            "en": "A date and time value expressed with millisecond precision that describes when an Entity was created."
+          }
+        ]
+      }
+    },
+    "dateModified": {
+      "type": "string",
+      "definedBy": "http://www.w3.org/2001/XMLSchema#dateTime",
+      "format": "date-time",
+      "title": "dateModified",
+      "description": "A date and time value expressed with millisecond precision that describes when an Entity was last changed or modified.",
+      "translations": {
+        "title": [
+          {
+            "en": "dateModified"
+          }
+        ],
+        "description": [
+          {
+            "en": "A date and time value expressed with millisecond precision that describes when an Entity was last changed or modified."
+          }
+        ]
+      }
+    },
+    "description": {
+      "type": "string",
+      "definedBy": "http://www.w3.org/2001/XMLSchema#string",
+      "title": "description",
+      "description": "A brief, plain-text representation of the resource.",
+      "translations": {
+        "title": [
+          {
+            "en": "description"
+          }
+        ],
+        "description": [
+          {
+            "en": "A brief, plain-text representation of the resource."
+          }
+        ]
+      }
+    },
+    "name": {
+      "type": "string",
+      "definedBy": "http://www.w3.org/2001/XMLSchema#string",
+      "title": "name",
+      "description": "A string value comprising a word or phrase by which the resource is known.",
+      "translations": {
+        "title": [
+          {
+            "en": "name"
+          }
+        ],
+        "description": [
+          {
+            "en": "A string value comprising a word or phrase by which the resource is known."
+          }
+        ]
+      }
+    },
+    "@context": {
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^http://purl.imsglobal.org/ctx/caliper/v1p2$"
+        },
+        {
+          "type": "array"
+        },
+        {
+          "type": "object"
+        }
+      ]
+    }
+  },
+  "title": "OpenEndedQuestion",
+  "description": "A Caliper OpenEndedQuestion represents a question with no pre-defined response. Respondents can record their response in the form of qualitative feedback with no length limit imposed.",
+  "translations": {
+    "title": [
+      {
+        "en": "OpenEndedQuestion"
+      }
+    ],
+    "description": [
+      {
+        "en": "A Caliper OpenEndedQuestion represents a question with no pre-defined response. Respondents can record their response in the form of qualitative feedback with no length limit imposed."
+      }
+    ]
+  },
+  "required": [
+    "id",
+    "type"
+  ]
+}
