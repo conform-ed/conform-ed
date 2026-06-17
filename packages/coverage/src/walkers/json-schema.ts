@@ -48,9 +48,12 @@ function getString(node: JsonSchema, key: string): string | undefined {
   return typeof v === "string" ? v : undefined;
 }
 
-/** Resolve a local `#/$defs/<Name>` (or legacy `#/definitions/<Name>`) ref. */
+/**
+ * Resolve a local definition ref to its definition name: `#/$defs/<Name>`, the legacy
+ * `#/definitions/<Name>`, or OpenAPI's `#/components/schemas/<Name>`.
+ */
 export function refDefName(ref: string): string | undefined {
-  const match = /^#\/(?:\$defs|definitions)\/(.+)$/.exec(ref);
+  const match = /^#\/(?:\$defs|definitions|components\/schemas)\/(.+)$/.exec(ref);
   if (match === null) return undefined;
   const tail = match[1];
   // Only single-segment definition refs are tracked (deep JSON-Pointer refs are rare here).

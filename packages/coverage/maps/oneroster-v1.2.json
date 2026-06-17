@@ -1,0 +1,2122 @@
+{
+  "meta": {
+    "spec": "or",
+    "version": "1.2",
+    "generatedAt": "2026-06-17",
+    "sources": [
+      {
+        "binding": "AcademicSessionDType",
+        "language": "openapi",
+        "id": "OneRoster OpenAPI (JSON) Definition v1.2",
+        "sha256": "06cafc2234ae1cdc58a2fe8ea03a8e0a5bf57d0e39830468d9adf7cc16acd26f"
+      },
+      {
+        "binding": "ClassDType",
+        "language": "openapi",
+        "id": "OneRoster OpenAPI (JSON) Definition v1.2",
+        "sha256": "06cafc2234ae1cdc58a2fe8ea03a8e0a5bf57d0e39830468d9adf7cc16acd26f"
+      },
+      {
+        "binding": "CourseDType",
+        "language": "openapi",
+        "id": "OneRoster OpenAPI (JSON) Definition v1.2",
+        "sha256": "06cafc2234ae1cdc58a2fe8ea03a8e0a5bf57d0e39830468d9adf7cc16acd26f"
+      },
+      {
+        "binding": "DemographicsDType",
+        "language": "openapi",
+        "id": "OneRoster OpenAPI (JSON) Definition v1.2",
+        "sha256": "06cafc2234ae1cdc58a2fe8ea03a8e0a5bf57d0e39830468d9adf7cc16acd26f"
+      },
+      {
+        "binding": "EnrollmentDType",
+        "language": "openapi",
+        "id": "OneRoster OpenAPI (JSON) Definition v1.2",
+        "sha256": "06cafc2234ae1cdc58a2fe8ea03a8e0a5bf57d0e39830468d9adf7cc16acd26f"
+      },
+      {
+        "binding": "OrgDType",
+        "language": "openapi",
+        "id": "OneRoster OpenAPI (JSON) Definition v1.2",
+        "sha256": "06cafc2234ae1cdc58a2fe8ea03a8e0a5bf57d0e39830468d9adf7cc16acd26f"
+      },
+      {
+        "binding": "UserDType",
+        "language": "openapi",
+        "id": "OneRoster OpenAPI (JSON) Definition v1.2",
+        "sha256": "06cafc2234ae1cdc58a2fe8ea03a8e0a5bf57d0e39830468d9adf7cc16acd26f"
+      }
+    ]
+  },
+  "items": [
+    {
+      "key": "or:1.2:def:AcademicSessionDType",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "The container for an academicSession. An academicSession represents a duration of time. Typically they are used to describe terms, grading periods, and other durations e.g. school years. Term is used to describe a period of time during which learning will take place. Other words…"
+    },
+    {
+      "key": "or:1.2:def:AcademicSessionDType/children",
+      "kind": "property",
+      "path": "children",
+      "jsonType": "array",
+      "description": "The set of links to the child AcademicSessions i.e. a set of AcademicSession 'sourcedIds'.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:AcademicSessionDType/children/[]",
+      "kind": "property",
+      "path": "children/[]"
+    },
+    {
+      "key": "or:1.2:def:AcademicSessionDType/dateLastModified",
+      "kind": "property",
+      "path": "dateLastModified",
+      "jsonType": "string",
+      "required": true,
+      "normative": true,
+      "description": "Model Primitive Datatype = DateTime. All objects MUST be annotated with the dateTime upon which they were last modified. This enables requesters to query for just the latest objects. DateTimes MUST be expressed in W3C profile of [ISO 8601] and MUST contain the UTC timezone.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:AcademicSessionDType/endDate",
+      "kind": "property",
+      "path": "endDate",
+      "jsonType": "string",
+      "required": true,
+      "description": "Model Primitive Datatype = Date. The end date for the academic session. The end date is excluded from the academic session. This is in [ISO 8601] format of 'YYYY-MM-DD'.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:AcademicSessionDType/metadata",
+      "kind": "property",
+      "path": "metadata",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:AcademicSessionDType/parent",
+      "kind": "property",
+      "path": "parent",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:AcademicSessionDType/schoolYear",
+      "kind": "property",
+      "path": "schoolYear",
+      "jsonType": "string",
+      "required": true,
+      "description": "Model Primitive Datatype = NormalizedString. The school year for the academic session. This year should include the school year end e.g. 2014. This is in the [ISO 8601] format of 'YYYY'.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:AcademicSessionDType/sourcedId",
+      "kind": "property",
+      "path": "sourcedId",
+      "jsonType": "string",
+      "required": true,
+      "normative": true,
+      "description": "Model Primitive Datatype = String. The sourcedId of the object. All objects MUST be identified by a Source Identifier. This is a GUID System ID for an object. This is the GUID that SYSTEMS will refer to when making API calls, or when needing to identify an object. It is RECOMMEN…",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:AcademicSessionDType/startDate",
+      "kind": "property",
+      "path": "startDate",
+      "jsonType": "string",
+      "required": true,
+      "description": "Model Primitive Datatype = Date. The start date for the academic session. The start date is included in the academic session. This is in [ISO 8601] format of 'YYYY-MM-DD'.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:AcademicSessionDType/status",
+      "kind": "property",
+      "path": "status",
+      "jsonType": "string",
+      "required": true,
+      "enumValues": [
+        "active",
+        "tobedeleted"
+      ],
+      "normative": true,
+      "description": "All objects MUST BE either 'active' or 'tobedeleted'. Something which is flagged 'tobedeleted' is to be considered safe to delete. Systems can delete records that are flagged as such if they wish, but they are not under any compulsion to do so. In v1.1 the enumeration value of '…",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:AcademicSessionDType/title",
+      "kind": "property",
+      "path": "title",
+      "jsonType": "string",
+      "required": true,
+      "description": "Model Primitive Datatype = NormalizedString. The title/label for the academic session.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:AcademicSessionDType/type",
+      "kind": "property",
+      "path": "type",
+      "required": true,
+      "description": "The type of academic session. This is based upon an enumerated vocabulary.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:AcademicSessionSetDType",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "This is the container for a collection of academicSessions instances for a message payload. This may be empty if no instances are found that sustain the applied query constraints. The order is not significant."
+    },
+    {
+      "key": "or:1.2:def:AcademicSessionSetDType/academicSessions",
+      "kind": "property",
+      "path": "academicSessions",
+      "jsonType": "array",
+      "description": "The collection of academicSession instances. The order is not significant. The corresponding query constraints may result in no instances being returned."
+    },
+    {
+      "key": "or:1.2:def:AcademicSessionSetDType/academicSessions/[]",
+      "kind": "property",
+      "path": "academicSessions/[]"
+    },
+    {
+      "key": "or:1.2:def:AcadSessionGUIDRefDType",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "This is the container for reference to a OneRoster 'Academic Session' object that has an allocated sourcedId (GUID)."
+    },
+    {
+      "key": "or:1.2:def:AcadSessionGUIDRefDType/href",
+      "kind": "property",
+      "path": "href",
+      "jsonType": "string",
+      "required": true,
+      "description": "Model Primitive Datatype = AnyURI. The URI for the type of object being referenced.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:AcadSessionGUIDRefDType/sourcedId",
+      "kind": "property",
+      "path": "sourcedId",
+      "jsonType": "string",
+      "required": true,
+      "description": "Model Primitive Datatype = String. The globally unique identifier of the object being referenced.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:AcadSessionGUIDRefDType/type",
+      "kind": "property",
+      "path": "type",
+      "jsonType": "string",
+      "required": true,
+      "enumValues": [
+        "academicSession"
+      ],
+      "description": "The type of object being referenced i.e. an 'academicSession'.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:ClassDType",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "A class is an instance of a course, onto which students and teachers are enrolled. A class is typically held within a term."
+    },
+    {
+      "key": "or:1.2:def:ClassDType/classCode",
+      "kind": "property",
+      "path": "classCode",
+      "jsonType": "string",
+      "description": "Model Primitive Datatype = NormalizedString. The class code.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:ClassDType/classType",
+      "kind": "property",
+      "path": "classType",
+      "description": "The type of class. This is based upon an enumerated vocabulary.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:ClassDType/course",
+      "kind": "property",
+      "path": "course",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:ClassDType/dateLastModified",
+      "kind": "property",
+      "path": "dateLastModified",
+      "jsonType": "string",
+      "required": true,
+      "normative": true,
+      "description": "Model Primitive Datatype = DateTime. All objects MUST be annotated with the dateTime upon which they were last modified. This enables requesters to query for just the latest objects. DateTimes MUST be expressed in W3C profile of [ISO 8601] and MUST contain the UTC timezone.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:ClassDType/grades",
+      "kind": "property",
+      "path": "grades",
+      "jsonType": "array",
+      "description": "Model Primitive Datatype = NormalizedString. The grade(s) who attend the class. The permitted vocabulary should be defined as part of the adoption and deployment process. See the Implementation Guide [OR-IMPL-12] for more details on how to define/use such a vocabulary.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:ClassDType/grades/[]",
+      "kind": "property",
+      "path": "grades/[]",
+      "jsonType": "string"
+    },
+    {
+      "key": "or:1.2:def:ClassDType/location",
+      "kind": "property",
+      "path": "location",
+      "jsonType": "string",
+      "description": "Model Primitive Datatype = NormalizedString. The location for the class e.g. 'Room 19'.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:ClassDType/metadata",
+      "kind": "property",
+      "path": "metadata",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:ClassDType/periods",
+      "kind": "property",
+      "path": "periods",
+      "jsonType": "array",
+      "description": "Model Primitive Datatype = NormalizedString. The time slots in the day that the class will be given. Examples are 1 or a list of 1, 3, 5, etc.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:ClassDType/periods/[]",
+      "kind": "property",
+      "path": "periods/[]",
+      "jsonType": "string"
+    },
+    {
+      "key": "or:1.2:def:ClassDType/resources",
+      "kind": "property",
+      "path": "resources",
+      "jsonType": "array",
+      "description": "The links to the set of associated resources i.e. the Resource 'sourcedIds'.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:ClassDType/resources/[]",
+      "kind": "property",
+      "path": "resources/[]"
+    },
+    {
+      "key": "or:1.2:def:ClassDType/school",
+      "kind": "property",
+      "path": "school",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:ClassDType/sourcedId",
+      "kind": "property",
+      "path": "sourcedId",
+      "jsonType": "string",
+      "required": true,
+      "normative": true,
+      "description": "Model Primitive Datatype = String. The sourcedId of the object. All objects MUST be identified by a Source Identifier. This is a GUID System ID for an object. This is the GUID that SYSTEMS will refer to when making API calls, or when needing to identify an object. It is RECOMMEN…",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:ClassDType/status",
+      "kind": "property",
+      "path": "status",
+      "jsonType": "string",
+      "required": true,
+      "enumValues": [
+        "active",
+        "tobedeleted"
+      ],
+      "normative": true,
+      "description": "All objects MUST BE either 'active' or 'tobedeleted'. Something which is flagged 'tobedeleted' is to be considered safe to delete. Systems can delete records that are flagged as such if they wish, but they are not under any compulsion to do so. In v1.1 the enumeration value of '…",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:ClassDType/subjectCodes",
+      "kind": "property",
+      "path": "subjectCodes",
+      "jsonType": "array",
+      "description": "Model Primitive Datatype = NormalizedString. This is a machine readable set of codes and the number should match the associated 'subjects' attribute. The vocabulary for this characteristic should be defined as part of the local addition of this specification (see the Implementat…",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:ClassDType/subjectCodes/[]",
+      "kind": "property",
+      "path": "subjectCodes/[]",
+      "jsonType": "string"
+    },
+    {
+      "key": "or:1.2:def:ClassDType/subjects",
+      "kind": "property",
+      "path": "subjects",
+      "jsonType": "array",
+      "description": "Model Primitive Datatype = NormalizedString. The set of subjects addressed by this class e.g. 'chemistry'.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:ClassDType/subjects/[]",
+      "kind": "property",
+      "path": "subjects/[]",
+      "jsonType": "string"
+    },
+    {
+      "key": "or:1.2:def:ClassDType/terms",
+      "kind": "property",
+      "path": "terms",
+      "jsonType": "array",
+      "required": true,
+      "description": "The links to the set of terms or semesters (academicSession) i.e. the set of 'sourcedIds' for the terms within the associated school year.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:ClassDType/terms/[]",
+      "kind": "property",
+      "path": "terms/[]"
+    },
+    {
+      "key": "or:1.2:def:ClassDType/title",
+      "kind": "property",
+      "path": "title",
+      "jsonType": "string",
+      "required": true,
+      "description": "Model Primitive Datatype = NormalizedString. The tile/label for the class.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:ClassGUIDRefDType",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "This is the container for reference to a OneRoster 'Class' object that has an allocated sourcedId (GUID)."
+    },
+    {
+      "key": "or:1.2:def:ClassGUIDRefDType/href",
+      "kind": "property",
+      "path": "href",
+      "jsonType": "string",
+      "required": true,
+      "description": "Model Primitive Datatype = AnyURI. The URI for the type of object being referenced.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:ClassGUIDRefDType/sourcedId",
+      "kind": "property",
+      "path": "sourcedId",
+      "jsonType": "string",
+      "required": true,
+      "description": "Model Primitive Datatype = String. The globally unique identifier of the object being referenced.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:ClassGUIDRefDType/type",
+      "kind": "property",
+      "path": "type",
+      "jsonType": "string",
+      "required": true,
+      "enumValues": [
+        "class"
+      ],
+      "description": "The type of object being referenced i.e. a 'class'.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:ClassSetDType",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "This is the container for a collection of classes instances for a message payload. This may be empty if no instances are found that sustain the applied query constraints. The order is not significant."
+    },
+    {
+      "key": "or:1.2:def:ClassSetDType/classes",
+      "kind": "property",
+      "path": "classes",
+      "jsonType": "array",
+      "description": "The collection of class instances. The order is not significant. The corresponding query constraints may result in no instances being returned."
+    },
+    {
+      "key": "or:1.2:def:ClassSetDType/classes/[]",
+      "kind": "property",
+      "path": "classes/[]"
+    },
+    {
+      "key": "or:1.2:def:CourseDType",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "The information about a course. A Course is a course of study that, typically, has a shared curriculum although it may be taught to different students by different teachers. It is likely that several classes of a single course may be taught in a term. For example, a school runs …"
+    },
+    {
+      "key": "or:1.2:def:CourseDType/courseCode",
+      "kind": "property",
+      "path": "courseCode",
+      "jsonType": "string",
+      "required": true,
+      "description": "Model Primitive Datatype = NormalizedString. The assigned course code.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:CourseDType/dateLastModified",
+      "kind": "property",
+      "path": "dateLastModified",
+      "jsonType": "string",
+      "required": true,
+      "normative": true,
+      "description": "Model Primitive Datatype = DateTime. All objects MUST be annotated with the dateTime upon which they were last modified. This enables requesters to query for just the latest objects. DateTimes MUST be expressed in W3C profile of [ISO 8601] and MUST contain the UTC timezone.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:CourseDType/grades",
+      "kind": "property",
+      "path": "grades",
+      "jsonType": "array",
+      "description": "Model Primitive Datatype = NormalizedString. Grade(s) for which the class is attended. The permitted vocabulary should be defined as part of the adoption and deployment process. See the Implementation Guide [OR-IMPL-12] for more details on how to define/use such a vocabulary.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:CourseDType/grades/[]",
+      "kind": "property",
+      "path": "grades/[]",
+      "jsonType": "string"
+    },
+    {
+      "key": "or:1.2:def:CourseDType/metadata",
+      "kind": "property",
+      "path": "metadata",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:CourseDType/org",
+      "kind": "property",
+      "path": "org",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:CourseDType/resources",
+      "kind": "property",
+      "path": "resources",
+      "jsonType": "array",
+      "description": "The links to the associated resources if applicable i.e. the resource 'sourcedIds'.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:CourseDType/resources/[]",
+      "kind": "property",
+      "path": "resources/[]"
+    },
+    {
+      "key": "or:1.2:def:CourseDType/schoolYear",
+      "kind": "property",
+      "path": "schoolYear",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:CourseDType/sourcedId",
+      "kind": "property",
+      "path": "sourcedId",
+      "jsonType": "string",
+      "required": true,
+      "normative": true,
+      "description": "Model Primitive Datatype = String. The sourcedId of the object. All objects MUST be identified by a Source Identifier. This is a GUID System ID for an object. This is the GUID that SYSTEMS will refer to when making API calls, or when needing to identify an object. It is RECOMMEN…",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:CourseDType/status",
+      "kind": "property",
+      "path": "status",
+      "jsonType": "string",
+      "required": true,
+      "enumValues": [
+        "active",
+        "tobedeleted"
+      ],
+      "normative": true,
+      "description": "All objects MUST BE either 'active' or 'tobedeleted'. Something which is flagged 'tobedeleted' is to be considered safe to delete. Systems can delete records that are flagged as such if they wish, but they are not under any compulsion to do so. In v1.1 the enumeration value of '…",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:CourseDType/subjectCodes",
+      "kind": "property",
+      "path": "subjectCodes",
+      "jsonType": "array",
+      "description": "Model Primitive Datatype = NormalizedString. This is a machine readable set of codes and the number should match the associated 'subjects' attribute. The vocabulary for this characteristic should be defined as part of the local addition of this specification (see the Implementat…",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:CourseDType/subjectCodes/[]",
+      "kind": "property",
+      "path": "subjectCodes/[]",
+      "jsonType": "string"
+    },
+    {
+      "key": "or:1.2:def:CourseDType/subjects",
+      "kind": "property",
+      "path": "subjects",
+      "jsonType": "array",
+      "description": "Model Primitive Datatype = NormalizedString. The set of subjects addresse by this course. This is a set of human readable strings.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:CourseDType/subjects/[]",
+      "kind": "property",
+      "path": "subjects/[]",
+      "jsonType": "string"
+    },
+    {
+      "key": "or:1.2:def:CourseDType/title",
+      "kind": "property",
+      "path": "title",
+      "jsonType": "string",
+      "required": true,
+      "description": "Model Primitive Datatype = NormalizedString. The title of the course.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:CourseGUIDRefDType",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "This is the container for reference to a OneRoster 'Course' object that has an allocated sourcedId (GUID)."
+    },
+    {
+      "key": "or:1.2:def:CourseGUIDRefDType/href",
+      "kind": "property",
+      "path": "href",
+      "jsonType": "string",
+      "required": true,
+      "description": "Model Primitive Datatype = AnyURI. The URI for the type of object being referenced.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:CourseGUIDRefDType/sourcedId",
+      "kind": "property",
+      "path": "sourcedId",
+      "jsonType": "string",
+      "required": true,
+      "description": "Model Primitive Datatype = String. The globally unique identifier of the object being referenced.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:CourseGUIDRefDType/type",
+      "kind": "property",
+      "path": "type",
+      "jsonType": "string",
+      "required": true,
+      "enumValues": [
+        "course"
+      ],
+      "description": "The type of object being referenced i.e. a 'course'.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:CourseSetDType",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "This is the container for a collection of courses instances for a message payload. This may be empty if no instances are found that sustain the applied query constraints. The order is not significant."
+    },
+    {
+      "key": "or:1.2:def:CourseSetDType/courses",
+      "kind": "property",
+      "path": "courses",
+      "jsonType": "array",
+      "description": "The collection of course instances. The order is not significant. The corresponding query constraints may result in no instances being returned."
+    },
+    {
+      "key": "or:1.2:def:CourseSetDType/courses/[]",
+      "kind": "property",
+      "path": "courses/[]"
+    },
+    {
+      "key": "or:1.2:def:CredentialDType",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "The container for a single set of credentials for an account."
+    },
+    {
+      "key": "or:1.2:def:CredentialDType/password",
+      "kind": "property",
+      "path": "password",
+      "jsonType": "string",
+      "description": "Model Primitive Datatype = String. The password in this set of credentials. Care should be taken to ensure that no unencrypted value is revealed.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:CredentialDType/type",
+      "kind": "property",
+      "path": "type",
+      "jsonType": "string",
+      "required": true,
+      "description": "Model Primitive Datatype = String. The type of credentials for the profile. This should be indicative of when this specific credential should be used.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:CredentialDType/username",
+      "kind": "property",
+      "path": "username",
+      "jsonType": "string",
+      "required": true,
+      "description": "Model Primitive Datatype = NormalizedString. The username.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:DemographicsDType",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "Demographics information is taken from the Common Educational Data Standards (CEDS) from the US government. (http://ceds.ed.gov). Note that demographics data is held in its own service, and that access to this service is considered privileged. Not all consumer keys will be able …"
+    },
+    {
+      "key": "or:1.2:def:DemographicsDType/americanIndianOrAlaskaNative",
+      "kind": "property",
+      "path": "americanIndianOrAlaskaNative",
+      "jsonType": "string",
+      "enumValues": [
+        "true",
+        "false"
+      ],
+      "description": "Identification of whether or not the user is an American Indian or Alaska Native ethnicity.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:DemographicsDType/asian",
+      "kind": "property",
+      "path": "asian",
+      "jsonType": "string",
+      "enumValues": [
+        "true",
+        "false"
+      ],
+      "description": "Identification of whether or not the user is of Asian ethnicity.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:DemographicsDType/birthDate",
+      "kind": "property",
+      "path": "birthDate",
+      "jsonType": "string",
+      "description": "Model Primitive Datatype = Date. the date of birth. The format is [ISO 8601] of 'YYYY-MM-DD'.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:DemographicsDType/blackOrAfricanAmerican",
+      "kind": "property",
+      "path": "blackOrAfricanAmerican",
+      "jsonType": "string",
+      "enumValues": [
+        "true",
+        "false"
+      ],
+      "description": "Identification of whether or not the user is black or African American ethnicity.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:DemographicsDType/cityOfBirth",
+      "kind": "property",
+      "path": "cityOfBirth",
+      "jsonType": "string",
+      "description": "Model Primitive Datatype = NormalizedString. The name of the city in which the user was born.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:DemographicsDType/countryOfBirthCode",
+      "kind": "property",
+      "path": "countryOfBirthCode",
+      "jsonType": "string",
+      "description": "Model Primitive Datatype = NormalizedString. The country of birth code. The permitted vocabulary should be defined as part of the adoption and deployment process. See the Implementation Guide [OR-IMPL-12] for more details on how to define/use such a vocabulary.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:DemographicsDType/dateLastModified",
+      "kind": "property",
+      "path": "dateLastModified",
+      "jsonType": "string",
+      "required": true,
+      "normative": true,
+      "description": "Model Primitive Datatype = DateTime. All objects MUST be annotated with the dateTime upon which they were last modified. This enables requesters to query for just the latest objects. DateTimes MUST be expressed in W3C profile of [ISO 8601] and MUST contain the UTC timezone.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:DemographicsDType/demographicRaceTwoOrMoreRaces",
+      "kind": "property",
+      "path": "demographicRaceTwoOrMoreRaces",
+      "jsonType": "string",
+      "enumValues": [
+        "true",
+        "false"
+      ],
+      "description": "Identification of whether or not the user has a demographic of two or more race ethnicities.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:DemographicsDType/hispanicOrLatinoEthnicity",
+      "kind": "property",
+      "path": "hispanicOrLatinoEthnicity",
+      "jsonType": "string",
+      "enumValues": [
+        "true",
+        "false"
+      ],
+      "description": "Identification of whether or not the user is Hispanic or of Latino ethnicity.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:DemographicsDType/metadata",
+      "kind": "property",
+      "path": "metadata",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:DemographicsDType/nativeHawaiianOrOtherPacificIslander",
+      "kind": "property",
+      "path": "nativeHawaiianOrOtherPacificIslander",
+      "jsonType": "string",
+      "enumValues": [
+        "true",
+        "false"
+      ],
+      "description": "Identification of whether or not the user is Native Hawaiian or Other Pacific Islander ethnicity.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:DemographicsDType/publicSchoolResidenceStatus",
+      "kind": "property",
+      "path": "publicSchoolResidenceStatus",
+      "jsonType": "string",
+      "description": "Model Primitive Datatype = NormalizedString. An indication of the location of a person's legal residence relative to (within or outside) the boundaries of the public school attended and its administrative unit. The permitted vocabulary should be defined as part of the adoption a…",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:DemographicsDType/sex",
+      "kind": "property",
+      "path": "sex",
+      "description": "The sex of the individual. The permitted values are from an enumerated list.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:DemographicsDType/sourcedId",
+      "kind": "property",
+      "path": "sourcedId",
+      "jsonType": "string",
+      "required": true,
+      "normative": true,
+      "description": "Model Primitive Datatype = String. The sourcedId of the object. All objects MUST be identified by a Source Identifier. This is a GUID System ID for an object. This is the GUID that SYSTEMS will refer to when making API calls, or when needing to identify an object. It is RECOMMEN…",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:DemographicsDType/stateOfBirthAbbreviation",
+      "kind": "property",
+      "path": "stateOfBirthAbbreviation",
+      "jsonType": "string",
+      "description": "Model Primitive Datatype = NormalizedString. The abbreviation for the name of the state (within the United States) or extra-state jurisdiction in which a person was born. The permitted vocabulary should be defined as part of the adoption and deployment process. See the Implement…",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:DemographicsDType/status",
+      "kind": "property",
+      "path": "status",
+      "jsonType": "string",
+      "required": true,
+      "enumValues": [
+        "active",
+        "tobedeleted"
+      ],
+      "normative": true,
+      "description": "All objects MUST BE either 'active' or 'tobedeleted'. Something which is flagged 'tobedeleted' is to be considered safe to delete. Systems can delete records that are flagged as such if they wish, but they are not under any compulsion to do so. In v1.1 the enumeration value of '…",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:DemographicsDType/white",
+      "kind": "property",
+      "path": "white",
+      "jsonType": "string",
+      "enumValues": [
+        "true",
+        "false"
+      ],
+      "description": "Identification of whether or not the user is of white ethnicity.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:DemographicsSetDType",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "This is the container for a collection of demographics instances for a message payload. This may be empty if no instances are found that sustain the applied query constraints. The order is not significant."
+    },
+    {
+      "key": "or:1.2:def:DemographicsSetDType/demographics",
+      "kind": "property",
+      "path": "demographics",
+      "jsonType": "array",
+      "description": "The collection of demographics instances. The order is not significant. The corresponding query constraints may result in no instances being returned."
+    },
+    {
+      "key": "or:1.2:def:DemographicsSetDType/demographics/[]",
+      "kind": "property",
+      "path": "demographics/[]"
+    },
+    {
+      "key": "or:1.2:def:EnrollmentDType",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "An enrollment is the name given to an individual taking part in a class. In the vast majority of cases, users will be students learning in a class, or teachers teaching the class. Other roles are also possible."
+    },
+    {
+      "key": "or:1.2:def:EnrollmentDType/beginDate",
+      "kind": "property",
+      "path": "beginDate",
+      "jsonType": "string",
+      "description": "Model Primitive Datatype = Date. The start date for the enrollment (inclusive). This date must be within the period of the associated Academic Session for the class (Term/Semester/SchoolYear). Use the [ISO 8601] format of 'YYYY-MM-DD'.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:EnrollmentDType/class",
+      "kind": "property",
+      "path": "class",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:EnrollmentDType/dateLastModified",
+      "kind": "property",
+      "path": "dateLastModified",
+      "jsonType": "string",
+      "required": true,
+      "normative": true,
+      "description": "Model Primitive Datatype = DateTime. All objects MUST be annotated with the dateTime upon which they were last modified. This enables requesters to query for just the latest objects. DateTimes MUST be expressed in W3C profile of [ISO 8601] and MUST contain the UTC timezone.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:EnrollmentDType/endDate",
+      "kind": "property",
+      "path": "endDate",
+      "jsonType": "string",
+      "description": "Model Primitive Datatype = Date. The end date for the enrollment (exclusive). This date must be within the period of the associated Academic Session for the class (Term/Semester/SchoolYear). Use the [ISO 8601] format of 'YYYY-MM-DD'.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:EnrollmentDType/metadata",
+      "kind": "property",
+      "path": "metadata",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:EnrollmentDType/primary",
+      "kind": "property",
+      "path": "primary",
+      "jsonType": "string",
+      "enumValues": [
+        "true",
+        "false"
+      ],
+      "description": "Applicable only to teachers. Only one teacher should be designated as the primary teacher for a class (this value set as 'true') in the period defined by the begin/end dates.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:EnrollmentDType/role",
+      "kind": "property",
+      "path": "role",
+      "required": true,
+      "description": "The role of the user for this class in the school e.g teacher, student, etc. This is from an enumerated vocabulary.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:EnrollmentDType/school",
+      "kind": "property",
+      "path": "school",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:EnrollmentDType/sourcedId",
+      "kind": "property",
+      "path": "sourcedId",
+      "jsonType": "string",
+      "required": true,
+      "normative": true,
+      "description": "Model Primitive Datatype = String. The sourcedId of the object. All objects MUST be identified by a Source Identifier. This is a GUID System ID for an object. This is the GUID that SYSTEMS will refer to when making API calls, or when needing to identify an object. It is RECOMMEN…",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:EnrollmentDType/status",
+      "kind": "property",
+      "path": "status",
+      "jsonType": "string",
+      "required": true,
+      "enumValues": [
+        "active",
+        "tobedeleted"
+      ],
+      "normative": true,
+      "description": "All objects MUST BE either 'active' or 'tobedeleted'. Something which is flagged 'tobedeleted' is to be considered safe to delete. Systems can delete records that are flagged as such if they wish, but they are not under any compulsion to do so. In v1.1 the enumeration value of '…",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:EnrollmentDType/user",
+      "kind": "property",
+      "path": "user",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:EnrollmentSetDType",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "This is the container for a collection of enrollment instances for a message payload. This may be empty if no instances are found that sustain the applied query constraints. The order is not significant."
+    },
+    {
+      "key": "or:1.2:def:EnrollmentSetDType/enrollments",
+      "kind": "property",
+      "path": "enrollments",
+      "jsonType": "array",
+      "description": "The collection of enrollment instances. The order is not significant. The corresponding query constraints may result in no instances being returned."
+    },
+    {
+      "key": "or:1.2:def:EnrollmentSetDType/enrollments/[]",
+      "kind": "property",
+      "path": "enrollments/[]"
+    },
+    {
+      "key": "or:1.2:def:imsx_CodeMinorDType",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "This is the container for the set of code minor status codes reported in the responses from the Service Provider."
+    },
+    {
+      "key": "or:1.2:def:imsx_CodeMinorDType/imsx_codeMinorField",
+      "kind": "property",
+      "path": "imsx_codeMinorField",
+      "jsonType": "array",
+      "required": true,
+      "description": "Each reported code minor status code."
+    },
+    {
+      "key": "or:1.2:def:imsx_CodeMinorDType/imsx_codeMinorField/[]",
+      "kind": "property",
+      "path": "imsx_codeMinorField/[]"
+    },
+    {
+      "key": "or:1.2:def:imsx_CodeMinorFieldDType",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "This is the container for a single code minor status code."
+    },
+    {
+      "key": "or:1.2:def:imsx_CodeMinorFieldDType/imsx_codeMinorFieldName",
+      "kind": "property",
+      "path": "imsx_codeMinorFieldName",
+      "jsonType": "string",
+      "required": true,
+      "description": "Model Primitive Datatype = NormalizedString. This should contain the identity of the system that has produced the code minor status code report. In most cases this will be the target service provider denoted as 'TargetEndSystem'."
+    },
+    {
+      "key": "or:1.2:def:imsx_CodeMinorFieldDType/imsx_codeMinorFieldValue",
+      "kind": "property",
+      "path": "imsx_codeMinorFieldValue",
+      "jsonType": "string",
+      "required": true,
+      "enumValues": [
+        "fullsuccess",
+        "invalid_filter_field",
+        "invalid_selection_field",
+        "invaliddata",
+        "unauthorisedrequest",
+        "forbidden",
+        "server_busy",
+        "unknownobject",
+        "internal_server_error"
+      ],
+      "description": "The code minor status code (this is a value from the corresponding enumerated vocabulary)."
+    },
+    {
+      "key": "or:1.2:def:imsx_StatusInfoDType",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "This is the container for the status code and associated information returned within the HTTP messages received from the Service Provider. For the OneRoster Rostering service this object will only be returned to provide information about a failed request i.e. it will NOT be in t…"
+    },
+    {
+      "key": "or:1.2:def:imsx_StatusInfoDType/imsx_codeMajor",
+      "kind": "property",
+      "path": "imsx_codeMajor",
+      "jsonType": "string",
+      "required": true,
+      "enumValues": [
+        "success",
+        "processing",
+        "failure",
+        "unsupported"
+      ],
+      "description": "The code major value (from the corresponding enumerated vocabulary). See Appendix B for further information on the interpretation of this set of codes. The permitted vocabulary for the values for the CodeMajor field."
+    },
+    {
+      "key": "or:1.2:def:imsx_StatusInfoDType/imsx_CodeMinor",
+      "kind": "property",
+      "path": "imsx_CodeMinor"
+    },
+    {
+      "key": "or:1.2:def:imsx_StatusInfoDType/imsx_description",
+      "kind": "property",
+      "path": "imsx_description",
+      "jsonType": "string",
+      "description": "Model Primitive Datatype = String. A human readable description supplied by the entity creating the status code information."
+    },
+    {
+      "key": "or:1.2:def:imsx_StatusInfoDType/imsx_severity",
+      "kind": "property",
+      "path": "imsx_severity",
+      "jsonType": "string",
+      "required": true,
+      "enumValues": [
+        "status",
+        "warning",
+        "error"
+      ],
+      "description": "The severity value (from the corresponding enumerated vocabulary). See Appendix B for further information on the interpretation of this set of codes."
+    },
+    {
+      "key": "or:1.2:def:MetadataDType",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "The container for the proprietary extensions."
+    },
+    {
+      "key": "or:1.2:def:OrgDType",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "ORG is defined here as a structure for holding organizational information. An ORG might be a school, or it might be a local, statewide, or national entity. ORGs will typically have a parent ORG (up to the national level), and children, allowing a hierarchy to be established. Sch…"
+    },
+    {
+      "key": "or:1.2:def:OrgDType/children",
+      "kind": "property",
+      "path": "children",
+      "jsonType": "array",
+      "description": "The 'sourcedIds' for the set of child organizations.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:OrgDType/children/[]",
+      "kind": "property",
+      "path": "children/[]"
+    },
+    {
+      "key": "or:1.2:def:OrgDType/dateLastModified",
+      "kind": "property",
+      "path": "dateLastModified",
+      "jsonType": "string",
+      "required": true,
+      "normative": true,
+      "description": "Model Primitive Datatype = DateTime. All objects MUST be annotated with the dateTime upon which they were last modified. This enables requesters to query for just the latest objects. DateTimes MUST be expressed in W3C profile of [ISO 8601] and MUST contain the UTC timezone.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:OrgDType/identifier",
+      "kind": "property",
+      "path": "identifier",
+      "jsonType": "string",
+      "required": true,
+      "description": "Model Primitive Datatype = String. Human readable identifier for this org e.g. NCES ID.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:OrgDType/metadata",
+      "kind": "property",
+      "path": "metadata",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:OrgDType/name",
+      "kind": "property",
+      "path": "name",
+      "jsonType": "string",
+      "required": true,
+      "description": "Model Primitive Datatype = NormalizedString. The name of the organization.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:OrgDType/parent",
+      "kind": "property",
+      "path": "parent",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:OrgDType/sourcedId",
+      "kind": "property",
+      "path": "sourcedId",
+      "jsonType": "string",
+      "required": true,
+      "normative": true,
+      "description": "Model Primitive Datatype = String. The sourcedId of the object. All objects MUST be identified by a Source Identifier. This is a GUID System ID for an object. This is the GUID that SYSTEMS will refer to when making API calls, or when needing to identify an object. It is RECOMMEN…",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:OrgDType/status",
+      "kind": "property",
+      "path": "status",
+      "jsonType": "string",
+      "required": true,
+      "enumValues": [
+        "active",
+        "tobedeleted"
+      ],
+      "normative": true,
+      "description": "All objects MUST BE either 'active' or 'tobedeleted'. Something which is flagged 'tobedeleted' is to be considered safe to delete. Systems can delete records that are flagged as such if they wish, but they are not under any compulsion to do so. In v1.1 the enumeration value of '…",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:OrgDType/type",
+      "kind": "property",
+      "path": "type",
+      "required": true,
+      "description": "The type of organization. This uses a predefined vocabulary.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:OrgGUIDRefDType",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "This is the container for reference to a OneRoster 'Org' object that has an allocated sourcedId (GUID)."
+    },
+    {
+      "key": "or:1.2:def:OrgGUIDRefDType/href",
+      "kind": "property",
+      "path": "href",
+      "jsonType": "string",
+      "required": true,
+      "description": "Model Primitive Datatype = AnyURI. The URI for the type of object being referenced.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:OrgGUIDRefDType/sourcedId",
+      "kind": "property",
+      "path": "sourcedId",
+      "jsonType": "string",
+      "required": true,
+      "description": "Model Primitive Datatype = String. The globally unique identifier of the object being referenced.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:OrgGUIDRefDType/type",
+      "kind": "property",
+      "path": "type",
+      "jsonType": "string",
+      "required": true,
+      "enumValues": [
+        "org"
+      ],
+      "description": "The type of object being referenced i.e. an 'org'.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:OrgSetDType",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "This is the container for a collection of org instances for a message payload. This may be empty if no instances are found that sustain the applied query constraints. The order is not significant."
+    },
+    {
+      "key": "or:1.2:def:OrgSetDType/orgs",
+      "kind": "property",
+      "path": "orgs",
+      "jsonType": "array",
+      "description": "The collection of org instances. The order is not significant. The corresponding query constraints may result in no instances being returned."
+    },
+    {
+      "key": "or:1.2:def:OrgSetDType/orgs/[]",
+      "kind": "property",
+      "path": "orgs/[]"
+    },
+    {
+      "key": "or:1.2:def:ResourceGUIDRefDType",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "This is the container for reference to a OneRoster 'Resourse' object that has an allocated sourcedId (GUID)."
+    },
+    {
+      "key": "or:1.2:def:ResourceGUIDRefDType/href",
+      "kind": "property",
+      "path": "href",
+      "jsonType": "string",
+      "required": true,
+      "description": "Model Primitive Datatype = AnyURI. The URI for the type of object being referenced.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:ResourceGUIDRefDType/sourcedId",
+      "kind": "property",
+      "path": "sourcedId",
+      "jsonType": "string",
+      "required": true,
+      "description": "Model Primitive Datatype = String. The globally unique identifier of the object being referenced.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:ResourceGUIDRefDType/type",
+      "kind": "property",
+      "path": "type",
+      "jsonType": "string",
+      "required": true,
+      "enumValues": [
+        "resource"
+      ],
+      "description": "The type of object being referenced i.e. a 'resource'.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:RoleDType",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "The container for one mapping between a role and an org for the user."
+    },
+    {
+      "key": "or:1.2:def:RoleDType/beginDate",
+      "kind": "property",
+      "path": "beginDate",
+      "jsonType": "string",
+      "description": "Model Primitive Datatype = Date. The start date on which the role becomes active (inclusive).",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:RoleDType/endDate",
+      "kind": "property",
+      "path": "endDate",
+      "jsonType": "string",
+      "description": "Model Primitive Datatype = Date. The end date on which the role becomes inactive (exclusive).",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:RoleDType/org",
+      "kind": "property",
+      "path": "org",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:RoleDType/role",
+      "kind": "property",
+      "path": "role",
+      "required": true,
+      "description": "The role of the user in the org. The permitted values are from an enumerated list.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:RoleDType/roleType",
+      "kind": "property",
+      "path": "roleType",
+      "jsonType": "string",
+      "required": true,
+      "enumValues": [
+        "primary",
+        "secondary"
+      ],
+      "normative": true,
+      "description": "Indicates if this role is the primary or secondary role for that org. There MUST be one, and only one, primary role for each org.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:RoleDType/userProfile",
+      "kind": "property",
+      "path": "userProfile",
+      "jsonType": "string",
+      "description": "Model Primitive Datatype = AnyURI. The identifier for the system/tool/app access account that is relevant to this role in the org. The equivalent UserProfile should exist with a 'profileId' equal to this identifier value.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:SingleAcademicSessionDType",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "This is the container for a single academicSession instance for a message payload."
+    },
+    {
+      "key": "or:1.2:def:SingleAcademicSessionDType/academicSession",
+      "kind": "property",
+      "path": "academicSession",
+      "required": true
+    },
+    {
+      "key": "or:1.2:def:SingleClassDType",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "This is the container for a single class instance for a message payload."
+    },
+    {
+      "key": "or:1.2:def:SingleClassDType/class",
+      "kind": "property",
+      "path": "class",
+      "required": true
+    },
+    {
+      "key": "or:1.2:def:SingleCourseDType",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "This is the container for a single course instance for a message payload."
+    },
+    {
+      "key": "or:1.2:def:SingleCourseDType/course",
+      "kind": "property",
+      "path": "course",
+      "required": true
+    },
+    {
+      "key": "or:1.2:def:SingleDemographicsDType",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "This is the container for a single demographics instance for a message payload."
+    },
+    {
+      "key": "or:1.2:def:SingleDemographicsDType/demographics",
+      "kind": "property",
+      "path": "demographics",
+      "required": true
+    },
+    {
+      "key": "or:1.2:def:SingleEnrollmentDType",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "This is the container for a single enrollment instance for a message payload."
+    },
+    {
+      "key": "or:1.2:def:SingleEnrollmentDType/enrollment",
+      "kind": "property",
+      "path": "enrollment",
+      "required": true
+    },
+    {
+      "key": "or:1.2:def:SingleOrgDType",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "This is the container for a single org instance for a message payload."
+    },
+    {
+      "key": "or:1.2:def:SingleOrgDType/org",
+      "kind": "property",
+      "path": "org",
+      "required": true
+    },
+    {
+      "key": "or:1.2:def:SingleUserDType",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "This is the container for a single user instance for a message payload."
+    },
+    {
+      "key": "or:1.2:def:SingleUserDType/user",
+      "kind": "property",
+      "path": "user",
+      "required": true
+    },
+    {
+      "key": "or:1.2:def:UserDType",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "normative": true,
+      "description": "Users, Teachers and Students are human beings that are teaching or studying in a class respectively. A single User class is used to represent both teachers and students and a role property is used to distinguish a user's natural role.Humans may have relationships with other huma…"
+    },
+    {
+      "key": "or:1.2:def:UserDType/agents",
+      "kind": "property",
+      "path": "agents",
+      "jsonType": "array",
+      "description": "The links to other people i.e. User 'sourcedIds'.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:UserDType/agents/[]",
+      "kind": "property",
+      "path": "agents/[]"
+    },
+    {
+      "key": "or:1.2:def:UserDType/dateLastModified",
+      "kind": "property",
+      "path": "dateLastModified",
+      "jsonType": "string",
+      "required": true,
+      "normative": true,
+      "description": "Model Primitive Datatype = DateTime. All objects MUST be annotated with the dateTime upon which they were last modified. This enables requesters to query for just the latest objects. DateTimes MUST be expressed in W3C profile of [ISO 8601] and MUST contain the UTC timezone.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:UserDType/email",
+      "kind": "property",
+      "path": "email",
+      "jsonType": "string",
+      "description": "Model Primitive Datatype = NormalizedString. The email address for the user.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:UserDType/enabledUser",
+      "kind": "property",
+      "path": "enabledUser",
+      "jsonType": "string",
+      "required": true,
+      "enumValues": [
+        "true",
+        "false"
+      ],
+      "description": "This is used to determine whether or not the record is active in the local system. 'false' denotes that the record is active but system access is curtailed according to the local administration rules.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:UserDType/familyName",
+      "kind": "property",
+      "path": "familyName",
+      "jsonType": "string",
+      "required": true,
+      "description": "Model Primitive Datatype = NormalizedString. The family name. Also, known as the last name.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:UserDType/givenName",
+      "kind": "property",
+      "path": "givenName",
+      "jsonType": "string",
+      "required": true,
+      "description": "Model Primitive Datatype = NormalizedString. The given name. Also, known as the first name.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:UserDType/grades",
+      "kind": "property",
+      "path": "grades",
+      "jsonType": "array",
+      "description": "Model Primitive Datatype = NormalizedString. Grade(s) for which a user with role 'student' is enrolled. The permitted vocabulary should be defined as part of the adoption and deployment process. See the Implementation Guide [OR-IMPL-12] for more details on how to define/use such…",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:UserDType/grades/[]",
+      "kind": "property",
+      "path": "grades/[]",
+      "jsonType": "string"
+    },
+    {
+      "key": "or:1.2:def:UserDType/identifier",
+      "kind": "property",
+      "path": "identifier",
+      "jsonType": "string",
+      "description": "Model Primitive Datatype = String. An identifier for the user. NOTE - This characteristic is kept for backwards compatibility with OneRoster 1.1/1.0. The 'userIds' characteristic SHOULD be used instead.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:UserDType/metadata",
+      "kind": "property",
+      "path": "metadata",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:UserDType/middleName",
+      "kind": "property",
+      "path": "middleName",
+      "jsonType": "string",
+      "description": "Model Primitive Datatype = NormalizedString. The set of middle names. If more than one middle name is needed separate using a space e.g. 'Wingarde Granville'.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:UserDType/password",
+      "kind": "property",
+      "path": "password",
+      "jsonType": "string",
+      "description": "Model Primitive Datatype = String. A top-level password for the user. Care should be taken when using this field and the password SHOULD be encrypted.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:UserDType/phone",
+      "kind": "property",
+      "path": "phone",
+      "jsonType": "string",
+      "description": "Model Primitive Datatype = NormalizedString. The phone number for the user.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:UserDType/preferredFirstName",
+      "kind": "property",
+      "path": "preferredFirstName",
+      "jsonType": "string",
+      "description": "Model Primitive Datatype = NormalizedString. The user's preferred first name. This attribute was added in version 1.2.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:UserDType/preferredLastName",
+      "kind": "property",
+      "path": "preferredLastName",
+      "jsonType": "string",
+      "description": "Model Primitive Datatype = NormalizedString. The user's preferred last name. This attribute was added in version 1.2.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:UserDType/preferredMiddleName",
+      "kind": "property",
+      "path": "preferredMiddleName",
+      "jsonType": "string",
+      "description": "Model Primitive Datatype = NormalizedString. The user's preferred middle name(s). This attribute was added in version 1.2.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:UserDType/primaryOrg",
+      "kind": "property",
+      "path": "primaryOrg",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:UserDType/pronouns",
+      "kind": "property",
+      "path": "pronouns",
+      "jsonType": "string",
+      "description": "Model Primitive Datatype = NormalizedString. The pronoun(s) by which this person is referenced. Examples (in the case of English) include 'she/her/hers', 'he/him/his', 'they/them/theirs', 'ze/hir/hir', 'xe/xir', or a statement that the person's name should be used instead of any…",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:UserDType/resources",
+      "kind": "property",
+      "path": "resources",
+      "jsonType": "array",
+      "description": "The identifiers (GUIDs) for the set of resources that are to be made available to the user. These are the sourcedIds that should be used for obtaining the metadata about the resources using the OR 1.2 Resources Service [OR-RES-SM-12].",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:UserDType/resources/[]",
+      "kind": "property",
+      "path": "resources/[]"
+    },
+    {
+      "key": "or:1.2:def:UserDType/roles",
+      "kind": "property",
+      "path": "roles",
+      "jsonType": "array",
+      "required": true,
+      "description": "The set of roles for each of the orgs to which the user is affilliated. This is expressed as a set of role/org tuples.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:UserDType/roles/[]",
+      "kind": "property",
+      "path": "roles/[]"
+    },
+    {
+      "key": "or:1.2:def:UserDType/sms",
+      "kind": "property",
+      "path": "sms",
+      "jsonType": "string",
+      "description": "Model Primitive Datatype = NormalizedString. The SMS number for the user.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:UserDType/sourcedId",
+      "kind": "property",
+      "path": "sourcedId",
+      "jsonType": "string",
+      "required": true,
+      "normative": true,
+      "description": "Model Primitive Datatype = String. The sourcedId of the object. All objects MUST be identified by a Source Identifier. This is a GUID System ID for an object. This is the GUID that SYSTEMS will refer to when making API calls, or when needing to identify an object. It is RECOMMEN…",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:UserDType/status",
+      "kind": "property",
+      "path": "status",
+      "jsonType": "string",
+      "required": true,
+      "enumValues": [
+        "active",
+        "tobedeleted"
+      ],
+      "normative": true,
+      "description": "All objects MUST BE either 'active' or 'tobedeleted'. Something which is flagged 'tobedeleted' is to be considered safe to delete. Systems can delete records that are flagged as such if they wish, but they are not under any compulsion to do so. In v1.1 the enumeration value of '…",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:UserDType/userIds",
+      "kind": "property",
+      "path": "userIds",
+      "jsonType": "array",
+      "description": "The set of external user identifiers that should be used for this user, if for some reason the sourcedId cannot be used. This might be an active directory id, an LTI id, or some other machine-readable identifier that is used for this person.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:UserDType/userIds/[]",
+      "kind": "property",
+      "path": "userIds/[]"
+    },
+    {
+      "key": "or:1.2:def:UserDType/userMasterIdentifier",
+      "kind": "property",
+      "path": "userMasterIdentifier",
+      "jsonType": "string",
+      "description": "Model Primitive Datatype = NormalizedString. The master unique identifier for this user. This is NOT the same as the user's interoperability 'sourcedId'. This should be used to ensure that all of the system identifiers/accounts etc. can be reconciled to the same user. How this i…",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:UserDType/username",
+      "kind": "property",
+      "path": "username",
+      "jsonType": "string",
+      "description": "Model Primitive Datatype = NormalizedString. The user name assigned to the user. NOTE - This has been kept for backwards compatibility with OneRoster 1.1 and the new 'userProfiles' characteristic SHOULD be used instead.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:UserDType/userProfiles",
+      "kind": "property",
+      "path": "userProfiles",
+      "jsonType": "array",
+      "description": "The set of system/app/tool profiles for the user.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:UserDType/userProfiles/[]",
+      "kind": "property",
+      "path": "userProfiles/[]"
+    },
+    {
+      "key": "or:1.2:def:UserGUIDRefDType",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "This is the container for reference to a OneRoster 'User' object that has an allocated sourcedId (GUID)."
+    },
+    {
+      "key": "or:1.2:def:UserGUIDRefDType/href",
+      "kind": "property",
+      "path": "href",
+      "jsonType": "string",
+      "required": true,
+      "description": "Model Primitive Datatype = AnyURI. The URI for the type of object being referenced.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:UserGUIDRefDType/sourcedId",
+      "kind": "property",
+      "path": "sourcedId",
+      "jsonType": "string",
+      "required": true,
+      "description": "Model Primitive Datatype = String. The globally unique identifier of the object being referenced.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:UserGUIDRefDType/type",
+      "kind": "property",
+      "path": "type",
+      "jsonType": "string",
+      "required": true,
+      "enumValues": [
+        "user"
+      ],
+      "description": "The type of object being referenced i.e. a 'user'.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:UserIdDType",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "This is the set of external user identifiers that should be used for this user, if for some reason the sourcedId cannot be used. This might be an active directory id, an LTI id, or some other machine-readable identifier that is used for this person."
+    },
+    {
+      "key": "or:1.2:def:UserIdDType/identifier",
+      "kind": "property",
+      "path": "identifier",
+      "jsonType": "string",
+      "required": true,
+      "description": "Model Primitive Datatype = String. The user identifier.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:UserIdDType/type",
+      "kind": "property",
+      "path": "type",
+      "jsonType": "string",
+      "required": true,
+      "description": "Model Primitive Datatype = NormalizedString. The type of identifier. This is no predefined vocabuary.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:UserProfileDType",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "The container for the information about a User Profile that will provide the user with access to some system, application, tool, etc."
+    },
+    {
+      "key": "or:1.2:def:UserProfileDType/applicationId",
+      "kind": "property",
+      "path": "applicationId",
+      "jsonType": "string",
+      "description": "Model Primitive Datatype = NormalizedString. Identifier for the application associated with the account. The nature, and how this identifier is assigned is not defined by this specification. This may have a value of 'default' to denote this account should be used for default acc…",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:UserProfileDType/credentials",
+      "kind": "property",
+      "path": "credentials",
+      "jsonType": "array",
+      "description": "The set of credentials that are available for access to this profile.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:UserProfileDType/credentials/[]",
+      "kind": "property",
+      "path": "credentials/[]"
+    },
+    {
+      "key": "or:1.2:def:UserProfileDType/description",
+      "kind": "property",
+      "path": "description",
+      "jsonType": "string",
+      "description": "Model Primitive Datatype = String. A human readable description of the use of the profile. This should not contain any security information for access to the account.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:UserProfileDType/profileId",
+      "kind": "property",
+      "path": "profileId",
+      "jsonType": "string",
+      "required": true,
+      "description": "Model Primitive Datatype = AnyURI. The unique identifier for the profile. This does not need to be a globally unique identifier but it must be unique within the scope of the user.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:UserProfileDType/profileType",
+      "kind": "property",
+      "path": "profileType",
+      "jsonType": "string",
+      "required": true,
+      "description": "Model Primitive Datatype = NormalizedString. The type of profile. This should be a human readable label that has some significance in the context of the related system, app, tool, etc.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:UserProfileDType/vendorId",
+      "kind": "property",
+      "path": "vendorId",
+      "jsonType": "string",
+      "required": true,
+      "description": "Model Primitive Datatype = NormalizedString. The unique identifier for the vendor of the system, tool, app, etc. which requires the use of this profile.",
+      "modelled": "yes"
+    },
+    {
+      "key": "or:1.2:def:UserSetDType",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "This is the container for a collection of user instances for a message payload. This may be empty if no instances are found that sustain the applied query constraints. The order is not significant."
+    },
+    {
+      "key": "or:1.2:def:UserSetDType/users",
+      "kind": "property",
+      "path": "users",
+      "jsonType": "array",
+      "description": "The collection of user instances. The order is not significant. The corresponding query constraints may result in no instances being returned."
+    },
+    {
+      "key": "or:1.2:def:UserSetDType/users/[]",
+      "kind": "property",
+      "path": "users/[]"
+    },
+    {
+      "key": "or:1.2:doc:AcademicSessionDType",
+      "kind": "document",
+      "path": ""
+    },
+    {
+      "key": "or:1.2:doc:ClassDType",
+      "kind": "document",
+      "path": ""
+    },
+    {
+      "key": "or:1.2:doc:CourseDType",
+      "kind": "document",
+      "path": ""
+    },
+    {
+      "key": "or:1.2:doc:DemographicsDType",
+      "kind": "document",
+      "path": ""
+    },
+    {
+      "key": "or:1.2:doc:EnrollmentDType",
+      "kind": "document",
+      "path": ""
+    },
+    {
+      "key": "or:1.2:doc:OrgDType",
+      "kind": "document",
+      "path": ""
+    },
+    {
+      "key": "or:1.2:doc:UserDType",
+      "kind": "document",
+      "path": ""
+    }
+  ],
+  "edges": [
+    {
+      "from": "or:1.2:def:AcademicSessionDType/children/[]",
+      "to": "or:1.2:def:AcadSessionGUIDRefDType"
+    },
+    {
+      "from": "or:1.2:def:AcademicSessionDType/metadata",
+      "to": "or:1.2:def:MetadataDType"
+    },
+    {
+      "from": "or:1.2:def:AcademicSessionDType/parent",
+      "to": "or:1.2:def:AcadSessionGUIDRefDType"
+    },
+    {
+      "from": "or:1.2:def:AcademicSessionSetDType/academicSessions/[]",
+      "to": "or:1.2:def:AcademicSessionDType"
+    },
+    {
+      "from": "or:1.2:def:ClassDType/course",
+      "to": "or:1.2:def:CourseGUIDRefDType"
+    },
+    {
+      "from": "or:1.2:def:ClassDType/metadata",
+      "to": "or:1.2:def:MetadataDType"
+    },
+    {
+      "from": "or:1.2:def:ClassDType/resources/[]",
+      "to": "or:1.2:def:ResourceGUIDRefDType"
+    },
+    {
+      "from": "or:1.2:def:ClassDType/school",
+      "to": "or:1.2:def:OrgGUIDRefDType"
+    },
+    {
+      "from": "or:1.2:def:ClassDType/terms/[]",
+      "to": "or:1.2:def:AcadSessionGUIDRefDType"
+    },
+    {
+      "from": "or:1.2:def:ClassSetDType/classes/[]",
+      "to": "or:1.2:def:ClassDType"
+    },
+    {
+      "from": "or:1.2:def:CourseDType/metadata",
+      "to": "or:1.2:def:MetadataDType"
+    },
+    {
+      "from": "or:1.2:def:CourseDType/org",
+      "to": "or:1.2:def:OrgGUIDRefDType"
+    },
+    {
+      "from": "or:1.2:def:CourseDType/resources/[]",
+      "to": "or:1.2:def:ResourceGUIDRefDType"
+    },
+    {
+      "from": "or:1.2:def:CourseDType/schoolYear",
+      "to": "or:1.2:def:AcadSessionGUIDRefDType"
+    },
+    {
+      "from": "or:1.2:def:CourseSetDType/courses/[]",
+      "to": "or:1.2:def:CourseDType"
+    },
+    {
+      "from": "or:1.2:def:DemographicsDType/metadata",
+      "to": "or:1.2:def:MetadataDType"
+    },
+    {
+      "from": "or:1.2:def:DemographicsSetDType/demographics/[]",
+      "to": "or:1.2:def:DemographicsDType"
+    },
+    {
+      "from": "or:1.2:def:EnrollmentDType/class",
+      "to": "or:1.2:def:ClassGUIDRefDType"
+    },
+    {
+      "from": "or:1.2:def:EnrollmentDType/metadata",
+      "to": "or:1.2:def:MetadataDType"
+    },
+    {
+      "from": "or:1.2:def:EnrollmentDType/school",
+      "to": "or:1.2:def:OrgGUIDRefDType"
+    },
+    {
+      "from": "or:1.2:def:EnrollmentDType/user",
+      "to": "or:1.2:def:UserGUIDRefDType"
+    },
+    {
+      "from": "or:1.2:def:EnrollmentSetDType/enrollments/[]",
+      "to": "or:1.2:def:EnrollmentDType"
+    },
+    {
+      "from": "or:1.2:def:imsx_CodeMinorDType/imsx_codeMinorField/[]",
+      "to": "or:1.2:def:imsx_CodeMinorFieldDType"
+    },
+    {
+      "from": "or:1.2:def:imsx_StatusInfoDType/imsx_CodeMinor",
+      "to": "or:1.2:def:imsx_CodeMinorDType"
+    },
+    {
+      "from": "or:1.2:def:OrgDType/children/[]",
+      "to": "or:1.2:def:OrgGUIDRefDType"
+    },
+    {
+      "from": "or:1.2:def:OrgDType/metadata",
+      "to": "or:1.2:def:MetadataDType"
+    },
+    {
+      "from": "or:1.2:def:OrgDType/parent",
+      "to": "or:1.2:def:OrgGUIDRefDType"
+    },
+    {
+      "from": "or:1.2:def:OrgSetDType/orgs/[]",
+      "to": "or:1.2:def:OrgDType"
+    },
+    {
+      "from": "or:1.2:def:RoleDType/org",
+      "to": "or:1.2:def:OrgGUIDRefDType"
+    },
+    {
+      "from": "or:1.2:def:SingleAcademicSessionDType/academicSession",
+      "to": "or:1.2:def:AcademicSessionDType"
+    },
+    {
+      "from": "or:1.2:def:SingleClassDType/class",
+      "to": "or:1.2:def:ClassDType"
+    },
+    {
+      "from": "or:1.2:def:SingleCourseDType/course",
+      "to": "or:1.2:def:CourseDType"
+    },
+    {
+      "from": "or:1.2:def:SingleDemographicsDType/demographics",
+      "to": "or:1.2:def:DemographicsDType"
+    },
+    {
+      "from": "or:1.2:def:SingleEnrollmentDType/enrollment",
+      "to": "or:1.2:def:EnrollmentDType"
+    },
+    {
+      "from": "or:1.2:def:SingleOrgDType/org",
+      "to": "or:1.2:def:OrgDType"
+    },
+    {
+      "from": "or:1.2:def:SingleUserDType/user",
+      "to": "or:1.2:def:UserDType"
+    },
+    {
+      "from": "or:1.2:def:UserDType/agents/[]",
+      "to": "or:1.2:def:UserGUIDRefDType"
+    },
+    {
+      "from": "or:1.2:def:UserDType/metadata",
+      "to": "or:1.2:def:MetadataDType"
+    },
+    {
+      "from": "or:1.2:def:UserDType/primaryOrg",
+      "to": "or:1.2:def:OrgGUIDRefDType"
+    },
+    {
+      "from": "or:1.2:def:UserDType/resources/[]",
+      "to": "or:1.2:def:ResourceGUIDRefDType"
+    },
+    {
+      "from": "or:1.2:def:UserDType/roles/[]",
+      "to": "or:1.2:def:RoleDType"
+    },
+    {
+      "from": "or:1.2:def:UserDType/userIds/[]",
+      "to": "or:1.2:def:UserIdDType"
+    },
+    {
+      "from": "or:1.2:def:UserDType/userProfiles/[]",
+      "to": "or:1.2:def:UserProfileDType"
+    },
+    {
+      "from": "or:1.2:def:UserProfileDType/credentials/[]",
+      "to": "or:1.2:def:CredentialDType"
+    },
+    {
+      "from": "or:1.2:def:UserSetDType/users/[]",
+      "to": "or:1.2:def:UserDType"
+    },
+    {
+      "from": "or:1.2:doc:AcademicSessionDType",
+      "to": "or:1.2:def:AcademicSessionDType"
+    },
+    {
+      "from": "or:1.2:doc:ClassDType",
+      "to": "or:1.2:def:ClassDType"
+    },
+    {
+      "from": "or:1.2:doc:CourseDType",
+      "to": "or:1.2:def:CourseDType"
+    },
+    {
+      "from": "or:1.2:doc:DemographicsDType",
+      "to": "or:1.2:def:DemographicsDType"
+    },
+    {
+      "from": "or:1.2:doc:EnrollmentDType",
+      "to": "or:1.2:def:EnrollmentDType"
+    },
+    {
+      "from": "or:1.2:doc:OrgDType",
+      "to": "or:1.2:def:OrgDType"
+    },
+    {
+      "from": "or:1.2:doc:UserDType",
+      "to": "or:1.2:def:UserDType"
+    }
+  ],
+  "conformance": [
+    {
+      "key": "or:1.2:conf:rostering/OR-1",
+      "profile": "rostering",
+      "reqId": "OR-1",
+      "level": "MUST",
+      "statement": "Every OneRoster object MUST carry a sourcedId (its stable GUID) and a status (active / tobedeleted).",
+      "constrains": [
+        "or:1.2:def:UserDType/sourcedId",
+        "or:1.2:def:UserDType/status"
+      ],
+      "source": "OneRoster 1.2 §Base / GUIDRef — https://www.imsglobal.org/spec/oneroster/v1p2"
+    },
+    {
+      "key": "or:1.2:conf:rostering/OR-2",
+      "profile": "rostering",
+      "reqId": "OR-2",
+      "level": "MUST",
+      "statement": "A User MUST declare at least one role binding the user to an organization.",
+      "constrains": [
+        "or:1.2:def:UserDType/roles"
+      ],
+      "source": "OneRoster 1.2 §User / Role — https://www.imsglobal.org/spec/oneroster/v1p2"
+    }
+  ],
+  "residues": {
+    "silentGaps": [],
+    "extensions": []
+  },
+  "rollup": {
+    "items": 227,
+    "modelledYes": 137,
+    "modelledPartial": 0,
+    "modelledNo": 0,
+    "normativeItems": 23,
+    "conformanceRequirements": 2
+  }
+}

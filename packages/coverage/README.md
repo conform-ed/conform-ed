@@ -40,44 +40,51 @@ Adding a spec: vendor its source schema under `vendor/<spec>/<version>/`, declar
 
 ## Status
 
-Five `spec:version` maps, both schema-language families:
+Six `spec:version` maps across all three schema-language families:
 
-| Map                     | Family      | Items | Silent gaps | Extensions | Conf. reqs |
-| ----------------------- | ----------- | ----- | ----------- | ---------- | ---------- |
-| `open-badges-v3.0`      | JSON Schema | 340   | 0           | 0          | 5          |
-| `clr-v2.0`              | JSON Schema | 409   | 0           | 0          | 4          |
-| `case-v1.1`             | JSON Schema | 344   | 0           | 0          | 3          |
-| `common-cartridge-v1.3` | XSD         | 42    | 0           | 3          | 4          |
+| Map                     | Family      | Items | Modelled | Silent gaps | Extensions | Conf. reqs |
+| ----------------------- | ----------- | ----- | -------- | ----------- | ---------- | ---------- |
+| `open-badges-v3.0`      | JSON Schema | 340   | 241      | 0           | 0          | 5          |
+| `clr-v2.0`              | JSON Schema | 409   | 299      | 0           | 0          | 4          |
+| `case-v1.1`             | JSON Schema | 344   | 264      | 0           | 0          | 3          |
+| `common-cartridge-v1.3` | XSD         | 40    | 21       | 0           | 3          | 4          |
+| `qti-v3.0.1`            | XSD         | 5344  | 205      | 345         | 115        | 2          |
+| `oneroster-v1.2`        | OpenAPI     | 227   | 137      | 0           | 0          | 2          |
 
-- **Open Badges 3.0 / CLR 2.0** share the OB/VC credential machinery — both reconcile
-  `0/0` (recursive `Profile`/endorsement structures matched at depth).
-- **CASE 1.1** — all 13 published entity schemas (CFPackage / CFItem / CFAssociation /
-  …) reconcile `0/0`.
-- **Common Cartridge 1.3** — three resource-type bindings (Web Link / Discussion Topic
-  / Curriculum Standards Metadata) via the **direct XSD walker** (`src/walkers/xsd.ts`).
-  `0` silent gaps; the three `extension` residues are all documented normalisations
-  (XSD `xs:any` → conform-ed's `extensions`; simpleContent text → `value`).
+- **Open Badges 3.0 / CLR 2.0** share the OB/VC credential machinery; **CASE 1.1** (all
+  13 entity schemas) and **OneRoster 1.2** (7 rostering entities) all reconcile `0/0`.
+- **Common Cartridge 1.3** — three resource-type bindings (Web Link / Discussion Topic /
+  Curriculum Standards Metadata) via the **direct XSD walker**. The three `extension`
+  residues are documented normalisations (XSD `xs:any` → `extensions`; simpleContent
+  text → `value`).
+- **QTI 3.0.1** — the full literal ASI information model (4 bindings, one self-contained
+  18 MB XSD; its `xs:import`s are foreign vocab — MathML/SSML/XML/XInclude — left opaque,
+  hence `0` dangling edges). The L2 join uses a kebab(`qti-`)↔camelCase **name
+  normaliser** (the XSD is the XML binding, conform-ed models the JSON binding). The 345
+  silent gaps are honest signal: ~46 ARIA attributes + content-model expression operators
+  that conform-ed models as Zod unions rather than named elements.
 
 Conformance catalogs are grounded **seeds**; full extraction from the published 1EdTech
 guides is the next hand-curation increment.
 
 ### Rollout (emergent ADR-0028)
 
-- **JSON-Schema family** — OB ✓, CLR ✓, CASE ✓. **VC 2.0** has no standalone published
-  per-binding JSON Schema (it is the W3C substrate already exercised through OB/CLR), so
-  it is not a separate map. **Caliper 1.2** ships its schemas in the GitHub
-  CaliperBootcamp repo (JSON-LD) — pending a literal-denominator provenance decision.
-- **XSD family** — CC 1.3 (3 bindings) ✓ via the direct XSD walker (chosen over
-  XSD→JSON-Schema converters, which proved dead, lossy — they drop `xs:documentation` —
-  or non-reproducible in CI). **QTI 3.0.1 / 2.x** are _walker-ready_ (QTI's ASI XSD is
-  self-contained; its 4 `xs:import`s are foreign vocabularies — MathML/SSML/XML/XInclude
-  — which the walker already treats as opaque). The open item is reconciliation: the QTI
-  _XML_ binding uses kebab element names (`qti-response-declaration`) while conform-ed's
-  Zod models the QTI **JSON** binding (camelCase `responseDeclaration`), so a meaningful
-  L2 join needs a **name-normalisation layer** (kebab-`qti-` ↔ camelCase) on the
-  reconciler before a QTI map is produced — without it every name would mismatch.
-- **OpenAPI family** — OneRoster 1.2 needs a third walker (`walkers/openapi.ts`).
+All three schema-language walkers are built and proven:
 
-The reconciler's automated structural join is layered with explicit `specRef` overrides
-for conform-ed's documented normalisations (e.g. the CC `xs:any` → `extensions` rename)
-as those are annotated upstream in `@conform-ed/contracts`.
+- **JSON Schema** (`walkers/json-schema.ts`) — OB ✓, CLR ✓, CASE ✓. **VC 2.0** has no
+  standalone published per-binding JSON Schema (it is the W3C substrate already exercised
+  through OB/CLR), so it is not a separate map. **Caliper 1.2** ships its schemas in the
+  GitHub CaliperBootcamp repo (JSON-LD) — pending a literal-denominator provenance call.
+- **XSD** (`walkers/xsd.ts`) — CC 1.3 ✓, QTI 3.0.1 ✓ (chosen over XSD→JSON-Schema
+  converters, which proved dead, lossy — they drop `xs:documentation` — or non-
+  reproducible in CI). Remaining: the rest of the CC bindings and QTI 2.x.
+- **OpenAPI** (`walkers/openapi.ts`) — OneRoster 1.2 rostering ✓ (walks
+  `components.schemas`, reusing the JSON-Schema walker via `#/components/schemas/` refs).
+  Remaining: the OneRoster gradebook + resources services.
+
+Where the literal and Zod bindings differ by a systematic naming convention (QTI's
+XML↔JSON kebab/camel/singular-plural), a per-spec `nameNormalizer` on the `SpecSource`
+canonicalises both sides for the L2 join (item keys stay literal). The structural join is
+otherwise layered with explicit `specRef` overrides for documented normalisations (e.g.
+the CC `xs:any` → `extensions` rename) as those are annotated upstream in
+`@conform-ed/contracts`.
