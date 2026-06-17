@@ -8,11 +8,14 @@ import type { CoverageMap } from "../src/types";
 
 const map = buildCoverageMap(commonCartridgeV1_3, { now: "2026-01-01" });
 
-describe("Common Cartridge 1.3 (Web Link) Coverage Map — XSD walker pilot", () => {
-  test("walks the literal XSD into a doc root + named-type definitions", () => {
+describe("Common Cartridge 1.3 Coverage Map — XSD walker (Web Link / Discussion / Curriculum Standards)", () => {
+  test("walks each resource-type XSD into a doc root + named-type definitions", () => {
     expect(map.meta.spec).toBe("cc");
     expect(map.meta.version).toBe("1.3");
-    expect(map.items.some((i) => i.key === "cc:1.3:doc:webLink" && i.kind === "document")).toBe(true);
+    const docRoots = map.items.filter((i) => i.kind === "document").map((i) => i.key);
+    expect(docRoots).toEqual(
+      expect.arrayContaining(["cc:1.3:doc:webLink", "cc:1.3:doc:topic", "cc:1.3:doc:curriculumStandardsMetadataSet"]),
+    );
     expect(map.items.some((i) => i.key === "cc:1.3:def:WebLink.Type" && i.kind === "definition")).toBe(true);
     expect(map.items.some((i) => i.key === "cc:1.3:def:URL.Type")).toBe(true);
   });
@@ -21,24 +24,30 @@ describe("Common Cartridge 1.3 (Web Link) Coverage Map — XSD walker pilot", ()
     for (const item of map.items) expect(item.key.startsWith("cc:1.3:")).toBe(true);
   });
 
-  test("pins the vendored XSD by targetNamespace + sha256", () => {
-    expect(map.meta.sources).toHaveLength(1);
-    const [source] = map.meta.sources;
-    expect(source?.language).toBe("xsd");
-    expect(source?.id).toBe("http://www.imsglobal.org/xsd/imsccv1p3/imswl_v1p3");
-    expect(source?.sha256).toMatch(/^[0-9a-f]{64}$/);
+  test("pins each vendored XSD by targetNamespace + sha256", () => {
+    expect(map.meta.sources).toHaveLength(3);
+    for (const source of map.meta.sources) {
+      expect(source.language).toBe("xsd");
+      expect(source.id).toMatch(/^http:\/\/www\.imsglobal\.org\/xsd\/imsccv1p3\//);
+      expect(source.sha256).toMatch(/^[0-9a-f]{64}$/);
+    }
   });
 
   test("the named information model reconciles with conform-ed's Zod (no silent gaps)", () => {
     expect(map.rollup.modelledNo).toBe(0);
     expect(map.residues.silentGaps).toEqual([]);
-    expect(map.rollup.modelledYes).toBe(5); // title, url, href, target, windowFeatures
+    expect(map.rollup.modelledYes).toBe(21);
   });
 
-  test("the XSD xs:any wildcard surfaces as a single named `extensions` residue", () => {
-    // conform-ed models the open extension point as a named field; the literal
-    // schema has only a nameless xs:any — a documented normalisation, not a gap.
-    expect(map.residues.extensions).toEqual(["cc:1.3:doc:webLink/extensions"]);
+  test("only XSD open-content points (xs:any / simpleContent text) surface as residues", () => {
+    // conform-ed names the open extension point `extensions` and the simpleContent
+    // text body `value`; the literal XSD leaves both nameless — documented
+    // normalisations (future specRef overrides), not silent gaps.
+    expect(map.residues.extensions).toEqual([
+      "cc:1.3:doc:topic/extensions",
+      "cc:1.3:doc:topic/text/value",
+      "cc:1.3:doc:webLink/extensions",
+    ]);
   });
 
   test("attributes are modelled as properties with use=required honoured", () => {
@@ -57,7 +66,7 @@ describe("Common Cartridge 1.3 (Web Link) Coverage Map — XSD walker pilot", ()
 
   test("every conformance requirement cross-links to a real item key", () => {
     const keys = new Set(map.items.map((i) => i.key));
-    expect(map.rollup.conformanceRequirements).toBe(2);
+    expect(map.rollup.conformanceRequirements).toBe(4);
     for (const req of map.conformance) {
       expect(req.constrains.length).toBeGreaterThan(0);
       for (const key of req.constrains) expect(keys.has(key)).toBe(true);

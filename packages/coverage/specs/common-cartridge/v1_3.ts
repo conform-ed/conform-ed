@@ -19,7 +19,11 @@
 
 import { join } from "node:path";
 
-import { WebLinkSchema } from "@conform-ed/contracts/common-cartridge/v1_3";
+import {
+  CurriculumStandardsMetadataSetSchema,
+  DiscussionTopicSchema,
+  WebLinkSchema,
+} from "@conform-ed/contracts/common-cartridge/v1_3";
 
 import type { SpecSource } from "../../src/source";
 import type { ConformanceRequirement } from "../../src/types";
@@ -27,10 +31,11 @@ import type { ConformanceRequirement } from "../../src/types";
 const vendor = (file: string): string => join(import.meta.dir, "..", "..", "vendor", "common-cartridge", "v1_3", file);
 
 /**
- * Conformance seed — a grounded slice of the CC 1.3 Web Link resource's normative
- * rules, each cross-linked to the literal L1 item it constrains. Requirement ids
- * are synthesised (`CC-WL-n`); the published CC 1.3 conformance guide has no clean
- * per-statement id scheme. Full extraction is the next hand-curation increment.
+ * Conformance seed — grounded slices of the CC 1.3 resource-type normative rules,
+ * each cross-linked to the literal L1 item it constrains. Requirement ids are
+ * synthesised per profile (`CC-WL-n`, `CC-DT-n`, `CC-CSM-n`); the published CC 1.3
+ * conformance guide has no clean per-statement id scheme. Full extraction is the
+ * next hand-curation increment.
  */
 const conformance: readonly ConformanceRequirement[] = [
   {
@@ -53,6 +58,30 @@ const conformance: readonly ConformanceRequirement[] = [
     source:
       "IMS CC 1.3 — Web Link resource (imswl_v1p3) URL.Type — https://www.imsglobal.org/cc/CCv1p3/imscc_profilev1p3-Final.html#WebLinks",
   },
+  {
+    key: "cc:1.3:conf:discussion-topic/CC-DT-1",
+    profile: "discussion-topic",
+    reqId: "CC-DT-1",
+    level: "MUST",
+    statement: "A Discussion Topic resource MUST carry exactly one title and exactly one text body.",
+    constrains: ["cc:1.3:def:Topic.Type/title", "cc:1.3:def:Topic.Type/text"],
+    source:
+      "IMS CC 1.3 — Discussion Topic resource (imsdt_v1p3) — https://www.imsglobal.org/cc/CCv1p3/imscc_profilev1p3-Final.html#DiscussionTopics",
+  },
+  {
+    key: "cc:1.3:conf:curriculum-standards-metadata/CC-CSM-1",
+    profile: "curriculum-standards-metadata",
+    reqId: "CC-CSM-1",
+    level: "MUST",
+    statement:
+      "A CurriculumStandardsMetadataSet MUST contain at least one curriculumStandardsMetadata, each with at least one setOfGUIDs.",
+    constrains: [
+      "cc:1.3:def:CurriculumStandardsMetadataSet.Type/curriculumStandardsMetadata",
+      "cc:1.3:def:CurriculumStandardsMetadata.Type/setOfGUIDs",
+    ],
+    source:
+      "IMS CC 1.3 — Curriculum Standards Metadata (imscsmd_v1p0) — https://www.imsglobal.org/cc/CCv1p3/imscc_profilev1p3-Final.html",
+  },
 ];
 
 export const commonCartridgeV1_3: SpecSource = {
@@ -64,6 +93,18 @@ export const commonCartridgeV1_3: SpecSource = {
       schemaPath: vendor("ccv1p3_imswl_v1p3.xsd"),
       language: "xsd",
       zod: WebLinkSchema,
+    },
+    {
+      binding: "topic",
+      schemaPath: vendor("ccv1p3_imsdt_v1p3.xsd"),
+      language: "xsd",
+      zod: DiscussionTopicSchema,
+    },
+    {
+      binding: "curriculumStandardsMetadataSet",
+      schemaPath: vendor("ccv1p3_imscsmd_v1p0.xsd"),
+      language: "xsd",
+      zod: CurriculumStandardsMetadataSetSchema,
     },
   ],
   conformance,
