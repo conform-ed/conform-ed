@@ -49,7 +49,10 @@ Adding a spec: vendor its source schema under `vendor/<spec>/<version>/`, declar
 ### Rollout (emergent ADR-0028)
 
 JSON-Schema family first (OB → CLR / CASE / Caliper / VC), then the XSD family
-(QTI 3.0.1 / CC / QTI 2.x — `xsd2jsonschema` lets these reuse this JSON-Schema walker
-behind a pre-step), then OpenAPI (OneRoster). The reconciler's automated structural
-join is layered with explicit `specRef` overrides for conform-ed's documented
-normalisations as those are annotated upstream in `@conform-ed/contracts`.
+(QTI 3.0.1 / CC / QTI 2.x) via a **direct XSD walker** built on `fast-xml-parser`
+(already a `@conform-ed/qti-xml` dep) — XSD→JSON-Schema converters proved too
+unreliable on the 1EdTech bundles, so we walk the XSD itself; it emits the same
+`CoverageItem`/`UsageEdge` model, so the reconciler is reused unchanged. Then OpenAPI
+(OneRoster). The reconciler's automated structural join is layered with explicit
+`specRef` overrides for conform-ed's documented normalisations as those are annotated
+upstream in `@conform-ed/contracts`.
