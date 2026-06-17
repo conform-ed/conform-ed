@@ -62,7 +62,7 @@ the `Norm.` column counts the keys each map's `specRefOverrides` moved into `nor
 | Map                     | Family      | Items | Modelled | Silent gaps | Extensions | Norm. | Conf. reqs |
 | ----------------------- | ----------- | ----- | -------- | ----------- | ---------- | ----- | ---------- |
 | `open-badges-v3.0`      | JSON Schema | 340   | 241      | 0           | 0          | 0     | 16         |
-| `clr-v2.0`              | JSON Schema | 409   | 299      | 0           | 0          | 0     | 4          |
+| `clr-v2.0`              | JSON Schema | 409   | 299      | 0           | 0          | 0     | 14         |
 | `case-v1.1`             | JSON Schema | 344   | 264      | 0           | 0          | 0     | 3          |
 | `caliper-v1.2`          | JSON Schema | 1957  | 78       | 136         | 26         | 0     | 3          |
 | `common-cartridge-v1.3` | XSD         | 676   | 413      | 0           | 96         | 97    | 7          |
@@ -135,8 +135,10 @@ they constrain, lifting `normativeStatementsCited` to 9/36 (the credential-conte
 guide tests; the remaining sub-entity type-set MUSTs are enforced holistically by the
 schema-validation requirement OB-ISS-8). The Badge Connect API **transport** requirements
 (endpoints, OAuth, pagination) are a separate surface with no L1 item in the data-model map and
-await an OpenAPI binding map. The other maps' catalogs remain grounded **seeds** pending the
-same per-guide curation.
+await an OpenAPI binding map. **CLR 2.0** is curated the same way (14 requirements across the
+same three roles; it shares OB's credential stack, so the displayer/host shapes match,
+`cited` 7/40). The remaining maps' catalogs are grounded **seeds** pending the same per-guide
+curation.
 
 ### Rollout (emergent ADR-0028)
 

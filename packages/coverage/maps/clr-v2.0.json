@@ -3532,6 +3532,95 @@
   ],
   "conformance": [
     {
+      "key": "clr:2.0:conf:displayer/CLR-DSP-1",
+      "profile": "displayer",
+      "reqId": "CLR-DSP-1",
+      "level": "MUST",
+      "statement": "A displayer MUST verify a presented ClrCredential and correctly determine its state — valid, expired or revoked — before display, and MUST allow a viewer to trigger verification and retrieve the result.",
+      "constrains": [
+        "clr:2.0:def:ClrCredential/proof",
+        "clr:2.0:def:ClrCredential/validUntil",
+        "clr:2.0:def:ClrCredential/credentialStatus"
+      ],
+      "source": "CLR 2.0 Cert §4.2 (Displayer Tests) — https://www.imsglobal.org/spec/clr/v2p0/cert/#displayer"
+    },
+    {
+      "key": "clr:2.0:conf:displayer/CLR-DSP-2",
+      "profile": "displayer",
+      "reqId": "CLR-DSP-2",
+      "level": "MUST",
+      "statement": "A displayer MUST present the record's name, description, issuer name, issue date (validFrom), verification status, and the image when present.",
+      "constrains": [
+        "clr:2.0:def:ClrCredential/name",
+        "clr:2.0:def:ClrCredential/description",
+        "clr:2.0:def:ClrCredential/issuer",
+        "clr:2.0:def:ClrCredential/validFrom",
+        "clr:2.0:def:ClrCredential/image",
+        "clr:2.0:def:ClrCredential/credentialStatus"
+      ],
+      "source": "CLR 2.0 Cert §4.2 (Displayer — displayed data) — https://www.imsglobal.org/spec/clr/v2p0/cert/#displayer"
+    },
+    {
+      "key": "clr:2.0:conf:displayer/CLR-DSP-3",
+      "profile": "displayer",
+      "reqId": "CLR-DSP-3",
+      "level": "MUST",
+      "statement": "A ClrCredential MUST be treated as expired when the current date-time is after its validUntil.",
+      "constrains": [
+        "clr:2.0:def:ClrCredential/validUntil"
+      ],
+      "source": "CLR 2.0 Cert §4.1 (Verification and Status — expired) — https://www.imsglobal.org/spec/clr/v2p0/cert/#status"
+    },
+    {
+      "key": "clr:2.0:conf:displayer/CLR-DSP-4",
+      "profile": "displayer",
+      "reqId": "CLR-DSP-4",
+      "level": "MUST",
+      "statement": "A ClrCredential MUST be treated as revoked when credentialStatus is present with type '1EdTechRevocationList'; credentialStatus.id MUST be the URL of the issuer's credential status method.",
+      "constrains": [
+        "clr:2.0:def:ClrCredential/credentialStatus",
+        "clr:2.0:def:CredentialStatus/id",
+        "clr:2.0:def:CredentialStatus/type"
+      ],
+      "source": "CLR 2.0 Cert §4.1 (Verification and Status — revoked) — https://www.imsglobal.org/spec/clr/v2p0/cert/#status"
+    },
+    {
+      "key": "clr:2.0:conf:displayer/CLR-DSP-5",
+      "profile": "displayer",
+      "reqId": "CLR-DSP-5",
+      "level": "MUST",
+      "statement": "A displayer MUST support the Data Integrity proof cryptosuites and MUST verify credentials expressed against the W3C VC Data Model 2.0 context.",
+      "constrains": [
+        "clr:2.0:def:ClrCredential/proof",
+        "clr:2.0:def:ClrCredential/@context"
+      ],
+      "source": "CLR 2.0 Cert §4.2 (Displayer — VC 2.0 + proof) — https://www.imsglobal.org/spec/clr/v2p0/cert/#displayer"
+    },
+    {
+      "key": "clr:2.0:conf:host/CLR-HST-1",
+      "profile": "host",
+      "reqId": "CLR-HST-1",
+      "level": "MUST",
+      "statement": "The getCredentials response MUST return ClrCredentials, each independently verifiable; VC-JWT-signed credentials MUST be carried in compactJwsString. A host MUST import and re-export a ClrCredential with no data loss.",
+      "constrains": [
+        "clr:2.0:doc:getclrcredentialsresponse/credential/[]",
+        "clr:2.0:doc:getclrcredentialsresponse/compactJwsString/[]"
+      ],
+      "source": "CLR 2.0 Cert §5.1–5.3 (Host — import/export + Service Provider Read) — https://www.imsglobal.org/spec/clr/v2p0/cert/#host"
+    },
+    {
+      "key": "clr:2.0:conf:host/CLR-HST-2",
+      "profile": "host",
+      "reqId": "CLR-HST-2",
+      "level": "MUST",
+      "statement": "A CLR API service error/status response MUST be reported through the imsx_statusInfo structure, carrying at least an imsx_codeMajor and imsx_severity.",
+      "constrains": [
+        "clr:2.0:doc:imsx_statusinfo/imsx_codeMajor",
+        "clr:2.0:doc:imsx_statusinfo/imsx_severity"
+      ],
+      "source": "CLR 2.0 Cert §5 (Host — Service Provider compliance) — https://www.imsglobal.org/spec/clr/v2p0/cert/#host"
+    },
+    {
       "key": "clr:2.0:conf:issuer/CLR-ISS-1",
       "profile": "issuer",
       "reqId": "CLR-ISS-1",
@@ -3549,7 +3638,8 @@
       "level": "MUST",
       "statement": "The type MUST be an unordered set containing 'VerifiableCredential' and 'ClrCredential'.",
       "constrains": [
-        "clr:2.0:doc:clrcredential/type"
+        "clr:2.0:doc:clrcredential/type",
+        "clr:2.0:doc:clrcredential/type/[]"
       ],
       "source": "CLR 2.0 §ClrCredential.type — https://www.imsglobal.org/spec/clr/v2p0/#clrcredential"
     },
@@ -3560,7 +3650,8 @@
       "level": "MUST",
       "statement": "credentialSubject MUST be a ClrSubject that carries the learner's achievements and the verifiable AchievementCredentials.",
       "constrains": [
-        "clr:2.0:doc:clrcredential/credentialSubject"
+        "clr:2.0:doc:clrcredential/credentialSubject",
+        "clr:2.0:def:ClrSubject/type/[]"
       ],
       "source": "CLR 2.0 §ClrSubject — https://www.imsglobal.org/spec/clr/v2p0/#clrsubject"
     },
@@ -3571,9 +3662,51 @@
       "level": "MUST",
       "statement": "The issuer MUST be a Profile identified by an IRI in the issuer.id property.",
       "constrains": [
-        "clr:2.0:doc:clrcredential/issuer"
+        "clr:2.0:doc:clrcredential/issuer",
+        "clr:2.0:def:ProfileRef"
       ],
       "source": "CLR 2.0 §ClrCredential.issuer + §Profile — https://www.imsglobal.org/spec/clr/v2p0/#profile"
+    },
+    {
+      "key": "clr:2.0:conf:issuer/CLR-ISS-5",
+      "profile": "issuer",
+      "reqId": "CLR-ISS-5",
+      "level": "MUST",
+      "statement": "An issued ClrCredential MUST be signed with a supported proof mechanism — a Data Integrity proof (eddsa-rdfc-2022 or ecdsa-sd-2023) or an external VC-JWT proof — and an embedded proof's proofPurpose MUST be 'assertionMethod'.",
+      "constrains": [
+        "clr:2.0:def:ClrCredential/proof",
+        "clr:2.0:def:Proof/proofPurpose"
+      ],
+      "source": "CLR 2.0 Cert §3 (Issuer — baked, signed ClrCredential) — https://www.imsglobal.org/spec/clr/v2p0/cert/#issuer"
+    },
+    {
+      "key": "clr:2.0:conf:issuer/CLR-ISS-6",
+      "profile": "issuer",
+      "reqId": "CLR-ISS-6",
+      "level": "MUST",
+      "statement": "The issued ClrCredential MUST contain all required fields (id, @context, issuer, validFrom, credentialSubject) and be valid: it MUST pass JSON-LD validation in safe mode.",
+      "constrains": [
+        "clr:2.0:doc:clrcredential",
+        "clr:2.0:def:ClrCredential/id",
+        "clr:2.0:def:ClrCredential/@context",
+        "clr:2.0:def:ClrCredential/issuer",
+        "clr:2.0:def:ClrCredential/validFrom",
+        "clr:2.0:def:ClrCredential/credentialSubject"
+      ],
+      "source": "CLR 2.0 Cert §3.1 (Issuer Tests — valid baked ClrCredential) — https://www.imsglobal.org/spec/clr/v2p0/cert/#issuer"
+    },
+    {
+      "key": "clr:2.0:conf:issuer/CLR-ISS-7",
+      "profile": "issuer",
+      "reqId": "CLR-ISS-7",
+      "level": "MUST",
+      "statement": "The ClrSubject MUST aggregate the learner's record as a set of verifiable credentials (verifiableCredential), each itself a VerifiableCredential, alongside the achievements they evidence.",
+      "constrains": [
+        "clr:2.0:def:ClrSubject/verifiableCredential",
+        "clr:2.0:def:ClrSubject/achievement",
+        "clr:2.0:def:VerifiableCredential/type/[]"
+      ],
+      "source": "CLR 2.0 §ClrSubject (verifiableCredential) — https://www.imsglobal.org/spec/clr/v2p0/#clrsubject"
     }
   ],
   "normativeStatements": [
@@ -3623,7 +3756,7 @@
       "item": "clr:2.0:def:ClrSubject/type/[]",
       "level": "MUST",
       "statement": "The property MUST contain the IRI `ClrSubject`.",
-      "cited": false
+      "cited": true
     },
     {
       "item": "clr:2.0:def:Context",
@@ -3647,7 +3780,7 @@
       "item": "clr:2.0:def:CredentialStatus/id",
       "level": "MUST",
       "statement": "The value MUST be the URL of the issuer's credential status method.",
-      "cited": false
+      "cited": true
     },
     {
       "item": "clr:2.0:def:EndorsementCredential",
@@ -3713,13 +3846,13 @@
       "item": "clr:2.0:def:ProfileRef",
       "level": "MUST",
       "statement": "A description of the individual, entity, or organization that issued the credential. Either a URI with the Unique URI for the Issuer/Profile file, or a Profile object MUST be supplied.",
-      "cited": false
+      "cited": true
     },
     {
       "item": "clr:2.0:def:Proof/proofPurpose",
       "level": "MUST",
       "statement": "The purpose of the proof to be used with `verificationMethod`. MUST be 'assertionMethod'.",
-      "cited": false
+      "cited": true
     },
     {
       "item": "clr:2.0:def:RefreshService/id",
@@ -3773,7 +3906,7 @@
       "item": "clr:2.0:def:VerifiableCredential/type/[]",
       "level": "MUST",
       "statement": "The value of the type property MUST be an unordered set. One of the items MUST be the URI 'VerifiableCredential'.",
-      "cited": false
+      "cited": true
     },
     {
       "item": "clr:2.0:doc:achievementcredential",
@@ -3791,7 +3924,7 @@
       "item": "clr:2.0:doc:clrcredential/type/[]",
       "level": "MUST",
       "statement": "The value of the type property MUST be an unordered set. One of the items MUST be the IRI `VerifiableCredential`, and one of the items MUST be the IRI `ClrCredential`.",
-      "cited": false
+      "cited": true
     },
     {
       "item": "clr:2.0:doc:endorsementcredential",
@@ -3809,7 +3942,7 @@
       "item": "clr:2.0:doc:getclrcredentialsresponse/compactJwsString/[]",
       "level": "MUST",
       "statement": "ClrCredentials that have been signed with the VC-JWT Proof Format MUST be in the `compactJwsString` array.",
-      "cited": false
+      "cited": true
     },
     {
       "item": "clr:2.0:doc:profile/type/[]",
@@ -3829,9 +3962,9 @@
     "modelledPartial": 39,
     "modelledNo": 0,
     "normativeItems": 40,
-    "conformanceRequirements": 4,
+    "conformanceRequirements": 14,
     "normativeStatements": 40,
-    "normativeStatementsCited": 0,
+    "normativeStatementsCited": 7,
     "normalisations": 0
   }
 }

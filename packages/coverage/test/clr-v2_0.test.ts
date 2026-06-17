@@ -33,9 +33,12 @@ describe("Comprehensive Learner Record 2.0 Coverage Map", () => {
     expect(map.residues.extensions).toEqual([]);
   });
 
-  test("captures normative items and the conformance seed", () => {
+  test("captures normative items and the curated catalogue across the three cert profiles", () => {
     expect(map.rollup.normativeItems).toBeGreaterThan(0);
-    expect(map.rollup.conformanceRequirements).toBe(4);
+    expect(map.rollup.conformanceRequirements).toBe(14);
+    expect(new Set(map.conformance.map((c) => c.profile))).toEqual(new Set(["issuer", "displayer", "host"]));
+    // The curated catalogue cross-links the schema's own MUSTs where requirements coincide.
+    expect(map.rollup.normativeStatementsCited).toBeGreaterThanOrEqual(6);
   });
 
   test("every conformance requirement cross-links to a real item key", () => {
