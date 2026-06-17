@@ -47,8 +47,8 @@ Nine `spec:version` maps across all three schema-language families:
 | `open-badges-v3.0`      | JSON Schema | 340   | 241      | 0           | 0          | 5          |
 | `clr-v2.0`              | JSON Schema | 409   | 299      | 0           | 0          | 4          |
 | `case-v1.1`             | JSON Schema | 344   | 264      | 0           | 0          | 3          |
-| `common-cartridge-v1.3` | XSD         | 110   | 65       | 3           | 27         | 6          |
-| `common-cartridge-v1.4` | XSD         | 112   | 66       | 3           | 33         | 4          |
+| `common-cartridge-v1.3` | XSD         | 676   | 410      | 3           | 190        | 7          |
+| `common-cartridge-v1.4` | XSD         | 143   | 81       | 3           | 35         | 5          |
 | `qti-v2.1`              | XSD         | 4629  | 116      | 347         | 35         | 2          |
 | `qti-v2.2`              | XSD         | 4991  | 125      | 501         | 44         | 2          |
 | `qti-v3.0.1`            | XSD         | 5344  | 223      | 359         | 89         | 2          |
@@ -59,13 +59,18 @@ Nine `spec:version` maps across all three schema-language families:
 - **OneRoster 1.2** spans all three services in one map — Rostering (7 entities),
   Gradebook (LineItem / Result / Category / ScoreScale / AssessmentLineItem /
   AssessmentResult / LearningObjectiveSet) and Resources (Resource) — and reconciles `0/0`.
-- **Common Cartridge 1.3 / 1.4** — five resource-type bindings each (content-packaging
-  Manifest / Web Link / Discussion Topic / Authorization / Curriculum Standards Metadata)
-  via the **direct XSD walker**. The `extension` residues are documented normalisations
-  (XSD `xs:any` → `extensions`; simpleContent text → `value`; the foreign `xml:base`
-  attribute → `xmlBase`, which pairs with the three `/base` silent gaps), plus the
-  manifest's `metadata` LOM tree, which is opaque at the `xs:import` boundary so
-  conform-ed's richer LOM model surfaces as extensions until the LOM bindings land.
+- **Common Cartridge 1.3 / 1.4** — via the **direct XSD walker**, with `def:`s scoped by
+  source schema (`scopeXsdDefsBySource`) so same-named complexTypes from different files
+  stay distinct. CC 1.3 carries eight bindings: content-packaging Manifest, Web Link,
+  Discussion Topic, Authorization, Curriculum Standards Metadata, and the three IEEE-LOM
+  profiles (Basic LTI Link, Resource metadata, Manifest metadata — all rooted at
+  `<xs:element name="lom" type="LOM.Type">`, kept apart by source-scoping). CC 1.4 carries
+  six (the same core five plus the `assignment` extension, whose `Text.Type` /
+  `Attachment.Type` would otherwise collide with Discussion Topic's). The `extension`
+  residues are documented normalisations (XSD `xs:any` → `extensions`; simpleContent text
+  → `value`; the foreign `xml:base` attribute → `xmlBase`, which pairs with the three
+  `/base` silent gaps), plus the rich IEEE-LOM optional sub-trees conform-ed models that
+  the literal LOM profiles leave to imported boundaries.
 - **QTI 2.1 / 2.2 / 3.0.1** — the full literal ASI information model (3–4 bindings each,
   one self-contained XSD per version; their `xs:import`s are foreign vocab —
   MathML/SSML/XML/XInclude/HTML5/APIP — left opaque, hence `0` dangling edges). QTI 2.x
@@ -90,16 +95,16 @@ All three schema-language walkers are built and proven:
   GitHub CaliperBootcamp repo (JSON-LD) — pending a literal-denominator provenance call.
 - **XSD** (`walkers/xsd.ts`) — CC 1.3 ✓, CC 1.4 ✓, QTI 2.1 ✓, QTI 2.2 ✓, QTI 3.0.1 ✓
   (chosen over XSD→JSON-Schema converters, which proved dead, lossy — they drop
-  `xs:documentation` — or non-reproducible in CI). The walker resolves
-  `<xs:element ref="…">` to the referenced global element's type, so modular schemas
-  (QTI 2.x) descend as fully as flattened ones.
-  **Deferred — per-source def-namespacing**: the walker keys `def:`s by global type name,
-  which conflates structurally-distinct same-named types defined in different files
-  (CC `LOM.Type` across the three LOM profiles; `Text.Type` / `Attachment.Type` in the
-  CC 1.4 `assignment` extension vs Discussion Topic). The CC LOM bindings + the
-  `assignment` extension wait on namespacing literal defs per source (mirroring the Zod
-  side's per-binding scoping). QTI 2.x results-reporting / metadata / content-package
-  bindings are also still to come.
+  `xs:documentation` — or non-reproducible in CI). Two walker features make modular,
+  multi-file schemas tractable: it resolves `<xs:element ref="…">` to the referenced
+  global element's type (so QTI 2.x descends as fully as flattened 3.0.1), and — for maps
+  that set `scopeXsdDefsBySource` — it scopes every `def:` key by its source schema, so
+  structurally-distinct same-named types from different files stay separate (CC's
+  `LOM.Type` across the three LOM profiles; `Text.Type` / `Attachment.Type` in the CC 1.4
+  `assignment` extension vs Discussion Topic). A binding may also set `rootElement` to
+  walk a shared root element name (the three LOM profiles all root at `lom`) under a
+  distinct `doc:` label. Still to come: QTI 2.x results-reporting / metadata /
+  content-package bindings.
 - **OpenAPI** (`walkers/openapi.ts`) — OneRoster 1.2 ✓ across all three services —
   Rostering, Gradebook and Resources (walks `components.schemas`, reusing the
   JSON-Schema walker via `#/components/schemas/` refs).

@@ -6,18 +6,16 @@
  * `imscsmd_v1p1` Curriculum Standards Metadata), each walked from its literal published
  * `.xsd` and reconciled with conform-ed's Zod.
  *
- * Deferred (a documented boundary, not an omission): the CC 1.4 `assignment` extension
- * (`cc_extresource_assignment`) and the LOM-derived `lom`-rooted bindings define
- * complexTypes whose **names collide across files** (`Text.Type` / `Attachment.Type` in
- * assignment vs Discussion Topic; `LOM.Type` across the three LOM profiles). The XSD
- * walker currently keys `def:`s by global type name, so including them would conflate
- * structurally-distinct types. Bridging them needs per-source def-namespacing in the
- * walker (mirroring the Zod side's per-binding scoping) — the next walker increment.
+ * Adds the CC 1.4 `assignment` extension (`cc_extresource_assignment`). Its `Text.Type`
+ * / `Attachment.Type` complexTypes share names with Discussion Topic's, so this map sets
+ * `scopeXsdDefsBySource` to key every `def:` by its source schema — the same mechanism
+ * that lets CC 1.3 carry the three `LOM.Type` profiles distinctly.
  */
 
 import { join } from "node:path";
 
 import {
+  AssignmentSchema,
   CommonCartridgeAuthorizationsSchema,
   CommonCartridgeManifestRawSchema,
   CurriculumStandardsMetadataSetSchema,
@@ -45,9 +43,9 @@ const conformance: readonly ConformanceRequirement[] = [
     statement:
       "A Common Cartridge 1.4 manifest MUST carry an identifier and exactly one organizations and one resources element.",
     constrains: [
-      "cc:1.4:def:Manifest.Type/identifier",
-      "cc:1.4:def:Manifest.Type/organizations",
-      "cc:1.4:def:Manifest.Type/resources",
+      "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Manifest.Type/identifier",
+      "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Manifest.Type/organizations",
+      "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Manifest.Type/resources",
     ],
     source: "IMS CC 1.4 — Content Packaging manifest (imscp_v1p2) — https://www.imsglobal.org/spec/cc/v1p4",
   },
@@ -57,7 +55,7 @@ const conformance: readonly ConformanceRequirement[] = [
     reqId: "CC14-WL-1",
     level: "MUST",
     statement: "A Web Link resource MUST contain a webLink element carrying exactly one title and exactly one url.",
-    constrains: ["cc:1.4:def:WebLink.Type/title", "cc:1.4:def:WebLink.Type/url"],
+    constrains: ["cc:1.4:def:ccv1p4_imswl_v1p4.WebLink.Type/title", "cc:1.4:def:ccv1p4_imswl_v1p4.WebLink.Type/url"],
     source: "IMS CC 1.4 — Web Link resource (imswl_v1p4) — https://www.imsglobal.org/spec/cc/v1p4",
   },
   {
@@ -66,7 +64,7 @@ const conformance: readonly ConformanceRequirement[] = [
     reqId: "CC14-DT-1",
     level: "MUST",
     statement: "A Discussion Topic resource MUST carry exactly one title and exactly one text body.",
-    constrains: ["cc:1.4:def:Topic.Type/title", "cc:1.4:def:Topic.Type/text"],
+    constrains: ["cc:1.4:def:ccv1p4_imsdt_v1p4.Topic.Type/title", "cc:1.4:def:ccv1p4_imsdt_v1p4.Topic.Type/text"],
     source: "IMS CC 1.4 — Discussion Topic resource (imsdt_v1p4) — https://www.imsglobal.org/spec/cc/v1p4",
   },
   {
@@ -76,14 +74,29 @@ const conformance: readonly ConformanceRequirement[] = [
     level: "MUST",
     statement:
       "An authorizations document MUST contain at least one authorization describing how to access a resource.",
-    constrains: ["cc:1.4:def:Authorizations.Type/authorization"],
+    constrains: ["cc:1.4:def:ccv1p4_imsccauth_v1p4.Authorizations.Type/authorization"],
     source: "IMS CC 1.4 — Authorization (imsccauth_v1p4) — https://www.imsglobal.org/spec/cc/v1p4",
+  },
+  {
+    key: "cc:1.4:conf:assignment/CC14-ASN-1",
+    profile: "assignment",
+    reqId: "CC14-ASN-1",
+    level: "MUST",
+    statement: "An Assignment resource MUST carry a title and a text body describing the work the learner must submit.",
+    constrains: [
+      "cc:1.4:def:cc_extresource_assignmentv1p0_v1p0.Assignment.Type/title",
+      "cc:1.4:def:cc_extresource_assignmentv1p0_v1p0.Assignment.Type/text",
+    ],
+    source: "IMS CC 1.4 — Assignment extension (cc_extresource_assignment) — https://www.imsglobal.org/spec/cc/v1p4",
   },
 ];
 
 export const commonCartridgeV1_4: SpecSource = {
   spec: "cc",
   version: "1.4",
+  // Multi-file map: `def:`s are scoped by source schema so the `assignment` extension's
+  // `Text.Type` / `Attachment.Type` stay distinct from Discussion Topic's.
+  scopeXsdDefsBySource: true,
   bindings: [
     {
       binding: "manifest",
@@ -114,6 +127,12 @@ export const commonCartridgeV1_4: SpecSource = {
       schemaPath: vendor("ccv1p4_imscsmd_v1p1.xsd"),
       language: "xsd",
       zod: CurriculumStandardsMetadataSetSchema,
+    },
+    {
+      binding: "assignment",
+      schemaPath: vendor("cc_extresource_assignmentv1p0_v1p0.xsd"),
+      language: "xsd",
+      zod: AssignmentSchema,
     },
   ],
   conformance,

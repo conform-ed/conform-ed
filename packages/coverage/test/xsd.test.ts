@@ -114,3 +114,57 @@ describe("walkXsd", () => {
     for (const edge of edges) expect(keys.has(edge.to)).toBe(true);
   });
 });
+
+// A modular schema: the document root's child is a `ref` to a global element (not an
+// inline `name`+`type`), the style QTI 2.x and CC use throughout. The root global
+// element name (`record`) differs from the binding label we want.
+const modularXsd = `<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:m" xmlns="urn:m">
+  <xs:complexType name="Payload.Type">
+    <xs:sequence><xs:element name="value" type="xs:string"/></xs:sequence>
+  </xs:complexType>
+  <xs:element name="payload" type="Payload.Type"/>
+  <xs:complexType name="Record.Type">
+    <xs:sequence>
+      <xs:element ref="payload" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="record" type="Record.Type"/>
+</xs:schema>`;
+
+describe("walkXsd — element-ref resolution", () => {
+  const { items, edges } = walkXsd(modularXsd, "record", ctx);
+  const keys = new Set(items.map((i) => i.key));
+
+  test("`<xs:element ref>` resolves to the referenced global element's type, continuing the descent", () => {
+    // record → Record.Type → payload (ref) → Payload.Type → value
+    expect(edges).toContainEqual({ from: "t:1.0:def:Record.Type/payload/[]", to: "t:1.0:def:Payload.Type" });
+    expect(keys.has("t:1.0:def:Payload.Type/value")).toBe(true);
+    for (const edge of edges) expect(keys.has(edge.to)).toBe(true);
+  });
+
+  test("a foreign-namespace ref stays an opaque property — no dangling edge", () => {
+    const foreignRefXsd = modularXsd.replace('<xs:element ref="payload"', '<xs:element ref="ext:thing"');
+    const out = walkXsd(foreignRefXsd, "record", ctx);
+    const outKeys = new Set(out.items.map((i) => i.key));
+    for (const edge of out.edges) expect(outKeys.has(edge.to)).toBe(true);
+  });
+});
+
+describe("walkXsd — sourceToken scoping + rootElement override", () => {
+  test("sourceToken prefixes every def key so same-named types from different files stay distinct", () => {
+    const out = walkXsd(modularXsd, "record", ctx, { sourceToken: "fileA" });
+    const keys = new Set(out.items.map((i) => i.key));
+    expect(keys.has("t:1.0:def:fileA.Record.Type")).toBe(true);
+    expect(keys.has("t:1.0:def:fileA.Payload.Type/value")).toBe(true);
+    // doc roots stay unscoped (they use the binding label, already unique per map).
+    expect(out.docRootKey).toBe("t:1.0:doc:record");
+    for (const edge of out.edges) expect(keys.has(edge.to)).toBe(true);
+  });
+
+  test("rootElement overrides which global element is the document root, keeping the binding label", () => {
+    const out = walkXsd(modularXsd, "wrapper", ctx, { rootElement: "record" });
+    expect(out.docRootKey).toBe("t:1.0:doc:wrapper");
+    expect(out.edges).toContainEqual({ from: "t:1.0:doc:wrapper", to: "t:1.0:def:Record.Type" });
+  });
+});

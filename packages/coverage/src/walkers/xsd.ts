@@ -43,6 +43,17 @@ export interface XsdWalkContext {
   readonly version: string;
 }
 
+export interface XsdWalkOptions {
+  /**
+   * When set, every `def:` key is scoped `def:<sourceToken>.<TypeName>` so that
+   * same-named complexTypes from different files in one map stay distinct. Omitted ⇒
+   * bare `def:<TypeName>` keys (the right choice for a single-file map).
+   */
+  readonly sourceToken?: string;
+  /** The global `<xs:element>` name to walk as the document root; defaults to `binding`. */
+  readonly rootElement?: string;
+}
+
 export interface XsdWalkResult {
   readonly items: readonly CoverageItem[];
   readonly edges: readonly UsageEdge[];
@@ -195,7 +206,17 @@ function inlineSimpleInfo(node: XmlNode): { jsonType?: string; enumValues?: read
   return {};
 }
 
-export function walkXsd(xsdText: string, binding: string, ctx: XsdWalkContext): XsdWalkResult {
+export function walkXsd(
+  xsdText: string,
+  binding: string,
+  ctx: XsdWalkContext,
+  options: XsdWalkOptions = {},
+): XsdWalkResult {
+  const { sourceToken, rootElement = binding } = options;
+  const defKey = (name: string): string =>
+    sourceToken !== undefined
+      ? `${ctx.spec}:${ctx.version}:def:${sourceToken}.${name}`
+      : `${ctx.spec}:${ctx.version}:def:${name}`;
   const parser = new XMLParser({
     ignoreAttributes: false,
     attributeNamePrefix: "@_",
@@ -280,13 +301,12 @@ export function walkXsd(xsdText: string, binding: string, ctx: XsdWalkContext): 
       return { ...(jsonType !== undefined ? { jsonType } : {}), ...(enumValues !== undefined ? { enumValues } : {}) };
     }
     if (complexTypes.has(local)) {
-      edges.push({ from: ownerKey, to: `${ctx.spec}:${ctx.version}:def:${local}` });
+      edges.push({ from: ownerKey, to: defKey(local) });
       return { edgeTo: local };
     }
     return {}; // unknown / imported type: recorded as a plain untyped property
   };
 
-  const defKey = (name: string): string => `${ctx.spec}:${ctx.version}:def:${name}`;
   const pending = new Set<string>(); // local type names still to be walked as defs
 
   const nameOrRef = (node: XmlNode): string | undefined => {
@@ -437,20 +457,21 @@ export function walkXsd(xsdText: string, binding: string, ctx: XsdWalkContext): 
     collectMembers(node, rootKey, "");
   };
 
-  // 1. Walk the binding's global element as the document root.
-  const rootElement = elements.get(binding);
-  if (rootElement === undefined) {
-    throw new Error(`global <xs:element name="${binding}"> not found in schema`);
+  // 1. Walk the binding's global element as the document root. `rootElement` may differ
+  //    from the `binding` label (e.g. CC's three LOM profiles all root at `lom`).
+  const rootElementNode = elements.get(rootElement);
+  if (rootElementNode === undefined) {
+    throw new Error(`global <xs:element name="${rootElement}"> not found in schema`);
   }
   const docRootKey = `${ctx.spec}:${ctx.version}:doc:${binding}`;
-  const rootResolved = resolveTypeRef(attr(rootElement, "type"), docRootKey);
+  const rootResolved = resolveTypeRef(attr(rootElementNode, "type"), docRootKey);
   emit(
-    buildItem(docRootKey, "document", "", rootElement, {
+    buildItem(docRootKey, "document", "", rootElementNode, {
       ...(rootResolved.jsonType !== undefined ? { jsonType: rootResolved.jsonType } : {}),
     }),
   );
   if (rootResolved.edgeTo !== undefined) pending.add(rootResolved.edgeTo);
-  for (const inlineCt of toArray(rootElement["complexType"])) collectMembers(inlineCt, docRootKey, "");
+  for (const inlineCt of toArray(rootElementNode["complexType"])) collectMembers(inlineCt, docRootKey, "");
 
   // 2. Walk every named complexType / group / attributeGroup as a shared definition
   //    (drain the worklist so transitively-referenced types are all walked once).

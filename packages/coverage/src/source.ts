@@ -15,6 +15,14 @@ export interface SpecBindingSource {
   readonly schemaPath: string;
   readonly language: SchemaLanguage;
   /**
+   * For XSD bindings only: the name of the global `<xs:element>` to walk as this
+   * binding's document root, when it differs from {@link binding}. Lets two bindings
+   * over different files share a root element name (e.g. the three CC LOM profiles are
+   * all rooted at `<xs:element name="lom">`) while keeping distinct `doc:` labels.
+   * Defaults to {@link binding}.
+   */
+  readonly rootElement?: string;
+  /**
    * The conform-ed Zod schema that models this binding's root, for L2
    * reconciliation. Omitted when conform-ed does not (yet) model the binding —
    * the whole binding then reconciles as a silent gap.
@@ -39,4 +47,15 @@ export interface SpecSource {
    * uses the normalised name. Omitted ⇒ identity (names compared verbatim).
    */
   readonly nameNormalizer?: (propertyName: string) => string;
+  /**
+   * For XSD maps whose bindings span **multiple files**: scope each `def:` key by its
+   * source file (`def:<fileBasename>.<TypeName>`) instead of by bare type name. The XSD
+   * walker keys definitions by global complexType name, which collides when different
+   * files reuse a name for structurally-distinct types (CC's `LOM.Type` across the three
+   * LOM profiles; `Text.Type` / `Attachment.Type` in the CC 1.4 `assignment` extension vs
+   * Discussion Topic). Source-scoping disambiguates them. Leave off for single-file maps
+   * (every QTI version) so their keys stay un-prefixed. The reconciler matches by property
+   * name, not def key, so this only affects item identity — never the L2 verdicts.
+   */
+  readonly scopeXsdDefsBySource?: boolean;
 }

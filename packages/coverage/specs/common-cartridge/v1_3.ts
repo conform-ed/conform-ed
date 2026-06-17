@@ -24,6 +24,9 @@ import {
   CommonCartridgeManifestRawSchema,
   CurriculumStandardsMetadataSetSchema,
   DiscussionTopicSchema,
+  LomCcLtiLinkSchema,
+  LomManifestSchema,
+  LomResourceSchema,
   WebLinkSchema,
 } from "@conform-ed/contracts/common-cartridge/v1_3";
 
@@ -46,7 +49,7 @@ const conformance: readonly ConformanceRequirement[] = [
     reqId: "CC-WL-1",
     level: "MUST",
     statement: "A Web Link resource MUST contain a webLink element carrying exactly one title and exactly one url.",
-    constrains: ["cc:1.3:def:WebLink.Type/title", "cc:1.3:def:WebLink.Type/url"],
+    constrains: ["cc:1.3:def:ccv1p3_imswl_v1p3.WebLink.Type/title", "cc:1.3:def:ccv1p3_imswl_v1p3.WebLink.Type/url"],
     source:
       "IMS CC 1.3 — Web Link resource (imswl_v1p3) — https://www.imsglobal.org/cc/CCv1p3/imscc_profilev1p3-Final.html#WebLinks",
   },
@@ -56,7 +59,7 @@ const conformance: readonly ConformanceRequirement[] = [
     reqId: "CC-WL-2",
     level: "MUST",
     statement: "The url element MUST carry an href attribute identifying the link target.",
-    constrains: ["cc:1.3:def:URL.Type/href"],
+    constrains: ["cc:1.3:def:ccv1p3_imswl_v1p3.URL.Type/href"],
     source:
       "IMS CC 1.3 — Web Link resource (imswl_v1p3) URL.Type — https://www.imsglobal.org/cc/CCv1p3/imscc_profilev1p3-Final.html#WebLinks",
   },
@@ -66,7 +69,7 @@ const conformance: readonly ConformanceRequirement[] = [
     reqId: "CC-DT-1",
     level: "MUST",
     statement: "A Discussion Topic resource MUST carry exactly one title and exactly one text body.",
-    constrains: ["cc:1.3:def:Topic.Type/title", "cc:1.3:def:Topic.Type/text"],
+    constrains: ["cc:1.3:def:ccv1p3_imsdt_v1p3.Topic.Type/title", "cc:1.3:def:ccv1p3_imsdt_v1p3.Topic.Type/text"],
     source:
       "IMS CC 1.3 — Discussion Topic resource (imsdt_v1p3) — https://www.imsglobal.org/cc/CCv1p3/imscc_profilev1p3-Final.html#DiscussionTopics",
   },
@@ -78,8 +81,8 @@ const conformance: readonly ConformanceRequirement[] = [
     statement:
       "A CurriculumStandardsMetadataSet MUST contain at least one curriculumStandardsMetadata, each with at least one setOfGUIDs.",
     constrains: [
-      "cc:1.3:def:CurriculumStandardsMetadataSet.Type/curriculumStandardsMetadata",
-      "cc:1.3:def:CurriculumStandardsMetadata.Type/setOfGUIDs",
+      "cc:1.3:def:ccv1p3_imscsmd_v1p0.CurriculumStandardsMetadataSet.Type/curriculumStandardsMetadata",
+      "cc:1.3:def:ccv1p3_imscsmd_v1p0.CurriculumStandardsMetadata.Type/setOfGUIDs",
     ],
     source:
       "IMS CC 1.3 — Curriculum Standards Metadata (imscsmd_v1p0) — https://www.imsglobal.org/cc/CCv1p3/imscc_profilev1p3-Final.html",
@@ -92,9 +95,9 @@ const conformance: readonly ConformanceRequirement[] = [
     statement:
       "A Common Cartridge manifest MUST carry an identifier and exactly one organizations and one resources element.",
     constrains: [
-      "cc:1.3:def:Manifest.Type/identifier",
-      "cc:1.3:def:Manifest.Type/organizations",
-      "cc:1.3:def:Manifest.Type/resources",
+      "cc:1.3:def:ccv1p3_imscp_v1p2_v1p0.Manifest.Type/identifier",
+      "cc:1.3:def:ccv1p3_imscp_v1p2_v1p0.Manifest.Type/organizations",
+      "cc:1.3:def:ccv1p3_imscp_v1p2_v1p0.Manifest.Type/resources",
     ],
     source:
       "IMS CC 1.3 — Content Packaging manifest (imscp_v1p2) — https://www.imsglobal.org/cc/CCv1p3/imscc_profilev1p3-Final.html",
@@ -106,15 +109,28 @@ const conformance: readonly ConformanceRequirement[] = [
     level: "MUST",
     statement:
       "An authorizations document MUST contain at least one authorization describing how to access a resource.",
-    constrains: ["cc:1.3:def:Authorizations.Type/authorization"],
+    constrains: ["cc:1.3:def:ccv1p3_imsccauth_v1p3.Authorizations.Type/authorization"],
     source:
       "IMS CC 1.3 — Authorization (imsccauth_v1p3) — https://www.imsglobal.org/cc/CCv1p3/imscc_profilev1p3-Final.html",
+  },
+  {
+    key: "cc:1.3:conf:lti-link/CC-LTI-1",
+    profile: "lti-link",
+    reqId: "CC-LTI-1",
+    level: "MUST",
+    statement: "A Basic LTI Link resource is carried as an IEEE LOM record whose general metadata identifies the link.",
+    constrains: ["cc:1.3:def:ccv1p3_lomccltilink_v1p0.LOM.Type/general"],
+    source:
+      "IMS CC 1.3 — Basic LTI Link (lomccltilink) — https://www.imsglobal.org/cc/CCv1p3/imscc_profilev1p3-Final.html",
   },
 ];
 
 export const commonCartridgeV1_3: SpecSource = {
   spec: "cc",
   version: "1.3",
+  // Multi-file map: `def:`s are scoped by source schema (the three LOM profiles all
+  // define `LOM.Type`, and the resource XSDs share boilerplate type names).
+  scopeXsdDefsBySource: true,
   bindings: [
     {
       binding: "webLink",
@@ -145,6 +161,29 @@ export const commonCartridgeV1_3: SpecSource = {
       schemaPath: vendor("ccv1p3_imsccauth_v1p3.xsd"),
       language: "xsd",
       zod: CommonCartridgeAuthorizationsSchema,
+    },
+    // The three LOM metadata profiles are all rooted at `<xs:element name="lom">` and all
+    // define a (structurally distinct) `LOM.Type` — distinguished by source-scoped def keys.
+    {
+      binding: "ltiLink",
+      rootElement: "lom",
+      schemaPath: vendor("ccv1p3_lomccltilink_v1p0.xsd"),
+      language: "xsd",
+      zod: LomCcLtiLinkSchema,
+    },
+    {
+      binding: "lomResource",
+      rootElement: "lom",
+      schemaPath: vendor("ccv1p3_lomresource_v1p0.xsd"),
+      language: "xsd",
+      zod: LomResourceSchema,
+    },
+    {
+      binding: "lomManifest",
+      rootElement: "lom",
+      schemaPath: vendor("ccv1p3_lommanifest_v1p0.xsd"),
+      language: "xsd",
+      zod: LomManifestSchema,
     },
   ],
   conformance,

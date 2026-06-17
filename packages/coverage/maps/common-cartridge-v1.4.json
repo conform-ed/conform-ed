@@ -5,6 +5,12 @@
     "generatedAt": "2026-06-17",
     "sources": [
       {
+        "binding": "assignment",
+        "language": "xsd",
+        "id": "http://www.imsglobal.org/xsd/imscc_extensions/assignment",
+        "sha256": "532c2a5c1031a9351ff483f5c0a3ddc2cb5a9b21ee3d29f332ecac2cd6688ff9"
+      },
+      {
         "binding": "authorizations",
         "language": "xsd",
         "id": "http://www.imsglobal.org/xsd/imsccv1p4/imsccauth_v1p4",
@@ -38,12 +44,71 @@
   },
   "items": [
     {
-      "key": "cc:1.4:def:Attachment.Type",
+      "key": "cc:1.4:def:cc_extresource_assignmentv1p0_v1p0.Assignment.Type",
+      "kind": "definition",
+      "path": "",
+      "description": "TBD. TBD-Attributes"
+    },
+    {
+      "key": "cc:1.4:def:cc_extresource_assignmentv1p0_v1p0.Assignment.Type/attachments",
+      "kind": "property",
+      "path": "attachments",
+      "modelled": "yes"
+    },
+    {
+      "key": "cc:1.4:def:cc_extresource_assignmentv1p0_v1p0.Assignment.Type/extensions",
+      "kind": "property",
+      "path": "extensions",
+      "modelled": "yes"
+    },
+    {
+      "key": "cc:1.4:def:cc_extresource_assignmentv1p0_v1p0.Assignment.Type/gradable",
+      "kind": "property",
+      "path": "gradable",
+      "jsonType": "boolean",
+      "modelled": "yes"
+    },
+    {
+      "key": "cc:1.4:def:cc_extresource_assignmentv1p0_v1p0.Assignment.Type/identifier",
+      "kind": "property",
+      "path": "identifier",
+      "required": true,
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "cc:1.4:def:cc_extresource_assignmentv1p0_v1p0.Assignment.Type/instructor_text",
+      "kind": "property",
+      "path": "instructor_text",
+      "modelled": "yes"
+    },
+    {
+      "key": "cc:1.4:def:cc_extresource_assignmentv1p0_v1p0.Assignment.Type/submission_formats",
+      "kind": "property",
+      "path": "submission_formats",
+      "modelled": "yes"
+    },
+    {
+      "key": "cc:1.4:def:cc_extresource_assignmentv1p0_v1p0.Assignment.Type/text",
+      "kind": "property",
+      "path": "text",
+      "modelled": "yes"
+    },
+    {
+      "key": "cc:1.4:def:cc_extresource_assignmentv1p0_v1p0.Assignment.Type/title",
+      "kind": "property",
+      "path": "title",
+      "required": true,
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "cc:1.4:def:cc_extresource_assignmentv1p0_v1p0.Attachment.Type",
       "kind": "definition",
       "path": ""
     },
     {
-      "key": "cc:1.4:def:Attachment.Type/href",
+      "key": "cc:1.4:def:cc_extresource_assignmentv1p0_v1p0.Attachment.Type/href",
       "kind": "property",
       "path": "href",
       "required": true,
@@ -51,12 +116,27 @@
       "modelled": "yes"
     },
     {
-      "key": "cc:1.4:def:Attachments.Type",
-      "kind": "definition",
-      "path": ""
+      "key": "cc:1.4:def:cc_extresource_assignmentv1p0_v1p0.Attachment.Type/role",
+      "kind": "property",
+      "path": "role",
+      "required": true,
+      "jsonType": "string",
+      "enumValues": [
+        "All",
+        "Learner",
+        "Manager",
+        "Instructor"
+      ],
+      "modelled": "yes"
     },
     {
-      "key": "cc:1.4:def:Attachments.Type/attachment",
+      "key": "cc:1.4:def:cc_extresource_assignmentv1p0_v1p0.Attachments.Type",
+      "kind": "definition",
+      "path": "",
+      "description": "TBD."
+    },
+    {
+      "key": "cc:1.4:def:cc_extresource_assignmentv1p0_v1p0.Attachments.Type/attachment",
       "kind": "property",
       "path": "attachment",
       "jsonType": "array",
@@ -64,18 +144,98 @@
       "modelled": "yes"
     },
     {
-      "key": "cc:1.4:def:Attachments.Type/attachment/[]",
+      "key": "cc:1.4:def:cc_extresource_assignmentv1p0_v1p0.Attachments.Type/attachment/[]",
       "kind": "property",
       "path": "attachment/[]"
     },
     {
-      "key": "cc:1.4:def:Authorization.Type",
+      "key": "cc:1.4:def:cc_extresource_assignmentv1p0_v1p0.EmptyPrimitiveType.Type",
+      "kind": "definition",
+      "path": ""
+    },
+    {
+      "key": "cc:1.4:def:cc_extresource_assignmentv1p0_v1p0.Extensions.Type",
+      "kind": "definition",
+      "path": "",
+      "description": "TBD."
+    },
+    {
+      "key": "cc:1.4:def:cc_extresource_assignmentv1p0_v1p0.Extensions.Type/platform",
+      "kind": "property",
+      "path": "platform",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "cc:1.4:def:cc_extresource_assignmentv1p0_v1p0.Format.Type",
+      "kind": "definition",
+      "path": ""
+    },
+    {
+      "key": "cc:1.4:def:cc_extresource_assignmentv1p0_v1p0.Format.Type/type",
+      "kind": "property",
+      "path": "type",
+      "required": true,
+      "jsonType": "string",
+      "enumValues": [
+        "text",
+        "html",
+        "url",
+        "file"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "cc:1.4:def:cc_extresource_assignmentv1p0_v1p0.grpStrict.any",
+      "kind": "definition",
+      "path": "",
+      "description": "Any namespaced element from any namespace may be included within an \"any\" element. The namespace for the imported element must be defined in the instance, and the schema must be imported. The extension has a definition of \"strict\" i.e. they must have their own namespace."
+    },
+    {
+      "key": "cc:1.4:def:cc_extresource_assignmentv1p0_v1p0.SubmissionFormats.Type",
+      "kind": "definition",
+      "path": "",
+      "description": "TBD."
+    },
+    {
+      "key": "cc:1.4:def:cc_extresource_assignmentv1p0_v1p0.SubmissionFormats.Type/format",
+      "kind": "property",
+      "path": "format",
+      "jsonType": "array",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "cc:1.4:def:cc_extresource_assignmentv1p0_v1p0.SubmissionFormats.Type/format/[]",
+      "kind": "property",
+      "path": "format/[]"
+    },
+    {
+      "key": "cc:1.4:def:cc_extresource_assignmentv1p0_v1p0.Text.Type",
+      "kind": "definition",
+      "path": "",
+      "description": "This is the explanatory text for the assignment."
+    },
+    {
+      "key": "cc:1.4:def:cc_extresource_assignmentv1p0_v1p0.Text.Type/texttype",
+      "kind": "property",
+      "path": "texttype",
+      "required": true,
+      "jsonType": "string",
+      "enumValues": [
+        "text/plain",
+        "text/html"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "cc:1.4:def:ccv1p4_imsccauth_v1p4.Authorization.Type",
       "kind": "definition",
       "path": "",
       "description": "The authorization detail for the cartridge in terms of the web service."
     },
     {
-      "key": "cc:1.4:def:Authorization.Type/cartridgeId",
+      "key": "cc:1.4:def:ccv1p4_imsccauth_v1p4.Authorization.Type/cartridgeId",
       "kind": "property",
       "path": "cartridgeId",
       "required": true,
@@ -83,20 +243,20 @@
       "modelled": "yes"
     },
     {
-      "key": "cc:1.4:def:Authorization.Type/webservice",
+      "key": "cc:1.4:def:ccv1p4_imsccauth_v1p4.Authorization.Type/webservice",
       "kind": "property",
       "path": "webservice",
       "jsonType": "string",
       "modelled": "yes"
     },
     {
-      "key": "cc:1.4:def:Authorizations.Type",
+      "key": "cc:1.4:def:ccv1p4_imsccauth_v1p4.Authorizations.Type",
       "kind": "definition",
       "path": "",
       "description": "The set of authorizations for the associated object."
     },
     {
-      "key": "cc:1.4:def:Authorizations.Type/access",
+      "key": "cc:1.4:def:ccv1p4_imsccauth_v1p4.Authorizations.Type/access",
       "kind": "property",
       "path": "access",
       "required": true,
@@ -108,86 +268,33 @@
       "modelled": "yes"
     },
     {
-      "key": "cc:1.4:def:Authorizations.Type/authorization",
+      "key": "cc:1.4:def:ccv1p4_imsccauth_v1p4.Authorizations.Type/authorization",
       "kind": "property",
       "path": "authorization",
       "required": true,
       "modelled": "yes"
     },
     {
-      "key": "cc:1.4:def:Authorizations.Type/import",
+      "key": "cc:1.4:def:ccv1p4_imsccauth_v1p4.Authorizations.Type/import",
       "kind": "property",
       "path": "import",
       "jsonType": "boolean",
       "modelled": "yes"
     },
     {
-      "key": "cc:1.4:def:CurriculumStandardsMetadata.Type",
+      "key": "cc:1.4:def:ccv1p4_imsccauth_v1p4.grpStrict.any",
       "kind": "definition",
       "path": "",
-      "description": "The CurriculumStandardsMetadata data-type is the container for the specicial metadata for curriculum standards for a particular domain of GUID provider. The 'providerId' attribute is used to denote the originator of the GUID scheme."
+      "description": "Any namespaced element from any namespace, other than the target namespace, may be included within an \"any\" element. The namespace for the imported element must be defined in the instance, and the schema must be imported. The extension has a definition of \"strict\" i.e. they must…"
     },
     {
-      "key": "cc:1.4:def:CurriculumStandardsMetadata.Type/providerId",
-      "kind": "property",
-      "path": "providerId",
-      "jsonType": "string",
-      "modelled": "yes"
-    },
-    {
-      "key": "cc:1.4:def:CurriculumStandardsMetadata.Type/setOfGUIDs",
-      "kind": "property",
-      "path": "setOfGUIDs",
-      "jsonType": "array",
-      "required": true,
-      "modelled": "yes"
-    },
-    {
-      "key": "cc:1.4:def:CurriculumStandardsMetadata.Type/setOfGUIDs/[]",
-      "kind": "property",
-      "path": "setOfGUIDs/[]"
-    },
-    {
-      "key": "cc:1.4:def:CurriculumStandardsMetadataSet.Type",
-      "kind": "definition",
-      "path": "",
-      "description": "The CurriculumStandardsMetadataSet data-type is the container for the set of curriculum s- tandards metadata. Each member of the set contains the curriculum standards metadata for a specific source of the GUIDs. The 'resourceLabel' attribute is a human readable label used to ide…"
-    },
-    {
-      "key": "cc:1.4:def:CurriculumStandardsMetadataSet.Type/curriculumStandardsMetadata",
-      "kind": "property",
-      "path": "curriculumStandardsMetadata",
-      "jsonType": "array",
-      "required": true,
-      "modelled": "yes"
-    },
-    {
-      "key": "cc:1.4:def:CurriculumStandardsMetadataSet.Type/curriculumStandardsMetadata/[]",
-      "kind": "property",
-      "path": "curriculumStandardsMetadata/[]"
-    },
-    {
-      "key": "cc:1.4:def:CurriculumStandardsMetadataSet.Type/resourceLabel",
-      "kind": "property",
-      "path": "resourceLabel",
-      "jsonType": "string",
-      "modelled": "yes"
-    },
-    {
-      "key": "cc:1.4:def:CurriculumStandardsMetadataSet.Type/resourcePartId",
-      "kind": "property",
-      "path": "resourcePartId",
-      "jsonType": "string",
-      "modelled": "yes"
-    },
-    {
-      "key": "cc:1.4:def:Dependency.Type",
+      "key": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Dependency.Type",
       "kind": "definition",
       "path": "",
       "description": "This identifies a resource whose files this resource depends upon. The reference to an identifier in the resources section is contained in the Identifierref attribute."
     },
     {
-      "key": "cc:1.4:def:Dependency.Type/identifierref",
+      "key": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Dependency.Type/identifierref",
       "kind": "property",
       "path": "identifierref",
       "required": true,
@@ -195,18 +302,13 @@
       "modelled": "yes"
     },
     {
-      "key": "cc:1.4:def:EmptyPrimitiveType.Type",
-      "kind": "definition",
-      "path": ""
-    },
-    {
-      "key": "cc:1.4:def:File.Type",
+      "key": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.File.Type",
       "kind": "definition",
       "path": "",
       "description": "A listing of file that this resource is dependent on. The href attribute identifies the location of the file. This may have some meta-data."
     },
     {
-      "key": "cc:1.4:def:File.Type/href",
+      "key": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.File.Type/href",
       "kind": "property",
       "path": "href",
       "required": true,
@@ -214,25 +316,25 @@
       "modelled": "yes"
     },
     {
-      "key": "cc:1.4:def:File.Type/metadata",
+      "key": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.File.Type/metadata",
       "kind": "property",
       "path": "metadata",
       "modelled": "yes"
     },
     {
-      "key": "cc:1.4:def:grpStrict.any",
+      "key": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.grpStrict.any",
       "kind": "definition",
       "path": "",
       "description": "Any namespaced element from any namespace may be included within an \"any\" element. The namespace for the imported element must be defined in the instance, and the schema must be imported. The extension has a definition of \"strict\" i.e. they must have their own namespace."
     },
     {
-      "key": "cc:1.4:def:Item.Type",
+      "key": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Item.Type",
       "kind": "definition",
       "path": "",
       "description": "This is the structure that describes the shape of the organization. It is used in a hierarchical organizational scheme by ordering and nesting. Each Item has an identifier that is unique within the Manifest file. Identifierref acts as a reference to an identifier in the resource…"
     },
     {
-      "key": "cc:1.4:def:Item.Type/identifier",
+      "key": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Item.Type/identifier",
       "kind": "property",
       "path": "identifier",
       "required": true,
@@ -240,32 +342,32 @@
       "modelled": "yes"
     },
     {
-      "key": "cc:1.4:def:Item.Type/identifierref",
+      "key": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Item.Type/identifierref",
       "kind": "property",
       "path": "identifierref",
       "jsonType": "string",
       "modelled": "yes"
     },
     {
-      "key": "cc:1.4:def:Item.Type/item",
+      "key": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Item.Type/item",
       "kind": "property",
       "path": "item",
       "jsonType": "array",
       "modelled": "yes"
     },
     {
-      "key": "cc:1.4:def:Item.Type/item/[]",
+      "key": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Item.Type/item/[]",
       "kind": "property",
       "path": "item/[]"
     },
     {
-      "key": "cc:1.4:def:Item.Type/metadata",
+      "key": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Item.Type/metadata",
       "kind": "property",
       "path": "metadata",
       "modelled": "yes"
     },
     {
-      "key": "cc:1.4:def:Item.Type/title",
+      "key": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Item.Type/title",
       "kind": "property",
       "path": "title",
       "required": true,
@@ -273,13 +375,13 @@
       "modelled": "yes"
     },
     {
-      "key": "cc:1.4:def:ItemOrg.Type",
+      "key": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.ItemOrg.Type",
       "kind": "definition",
       "path": "",
       "description": "This is the structure that describes the top-level shape of the organization and so only a single Item is permitted. The top-level has an identifier that is unique within the Manifest file. It may have meta-data but it has not title. It can contain any number of Items. The param…"
     },
     {
-      "key": "cc:1.4:def:ItemOrg.Type/identifier",
+      "key": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.ItemOrg.Type/identifier",
       "kind": "property",
       "path": "identifier",
       "required": true,
@@ -287,66 +389,38 @@
       "modelled": "yes"
     },
     {
-      "key": "cc:1.4:def:ItemOrg.Type/item",
+      "key": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.ItemOrg.Type/item",
       "kind": "property",
       "path": "item",
       "jsonType": "array",
       "modelled": "yes"
     },
     {
-      "key": "cc:1.4:def:ItemOrg.Type/item/[]",
+      "key": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.ItemOrg.Type/item/[]",
       "kind": "property",
       "path": "item/[]"
     },
     {
-      "key": "cc:1.4:def:ItemOrg.Type/metadata",
+      "key": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.ItemOrg.Type/metadata",
       "kind": "property",
       "path": "metadata",
       "modelled": "yes"
     },
     {
-      "key": "cc:1.4:def:LabelledGUID.Type",
-      "kind": "definition",
-      "path": "",
-      "description": "The labelled curriculum standard GUID. The optional label provides a human readable string to provide a clue about the nature of the curriculum standard."
-    },
-    {
-      "key": "cc:1.4:def:LabelledGUID.Type/caseItemURI",
-      "kind": "property",
-      "path": "caseItemURI",
-      "jsonType": "string",
-      "modelled": "yes"
-    },
-    {
-      "key": "cc:1.4:def:LabelledGUID.Type/GUID",
-      "kind": "property",
-      "path": "GUID",
-      "required": true,
-      "jsonType": "string",
-      "modelled": "yes"
-    },
-    {
-      "key": "cc:1.4:def:LabelledGUID.Type/label",
-      "kind": "property",
-      "path": "label",
-      "jsonType": "string",
-      "modelled": "yes"
-    },
-    {
-      "key": "cc:1.4:def:Manifest.Type",
+      "key": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Manifest.Type",
       "kind": "definition",
       "path": "",
       "description": "A reusable unit of instruction. It encapsulates meta-data, organizations, resource references and authorization. It must have an identifier that is unique within the Manifest. The version and reference base is optional. The base provides the relative path offset for the content …"
     },
     {
-      "key": "cc:1.4:def:Manifest.Type/base",
+      "key": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Manifest.Type/base",
       "kind": "property",
       "path": "base",
       "jsonType": "string",
       "modelled": "no"
     },
     {
-      "key": "cc:1.4:def:Manifest.Type/identifier",
+      "key": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Manifest.Type/identifier",
       "kind": "property",
       "path": "identifier",
       "required": true,
@@ -354,47 +428,47 @@
       "modelled": "yes"
     },
     {
-      "key": "cc:1.4:def:Manifest.Type/metadata",
+      "key": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Manifest.Type/metadata",
       "kind": "property",
       "path": "metadata",
       "required": true,
       "modelled": "yes"
     },
     {
-      "key": "cc:1.4:def:Manifest.Type/organizations",
+      "key": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Manifest.Type/organizations",
       "kind": "property",
       "path": "organizations",
       "required": true,
       "modelled": "yes"
     },
     {
-      "key": "cc:1.4:def:Manifest.Type/resources",
+      "key": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Manifest.Type/resources",
       "kind": "property",
       "path": "resources",
       "required": true,
       "modelled": "yes"
     },
     {
-      "key": "cc:1.4:def:ManifestMetadata.Type",
+      "key": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.ManifestMetadata.Type",
       "kind": "definition",
       "path": "",
       "description": "This is the meta-data describing the Manifest. The schema describes the schema that defines and controls the Manifest. Schemaversion describes the version of the above schema (e.g. 1.0, 1.1, etc.). In Common Cartridge all of the meta-data is described using the IEEE LOM standard…"
     },
     {
-      "key": "cc:1.4:def:ManifestMetadata.Type/curriculumStandardsMetadataSet",
+      "key": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.ManifestMetadata.Type/curriculumStandardsMetadataSet",
       "kind": "property",
       "path": "curriculumStandardsMetadataSet",
       "modelled": "yes"
     },
     {
-      "key": "cc:1.4:def:ManifestMetadata.Type/lom",
+      "key": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.ManifestMetadata.Type/lom",
       "kind": "property",
       "path": "lom",
       "required": true,
       "modelled": "yes"
     },
     {
-      "key": "cc:1.4:def:ManifestMetadata.Type/schema",
+      "key": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.ManifestMetadata.Type/schema",
       "kind": "property",
       "path": "schema",
       "required": true,
@@ -408,7 +482,7 @@
       "modelled": "yes"
     },
     {
-      "key": "cc:1.4:def:ManifestMetadata.Type/schemaversion",
+      "key": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.ManifestMetadata.Type/schemaversion",
       "kind": "property",
       "path": "schemaversion",
       "required": true,
@@ -419,19 +493,19 @@
       "modelled": "yes"
     },
     {
-      "key": "cc:1.4:def:Metadata.Type",
+      "key": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Metadata.Type",
       "kind": "definition",
       "path": "",
       "description": "This is the meta-data describing the associated class (but not the manifest which has its own meta-data structure). In Common Cartridge all of the meta-data is described using the IEEE LOM standard format."
     },
     {
-      "key": "cc:1.4:def:Organization.Type",
+      "key": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Organization.Type",
       "kind": "definition",
       "path": "",
       "description": "Describes a particular hierarchical organization in this profile; this is the only type of oranization that is permitted. The identifier, for the organization, that is unique within the Manifest file. The organization may have meta-data."
     },
     {
-      "key": "cc:1.4:def:Organization.Type/identifier",
+      "key": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Organization.Type/identifier",
       "kind": "property",
       "path": "identifier",
       "required": true,
@@ -439,20 +513,20 @@
       "modelled": "yes"
     },
     {
-      "key": "cc:1.4:def:Organization.Type/item",
+      "key": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Organization.Type/item",
       "kind": "property",
       "path": "item",
       "required": true,
       "modelled": "yes"
     },
     {
-      "key": "cc:1.4:def:Organization.Type/metadata",
+      "key": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Organization.Type/metadata",
       "kind": "property",
       "path": "metadata",
       "modelled": "yes"
     },
     {
-      "key": "cc:1.4:def:Organization.Type/structure",
+      "key": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Organization.Type/structure",
       "kind": "property",
       "path": "structure",
       "required": true,
@@ -460,70 +534,70 @@
       "modelled": "yes"
     },
     {
-      "key": "cc:1.4:def:Organization.Type/title",
+      "key": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Organization.Type/title",
       "kind": "property",
       "path": "title",
       "jsonType": "string",
       "modelled": "yes"
     },
     {
-      "key": "cc:1.4:def:Organizations.Type",
+      "key": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Organizations.Type",
       "kind": "definition",
       "path": "",
       "description": "Describes zero or one structures or organizations for the Cartridge. Only one organization is permitted so the default attribute has been removed for this Profile."
     },
     {
-      "key": "cc:1.4:def:Organizations.Type/organization",
+      "key": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Organizations.Type/organization",
       "kind": "property",
       "path": "organization",
       "modelled": "yes"
     },
     {
-      "key": "cc:1.4:def:Resource.Type",
+      "key": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Resource.Type",
       "kind": "definition",
       "path": "",
       "description": "A reference to a resource which consists of one or more physical files. The Identifer of the resource is unique within the scope of its containing Manifest file. The Type attribute indicates the type of resource - for the Cartridge this is an enumerated set. The resource may hav…"
     },
     {
-      "key": "cc:1.4:def:Resource.Type/base",
+      "key": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Resource.Type/base",
       "kind": "property",
       "path": "base",
       "jsonType": "string",
       "modelled": "no"
     },
     {
-      "key": "cc:1.4:def:Resource.Type/dependency",
+      "key": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Resource.Type/dependency",
       "kind": "property",
       "path": "dependency",
       "jsonType": "array",
       "modelled": "yes"
     },
     {
-      "key": "cc:1.4:def:Resource.Type/dependency/[]",
+      "key": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Resource.Type/dependency/[]",
       "kind": "property",
       "path": "dependency/[]"
     },
     {
-      "key": "cc:1.4:def:Resource.Type/file",
+      "key": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Resource.Type/file",
       "kind": "property",
       "path": "file",
       "jsonType": "array",
       "modelled": "yes"
     },
     {
-      "key": "cc:1.4:def:Resource.Type/file/[]",
+      "key": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Resource.Type/file/[]",
       "kind": "property",
       "path": "file/[]"
     },
     {
-      "key": "cc:1.4:def:Resource.Type/href",
+      "key": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Resource.Type/href",
       "kind": "property",
       "path": "href",
       "jsonType": "string",
       "modelled": "yes"
     },
     {
-      "key": "cc:1.4:def:Resource.Type/identifier",
+      "key": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Resource.Type/identifier",
       "kind": "property",
       "path": "identifier",
       "required": true,
@@ -531,7 +605,7 @@
       "modelled": "yes"
     },
     {
-      "key": "cc:1.4:def:Resource.Type/intendeduse",
+      "key": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Resource.Type/intendeduse",
       "kind": "property",
       "path": "intendeduse",
       "jsonType": "string",
@@ -544,13 +618,13 @@
       "modelled": "yes"
     },
     {
-      "key": "cc:1.4:def:Resource.Type/metadata",
+      "key": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Resource.Type/metadata",
       "kind": "property",
       "path": "metadata",
       "modelled": "yes"
     },
     {
-      "key": "cc:1.4:def:Resource.Type/type",
+      "key": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Resource.Type/type",
       "kind": "property",
       "path": "type",
       "required": true,
@@ -574,76 +648,163 @@
       "modelled": "yes"
     },
     {
-      "key": "cc:1.4:def:ResourceMetadata.Type",
+      "key": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.ResourceMetadata.Type",
       "kind": "definition",
       "path": "",
       "description": "This is the container for resource specific metadata. It may contain GUIDs that identify the curriculum standards which are associated with the resource."
     },
     {
-      "key": "cc:1.4:def:ResourceMetadata.Type/curriculumStandardsMetadataSet",
+      "key": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.ResourceMetadata.Type/curriculumStandardsMetadataSet",
       "kind": "property",
       "path": "curriculumStandardsMetadataSet",
       "jsonType": "array",
       "modelled": "yes"
     },
     {
-      "key": "cc:1.4:def:ResourceMetadata.Type/curriculumStandardsMetadataSet/[]",
+      "key": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.ResourceMetadata.Type/curriculumStandardsMetadataSet/[]",
       "kind": "property",
       "path": "curriculumStandardsMetadataSet/[]"
     },
     {
-      "key": "cc:1.4:def:ResourceMetadata.Type/lom",
+      "key": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.ResourceMetadata.Type/lom",
       "kind": "property",
       "path": "lom",
       "modelled": "yes"
     },
     {
-      "key": "cc:1.4:def:ResourceMetadata.Type/schema",
+      "key": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.ResourceMetadata.Type/schema",
       "kind": "property",
       "path": "schema",
       "jsonType": "string",
       "modelled": "yes"
     },
     {
-      "key": "cc:1.4:def:ResourceMetadata.Type/schemaversion",
+      "key": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.ResourceMetadata.Type/schemaversion",
       "kind": "property",
       "path": "schemaversion",
       "jsonType": "string",
       "modelled": "yes"
     },
     {
-      "key": "cc:1.4:def:Resources.Type",
+      "key": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Resources.Type",
       "kind": "definition",
       "path": "",
       "description": "A collection of references to resources. There is no assumption of order or hierarchy. The base attribute provides the relative path offset for the content file(s)."
     },
     {
-      "key": "cc:1.4:def:Resources.Type/base",
+      "key": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Resources.Type/base",
       "kind": "property",
       "path": "base",
       "jsonType": "string",
       "modelled": "no"
     },
     {
-      "key": "cc:1.4:def:Resources.Type/resource",
+      "key": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Resources.Type/resource",
       "kind": "property",
       "path": "resource",
       "jsonType": "array",
       "modelled": "yes"
     },
     {
-      "key": "cc:1.4:def:Resources.Type/resource/[]",
+      "key": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Resources.Type/resource/[]",
       "kind": "property",
       "path": "resource/[]"
     },
     {
-      "key": "cc:1.4:def:SetOfGUIDs.Type",
+      "key": "cc:1.4:def:ccv1p4_imscsmd_v1p1.CurriculumStandardsMetadata.Type",
+      "kind": "definition",
+      "path": "",
+      "description": "The CurriculumStandardsMetadata data-type is the container for the specicial metadata for curriculum standards for a particular domain of GUID provider. The 'providerId' attribute is used to denote the originator of the GUID scheme."
+    },
+    {
+      "key": "cc:1.4:def:ccv1p4_imscsmd_v1p1.CurriculumStandardsMetadata.Type/providerId",
+      "kind": "property",
+      "path": "providerId",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "cc:1.4:def:ccv1p4_imscsmd_v1p1.CurriculumStandardsMetadata.Type/setOfGUIDs",
+      "kind": "property",
+      "path": "setOfGUIDs",
+      "jsonType": "array",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "cc:1.4:def:ccv1p4_imscsmd_v1p1.CurriculumStandardsMetadata.Type/setOfGUIDs/[]",
+      "kind": "property",
+      "path": "setOfGUIDs/[]"
+    },
+    {
+      "key": "cc:1.4:def:ccv1p4_imscsmd_v1p1.CurriculumStandardsMetadataSet.Type",
+      "kind": "definition",
+      "path": "",
+      "description": "The CurriculumStandardsMetadataSet data-type is the container for the set of curriculum s- tandards metadata. Each member of the set contains the curriculum standards metadata for a specific source of the GUIDs. The 'resourceLabel' attribute is a human readable label used to ide…"
+    },
+    {
+      "key": "cc:1.4:def:ccv1p4_imscsmd_v1p1.CurriculumStandardsMetadataSet.Type/curriculumStandardsMetadata",
+      "kind": "property",
+      "path": "curriculumStandardsMetadata",
+      "jsonType": "array",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "cc:1.4:def:ccv1p4_imscsmd_v1p1.CurriculumStandardsMetadataSet.Type/curriculumStandardsMetadata/[]",
+      "kind": "property",
+      "path": "curriculumStandardsMetadata/[]"
+    },
+    {
+      "key": "cc:1.4:def:ccv1p4_imscsmd_v1p1.CurriculumStandardsMetadataSet.Type/resourceLabel",
+      "kind": "property",
+      "path": "resourceLabel",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "cc:1.4:def:ccv1p4_imscsmd_v1p1.CurriculumStandardsMetadataSet.Type/resourcePartId",
+      "kind": "property",
+      "path": "resourcePartId",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "cc:1.4:def:ccv1p4_imscsmd_v1p1.LabelledGUID.Type",
+      "kind": "definition",
+      "path": "",
+      "description": "The labelled curriculum standard GUID. The optional label provides a human readable string to provide a clue about the nature of the curriculum standard."
+    },
+    {
+      "key": "cc:1.4:def:ccv1p4_imscsmd_v1p1.LabelledGUID.Type/caseItemURI",
+      "kind": "property",
+      "path": "caseItemURI",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "cc:1.4:def:ccv1p4_imscsmd_v1p1.LabelledGUID.Type/GUID",
+      "kind": "property",
+      "path": "GUID",
+      "required": true,
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "cc:1.4:def:ccv1p4_imscsmd_v1p1.LabelledGUID.Type/label",
+      "kind": "property",
+      "path": "label",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "cc:1.4:def:ccv1p4_imscsmd_v1p1.SetOfGUIDs.Type",
       "kind": "definition",
       "path": "",
       "description": "The SetofGUIDs data-type is the container for the set of GUIDs that are to annotate a res- ource for a particular geographical/socio-political/etc. region. The region is denote usi- ng the 'region' attribute. The 'version' attribute is used to denote any relevant version- ing in…"
     },
     {
-      "key": "cc:1.4:def:SetOfGUIDs.Type/labelledGUID",
+      "key": "cc:1.4:def:ccv1p4_imscsmd_v1p1.SetOfGUIDs.Type/labelledGUID",
       "kind": "property",
       "path": "labelledGUID",
       "jsonType": "array",
@@ -651,32 +812,74 @@
       "modelled": "yes"
     },
     {
-      "key": "cc:1.4:def:SetOfGUIDs.Type/labelledGUID/[]",
+      "key": "cc:1.4:def:ccv1p4_imscsmd_v1p1.SetOfGUIDs.Type/labelledGUID/[]",
       "kind": "property",
       "path": "labelledGUID/[]"
     },
     {
-      "key": "cc:1.4:def:SetOfGUIDs.Type/region",
+      "key": "cc:1.4:def:ccv1p4_imscsmd_v1p1.SetOfGUIDs.Type/region",
       "kind": "property",
       "path": "region",
       "jsonType": "string",
       "modelled": "yes"
     },
     {
-      "key": "cc:1.4:def:SetOfGUIDs.Type/version",
+      "key": "cc:1.4:def:ccv1p4_imscsmd_v1p1.SetOfGUIDs.Type/version",
       "kind": "property",
       "path": "version",
       "jsonType": "string",
       "modelled": "yes"
     },
     {
-      "key": "cc:1.4:def:Text.Type",
+      "key": "cc:1.4:def:ccv1p4_imsdt_v1p4.Attachment.Type",
+      "kind": "definition",
+      "path": ""
+    },
+    {
+      "key": "cc:1.4:def:ccv1p4_imsdt_v1p4.Attachment.Type/href",
+      "kind": "property",
+      "path": "href",
+      "required": true,
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "cc:1.4:def:ccv1p4_imsdt_v1p4.Attachments.Type",
+      "kind": "definition",
+      "path": ""
+    },
+    {
+      "key": "cc:1.4:def:ccv1p4_imsdt_v1p4.Attachments.Type/attachment",
+      "kind": "property",
+      "path": "attachment",
+      "jsonType": "array",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "cc:1.4:def:ccv1p4_imsdt_v1p4.Attachments.Type/attachment/[]",
+      "kind": "property",
+      "path": "attachment/[]"
+    },
+    {
+      "key": "cc:1.4:def:ccv1p4_imsdt_v1p4.EmptyPrimitiveType.Type",
+      "kind": "definition",
+      "path": ""
+    },
+    {
+      "key": "cc:1.4:def:ccv1p4_imsdt_v1p4.grpStrict.any",
+      "kind": "definition",
+      "path": "",
+      "description": "Any namespaced element from any namespace, other than the target namespace, may be included within an \"any\" element. The namespace for the imported element must be defined in the instance, and the schema must be imported. The extension has a definition of \"strict\" i.e. they must…"
+    },
+    {
+      "key": "cc:1.4:def:ccv1p4_imsdt_v1p4.Text.Type",
       "kind": "definition",
       "path": "",
       "description": "The Text for the discussion topic."
     },
     {
-      "key": "cc:1.4:def:Text.Type/texttype",
+      "key": "cc:1.4:def:ccv1p4_imsdt_v1p4.Text.Type/texttype",
       "kind": "property",
       "path": "texttype",
       "required": true,
@@ -688,38 +891,38 @@
       "modelled": "yes"
     },
     {
-      "key": "cc:1.4:def:Topic.Type",
+      "key": "cc:1.4:def:ccv1p4_imsdt_v1p4.Topic.Type",
       "kind": "definition",
       "path": "",
       "description": "The Topic complexType for the discussion topic object."
     },
     {
-      "key": "cc:1.4:def:Topic.Type/attachments",
+      "key": "cc:1.4:def:ccv1p4_imsdt_v1p4.Topic.Type/attachments",
       "kind": "property",
       "path": "attachments",
       "modelled": "yes"
     },
     {
-      "key": "cc:1.4:def:Topic.Type/extensions",
+      "key": "cc:1.4:def:ccv1p4_imsdt_v1p4.Topic.Type/extensions",
       "kind": "property",
       "path": "extensions",
       "jsonType": "array",
       "modelled": "yes"
     },
     {
-      "key": "cc:1.4:def:Topic.Type/extensions/[]",
+      "key": "cc:1.4:def:ccv1p4_imsdt_v1p4.Topic.Type/extensions/[]",
       "kind": "property",
       "path": "extensions/[]"
     },
     {
-      "key": "cc:1.4:def:Topic.Type/text",
+      "key": "cc:1.4:def:ccv1p4_imsdt_v1p4.Topic.Type/text",
       "kind": "property",
       "path": "text",
       "required": true,
       "modelled": "yes"
     },
     {
-      "key": "cc:1.4:def:Topic.Type/title",
+      "key": "cc:1.4:def:ccv1p4_imsdt_v1p4.Topic.Type/title",
       "kind": "property",
       "path": "title",
       "required": true,
@@ -727,13 +930,24 @@
       "modelled": "yes"
     },
     {
-      "key": "cc:1.4:def:URL.Type",
+      "key": "cc:1.4:def:ccv1p4_imswl_v1p4.EmptyPrimitiveType.Type",
+      "kind": "definition",
+      "path": ""
+    },
+    {
+      "key": "cc:1.4:def:ccv1p4_imswl_v1p4.grpStrict.any",
+      "kind": "definition",
+      "path": "",
+      "description": "Any namespaced element from any namespace, other than the target namespace, may be included within an \"any\" element. The namespace for the imported element must be defined in the instance, and the schema must be imported. The extension has a definition of \"strict\" i.e. they must…"
+    },
+    {
+      "key": "cc:1.4:def:ccv1p4_imswl_v1p4.URL.Type",
       "kind": "definition",
       "path": "",
       "description": "The URL for the web link."
     },
     {
-      "key": "cc:1.4:def:URL.Type/href",
+      "key": "cc:1.4:def:ccv1p4_imswl_v1p4.URL.Type/href",
       "kind": "property",
       "path": "href",
       "required": true,
@@ -741,39 +955,39 @@
       "modelled": "yes"
     },
     {
-      "key": "cc:1.4:def:URL.Type/target",
+      "key": "cc:1.4:def:ccv1p4_imswl_v1p4.URL.Type/target",
       "kind": "property",
       "path": "target",
       "jsonType": "string",
       "modelled": "yes"
     },
     {
-      "key": "cc:1.4:def:URL.Type/windowFeatures",
+      "key": "cc:1.4:def:ccv1p4_imswl_v1p4.URL.Type/windowFeatures",
       "kind": "property",
       "path": "windowFeatures",
       "jsonType": "string",
       "modelled": "yes"
     },
     {
-      "key": "cc:1.4:def:WebLink.Type",
+      "key": "cc:1.4:def:ccv1p4_imswl_v1p4.WebLink.Type",
       "kind": "definition",
       "path": "",
       "description": "The WebLink complexType for the associated object."
     },
     {
-      "key": "cc:1.4:def:WebLink.Type/extensions",
+      "key": "cc:1.4:def:ccv1p4_imswl_v1p4.WebLink.Type/extensions",
       "kind": "property",
       "path": "extensions",
       "jsonType": "array",
       "modelled": "yes"
     },
     {
-      "key": "cc:1.4:def:WebLink.Type/extensions/[]",
+      "key": "cc:1.4:def:ccv1p4_imswl_v1p4.WebLink.Type/extensions/[]",
       "kind": "property",
       "path": "extensions/[]"
     },
     {
-      "key": "cc:1.4:def:WebLink.Type/title",
+      "key": "cc:1.4:def:ccv1p4_imswl_v1p4.WebLink.Type/title",
       "kind": "property",
       "path": "title",
       "required": true,
@@ -781,11 +995,16 @@
       "modelled": "yes"
     },
     {
-      "key": "cc:1.4:def:WebLink.Type/url",
+      "key": "cc:1.4:def:ccv1p4_imswl_v1p4.WebLink.Type/url",
       "kind": "property",
       "path": "url",
       "required": true,
       "modelled": "yes"
+    },
+    {
+      "key": "cc:1.4:doc:assignment",
+      "kind": "document",
+      "path": ""
     },
     {
       "key": "cc:1.4:doc:authorizations",
@@ -815,147 +1034,203 @@
   ],
   "edges": [
     {
-      "from": "cc:1.4:def:Attachment.Type",
-      "to": "cc:1.4:def:EmptyPrimitiveType.Type"
+      "from": "cc:1.4:def:cc_extresource_assignmentv1p0_v1p0.Assignment.Type/attachments",
+      "to": "cc:1.4:def:cc_extresource_assignmentv1p0_v1p0.Attachments.Type"
     },
     {
-      "from": "cc:1.4:def:Attachments.Type/attachment/[]",
-      "to": "cc:1.4:def:Attachment.Type"
+      "from": "cc:1.4:def:cc_extresource_assignmentv1p0_v1p0.Assignment.Type/extensions",
+      "to": "cc:1.4:def:cc_extresource_assignmentv1p0_v1p0.Extensions.Type"
     },
     {
-      "from": "cc:1.4:def:Authorizations.Type",
-      "to": "cc:1.4:def:grpStrict.any"
+      "from": "cc:1.4:def:cc_extresource_assignmentv1p0_v1p0.Assignment.Type/instructor_text",
+      "to": "cc:1.4:def:cc_extresource_assignmentv1p0_v1p0.Text.Type"
     },
     {
-      "from": "cc:1.4:def:Authorizations.Type/authorization",
-      "to": "cc:1.4:def:Authorization.Type"
+      "from": "cc:1.4:def:cc_extresource_assignmentv1p0_v1p0.Assignment.Type/submission_formats",
+      "to": "cc:1.4:def:cc_extresource_assignmentv1p0_v1p0.SubmissionFormats.Type"
     },
     {
-      "from": "cc:1.4:def:CurriculumStandardsMetadata.Type/setOfGUIDs/[]",
-      "to": "cc:1.4:def:SetOfGUIDs.Type"
+      "from": "cc:1.4:def:cc_extresource_assignmentv1p0_v1p0.Assignment.Type/text",
+      "to": "cc:1.4:def:cc_extresource_assignmentv1p0_v1p0.Text.Type"
     },
     {
-      "from": "cc:1.4:def:CurriculumStandardsMetadataSet.Type/curriculumStandardsMetadata/[]",
-      "to": "cc:1.4:def:CurriculumStandardsMetadata.Type"
+      "from": "cc:1.4:def:cc_extresource_assignmentv1p0_v1p0.Attachment.Type",
+      "to": "cc:1.4:def:cc_extresource_assignmentv1p0_v1p0.EmptyPrimitiveType.Type"
     },
     {
-      "from": "cc:1.4:def:File.Type/metadata",
-      "to": "cc:1.4:def:Metadata.Type"
+      "from": "cc:1.4:def:cc_extresource_assignmentv1p0_v1p0.Attachments.Type/attachment/[]",
+      "to": "cc:1.4:def:cc_extresource_assignmentv1p0_v1p0.Attachment.Type"
     },
     {
-      "from": "cc:1.4:def:Item.Type/item/[]",
-      "to": "cc:1.4:def:Item.Type"
+      "from": "cc:1.4:def:cc_extresource_assignmentv1p0_v1p0.Extensions.Type",
+      "to": "cc:1.4:def:cc_extresource_assignmentv1p0_v1p0.grpStrict.any"
     },
     {
-      "from": "cc:1.4:def:Item.Type/metadata",
-      "to": "cc:1.4:def:Metadata.Type"
+      "from": "cc:1.4:def:cc_extresource_assignmentv1p0_v1p0.Format.Type",
+      "to": "cc:1.4:def:cc_extresource_assignmentv1p0_v1p0.EmptyPrimitiveType.Type"
     },
     {
-      "from": "cc:1.4:def:ItemOrg.Type/item/[]",
-      "to": "cc:1.4:def:Item.Type"
+      "from": "cc:1.4:def:cc_extresource_assignmentv1p0_v1p0.SubmissionFormats.Type/format/[]",
+      "to": "cc:1.4:def:cc_extresource_assignmentv1p0_v1p0.Format.Type"
     },
     {
-      "from": "cc:1.4:def:ItemOrg.Type/metadata",
-      "to": "cc:1.4:def:Metadata.Type"
+      "from": "cc:1.4:def:ccv1p4_imsccauth_v1p4.Authorizations.Type",
+      "to": "cc:1.4:def:ccv1p4_imsccauth_v1p4.grpStrict.any"
     },
     {
-      "from": "cc:1.4:def:Manifest.Type/metadata",
-      "to": "cc:1.4:def:ManifestMetadata.Type"
+      "from": "cc:1.4:def:ccv1p4_imsccauth_v1p4.Authorizations.Type/authorization",
+      "to": "cc:1.4:def:ccv1p4_imsccauth_v1p4.Authorization.Type"
     },
     {
-      "from": "cc:1.4:def:Manifest.Type/organizations",
-      "to": "cc:1.4:def:Organizations.Type"
+      "from": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.File.Type/metadata",
+      "to": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Metadata.Type"
     },
     {
-      "from": "cc:1.4:def:Manifest.Type/resources",
-      "to": "cc:1.4:def:Resources.Type"
+      "from": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Item.Type/item/[]",
+      "to": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Item.Type"
     },
     {
-      "from": "cc:1.4:def:Metadata.Type",
-      "to": "cc:1.4:def:grpStrict.any"
+      "from": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Item.Type/metadata",
+      "to": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Metadata.Type"
     },
     {
-      "from": "cc:1.4:def:Organization.Type/item",
-      "to": "cc:1.4:def:ItemOrg.Type"
+      "from": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.ItemOrg.Type/item/[]",
+      "to": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Item.Type"
     },
     {
-      "from": "cc:1.4:def:Organization.Type/metadata",
-      "to": "cc:1.4:def:Metadata.Type"
+      "from": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.ItemOrg.Type/metadata",
+      "to": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Metadata.Type"
     },
     {
-      "from": "cc:1.4:def:Organizations.Type/organization",
-      "to": "cc:1.4:def:Organization.Type"
+      "from": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Manifest.Type/metadata",
+      "to": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.ManifestMetadata.Type"
     },
     {
-      "from": "cc:1.4:def:Resource.Type",
-      "to": "cc:1.4:def:grpStrict.any"
+      "from": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Manifest.Type/organizations",
+      "to": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Organizations.Type"
     },
     {
-      "from": "cc:1.4:def:Resource.Type/dependency/[]",
-      "to": "cc:1.4:def:Dependency.Type"
+      "from": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Manifest.Type/resources",
+      "to": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Resources.Type"
     },
     {
-      "from": "cc:1.4:def:Resource.Type/file/[]",
-      "to": "cc:1.4:def:File.Type"
+      "from": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Metadata.Type",
+      "to": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.grpStrict.any"
     },
     {
-      "from": "cc:1.4:def:Resource.Type/metadata",
-      "to": "cc:1.4:def:ResourceMetadata.Type"
+      "from": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Organization.Type/item",
+      "to": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.ItemOrg.Type"
     },
     {
-      "from": "cc:1.4:def:Resources.Type/resource/[]",
-      "to": "cc:1.4:def:Resource.Type"
+      "from": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Organization.Type/metadata",
+      "to": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Metadata.Type"
     },
     {
-      "from": "cc:1.4:def:SetOfGUIDs.Type/labelledGUID/[]",
-      "to": "cc:1.4:def:LabelledGUID.Type"
+      "from": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Organizations.Type/organization",
+      "to": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Organization.Type"
     },
     {
-      "from": "cc:1.4:def:Topic.Type",
-      "to": "cc:1.4:def:grpStrict.any"
+      "from": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Resource.Type",
+      "to": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.grpStrict.any"
     },
     {
-      "from": "cc:1.4:def:Topic.Type/attachments",
-      "to": "cc:1.4:def:Attachments.Type"
+      "from": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Resource.Type/dependency/[]",
+      "to": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Dependency.Type"
     },
     {
-      "from": "cc:1.4:def:Topic.Type/text",
-      "to": "cc:1.4:def:Text.Type"
+      "from": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Resource.Type/file/[]",
+      "to": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.File.Type"
     },
     {
-      "from": "cc:1.4:def:URL.Type",
-      "to": "cc:1.4:def:EmptyPrimitiveType.Type"
+      "from": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Resource.Type/metadata",
+      "to": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.ResourceMetadata.Type"
     },
     {
-      "from": "cc:1.4:def:WebLink.Type",
-      "to": "cc:1.4:def:grpStrict.any"
+      "from": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Resources.Type/resource/[]",
+      "to": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Resource.Type"
     },
     {
-      "from": "cc:1.4:def:WebLink.Type/url",
-      "to": "cc:1.4:def:URL.Type"
+      "from": "cc:1.4:def:ccv1p4_imscsmd_v1p1.CurriculumStandardsMetadata.Type/setOfGUIDs/[]",
+      "to": "cc:1.4:def:ccv1p4_imscsmd_v1p1.SetOfGUIDs.Type"
+    },
+    {
+      "from": "cc:1.4:def:ccv1p4_imscsmd_v1p1.CurriculumStandardsMetadataSet.Type/curriculumStandardsMetadata/[]",
+      "to": "cc:1.4:def:ccv1p4_imscsmd_v1p1.CurriculumStandardsMetadata.Type"
+    },
+    {
+      "from": "cc:1.4:def:ccv1p4_imscsmd_v1p1.SetOfGUIDs.Type/labelledGUID/[]",
+      "to": "cc:1.4:def:ccv1p4_imscsmd_v1p1.LabelledGUID.Type"
+    },
+    {
+      "from": "cc:1.4:def:ccv1p4_imsdt_v1p4.Attachment.Type",
+      "to": "cc:1.4:def:ccv1p4_imsdt_v1p4.EmptyPrimitiveType.Type"
+    },
+    {
+      "from": "cc:1.4:def:ccv1p4_imsdt_v1p4.Attachments.Type/attachment/[]",
+      "to": "cc:1.4:def:ccv1p4_imsdt_v1p4.Attachment.Type"
+    },
+    {
+      "from": "cc:1.4:def:ccv1p4_imsdt_v1p4.Topic.Type",
+      "to": "cc:1.4:def:ccv1p4_imsdt_v1p4.grpStrict.any"
+    },
+    {
+      "from": "cc:1.4:def:ccv1p4_imsdt_v1p4.Topic.Type/attachments",
+      "to": "cc:1.4:def:ccv1p4_imsdt_v1p4.Attachments.Type"
+    },
+    {
+      "from": "cc:1.4:def:ccv1p4_imsdt_v1p4.Topic.Type/text",
+      "to": "cc:1.4:def:ccv1p4_imsdt_v1p4.Text.Type"
+    },
+    {
+      "from": "cc:1.4:def:ccv1p4_imswl_v1p4.URL.Type",
+      "to": "cc:1.4:def:ccv1p4_imswl_v1p4.EmptyPrimitiveType.Type"
+    },
+    {
+      "from": "cc:1.4:def:ccv1p4_imswl_v1p4.WebLink.Type",
+      "to": "cc:1.4:def:ccv1p4_imswl_v1p4.grpStrict.any"
+    },
+    {
+      "from": "cc:1.4:def:ccv1p4_imswl_v1p4.WebLink.Type/url",
+      "to": "cc:1.4:def:ccv1p4_imswl_v1p4.URL.Type"
+    },
+    {
+      "from": "cc:1.4:doc:assignment",
+      "to": "cc:1.4:def:cc_extresource_assignmentv1p0_v1p0.Assignment.Type"
     },
     {
       "from": "cc:1.4:doc:authorizations",
-      "to": "cc:1.4:def:Authorizations.Type"
+      "to": "cc:1.4:def:ccv1p4_imsccauth_v1p4.Authorizations.Type"
     },
     {
       "from": "cc:1.4:doc:curriculumStandardsMetadataSet",
-      "to": "cc:1.4:def:CurriculumStandardsMetadataSet.Type"
+      "to": "cc:1.4:def:ccv1p4_imscsmd_v1p1.CurriculumStandardsMetadataSet.Type"
     },
     {
       "from": "cc:1.4:doc:manifest",
-      "to": "cc:1.4:def:Manifest.Type"
+      "to": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Manifest.Type"
     },
     {
       "from": "cc:1.4:doc:topic",
-      "to": "cc:1.4:def:Topic.Type"
+      "to": "cc:1.4:def:ccv1p4_imsdt_v1p4.Topic.Type"
     },
     {
       "from": "cc:1.4:doc:webLink",
-      "to": "cc:1.4:def:WebLink.Type"
+      "to": "cc:1.4:def:ccv1p4_imswl_v1p4.WebLink.Type"
     }
   ],
   "conformance": [
+    {
+      "key": "cc:1.4:conf:assignment/CC14-ASN-1",
+      "profile": "assignment",
+      "reqId": "CC14-ASN-1",
+      "level": "MUST",
+      "statement": "An Assignment resource MUST carry a title and a text body describing the work the learner must submit.",
+      "constrains": [
+        "cc:1.4:def:cc_extresource_assignmentv1p0_v1p0.Assignment.Type/title",
+        "cc:1.4:def:cc_extresource_assignmentv1p0_v1p0.Assignment.Type/text"
+      ],
+      "source": "IMS CC 1.4 — Assignment extension (cc_extresource_assignment) — https://www.imsglobal.org/spec/cc/v1p4"
+    },
     {
       "key": "cc:1.4:conf:authorization/CC14-AUTH-1",
       "profile": "authorization",
@@ -963,7 +1238,7 @@
       "level": "MUST",
       "statement": "An authorizations document MUST contain at least one authorization describing how to access a resource.",
       "constrains": [
-        "cc:1.4:def:Authorizations.Type/authorization"
+        "cc:1.4:def:ccv1p4_imsccauth_v1p4.Authorizations.Type/authorization"
       ],
       "source": "IMS CC 1.4 — Authorization (imsccauth_v1p4) — https://www.imsglobal.org/spec/cc/v1p4"
     },
@@ -974,8 +1249,8 @@
       "level": "MUST",
       "statement": "A Discussion Topic resource MUST carry exactly one title and exactly one text body.",
       "constrains": [
-        "cc:1.4:def:Topic.Type/title",
-        "cc:1.4:def:Topic.Type/text"
+        "cc:1.4:def:ccv1p4_imsdt_v1p4.Topic.Type/title",
+        "cc:1.4:def:ccv1p4_imsdt_v1p4.Topic.Type/text"
       ],
       "source": "IMS CC 1.4 — Discussion Topic resource (imsdt_v1p4) — https://www.imsglobal.org/spec/cc/v1p4"
     },
@@ -986,9 +1261,9 @@
       "level": "MUST",
       "statement": "A Common Cartridge 1.4 manifest MUST carry an identifier and exactly one organizations and one resources element.",
       "constrains": [
-        "cc:1.4:def:Manifest.Type/identifier",
-        "cc:1.4:def:Manifest.Type/organizations",
-        "cc:1.4:def:Manifest.Type/resources"
+        "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Manifest.Type/identifier",
+        "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Manifest.Type/organizations",
+        "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Manifest.Type/resources"
       ],
       "source": "IMS CC 1.4 — Content Packaging manifest (imscp_v1p2) — https://www.imsglobal.org/spec/cc/v1p4"
     },
@@ -999,19 +1274,20 @@
       "level": "MUST",
       "statement": "A Web Link resource MUST contain a webLink element carrying exactly one title and exactly one url.",
       "constrains": [
-        "cc:1.4:def:WebLink.Type/title",
-        "cc:1.4:def:WebLink.Type/url"
+        "cc:1.4:def:ccv1p4_imswl_v1p4.WebLink.Type/title",
+        "cc:1.4:def:ccv1p4_imswl_v1p4.WebLink.Type/url"
       ],
       "source": "IMS CC 1.4 — Web Link resource (imswl_v1p4) — https://www.imsglobal.org/spec/cc/v1p4"
     }
   ],
   "residues": {
     "silentGaps": [
-      "cc:1.4:def:Manifest.Type/base",
-      "cc:1.4:def:Resource.Type/base",
-      "cc:1.4:def:Resources.Type/base"
+      "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Manifest.Type/base",
+      "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Resource.Type/base",
+      "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Resources.Type/base"
     ],
     "extensions": [
+      "cc:1.4:def:assignment.__schema1/value",
       "cc:1.4:def:manifest.__schema1/annotation",
       "cc:1.4:def:manifest.__schema1/classification",
       "cc:1.4:def:manifest.__schema1/educational",
@@ -1027,6 +1303,7 @@
       "cc:1.4:def:manifest.__schema20/resourceLabel",
       "cc:1.4:def:manifest.__schema20/resourcePartId",
       "cc:1.4:def:manifest.__schema26/extensions",
+      "cc:1.4:doc:assignment/extensions/extensions",
       "cc:1.4:doc:authorizations/extensions",
       "cc:1.4:doc:manifest/authorizations",
       "cc:1.4:doc:manifest/resources/resource/[]/extensions",
@@ -1048,11 +1325,11 @@
     ]
   },
   "rollup": {
-    "items": 112,
-    "modelledYes": 66,
+    "items": 143,
+    "modelledYes": 81,
     "modelledPartial": 0,
     "modelledNo": 3,
     "normativeItems": 0,
-    "conformanceRequirements": 4
+    "conformanceRequirements": 5
   }
 }
