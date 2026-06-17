@@ -55,9 +55,19 @@ describe("Caliper 1.2 Coverage Map — bundled-bootcamp JSON-Schema walker", () 
     expect(map.residues.silentGaps.length).toBeGreaterThan(0);
   });
 
+  test("extracts the rich embedded normative surface (the JSON-family schemas carry MUST prose)", () => {
+    // Caliper's schemas embed ~99 MUST statements; all materialise as regenerated entries.
+    expect(map.rollup.normativeStatements).toBeGreaterThan(50);
+    expect(map.normativeStatements.length).toBe(map.rollup.normativeStatements);
+    for (const s of map.normativeStatements) expect(s.statement.length).toBeGreaterThan(0);
+    // CAL-ID-1 cites the Event/Entity id MUSTs, so curated coverage is non-zero.
+    expect(map.rollup.normativeStatementsCited).toBeGreaterThan(0);
+    expect(map.normativeStatements.find((s) => s.item === "caliper:1.2:def:Event/id")?.cited).toBe(true);
+  });
+
   test("every conformance requirement cross-links to a real item key", () => {
     const keys = new Set(map.items.map((i) => i.key));
-    expect(map.rollup.conformanceRequirements).toBe(2);
+    expect(map.rollup.conformanceRequirements).toBe(3);
     for (const req of map.conformance) {
       expect(req.constrains.length).toBeGreaterThan(0);
       for (const key of req.constrains) expect(keys.has(key)).toBe(true);

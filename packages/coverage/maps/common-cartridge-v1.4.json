@@ -1280,6 +1280,7 @@
       "source": "IMS CC 1.4 — Web Link resource (imswl_v1p4) — https://www.imsglobal.org/spec/cc/v1p4"
     }
   ],
+  "normativeStatements": [],
   "residues": {
     "silentGaps": [
       "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Manifest.Type/base",
@@ -1330,6 +1331,8 @@
     "modelledPartial": 0,
     "modelledNo": 3,
     "normativeItems": 0,
-    "conformanceRequirements": 5
+    "conformanceRequirements": 5,
+    "normativeStatements": 0,
+    "normativeStatementsCited": 0
   }
 }

@@ -32,7 +32,18 @@ describe("Open Badges 3.0 Coverage Map", () => {
 
   test("captures normative items and the conformance seed", () => {
     expect(map.rollup.normativeItems).toBeGreaterThan(0);
-    expect(map.rollup.conformanceRequirements).toBe(5);
+    expect(map.rollup.conformanceRequirements).toBe(6);
+  });
+
+  test("extracts the schema's embedded normative statements + tracks curated coverage", () => {
+    // Every normative L1 item is materialised as a regenerated statement.
+    expect(map.normativeStatements.length).toBe(map.rollup.normativeItems);
+    expect(map.rollup.normativeStatements).toBe(map.normativeStatements.length);
+    for (const s of map.normativeStatements) expect(s.level === "MUST" || s.level === "MUST NOT").toBe(true);
+    // OB-ISS-6 cites the schema's own type-set MUSTs, so coverage is non-zero.
+    expect(map.rollup.normativeStatementsCited).toBeGreaterThan(0);
+    const cited = map.normativeStatements.find((s) => s.item === "ob:3.0:def:Achievement/type/[]");
+    expect(cited?.cited).toBe(true);
   });
 
   test("every conformance requirement cross-links to a real item key", () => {

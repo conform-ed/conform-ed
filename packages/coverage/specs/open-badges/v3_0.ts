@@ -82,6 +82,19 @@ const conformance: readonly ConformanceRequirement[] = [
     source:
       "OB 3.0 §8 (AchievementCredential.credentialSubject) + AchievementSubject — https://www.imsglobal.org/spec/ob/v3p0/#achievementsubject",
   },
+  {
+    // Cites the schema's own embedded MUST prose on the `type` sets (cf. normativeStatements):
+    // demonstrates a curated requirement covering the machine-extracted normative surface.
+    key: "ob:3.0:conf:issuer/OB-ISS-6",
+    profile: "issuer",
+    reqId: "OB-ISS-6",
+    level: "MUST",
+    statement:
+      "The type sets MUST be unordered sets whose required IRIs are present: an AchievementCredential's type MUST include 'AchievementCredential', and an Achievement's type MUST include 'Achievement'.",
+    constrains: ["ob:3.0:def:AchievementCredential/type/[]", "ob:3.0:def:Achievement/type/[]"],
+    source:
+      "OB 3.0 §8 (AchievementCredential.type) + §Achievement — https://www.imsglobal.org/spec/ob/v3p0/#achievement",
+  },
 ];
 
 export const openBadgesV3_0: SpecSource = {

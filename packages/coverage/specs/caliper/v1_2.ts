@@ -76,6 +76,18 @@ const conformance: readonly ConformanceRequirement[] = [
     constrains: ["caliper:1.2:def:Event/actor", "caliper:1.2:def:Event/action", "caliper:1.2:def:Event/object"],
     source: "Caliper 1.2 §Event — https://www.imsglobal.org/spec/caliper/v1p2",
   },
+  {
+    // Cites the schema's own embedded MUST prose on `id` (cf. normativeStatements):
+    // an Event id MUST be a urn:uuid; an Entity id MUST be a unique, persistent IRI.
+    key: "caliper:1.2:conf:identifier/CAL-ID-1",
+    profile: "identifier",
+    reqId: "CAL-ID-1",
+    level: "MUST",
+    statement:
+      "Every Caliper Event id MUST be a UUID expressed as a urn:uuid:<UUID> (RFC 4122); every Entity id MUST be a unique, persistent IRI.",
+    constrains: ["caliper:1.2:def:Event/id", "caliper:1.2:def:Entity/id"],
+    source: "Caliper 1.2 §Event / §Entity identifier — https://www.imsglobal.org/spec/caliper/v1p2",
+  },
 ];
 
 export const caliperV1_2: SpecSource = {

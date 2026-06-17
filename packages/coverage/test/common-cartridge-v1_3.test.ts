@@ -104,6 +104,14 @@ describe("Common Cartridge 1.3 Coverage Map — XSD walker (8 source-scoped bind
     }
   });
 
+  test("the CC XSDs embed no RFC-2119 prose — its norms are curated from the guides, not extracted", () => {
+    // Unlike the JSON-family schemas, the CC bindings carry no MUST-level documentation,
+    // so the extracted layer is empty and the C axis is curated-only.
+    expect(map.normativeStatements).toEqual([]);
+    expect(map.rollup.normativeStatements).toBe(0);
+    expect(map.rollup.conformanceRequirements).toBeGreaterThan(0);
+  });
+
   test("generation is deterministic", () => {
     const again = buildCoverageMap(commonCartridgeV1_3, { now: "2026-01-01" });
     expect(JSON.stringify(again)).toBe(JSON.stringify(map));

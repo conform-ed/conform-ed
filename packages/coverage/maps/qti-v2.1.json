@@ -45824,6 +45824,7 @@
       "source": "QTI 2.1 Results Reporting §assessmentResult — https://www.imsglobal.org/question/qtiv2p1/imsqti_resultv2p1.html"
     }
   ],
+  "normativeStatements": [],
   "residues": {
     "silentGaps": [
       "qti:2.1:def:apipv1p0_qtiextv2p1_v1p0.CompanionMaterialsInfo.Type/calculator",
@@ -46297,6 +46298,8 @@
     "modelledPartial": 0,
     "modelledNo": 385,
     "normativeItems": 0,
-    "conformanceRequirements": 3
+    "conformanceRequirements": 3,
+    "normativeStatements": 0,
+    "normativeStatementsCited": 0
   }
 }

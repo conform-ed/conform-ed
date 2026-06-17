@@ -50318,6 +50318,20 @@
       "source": "QTI 3.0 §item-body — https://www.imsglobal.org/spec/qti/v3p0/impl#h.item-body"
     }
   ],
+  "normativeStatements": [
+    {
+      "item": "qti:3.0.1:def:BaseSequenceEmptyDType",
+      "level": "MUST NOT",
+      "statement": "This class provides the base characteristics for some of the HTML tag and QTI interactions which MUST NOT have any child tags. This class provides the base characteristics for some of the HTML tag and QTI interactions which MUST NOT have any child tags.",
+      "cited": false
+    },
+    {
+      "item": "qti:3.0.1:def:TestRubricBlockDType",
+      "level": "MUST NOT",
+      "statement": "The container for the test-level and section-level rubric block content. A rubric block i- dentifies part of the content that represents instructions to one or more of the actors t- hat view the test. Rubric Blocks MUST NOT be nested within other Rubric Blocks.",
+      "cited": false
+    }
+  ],
   "residues": {
     "silentGaps": [
       "qti:3.0.1:def:ARIABaseDType/aria-activedescendant",
@@ -50778,6 +50792,8 @@
     "modelledPartial": 0,
     "modelledNo": 359,
     "normativeItems": 2,
-    "conformanceRequirements": 2
+    "conformanceRequirements": 2,
+    "normativeStatements": 2,
+    "normativeStatementsCited": 0
   }
 }

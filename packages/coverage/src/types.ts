@@ -78,6 +78,29 @@ export interface ConformanceRequirement {
   readonly source: string;
 }
 
+/**
+ * A normative statement **extracted from the literal schema's own documentation** (the
+ * RFC-2119 prose embedded in `xs:documentation` / JSON-Schema `description` / `$comment`).
+ *
+ * This is the machine-extractable half of the conformance surface, distinct from the
+ * hand-curated {@link ConformanceRequirement} catalog (whose source is the published
+ * certification *guide*, not the schema). It is regenerated from the denominator on every
+ * build — no hand-curation — so it stays exact. `cited` flags whether a curated
+ * requirement already references this item, surfacing where curation lags the schema's
+ * own declared norms. The XSD-family schemas embed almost no RFC-2119 prose (their norms
+ * live in prose guides → curation only); the JSON-family schemas embed a great deal.
+ */
+export interface NormativeStatement {
+  /** The L1 item key whose documentation carries the statement. */
+  readonly item: string;
+  /** RFC-2119 level parsed from the prose (extraction only detects MUST-family today). */
+  readonly level: NormativeLevel;
+  /** The normative prose, lifted verbatim from the schema documentation. */
+  readonly statement: string;
+  /** True when a curated {@link ConformanceRequirement} already `constrains` this item. */
+  readonly cited: boolean;
+}
+
 /** The three reconciliation residues that are the point of the literal denominator. */
 export interface ReconciliationResidues {
   /** Literal expanded paths with no Zod counterpart — candidate silent gaps. */
@@ -92,8 +115,14 @@ export interface CoverageRollup {
   readonly modelledYes: number;
   readonly modelledPartial: number;
   readonly modelledNo: number;
+  /** L1 items flagged normative (== {@link CoverageMap.normativeStatements} length). */
   readonly normativeItems: number;
+  /** Hand-curated {@link ConformanceRequirement}s (the certification catalog). */
   readonly conformanceRequirements: number;
+  /** Statements extracted from the schema's own RFC-2119 prose (the machine half). */
+  readonly normativeStatements: number;
+  /** Of those, how many a curated requirement already references (`cited`). */
+  readonly normativeStatementsCited: number;
 }
 
 /** Provenance of a single vendored source artifact in the denominator. */
@@ -120,6 +149,8 @@ export interface CoverageMap {
   readonly items: readonly CoverageItem[];
   readonly edges: readonly UsageEdge[];
   readonly conformance: readonly ConformanceRequirement[];
+  /** Normative statements extracted from the schema's own documentation (regenerated). */
+  readonly normativeStatements: readonly NormativeStatement[];
   readonly residues: ReconciliationResidues;
   readonly rollup: CoverageRollup;
 }

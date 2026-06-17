@@ -6102,6 +6102,7 @@
       "source": "IMS CC 1.3 — Web Link resource (imswl_v1p3) URL.Type — https://www.imsglobal.org/cc/CCv1p3/imscc_profilev1p3-Final.html#WebLinks"
     }
   ],
+  "normativeStatements": [],
   "residues": {
     "silentGaps": [
       "cc:1.3:def:ccv1p3_imscp_v1p2_v1p0.Manifest.Type/base",
@@ -6307,6 +6308,8 @@
     "modelledPartial": 0,
     "modelledNo": 3,
     "normativeItems": 0,
-    "conformanceRequirements": 7
+    "conformanceRequirements": 7,
+    "normativeStatements": 0,
+    "normativeStatementsCited": 0
   }
 }

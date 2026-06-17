@@ -3856,6 +3856,296 @@
       "source": "OneRoster 1.2 §User / Role — https://www.imsglobal.org/spec/oneroster/v1p2"
     }
   ],
+  "normativeStatements": [
+    {
+      "item": "or:1.2:def:AcademicSessionDType/dateLastModified",
+      "level": "MUST",
+      "statement": "Model Primitive Datatype = DateTime. All objects MUST be annotated with the dateTime upon which they were last modified. This enables requesters to query for just the latest objects. DateTimes MUST be expressed in W3C profile of [ISO 8601] and MUST contain the UTC timezone.",
+      "cited": false
+    },
+    {
+      "item": "or:1.2:def:AcademicSessionDType/sourcedId",
+      "level": "MUST",
+      "statement": "Model Primitive Datatype = String. The sourcedId of the object. All objects MUST be identified by a Source Identifier. This is a GUID System ID for an object. This is the GUID that SYSTEMS will refer to when making API calls, or when needing to identify an object. It is RECOMMEN…",
+      "cited": false
+    },
+    {
+      "item": "or:1.2:def:AcademicSessionDType/status",
+      "level": "MUST",
+      "statement": "All objects MUST BE either 'active' or 'tobedeleted'. Something which is flagged 'tobedeleted' is to be considered safe to delete. Systems can delete records that are flagged as such if they wish, but they are not under any compulsion to do so. In v1.1 the enumeration value of '…",
+      "cited": false
+    },
+    {
+      "item": "or:1.2:def:AssessmentLineItemDType/dateLastModified",
+      "level": "MUST",
+      "statement": "Model Primitive Datatype = DateTime. All objects MUST be annotated with the dateTime upon which they were last modified. This enables requesters to query for just the latest objects. DateTimes MUST be expressed in W3C profile of [ISO 8601] and MUST contain the UTC timezone.",
+      "cited": false
+    },
+    {
+      "item": "or:1.2:def:AssessmentLineItemDType/sourcedId",
+      "level": "MUST",
+      "statement": "Model Primitive Datatype = String. The sourcedId of the object. All objects MUST be identified by a Source Identifier. This is a GUID System ID for an object. This is the GUID that SYSTEMS will refer to when making API calls, or when needing to identify an object. It is RECOMMEN…",
+      "cited": false
+    },
+    {
+      "item": "or:1.2:def:AssessmentLineItemDType/status",
+      "level": "MUST",
+      "statement": "All objects MUST BE either 'active' or 'tobedeleted'. Something which is flagged 'tobedeleted' is to be considered safe to delete. Systems can delete records that are flagged as such if they wish, but they are not under any compulsion to do so. In v1.1 the enumeration value of '…",
+      "cited": false
+    },
+    {
+      "item": "or:1.2:def:AssessmentResultDType/dateLastModified",
+      "level": "MUST",
+      "statement": "Model Primitive Datatype = DateTime. All objects MUST be annotated with the dateTime upon which they were last modified. This enables requesters to query for just the latest objects. DateTimes MUST be expressed in W3C profile of [ISO 8601] and MUST contain the UTC timezone.",
+      "cited": false
+    },
+    {
+      "item": "or:1.2:def:AssessmentResultDType/sourcedId",
+      "level": "MUST",
+      "statement": "Model Primitive Datatype = String. The sourcedId of the object. All objects MUST be identified by a Source Identifier. This is a GUID System ID for an object. This is the GUID that SYSTEMS will refer to when making API calls, or when needing to identify an object. It is RECOMMEN…",
+      "cited": false
+    },
+    {
+      "item": "or:1.2:def:AssessmentResultDType/status",
+      "level": "MUST",
+      "statement": "All objects MUST BE either 'active' or 'tobedeleted'. Something which is flagged 'tobedeleted' is to be considered safe to delete. Systems can delete records that are flagged as such if they wish, but they are not under any compulsion to do so. In v1.1 the enumeration value of '…",
+      "cited": false
+    },
+    {
+      "item": "or:1.2:def:CategoryDType/dateLastModified",
+      "level": "MUST",
+      "statement": "Model Primitive Datatype = DateTime. All objects MUST be annotated with the dateTime upon which they were last modified. This enables requesters to query for just the latest objects. DateTimes MUST be expressed in W3C profile of [ISO 8601] and MUST contain the UTC timezone.",
+      "cited": false
+    },
+    {
+      "item": "or:1.2:def:CategoryDType/sourcedId",
+      "level": "MUST",
+      "statement": "Model Primitive Datatype = String. The sourcedId of the object. All objects MUST be identified by a Source Identifier. This is a GUID System ID for an object. This is the GUID that SYSTEMS will refer to when making API calls, or when needing to identify an object. It is RECOMMEN…",
+      "cited": false
+    },
+    {
+      "item": "or:1.2:def:CategoryDType/status",
+      "level": "MUST",
+      "statement": "All objects MUST BE either 'active' or 'tobedeleted'. Something which is flagged 'tobedeleted' is to be considered safe to delete. Systems can delete records that are flagged as such if they wish, but they are not under any compulsion to do so. In v1.1 the enumeration value of '…",
+      "cited": false
+    },
+    {
+      "item": "or:1.2:def:ClassDType/dateLastModified",
+      "level": "MUST",
+      "statement": "Model Primitive Datatype = DateTime. All objects MUST be annotated with the dateTime upon which they were last modified. This enables requesters to query for just the latest objects. DateTimes MUST be expressed in W3C profile of [ISO 8601] and MUST contain the UTC timezone.",
+      "cited": false
+    },
+    {
+      "item": "or:1.2:def:ClassDType/sourcedId",
+      "level": "MUST",
+      "statement": "Model Primitive Datatype = String. The sourcedId of the object. All objects MUST be identified by a Source Identifier. This is a GUID System ID for an object. This is the GUID that SYSTEMS will refer to when making API calls, or when needing to identify an object. It is RECOMMEN…",
+      "cited": false
+    },
+    {
+      "item": "or:1.2:def:ClassDType/status",
+      "level": "MUST",
+      "statement": "All objects MUST BE either 'active' or 'tobedeleted'. Something which is flagged 'tobedeleted' is to be considered safe to delete. Systems can delete records that are flagged as such if they wish, but they are not under any compulsion to do so. In v1.1 the enumeration value of '…",
+      "cited": false
+    },
+    {
+      "item": "or:1.2:def:CourseDType/dateLastModified",
+      "level": "MUST",
+      "statement": "Model Primitive Datatype = DateTime. All objects MUST be annotated with the dateTime upon which they were last modified. This enables requesters to query for just the latest objects. DateTimes MUST be expressed in W3C profile of [ISO 8601] and MUST contain the UTC timezone.",
+      "cited": false
+    },
+    {
+      "item": "or:1.2:def:CourseDType/sourcedId",
+      "level": "MUST",
+      "statement": "Model Primitive Datatype = String. The sourcedId of the object. All objects MUST be identified by a Source Identifier. This is a GUID System ID for an object. This is the GUID that SYSTEMS will refer to when making API calls, or when needing to identify an object. It is RECOMMEN…",
+      "cited": false
+    },
+    {
+      "item": "or:1.2:def:CourseDType/status",
+      "level": "MUST",
+      "statement": "All objects MUST BE either 'active' or 'tobedeleted'. Something which is flagged 'tobedeleted' is to be considered safe to delete. Systems can delete records that are flagged as such if they wish, but they are not under any compulsion to do so. In v1.1 the enumeration value of '…",
+      "cited": false
+    },
+    {
+      "item": "or:1.2:def:DemographicsDType/dateLastModified",
+      "level": "MUST",
+      "statement": "Model Primitive Datatype = DateTime. All objects MUST be annotated with the dateTime upon which they were last modified. This enables requesters to query for just the latest objects. DateTimes MUST be expressed in W3C profile of [ISO 8601] and MUST contain the UTC timezone.",
+      "cited": false
+    },
+    {
+      "item": "or:1.2:def:DemographicsDType/sourcedId",
+      "level": "MUST",
+      "statement": "Model Primitive Datatype = String. The sourcedId of the object. All objects MUST be identified by a Source Identifier. This is a GUID System ID for an object. This is the GUID that SYSTEMS will refer to when making API calls, or when needing to identify an object. It is RECOMMEN…",
+      "cited": false
+    },
+    {
+      "item": "or:1.2:def:DemographicsDType/status",
+      "level": "MUST",
+      "statement": "All objects MUST BE either 'active' or 'tobedeleted'. Something which is flagged 'tobedeleted' is to be considered safe to delete. Systems can delete records that are flagged as such if they wish, but they are not under any compulsion to do so. In v1.1 the enumeration value of '…",
+      "cited": false
+    },
+    {
+      "item": "or:1.2:def:EnrollmentDType/dateLastModified",
+      "level": "MUST",
+      "statement": "Model Primitive Datatype = DateTime. All objects MUST be annotated with the dateTime upon which they were last modified. This enables requesters to query for just the latest objects. DateTimes MUST be expressed in W3C profile of [ISO 8601] and MUST contain the UTC timezone.",
+      "cited": false
+    },
+    {
+      "item": "or:1.2:def:EnrollmentDType/sourcedId",
+      "level": "MUST",
+      "statement": "Model Primitive Datatype = String. The sourcedId of the object. All objects MUST be identified by a Source Identifier. This is a GUID System ID for an object. This is the GUID that SYSTEMS will refer to when making API calls, or when needing to identify an object. It is RECOMMEN…",
+      "cited": false
+    },
+    {
+      "item": "or:1.2:def:EnrollmentDType/status",
+      "level": "MUST",
+      "statement": "All objects MUST BE either 'active' or 'tobedeleted'. Something which is flagged 'tobedeleted' is to be considered safe to delete. Systems can delete records that are flagged as such if they wish, but they are not under any compulsion to do so. In v1.1 the enumeration value of '…",
+      "cited": false
+    },
+    {
+      "item": "or:1.2:def:LearningObjectiveResultsDType/learningObjectiveId",
+      "level": "MUST",
+      "statement": "Model Primitive Datatype = NormalizedString. The unique identifier for the associated learning objective. If this is a CASE identifier it MUST be a valid UUID.",
+      "cited": false
+    },
+    {
+      "item": "or:1.2:def:LearningObjectiveScoreSetDType/learningObjectiveResults",
+      "level": "MUST",
+      "statement": "The set of unique identifiers for the associated learning objectives (these may have alignment with a mastery score). If these are CASE identifiers they MUST be valid UUIDs.",
+      "cited": false
+    },
+    {
+      "item": "or:1.2:def:LearningObjectiveSetDType/learningObjectiveIds",
+      "level": "MUST",
+      "statement": "Model Primitive Datatype = NormalizedString. The set of unique identifiers for the associated learning objectives. If these are CASE identifiers they MUST be valid UUIDs.",
+      "cited": false
+    },
+    {
+      "item": "or:1.2:def:LineItemDType/dateLastModified",
+      "level": "MUST",
+      "statement": "Model Primitive Datatype = DateTime. All objects MUST be annotated with the dateTime upon which they were last modified. This enables requesters to query for just the latest objects. DateTimes MUST be expressed in W3C profile of [ISO 8601] and MUST contain the UTC timezone.",
+      "cited": false
+    },
+    {
+      "item": "or:1.2:def:LineItemDType/sourcedId",
+      "level": "MUST",
+      "statement": "Model Primitive Datatype = String. The sourcedId of the object. All objects MUST be identified by a Source Identifier. This is a GUID System ID for an object. This is the GUID that SYSTEMS will refer to when making API calls, or when needing to identify an object. It is RECOMMEN…",
+      "cited": false
+    },
+    {
+      "item": "or:1.2:def:LineItemDType/status",
+      "level": "MUST",
+      "statement": "All objects MUST BE either 'active' or 'tobedeleted'. Something which is flagged 'tobedeleted' is to be considered safe to delete. Systems can delete records that are flagged as such if they wish, but they are not under any compulsion to do so. In v1.1 the enumeration value of '…",
+      "cited": false
+    },
+    {
+      "item": "or:1.2:def:OrgDType/dateLastModified",
+      "level": "MUST",
+      "statement": "Model Primitive Datatype = DateTime. All objects MUST be annotated with the dateTime upon which they were last modified. This enables requesters to query for just the latest objects. DateTimes MUST be expressed in W3C profile of [ISO 8601] and MUST contain the UTC timezone.",
+      "cited": false
+    },
+    {
+      "item": "or:1.2:def:OrgDType/sourcedId",
+      "level": "MUST",
+      "statement": "Model Primitive Datatype = String. The sourcedId of the object. All objects MUST be identified by a Source Identifier. This is a GUID System ID for an object. This is the GUID that SYSTEMS will refer to when making API calls, or when needing to identify an object. It is RECOMMEN…",
+      "cited": false
+    },
+    {
+      "item": "or:1.2:def:OrgDType/status",
+      "level": "MUST",
+      "statement": "All objects MUST BE either 'active' or 'tobedeleted'. Something which is flagged 'tobedeleted' is to be considered safe to delete. Systems can delete records that are flagged as such if they wish, but they are not under any compulsion to do so. In v1.1 the enumeration value of '…",
+      "cited": false
+    },
+    {
+      "item": "or:1.2:def:ResourceDType",
+      "level": "MUST",
+      "statement": "A resource is a description of learning content that is related to a course and/or a class and/or a user. This identifies a resource that is used by a teacher, learner, etc. as part of the learning experience. A resource MUST be associated to a course and/or a class.",
+      "cited": false
+    },
+    {
+      "item": "or:1.2:def:ResourceDType/dateLastModified",
+      "level": "MUST",
+      "statement": "Model Primitive Datatype = DateTime. All objects MUST be annotated with the dateTime upon which they were last modified. This enables requesters to query for just the latest objects. DateTimes MUST be expressed in W3C profile of [ISO 8601] and MUST contain the UTC timezone.",
+      "cited": false
+    },
+    {
+      "item": "or:1.2:def:ResourceDType/sourcedId",
+      "level": "MUST",
+      "statement": "Model Primitive Datatype = String. All Objects MUST be identified by a Source Identifier. This is a GUID i.e. a unique system interoperability identifier for an object. This is the GUID that SYSTEMS will refer to when making API calls, or when needing to identify an object. It i…",
+      "cited": false
+    },
+    {
+      "item": "or:1.2:def:ResourceDType/status",
+      "level": "MUST",
+      "statement": "All objects MUST BE either 'active' or 'tobedeleted'. Something which is flagged 'tobedeleted' is to be considered safe to delete. Systems can delete records that are flagged as such if they wish, but they are not under any compulsion to do so. NOTE: In v1.1 the enumeration valu…",
+      "cited": false
+    },
+    {
+      "item": "or:1.2:def:ResultDType/dateLastModified",
+      "level": "MUST",
+      "statement": "Model Primitive Datatype = DateTime. All objects MUST be annotated with the dateTime upon which they were last modified. This enables requesters to query for just the latest objects. DateTimes MUST be expressed in W3C profile of [ISO 8601] and MUST contain the UTC timezone.",
+      "cited": false
+    },
+    {
+      "item": "or:1.2:def:ResultDType/sourcedId",
+      "level": "MUST",
+      "statement": "Model Primitive Datatype = String. The sourcedId of the object. All objects MUST be identified by a Source Identifier. This is a GUID System ID for an object. This is the GUID that SYSTEMS will refer to when making API calls, or when needing to identify an object. It is RECOMMEN…",
+      "cited": false
+    },
+    {
+      "item": "or:1.2:def:ResultDType/status",
+      "level": "MUST",
+      "statement": "All objects MUST BE either 'active' or 'tobedeleted'. Something which is flagged 'tobedeleted' is to be considered safe to delete. Systems can delete records that are flagged as such if they wish, but they are not under any compulsion to do so. In v1.1 the enumeration value of '…",
+      "cited": false
+    },
+    {
+      "item": "or:1.2:def:RoleDType/roleType",
+      "level": "MUST",
+      "statement": "Indicates if this role is the primary or secondary role for that org. There MUST be one, and only one, primary role for each org.",
+      "cited": false
+    },
+    {
+      "item": "or:1.2:def:ScoreScaleDType/dateLastModified",
+      "level": "MUST",
+      "statement": "Model Primitive Datatype = DateTime. All objects MUST be annotated with the dateTime upon which they were last modified. This enables requesters to query for just the latest objects. DateTimes MUST be expressed in W3C profile of [ISO 8601] and MUST contain the UTC timezone.",
+      "cited": false
+    },
+    {
+      "item": "or:1.2:def:ScoreScaleDType/sourcedId",
+      "level": "MUST",
+      "statement": "Model Primitive Datatype = String. The sourcedId of the object. All objects MUST be identified by a Source Identifier. This is a GUID System ID for an object. This is the GUID that SYSTEMS will refer to when making API calls, or when needing to identify an object. It is RECOMMEN…",
+      "cited": false
+    },
+    {
+      "item": "or:1.2:def:ScoreScaleDType/status",
+      "level": "MUST",
+      "statement": "All objects MUST BE either 'active' or 'tobedeleted'. Something which is flagged 'tobedeleted' is to be considered safe to delete. Systems can delete records that are flagged as such if they wish, but they are not under any compulsion to do so. In v1.1 the enumeration value of '…",
+      "cited": false
+    },
+    {
+      "item": "or:1.2:def:UserDType",
+      "level": "MUST",
+      "statement": "Users, Teachers and Students are human beings that are teaching or studying in a class respectively. A single User class is used to represent both teachers and students and a role property is used to distinguish a user's natural role.Humans may have relationships with other huma…",
+      "cited": false
+    },
+    {
+      "item": "or:1.2:def:UserDType/dateLastModified",
+      "level": "MUST",
+      "statement": "Model Primitive Datatype = DateTime. All objects MUST be annotated with the dateTime upon which they were last modified. This enables requesters to query for just the latest objects. DateTimes MUST be expressed in W3C profile of [ISO 8601] and MUST contain the UTC timezone.",
+      "cited": false
+    },
+    {
+      "item": "or:1.2:def:UserDType/sourcedId",
+      "level": "MUST",
+      "statement": "Model Primitive Datatype = String. The sourcedId of the object. All objects MUST be identified by a Source Identifier. This is a GUID System ID for an object. This is the GUID that SYSTEMS will refer to when making API calls, or when needing to identify an object. It is RECOMMEN…",
+      "cited": true
+    },
+    {
+      "item": "or:1.2:def:UserDType/status",
+      "level": "MUST",
+      "statement": "All objects MUST BE either 'active' or 'tobedeleted'. Something which is flagged 'tobedeleted' is to be considered safe to delete. Systems can delete records that are flagged as such if they wish, but they are not under any compulsion to do so. In v1.1 the enumeration value of '…",
+      "cited": true
+    }
+  ],
   "residues": {
     "silentGaps": [],
     "extensions": []
@@ -3866,6 +4156,8 @@
     "modelledPartial": 0,
     "modelledNo": 0,
     "normativeItems": 48,
-    "conformanceRequirements": 5
+    "conformanceRequirements": 5,
+    "normativeStatements": 48,
+    "normativeStatementsCited": 2
   }
 }

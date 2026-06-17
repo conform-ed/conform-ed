@@ -3041,6 +3041,26 @@
       "source": "CASE 1.1 §CFAssociation — https://www.imsglobal.org/spec/case/v1p1"
     }
   ],
+  "normativeStatements": [
+    {
+      "item": "case:1.1:def:CFDocument/caseVersion",
+      "level": "MUST",
+      "statement": "This is a new attribute added in version 1.1. Denotes the version of the CFDocument. If present it MUST have a value of '1.1'.",
+      "cited": false
+    },
+    {
+      "item": "case:1.1:def:CFPckgDocument/caseVersion",
+      "level": "MUST",
+      "statement": "This is a new attribute added in version 1.1. Denotes the version of the CFDocument. If present it MUST have a value of '1.1'.",
+      "cited": false
+    },
+    {
+      "item": "case:1.1:doc:cfdocument/caseVersion",
+      "level": "MUST",
+      "statement": "This is a new attribute added in version 1.1. Denotes the version of the CFDocument. If present it MUST have a value of '1.1'.",
+      "cited": false
+    }
+  ],
   "residues": {
     "silentGaps": [],
     "extensions": []
@@ -3051,6 +3071,8 @@
     "modelledPartial": 0,
     "modelledNo": 0,
     "normativeItems": 3,
-    "conformanceRequirements": 3
+    "conformanceRequirements": 3,
+    "normativeStatements": 3,
+    "normativeStatementsCited": 0
   }
 }

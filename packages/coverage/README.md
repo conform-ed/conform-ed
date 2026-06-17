@@ -22,7 +22,16 @@ For one `spec:version` (`maps/<slug>.json`):
   model: `yes` / `partial` / `no`, computed by a lockstep structural alignment of the
   literal and Zod trees (see `src/reconcile.ts`).
 - **C — `conformance`.** Hand-curated normative requirement statements, profile-tagged
-  and cross-linked to the L1 items they constrain.
+  and cross-linked to the L1 items they constrain. Sourced from the published
+  certification **guides** (no machine source) — the certification catalog certifiers read.
+- **`normativeStatements`.** The machine-extracted other half of the conformance surface:
+  the RFC-2119 prose the schema embeds in its own documentation (`xs:documentation` /
+  JSON-Schema `description`), lifted verbatim and keyed to the L1 item it annotates.
+  Regenerated from the denominator on every build (never curated, so always exact), with
+  `cited` flagging whether a curated `conformance` requirement already references it —
+  surfacing where curation lags the schema's own declared norms. The JSON-family schemas
+  embed a great deal of this; the XSD-family schemas embed almost none (their norms live
+  in prose guides, so those maps are curated-only).
 - **`residues`.** The three signals that justify the literal denominator:
   - `silentGaps` — in the published spec, never modelled (candidate gaps);
   - `extensions` — modelled but absent from the spec (conform-ed extensions).
@@ -97,8 +106,15 @@ Ten `spec:version` maps across all three schema-language families:
   gaps are honest signal: ARIA attributes + content-model expression operators that
   conform-ed models as Zod unions rather than named elements.
 
-Conformance catalogs are grounded **seeds**; full extraction from the published 1EdTech
-guides is the next hand-curation increment.
+The conformance surface has two halves. The **machine-extractable** half —
+`normativeStatements`, the RFC-2119 prose the schemas embed in their own documentation —
+is fully extracted and regenerated on every build: 228 MUST-level statements across the
+JSON-family maps (Caliper 99, OneRoster 48, CLR 40, OB 36, CASE 3, QTI 3.0.1 2; the
+XSD-family CC / QTI 2.x embed none — those norms exist only in prose guides). The
+**hand-curated** half — the `conformance` catalog drawn from the published certification
+guides — remains a grounded **seed**; each map's `rollup.normativeStatementsCited` reports
+how much of the extracted surface the curated catalog already references, so the curation
+backlog is measurable rather than guessed.
 
 ### Rollout (emergent ADR-0028)
 

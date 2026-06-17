@@ -2943,6 +2943,236 @@
         "ob:3.0:def:AchievementSubject/achievement"
       ],
       "source": "OB 3.0 §8 (AchievementCredential.credentialSubject) + AchievementSubject — https://www.imsglobal.org/spec/ob/v3p0/#achievementsubject"
+    },
+    {
+      "key": "ob:3.0:conf:issuer/OB-ISS-6",
+      "profile": "issuer",
+      "reqId": "OB-ISS-6",
+      "level": "MUST",
+      "statement": "The type sets MUST be unordered sets whose required IRIs are present: an AchievementCredential's type MUST include 'AchievementCredential', and an Achievement's type MUST include 'Achievement'.",
+      "constrains": [
+        "ob:3.0:def:AchievementCredential/type/[]",
+        "ob:3.0:def:Achievement/type/[]"
+      ],
+      "source": "OB 3.0 §8 (AchievementCredential.type) + §Achievement — https://www.imsglobal.org/spec/ob/v3p0/#achievement"
+    }
+  ],
+  "normativeStatements": [
+    {
+      "item": "ob:3.0:def:Achievement/type/[]",
+      "level": "MUST",
+      "statement": "The type MUST include the IRI 'Achievement'.",
+      "cited": true
+    },
+    {
+      "item": "ob:3.0:def:AchievementCredential",
+      "level": "MUST",
+      "statement": "AchievementCredentials are representations of an awarded achievement, used to share information about a achievement belonging to one earner. Maps to a Verifiable Credential as defined in the [[VC-DATA-MODEL-2.0]]. As described in [[[#data-integrity]]], at least one proof mechani…",
+      "cited": false
+    },
+    {
+      "item": "ob:3.0:def:AchievementCredential/type/[]",
+      "level": "MUST",
+      "statement": "The value of the type property MUST be an unordered set. One of the items MUST be the URI 'VerifiableCredential', and one of the items MUST be the URI 'AchievementCredential' or the URI 'OpenBadgeCredential'.",
+      "cited": true
+    },
+    {
+      "item": "ob:3.0:def:AchievementSubject/id",
+      "level": "MUST",
+      "statement": "An identifier for the Credential Subject. Either `id` or at least one `identifier` MUST be supplied.",
+      "cited": false
+    },
+    {
+      "item": "ob:3.0:def:AchievementSubject/type/[]",
+      "level": "MUST",
+      "statement": "The value of the type property MUST be an unordered set. One of the items MUST be the IRI 'AchievementSubject'.",
+      "cited": false
+    },
+    {
+      "item": "ob:3.0:def:Address/type/[]",
+      "level": "MUST",
+      "statement": "The value of the type property MUST be an unordered set. One of the items MUST be the IRI 'Address'.",
+      "cited": false
+    },
+    {
+      "item": "ob:3.0:def:Alignment/type/[]",
+      "level": "MUST",
+      "statement": "The value of the type property MUST be an unordered set. One of the items MUST be the IRI 'Alignment'.",
+      "cited": false
+    },
+    {
+      "item": "ob:3.0:def:Context",
+      "level": "MUST",
+      "statement": "JSON-LD Context. Either a URI with the context definition or a Map with a local context definition MUST be supplied.",
+      "cited": false
+    },
+    {
+      "item": "ob:3.0:def:CredentialSchema/id",
+      "level": "MUST",
+      "statement": "The value MUST be a URI identifying the schema file. One instance of `CredentialSchema` MUST have an `id` that is the URL of the JSON Schema for this credential defined by this specification.",
+      "cited": false
+    },
+    {
+      "item": "ob:3.0:def:CredentialSchema/type",
+      "level": "MUST",
+      "statement": "The value MUST identify the type of data schema validation. One instance of `CredentialSchema` MUST have a `type` of '1EdTechJsonSchemaValidator2019'.",
+      "cited": false
+    },
+    {
+      "item": "ob:3.0:def:CredentialStatus/id",
+      "level": "MUST",
+      "statement": "The value MUST be the URL of the issuer's credential status method.",
+      "cited": false
+    },
+    {
+      "item": "ob:3.0:def:EndorsementCredential",
+      "level": "MUST",
+      "statement": "A verifiable credential that asserts a claim about an entity. As described in [[[#data-integrity]]], at least one proof mechanism, and the details necessary to evaluate that proof, MUST be expressed for a credential to be a verifiable credential. In the case of an embedded proof…",
+      "cited": false
+    },
+    {
+      "item": "ob:3.0:def:EndorsementCredential/type/[]",
+      "level": "MUST",
+      "statement": "The value of the type property MUST be an unordered set. One of the items MUST be the URI 'VerifiableCredential', and one of the items MUST be the URI 'EndorsementCredential'.",
+      "cited": false
+    },
+    {
+      "item": "ob:3.0:def:EndorsementSubject/type/[]",
+      "level": "MUST",
+      "statement": "The value of the type property MUST be an unordered set. One of the items MUST be the URI 'EndorsementSubject'.",
+      "cited": false
+    },
+    {
+      "item": "ob:3.0:def:Evidence/type/[]",
+      "level": "MUST",
+      "statement": "The value of the type property MUST be an unordered set. One of the items MUST be the IRI 'Evidence'.",
+      "cited": false
+    },
+    {
+      "item": "ob:3.0:def:GeoCoordinates/type",
+      "level": "MUST",
+      "statement": "MUST be the IRI 'GeoCoordinates'.",
+      "cited": false
+    },
+    {
+      "item": "ob:3.0:def:IdentifierEntry/type",
+      "level": "MUST",
+      "statement": "MUST be the IRI 'IdentifierEntry'.",
+      "cited": false
+    },
+    {
+      "item": "ob:3.0:def:IdentityObject/identityHash",
+      "level": "MUST",
+      "statement": "Either the IdentityHash of the identity or the plaintext value. If it's possible that the plaintext transmission and storage of the identity value would leak personally identifiable information where there is an expectation of privacy, it is strongly recommended that an Identity…",
+      "cited": false
+    },
+    {
+      "item": "ob:3.0:def:IdentityObject/type",
+      "level": "MUST",
+      "statement": "MUST be the IRI 'IdentityObject'.",
+      "cited": false
+    },
+    {
+      "item": "ob:3.0:def:Image/type",
+      "level": "MUST",
+      "statement": "MUST be the IRI 'Image'.",
+      "cited": false
+    },
+    {
+      "item": "ob:3.0:def:Profile/type/[]",
+      "level": "MUST",
+      "statement": "The value of the type property MUST be an unordered set. One of the items MUST be the IRI 'Profile'.",
+      "cited": false
+    },
+    {
+      "item": "ob:3.0:def:ProfileRef",
+      "level": "MUST",
+      "statement": "A description of the individual, entity, or organization that issued the credential. Either a URI with the Unique URI for the Issuer/Profile file, or a Profile object MUST be supplied.",
+      "cited": false
+    },
+    {
+      "item": "ob:3.0:def:Proof/proofPurpose",
+      "level": "MUST",
+      "statement": "The purpose of the proof to be used with `verificationMethod`. MUST be 'assertionMethod'.",
+      "cited": false
+    },
+    {
+      "item": "ob:3.0:def:RefreshService/id",
+      "level": "MUST",
+      "statement": "The value MUST be the URL of the issuer's refresh service.",
+      "cited": false
+    },
+    {
+      "item": "ob:3.0:def:Related/type/[]",
+      "level": "MUST",
+      "statement": "The value of the type property MUST be an unordered set. One of the items MUST be the IRI 'Related'.",
+      "cited": false
+    },
+    {
+      "item": "ob:3.0:def:Result/type/[]",
+      "level": "MUST",
+      "statement": "The value of the type property MUST be an unordered set. One of the items MUST be the IRI 'Result'.",
+      "cited": false
+    },
+    {
+      "item": "ob:3.0:def:ResultDescription/type/[]",
+      "level": "MUST",
+      "statement": "The value of the type property MUST be an unordered set. One of the items MUST be the IRI 'ResultDescription'.",
+      "cited": false
+    },
+    {
+      "item": "ob:3.0:def:RubricCriterionLevel/type/[]",
+      "level": "MUST",
+      "statement": "The value of the type property MUST be an unordered set. One of the items MUST be the IRI 'RubricCriterionLevel'.",
+      "cited": false
+    },
+    {
+      "item": "ob:3.0:def:TermsOfUse/id",
+      "level": "MUST",
+      "statement": "The value MUST be a URI identifying the term of use.",
+      "cited": false
+    },
+    {
+      "item": "ob:3.0:def:TermsOfUse/type",
+      "level": "MUST",
+      "statement": "The value MUST identify the type of the terms of use.",
+      "cited": false
+    },
+    {
+      "item": "ob:3.0:doc:achievementcredential",
+      "level": "MUST",
+      "statement": "AchievementCredentials are representations of an awarded achievement, used to share information about a achievement belonging to one earner. Maps to a Verifiable Credential as defined in the [[VC-DATA-MODEL-2.0]]. As described in [[[#data-integrity]]], at least one proof mechani…",
+      "cited": false
+    },
+    {
+      "item": "ob:3.0:doc:achievementcredential/type/[]",
+      "level": "MUST",
+      "statement": "The value of the type property MUST be an unordered set. One of the items MUST be the URI 'VerifiableCredential', and one of the items MUST be the URI 'AchievementCredential' or the URI 'OpenBadgeCredential'.",
+      "cited": false
+    },
+    {
+      "item": "ob:3.0:doc:endorsementcredential",
+      "level": "MUST",
+      "statement": "A verifiable credential that asserts a claim about an entity. As described in [[[#data-integrity]]], at least one proof mechanism, and the details necessary to evaluate that proof, MUST be expressed for a credential to be a verifiable credential. In the case of an embedded proof…",
+      "cited": false
+    },
+    {
+      "item": "ob:3.0:doc:endorsementcredential/type/[]",
+      "level": "MUST",
+      "statement": "The value of the type property MUST be an unordered set. One of the items MUST be the URI 'VerifiableCredential', and one of the items MUST be the URI 'EndorsementCredential'.",
+      "cited": false
+    },
+    {
+      "item": "ob:3.0:doc:getopenbadgecredentialsresponse/compactJwsString/[]",
+      "level": "MUST",
+      "statement": "OpenBadgeCredentials that have been signed with the VC-JWT Proof Format MUST be in the `compactJwsString` array.",
+      "cited": false
+    },
+    {
+      "item": "ob:3.0:doc:profile/type/[]",
+      "level": "MUST",
+      "statement": "The value of the type property MUST be an unordered set. One of the items MUST be the IRI 'Profile'.",
+      "cited": false
     }
   ],
   "residues": {
@@ -2955,6 +3185,8 @@
     "modelledPartial": 39,
     "modelledNo": 0,
     "normativeItems": 36,
-    "conformanceRequirements": 5
+    "conformanceRequirements": 6,
+    "normativeStatements": 36,
+    "normativeStatementsCited": 2
   }
 }
