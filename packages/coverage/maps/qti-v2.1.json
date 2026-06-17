@@ -46214,14 +46214,11 @@
       "qti:2.1:def:qtiv2p1_imscpv1p2_v1p0.Resources.Type/resource"
     ],
     "extensions": [
-      "qti:2.1:def:apipAccessibility.__schema5/extensions",
       "qti:2.1:def:apipAccessibility.__schema5/foreignAttributes",
-      "qti:2.1:def:apipAccessibility.__schema5/relatedElementInfo/extensions",
       "qti:2.1:def:apipAccessibility.__schema5/relatedElementInfo/foreignAttributes",
       "qti:2.1:def:apipAccessibility.__schema5/relatedElementInfo/identifierRef",
       "qti:2.1:def:apipAccessibility.__schema5/relatedElementInfo/qtiClass",
       "qti:2.1:def:apipAccessibility.__schema5/relatedElementInfo/title",
-      "qti:2.1:def:apipAccessibility.__schema6/extensions",
       "qti:2.1:def:apipAccessibility.__schema6/fileHrefs",
       "qti:2.1:def:apipAccessibility.__schema6/foreignAttributes",
       "qti:2.1:def:apipAccessibility.__schema6/identifier",
@@ -46229,14 +46226,12 @@
       "qti:2.1:def:apipAccessibility.__schema6/qtiHtmlTagIdentifier",
       "qti:2.1:def:apipAccessibility.__schema6/qtiLinkIdentifier",
       "qti:2.1:def:assessmentItem.__schema104/children",
-      "qti:2.1:def:assessmentItem.__schema13/value",
       "qti:2.1:def:assessmentItem.__schema15/entries",
       "qti:2.1:def:assessmentItem.__schema160/rules",
       "qti:2.1:def:assessmentItem.__schema162/[]/children",
       "qti:2.1:def:assessmentItem.__schema162/[]/kind",
       "qti:2.1:def:assessmentItem.__schema163/accessibilityInfo",
       "qti:2.1:def:assessmentItem.__schema163/companionMaterialsInfo",
-      "qti:2.1:def:assessmentItem.__schema163/extensions",
       "qti:2.1:def:assessmentItem.__schema163/foreignAttributes",
       "qti:2.1:def:assessmentItem.__schema163/inclusionOrder",
       "qti:2.1:def:assessmentItem.__schema17/entries",
@@ -46244,12 +46239,9 @@
       "qti:2.1:def:assessmentItem.__schema23/entries",
       "qti:2.1:def:assessmentItem.__schema25/entries",
       "qti:2.1:def:assessmentItem.__schema40/rules",
-      "qti:2.1:def:assessmentResult.__schema7/value",
       "qti:2.1:def:assessmentSection.__schema1/expression",
       "qti:2.1:def:assessmentSection.__schema63/expression",
-      "qti:2.1:def:assessmentSection.__schema73/extensions",
       "qti:2.1:def:assessmentSection.__schema73/foreignAttributes",
-      "qti:2.1:def:assessmentSection.__schema80/extensions",
       "qti:2.1:def:assessmentSection.__schema80/foreignAttributes",
       "qti:2.1:def:assessmentSection.__schema81/children",
       "qti:2.1:def:assessmentSection.__schema81/kind",
@@ -46263,7 +46255,6 @@
       "qti:2.1:def:assessmentTest.__schema28/expression",
       "qti:2.1:def:assessmentTest.__schema4/[]/externalScored",
       "qti:2.1:def:assessmentTest.__schema88/expression",
-      "qti:2.1:def:assessmentTest.__schema9/value",
       "qti:2.1:def:manifest.__schema1/curriculumStandardsMetadataSet",
       "qti:2.1:def:manifest.__schema2/composite",
       "qti:2.1:def:manifest.__schema2/feedbackType",
@@ -46281,15 +46272,38 @@
       "qti:2.1:def:manifest.__schema4/[]/metadata",
       "qti:2.1:def:manifest.__schema4/[]/type",
       "qti:2.1:doc:apipAccessibility/companionMaterialsInfo/description",
-      "qti:2.1:doc:apipAccessibility/companionMaterialsInfo/extensions",
       "qti:2.1:doc:apipAccessibility/companionMaterialsInfo/fileHrefs",
       "qti:2.1:doc:apipAccessibility/companionMaterialsInfo/foreignAttributes",
-      "qti:2.1:doc:apipAccessibility/extensions",
       "qti:2.1:doc:apipAccessibility/foreignAttributes",
-      "qti:2.1:doc:apipAccessibility/inclusionOrder/extensions",
       "qti:2.1:doc:apipAccessibility/inclusionOrder/foreignAttributes",
       "qti:2.1:doc:apipAccessibility/inclusionOrder/identifiers",
       "qti:2.1:doc:usageData/statistics"
+    ],
+    "normalisations": [
+      {
+        "note": "XSD `xs:any` open-content wildcard → conform-ed `extensions` (an unnamed wildcard has no literal name to join).",
+        "modelledKeys": [
+          "qti:2.1:def:apipAccessibility.__schema5/extensions",
+          "qti:2.1:def:apipAccessibility.__schema5/relatedElementInfo/extensions",
+          "qti:2.1:def:apipAccessibility.__schema6/extensions",
+          "qti:2.1:def:assessmentItem.__schema163/extensions",
+          "qti:2.1:def:assessmentSection.__schema73/extensions",
+          "qti:2.1:def:assessmentSection.__schema80/extensions",
+          "qti:2.1:doc:apipAccessibility/companionMaterialsInfo/extensions",
+          "qti:2.1:doc:apipAccessibility/extensions",
+          "qti:2.1:doc:apipAccessibility/inclusionOrder/extensions"
+        ],
+        "literalKeys": []
+      },
+      {
+        "note": "XSD `simpleContent` text node → conform-ed `value` (the literal leaves the text node unnamed).",
+        "modelledKeys": [
+          "qti:2.1:def:assessmentItem.__schema13/value",
+          "qti:2.1:def:assessmentResult.__schema7/value",
+          "qti:2.1:def:assessmentTest.__schema9/value"
+        ],
+        "literalKeys": []
+      }
     ]
   },
   "rollup": {
@@ -46300,6 +46314,7 @@
     "normativeItems": 0,
     "conformanceRequirements": 3,
     "normativeStatements": 0,
-    "normativeStatementsCited": 0
+    "normativeStatementsCited": 0,
+    "normalisations": 12
   }
 }

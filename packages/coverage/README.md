@@ -32,9 +32,14 @@ For one `spec:version` (`maps/<slug>.json`):
   surfacing where curation lags the schema's own declared norms. The JSON-family schemas
   embed a great deal of this; the XSD-family schemas embed almost none (their norms live
   in prose guides, so those maps are curated-only).
-- **`residues`.** The three signals that justify the literal denominator:
+- **`residues`.** The signals that justify the literal denominator:
   - `silentGaps` — in the published spec, never modelled (candidate gaps);
-  - `extensions` — modelled but absent from the spec (conform-ed extensions).
+  - `extensions` — modelled but absent from the spec (conform-ed extensions);
+  - `normalisations` — documented XSD→Zod renames the structural name-join cannot pair
+    (`xs:any` → `extensions`, simpleContent text → `value`, `xml:base` ⇄ `xmlBase`),
+    declared as `specRefOverrides` on the `SpecSource` and absorbed out of the two lists
+    above so they keep only genuine signal. Each records exactly which keys it absorbed; a
+    rename of a _named_ construct (`xml:base`) also flips its literal items to `modelled`.
 - **`rollup`.** Computed counts (never hand-typed) per map.
 
 ## Usage
@@ -51,18 +56,21 @@ Adding a spec: vendor its source schema under `vendor/<spec>/<version>/`, declar
 
 Ten `spec:version` maps across all three schema-language families:
 
-| Map                     | Family      | Items | Modelled | Silent gaps | Extensions | Conf. reqs |
-| ----------------------- | ----------- | ----- | -------- | ----------- | ---------- | ---------- |
-| `open-badges-v3.0`      | JSON Schema | 340   | 241      | 0           | 0          | 5          |
-| `clr-v2.0`              | JSON Schema | 409   | 299      | 0           | 0          | 4          |
-| `case-v1.1`             | JSON Schema | 344   | 264      | 0           | 0          | 3          |
-| `caliper-v1.2`          | JSON Schema | 1957  | 78       | 136         | 26         | 2          |
-| `common-cartridge-v1.3` | XSD         | 676   | 410      | 3           | 190        | 7          |
-| `common-cartridge-v1.4` | XSD         | 143   | 81       | 3           | 35         | 5          |
-| `qti-v2.1`              | XSD         | 4971  | 186      | 385         | 76         | 3          |
-| `qti-v2.2`              | XSD         | 5378  | 208      | 541         | 92         | 3          |
-| `qti-v3.0.1`            | XSD         | 5344  | 223      | 359         | 89         | 2          |
-| `oneroster-v1.2`        | OpenAPI     | 410   | 248      | 0           | 0          | 5          |
+Silent-gap / extension columns are the residues _after_ documented renames are absorbed;
+the `Norm.` column counts the keys each map's `specRefOverrides` moved into `normalisations`.
+
+| Map                     | Family      | Items | Modelled | Silent gaps | Extensions | Norm. | Conf. reqs |
+| ----------------------- | ----------- | ----- | -------- | ----------- | ---------- | ----- | ---------- |
+| `open-badges-v3.0`      | JSON Schema | 340   | 241      | 0           | 0          | 0     | 6          |
+| `clr-v2.0`              | JSON Schema | 409   | 299      | 0           | 0          | 0     | 4          |
+| `case-v1.1`             | JSON Schema | 344   | 264      | 0           | 0          | 0     | 3          |
+| `caliper-v1.2`          | JSON Schema | 1957  | 78       | 136         | 26         | 0     | 3          |
+| `common-cartridge-v1.3` | XSD         | 676   | 413      | 0           | 96         | 97    | 7          |
+| `common-cartridge-v1.4` | XSD         | 143   | 84       | 0           | 23         | 15    | 5          |
+| `qti-v2.1`              | XSD         | 4971  | 186      | 385         | 64         | 12    | 3          |
+| `qti-v2.2`              | XSD         | 5378  | 208      | 541         | 78         | 14    | 3          |
+| `qti-v3.0.1`            | XSD         | 5344  | 224      | 358         | 78         | 12    | 2          |
+| `oneroster-v1.2`        | OpenAPI     | 410   | 248      | 0           | 0          | 0     | 5          |
 
 - **Open Badges 3.0 / CLR 2.0** share the OB/VC credential machinery; **CASE 1.1** (all
   13 entity schemas) reconciles `0/0`.
@@ -85,11 +93,13 @@ Ten `spec:version` maps across all three schema-language families:
   profiles (Basic LTI Link, Resource metadata, Manifest metadata — all rooted at
   `<xs:element name="lom" type="LOM.Type">`, kept apart by source-scoping). CC 1.4 carries
   six (the same core five plus the `assignment` extension, whose `Text.Type` /
-  `Attachment.Type` would otherwise collide with Discussion Topic's). The `extension`
-  residues are documented normalisations (XSD `xs:any` → `extensions`; simpleContent text
-  → `value`; the foreign `xml:base` attribute → `xmlBase`, which pairs with the three
-  `/base` silent gaps), plus the rich IEEE-LOM optional sub-trees conform-ed models that
-  the literal LOM profiles leave to imported boundaries.
+  `Attachment.Type` would otherwise collide with Discussion Topic's). Three documented
+  XSD→Zod renames (`xs:any` → `extensions`; simpleContent text → `value`; `xml:base` ⇄
+  `xmlBase`) are declared as `specRefOverrides` and absorbed into `normalisations`, so they
+  no longer pollute the residues: CC's `silentGaps` are now empty (the `/base` items, a
+  _named_ rename, flip to `modelled`) and the surviving `extensions` are the genuine signal —
+  the rich IEEE-LOM optional sub-trees conform-ed models that the literal LOM profiles leave
+  to imported boundaries.
 - **QTI 2.1 / 2.2 / 3.0.1** — the literal ASI information model plus, for 2.1 / 2.2, the
   rest of the document family (Results Reporting, Usage Data, item Metadata, the
   content-package manifest, the APIP accessibility extension, and — 2.2 only — Curriculum
@@ -102,9 +112,13 @@ Ten `spec:version` maps across all three schema-language families:
   global element's named type to continue the descent; 3.0.1 uses it for a handful
   (resolving them deepened 3.0.1 from 205 → 223 modelled). The L2 join uses a
   singular(XML)↔plural(Zod) **name normaliser** (the XSD is the XML binding, conform-ed
-  models the JSON binding; for 3.0.1 it also bridges the `qti-`/kebab prefix). The silent
-  gaps are honest signal: ARIA attributes + content-model expression operators that
-  conform-ed models as Zod unions rather than named elements.
+  models the JSON binding; for 3.0.1 it also bridges the `qti-`/kebab prefix). The same
+  three XSD→Zod renames are absorbed via `specRefOverrides` — except `xml:base` ⇄ `xmlBase`,
+  which **2.1 / 2.2 deliberately omit**: conform-ed names no `xmlBase` in the 2.x model, so
+  their `/base` items are genuine silent gaps and must stay (3.0.1 does model it, so its one
+  `/base` flips to `modelled`). The surviving silent gaps are honest signal: ARIA attributes
+  - content-model expression operators that conform-ed models as Zod unions rather than
+    named elements.
 
 The conformance surface has two halves. The **machine-extractable** half —
 `normativeStatements`, the RFC-2119 prose the schemas embed in their own documentation —
@@ -143,7 +157,11 @@ All three schema-language walkers are built and proven:
 
 Where the literal and Zod bindings differ by a systematic naming convention (QTI's
 XML↔JSON kebab/camel/singular-plural), a per-spec `nameNormalizer` on the `SpecSource`
-canonicalises both sides for the L2 join (item keys stay literal). The structural join is
-otherwise layered with explicit `specRef` overrides for documented normalisations (e.g.
-the CC `xs:any` → `extensions` rename) as those are annotated upstream in
-`@conform-ed/contracts`.
+canonicalises both sides for the L2 join (item keys stay literal). For the handful of
+_non-systematic_ renames the name-join still cannot pair — a foreign attribute conform-ed
+renames (`xml:base` ⇄ `xmlBase`), or an XSD construct the schema leaves unnamed that
+conform-ed names (`xs:any` → `extensions`, simpleContent text → `value`) — each map
+declares explicit `specRefOverrides` (shared in `specs/xsd-normalisations.ts`). A post-pass
+(`applySpecRefOverrides`) absorbs the matching residue keys into `residues.normalisations`,
+recording exactly which keys each rename covered and flipping the literal side of a named
+rename to `modelled` — so the residue lists carry only genuine gaps and extensions.

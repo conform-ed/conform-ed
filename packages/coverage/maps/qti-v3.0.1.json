@@ -3762,7 +3762,7 @@
       "kind": "property",
       "path": "base",
       "jsonType": "string",
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:BaseSequenceXBaseDType/class",
@@ -50388,7 +50388,6 @@
       "qti:3.0.1:def:AssessmentSectionDType/qti-assessment-section",
       "qti:3.0.1:def:AssessmentSectionDType/qti-assessment-section-ref",
       "qti:3.0.1:def:AssessmentStimulusDType/lang",
-      "qti:3.0.1:def:BaseSequenceXBaseDType/base",
       "qti:3.0.1:def:BranchRuleDType/qti-and",
       "qti:3.0.1:def:BranchRuleDType/qti-any-n",
       "qti:3.0.1:def:BranchRuleDType/qti-base-value",
@@ -50706,9 +50705,6 @@
       "qti:3.0.1:def:qti-assessment-item.__schema21/interpolationTableEntries",
       "qti:3.0.1:def:qti-assessment-item.__schema36/rules",
       "qti:3.0.1:def:qti-assessment-item.__schema66/foreignAttributes",
-      "qti:3.0.1:def:qti-assessment-item.__schema68/extensions",
-      "qti:3.0.1:def:qti-assessment-item.__schema7/value",
-      "qti:3.0.1:def:qti-assessment-item.__schema71/value",
       "qti:3.0.1:def:qti-assessment-item.__schema74/content",
       "qti:3.0.1:def:qti-assessment-item.__schema95/cardEntries",
       "qti:3.0.1:def:qti-assessment-item.__schema95/xmlLang",
@@ -50719,18 +50715,14 @@
       "qti:3.0.1:def:qti-assessment-section.__schema3/kind",
       "qti:3.0.1:def:qti-assessment-section.__schema33/expression",
       "qti:3.0.1:def:qti-assessment-section.__schema33/kind",
-      "qti:3.0.1:def:qti-assessment-section.__schema41/extensions",
       "qti:3.0.1:def:qti-assessment-section.__schema41/foreignAttributes",
-      "qti:3.0.1:def:qti-assessment-section.__schema43/extensions",
       "qti:3.0.1:def:qti-assessment-section.__schema43/foreignAttributes",
       "qti:3.0.1:def:qti-assessment-section.__schema44/ariaAttributes",
       "qti:3.0.1:def:qti-assessment-section.__schema44/content",
       "qti:3.0.1:def:qti-assessment-section.__schema44/foreignAttributes",
       "qti:3.0.1:def:qti-assessment-section.__schema44/kind",
-      "qti:3.0.1:def:qti-assessment-section.__schema44/xmlBase",
       "qti:3.0.1:def:qti-assessment-section.__schema44/xmlLang",
       "qti:3.0.1:def:qti-assessment-section.__schema61/kind",
-      "qti:3.0.1:def:qti-assessment-section.__schema61/xmlBase",
       "qti:3.0.1:def:qti-assessment-section.__schema61/xmlLang",
       "qti:3.0.1:def:qti-assessment-section.__schema65/cardEntries",
       "qti:3.0.1:def:qti-assessment-section.__schema65/xmlLang",
@@ -50756,10 +50748,8 @@
       "qti:3.0.1:def:qti-assessment-test.__schema30/content",
       "qti:3.0.1:def:qti-assessment-test.__schema30/foreignAttributes",
       "qti:3.0.1:def:qti-assessment-test.__schema30/kind",
-      "qti:3.0.1:def:qti-assessment-test.__schema30/xmlBase",
       "qti:3.0.1:def:qti-assessment-test.__schema30/xmlLang",
       "qti:3.0.1:def:qti-assessment-test.__schema47/kind",
-      "qti:3.0.1:def:qti-assessment-test.__schema47/xmlBase",
       "qti:3.0.1:def:qti-assessment-test.__schema47/xmlLang",
       "qti:3.0.1:def:qti-assessment-test.__schema51/cardEntries",
       "qti:3.0.1:def:qti-assessment-test.__schema51/xmlLang",
@@ -50771,7 +50761,6 @@
       "qti:3.0.1:def:qti-assessment-test.__schema78/foreignAttributes",
       "qti:3.0.1:def:qti-assessment-test.__schema79/expression",
       "qti:3.0.1:def:qti-assessment-test.__schema79/kind",
-      "qti:3.0.1:def:qti-assessment-test.__schema9/value",
       "qti:3.0.1:doc:qti-assessment-item/foreignAttributes",
       "qti:3.0.1:doc:qti-assessment-item/xmlLang",
       "qti:3.0.1:doc:qti-assessment-section/children",
@@ -50780,20 +50769,53 @@
       "qti:3.0.1:doc:qti-assessment-stimulus/stimulusBody/content",
       "qti:3.0.1:doc:qti-assessment-stimulus/stimulusBody/dataSsml",
       "qti:3.0.1:doc:qti-assessment-stimulus/stimulusBody/foreignAttributes",
-      "qti:3.0.1:doc:qti-assessment-stimulus/stimulusBody/xmlBase",
       "qti:3.0.1:doc:qti-assessment-stimulus/stimulusBody/xmlLang",
       "qti:3.0.1:doc:qti-assessment-stimulus/xmlLang",
       "qti:3.0.1:doc:qti-assessment-test/foreignAttributes"
+    ],
+    "normalisations": [
+      {
+        "note": "XSD `xs:any` open-content wildcard → conform-ed `extensions` (an unnamed wildcard has no literal name to join).",
+        "modelledKeys": [
+          "qti:3.0.1:def:qti-assessment-item.__schema68/extensions",
+          "qti:3.0.1:def:qti-assessment-section.__schema41/extensions",
+          "qti:3.0.1:def:qti-assessment-section.__schema43/extensions"
+        ],
+        "literalKeys": []
+      },
+      {
+        "note": "XSD `simpleContent` text node → conform-ed `value` (the literal leaves the text node unnamed).",
+        "modelledKeys": [
+          "qti:3.0.1:def:qti-assessment-item.__schema7/value",
+          "qti:3.0.1:def:qti-assessment-item.__schema71/value",
+          "qti:3.0.1:def:qti-assessment-test.__schema9/value"
+        ],
+        "literalKeys": []
+      },
+      {
+        "note": "Foreign `xml:base` attribute (local name `base`) → conform-ed `xmlBase` (a named rename; the literal items are modelled).",
+        "modelledKeys": [
+          "qti:3.0.1:def:qti-assessment-section.__schema44/xmlBase",
+          "qti:3.0.1:def:qti-assessment-section.__schema61/xmlBase",
+          "qti:3.0.1:def:qti-assessment-test.__schema30/xmlBase",
+          "qti:3.0.1:def:qti-assessment-test.__schema47/xmlBase",
+          "qti:3.0.1:doc:qti-assessment-stimulus/stimulusBody/xmlBase"
+        ],
+        "literalKeys": [
+          "qti:3.0.1:def:BaseSequenceXBaseDType/base"
+        ]
+      }
     ]
   },
   "rollup": {
     "items": 5344,
-    "modelledYes": 223,
+    "modelledYes": 224,
     "modelledPartial": 0,
-    "modelledNo": 359,
+    "modelledNo": 358,
     "normativeItems": 2,
     "conformanceRequirements": 2,
     "normativeStatements": 2,
-    "normativeStatementsCited": 0
+    "normativeStatementsCited": 0,
+    "normalisations": 12
   }
 }

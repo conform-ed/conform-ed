@@ -64,6 +64,17 @@ describe("QTI 3.0.1 Coverage Map — XSD walker + name-normalisation", () => {
     expect(map.residues.silentGaps.some((k) => k.includes("/aria-"))).toBe(true);
   });
 
+  test("xml:base is a named rename here (flipped to modelled), unlike QTI 2.x", () => {
+    // The flattened 3.0.1 ASI models xml:base as xmlBase, so its single `/base` item is a
+    // rename absorbed into normalisations (literal side flipped to yes), not a silent gap.
+    const xmlBase = map.residues.normalisations.find((n) => n.literalKeys.length > 0);
+    expect(xmlBase?.literalKeys).toEqual(["qti:3.0.1:def:BaseSequenceXBaseDType/base"]);
+    expect(byKey.get("qti:3.0.1:def:BaseSequenceXBaseDType/base")?.modelled).toBe("yes");
+    expect(xmlBase?.modelledKeys.every((k) => k.endsWith("/xmlBase"))).toBe(true);
+    expect(map.residues.silentGaps.some((k) => k.endsWith("/base"))).toBe(false);
+    expect(map.residues.extensions.some((k) => /\/(xmlBase|extensions|value)$/.test(k))).toBe(false);
+  });
+
   test("every conformance requirement cross-links to a real item key", () => {
     const keys = new Set(map.items.map((i) => i.key));
     expect(map.rollup.conformanceRequirements).toBe(2);

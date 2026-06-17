@@ -8,6 +8,37 @@ import type { ZodType } from "zod";
 
 import type { ConformanceRequirement, SchemaLanguage } from "./types";
 
+/**
+ * One documented XSD→Zod rename, applied as a post-pass over the raw reconciliation
+ * residues. The structural join matches by property name, so it cannot pair a literal
+ * construct that conform-ed deliberately models under a *different* name (`xml:base` ⇄
+ * `xmlBase`) or for an *unnamed* literal construct conform-ed gives a name (`xs:any` open
+ * content → `extensions`; simpleContent text → `value`). Left alone these surface as false
+ * signal in `silentGaps` / `extensions`; an override absorbs them into
+ * `residues.normalisations` instead. Matching is by the **final path segment** of the
+ * residue key, scoped to this one map — so a per-spec author asserts "in this schema, a
+ * Zod `value` extension is always the simpleContent-text rename", and the generated map
+ * records exactly which keys each rule absorbed (auditable, and pinned by tests).
+ */
+export interface SpecRefOverride {
+  /** The documented rename, recorded verbatim in the map's `normalisations` entry. */
+  readonly note: string;
+  /**
+   * Absorb `extensions` residues whose final path segment equals this — the conform-ed
+   * property name modelling the literal construct the name-join could not pair.
+   */
+  readonly modelledSegment: string;
+  /**
+   * For a rename of a *named* literal construct only (e.g. `xml:base`): the literal side's
+   * final path segment. Silent gaps matching it are flipped to `modelled: "yes"` (conform-ed
+   * does model them, under the conform-ed name) and recorded. Omit for unnamed constructs
+   * (`xs:any`, simpleContent text), which have no literal item — and crucially omit it where
+   * conform-ed does **not** model the construct at all (QTI 2.x names no `xmlBase`, so its
+   * `/base` gaps are genuine and must stay).
+   */
+  readonly literalSegment?: string;
+}
+
 export interface SpecBindingSource {
   /** Short logical name of the source artifact; becomes the `doc:<binding>` scope. */
   readonly binding: string;
@@ -58,4 +89,10 @@ export interface SpecSource {
    * name, not def key, so this only affects item identity — never the L2 verdicts.
    */
   readonly scopeXsdDefsBySource?: boolean;
+  /**
+   * Documented XSD→Zod renames that the structural name-join cannot pair, absorbed out of
+   * the residue lists into `residues.normalisations` (see {@link SpecRefOverride}). Omitted
+   * ⇒ none (the JSON-family maps need none; their residues are already genuine signal).
+   */
+  readonly specRefOverrides?: readonly SpecRefOverride[];
 }

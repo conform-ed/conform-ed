@@ -45,19 +45,30 @@ describe("Common Cartridge 1.4 Coverage Map — XSD walker (6 source-scoped bind
   });
 
   test("the named information model reconciles with conform-ed's Zod", () => {
-    expect(map.rollup.modelledYes).toBe(81);
+    expect(map.rollup.modelledYes).toBe(84);
     expect(byKey.get("cc:1.4:def:ccv1p4_imswl_v1p4.WebLink.Type/url")?.modelled).toBe("yes");
     expect(byKey.get("cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Manifest.Type/resources")?.modelled).toBe("yes");
     expect(byKey.get("cc:1.4:def:cc_extresource_assignmentv1p0_v1p0.Assignment.Type/text")?.modelled).toBe("yes");
   });
 
-  test("the only silent gaps are the foreign xml:base attribute (modelled by conform-ed as xmlBase)", () => {
-    expect(map.residues.silentGaps).toEqual([
+  test("documented XSD→Zod renames are absorbed into residues.normalisations, not left as false signal", () => {
+    expect(map.residues.silentGaps).toEqual([]);
+    expect(map.residues.extensions.some((k) => /\/(xmlBase|extensions|value)$/.test(k))).toBe(false);
+
+    // xml:base → xmlBase is a named rename here: the literal `/base` items are flipped to yes.
+    const xmlBase = map.residues.normalisations.find((n) => n.literalKeys.length > 0);
+    expect(xmlBase?.literalKeys).toEqual([
       "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Manifest.Type/base",
       "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Resource.Type/base",
       "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Resources.Type/base",
     ]);
-    expect(map.residues.extensions.some((k) => k.endsWith("/xmlBase"))).toBe(true);
+    for (const key of xmlBase?.literalKeys ?? []) expect(byKey.get(key)?.modelled).toBe("yes");
+
+    expect(map.residues.normalisations.some((n) => n.modelledKeys.some((k) => k.endsWith("/extensions")))).toBe(true);
+    expect(map.residues.normalisations.some((n) => n.modelledKeys.some((k) => k.endsWith("/value")))).toBe(true);
+
+    const absorbed = map.residues.normalisations.reduce((s, n) => s + n.modelledKeys.length + n.literalKeys.length, 0);
+    expect(map.rollup.normalisations).toBe(absorbed);
   });
 
   test("no dangling edges (foreign-namespace imports stay opaque)", () => {

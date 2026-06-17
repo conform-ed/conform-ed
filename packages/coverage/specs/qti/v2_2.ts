@@ -35,6 +35,7 @@ import {
 
 import type { SpecSource } from "../../src/source";
 import type { ConformanceRequirement } from "../../src/types";
+import { SIMPLE_CONTENT_VALUE, XS_ANY_EXTENSIONS } from "../xsd-normalisations";
 import { normalizeQtiName } from "./v3_0_1";
 
 const vendor = (file: string): string => join(import.meta.dir, "..", "..", "vendor", "qti", "v2_2", file);
@@ -99,6 +100,9 @@ export const qtiV2_2: SpecSource = {
   // Multi-file map: scope `def:`s by source schema (ASI + result / usagedata / metadata /
   // content-package / CSM / APIP schemas reuse type names for distinct types).
   scopeXsdDefsBySource: true,
+  // As QTI 2.1: only the unnamed-construct renames; the 2.x model names no `xmlBase`, so the
+  // literal `/base` items stay genuine silent gaps.
+  specRefOverrides: [XS_ANY_EXTENSIONS, SIMPLE_CONTENT_VALUE],
   bindings: [
     xsd("assessmentItem", "imsqti_v2p2p4", QtiAssessmentItemSchema),
     xsd("assessmentTest", "imsqti_v2p2p4", QtiAssessmentTestSchema),

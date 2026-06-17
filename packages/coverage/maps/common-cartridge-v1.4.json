@@ -417,7 +417,7 @@
       "kind": "property",
       "path": "base",
       "jsonType": "string",
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Manifest.Type/identifier",
@@ -563,7 +563,7 @@
       "kind": "property",
       "path": "base",
       "jsonType": "string",
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Resource.Type/dependency",
@@ -696,7 +696,7 @@
       "kind": "property",
       "path": "base",
       "jsonType": "string",
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Resources.Type/resource",
@@ -1282,17 +1282,11 @@
   ],
   "normativeStatements": [],
   "residues": {
-    "silentGaps": [
-      "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Manifest.Type/base",
-      "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Resource.Type/base",
-      "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Resources.Type/base"
-    ],
+    "silentGaps": [],
     "extensions": [
-      "cc:1.4:def:assignment.__schema1/value",
       "cc:1.4:def:manifest.__schema1/annotation",
       "cc:1.4:def:manifest.__schema1/classification",
       "cc:1.4:def:manifest.__schema1/educational",
-      "cc:1.4:def:manifest.__schema1/extensions",
       "cc:1.4:def:manifest.__schema1/foreignAttributes",
       "cc:1.4:def:manifest.__schema1/general",
       "cc:1.4:def:manifest.__schema1/lifeCycle",
@@ -1303,36 +1297,63 @@
       "cc:1.4:def:manifest.__schema20/curriculumStandardsMetadata",
       "cc:1.4:def:manifest.__schema20/resourceLabel",
       "cc:1.4:def:manifest.__schema20/resourcePartId",
-      "cc:1.4:def:manifest.__schema26/extensions",
-      "cc:1.4:doc:assignment/extensions/extensions",
-      "cc:1.4:doc:authorizations/extensions",
       "cc:1.4:doc:manifest/authorizations",
-      "cc:1.4:doc:manifest/resources/resource/[]/extensions",
       "cc:1.4:doc:manifest/resources/resource/[]/protected",
-      "cc:1.4:doc:manifest/resources/resource/[]/xmlBase",
-      "cc:1.4:doc:manifest/resources/xmlBase",
-      "cc:1.4:doc:manifest/xmlBase",
       "cc:1.4:doc:topic/extensions/[]/attributes",
       "cc:1.4:doc:topic/extensions/[]/children",
       "cc:1.4:doc:topic/extensions/[]/name",
       "cc:1.4:doc:topic/extensions/[]/namespace",
-      "cc:1.4:doc:topic/extensions/[]/value",
-      "cc:1.4:doc:topic/text/value",
       "cc:1.4:doc:webLink/extensions/[]/attributes",
       "cc:1.4:doc:webLink/extensions/[]/children",
       "cc:1.4:doc:webLink/extensions/[]/name",
-      "cc:1.4:doc:webLink/extensions/[]/namespace",
-      "cc:1.4:doc:webLink/extensions/[]/value"
+      "cc:1.4:doc:webLink/extensions/[]/namespace"
+    ],
+    "normalisations": [
+      {
+        "note": "XSD `xs:any` open-content wildcard → conform-ed `extensions` (an unnamed wildcard has no literal name to join).",
+        "modelledKeys": [
+          "cc:1.4:def:manifest.__schema1/extensions",
+          "cc:1.4:def:manifest.__schema26/extensions",
+          "cc:1.4:doc:assignment/extensions/extensions",
+          "cc:1.4:doc:authorizations/extensions",
+          "cc:1.4:doc:manifest/resources/resource/[]/extensions"
+        ],
+        "literalKeys": []
+      },
+      {
+        "note": "XSD `simpleContent` text node → conform-ed `value` (the literal leaves the text node unnamed).",
+        "modelledKeys": [
+          "cc:1.4:def:assignment.__schema1/value",
+          "cc:1.4:doc:topic/extensions/[]/value",
+          "cc:1.4:doc:topic/text/value",
+          "cc:1.4:doc:webLink/extensions/[]/value"
+        ],
+        "literalKeys": []
+      },
+      {
+        "note": "Foreign `xml:base` attribute (local name `base`) → conform-ed `xmlBase` (a named rename; the literal items are modelled).",
+        "modelledKeys": [
+          "cc:1.4:doc:manifest/resources/resource/[]/xmlBase",
+          "cc:1.4:doc:manifest/resources/xmlBase",
+          "cc:1.4:doc:manifest/xmlBase"
+        ],
+        "literalKeys": [
+          "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Manifest.Type/base",
+          "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Resource.Type/base",
+          "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Resources.Type/base"
+        ]
+      }
     ]
   },
   "rollup": {
     "items": 143,
-    "modelledYes": 81,
+    "modelledYes": 84,
     "modelledPartial": 0,
-    "modelledNo": 3,
+    "modelledNo": 0,
     "normativeItems": 0,
     "conformanceRequirements": 5,
     "normativeStatements": 0,
-    "normativeStatementsCited": 0
+    "normativeStatementsCited": 0,
+    "normalisations": 15
   }
 }

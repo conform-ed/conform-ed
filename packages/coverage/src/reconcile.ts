@@ -12,7 +12,8 @@
  * terminate without the path-cross-product explosion a naive expansion produces.
  */
 
-import type { CoverageItem, ModelledStatus, ReconciliationResidues, UsageEdge } from "./types";
+import type { SpecRefOverride } from "./source";
+import type { CoverageItem, ModelledStatus, ReconciliationResidues, SpecRefNormalisation, UsageEdge } from "./types";
 
 interface Inventory {
   readonly items: readonly CoverageItem[];
@@ -78,10 +79,16 @@ function shapeOf(side: SideIndex, nodeKey: string, normalize: (name: string) => 
   return shape;
 }
 
+/** The raw residue lists before documented `specRef` renames are absorbed. */
+export interface RawResidues {
+  readonly silentGaps: readonly string[];
+  readonly extensions: readonly string[];
+}
+
 export interface ReconcileResult {
   /** Item key -> L2 verdict, for every literal item reached by the alignment. */
   readonly modelled: ReadonlyMap<string, ModelledStatus>;
-  readonly residues: ReconciliationResidues;
+  readonly residues: RawResidues;
 }
 
 export function reconcile(
@@ -158,6 +165,51 @@ export function reconcile(
   const extensions = [...zodSeen].filter((key) => !zodMatched.has(key)).sort();
 
   return { modelled, residues: { silentGaps, extensions } };
+}
+
+/**
+ * Absorb documented XSD→Zod renames out of the raw residues (conform-ed ADR-0013).
+ *
+ * The structural join in {@link reconcile} matches purely by property name, so a literal
+ * construct conform-ed models under a different name — or a construct the XSD leaves
+ * *unnamed* that conform-ed names (`xs:any` → `extensions`, simpleContent text → `value`,
+ * `xml:base` ⇄ `xmlBase`) — surfaces as false signal in `silentGaps` / `extensions`. Each
+ * {@link SpecRefOverride} declares one such rename by the residue key's **final path
+ * segment**; this pass moves the matched keys into `residues.normalisations`, and (for a
+ * rename of a *named* literal construct) flips the paired literal gap's verdict to `yes`.
+ * Returns a fresh modelled map and the full {@link ReconciliationResidues}. Determinism:
+ * absorbed key lists are sorted; overrides that match nothing are dropped (so a stale
+ * override is visible as a missing entry, caught by the per-map sync test).
+ */
+export function applySpecRefOverrides(
+  overrides: readonly SpecRefOverride[],
+  modelled: ReadonlyMap<string, ModelledStatus>,
+  residues: RawResidues,
+): { readonly modelled: ReadonlyMap<string, ModelledStatus>; readonly residues: ReconciliationResidues } {
+  const finalModelled = new Map(modelled);
+  let silentGaps = [...residues.silentGaps];
+  let extensions = [...residues.extensions];
+  const normalisations: SpecRefNormalisation[] = [];
+
+  for (const override of overrides) {
+    const modelledKeys = extensions.filter((k) => lastSegment(k) === override.modelledSegment);
+    const literalKeys =
+      override.literalSegment === undefined ? [] : silentGaps.filter((k) => lastSegment(k) === override.literalSegment);
+    if (modelledKeys.length === 0 && literalKeys.length === 0) continue;
+
+    const absorbedExt = new Set(modelledKeys);
+    const absorbedGap = new Set(literalKeys);
+    extensions = extensions.filter((k) => !absorbedExt.has(k));
+    silentGaps = silentGaps.filter((k) => !absorbedGap.has(k));
+    for (const key of literalKeys) finalModelled.set(key, "yes");
+    normalisations.push({
+      note: override.note,
+      modelledKeys: [...modelledKeys].sort(),
+      literalKeys: [...literalKeys].sort(),
+    });
+  }
+
+  return { modelled: finalModelled, residues: { silentGaps, extensions, normalisations } };
 }
 
 /** Apply L2 verdicts onto the inventory, returning new items (immutably). */

@@ -101,12 +101,41 @@ export interface NormativeStatement {
   readonly cited: boolean;
 }
 
-/** The three reconciliation residues that are the point of the literal denominator. */
+/**
+ * A documented, deliberate name-mapping between a literal (XSD) construct and the
+ * conform-ed property that models it — applied by a `specRefOverride` on the
+ * {@link SpecSource}. These are NOT silent gaps or extensions: the structural join
+ * can't match them by name (a renamed attribute like `xml:base` ⇄ `xmlBase`, or an
+ * *unnamed* XSD construct such as `xs:any` open content / simpleContent text that
+ * conform-ed names `extensions` / `value`). The override removes the affected keys
+ * from `silentGaps` / `extensions` and records the absorbed keys here for audit, so
+ * the residue lists carry only genuine signal.
+ */
+export interface SpecRefNormalisation {
+  /** The documented rename this rule encodes (recorded verbatim from the override). */
+  readonly note: string;
+  /**
+   * Zod-side `extensions` residue keys this rename absorbed — conform-ed models them,
+   * but under a name the literal does not use (or for a construct the literal leaves
+   * unnamed), so the structural name-join could not pair them.
+   */
+  readonly modelledKeys: readonly string[];
+  /**
+   * Literal `silentGap` keys flipped to `modelled: "yes"` because conform-ed models the
+   * construct under its own name (only the rename of a *named* literal construct, e.g.
+   * `xml:base` ⇄ `xmlBase`, has a literal side; unnamed constructs have none).
+   */
+  readonly literalKeys: readonly string[];
+}
+
+/** The reconciliation residues that are the point of the literal denominator. */
 export interface ReconciliationResidues {
   /** Literal expanded paths with no Zod counterpart — candidate silent gaps. */
   readonly silentGaps: readonly string[];
   /** Zod-modelled expanded paths with no literal counterpart — conform-ed extensions. */
   readonly extensions: readonly string[];
+  /** Documented XSD→Zod renames absorbed out of the two lists above (see {@link SpecRefNormalisation}). */
+  readonly normalisations: readonly SpecRefNormalisation[];
 }
 
 /** Computed rollup over the inventory (percentages are derived, never typed). */
@@ -123,6 +152,8 @@ export interface CoverageRollup {
   readonly normativeStatements: number;
   /** Of those, how many a curated requirement already references (`cited`). */
   readonly normativeStatementsCited: number;
+  /** Residue keys absorbed by documented `specRef` renames (gaps + extensions). */
+  readonly normalisations: number;
 }
 
 /** Provenance of a single vendored source artifact in the denominator. */

@@ -53,7 +53,7 @@ describe("Common Cartridge 1.3 Coverage Map — XSD walker (8 source-scoped bind
   });
 
   test("the named information model reconciles with conform-ed's Zod", () => {
-    expect(map.rollup.modelledYes).toBe(410);
+    expect(map.rollup.modelledYes).toBe(413);
     expect(byKey.get("cc:1.3:def:ccv1p3_imscp_v1p2_v1p0.Manifest.Type/organizations")?.modelled).toBe("yes");
     expect(byKey.get("cc:1.3:def:ccv1p3_imscp_v1p2_v1p0.Manifest.Type/resources")?.modelled).toBe("yes");
     expect(byKey.get("cc:1.3:def:ccv1p3_imsccauth_v1p3.Authorizations.Type/authorization")?.modelled).toBe("yes");
@@ -61,18 +61,35 @@ describe("Common Cartridge 1.3 Coverage Map — XSD walker (8 source-scoped bind
     expect(byKey.get("cc:1.3:def:ccv1p3_lomccltilink_v1p0.LOM.Type/general")?.modelled).toBe("yes");
   });
 
-  test("the only silent gaps are the foreign xml:base attribute (modelled by conform-ed as xmlBase)", () => {
-    expect(map.residues.silentGaps).toEqual([
+  test("documented XSD→Zod renames are absorbed into residues.normalisations, not left as false signal", () => {
+    // The structural name-join can't pair these; the `specRefOverrides` record them instead,
+    // so the residue lists keep only genuine signal.
+    expect(map.residues.silentGaps).toEqual([]);
+    expect(map.residues.extensions.some((k) => /\/(xmlBase|extensions|value)$/.test(k))).toBe(false);
+
+    // xml:base → xmlBase is a *named* rename: the literal `/base` items ARE modelled (flipped
+    // to yes), not gaps — conform-ed names xmlBase here (unlike QTI 2.x).
+    const xmlBase = map.residues.normalisations.find((n) => n.literalKeys.length > 0);
+    expect(xmlBase?.literalKeys).toEqual([
       "cc:1.3:def:ccv1p3_imscp_v1p2_v1p0.Manifest.Type/base",
       "cc:1.3:def:ccv1p3_imscp_v1p2_v1p0.Resource.Type/base",
       "cc:1.3:def:ccv1p3_imscp_v1p2_v1p0.Resources.Type/base",
     ]);
-    expect(map.residues.extensions.some((k) => k.endsWith("/xmlBase"))).toBe(true);
-  });
+    for (const key of xmlBase?.literalKeys ?? []) expect(byKey.get(key)?.modelled).toBe("yes");
+    expect(xmlBase?.modelledKeys.every((k) => k.endsWith("/xmlBase"))).toBe(true);
 
-  test("XSD open-content points (xs:any / simpleContent text) surface as documented residues", () => {
-    expect(map.residues.extensions).toContain("cc:1.3:doc:webLink/extensions");
-    expect(map.residues.extensions).toContain("cc:1.3:doc:topic/text/value");
+    // xs:any → extensions and simpleContent text → value are unnamed constructs: no literal side.
+    const ext = map.residues.normalisations.find((n) => n.modelledKeys.some((k) => k.endsWith("/extensions")));
+    expect(ext?.modelledKeys).toContain("cc:1.3:doc:webLink/extensions");
+    expect(ext?.literalKeys).toEqual([]);
+    const value = map.residues.normalisations.find((n) => n.modelledKeys.some((k) => k.endsWith("/value")));
+    expect(value?.modelledKeys).toContain("cc:1.3:doc:topic/text/value");
+    expect(value?.literalKeys).toEqual([]);
+
+    // The rollup tallies the total absorbed keys (gaps + extensions).
+    const absorbed = map.residues.normalisations.reduce((s, n) => s + n.modelledKeys.length + n.literalKeys.length, 0);
+    expect(map.rollup.normalisations).toBe(absorbed);
+    expect(absorbed).toBeGreaterThan(0);
   });
 
   test("attributes are modelled as properties with use=required honoured", () => {

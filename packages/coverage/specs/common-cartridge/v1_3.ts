@@ -9,12 +9,10 @@
  * (`ccv1p3_imswl_v1p3.xsd`, targetNamespace
  * `http://www.imsglobal.org/xsd/imsccv1p3/imswl_v1p3`).
  *
- * Note on the expected residue: the XSD's open extension point is the nameless
- * `xs:any` inside `grpStrict.any`; conform-ed models it as a named `extensions`
- * field. The two cannot align by name, so `extensions` surfaces as a single
- * `extension` residue — the literal-denominator mechanism correctly reporting a
- * documented normalisation (to be bridged by a `specRef` override increment),
- * not a defect.
+ * Documented normalisations (bridged by the `specRefOverrides` below, so they land in
+ * `residues.normalisations` rather than as false `silentGaps` / `extensions`): the nameless
+ * `xs:any` open-content point conform-ed names `extensions`; an XSD `simpleContent` text node
+ * conform-ed names `value`; and the foreign `xml:base` attribute conform-ed names `xmlBase`.
  */
 
 import { join } from "node:path";
@@ -32,6 +30,7 @@ import {
 
 import type { SpecSource } from "../../src/source";
 import type { ConformanceRequirement } from "../../src/types";
+import { SIMPLE_CONTENT_VALUE, XML_BASE, XS_ANY_EXTENSIONS } from "../xsd-normalisations";
 
 const vendor = (file: string): string => join(import.meta.dir, "..", "..", "vendor", "common-cartridge", "v1_3", file);
 
@@ -131,6 +130,8 @@ export const commonCartridgeV1_3: SpecSource = {
   // Multi-file map: `def:`s are scoped by source schema (the three LOM profiles all
   // define `LOM.Type`, and the resource XSDs share boilerplate type names).
   scopeXsdDefsBySource: true,
+  // conform-ed models xml:base (as xmlBase) here, so the `/base` items are renamed, not gaps.
+  specRefOverrides: [XS_ANY_EXTENSIONS, SIMPLE_CONTENT_VALUE, XML_BASE],
   bindings: [
     {
       binding: "webLink",

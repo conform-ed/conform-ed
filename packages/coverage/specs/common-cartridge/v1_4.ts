@@ -25,6 +25,7 @@ import {
 
 import type { SpecSource } from "../../src/source";
 import type { ConformanceRequirement } from "../../src/types";
+import { SIMPLE_CONTENT_VALUE, XML_BASE, XS_ANY_EXTENSIONS } from "../xsd-normalisations";
 
 const vendor = (file: string): string => join(import.meta.dir, "..", "..", "vendor", "common-cartridge", "v1_4", file);
 
@@ -97,6 +98,8 @@ export const commonCartridgeV1_4: SpecSource = {
   // Multi-file map: `def:`s are scoped by source schema so the `assignment` extension's
   // `Text.Type` / `Attachment.Type` stay distinct from Discussion Topic's.
   scopeXsdDefsBySource: true,
+  // Same documented renames as CC 1.3, including xml:base→xmlBase (conform-ed models it here).
+  specRefOverrides: [XS_ANY_EXTENSIONS, SIMPLE_CONTENT_VALUE, XML_BASE],
   bindings: [
     {
       binding: "manifest",

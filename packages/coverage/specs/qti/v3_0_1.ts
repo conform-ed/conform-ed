@@ -26,6 +26,7 @@ import {
 
 import type { SpecSource } from "../../src/source";
 import type { ConformanceRequirement } from "../../src/types";
+import { SIMPLE_CONTENT_VALUE, XML_BASE, XS_ANY_EXTENSIONS } from "../xsd-normalisations";
 
 const vendor = (file: string): string => join(import.meta.dir, "..", "..", "vendor", "qti", "v3_0_1", file);
 
@@ -84,6 +85,9 @@ export const qtiV3_0_1: SpecSource = {
   spec: "qti",
   version: "3.0.1",
   nameNormalizer: normalizeQtiName,
+  // The flattened 3.0.1 ASI models xml:base (as xmlBase), so its single `/base` item is a
+  // rename, not a gap — unlike QTI 2.x, which names no xmlBase (see those specs).
+  specRefOverrides: [XS_ANY_EXTENSIONS, SIMPLE_CONTENT_VALUE, XML_BASE],
   bindings: [
     {
       binding: "qti-assessment-item",

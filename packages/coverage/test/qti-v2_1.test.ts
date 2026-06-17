@@ -57,6 +57,17 @@ describe("QTI 2.1 Coverage Map — XSD walker, source-scoped document family", (
     expect(map.residues.silentGaps.length).toBeGreaterThan(0);
   });
 
+  test("only the unnamed-construct renames are absorbed; xml:base stays a genuine gap", () => {
+    // conform-ed names no `xmlBase` in the QTI 2.x model, so the literal `xml:base` (`/base`)
+    // items are real silent gaps — NOT flipped (unlike CC / QTI 3.0.1). No normalisation has a
+    // literal side here; only the unnamed xs:any / simpleContent-text constructs are bridged.
+    expect(map.residues.silentGaps.some((k) => k.endsWith("/base"))).toBe(true);
+    expect(map.residues.normalisations.every((n) => n.literalKeys.length === 0)).toBe(true);
+    expect(map.residues.normalisations.some((n) => n.modelledKeys.some((k) => k.endsWith("/extensions")))).toBe(true);
+    expect(map.residues.normalisations.some((n) => n.modelledKeys.some((k) => k.endsWith("/value")))).toBe(true);
+    expect(map.residues.extensions.some((k) => /\/(extensions|value)$/.test(k))).toBe(false);
+  });
+
   test("every conformance requirement cross-links to a real item key", () => {
     const keys = new Set(map.items.map((i) => i.key));
     expect(map.rollup.conformanceRequirements).toBe(3);

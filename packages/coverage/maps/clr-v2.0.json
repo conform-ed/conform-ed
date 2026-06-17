@@ -3820,7 +3820,8 @@
   ],
   "residues": {
     "silentGaps": [],
-    "extensions": []
+    "extensions": [],
+    "normalisations": []
   },
   "rollup": {
     "items": 409,
@@ -3830,6 +3831,7 @@
     "normativeItems": 40,
     "conformanceRequirements": 4,
     "normativeStatements": 40,
-    "normativeStatementsCited": 0
+    "normativeStatementsCited": 0,
+    "normalisations": 0
   }
 }

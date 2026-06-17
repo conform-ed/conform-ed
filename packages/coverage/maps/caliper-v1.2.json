@@ -70338,7 +70338,8 @@
       "caliper:1.2:def:Envelope.__schema3/start",
       "caliper:1.2:def:Envelope.__schema3/target",
       "caliper:1.2:def:Envelope.__schema3/type"
-    ]
+    ],
+    "normalisations": []
   },
   "rollup": {
     "items": 1957,
@@ -70348,6 +70349,7 @@
     "normativeItems": 99,
     "conformanceRequirements": 3,
     "normativeStatements": 99,
-    "normativeStatementsCited": 2
+    "normativeStatementsCited": 2,
+    "normalisations": 0
   }
 }
