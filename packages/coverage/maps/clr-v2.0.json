@@ -1,0 +1,3591 @@
+{
+  "meta": {
+    "spec": "clr",
+    "version": "2.0",
+    "generatedAt": "2026-06-17",
+    "sources": [
+      {
+        "binding": "achievementcredential",
+        "language": "json-schema",
+        "id": "https://purl.imsglobal.org/spec/clr/v2p0/schema/json/clr_v2p0_achievementcredential_schema.json",
+        "sha256": "c3cbfc94bde1c1ed8500994933fefb2dadc13a591bbe7b6c58e9978921fd34c3"
+      },
+      {
+        "binding": "clrcredential",
+        "language": "json-schema",
+        "id": "https://purl.imsglobal.org/spec/clr/v2p0/schema/json/clr_v2p0_clrcredential_schema.json",
+        "sha256": "59d778659204b0bd593e9e2ab1683fb6f688e339885c44019f606ed6feb4caee"
+      },
+      {
+        "binding": "endorsementcredential",
+        "language": "json-schema",
+        "id": "https://purl.imsglobal.org/spec/clr/v2p0/schema/json/clr_v2p0_endorsementcredential_schema.json",
+        "sha256": "0617e920a8daa0497a42537380036617e8239da01bf8ca3e7341e5b3e74b1356"
+      },
+      {
+        "binding": "getclrcredentialsresponse",
+        "language": "json-schema",
+        "id": "https://purl.imsglobal.org/spec/clr/v2p0/schema/json/clr_v2p0_getclrcredentialsresponse_schema.json",
+        "sha256": "9c5077de9d5e944fc41750ed9add69e8fb55853c04bca94493e38729e70703bf"
+      },
+      {
+        "binding": "imsx_statusinfo",
+        "language": "json-schema",
+        "id": "https://purl.imsglobal.org/spec/clr/v2p0/schema/json/clr_v2p0_imsx_statusinfo_schema.json",
+        "sha256": "53618e0d672c1db37d265638a085137d2e33276a3f684712de0509dcc2e2eacf"
+      },
+      {
+        "binding": "profile",
+        "language": "json-schema",
+        "id": "https://purl.imsglobal.org/spec/clr/v2p0/schema/json/clr_v2p0_profile_schema.json",
+        "sha256": "b9e1ed2da5761c107b1d440dd875374848ad56d40b1c006a8c4198a869d905b3"
+      }
+    ]
+  },
+  "items": [
+    {
+      "key": "clr:2.0:def:Achievement",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "A collection of information about the accomplishment recognized by the Assertion. Many assertions may be created corresponding to one Achievement."
+    },
+    {
+      "key": "clr:2.0:def:Achievement/achievementType",
+      "kind": "property",
+      "path": "achievementType",
+      "description": "The type of achievement. This is an extensible vocabulary.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:Achievement/alignment",
+      "kind": "property",
+      "path": "alignment",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:Achievement/alignment/[]",
+      "kind": "property",
+      "path": "alignment/[]",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:Achievement/creator",
+      "kind": "property",
+      "path": "creator",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:Achievement/creditsAvailable",
+      "kind": "property",
+      "path": "creditsAvailable",
+      "jsonType": "number",
+      "description": "Credit hours associated with this entity, or credit hours possible. For example 3.0.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:Achievement/criteria",
+      "kind": "property",
+      "path": "criteria",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:Achievement/description",
+      "kind": "property",
+      "path": "description",
+      "required": true,
+      "description": "A short description of the achievement.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:Achievement/endorsement",
+      "kind": "property",
+      "path": "endorsement",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:Achievement/endorsement/[]",
+      "kind": "property",
+      "path": "endorsement/[]",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:Achievement/endorsementJwt",
+      "kind": "property",
+      "path": "endorsementJwt",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:Achievement/endorsementJwt/[]",
+      "kind": "property",
+      "path": "endorsementJwt/[]",
+      "description": "Allows endorsers to make specific claims about the Achievement. These endorsements are signed with the VC-JWT proof format."
+    },
+    {
+      "key": "clr:2.0:def:Achievement/fieldOfStudy",
+      "kind": "property",
+      "path": "fieldOfStudy",
+      "description": "Category, subject, area of study, discipline, or general branch of knowledge. Examples include Business, Education, Psychology, and Technology.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:Achievement/humanCode",
+      "kind": "property",
+      "path": "humanCode",
+      "description": "The code, generally human readable, associated with an achievement.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:Achievement/id",
+      "kind": "property",
+      "path": "id",
+      "required": true,
+      "description": "Unique URI for the Achievement.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:Achievement/image",
+      "kind": "property",
+      "path": "image",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:Achievement/inLanguage",
+      "kind": "property",
+      "path": "inLanguage",
+      "description": "The language of the achievement.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:Achievement/name",
+      "kind": "property",
+      "path": "name",
+      "required": true,
+      "description": "The name of the achievement.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:Achievement/otherIdentifier",
+      "kind": "property",
+      "path": "otherIdentifier",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:Achievement/otherIdentifier/[]",
+      "kind": "property",
+      "path": "otherIdentifier/[]",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:Achievement/related",
+      "kind": "property",
+      "path": "related",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:Achievement/related/[]",
+      "kind": "property",
+      "path": "related/[]",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:Achievement/resultDescription",
+      "kind": "property",
+      "path": "resultDescription",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:Achievement/resultDescription/[]",
+      "kind": "property",
+      "path": "resultDescription/[]",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:Achievement/specialization",
+      "kind": "property",
+      "path": "specialization",
+      "description": "Name given to the focus, concentration, or specific area of study defined in the achievement. Examples include 'Entrepreneurship', 'Technical Communication', and 'Finance'.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:Achievement/tag",
+      "kind": "property",
+      "path": "tag",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:Achievement/tag/[]",
+      "kind": "property",
+      "path": "tag/[]",
+      "description": "One or more short, human-friendly, searchable, keywords that describe the type of achievement."
+    },
+    {
+      "key": "clr:2.0:def:Achievement/type",
+      "kind": "property",
+      "path": "type",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:Achievement/type/[]",
+      "kind": "property",
+      "path": "type/[]",
+      "normative": true,
+      "description": "The type MUST include the IRI 'Achievement'."
+    },
+    {
+      "key": "clr:2.0:def:Achievement/version",
+      "kind": "property",
+      "path": "version",
+      "description": "The version property allows issuers to set a version string for an Achievement. This is particularly useful when replacing a previous version with an update.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:AchievementSubject",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "A collection of information about the recipient of an achievement. Maps to Credential Subject in [[VC-DATA-MODEL-2.0]]."
+    },
+    {
+      "key": "clr:2.0:def:AchievementSubject/achievement",
+      "kind": "property",
+      "path": "achievement",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:AchievementSubject/activityEndDate",
+      "kind": "property",
+      "path": "activityEndDate",
+      "jsonType": "string",
+      "description": "The datetime the activity ended.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:AchievementSubject/activityStartDate",
+      "kind": "property",
+      "path": "activityStartDate",
+      "jsonType": "string",
+      "description": "The datetime the activity started.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:AchievementSubject/creditsEarned",
+      "kind": "property",
+      "path": "creditsEarned",
+      "jsonType": "number",
+      "description": "The number of credits earned, generally in semester or quarter credit hours. This field correlates with the Achievement `creditsAvailable` field.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:AchievementSubject/id",
+      "kind": "property",
+      "path": "id",
+      "normative": true,
+      "description": "An identifier for the Credential Subject. Either `id` or at least one `identifier` MUST be supplied.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:AchievementSubject/identifier",
+      "kind": "property",
+      "path": "identifier",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:AchievementSubject/identifier/[]",
+      "kind": "property",
+      "path": "identifier/[]",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:AchievementSubject/image",
+      "kind": "property",
+      "path": "image",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:AchievementSubject/licenseNumber",
+      "kind": "property",
+      "path": "licenseNumber",
+      "description": "The license number that was issued with this credential.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:AchievementSubject/narrative",
+      "kind": "property",
+      "path": "narrative",
+      "description": "A narrative that connects multiple pieces of evidence. Likely only present at this location if evidence is a multi-value array.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:AchievementSubject/result",
+      "kind": "property",
+      "path": "result",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:AchievementSubject/result/[]",
+      "kind": "property",
+      "path": "result/[]",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:AchievementSubject/role",
+      "kind": "property",
+      "path": "role",
+      "description": "Role, position, or title of the learner when demonstrating or performing the achievement or evidence of learning being asserted. Examples include 'Student President', 'Intern', 'Captain', etc.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:AchievementSubject/source",
+      "kind": "property",
+      "path": "source",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:AchievementSubject/term",
+      "kind": "property",
+      "path": "term",
+      "description": "The academic term in which this assertion was achieved.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:AchievementSubject/type",
+      "kind": "property",
+      "path": "type",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:AchievementSubject/type/[]",
+      "kind": "property",
+      "path": "type/[]",
+      "normative": true,
+      "description": "The value of the type property MUST be an unordered set. One of the items MUST be the IRI 'AchievementSubject'."
+    },
+    {
+      "key": "clr:2.0:def:Address",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "An address for the described entity."
+    },
+    {
+      "key": "clr:2.0:def:Address/addressCountry",
+      "kind": "property",
+      "path": "addressCountry",
+      "description": "A country.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:Address/addressCountryCode",
+      "kind": "property",
+      "path": "addressCountryCode",
+      "description": "A country code. The value must be a ISO 3166-1 alpha-2 country code [[ISO3166-1]].",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:Address/addressLocality",
+      "kind": "property",
+      "path": "addressLocality",
+      "description": "A locality within the region.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:Address/addressRegion",
+      "kind": "property",
+      "path": "addressRegion",
+      "description": "A region within the country.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:Address/geo",
+      "kind": "property",
+      "path": "geo",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:Address/postalCode",
+      "kind": "property",
+      "path": "postalCode",
+      "description": "A postal code.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:Address/postOfficeBoxNumber",
+      "kind": "property",
+      "path": "postOfficeBoxNumber",
+      "description": "A post office box number for PO box addresses.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:Address/streetAddress",
+      "kind": "property",
+      "path": "streetAddress",
+      "description": "A street address within the locality.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:Address/type",
+      "kind": "property",
+      "path": "type",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:Address/type/[]",
+      "kind": "property",
+      "path": "type/[]",
+      "normative": true,
+      "description": "The value of the type property MUST be an unordered set. One of the items MUST be the IRI 'Address'."
+    },
+    {
+      "key": "clr:2.0:def:Alignment",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "Describes an alignment between an achievement and a node in an educational framework."
+    },
+    {
+      "key": "clr:2.0:def:Alignment/targetCode",
+      "kind": "property",
+      "path": "targetCode",
+      "description": "If applicable, a locally unique string identifier that identifies the alignment target within its framework and/or targetUrl.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:Alignment/targetDescription",
+      "kind": "property",
+      "path": "targetDescription",
+      "description": "Short description of the alignment target.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:Alignment/targetFramework",
+      "kind": "property",
+      "path": "targetFramework",
+      "description": "Name of the framework the alignment target.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:Alignment/targetName",
+      "kind": "property",
+      "path": "targetName",
+      "required": true,
+      "description": "Name of the alignment.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:Alignment/targetType",
+      "kind": "property",
+      "path": "targetType",
+      "description": "The type of the alignment target node.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:Alignment/targetUrl",
+      "kind": "property",
+      "path": "targetUrl",
+      "required": true,
+      "description": "URL linking to the official description of the alignment target, for example an individual standard within an educational framework.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:Alignment/type",
+      "kind": "property",
+      "path": "type",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:Alignment/type/[]",
+      "kind": "property",
+      "path": "type/[]",
+      "normative": true,
+      "description": "The value of the type property MUST be an unordered set. One of the items MUST be the IRI 'Alignment'."
+    },
+    {
+      "key": "clr:2.0:def:Association",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "An Association describes the semantic relationship between two achievements and the credentials that assert those achievements."
+    },
+    {
+      "key": "clr:2.0:def:Association/associationType",
+      "kind": "property",
+      "path": "associationType",
+      "jsonType": "string",
+      "required": true,
+      "enumValues": [
+        "exactMatchOf",
+        "isChildOf",
+        "isParentOf",
+        "isPartOf",
+        "isPeerOf",
+        "isRelatedTo",
+        "precedes",
+        "replacedBy"
+      ],
+      "description": "The type of relationship between a source achievement and a target achievement. For example the source achievement is the child of the target achievement.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:Association/sourceId",
+      "kind": "property",
+      "path": "sourceId",
+      "required": true,
+      "description": "The `id` of the source achievement.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:Association/targetId",
+      "kind": "property",
+      "path": "targetId",
+      "required": true,
+      "description": "The `id` of the target achievement.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:Association/type",
+      "kind": "property",
+      "path": "type",
+      "required": true,
+      "normative": true,
+      "description": "The value of the type property MUST be 'Association'.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:ClrCredential",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "A ClrCredential is a CLR with all the properties needed to conform with a Verifiable Credential as defined in the [[VC-DATA-MODEL-2.0]]."
+    },
+    {
+      "key": "clr:2.0:def:ClrCredential/@context",
+      "kind": "property",
+      "path": "@context",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:ClrCredential/@context/[]",
+      "kind": "property",
+      "path": "@context/[]",
+      "enumValues": [
+        "https://www.w3.org/ns/credentials/v2"
+      ]
+    },
+    {
+      "key": "clr:2.0:def:ClrCredential/awardedDate",
+      "kind": "property",
+      "path": "awardedDate",
+      "jsonType": "string",
+      "description": "Timestamp of when the credential was awarded. `validFrom` is used to determine the most recent version of a Credential in conjunction with `issuer` and `id`. Consequently, the only way to update a Credental is to update the `validFrom`, losing the date when the Credential was or…",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:ClrCredential/credentialSchema",
+      "kind": "property",
+      "path": "credentialSchema",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:ClrCredential/credentialSchema/[]",
+      "kind": "property",
+      "path": "credentialSchema/[]",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:ClrCredential/credentialStatus",
+      "kind": "property",
+      "path": "credentialStatus",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:ClrCredential/credentialSubject",
+      "kind": "property",
+      "path": "credentialSubject",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:ClrCredential/description",
+      "kind": "property",
+      "path": "description",
+      "description": "Optional description of the CLR. May be displayed by wallet user interfaces.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:ClrCredential/endorsement",
+      "kind": "property",
+      "path": "endorsement",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:ClrCredential/endorsement/[]",
+      "kind": "property",
+      "path": "endorsement/[]",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:ClrCredential/endorsementJwt",
+      "kind": "property",
+      "path": "endorsementJwt",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:ClrCredential/endorsementJwt/[]",
+      "kind": "property",
+      "path": "endorsementJwt/[]",
+      "description": "Allows endorsers to make specific claims about the ClrCredential, or any AssertionCredential, Achievement, or Profile referenced in the ClrCredential. These endorsements are signed with the VC-JWT proof format."
+    },
+    {
+      "key": "clr:2.0:def:ClrCredential/evidence",
+      "kind": "property",
+      "path": "evidence",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:ClrCredential/evidence/[]",
+      "kind": "property",
+      "path": "evidence/[]",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:ClrCredential/id",
+      "kind": "property",
+      "path": "id",
+      "required": true,
+      "description": "Unambiguous reference to the credential.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:ClrCredential/image",
+      "kind": "property",
+      "path": "image",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:ClrCredential/issuer",
+      "kind": "property",
+      "path": "issuer",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:ClrCredential/name",
+      "kind": "property",
+      "path": "name",
+      "required": true,
+      "description": "The name of the CLR. May be displayed by wallet user interfaces.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:ClrCredential/partial",
+      "kind": "property",
+      "path": "partial",
+      "jsonType": "boolean",
+      "description": "True if CLR does not contain all the assertions known by the publisher for the learner at the time the CLR is issued. Useful if you are sending a small set of achievements in real time when they are achieved. If False or omitted, the CLR SHOULD be interpreted as containing all t…",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:ClrCredential/proof",
+      "kind": "property",
+      "path": "proof",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:ClrCredential/proof/[]",
+      "kind": "property",
+      "path": "proof/[]",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:ClrCredential/refreshService",
+      "kind": "property",
+      "path": "refreshService",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:ClrCredential/termsOfUse",
+      "kind": "property",
+      "path": "termsOfUse",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:ClrCredential/termsOfUse/[]",
+      "kind": "property",
+      "path": "termsOfUse/[]",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:ClrCredential/type",
+      "kind": "property",
+      "path": "type",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:ClrCredential/type/[]",
+      "kind": "property",
+      "path": "type/[]",
+      "normative": true,
+      "description": "The value of the type property MUST be an unordered set. One of the items MUST be the IRI `VerifiableCredential`, and one of the items MUST be the IRI `ClrCredential`."
+    },
+    {
+      "key": "clr:2.0:def:ClrCredential/validFrom",
+      "kind": "property",
+      "path": "validFrom",
+      "jsonType": "string",
+      "required": true,
+      "description": "Timestamp of when the credential becomes valid.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:ClrCredential/validUntil",
+      "kind": "property",
+      "path": "validUntil",
+      "jsonType": "string",
+      "description": "If the credential has some notion of validity period, this indicates a timestamp when a credential should no longer be considered valid. After this time, the credential should be considered invalid.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:ClrSubject",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "A collection of information about the learner that is the subject of this CLR credential."
+    },
+    {
+      "key": "clr:2.0:def:ClrSubject/achievement",
+      "kind": "property",
+      "path": "achievement",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:ClrSubject/achievement/[]",
+      "kind": "property",
+      "path": "achievement/[]",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:ClrSubject/association",
+      "kind": "property",
+      "path": "association",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:ClrSubject/association/[]",
+      "kind": "property",
+      "path": "association/[]",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:ClrSubject/id",
+      "kind": "property",
+      "path": "id",
+      "description": "An identifier for the recipient of the CLR credential. Either `id` or at least one `identifier` is required.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:ClrSubject/identifier",
+      "kind": "property",
+      "path": "identifier",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:ClrSubject/identifier/[]",
+      "kind": "property",
+      "path": "identifier/[]",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:ClrSubject/type",
+      "kind": "property",
+      "path": "type",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:ClrSubject/type/[]",
+      "kind": "property",
+      "path": "type/[]",
+      "normative": true,
+      "description": "The property MUST contain the IRI `ClrSubject`."
+    },
+    {
+      "key": "clr:2.0:def:ClrSubject/verifiableCredential",
+      "kind": "property",
+      "path": "verifiableCredential",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:ClrSubject/verifiableCredential/[]",
+      "kind": "property",
+      "path": "verifiableCredential/[]",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:Context",
+      "kind": "definition",
+      "path": "",
+      "normative": true,
+      "description": "JSON-LD Context. Either a URI with the context definition or a Map with a local context definition MUST be supplied."
+    },
+    {
+      "key": "clr:2.0:def:CredentialSchema",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "Identify the type and location of a data schema."
+    },
+    {
+      "key": "clr:2.0:def:CredentialSchema/id",
+      "kind": "property",
+      "path": "id",
+      "required": true,
+      "normative": true,
+      "description": "The value MUST be a URI identifying the schema file. One instance of `CredentialSchema` MUST have an `id` that is the URL of the JSON Schema for this credential defined by this specification.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:CredentialSchema/type",
+      "kind": "property",
+      "path": "type",
+      "required": true,
+      "normative": true,
+      "description": "The value MUST identify the type of data schema validation. One instance of `CredentialSchema` MUST have a `type` of '1EdTechJsonSchemaValidator2019'.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:CredentialStatus",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "The information in CredentialStatus is used to discover information about the current status of a verifiable credential, such as whether it is suspended or revoked."
+    },
+    {
+      "key": "clr:2.0:def:CredentialStatus/id",
+      "kind": "property",
+      "path": "id",
+      "normative": true,
+      "description": "The value MUST be the URL of the issuer's credential status method.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:CredentialStatus/type",
+      "kind": "property",
+      "path": "type",
+      "required": true,
+      "description": "The name of the credential status method.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:CredentialSubject",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "Claims about the credential subject. Maps to Credential Subject as defined in the [[VC-DATA-MODEL-2.0]]."
+    },
+    {
+      "key": "clr:2.0:def:CredentialSubject/id",
+      "kind": "property",
+      "path": "id",
+      "description": "The identity of the credential subject.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:Criteria",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "Descriptive metadata about the achievements necessary to be recognized with an assertion of a particular achievement. This data is added to the Achievement class so that it may be rendered when the achievement assertion is displayed, instead of simply a link to human-readable cr…"
+    },
+    {
+      "key": "clr:2.0:def:Criteria/id",
+      "kind": "property",
+      "path": "id",
+      "description": "The URI of a webpage that describes in a human-readable format the criteria for the achievement.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:Criteria/narrative",
+      "kind": "property",
+      "path": "narrative",
+      "description": "A narrative of what is needed to earn the achievement. Markdown is allowed.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:EndorsementCredential",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "normative": true,
+      "description": "A verifiable credential that asserts a claim about an entity. As described in [[[#data-integrity]]], at least one proof mechanism, and the details necessary to evaluate that proof, MUST be expressed for a credential to be a verifiable credential. In the case of an embedded proof…"
+    },
+    {
+      "key": "clr:2.0:def:EndorsementCredential/@context",
+      "kind": "property",
+      "path": "@context",
+      "required": true,
+      "modelled": "partial"
+    },
+    {
+      "key": "clr:2.0:def:EndorsementCredential/@context/[]",
+      "kind": "property",
+      "path": "@context/[]",
+      "enumValues": [
+        "https://www.w3.org/ns/credentials/v2"
+      ]
+    },
+    {
+      "key": "clr:2.0:def:EndorsementCredential/awardedDate",
+      "kind": "property",
+      "path": "awardedDate",
+      "jsonType": "string",
+      "description": "Timestamp of when the credential was awarded. `validFrom` is used to determine the most recent version of a Credential in conjunction with `issuer` and `id`. Consequently, the only way to update a Credental is to update the `validFrom`, losing the date when the Credential was or…",
+      "modelled": "partial"
+    },
+    {
+      "key": "clr:2.0:def:EndorsementCredential/credentialSchema",
+      "kind": "property",
+      "path": "credentialSchema",
+      "modelled": "partial"
+    },
+    {
+      "key": "clr:2.0:def:EndorsementCredential/credentialSchema/[]",
+      "kind": "property",
+      "path": "credentialSchema/[]",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:EndorsementCredential/credentialStatus",
+      "kind": "property",
+      "path": "credentialStatus",
+      "modelled": "partial"
+    },
+    {
+      "key": "clr:2.0:def:EndorsementCredential/credentialSubject",
+      "kind": "property",
+      "path": "credentialSubject",
+      "required": true,
+      "modelled": "partial"
+    },
+    {
+      "key": "clr:2.0:def:EndorsementCredential/description",
+      "kind": "property",
+      "path": "description",
+      "description": "The short description of the credential for display purposes in wallets.",
+      "modelled": "partial"
+    },
+    {
+      "key": "clr:2.0:def:EndorsementCredential/evidence",
+      "kind": "property",
+      "path": "evidence",
+      "modelled": "partial"
+    },
+    {
+      "key": "clr:2.0:def:EndorsementCredential/evidence/[]",
+      "kind": "property",
+      "path": "evidence/[]",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:EndorsementCredential/id",
+      "kind": "property",
+      "path": "id",
+      "required": true,
+      "description": "Unambiguous reference to the credential.",
+      "modelled": "partial"
+    },
+    {
+      "key": "clr:2.0:def:EndorsementCredential/issuer",
+      "kind": "property",
+      "path": "issuer",
+      "required": true,
+      "modelled": "partial"
+    },
+    {
+      "key": "clr:2.0:def:EndorsementCredential/name",
+      "kind": "property",
+      "path": "name",
+      "required": true,
+      "description": "The name of the credential for display purposes in wallets. For example, in a list of credentials and in detail views.",
+      "modelled": "partial"
+    },
+    {
+      "key": "clr:2.0:def:EndorsementCredential/proof",
+      "kind": "property",
+      "path": "proof",
+      "modelled": "partial"
+    },
+    {
+      "key": "clr:2.0:def:EndorsementCredential/proof/[]",
+      "kind": "property",
+      "path": "proof/[]",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:EndorsementCredential/refreshService",
+      "kind": "property",
+      "path": "refreshService",
+      "modelled": "partial"
+    },
+    {
+      "key": "clr:2.0:def:EndorsementCredential/termsOfUse",
+      "kind": "property",
+      "path": "termsOfUse",
+      "modelled": "partial"
+    },
+    {
+      "key": "clr:2.0:def:EndorsementCredential/termsOfUse/[]",
+      "kind": "property",
+      "path": "termsOfUse/[]",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:EndorsementCredential/type",
+      "kind": "property",
+      "path": "type",
+      "required": true,
+      "modelled": "partial"
+    },
+    {
+      "key": "clr:2.0:def:EndorsementCredential/type/[]",
+      "kind": "property",
+      "path": "type/[]",
+      "normative": true,
+      "description": "The value of the type property MUST be an unordered set. One of the items MUST be the URI 'VerifiableCredential', and one of the items MUST be the URI 'EndorsementCredential'."
+    },
+    {
+      "key": "clr:2.0:def:EndorsementCredential/validFrom",
+      "kind": "property",
+      "path": "validFrom",
+      "jsonType": "string",
+      "required": true,
+      "description": "Timestamp of when the credential becomes valid.",
+      "modelled": "partial"
+    },
+    {
+      "key": "clr:2.0:def:EndorsementCredential/validUntil",
+      "kind": "property",
+      "path": "validUntil",
+      "jsonType": "string",
+      "description": "If the credential has some notion of validity period, this indicates a timestamp when a credential should no longer be considered valid. After this time, the credential should be considered invalid.",
+      "modelled": "partial"
+    },
+    {
+      "key": "clr:2.0:def:EndorsementSubject",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "A collection of information about the subject of the endorsement."
+    },
+    {
+      "key": "clr:2.0:def:EndorsementSubject/endorsementComment",
+      "kind": "property",
+      "path": "endorsementComment",
+      "description": "Allows endorsers to make a simple claim in writing about the entity.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:EndorsementSubject/id",
+      "kind": "property",
+      "path": "id",
+      "required": true,
+      "description": "The identifier of the individual, entity, organization, assertion, or achievement that is endorsed.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:EndorsementSubject/type",
+      "kind": "property",
+      "path": "type",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:EndorsementSubject/type/[]",
+      "kind": "property",
+      "path": "type/[]",
+      "normative": true,
+      "description": "The value of the type property MUST be an unordered set. One of the items MUST be the URI 'EndorsementSubject'."
+    },
+    {
+      "key": "clr:2.0:def:Evidence",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "Descriptive metadata about evidence related to the achievement assertion. Each instance of the evidence class present in an assertion corresponds to one entity, though a single entry can describe a set of items collectively. There may be multiple evidence entries referenced from…"
+    },
+    {
+      "key": "clr:2.0:def:Evidence/audience",
+      "kind": "property",
+      "path": "audience",
+      "description": "A description of the intended audience for a piece of evidence.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:Evidence/description",
+      "kind": "property",
+      "path": "description",
+      "description": "A longer description of the evidence.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:Evidence/genre",
+      "kind": "property",
+      "path": "genre",
+      "description": "A string that describes the type of evidence. For example, Poetry, Prose, Film.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:Evidence/id",
+      "kind": "property",
+      "path": "id",
+      "description": "The URL of a webpage presenting evidence of achievement or the evidence encoded as a Data URI. The schema of the webpage is undefined.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:Evidence/name",
+      "kind": "property",
+      "path": "name",
+      "description": "A descriptive title of the evidence.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:Evidence/narrative",
+      "kind": "property",
+      "path": "narrative",
+      "description": "A narrative that describes the evidence and process of achievement that led to an assertion.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:Evidence/type",
+      "kind": "property",
+      "path": "type",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:Evidence/type/[]",
+      "kind": "property",
+      "path": "type/[]",
+      "normative": true,
+      "description": "The value of the type property MUST be an unordered set. One of the items MUST be the IRI 'Evidence'."
+    },
+    {
+      "key": "clr:2.0:def:GeoCoordinates",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "The geographic coordinates of a location."
+    },
+    {
+      "key": "clr:2.0:def:GeoCoordinates/latitude",
+      "kind": "property",
+      "path": "latitude",
+      "jsonType": "number",
+      "required": true,
+      "description": "The latitude of the location [[WGS84]].",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:GeoCoordinates/longitude",
+      "kind": "property",
+      "path": "longitude",
+      "jsonType": "number",
+      "required": true,
+      "description": "The longitude of the location [[WGS84]].",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:GeoCoordinates/type",
+      "kind": "property",
+      "path": "type",
+      "required": true,
+      "normative": true,
+      "description": "MUST be the IRI 'GeoCoordinates'.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:IdentifierEntry",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "No description supplied."
+    },
+    {
+      "key": "clr:2.0:def:IdentifierEntry/identifier",
+      "kind": "property",
+      "path": "identifier",
+      "required": true,
+      "description": "An identifier.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:IdentifierEntry/identifierType",
+      "kind": "property",
+      "path": "identifierType",
+      "required": true,
+      "description": "The identifier type.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:IdentifierEntry/type",
+      "kind": "property",
+      "path": "type",
+      "required": true,
+      "normative": true,
+      "description": "MUST be the IRI 'IdentifierEntry'.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:IdentityObject",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "A collection of information about the recipient of an achievement."
+    },
+    {
+      "key": "clr:2.0:def:IdentityObject/hashed",
+      "kind": "property",
+      "path": "hashed",
+      "jsonType": "boolean",
+      "required": true,
+      "description": "Whether or not the `identityHash` value is hashed.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:IdentityObject/identityHash",
+      "kind": "property",
+      "path": "identityHash",
+      "required": true,
+      "normative": true,
+      "description": "Either the IdentityHash of the identity or the plaintext value. If it's possible that the plaintext transmission and storage of the identity value would leak personally identifiable information where there is an expectation of privacy, it is strongly recommended that an Identity…",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:IdentityObject/identityType",
+      "kind": "property",
+      "path": "identityType",
+      "required": true,
+      "description": "The identity type.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:IdentityObject/salt",
+      "kind": "property",
+      "path": "salt",
+      "description": "If the `identityHash` is hashed, this should contain the string used to salt the hash. If this value is not provided, it should be assumed that the hash was not salted.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:IdentityObject/type",
+      "kind": "property",
+      "path": "type",
+      "required": true,
+      "normative": true,
+      "description": "MUST be the IRI 'IdentityObject'.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:Image",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "Metadata about images that represent assertions, achieve or profiles. These properties can typically be represented as just the id string of the image, but using a fleshed-out document allows for including captions and other applicable metadata."
+    },
+    {
+      "key": "clr:2.0:def:Image/caption",
+      "kind": "property",
+      "path": "caption",
+      "description": "The caption for the image.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:Image/id",
+      "kind": "property",
+      "path": "id",
+      "required": true,
+      "description": "The URI or Data URI of the image.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:Image/type",
+      "kind": "property",
+      "path": "type",
+      "required": true,
+      "normative": true,
+      "description": "MUST be the IRI 'Image'.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:Imsx_CodeMinor",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "This is the container for the set of code minor status codes reported in the responses from the Service Provider."
+    },
+    {
+      "key": "clr:2.0:def:Imsx_CodeMinor/imsx_codeMinorField",
+      "kind": "property",
+      "path": "imsx_codeMinorField",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:Imsx_CodeMinor/imsx_codeMinorField/[]",
+      "kind": "property",
+      "path": "imsx_codeMinorField/[]",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:Imsx_CodeMinorField",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "This is the container for a single code minor status code."
+    },
+    {
+      "key": "clr:2.0:def:Imsx_CodeMinorField/imsx_codeMinorFieldName",
+      "kind": "property",
+      "path": "imsx_codeMinorFieldName",
+      "required": true,
+      "description": "This should contain the identity of the system that has produced the code minor status code report.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:Imsx_CodeMinorField/imsx_codeMinorFieldValue",
+      "kind": "property",
+      "path": "imsx_codeMinorFieldValue",
+      "jsonType": "string",
+      "required": true,
+      "enumValues": [
+        "forbidden",
+        "fullsuccess",
+        "internal_server_error",
+        "invalid_data",
+        "invalid_query_parameter",
+        "misdirected_request",
+        "not_acceptable",
+        "not_allowed",
+        "not_found",
+        "not_modified",
+        "server_busy",
+        "unauthorizedrequest",
+        "unknown"
+      ],
+      "description": "The code minor status code (this is a value from the corresponding enumerated vocabulary).",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:Profile",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "A Profile is a collection of information that describes the entity or organization using Open Badges. Issuers must be represented as Profiles, and endorsers, or other entities may also be represented using this vocabulary. Each Profile that represents an Issuer may be referenced…"
+    },
+    {
+      "key": "clr:2.0:def:Profile/additionalName",
+      "kind": "property",
+      "path": "additionalName",
+      "description": "Additional name. Includes what is often referred to as 'middle name' in the western world.",
+      "modelled": "partial"
+    },
+    {
+      "key": "clr:2.0:def:Profile/address",
+      "kind": "property",
+      "path": "address",
+      "modelled": "partial"
+    },
+    {
+      "key": "clr:2.0:def:Profile/dateOfBirth",
+      "kind": "property",
+      "path": "dateOfBirth",
+      "jsonType": "string",
+      "description": "Birthdate of the person.",
+      "modelled": "partial"
+    },
+    {
+      "key": "clr:2.0:def:Profile/description",
+      "kind": "property",
+      "path": "description",
+      "description": "A short description of the issuer entity or organization.",
+      "modelled": "partial"
+    },
+    {
+      "key": "clr:2.0:def:Profile/email",
+      "kind": "property",
+      "path": "email",
+      "description": "An email address.",
+      "modelled": "partial"
+    },
+    {
+      "key": "clr:2.0:def:Profile/endorsement",
+      "kind": "property",
+      "path": "endorsement",
+      "modelled": "partial"
+    },
+    {
+      "key": "clr:2.0:def:Profile/endorsement/[]",
+      "kind": "property",
+      "path": "endorsement/[]",
+      "modelled": "partial"
+    },
+    {
+      "key": "clr:2.0:def:Profile/endorsementJwt",
+      "kind": "property",
+      "path": "endorsementJwt",
+      "modelled": "partial"
+    },
+    {
+      "key": "clr:2.0:def:Profile/endorsementJwt/[]",
+      "kind": "property",
+      "path": "endorsementJwt/[]",
+      "description": "Allows endorsers to make specific claims about the individual or organization represented by this profile. These endorsements are signed with the VC-JWT proof format."
+    },
+    {
+      "key": "clr:2.0:def:Profile/familyName",
+      "kind": "property",
+      "path": "familyName",
+      "description": "Family name. In the western world, often referred to as the 'last name' of a person.",
+      "modelled": "partial"
+    },
+    {
+      "key": "clr:2.0:def:Profile/familyNamePrefix",
+      "kind": "property",
+      "path": "familyNamePrefix",
+      "description": "Family name prefix. As used in some locales, this is the leading part of a family name (e.g. 'de' in the name 'de Boer').",
+      "modelled": "partial"
+    },
+    {
+      "key": "clr:2.0:def:Profile/givenName",
+      "kind": "property",
+      "path": "givenName",
+      "description": "Given name. In the western world, often referred to as the 'first name' of a person.",
+      "modelled": "partial"
+    },
+    {
+      "key": "clr:2.0:def:Profile/honorificPrefix",
+      "kind": "property",
+      "path": "honorificPrefix",
+      "description": "Honorific prefix(es) preceding a person's name (e.g. 'Dr', 'Mrs' or 'Mr').",
+      "modelled": "partial"
+    },
+    {
+      "key": "clr:2.0:def:Profile/honorificSuffix",
+      "kind": "property",
+      "path": "honorificSuffix",
+      "description": "Honorific suffix(es) following a person's name (e.g. 'M.D, PhD').",
+      "modelled": "partial"
+    },
+    {
+      "key": "clr:2.0:def:Profile/id",
+      "kind": "property",
+      "path": "id",
+      "required": true,
+      "description": "Unique URI for the Issuer/Profile file.",
+      "modelled": "partial"
+    },
+    {
+      "key": "clr:2.0:def:Profile/image",
+      "kind": "property",
+      "path": "image",
+      "modelled": "partial"
+    },
+    {
+      "key": "clr:2.0:def:Profile/name",
+      "kind": "property",
+      "path": "name",
+      "description": "The name of the entity or organization.",
+      "modelled": "partial"
+    },
+    {
+      "key": "clr:2.0:def:Profile/official",
+      "kind": "property",
+      "path": "official",
+      "description": "If the entity is an organization, `official` is the name of an authorized official of the organization.",
+      "modelled": "partial"
+    },
+    {
+      "key": "clr:2.0:def:Profile/otherIdentifier",
+      "kind": "property",
+      "path": "otherIdentifier",
+      "modelled": "partial"
+    },
+    {
+      "key": "clr:2.0:def:Profile/otherIdentifier/[]",
+      "kind": "property",
+      "path": "otherIdentifier/[]",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:Profile/parentOrg",
+      "kind": "property",
+      "path": "parentOrg",
+      "modelled": "partial"
+    },
+    {
+      "key": "clr:2.0:def:Profile/patronymicName",
+      "kind": "property",
+      "path": "patronymicName",
+      "description": "Patronymic name.",
+      "modelled": "partial"
+    },
+    {
+      "key": "clr:2.0:def:Profile/phone",
+      "kind": "property",
+      "path": "phone",
+      "description": "A phone number.",
+      "modelled": "partial"
+    },
+    {
+      "key": "clr:2.0:def:Profile/type",
+      "kind": "property",
+      "path": "type",
+      "required": true,
+      "modelled": "partial"
+    },
+    {
+      "key": "clr:2.0:def:Profile/type/[]",
+      "kind": "property",
+      "path": "type/[]",
+      "normative": true,
+      "description": "The value of the type property MUST be an unordered set. One of the items MUST be the IRI 'Profile'."
+    },
+    {
+      "key": "clr:2.0:def:Profile/url",
+      "kind": "property",
+      "path": "url",
+      "description": "The homepage or social media profile of the entity, whether individual or institutional. Should be a URL/URI Accessible via HTTP.",
+      "modelled": "partial"
+    },
+    {
+      "key": "clr:2.0:def:ProfileRef",
+      "kind": "definition",
+      "path": "",
+      "normative": true,
+      "description": "A description of the individual, entity, or organization that issued the credential. Either a URI with the Unique URI for the Issuer/Profile file, or a Profile object MUST be supplied."
+    },
+    {
+      "key": "clr:2.0:def:Proof",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "A JSON-LD Linked Data proof."
+    },
+    {
+      "key": "clr:2.0:def:Proof/challenge",
+      "kind": "property",
+      "path": "challenge",
+      "description": "A value chosen by the verifier to mitigate authentication proof replay attacks.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:Proof/created",
+      "kind": "property",
+      "path": "created",
+      "jsonType": "string",
+      "description": "Date the proof was created.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:Proof/cryptosuite",
+      "kind": "property",
+      "path": "cryptosuite",
+      "description": "The suite used to create the proof.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:Proof/domain",
+      "kind": "property",
+      "path": "domain",
+      "description": "The domain of the proof to restrict its use to a particular target.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:Proof/nonce",
+      "kind": "property",
+      "path": "nonce",
+      "description": "A value chosen by the creator of proof to randomize proof values for privacy purposes.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:Proof/proofPurpose",
+      "kind": "property",
+      "path": "proofPurpose",
+      "normative": true,
+      "description": "The purpose of the proof to be used with `verificationMethod`. MUST be 'assertionMethod'.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:Proof/proofValue",
+      "kind": "property",
+      "path": "proofValue",
+      "description": "Value of the proof.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:Proof/type",
+      "kind": "property",
+      "path": "type",
+      "required": true,
+      "description": "Signature suite used to produce proof.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:Proof/verificationMethod",
+      "kind": "property",
+      "path": "verificationMethod",
+      "description": "The URL of the public key that can verify the signature.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:RefreshService",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "The information in RefreshService is used to refresh the verifiable credential."
+    },
+    {
+      "key": "clr:2.0:def:RefreshService/id",
+      "kind": "property",
+      "path": "id",
+      "required": true,
+      "normative": true,
+      "description": "The value MUST be the URL of the issuer's refresh service.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:RefreshService/type",
+      "kind": "property",
+      "path": "type",
+      "required": true,
+      "description": "The name of the refresh service method.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:Related",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "Identifies a related achievement."
+    },
+    {
+      "key": "clr:2.0:def:Related/id",
+      "kind": "property",
+      "path": "id",
+      "required": true,
+      "description": "The related achievement.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:Related/inLanguage",
+      "kind": "property",
+      "path": "inLanguage",
+      "description": "The language of the related achievement.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:Related/type",
+      "kind": "property",
+      "path": "type",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:Related/type/[]",
+      "kind": "property",
+      "path": "type/[]",
+      "normative": true,
+      "description": "The value of the type property MUST be an unordered set. One of the items MUST be the IRI 'Related'."
+    },
+    {
+      "key": "clr:2.0:def:Related/version",
+      "kind": "property",
+      "path": "version",
+      "description": "The version of the related achievement.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:Result",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "Describes a result that was achieved."
+    },
+    {
+      "key": "clr:2.0:def:Result/achievedLevel",
+      "kind": "property",
+      "path": "achievedLevel",
+      "description": "If the result represents an achieved rubric criterion level (e.g. Mastered), the value is the `id` of the RubricCriterionLevel in linked ResultDescription.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:Result/alignment",
+      "kind": "property",
+      "path": "alignment",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:Result/alignment/[]",
+      "kind": "property",
+      "path": "alignment/[]",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:Result/resultDescription",
+      "kind": "property",
+      "path": "resultDescription",
+      "description": "An achievement can have many result descriptions describing possible results. The value of `resultDescription` is the `id` of the result description linked to this result. The linked result description must be in the achievement that is being asserted.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:Result/status",
+      "kind": "property",
+      "path": "status",
+      "jsonType": "string",
+      "enumValues": [
+        "Completed",
+        "Enrolled",
+        "Failed",
+        "InProgress",
+        "OnHold",
+        "Provisional",
+        "Withdrew"
+      ],
+      "description": "The status of the achievement. Required if `resultType` of the linked ResultDescription is Status.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:Result/type",
+      "kind": "property",
+      "path": "type",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:Result/type/[]",
+      "kind": "property",
+      "path": "type/[]",
+      "normative": true,
+      "description": "The value of the type property MUST be an unordered set. One of the items MUST be the IRI 'Result'."
+    },
+    {
+      "key": "clr:2.0:def:Result/value",
+      "kind": "property",
+      "path": "value",
+      "description": "A string representing the result of the performance, or demonstration, of the achievement. For example, 'A' if the recipient received an A grade in class.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:ResultDescription",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "Describes a possible achievement result."
+    },
+    {
+      "key": "clr:2.0:def:ResultDescription/alignment",
+      "kind": "property",
+      "path": "alignment",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:ResultDescription/alignment/[]",
+      "kind": "property",
+      "path": "alignment/[]",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:ResultDescription/allowedValue",
+      "kind": "property",
+      "path": "allowedValue",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:ResultDescription/allowedValue/[]",
+      "kind": "property",
+      "path": "allowedValue/[]",
+      "description": "An ordered list of allowed values. The values should be ordered from low to high as determined by the achievement creator."
+    },
+    {
+      "key": "clr:2.0:def:ResultDescription/id",
+      "kind": "property",
+      "path": "id",
+      "required": true,
+      "description": "The unique URI for this result description. Required so a result can link to this result description.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:ResultDescription/name",
+      "kind": "property",
+      "path": "name",
+      "required": true,
+      "description": "The name of the result.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:ResultDescription/requiredLevel",
+      "kind": "property",
+      "path": "requiredLevel",
+      "description": "The `id` of the rubric criterion level required to pass as determined by the achievement creator.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:ResultDescription/requiredValue",
+      "kind": "property",
+      "path": "requiredValue",
+      "description": "A value from `allowedValue` or within the range of `valueMin` to `valueMax` required to pass as determined by the achievement creator.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:ResultDescription/resultType",
+      "kind": "property",
+      "path": "resultType",
+      "required": true,
+      "description": "The type of result this description represents. This is an extensible enumerated vocabulary.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:ResultDescription/rubricCriterionLevel",
+      "kind": "property",
+      "path": "rubricCriterionLevel",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:ResultDescription/rubricCriterionLevel/[]",
+      "kind": "property",
+      "path": "rubricCriterionLevel/[]",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:ResultDescription/type",
+      "kind": "property",
+      "path": "type",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:ResultDescription/type/[]",
+      "kind": "property",
+      "path": "type/[]",
+      "normative": true,
+      "description": "The value of the type property MUST be an unordered set. One of the items MUST be the IRI 'ResultDescription'."
+    },
+    {
+      "key": "clr:2.0:def:ResultDescription/valueMax",
+      "kind": "property",
+      "path": "valueMax",
+      "description": "The maximum possible `value` that may be asserted in a linked result.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:ResultDescription/valueMin",
+      "kind": "property",
+      "path": "valueMin",
+      "description": "The minimum possible `value` that may be asserted in a linked result.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:RubricCriterionLevel",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "Describes a rubric criterion level."
+    },
+    {
+      "key": "clr:2.0:def:RubricCriterionLevel/alignment",
+      "kind": "property",
+      "path": "alignment",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:RubricCriterionLevel/alignment/[]",
+      "kind": "property",
+      "path": "alignment/[]",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:RubricCriterionLevel/description",
+      "kind": "property",
+      "path": "description",
+      "description": "Description of the rubric criterion level.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:RubricCriterionLevel/id",
+      "kind": "property",
+      "path": "id",
+      "required": true,
+      "description": "The unique URI for this rubric criterion level. Required so a result can link to this rubric criterion level.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:RubricCriterionLevel/level",
+      "kind": "property",
+      "path": "level",
+      "description": "The rubric performance level in terms of success.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:RubricCriterionLevel/name",
+      "kind": "property",
+      "path": "name",
+      "required": true,
+      "description": "The name of the rubric criterion level.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:RubricCriterionLevel/points",
+      "kind": "property",
+      "path": "points",
+      "description": "The points associated with this rubric criterion level.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:RubricCriterionLevel/type",
+      "kind": "property",
+      "path": "type",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:RubricCriterionLevel/type/[]",
+      "kind": "property",
+      "path": "type/[]",
+      "normative": true,
+      "description": "The value of the type property MUST be an unordered set. One of the items MUST be the IRI 'RubricCriterionLevel'."
+    },
+    {
+      "key": "clr:2.0:def:TermsOfUse",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "Terms of use can be utilized by an issuer or a holder to communicate the terms under which a verifiable credential or verifiable presentation was issued"
+    },
+    {
+      "key": "clr:2.0:def:TermsOfUse/id",
+      "kind": "property",
+      "path": "id",
+      "normative": true,
+      "description": "The value MUST be a URI identifying the term of use.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:TermsOfUse/type",
+      "kind": "property",
+      "path": "type",
+      "required": true,
+      "normative": true,
+      "description": "The value MUST identify the type of the terms of use.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:VerifiableCredential",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "normative": true,
+      "description": "A Verifiable Credential as defined in the [[VC-DATA-MODEL-2.0]]. As described in [[[#proofs-signatures]]], at least one proof mechanism, and the details necessary to evaluate that proof, MUST be expressed for a credential to be a verifiable credential. In the case of an embedded…"
+    },
+    {
+      "key": "clr:2.0:def:VerifiableCredential/@context",
+      "kind": "property",
+      "path": "@context",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:VerifiableCredential/@context/[]",
+      "kind": "property",
+      "path": "@context/[]",
+      "enumValues": [
+        "https://www.w3.org/ns/credentials/v2"
+      ]
+    },
+    {
+      "key": "clr:2.0:def:VerifiableCredential/credentialSchema",
+      "kind": "property",
+      "path": "credentialSchema",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:VerifiableCredential/credentialSchema/[]",
+      "kind": "property",
+      "path": "credentialSchema/[]",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:VerifiableCredential/credentialStatus",
+      "kind": "property",
+      "path": "credentialStatus",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:VerifiableCredential/credentialSubject",
+      "kind": "property",
+      "path": "credentialSubject",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:VerifiableCredential/evidence",
+      "kind": "property",
+      "path": "evidence",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:VerifiableCredential/evidence/[]",
+      "kind": "property",
+      "path": "evidence/[]",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:VerifiableCredential/id",
+      "kind": "property",
+      "path": "id",
+      "description": "Unambiguous reference to the credential.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:VerifiableCredential/issuer",
+      "kind": "property",
+      "path": "issuer",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:VerifiableCredential/proof",
+      "kind": "property",
+      "path": "proof",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:VerifiableCredential/proof/[]",
+      "kind": "property",
+      "path": "proof/[]",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:VerifiableCredential/refreshService",
+      "kind": "property",
+      "path": "refreshService",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:VerifiableCredential/termsOfUse",
+      "kind": "property",
+      "path": "termsOfUse",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:VerifiableCredential/termsOfUse/[]",
+      "kind": "property",
+      "path": "termsOfUse/[]",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:VerifiableCredential/type",
+      "kind": "property",
+      "path": "type",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:VerifiableCredential/type/[]",
+      "kind": "property",
+      "path": "type/[]",
+      "normative": true,
+      "description": "The value of the type property MUST be an unordered set. One of the items MUST be the URI 'VerifiableCredential'."
+    },
+    {
+      "key": "clr:2.0:def:VerifiableCredential/validFrom",
+      "kind": "property",
+      "path": "validFrom",
+      "jsonType": "string",
+      "required": true,
+      "description": "Timestamp of when the credential becomes valid.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:def:VerifiableCredential/validUntil",
+      "kind": "property",
+      "path": "validUntil",
+      "jsonType": "string",
+      "description": "If the credential has some notion of validity period, this indicates a timestamp when a credential should no longer be considered valid. After this time, the credential should be considered invalid.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:achievementcredential",
+      "kind": "document",
+      "path": "",
+      "jsonType": "object",
+      "normative": true,
+      "description": "AchievementCredentials are representations of an awarded achievement, used to share information about a achievement belonging to one earner. Maps to a Verifiable Credential as defined in the [[VC-DATA-MODEL-2.0]]. As described in [[[#data-integrity]]], at least one proof mechani…"
+    },
+    {
+      "key": "clr:2.0:doc:achievementcredential/@context",
+      "kind": "property",
+      "path": "@context",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:achievementcredential/@context/[]",
+      "kind": "property",
+      "path": "@context/[]",
+      "enumValues": [
+        "https://www.w3.org/ns/credentials/v2"
+      ]
+    },
+    {
+      "key": "clr:2.0:doc:achievementcredential/awardedDate",
+      "kind": "property",
+      "path": "awardedDate",
+      "jsonType": "string",
+      "description": "Timestamp of when the credential was awarded. `validFrom` is used to determine the most recent version of a Credential in conjunction with `issuer` and `id`. Consequently, the only way to update a Credental is to update the `validFrom`, losing the date when the Credential was or…",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:achievementcredential/credentialSchema",
+      "kind": "property",
+      "path": "credentialSchema",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:achievementcredential/credentialSchema/[]",
+      "kind": "property",
+      "path": "credentialSchema/[]",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:achievementcredential/credentialStatus",
+      "kind": "property",
+      "path": "credentialStatus",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:achievementcredential/credentialSubject",
+      "kind": "property",
+      "path": "credentialSubject",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:achievementcredential/description",
+      "kind": "property",
+      "path": "description",
+      "description": "The short description of the credential for display purposes in wallets.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:achievementcredential/endorsement",
+      "kind": "property",
+      "path": "endorsement",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:achievementcredential/endorsement/[]",
+      "kind": "property",
+      "path": "endorsement/[]",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:achievementcredential/endorsementJwt",
+      "kind": "property",
+      "path": "endorsementJwt",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:achievementcredential/endorsementJwt/[]",
+      "kind": "property",
+      "path": "endorsementJwt/[]",
+      "description": "Allows endorsers to make specific claims about the credential, and the achievement and profiles in the credential. These endorsements are signed with the VC-JWT proof format."
+    },
+    {
+      "key": "clr:2.0:doc:achievementcredential/evidence",
+      "kind": "property",
+      "path": "evidence",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:achievementcredential/evidence/[]",
+      "kind": "property",
+      "path": "evidence/[]",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:achievementcredential/id",
+      "kind": "property",
+      "path": "id",
+      "required": true,
+      "description": "Unambiguous reference to the credential.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:achievementcredential/image",
+      "kind": "property",
+      "path": "image",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:achievementcredential/issuer",
+      "kind": "property",
+      "path": "issuer",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:achievementcredential/name",
+      "kind": "property",
+      "path": "name",
+      "description": "The name of the credential for display purposes in wallets. For example, in a list of credentials and in detail views.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:achievementcredential/proof",
+      "kind": "property",
+      "path": "proof",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:achievementcredential/proof/[]",
+      "kind": "property",
+      "path": "proof/[]",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:achievementcredential/refreshService",
+      "kind": "property",
+      "path": "refreshService",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:achievementcredential/termsOfUse",
+      "kind": "property",
+      "path": "termsOfUse",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:achievementcredential/termsOfUse/[]",
+      "kind": "property",
+      "path": "termsOfUse/[]",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:achievementcredential/type",
+      "kind": "property",
+      "path": "type",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:achievementcredential/type/[]",
+      "kind": "property",
+      "path": "type/[]",
+      "normative": true,
+      "description": "The value of the type property MUST be an unordered set. One of the items MUST be the URI 'VerifiableCredential', and one of the items MUST be the URI 'AchievementCredential' or the URI 'OpenBadgeCredential'."
+    },
+    {
+      "key": "clr:2.0:doc:achievementcredential/validFrom",
+      "kind": "property",
+      "path": "validFrom",
+      "jsonType": "string",
+      "required": true,
+      "description": "Timestamp of when the credential becomes valid.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:achievementcredential/validUntil",
+      "kind": "property",
+      "path": "validUntil",
+      "jsonType": "string",
+      "description": "If the credential has some notion of validity period, this indicates a timestamp when a credential should no longer be considered valid. After this time, the credential should be considered invalid.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:clrcredential",
+      "kind": "document",
+      "path": "",
+      "jsonType": "object",
+      "description": "A ClrCredential is a CLR with all the properties needed to conform with a Verifiable Credential as defined in the [[VC-DATA-MODEL-2.0]]."
+    },
+    {
+      "key": "clr:2.0:doc:clrcredential/@context",
+      "kind": "property",
+      "path": "@context",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:clrcredential/@context/[]",
+      "kind": "property",
+      "path": "@context/[]",
+      "enumValues": [
+        "https://www.w3.org/ns/credentials/v2"
+      ]
+    },
+    {
+      "key": "clr:2.0:doc:clrcredential/awardedDate",
+      "kind": "property",
+      "path": "awardedDate",
+      "jsonType": "string",
+      "description": "Timestamp of when the credential was awarded. `validFrom` is used to determine the most recent version of a Credential in conjunction with `issuer` and `id`. Consequently, the only way to update a Credental is to update the `validFrom`, losing the date when the Credential was or…",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:clrcredential/credentialSchema",
+      "kind": "property",
+      "path": "credentialSchema",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:clrcredential/credentialSchema/[]",
+      "kind": "property",
+      "path": "credentialSchema/[]",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:clrcredential/credentialStatus",
+      "kind": "property",
+      "path": "credentialStatus",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:clrcredential/credentialSubject",
+      "kind": "property",
+      "path": "credentialSubject",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:clrcredential/description",
+      "kind": "property",
+      "path": "description",
+      "description": "Optional description of the CLR. May be displayed by wallet user interfaces.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:clrcredential/endorsement",
+      "kind": "property",
+      "path": "endorsement",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:clrcredential/endorsement/[]",
+      "kind": "property",
+      "path": "endorsement/[]",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:clrcredential/endorsementJwt",
+      "kind": "property",
+      "path": "endorsementJwt",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:clrcredential/endorsementJwt/[]",
+      "kind": "property",
+      "path": "endorsementJwt/[]",
+      "description": "Allows endorsers to make specific claims about the ClrCredential, or any AssertionCredential, Achievement, or Profile referenced in the ClrCredential. These endorsements are signed with the VC-JWT proof format."
+    },
+    {
+      "key": "clr:2.0:doc:clrcredential/evidence",
+      "kind": "property",
+      "path": "evidence",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:clrcredential/evidence/[]",
+      "kind": "property",
+      "path": "evidence/[]",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:clrcredential/id",
+      "kind": "property",
+      "path": "id",
+      "required": true,
+      "description": "Unambiguous reference to the credential.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:clrcredential/image",
+      "kind": "property",
+      "path": "image",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:clrcredential/issuer",
+      "kind": "property",
+      "path": "issuer",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:clrcredential/name",
+      "kind": "property",
+      "path": "name",
+      "required": true,
+      "description": "The name of the CLR. May be displayed by wallet user interfaces.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:clrcredential/partial",
+      "kind": "property",
+      "path": "partial",
+      "jsonType": "boolean",
+      "description": "True if CLR does not contain all the assertions known by the publisher for the learner at the time the CLR is issued. Useful if you are sending a small set of achievements in real time when they are achieved. If False or omitted, the CLR SHOULD be interpreted as containing all t…",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:clrcredential/proof",
+      "kind": "property",
+      "path": "proof",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:clrcredential/proof/[]",
+      "kind": "property",
+      "path": "proof/[]",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:clrcredential/refreshService",
+      "kind": "property",
+      "path": "refreshService",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:clrcredential/termsOfUse",
+      "kind": "property",
+      "path": "termsOfUse",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:clrcredential/termsOfUse/[]",
+      "kind": "property",
+      "path": "termsOfUse/[]",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:clrcredential/type",
+      "kind": "property",
+      "path": "type",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:clrcredential/type/[]",
+      "kind": "property",
+      "path": "type/[]",
+      "normative": true,
+      "description": "The value of the type property MUST be an unordered set. One of the items MUST be the IRI `VerifiableCredential`, and one of the items MUST be the IRI `ClrCredential`."
+    },
+    {
+      "key": "clr:2.0:doc:clrcredential/validFrom",
+      "kind": "property",
+      "path": "validFrom",
+      "jsonType": "string",
+      "required": true,
+      "description": "Timestamp of when the credential becomes valid.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:clrcredential/validUntil",
+      "kind": "property",
+      "path": "validUntil",
+      "jsonType": "string",
+      "description": "If the credential has some notion of validity period, this indicates a timestamp when a credential should no longer be considered valid. After this time, the credential should be considered invalid.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:endorsementcredential",
+      "kind": "document",
+      "path": "",
+      "jsonType": "object",
+      "normative": true,
+      "description": "A verifiable credential that asserts a claim about an entity. As described in [[[#data-integrity]]], at least one proof mechanism, and the details necessary to evaluate that proof, MUST be expressed for a credential to be a verifiable credential. In the case of an embedded proof…"
+    },
+    {
+      "key": "clr:2.0:doc:endorsementcredential/@context",
+      "kind": "property",
+      "path": "@context",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:endorsementcredential/@context/[]",
+      "kind": "property",
+      "path": "@context/[]",
+      "enumValues": [
+        "https://www.w3.org/ns/credentials/v2"
+      ]
+    },
+    {
+      "key": "clr:2.0:doc:endorsementcredential/awardedDate",
+      "kind": "property",
+      "path": "awardedDate",
+      "jsonType": "string",
+      "description": "Timestamp of when the credential was awarded. `validFrom` is used to determine the most recent version of a Credential in conjunction with `issuer` and `id`. Consequently, the only way to update a Credental is to update the `validFrom`, losing the date when the Credential was or…",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:endorsementcredential/credentialSchema",
+      "kind": "property",
+      "path": "credentialSchema",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:endorsementcredential/credentialSchema/[]",
+      "kind": "property",
+      "path": "credentialSchema/[]",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:endorsementcredential/credentialStatus",
+      "kind": "property",
+      "path": "credentialStatus",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:endorsementcredential/credentialSubject",
+      "kind": "property",
+      "path": "credentialSubject",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:endorsementcredential/description",
+      "kind": "property",
+      "path": "description",
+      "description": "The short description of the credential for display purposes in wallets.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:endorsementcredential/evidence",
+      "kind": "property",
+      "path": "evidence",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:endorsementcredential/evidence/[]",
+      "kind": "property",
+      "path": "evidence/[]",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:endorsementcredential/id",
+      "kind": "property",
+      "path": "id",
+      "required": true,
+      "description": "Unambiguous reference to the credential.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:endorsementcredential/issuer",
+      "kind": "property",
+      "path": "issuer",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:endorsementcredential/name",
+      "kind": "property",
+      "path": "name",
+      "required": true,
+      "description": "The name of the credential for display purposes in wallets. For example, in a list of credentials and in detail views.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:endorsementcredential/proof",
+      "kind": "property",
+      "path": "proof",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:endorsementcredential/proof/[]",
+      "kind": "property",
+      "path": "proof/[]",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:endorsementcredential/refreshService",
+      "kind": "property",
+      "path": "refreshService",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:endorsementcredential/termsOfUse",
+      "kind": "property",
+      "path": "termsOfUse",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:endorsementcredential/termsOfUse/[]",
+      "kind": "property",
+      "path": "termsOfUse/[]",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:endorsementcredential/type",
+      "kind": "property",
+      "path": "type",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:endorsementcredential/type/[]",
+      "kind": "property",
+      "path": "type/[]",
+      "normative": true,
+      "description": "The value of the type property MUST be an unordered set. One of the items MUST be the URI 'VerifiableCredential', and one of the items MUST be the URI 'EndorsementCredential'."
+    },
+    {
+      "key": "clr:2.0:doc:endorsementcredential/validFrom",
+      "kind": "property",
+      "path": "validFrom",
+      "jsonType": "string",
+      "required": true,
+      "description": "Timestamp of when the credential becomes valid.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:endorsementcredential/validUntil",
+      "kind": "property",
+      "path": "validUntil",
+      "jsonType": "string",
+      "description": "If the credential has some notion of validity period, this indicates a timestamp when a credential should no longer be considered valid. After this time, the credential should be considered invalid.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:getclrcredentialsresponse",
+      "kind": "document",
+      "path": "",
+      "jsonType": "object",
+      "description": "No description supplied."
+    },
+    {
+      "key": "clr:2.0:doc:getclrcredentialsresponse/compactJwsString",
+      "kind": "property",
+      "path": "compactJwsString",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:getclrcredentialsresponse/compactJwsString/[]",
+      "kind": "property",
+      "path": "compactJwsString/[]",
+      "normative": true,
+      "description": "ClrCredentials that have been signed with the VC-JWT Proof Format MUST be in the `compactJwsString` array."
+    },
+    {
+      "key": "clr:2.0:doc:getclrcredentialsresponse/credential",
+      "kind": "property",
+      "path": "credential",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:getclrcredentialsresponse/credential/[]",
+      "kind": "property",
+      "path": "credential/[]",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:imsx_statusinfo",
+      "kind": "document",
+      "path": "",
+      "jsonType": "object",
+      "description": "This is the container for the status code and associated information returned within the HTTP messages received from the Service Provider."
+    },
+    {
+      "key": "clr:2.0:doc:imsx_statusinfo/imsx_codeMajor",
+      "kind": "property",
+      "path": "imsx_codeMajor",
+      "jsonType": "string",
+      "required": true,
+      "enumValues": [
+        "failure",
+        "processing",
+        "success",
+        "unsupported"
+      ],
+      "description": "The code major value (from the corresponding enumerated vocabulary).",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:imsx_statusinfo/imsx_codeMinor",
+      "kind": "property",
+      "path": "imsx_codeMinor",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:imsx_statusinfo/imsx_description",
+      "kind": "property",
+      "path": "imsx_description",
+      "description": "A human readable description supplied by the entity creating the status code information.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:imsx_statusinfo/imsx_severity",
+      "kind": "property",
+      "path": "imsx_severity",
+      "jsonType": "string",
+      "required": true,
+      "enumValues": [
+        "error",
+        "status",
+        "warning"
+      ],
+      "description": "The severity value (from the corresponding enumerated vocabulary).",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:profile",
+      "kind": "document",
+      "path": "",
+      "jsonType": "object",
+      "description": "A Profile is a collection of information that describes the entity or organization using Open Badges. Issuers must be represented as Profiles, and endorsers, or other entities may also be represented using this vocabulary. Each Profile that represents an Issuer may be referenced…"
+    },
+    {
+      "key": "clr:2.0:doc:profile/additionalName",
+      "kind": "property",
+      "path": "additionalName",
+      "description": "Additional name. Includes what is often referred to as 'middle name' in the western world.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:profile/address",
+      "kind": "property",
+      "path": "address",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:profile/dateOfBirth",
+      "kind": "property",
+      "path": "dateOfBirth",
+      "jsonType": "string",
+      "description": "Birthdate of the person.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:profile/description",
+      "kind": "property",
+      "path": "description",
+      "description": "A short description of the issuer entity or organization.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:profile/email",
+      "kind": "property",
+      "path": "email",
+      "description": "An email address.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:profile/endorsement",
+      "kind": "property",
+      "path": "endorsement",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:profile/endorsement/[]",
+      "kind": "property",
+      "path": "endorsement/[]",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:profile/endorsementJwt",
+      "kind": "property",
+      "path": "endorsementJwt",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:profile/endorsementJwt/[]",
+      "kind": "property",
+      "path": "endorsementJwt/[]",
+      "description": "Allows endorsers to make specific claims about the individual or organization represented by this profile. These endorsements are signed with the VC-JWT proof format."
+    },
+    {
+      "key": "clr:2.0:doc:profile/familyName",
+      "kind": "property",
+      "path": "familyName",
+      "description": "Family name. In the western world, often referred to as the 'last name' of a person.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:profile/familyNamePrefix",
+      "kind": "property",
+      "path": "familyNamePrefix",
+      "description": "Family name prefix. As used in some locales, this is the leading part of a family name (e.g. 'de' in the name 'de Boer').",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:profile/givenName",
+      "kind": "property",
+      "path": "givenName",
+      "description": "Given name. In the western world, often referred to as the 'first name' of a person.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:profile/honorificPrefix",
+      "kind": "property",
+      "path": "honorificPrefix",
+      "description": "Honorific prefix(es) preceding a person's name (e.g. 'Dr', 'Mrs' or 'Mr').",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:profile/honorificSuffix",
+      "kind": "property",
+      "path": "honorificSuffix",
+      "description": "Honorific suffix(es) following a person's name (e.g. 'M.D, PhD').",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:profile/id",
+      "kind": "property",
+      "path": "id",
+      "required": true,
+      "description": "Unique URI for the Issuer/Profile file.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:profile/image",
+      "kind": "property",
+      "path": "image",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:profile/name",
+      "kind": "property",
+      "path": "name",
+      "description": "The name of the entity or organization.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:profile/official",
+      "kind": "property",
+      "path": "official",
+      "description": "If the entity is an organization, `official` is the name of an authorized official of the organization.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:profile/otherIdentifier",
+      "kind": "property",
+      "path": "otherIdentifier",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:profile/otherIdentifier/[]",
+      "kind": "property",
+      "path": "otherIdentifier/[]",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:profile/parentOrg",
+      "kind": "property",
+      "path": "parentOrg",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:profile/patronymicName",
+      "kind": "property",
+      "path": "patronymicName",
+      "description": "Patronymic name.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:profile/phone",
+      "kind": "property",
+      "path": "phone",
+      "description": "A phone number.",
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:profile/type",
+      "kind": "property",
+      "path": "type",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "clr:2.0:doc:profile/type/[]",
+      "kind": "property",
+      "path": "type/[]",
+      "normative": true,
+      "description": "The value of the type property MUST be an unordered set. One of the items MUST be the IRI 'Profile'."
+    },
+    {
+      "key": "clr:2.0:doc:profile/url",
+      "kind": "property",
+      "path": "url",
+      "description": "The homepage or social media profile of the entity, whether individual or institutional. Should be a URL/URI Accessible via HTTP.",
+      "modelled": "yes"
+    }
+  ],
+  "edges": [
+    {
+      "from": "clr:2.0:def:Achievement/alignment",
+      "to": "clr:2.0:def:Alignment"
+    },
+    {
+      "from": "clr:2.0:def:Achievement/alignment/[]",
+      "to": "clr:2.0:def:Alignment"
+    },
+    {
+      "from": "clr:2.0:def:Achievement/creator",
+      "to": "clr:2.0:def:Profile"
+    },
+    {
+      "from": "clr:2.0:def:Achievement/criteria",
+      "to": "clr:2.0:def:Criteria"
+    },
+    {
+      "from": "clr:2.0:def:Achievement/endorsement",
+      "to": "clr:2.0:def:EndorsementCredential"
+    },
+    {
+      "from": "clr:2.0:def:Achievement/endorsement/[]",
+      "to": "clr:2.0:def:EndorsementCredential"
+    },
+    {
+      "from": "clr:2.0:def:Achievement/image",
+      "to": "clr:2.0:def:Image"
+    },
+    {
+      "from": "clr:2.0:def:Achievement/otherIdentifier",
+      "to": "clr:2.0:def:IdentifierEntry"
+    },
+    {
+      "from": "clr:2.0:def:Achievement/otherIdentifier/[]",
+      "to": "clr:2.0:def:IdentifierEntry"
+    },
+    {
+      "from": "clr:2.0:def:Achievement/related",
+      "to": "clr:2.0:def:Related"
+    },
+    {
+      "from": "clr:2.0:def:Achievement/related/[]",
+      "to": "clr:2.0:def:Related"
+    },
+    {
+      "from": "clr:2.0:def:Achievement/resultDescription",
+      "to": "clr:2.0:def:ResultDescription"
+    },
+    {
+      "from": "clr:2.0:def:Achievement/resultDescription/[]",
+      "to": "clr:2.0:def:ResultDescription"
+    },
+    {
+      "from": "clr:2.0:def:AchievementSubject/achievement",
+      "to": "clr:2.0:def:Achievement"
+    },
+    {
+      "from": "clr:2.0:def:AchievementSubject/identifier",
+      "to": "clr:2.0:def:IdentityObject"
+    },
+    {
+      "from": "clr:2.0:def:AchievementSubject/identifier/[]",
+      "to": "clr:2.0:def:IdentityObject"
+    },
+    {
+      "from": "clr:2.0:def:AchievementSubject/image",
+      "to": "clr:2.0:def:Image"
+    },
+    {
+      "from": "clr:2.0:def:AchievementSubject/result",
+      "to": "clr:2.0:def:Result"
+    },
+    {
+      "from": "clr:2.0:def:AchievementSubject/result/[]",
+      "to": "clr:2.0:def:Result"
+    },
+    {
+      "from": "clr:2.0:def:AchievementSubject/source",
+      "to": "clr:2.0:def:Profile"
+    },
+    {
+      "from": "clr:2.0:def:Address/geo",
+      "to": "clr:2.0:def:GeoCoordinates"
+    },
+    {
+      "from": "clr:2.0:def:ClrCredential/@context",
+      "to": "clr:2.0:def:Context"
+    },
+    {
+      "from": "clr:2.0:def:ClrCredential/@context/[]",
+      "to": "clr:2.0:def:Context"
+    },
+    {
+      "from": "clr:2.0:def:ClrCredential/credentialSchema",
+      "to": "clr:2.0:def:CredentialSchema"
+    },
+    {
+      "from": "clr:2.0:def:ClrCredential/credentialSchema/[]",
+      "to": "clr:2.0:def:CredentialSchema"
+    },
+    {
+      "from": "clr:2.0:def:ClrCredential/credentialStatus",
+      "to": "clr:2.0:def:CredentialStatus"
+    },
+    {
+      "from": "clr:2.0:def:ClrCredential/credentialSubject",
+      "to": "clr:2.0:def:ClrSubject"
+    },
+    {
+      "from": "clr:2.0:def:ClrCredential/endorsement",
+      "to": "clr:2.0:def:EndorsementCredential"
+    },
+    {
+      "from": "clr:2.0:def:ClrCredential/endorsement/[]",
+      "to": "clr:2.0:def:EndorsementCredential"
+    },
+    {
+      "from": "clr:2.0:def:ClrCredential/evidence",
+      "to": "clr:2.0:def:Evidence"
+    },
+    {
+      "from": "clr:2.0:def:ClrCredential/evidence/[]",
+      "to": "clr:2.0:def:Evidence"
+    },
+    {
+      "from": "clr:2.0:def:ClrCredential/image",
+      "to": "clr:2.0:def:Image"
+    },
+    {
+      "from": "clr:2.0:def:ClrCredential/issuer",
+      "to": "clr:2.0:def:ProfileRef"
+    },
+    {
+      "from": "clr:2.0:def:ClrCredential/proof",
+      "to": "clr:2.0:def:Proof"
+    },
+    {
+      "from": "clr:2.0:def:ClrCredential/proof/[]",
+      "to": "clr:2.0:def:Proof"
+    },
+    {
+      "from": "clr:2.0:def:ClrCredential/refreshService",
+      "to": "clr:2.0:def:RefreshService"
+    },
+    {
+      "from": "clr:2.0:def:ClrCredential/termsOfUse",
+      "to": "clr:2.0:def:TermsOfUse"
+    },
+    {
+      "from": "clr:2.0:def:ClrCredential/termsOfUse/[]",
+      "to": "clr:2.0:def:TermsOfUse"
+    },
+    {
+      "from": "clr:2.0:def:ClrSubject/achievement",
+      "to": "clr:2.0:def:Achievement"
+    },
+    {
+      "from": "clr:2.0:def:ClrSubject/achievement/[]",
+      "to": "clr:2.0:def:Achievement"
+    },
+    {
+      "from": "clr:2.0:def:ClrSubject/association",
+      "to": "clr:2.0:def:Association"
+    },
+    {
+      "from": "clr:2.0:def:ClrSubject/association/[]",
+      "to": "clr:2.0:def:Association"
+    },
+    {
+      "from": "clr:2.0:def:ClrSubject/identifier",
+      "to": "clr:2.0:def:IdentityObject"
+    },
+    {
+      "from": "clr:2.0:def:ClrSubject/identifier/[]",
+      "to": "clr:2.0:def:IdentityObject"
+    },
+    {
+      "from": "clr:2.0:def:ClrSubject/verifiableCredential",
+      "to": "clr:2.0:def:VerifiableCredential"
+    },
+    {
+      "from": "clr:2.0:def:ClrSubject/verifiableCredential/[]",
+      "to": "clr:2.0:def:VerifiableCredential"
+    },
+    {
+      "from": "clr:2.0:def:EndorsementCredential/@context",
+      "to": "clr:2.0:def:Context"
+    },
+    {
+      "from": "clr:2.0:def:EndorsementCredential/@context/[]",
+      "to": "clr:2.0:def:Context"
+    },
+    {
+      "from": "clr:2.0:def:EndorsementCredential/credentialSchema",
+      "to": "clr:2.0:def:CredentialSchema"
+    },
+    {
+      "from": "clr:2.0:def:EndorsementCredential/credentialSchema/[]",
+      "to": "clr:2.0:def:CredentialSchema"
+    },
+    {
+      "from": "clr:2.0:def:EndorsementCredential/credentialStatus",
+      "to": "clr:2.0:def:CredentialStatus"
+    },
+    {
+      "from": "clr:2.0:def:EndorsementCredential/credentialSubject",
+      "to": "clr:2.0:def:EndorsementSubject"
+    },
+    {
+      "from": "clr:2.0:def:EndorsementCredential/evidence",
+      "to": "clr:2.0:def:Evidence"
+    },
+    {
+      "from": "clr:2.0:def:EndorsementCredential/evidence/[]",
+      "to": "clr:2.0:def:Evidence"
+    },
+    {
+      "from": "clr:2.0:def:EndorsementCredential/issuer",
+      "to": "clr:2.0:def:ProfileRef"
+    },
+    {
+      "from": "clr:2.0:def:EndorsementCredential/proof",
+      "to": "clr:2.0:def:Proof"
+    },
+    {
+      "from": "clr:2.0:def:EndorsementCredential/proof/[]",
+      "to": "clr:2.0:def:Proof"
+    },
+    {
+      "from": "clr:2.0:def:EndorsementCredential/refreshService",
+      "to": "clr:2.0:def:RefreshService"
+    },
+    {
+      "from": "clr:2.0:def:EndorsementCredential/termsOfUse",
+      "to": "clr:2.0:def:TermsOfUse"
+    },
+    {
+      "from": "clr:2.0:def:EndorsementCredential/termsOfUse/[]",
+      "to": "clr:2.0:def:TermsOfUse"
+    },
+    {
+      "from": "clr:2.0:def:Imsx_CodeMinor/imsx_codeMinorField",
+      "to": "clr:2.0:def:Imsx_CodeMinorField"
+    },
+    {
+      "from": "clr:2.0:def:Imsx_CodeMinor/imsx_codeMinorField/[]",
+      "to": "clr:2.0:def:Imsx_CodeMinorField"
+    },
+    {
+      "from": "clr:2.0:def:Profile/address",
+      "to": "clr:2.0:def:Address"
+    },
+    {
+      "from": "clr:2.0:def:Profile/endorsement",
+      "to": "clr:2.0:def:EndorsementCredential"
+    },
+    {
+      "from": "clr:2.0:def:Profile/endorsement/[]",
+      "to": "clr:2.0:def:EndorsementCredential"
+    },
+    {
+      "from": "clr:2.0:def:Profile/image",
+      "to": "clr:2.0:def:Image"
+    },
+    {
+      "from": "clr:2.0:def:Profile/otherIdentifier",
+      "to": "clr:2.0:def:IdentifierEntry"
+    },
+    {
+      "from": "clr:2.0:def:Profile/otherIdentifier/[]",
+      "to": "clr:2.0:def:IdentifierEntry"
+    },
+    {
+      "from": "clr:2.0:def:Profile/parentOrg",
+      "to": "clr:2.0:def:Profile"
+    },
+    {
+      "from": "clr:2.0:def:ProfileRef",
+      "to": "clr:2.0:def:Profile"
+    },
+    {
+      "from": "clr:2.0:def:Result/alignment",
+      "to": "clr:2.0:def:Alignment"
+    },
+    {
+      "from": "clr:2.0:def:Result/alignment/[]",
+      "to": "clr:2.0:def:Alignment"
+    },
+    {
+      "from": "clr:2.0:def:ResultDescription/alignment",
+      "to": "clr:2.0:def:Alignment"
+    },
+    {
+      "from": "clr:2.0:def:ResultDescription/alignment/[]",
+      "to": "clr:2.0:def:Alignment"
+    },
+    {
+      "from": "clr:2.0:def:ResultDescription/rubricCriterionLevel",
+      "to": "clr:2.0:def:RubricCriterionLevel"
+    },
+    {
+      "from": "clr:2.0:def:ResultDescription/rubricCriterionLevel/[]",
+      "to": "clr:2.0:def:RubricCriterionLevel"
+    },
+    {
+      "from": "clr:2.0:def:RubricCriterionLevel/alignment",
+      "to": "clr:2.0:def:Alignment"
+    },
+    {
+      "from": "clr:2.0:def:RubricCriterionLevel/alignment/[]",
+      "to": "clr:2.0:def:Alignment"
+    },
+    {
+      "from": "clr:2.0:def:VerifiableCredential/@context",
+      "to": "clr:2.0:def:Context"
+    },
+    {
+      "from": "clr:2.0:def:VerifiableCredential/@context/[]",
+      "to": "clr:2.0:def:Context"
+    },
+    {
+      "from": "clr:2.0:def:VerifiableCredential/credentialSchema",
+      "to": "clr:2.0:def:CredentialSchema"
+    },
+    {
+      "from": "clr:2.0:def:VerifiableCredential/credentialSchema/[]",
+      "to": "clr:2.0:def:CredentialSchema"
+    },
+    {
+      "from": "clr:2.0:def:VerifiableCredential/credentialStatus",
+      "to": "clr:2.0:def:CredentialStatus"
+    },
+    {
+      "from": "clr:2.0:def:VerifiableCredential/credentialSubject",
+      "to": "clr:2.0:def:CredentialSubject"
+    },
+    {
+      "from": "clr:2.0:def:VerifiableCredential/evidence",
+      "to": "clr:2.0:def:Evidence"
+    },
+    {
+      "from": "clr:2.0:def:VerifiableCredential/evidence/[]",
+      "to": "clr:2.0:def:Evidence"
+    },
+    {
+      "from": "clr:2.0:def:VerifiableCredential/issuer",
+      "to": "clr:2.0:def:ProfileRef"
+    },
+    {
+      "from": "clr:2.0:def:VerifiableCredential/proof",
+      "to": "clr:2.0:def:Proof"
+    },
+    {
+      "from": "clr:2.0:def:VerifiableCredential/proof/[]",
+      "to": "clr:2.0:def:Proof"
+    },
+    {
+      "from": "clr:2.0:def:VerifiableCredential/refreshService",
+      "to": "clr:2.0:def:RefreshService"
+    },
+    {
+      "from": "clr:2.0:def:VerifiableCredential/termsOfUse",
+      "to": "clr:2.0:def:TermsOfUse"
+    },
+    {
+      "from": "clr:2.0:def:VerifiableCredential/termsOfUse/[]",
+      "to": "clr:2.0:def:TermsOfUse"
+    },
+    {
+      "from": "clr:2.0:doc:achievementcredential/@context",
+      "to": "clr:2.0:def:Context"
+    },
+    {
+      "from": "clr:2.0:doc:achievementcredential/@context/[]",
+      "to": "clr:2.0:def:Context"
+    },
+    {
+      "from": "clr:2.0:doc:achievementcredential/credentialSchema",
+      "to": "clr:2.0:def:CredentialSchema"
+    },
+    {
+      "from": "clr:2.0:doc:achievementcredential/credentialSchema/[]",
+      "to": "clr:2.0:def:CredentialSchema"
+    },
+    {
+      "from": "clr:2.0:doc:achievementcredential/credentialStatus",
+      "to": "clr:2.0:def:CredentialStatus"
+    },
+    {
+      "from": "clr:2.0:doc:achievementcredential/credentialSubject",
+      "to": "clr:2.0:def:AchievementSubject"
+    },
+    {
+      "from": "clr:2.0:doc:achievementcredential/endorsement",
+      "to": "clr:2.0:def:EndorsementCredential"
+    },
+    {
+      "from": "clr:2.0:doc:achievementcredential/endorsement/[]",
+      "to": "clr:2.0:def:EndorsementCredential"
+    },
+    {
+      "from": "clr:2.0:doc:achievementcredential/evidence",
+      "to": "clr:2.0:def:Evidence"
+    },
+    {
+      "from": "clr:2.0:doc:achievementcredential/evidence/[]",
+      "to": "clr:2.0:def:Evidence"
+    },
+    {
+      "from": "clr:2.0:doc:achievementcredential/image",
+      "to": "clr:2.0:def:Image"
+    },
+    {
+      "from": "clr:2.0:doc:achievementcredential/issuer",
+      "to": "clr:2.0:def:ProfileRef"
+    },
+    {
+      "from": "clr:2.0:doc:achievementcredential/proof",
+      "to": "clr:2.0:def:Proof"
+    },
+    {
+      "from": "clr:2.0:doc:achievementcredential/proof/[]",
+      "to": "clr:2.0:def:Proof"
+    },
+    {
+      "from": "clr:2.0:doc:achievementcredential/refreshService",
+      "to": "clr:2.0:def:RefreshService"
+    },
+    {
+      "from": "clr:2.0:doc:achievementcredential/termsOfUse",
+      "to": "clr:2.0:def:TermsOfUse"
+    },
+    {
+      "from": "clr:2.0:doc:achievementcredential/termsOfUse/[]",
+      "to": "clr:2.0:def:TermsOfUse"
+    },
+    {
+      "from": "clr:2.0:doc:clrcredential/@context",
+      "to": "clr:2.0:def:Context"
+    },
+    {
+      "from": "clr:2.0:doc:clrcredential/@context/[]",
+      "to": "clr:2.0:def:Context"
+    },
+    {
+      "from": "clr:2.0:doc:clrcredential/credentialSchema",
+      "to": "clr:2.0:def:CredentialSchema"
+    },
+    {
+      "from": "clr:2.0:doc:clrcredential/credentialSchema/[]",
+      "to": "clr:2.0:def:CredentialSchema"
+    },
+    {
+      "from": "clr:2.0:doc:clrcredential/credentialStatus",
+      "to": "clr:2.0:def:CredentialStatus"
+    },
+    {
+      "from": "clr:2.0:doc:clrcredential/credentialSubject",
+      "to": "clr:2.0:def:ClrSubject"
+    },
+    {
+      "from": "clr:2.0:doc:clrcredential/endorsement",
+      "to": "clr:2.0:def:EndorsementCredential"
+    },
+    {
+      "from": "clr:2.0:doc:clrcredential/endorsement/[]",
+      "to": "clr:2.0:def:EndorsementCredential"
+    },
+    {
+      "from": "clr:2.0:doc:clrcredential/evidence",
+      "to": "clr:2.0:def:Evidence"
+    },
+    {
+      "from": "clr:2.0:doc:clrcredential/evidence/[]",
+      "to": "clr:2.0:def:Evidence"
+    },
+    {
+      "from": "clr:2.0:doc:clrcredential/image",
+      "to": "clr:2.0:def:Image"
+    },
+    {
+      "from": "clr:2.0:doc:clrcredential/issuer",
+      "to": "clr:2.0:def:ProfileRef"
+    },
+    {
+      "from": "clr:2.0:doc:clrcredential/proof",
+      "to": "clr:2.0:def:Proof"
+    },
+    {
+      "from": "clr:2.0:doc:clrcredential/proof/[]",
+      "to": "clr:2.0:def:Proof"
+    },
+    {
+      "from": "clr:2.0:doc:clrcredential/refreshService",
+      "to": "clr:2.0:def:RefreshService"
+    },
+    {
+      "from": "clr:2.0:doc:clrcredential/termsOfUse",
+      "to": "clr:2.0:def:TermsOfUse"
+    },
+    {
+      "from": "clr:2.0:doc:clrcredential/termsOfUse/[]",
+      "to": "clr:2.0:def:TermsOfUse"
+    },
+    {
+      "from": "clr:2.0:doc:endorsementcredential/@context",
+      "to": "clr:2.0:def:Context"
+    },
+    {
+      "from": "clr:2.0:doc:endorsementcredential/@context/[]",
+      "to": "clr:2.0:def:Context"
+    },
+    {
+      "from": "clr:2.0:doc:endorsementcredential/credentialSchema",
+      "to": "clr:2.0:def:CredentialSchema"
+    },
+    {
+      "from": "clr:2.0:doc:endorsementcredential/credentialSchema/[]",
+      "to": "clr:2.0:def:CredentialSchema"
+    },
+    {
+      "from": "clr:2.0:doc:endorsementcredential/credentialStatus",
+      "to": "clr:2.0:def:CredentialStatus"
+    },
+    {
+      "from": "clr:2.0:doc:endorsementcredential/credentialSubject",
+      "to": "clr:2.0:def:EndorsementSubject"
+    },
+    {
+      "from": "clr:2.0:doc:endorsementcredential/evidence",
+      "to": "clr:2.0:def:Evidence"
+    },
+    {
+      "from": "clr:2.0:doc:endorsementcredential/evidence/[]",
+      "to": "clr:2.0:def:Evidence"
+    },
+    {
+      "from": "clr:2.0:doc:endorsementcredential/issuer",
+      "to": "clr:2.0:def:ProfileRef"
+    },
+    {
+      "from": "clr:2.0:doc:endorsementcredential/proof",
+      "to": "clr:2.0:def:Proof"
+    },
+    {
+      "from": "clr:2.0:doc:endorsementcredential/proof/[]",
+      "to": "clr:2.0:def:Proof"
+    },
+    {
+      "from": "clr:2.0:doc:endorsementcredential/refreshService",
+      "to": "clr:2.0:def:RefreshService"
+    },
+    {
+      "from": "clr:2.0:doc:endorsementcredential/termsOfUse",
+      "to": "clr:2.0:def:TermsOfUse"
+    },
+    {
+      "from": "clr:2.0:doc:endorsementcredential/termsOfUse/[]",
+      "to": "clr:2.0:def:TermsOfUse"
+    },
+    {
+      "from": "clr:2.0:doc:getclrcredentialsresponse/credential",
+      "to": "clr:2.0:def:ClrCredential"
+    },
+    {
+      "from": "clr:2.0:doc:getclrcredentialsresponse/credential/[]",
+      "to": "clr:2.0:def:ClrCredential"
+    },
+    {
+      "from": "clr:2.0:doc:imsx_statusinfo/imsx_codeMinor",
+      "to": "clr:2.0:def:Imsx_CodeMinor"
+    },
+    {
+      "from": "clr:2.0:doc:profile/address",
+      "to": "clr:2.0:def:Address"
+    },
+    {
+      "from": "clr:2.0:doc:profile/endorsement",
+      "to": "clr:2.0:def:EndorsementCredential"
+    },
+    {
+      "from": "clr:2.0:doc:profile/endorsement/[]",
+      "to": "clr:2.0:def:EndorsementCredential"
+    },
+    {
+      "from": "clr:2.0:doc:profile/image",
+      "to": "clr:2.0:def:Image"
+    },
+    {
+      "from": "clr:2.0:doc:profile/otherIdentifier",
+      "to": "clr:2.0:def:IdentifierEntry"
+    },
+    {
+      "from": "clr:2.0:doc:profile/otherIdentifier/[]",
+      "to": "clr:2.0:def:IdentifierEntry"
+    },
+    {
+      "from": "clr:2.0:doc:profile/parentOrg",
+      "to": "clr:2.0:def:Profile"
+    }
+  ],
+  "conformance": [
+    {
+      "key": "clr:2.0:conf:issuer/CLR-ISS-1",
+      "profile": "issuer",
+      "reqId": "CLR-ISS-1",
+      "level": "MUST",
+      "statement": "The @context MUST begin with the VC 2.0 context URI (https://www.w3.org/ns/credentials/v2) followed by the CLR 2.0 context URI.",
+      "constrains": [
+        "clr:2.0:doc:clrcredential/@context"
+      ],
+      "source": "CLR 2.0 §ClrCredential — https://www.imsglobal.org/spec/clr/v2p0/#clrcredential"
+    },
+    {
+      "key": "clr:2.0:conf:issuer/CLR-ISS-2",
+      "profile": "issuer",
+      "reqId": "CLR-ISS-2",
+      "level": "MUST",
+      "statement": "The type MUST be an unordered set containing 'VerifiableCredential' and 'ClrCredential'.",
+      "constrains": [
+        "clr:2.0:doc:clrcredential/type"
+      ],
+      "source": "CLR 2.0 §ClrCredential.type — https://www.imsglobal.org/spec/clr/v2p0/#clrcredential"
+    },
+    {
+      "key": "clr:2.0:conf:issuer/CLR-ISS-3",
+      "profile": "issuer",
+      "reqId": "CLR-ISS-3",
+      "level": "MUST",
+      "statement": "credentialSubject MUST be a ClrSubject that carries the learner's achievements and the verifiable AchievementCredentials.",
+      "constrains": [
+        "clr:2.0:doc:clrcredential/credentialSubject"
+      ],
+      "source": "CLR 2.0 §ClrSubject — https://www.imsglobal.org/spec/clr/v2p0/#clrsubject"
+    },
+    {
+      "key": "clr:2.0:conf:issuer/CLR-ISS-4",
+      "profile": "issuer",
+      "reqId": "CLR-ISS-4",
+      "level": "MUST",
+      "statement": "The issuer MUST be a Profile identified by an IRI in the issuer.id property.",
+      "constrains": [
+        "clr:2.0:doc:clrcredential/issuer"
+      ],
+      "source": "CLR 2.0 §ClrCredential.issuer + §Profile — https://www.imsglobal.org/spec/clr/v2p0/#profile"
+    }
+  ],
+  "residues": {
+    "silentGaps": [],
+    "extensions": []
+  },
+  "rollup": {
+    "items": 409,
+    "modelledYes": 299,
+    "modelledPartial": 39,
+    "modelledNo": 0,
+    "normativeItems": 40,
+    "conformanceRequirements": 4
+  }
+}

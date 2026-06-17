@@ -1,0 +1,55 @@
+{
+  "$schema" : "https://json-schema.org/draft/2019-09/schema#",
+  "$id" : "https://purl.imsglobal.org/spec/case/v1p1/schema/json/case_v1p1_cflicense-jsonschema1.json",
+  "title" : "JSON Schema for the CFLicense class.",
+  "description" : "The container for the information about a license used within the competency framework.",
+  "type" : "object",
+  "properties" : {
+    "identifier" : {
+      "description" : "An unambiguous, synthetic, globally unique identifier for the CFLicense. This is the primary way in which the exchange identification is achieved.",
+      "$comment" : "Origin: UUID (DerivedType); The data-type for establishing a Globally Unique Identifier (GUID). The form of the GUID is a Universally Unique Identifier (UUID) of 16 hexadecimal characters (lower case) in the format 8-4-4-4-12. All permitted versions (1-5) and variants (1-2) are supported.",
+      "type" : "string",
+      "format" : "uuid"
+    },
+    "uri" : {
+      "description" : "An unambiguous reference to the CFLicense using a network-resolvable URI. ",
+      "$comment" : "Origin: AnyURI (PrimitiveType)",
+      "type" : "string"
+    },
+    "title" : {
+      "description" : "The title of the CFLicense.",
+      "$comment" : "Origin: NormalizedString (PrimitiveType)",
+      "type" : "string"
+    },
+    "description" : {
+      "description" : "A human readable description of the CFLicense.",
+      "$comment" : "Origin: String (PrimitiveType)",
+      "type" : "string"
+    },
+    "licenseText" : {
+      "description" : "Legal license text used by the organization to convey license permissions. This may include the actual license text, or a link to a web location containing the license as a document or as text.",
+      "$comment" : "Origin: String (PrimitiveType)",
+      "type" : "string"
+    },
+    "lastChangeDateTime" : {
+      "description" : "A system generated timestamp of the most recent change to this record. This conforms to ISO 8601 dateTime definition [ISO 8601].",
+      "$comment" : "Origin: DateTime (PrimitiveType)",
+      "type" : "string",
+      "format" : "date-time"
+    },
+    "extensions" : {
+      "$ref" : "#/$defs/CFLicenseExtension"
+    }
+  },
+  "required" : [ "identifier", "uri", "title", "licenseText", "lastChangeDateTime" ],
+  "additionalProperties" : false,
+  "$defs" : {
+    "CFLicenseExtension" : {
+      "description" : "The container for the proprietary extensions to the CFLicense class.",
+      "type" : "object",
+      "properties" : { },
+      "required" : [ ],
+      "additionalProperties" : true
+    }
+  }
+}

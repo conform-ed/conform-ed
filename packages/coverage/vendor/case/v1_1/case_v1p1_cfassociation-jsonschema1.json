@@ -1,0 +1,131 @@
+{
+  "$schema" : "https://json-schema.org/draft/2019-09/schema#",
+  "$id" : "https://purl.imsglobal.org/spec/case/v1p1/schema/json/case_v1p1_cfassociation-jsonschema1.json",
+  "title" : "JSON Schema for the CFAssociation class.",
+  "description" : "This is the container for the data about the relationship between two CFDocuments or between two CFItems outside of the context of a CFPackage or CFItem.",
+  "type" : "object",
+  "properties" : {
+    "CFDocumentURI" : {
+      "$ref" : "#/$defs/LinkURI"
+    },
+    "identifier" : {
+      "description" : "An unambiguous, synthetic, globally unique identifier for the CFAssociation. This is the primary way in which the exchange identification is achieved.",
+      "$comment" : "Origin: UUID (DerivedType); The data-type for establishing a Globally Unique Identifier (GUID). The form of the GUID is a Universally Unique Identifier (UUID) of 16 hexadecimal characters (lower case) in the format 8-4-4-4-12. All permitted versions (1-5) and variants (1-2) are supported.",
+      "type" : "string",
+      "format" : "uuid"
+    },
+    "associationType" : {
+      "description" : "The type of association. This uses an extensible enumerated vocabulary. Changed in CASE 1.1.",
+      "$comment" : "Origin: CFAssociationTypeExtEnum (Union); The data-type for the 'associationType' attribute for the CFPckgAssociation. This is an extensible enumerated vocabulary. Extending the vocabulary makes use of a naming convention. Changed in CASE 1.1.",
+      "oneOf" : [ {
+        "type" : "string",
+        "enum" : [ "isChildOf", "isPeerOf", "isPartOf", "exactMatchOf", "precedes", "isRelatedTo", "replacedBy", "exemplar", "hasSkillLevel", "isTranslationOf" ]
+      }, {
+        "type" : "string",
+        "pattern" : "(ext:)[a-z|A-Z|0-9|.|-|_]+"
+      } ]
+    },
+    "sequenceNumber" : {
+      "description" : "This is used to order associated objects. Associations can be created through mapping rather than strict hierarchy. As such the presentation of the list cannot be ordered by the objects in the list. They may be different based on the parent being viewed. Use of this property for sequencing is preferred over the use of the 'listEnumeration' property in the CFPckgItem class. ",
+      "$comment" : "Origin: Integer (PrimitiveType)",
+      "type" : "integer"
+    },
+    "uri" : {
+      "description" : "An unambiguous reference to the CFAssociation using a network-resolvable URI.",
+      "$comment" : "Origin: AnyURI (PrimitiveType)",
+      "type" : "string"
+    },
+    "originNodeURI" : {
+      "$ref" : "#/$defs/LinkGenURI"
+    },
+    "destinationNodeURI" : {
+      "$ref" : "#/$defs/LinkGenURI"
+    },
+    "CFAssociationGroupingURI" : {
+      "$ref" : "#/$defs/LinkURI"
+    },
+    "lastChangeDateTime" : {
+      "description" : "A system generated timestamp of the most recent change to this record. This conforms to ISO 8601 dateTime definition [ISO 8601].",
+      "$comment" : "Origin: DateTime (PrimitiveType)",
+      "type" : "string",
+      "format" : "date-time"
+    },
+    "notes" : {
+      "description" : "A new attribute added in Version 1.1. Information about the CFAssociation.",
+      "$comment" : "Origin: String (PrimitiveType)",
+      "type" : "string"
+    },
+    "extensions" : {
+      "$ref" : "#/$defs/CFAssociationExtension"
+    }
+  },
+  "required" : [ "identifier", "associationType", "uri", "originNodeURI", "destinationNodeURI", "lastChangeDateTime" ],
+  "additionalProperties" : false,
+  "$defs" : {
+    "CFAssociationExtension" : {
+      "description" : "The container for the proprietary extensions to the CFAssociation class.",
+      "type" : "object",
+      "properties" : { },
+      "required" : [ ],
+      "additionalProperties" : true
+    },
+    "LinkURI" : {
+      "description" : "A container for the information that is used to achieve the link data reference.",
+      "type" : "object",
+      "properties" : {
+        "title" : {
+          "description" : "A human readable title for the associated object.",
+          "$comment" : "Origin: NormalizedString (PrimitiveType)",
+          "type" : "string"
+        },
+        "identifier" : {
+          "description" : "An unambiguous, synthetic, globally unique identifier (UUID) for the associated object.",
+          "$comment" : "Origin: UUID (DerivedType); The data-type for establishing a Globally Unique Identifier (GUID). The form of the GUID is a Universally Unique Identifier (UUID) of 16 hexadecimal characters (lower case) in the format 8-4-4-4-12. All permitted versions (1-5) and variants (1-2) are supported.",
+          "type" : "string",
+          "format" : "uuid"
+        },
+        "uri" : {
+          "description" : "A network-resolvable URI pointing to the authoritative reference for the associated object.",
+          "$comment" : "Origin: AnyURI (PrimitiveType)",
+          "type" : "string"
+        }
+      },
+      "required" : [ "title", "identifier", "uri" ],
+      "additionalProperties" : false
+    },
+    "LinkGenURI" : {
+      "description" : "A container for the information that is used to achieve the link data reference.",
+      "type" : "object",
+      "properties" : {
+        "title" : {
+          "description" : "A human readable title for the associated object.",
+          "$comment" : "Origin: NormalizedString (PrimitiveType)",
+          "type" : "string"
+        },
+        "identifier" : {
+          "description" : "An unambiguous, synthetic, globally unique identifier (this may or may not be a UUID) for the associated object.",
+          "$comment" : "Origin: NormalizedString (PrimitiveType)",
+          "type" : "string"
+        },
+        "uri" : {
+          "description" : "A network-resolvable URI pointing to the authoritative reference for the associated object.",
+          "$comment" : "Origin: AnyURI (PrimitiveType)",
+          "type" : "string"
+        },
+        "targetType" : {
+          "description" : "This is a new attribute added in Version 1.1. It is used to identify the type of the referenced association i.e. this MAY NOT be a CASE Framework.",
+          "$comment" : "Origin: TargetTypeExtEnum (Union); The data-type for the 'targetType' attribute for a generic Link URI. This is an extensible enumerated vocabulary. Extending the vocabulary makes use of a naming convention.",
+          "oneOf" : [ {
+            "type" : "string",
+            "enum" : [ "CASE" ]
+          }, {
+            "type" : "string",
+            "pattern" : "(ext:)[a-z|A-Z|0-9|.|-|_]+"
+          } ]
+        }
+      },
+      "required" : [ "title", "identifier", "uri" ],
+      "additionalProperties" : false
+    }
+  }
+}

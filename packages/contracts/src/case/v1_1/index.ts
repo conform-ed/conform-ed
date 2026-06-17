@@ -13,9 +13,12 @@ import * as CaseV1P1SubjectSet from "./case_v1p1_cfsubjectset_jsonschema1";
 import * as CaseV1P1Status from "./case_v1p1_imsx_statusinfo_jsonschema1";
 import { CaseV1P1RestBindingOperations } from "./case_v1p1_openapi3_restbinding_schema";
 import {
+  CFAssociationGroupingSchema,
   CFAssociationSchema,
   CFAssociationSetSchema,
   CFConceptSetSchema,
+  CFDocumentSchema,
+  CFDocumentSetSchema,
   CFItemSchema,
   CFItemTypeSetSchema,
   CFLicenseSchema,
@@ -49,8 +52,11 @@ export const CaseV1_1 = {
 
   Schemas: {
     CFAssociation: CFAssociationSchema,
+    CFAssociationGrouping: CFAssociationGroupingSchema,
     CFAssociationSet: CFAssociationSetSchema,
     CFConceptSet: CFConceptSetSchema,
+    CFDocument: CFDocumentSchema,
+    CFDocumentSet: CFDocumentSetSchema,
     CFItem: CFItemSchema,
     CFItemTypeSet: CFItemTypeSetSchema,
     CFLicense: CFLicenseSchema,

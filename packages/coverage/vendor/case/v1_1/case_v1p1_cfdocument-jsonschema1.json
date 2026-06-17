@@ -1,0 +1,152 @@
+{
+  "$schema" : "https://json-schema.org/draft/2019-09/schema#",
+  "$id" : "https://purl.imsglobal.org/spec/case/v1p1/schema/json/case_v1p1_cfdocument-jsonschema1.json",
+  "title" : "JSON Schema for the CFDocument class.",
+  "description" : "The container for the data about a competency framework document (CFDocument) when exchanged outside of the context of a CFPackage. A CFDocument is the root for the creation of a learning standard/competency.",
+  "type" : "object",
+  "properties" : {
+    "CFPackageURI" : {
+      "$ref" : "#/$defs/LinkURI"
+    },
+    "identifier" : {
+      "description" : "An unambiguous, synthetic, globally unique identifier for the CFDocument. This is the primary way in which the exchange identification is achieved.",
+      "$comment" : "Origin: UUID (DerivedType); The data-type for establishing a Globally Unique Identifier (GUID). The form of the GUID is a Universally Unique Identifier (UUID) of 16 hexadecimal characters (lower case) in the format 8-4-4-4-12. All permitted versions (1-5) and variants (1-2) are supported.",
+      "type" : "string",
+      "format" : "uuid"
+    },
+    "uri" : {
+      "description" : "An unambiguous reference to the CFDocument using a network-resolvable URI.",
+      "$comment" : "Origin: AnyURI (PrimitiveType)",
+      "type" : "string"
+    },
+    "frameworkType" : {
+      "description" : "This is a new attribute added in version 1.1. This attribute allows framework creators to indicate what type of framework this is, for example course codes. In CASE 1.1. the only predefined type of framework is 'CourseCodes'. Other standardized framework types will be defined.",
+      "$comment" : "Origin: NormalizedString (PrimitiveType)",
+      "type" : "string"
+    },
+    "caseVersion" : {
+      "description" : "This is a new attribute added in version 1.1. Denotes the version of the CFDocument. If present it MUST have a value of '1.1'.",
+      "$comment" : "Origin: CaseVersionEnum (Enumeration); The set of values permitted to denote which version of the CASE specification is used to validate the content. ",
+      "type" : "string",
+      "enum" : [ "1.1" ]
+    },
+    "creator" : {
+      "description" : "The entity with authority that promulgates the competency framework. This is the entity that authorized or created the competency framework. It could be an education agency, higher education institution, professional body. It is the owner of the competency framework.",
+      "$comment" : "Origin: NormalizedString (PrimitiveType)",
+      "type" : "string"
+    },
+    "title" : {
+      "description" : "The title of the CFDocument.",
+      "$comment" : "Origin: NormalizedString (PrimitiveType)",
+      "type" : "string"
+    },
+    "lastChangeDateTime" : {
+      "description" : "A system generated timestamp of the most recent change to this record. This conforms to ISO 8601 dateTime definition [ISO 8601].",
+      "$comment" : "Origin: DateTime (PrimitiveType)",
+      "type" : "string",
+      "format" : "date-time"
+    },
+    "officialSourceURL" : {
+      "description" : "The URL link to the formal citation of the original achievement standards document created for humans.",
+      "$comment" : "Origin: URL (DerivedType); The data-type for establishing a Uniform Resource Locator (URL) as defined by W3C.",
+      "type" : "string"
+    },
+    "publisher" : {
+      "description" : "The entity responsible for making the learning standards document available.",
+      "$comment" : "Origin: NormalizedString (PrimitiveType)",
+      "type" : "string"
+    },
+    "description" : {
+      "description" : "A human readable description of the CFDocument. In Version 1.1 the data-type has been changed from NormalizedString.",
+      "$comment" : "Origin: String (PrimitiveType)",
+      "type" : "string"
+    },
+    "subject" : {
+      "type" : "array",
+      "items" : {
+        "description" : "The topic or academic subject of the Document (this should use some appropriate K-12, HE, etc. based vocabulary).",
+        "$comment" : "Origin: NormalizedString (PrimitiveType)",
+        "type" : "string"
+      }
+    },
+    "subjectURI" : {
+      "type" : "array",
+      "items" : {
+        "$ref" : "#/$defs/LinkURI"
+      }
+    },
+    "language" : {
+      "description" : "The default language of the text used for the content in the learning standard document (use ISO 639-2 [ISO 639]).",
+      "$comment" : "Origin: Language (PrimitiveType)",
+      "type" : "string"
+    },
+    "version" : {
+      "description" : "Defines the revision of the document (the nature of this versioning is an implementation issue).",
+      "$comment" : "Origin: NormalizedString (PrimitiveType)",
+      "type" : "string"
+    },
+    "adoptionStatus" : {
+      "description" : "The publication status of the document.",
+      "$comment" : "Origin: NormalizedString (PrimitiveType)",
+      "type" : "string"
+    },
+    "statusStartDate" : {
+      "description" : "The date the CFDocument status started.",
+      "$comment" : "Origin: Date (PrimitiveType)",
+      "type" : "string",
+      "format" : "date"
+    },
+    "statusEndDate" : {
+      "description" : "The date the CFDocument status ended or changed to another status.",
+      "$comment" : "Origin: Date (PrimitiveType)",
+      "type" : "string",
+      "format" : "date"
+    },
+    "licenseURI" : {
+      "$ref" : "#/$defs/LinkURI"
+    },
+    "notes" : {
+      "description" : "Any text used to comment on the published CFDocument.",
+      "$comment" : "Origin: String (PrimitiveType)",
+      "type" : "string"
+    },
+    "extensions" : {
+      "$ref" : "#/$defs/CFDocumentExtension"
+    }
+  },
+  "required" : [ "CFPackageURI", "identifier", "uri", "creator", "title", "lastChangeDateTime" ],
+  "additionalProperties" : false,
+  "$defs" : {
+    "LinkURI" : {
+      "description" : "A container for the information that is used to achieve the link data reference.",
+      "type" : "object",
+      "properties" : {
+        "title" : {
+          "description" : "A human readable title for the associated object.",
+          "$comment" : "Origin: NormalizedString (PrimitiveType)",
+          "type" : "string"
+        },
+        "identifier" : {
+          "description" : "An unambiguous, synthetic, globally unique identifier (UUID) for the associated object.",
+          "$comment" : "Origin: UUID (DerivedType); The data-type for establishing a Globally Unique Identifier (GUID). The form of the GUID is a Universally Unique Identifier (UUID) of 16 hexadecimal characters (lower case) in the format 8-4-4-4-12. All permitted versions (1-5) and variants (1-2) are supported.",
+          "type" : "string",
+          "format" : "uuid"
+        },
+        "uri" : {
+          "description" : "A network-resolvable URI pointing to the authoritative reference for the associated object.",
+          "$comment" : "Origin: AnyURI (PrimitiveType)",
+          "type" : "string"
+        }
+      },
+      "required" : [ "title", "identifier", "uri" ],
+      "additionalProperties" : false
+    },
+    "CFDocumentExtension" : {
+      "description" : "The container for the proprietary extensions to the CFDocument class.",
+      "type" : "object",
+      "properties" : { },
+      "required" : [ ],
+      "additionalProperties" : true
+    }
+  }
+}

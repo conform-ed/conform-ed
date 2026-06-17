@@ -1,0 +1,3056 @@
+{
+  "meta": {
+    "spec": "case",
+    "version": "1.1",
+    "generatedAt": "2026-06-17",
+    "sources": [
+      {
+        "binding": "cfassociation",
+        "language": "json-schema",
+        "id": "https://purl.imsglobal.org/spec/case/v1p1/schema/json/case_v1p1_cfassociation-jsonschema1.json",
+        "sha256": "74a7c069abbf5a35076038efd60d3380359554e25db75426ad3ae28a9db21dd2"
+      },
+      {
+        "binding": "cfassociationgrouping",
+        "language": "json-schema",
+        "id": "https://purl.imsglobal.org/spec/case/v1p1/schema/json/case_v1p1_cfassociationgrouping-jsonschema1.json",
+        "sha256": "b3fc82edd53285ac2134cd60789b7157ba154ca76e2af52fafba9ff1d4baa91a"
+      },
+      {
+        "binding": "cfassociationset",
+        "language": "json-schema",
+        "id": "https://purl.imsglobal.org/spec/case/v1p1/schema/json/case_v1p1_cfassociationset-jsonschema1.json",
+        "sha256": "10077af24995d4fc101daf42f92b59050a5eeb500ed8cb56607e0fead94bf385"
+      },
+      {
+        "binding": "cfconceptset",
+        "language": "json-schema",
+        "id": "https://purl.imsglobal.org/spec/case/v1p1/schema/json/case_v1p1_cfconceptset-jsonschema1.json",
+        "sha256": "2a65d5cbd9f3e9ab82bd43ff63e75e1c7abd914b3db4ba9404cda49f8c6e6810"
+      },
+      {
+        "binding": "cfdocument",
+        "language": "json-schema",
+        "id": "https://purl.imsglobal.org/spec/case/v1p1/schema/json/case_v1p1_cfdocument-jsonschema1.json",
+        "sha256": "e3fc26b66469fb1524b1c742cb4d411f50b90715c8fac6d7684a908692adb946"
+      },
+      {
+        "binding": "cfdocumentset",
+        "language": "json-schema",
+        "id": "https://purl.imsglobal.org/spec/case/v1p1/schema/json/case_v1p1_cfdocumentset-jsonschema1.json",
+        "sha256": "cb5cd1766baf04cd1b473659a1588a91e1127f325126213947f664d5d2e0661c"
+      },
+      {
+        "binding": "cfitem",
+        "language": "json-schema",
+        "id": "https://purl.imsglobal.org/spec/case/v1p1/schema/json/case_v1p1_cfitem-jsonschema1.json",
+        "sha256": "0010b9a88c489d9b024572a2dc024bf312575da8a4ef797ebdca94bb52fa94f2"
+      },
+      {
+        "binding": "cfitemtypeset",
+        "language": "json-schema",
+        "id": "https://purl.imsglobal.org/spec/case/v1p1/schema/json/case_v1p1_cfitemtypeset-jsonschema1.json",
+        "sha256": "9658ff28c925e80a1cd651158aa6fc8f15f88c409f1fb228a66b73f9d335637a"
+      },
+      {
+        "binding": "cflicense",
+        "language": "json-schema",
+        "id": "https://purl.imsglobal.org/spec/case/v1p1/schema/json/case_v1p1_cflicense-jsonschema1.json",
+        "sha256": "6e7a2a6bee2b4b35e53b13afba2bd596634d9354be38d1f9cc89d6e3db19c871"
+      },
+      {
+        "binding": "cfpackage",
+        "language": "json-schema",
+        "id": "https://purl.imsglobal.org/spec/case/v1p1/schema/json/case_v1p1_cfpackage-jsonschema1.json",
+        "sha256": "7930082b7ed54e76e45ecbc86f8dd467c9e1635e9ce818371599bca25f942fe5"
+      },
+      {
+        "binding": "cfrubric",
+        "language": "json-schema",
+        "id": "https://purl.imsglobal.org/spec/case/v1p1/schema/json/case_v1p1_cfrubric-jsonschema1.json",
+        "sha256": "80319d6a706be07256979a6e67c31bd0b54dc152312de9c75d9a975a7b3232c7"
+      },
+      {
+        "binding": "cfsubjectset",
+        "language": "json-schema",
+        "id": "https://purl.imsglobal.org/spec/case/v1p1/schema/json/case_v1p1_cfsubjectset-jsonschema1.json",
+        "sha256": "2dce5c81afb0ed6c2b21ceb3829d0da4c0abd9b5a938a1d2b70520b5199023ba"
+      },
+      {
+        "binding": "imsx_statusinfo",
+        "language": "json-schema",
+        "id": "https://purl.imsglobal.org/spec/case/v1p1/schema/json/case_v1p1_imsx_statusinfo-jsonschema1.json",
+        "sha256": "d1dfd9f4b766a730db50bf2322dcad8848970d07d0dd1b4d1e78ed3f19e1c869"
+      }
+    ]
+  },
+  "items": [
+    {
+      "key": "case:1.1:def:CFAssociationExtension",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "The container for the proprietary extensions to the CFAssociation class."
+    },
+    {
+      "key": "case:1.1:def:CFAssociationGrouping",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "This is the container for information about a set of associations that have been labelled as a group (the nature of the group being defined by this container)."
+    },
+    {
+      "key": "case:1.1:def:CFAssociationGrouping/description",
+      "kind": "property",
+      "path": "description",
+      "jsonType": "string",
+      "description": "A human readable description of the CFAssociationGrouping.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFAssociationGrouping/extensions",
+      "kind": "property",
+      "path": "extensions",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFAssociationGrouping/identifier",
+      "kind": "property",
+      "path": "identifier",
+      "jsonType": "string",
+      "required": true,
+      "description": "An unambiguous, synthetic, globally unique identifier for the CFAssociationGrouping. This is the primary way in which the exchange identification is achieved.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFAssociationGrouping/lastChangeDateTime",
+      "kind": "property",
+      "path": "lastChangeDateTime",
+      "jsonType": "string",
+      "required": true,
+      "description": "A system generated timestamp of the most recent change to this record. This conforms to ISO 8601 dateTime definition [ISO 8601].",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFAssociationGrouping/title",
+      "kind": "property",
+      "path": "title",
+      "jsonType": "string",
+      "required": true,
+      "description": "The title of the CFAssociationGrouping.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFAssociationGrouping/uri",
+      "kind": "property",
+      "path": "uri",
+      "jsonType": "string",
+      "required": true,
+      "description": "An unambiguous reference to the CFAssociationGrouping using a network-resolvable URI.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFAssociationGroupingExtension",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "The container for the proprietary extensions to the CFAssociationGrouping class."
+    },
+    {
+      "key": "case:1.1:def:CFConcept",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "The container for the definition of a concept which is addressed by the competency framework."
+    },
+    {
+      "key": "case:1.1:def:CFConcept/description",
+      "kind": "property",
+      "path": "description",
+      "jsonType": "string",
+      "description": "A human readable description of the CFConcept.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFConcept/extensions",
+      "kind": "property",
+      "path": "extensions",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFConcept/hierarchyCode",
+      "kind": "property",
+      "path": "hierarchyCode",
+      "jsonType": "string",
+      "required": true,
+      "description": "A human-referenceable code designated by the publisher to identify the item in the hierarchy of the Concepts.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFConcept/identifier",
+      "kind": "property",
+      "path": "identifier",
+      "jsonType": "string",
+      "required": true,
+      "description": "An unambiguous, synthetic, globally unique identifier for the CFConcept. This is the primary way in which the exchange identification is achieved.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFConcept/keywords",
+      "kind": "property",
+      "path": "keywords",
+      "jsonType": "string",
+      "description": "Defined listing of keywords delimited by '|' that the concept encompasses.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFConcept/lastChangeDateTime",
+      "kind": "property",
+      "path": "lastChangeDateTime",
+      "jsonType": "string",
+      "required": true,
+      "description": "A system generated timestamp of the most recent change to this record. This conforms to ISO 8601 dateTime definition [ISO 8601].",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFConcept/title",
+      "kind": "property",
+      "path": "title",
+      "jsonType": "string",
+      "required": true,
+      "description": "The title of the CFConcept.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFConcept/uri",
+      "kind": "property",
+      "path": "uri",
+      "jsonType": "string",
+      "required": true,
+      "description": "An unambiguous reference to the CFConcept using a network-resolvable URI.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFConceptExtension",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "The container for the proprietary extensions to the CFConcept class."
+    },
+    {
+      "key": "case:1.1:def:CFDefinition",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "The container for the set of definitions used for the competency framework i.e. the set of CFSubjects, CFConcepts, CFItemTypes, CFAssociationGroupings and CFLicenses."
+    },
+    {
+      "key": "case:1.1:def:CFDefinition/CFAssociationGroupings",
+      "kind": "property",
+      "path": "CFAssociationGroupings",
+      "jsonType": "array",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFDefinition/CFAssociationGroupings/[]",
+      "kind": "property",
+      "path": "CFAssociationGroupings/[]"
+    },
+    {
+      "key": "case:1.1:def:CFDefinition/CFConcepts",
+      "kind": "property",
+      "path": "CFConcepts",
+      "jsonType": "array",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFDefinition/CFConcepts/[]",
+      "kind": "property",
+      "path": "CFConcepts/[]"
+    },
+    {
+      "key": "case:1.1:def:CFDefinition/CFItemTypes",
+      "kind": "property",
+      "path": "CFItemTypes",
+      "jsonType": "array",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFDefinition/CFItemTypes/[]",
+      "kind": "property",
+      "path": "CFItemTypes/[]"
+    },
+    {
+      "key": "case:1.1:def:CFDefinition/CFLicenses",
+      "kind": "property",
+      "path": "CFLicenses",
+      "jsonType": "array",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFDefinition/CFLicenses/[]",
+      "kind": "property",
+      "path": "CFLicenses/[]"
+    },
+    {
+      "key": "case:1.1:def:CFDefinition/CFSubjects",
+      "kind": "property",
+      "path": "CFSubjects",
+      "jsonType": "array",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFDefinition/CFSubjects/[]",
+      "kind": "property",
+      "path": "CFSubjects/[]"
+    },
+    {
+      "key": "case:1.1:def:CFDefinition/extensions",
+      "kind": "property",
+      "path": "extensions",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFDefinitionExtension",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "The container for the proprietary extensions to the CFDefinition class."
+    },
+    {
+      "key": "case:1.1:def:CFDocument",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "The container for the data about a competency framework document (CFDocument) when exchanged outside of the context of a CFPackage. A CFDocument is the root for the creation of a learning standard/competency."
+    },
+    {
+      "key": "case:1.1:def:CFDocument/adoptionStatus",
+      "kind": "property",
+      "path": "adoptionStatus",
+      "jsonType": "string",
+      "description": "The publication status of the document.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFDocument/caseVersion",
+      "kind": "property",
+      "path": "caseVersion",
+      "jsonType": "string",
+      "enumValues": [
+        "1.1"
+      ],
+      "normative": true,
+      "description": "This is a new attribute added in version 1.1. Denotes the version of the CFDocument. If present it MUST have a value of '1.1'.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFDocument/CFPackageURI",
+      "kind": "property",
+      "path": "CFPackageURI",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFDocument/creator",
+      "kind": "property",
+      "path": "creator",
+      "jsonType": "string",
+      "required": true,
+      "description": "The entity with authority that promulgates the competency framework. This is the entity that authorized or created the competency framework. It could be an education agency, higher education institution, professional body. It is the owner of the competency framework.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFDocument/description",
+      "kind": "property",
+      "path": "description",
+      "jsonType": "string",
+      "description": "A human readable description of the CFDocument. In Version 1.1 the data-type has been changed from NormalizedString.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFDocument/extensions",
+      "kind": "property",
+      "path": "extensions",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFDocument/frameworkType",
+      "kind": "property",
+      "path": "frameworkType",
+      "jsonType": "string",
+      "description": "This is a new attribute added in version 1.1. This attribute allows framework creators to indicate what type of framework this is, for example course codes. In CASE 1.1. the only predefined type of framework is 'CourseCodes'. Other standardized framework types will be defined.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFDocument/identifier",
+      "kind": "property",
+      "path": "identifier",
+      "jsonType": "string",
+      "required": true,
+      "description": "An unambiguous, synthetic, globally unique identifier for the CFDocument. This is the primary way in which the exchange identification is achieved.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFDocument/language",
+      "kind": "property",
+      "path": "language",
+      "jsonType": "string",
+      "description": "The default language of the text used for the content in the learning standard document (use ISO 639-2 [ISO 639]).",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFDocument/lastChangeDateTime",
+      "kind": "property",
+      "path": "lastChangeDateTime",
+      "jsonType": "string",
+      "required": true,
+      "description": "A system generated timestamp of the most recent change to this record. This conforms to ISO 8601 dateTime definition [ISO 8601].",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFDocument/licenseURI",
+      "kind": "property",
+      "path": "licenseURI",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFDocument/notes",
+      "kind": "property",
+      "path": "notes",
+      "jsonType": "string",
+      "description": "Any text used to comment on the published CFDocument.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFDocument/officialSourceURL",
+      "kind": "property",
+      "path": "officialSourceURL",
+      "jsonType": "string",
+      "description": "The URL link to the formal citation of the original achievement standards document created for humans.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFDocument/publisher",
+      "kind": "property",
+      "path": "publisher",
+      "jsonType": "string",
+      "description": "The entity responsible for making the learning standards document available.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFDocument/statusEndDate",
+      "kind": "property",
+      "path": "statusEndDate",
+      "jsonType": "string",
+      "description": "The date the CFDocument status ended or changed to another status.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFDocument/statusStartDate",
+      "kind": "property",
+      "path": "statusStartDate",
+      "jsonType": "string",
+      "description": "The date the CFDocument status started.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFDocument/subject",
+      "kind": "property",
+      "path": "subject",
+      "jsonType": "array",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFDocument/subject/[]",
+      "kind": "property",
+      "path": "subject/[]",
+      "jsonType": "string",
+      "description": "The topic or academic subject of the Document (this should use some appropriate K-12, HE, etc. based vocabulary)."
+    },
+    {
+      "key": "case:1.1:def:CFDocument/subjectURI",
+      "kind": "property",
+      "path": "subjectURI",
+      "jsonType": "array",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFDocument/subjectURI/[]",
+      "kind": "property",
+      "path": "subjectURI/[]"
+    },
+    {
+      "key": "case:1.1:def:CFDocument/title",
+      "kind": "property",
+      "path": "title",
+      "jsonType": "string",
+      "required": true,
+      "description": "The title of the CFDocument.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFDocument/uri",
+      "kind": "property",
+      "path": "uri",
+      "jsonType": "string",
+      "required": true,
+      "description": "An unambiguous reference to the CFDocument using a network-resolvable URI.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFDocument/version",
+      "kind": "property",
+      "path": "version",
+      "jsonType": "string",
+      "description": "Defines the revision of the document (the nature of this versioning is an implementation issue).",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFDocumentExtension",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "The container for the proprietary extensions to the CFDocument class."
+    },
+    {
+      "key": "case:1.1:def:CFItem",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "This is the container for the CFItem data outside of the context of a CFPackage. This is the content that either describes a specific competency (learning objective) or describes a grouping of competencies within the taxonomy of a Competency Framework Document."
+    },
+    {
+      "key": "case:1.1:def:CFItem/abbreviatedStatement",
+      "kind": "property",
+      "path": "abbreviatedStatement",
+      "jsonType": "string",
+      "description": "An abbreviated version of the Full Statement.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFItem/alternativeLabel",
+      "kind": "property",
+      "path": "alternativeLabel",
+      "jsonType": "string",
+      "description": "An alternate 'term' for Competency. Some institutions may want to render their achievements as outcomes, or objectives, etc. Semantically they are the same as Competencies, but diversity of terms is used. This allows for the flexibility for the institution to define their own te…",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFItem/CFDocumentURI",
+      "kind": "property",
+      "path": "CFDocumentURI",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFItem/CFItemType",
+      "kind": "property",
+      "path": "CFItemType",
+      "jsonType": "string",
+      "description": "The textual label identifying the class of the statement as designated by the promulgating body.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFItem/CFItemTypeURI",
+      "kind": "property",
+      "path": "CFItemTypeURI",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFItem/conceptKeywords",
+      "kind": "property",
+      "path": "conceptKeywords",
+      "jsonType": "array",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFItem/conceptKeywords/[]",
+      "kind": "property",
+      "path": "conceptKeywords/[]",
+      "jsonType": "string",
+      "description": "The significant topicality of the CFItem using free-text keywords and phrases."
+    },
+    {
+      "key": "case:1.1:def:CFItem/conceptKeywordsURI",
+      "kind": "property",
+      "path": "conceptKeywordsURI",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFItem/educationLevel",
+      "kind": "property",
+      "path": "educationLevel",
+      "jsonType": "array",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFItem/educationLevel/[]",
+      "kind": "property",
+      "path": "educationLevel/[]",
+      "jsonType": "string",
+      "description": "The education level, grade level or primary instructional level at which a CFItem is intended"
+    },
+    {
+      "key": "case:1.1:def:CFItem/extensions",
+      "kind": "property",
+      "path": "extensions",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFItem/fullStatement",
+      "kind": "property",
+      "path": "fullStatement",
+      "jsonType": "string",
+      "required": true,
+      "description": "The text of the statement. The textual content that either describes a specific competency or describes a less granular group of competencies within the taxonomy of the standards document. In Version 1.1 the data-type was changed from NormalizedString.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFItem/humanCodingScheme",
+      "kind": "property",
+      "path": "humanCodingScheme",
+      "jsonType": "string",
+      "description": "A human-referenceable code designated by the publisher to identify the item among learning standard items.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFItem/identifier",
+      "kind": "property",
+      "path": "identifier",
+      "jsonType": "string",
+      "required": true,
+      "description": "An unambiguous, synthetic, globally unique identifier for the CFItem. This is the primary way in which the exchange identification is achieved.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFItem/language",
+      "kind": "property",
+      "path": "language",
+      "jsonType": "string",
+      "description": "The default language of the text used for the content in the learning standard document (use ISO 639-2 [ISO 639]).",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFItem/lastChangeDateTime",
+      "kind": "property",
+      "path": "lastChangeDateTime",
+      "jsonType": "string",
+      "required": true,
+      "description": "A system generated timestamp of the most recent change to this record. This conforms to ISO 8601 dateTime definition [ISO 8601].",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFItem/licenseURI",
+      "kind": "property",
+      "path": "licenseURI",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFItem/listEnumeration",
+      "kind": "property",
+      "path": "listEnumeration",
+      "jsonType": "string",
+      "description": "A set of one or more alphanumeric characters and/or symbol denoting the positioning of the statement being described in a sequential listing of statements. Use of the 'sequenceNumber' in the CFPckgAssociation class is preferred over the use of this property for sequencing.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFItem/notes",
+      "kind": "property",
+      "path": "notes",
+      "jsonType": "string",
+      "description": "Information about the derivation of a CFItem statement.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFItem/statusEndDate",
+      "kind": "property",
+      "path": "statusEndDate",
+      "jsonType": "string",
+      "description": "The date the CFItem status ended or changed to another status.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFItem/statusStartDate",
+      "kind": "property",
+      "path": "statusStartDate",
+      "jsonType": "string",
+      "description": "The date the CFItem status started.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFItem/subject",
+      "kind": "property",
+      "path": "subject",
+      "jsonType": "array",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFItem/subject/[]",
+      "kind": "property",
+      "path": "subject/[]",
+      "jsonType": "string",
+      "description": "A new attribute added in Version 1.1. The topic or academic subject of the Item (this should use some appropriate K-12, HE, etc. based vocabulary)."
+    },
+    {
+      "key": "case:1.1:def:CFItem/subjectURI",
+      "kind": "property",
+      "path": "subjectURI",
+      "jsonType": "array",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFItem/subjectURI/[]",
+      "kind": "property",
+      "path": "subjectURI/[]"
+    },
+    {
+      "key": "case:1.1:def:CFItem/uri",
+      "kind": "property",
+      "path": "uri",
+      "jsonType": "string",
+      "required": true,
+      "description": "An unambiguous reference to the CFItem using a network-resolvable URI.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFItemExtension",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "The container for the proprietary extensions to the CFItem class."
+    },
+    {
+      "key": "case:1.1:def:CFItemType",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "The container for the ItemType information use within the competency framework."
+    },
+    {
+      "key": "case:1.1:def:CFItemType/description",
+      "kind": "property",
+      "path": "description",
+      "jsonType": "string",
+      "required": true,
+      "description": "A human readable description of the CFItemType.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFItemType/extensions",
+      "kind": "property",
+      "path": "extensions",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFItemType/hierarchyCode",
+      "kind": "property",
+      "path": "hierarchyCode",
+      "jsonType": "string",
+      "required": true,
+      "description": "A human-referenceable code designated by the publisher to identify the item in the hierarchy of ItemTypes.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFItemType/identifier",
+      "kind": "property",
+      "path": "identifier",
+      "jsonType": "string",
+      "required": true,
+      "description": "An unambiguous, synthetic, globally unique identifier for the CFItemType. This is the primary way in which the exchange identification is achieved.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFItemType/lastChangeDateTime",
+      "kind": "property",
+      "path": "lastChangeDateTime",
+      "jsonType": "string",
+      "required": true,
+      "description": "A system generated timestamp of the most recent change to this record. This conforms to ISO 8601 dateTime definition [ISO 8601].",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFItemType/title",
+      "kind": "property",
+      "path": "title",
+      "jsonType": "string",
+      "required": true,
+      "description": "The title of the CFItemType.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFItemType/typeCode",
+      "kind": "property",
+      "path": "typeCode",
+      "jsonType": "string",
+      "description": "Text code used for type identification.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFItemType/uri",
+      "kind": "property",
+      "path": "uri",
+      "jsonType": "string",
+      "required": true,
+      "description": "An unambiguous reference to the CFItemType using a network-resolvable URI.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFItemTypeExtension",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "The container for the proprietary extensions to the CFItemType class."
+    },
+    {
+      "key": "case:1.1:def:CFLicense",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "The container for the information about a license used within the competency framework."
+    },
+    {
+      "key": "case:1.1:def:CFLicense/description",
+      "kind": "property",
+      "path": "description",
+      "jsonType": "string",
+      "description": "A human readable description of the CFLicense.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFLicense/extensions",
+      "kind": "property",
+      "path": "extensions",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFLicense/identifier",
+      "kind": "property",
+      "path": "identifier",
+      "jsonType": "string",
+      "required": true,
+      "description": "An unambiguous, synthetic, globally unique identifier for the CFLicense. This is the primary way in which the exchange identification is achieved.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFLicense/lastChangeDateTime",
+      "kind": "property",
+      "path": "lastChangeDateTime",
+      "jsonType": "string",
+      "required": true,
+      "description": "A system generated timestamp of the most recent change to this record. This conforms to ISO 8601 dateTime definition [ISO 8601].",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFLicense/licenseText",
+      "kind": "property",
+      "path": "licenseText",
+      "jsonType": "string",
+      "required": true,
+      "description": "Legal license text used by the organization to convey license permissions. This may include the actual license text, or a link to a web location containing the license as a document or as text.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFLicense/title",
+      "kind": "property",
+      "path": "title",
+      "jsonType": "string",
+      "required": true,
+      "description": "The title of the CFLicense.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFLicense/uri",
+      "kind": "property",
+      "path": "uri",
+      "jsonType": "string",
+      "required": true,
+      "description": "An unambiguous reference to the CFLicense using a network-resolvable URI.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFLicenseExtension",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "The container for the proprietary extensions to the CFLicense class."
+    },
+    {
+      "key": "case:1.1:def:CFPackageExtension",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "The container for the proprietary extensions to the CFPackage class."
+    },
+    {
+      "key": "case:1.1:def:CFPckgAssociation",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "This is the container for the data about the relationship between two CFDocuments or between two CFItems within the context of a CFPackage."
+    },
+    {
+      "key": "case:1.1:def:CFPckgAssociation/associationType",
+      "kind": "property",
+      "path": "associationType",
+      "required": true,
+      "description": "The type of association. This uses an extensible enumerated vocabulary. Changed in CASE 1.1.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFPckgAssociation/CFAssociationGroupingURI",
+      "kind": "property",
+      "path": "CFAssociationGroupingURI",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFPckgAssociation/destinationNodeURI",
+      "kind": "property",
+      "path": "destinationNodeURI",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFPckgAssociation/extensions",
+      "kind": "property",
+      "path": "extensions",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFPckgAssociation/identifier",
+      "kind": "property",
+      "path": "identifier",
+      "jsonType": "string",
+      "required": true,
+      "description": "An unambiguous, synthetic, globally unique identifier for the CFAssociation. This is the primary way in which the exchange identification is achieved.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFPckgAssociation/lastChangeDateTime",
+      "kind": "property",
+      "path": "lastChangeDateTime",
+      "jsonType": "string",
+      "required": true,
+      "description": "A system generated timestamp of the most recent change to this record. This conforms to ISO 8601 dateTime definition [ISO 8601].",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFPckgAssociation/notes",
+      "kind": "property",
+      "path": "notes",
+      "jsonType": "string",
+      "description": "A new attribute added in Version 1.1. Information about the CFAssociation.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFPckgAssociation/originNodeURI",
+      "kind": "property",
+      "path": "originNodeURI",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFPckgAssociation/sequenceNumber",
+      "kind": "property",
+      "path": "sequenceNumber",
+      "jsonType": "integer",
+      "description": "This is used to order associated objects. Associations can be created through mapping rather than strict hierarchy. As such the presentation of the list cannot be ordered by the objects in the list. They may be different based on the parent being viewed. Use of this property for…",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFPckgAssociation/uri",
+      "kind": "property",
+      "path": "uri",
+      "jsonType": "string",
+      "required": true,
+      "description": "An unambiguous reference to the CFAssociation using a network-resolvable URI.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFPckgDocument",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "The container for the data about a competency framework document (CFDocument) within a CFPackage. A CFDocument is the root for the creation of a learning standard/competency."
+    },
+    {
+      "key": "case:1.1:def:CFPckgDocument/adoptionStatus",
+      "kind": "property",
+      "path": "adoptionStatus",
+      "jsonType": "string",
+      "description": "The publication status of the document.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFPckgDocument/caseVersion",
+      "kind": "property",
+      "path": "caseVersion",
+      "jsonType": "string",
+      "enumValues": [
+        "1.1"
+      ],
+      "normative": true,
+      "description": "This is a new attribute added in version 1.1. Denotes the version of the CFDocument. If present it MUST have a value of '1.1'.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFPckgDocument/creator",
+      "kind": "property",
+      "path": "creator",
+      "jsonType": "string",
+      "required": true,
+      "description": "The entity with authority that promulgates the competency framework. This is the entity that authorized or created the competency framework. It could be an education agency, higher education institution, professional body. It is the owner of the competency framework.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFPckgDocument/description",
+      "kind": "property",
+      "path": "description",
+      "jsonType": "string",
+      "description": "A human readable description of the CFDocument. In Version 1.1 the data-type has been changed from NormalizedString.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFPckgDocument/extensions",
+      "kind": "property",
+      "path": "extensions",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFPckgDocument/frameworkType",
+      "kind": "property",
+      "path": "frameworkType",
+      "jsonType": "string",
+      "description": "This is a new attribute added in version 1.1. This attribute allows framework creators to indicate what type of framework this is, for example course codes. In CASE 1.1. the only predefined type of framework is 'CourseCodes'. Other standardized framework types will be defined.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFPckgDocument/identifier",
+      "kind": "property",
+      "path": "identifier",
+      "jsonType": "string",
+      "required": true,
+      "description": "An unambiguous, synthetic, globally unique identifier for the CFDocument. This is the primary way in which the exchange identification is achieved.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFPckgDocument/language",
+      "kind": "property",
+      "path": "language",
+      "jsonType": "string",
+      "description": "The default language of the text used for the content in the learning standard document (use ISO 639-2 [ISO 639]).",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFPckgDocument/lastChangeDateTime",
+      "kind": "property",
+      "path": "lastChangeDateTime",
+      "jsonType": "string",
+      "required": true,
+      "description": "A system generated timestamp of the most recent change to this record. This conforms to ISO 8601 dateTime definition [ISO 8601].",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFPckgDocument/licenseURI",
+      "kind": "property",
+      "path": "licenseURI",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFPckgDocument/notes",
+      "kind": "property",
+      "path": "notes",
+      "jsonType": "string",
+      "description": "Any text used to comment on the published CFDocument.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFPckgDocument/officialSourceURL",
+      "kind": "property",
+      "path": "officialSourceURL",
+      "jsonType": "string",
+      "description": "The URL link to the formal citation of the original achievement standards document created for humans.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFPckgDocument/publisher",
+      "kind": "property",
+      "path": "publisher",
+      "jsonType": "string",
+      "description": "The entity responsible for making the learning standards document available.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFPckgDocument/statusEndDate",
+      "kind": "property",
+      "path": "statusEndDate",
+      "jsonType": "string",
+      "description": "The date the CFDocument status ended or changed to another status.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFPckgDocument/statusStartDate",
+      "kind": "property",
+      "path": "statusStartDate",
+      "jsonType": "string",
+      "description": "The date the CFDocument status started.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFPckgDocument/subject",
+      "kind": "property",
+      "path": "subject",
+      "jsonType": "array",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFPckgDocument/subject/[]",
+      "kind": "property",
+      "path": "subject/[]",
+      "jsonType": "string",
+      "description": "The topic or academic subject of the Document (this should use some appropriate K-12, HE, etc. based vocabulary)."
+    },
+    {
+      "key": "case:1.1:def:CFPckgDocument/subjectURI",
+      "kind": "property",
+      "path": "subjectURI",
+      "jsonType": "array",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFPckgDocument/subjectURI/[]",
+      "kind": "property",
+      "path": "subjectURI/[]"
+    },
+    {
+      "key": "case:1.1:def:CFPckgDocument/title",
+      "kind": "property",
+      "path": "title",
+      "jsonType": "string",
+      "required": true,
+      "description": "The title of the CFDocument.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFPckgDocument/uri",
+      "kind": "property",
+      "path": "uri",
+      "jsonType": "string",
+      "required": true,
+      "description": "An unambiguous reference to the CFDocument using a network-resolvable URI.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFPckgDocument/version",
+      "kind": "property",
+      "path": "version",
+      "jsonType": "string",
+      "description": "Defines the revision of the document (the nature of this versioning is an implementation issue).",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFPckgItem",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "This is the container for the CFItem data within the context of a CFPackage. This is the content that either describes a specific competency (learning objective) or describes a grouping of competencies within the taxonomy of a Competency Framework Document."
+    },
+    {
+      "key": "case:1.1:def:CFPckgItem/abbreviatedStatement",
+      "kind": "property",
+      "path": "abbreviatedStatement",
+      "jsonType": "string",
+      "description": "An abbreviated version of the Full Statement.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFPckgItem/alternativeLabel",
+      "kind": "property",
+      "path": "alternativeLabel",
+      "jsonType": "string",
+      "description": "An alternate 'term' for Competency. Some institutions may want to render their achievements as outcomes, or objectives, etc. Semantically they are the same as Competencies, but diversity of terms is used. This allows for the flexibility for the institution to define their own te…",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFPckgItem/CFItemType",
+      "kind": "property",
+      "path": "CFItemType",
+      "jsonType": "string",
+      "description": "The textual label identifying the class of the statement as designated by the promulgating body.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFPckgItem/CFItemTypeURI",
+      "kind": "property",
+      "path": "CFItemTypeURI",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFPckgItem/conceptKeywords",
+      "kind": "property",
+      "path": "conceptKeywords",
+      "jsonType": "array",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFPckgItem/conceptKeywords/[]",
+      "kind": "property",
+      "path": "conceptKeywords/[]",
+      "jsonType": "string",
+      "description": "The significant topicality of the CFItem using free-text keywords and phrases."
+    },
+    {
+      "key": "case:1.1:def:CFPckgItem/conceptKeywordsURI",
+      "kind": "property",
+      "path": "conceptKeywordsURI",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFPckgItem/educationLevel",
+      "kind": "property",
+      "path": "educationLevel",
+      "jsonType": "array",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFPckgItem/educationLevel/[]",
+      "kind": "property",
+      "path": "educationLevel/[]",
+      "jsonType": "string",
+      "description": "The education level, grade level or primary instructional level at which a CFItem is intended"
+    },
+    {
+      "key": "case:1.1:def:CFPckgItem/extensions",
+      "kind": "property",
+      "path": "extensions",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFPckgItem/fullStatement",
+      "kind": "property",
+      "path": "fullStatement",
+      "jsonType": "string",
+      "required": true,
+      "description": "The text of the statement. The textual content that either describes a specific competency or describes a less granular group of competencies within the taxonomy of the standards document. In Version 1.1 the data-type was changed from NormalizedString.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFPckgItem/humanCodingScheme",
+      "kind": "property",
+      "path": "humanCodingScheme",
+      "jsonType": "string",
+      "description": "A human-referenceable code designated by the publisher to identify the item among learning standard items.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFPckgItem/identifier",
+      "kind": "property",
+      "path": "identifier",
+      "jsonType": "string",
+      "required": true,
+      "description": "An unambiguous, synthetic, globally unique identifier for the CFItem. This is the primary way in which the exchange identification is achieved.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFPckgItem/language",
+      "kind": "property",
+      "path": "language",
+      "jsonType": "string",
+      "description": "The default language of the text used for the content in the learning standard document (use ISO 639-2 [ISO 639]).",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFPckgItem/lastChangeDateTime",
+      "kind": "property",
+      "path": "lastChangeDateTime",
+      "jsonType": "string",
+      "required": true,
+      "description": "A system generated timestamp of the most recent change to this record. This conforms to ISO 8601 dateTime definition [ISO 8601].",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFPckgItem/licenseURI",
+      "kind": "property",
+      "path": "licenseURI",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFPckgItem/listEnumeration",
+      "kind": "property",
+      "path": "listEnumeration",
+      "jsonType": "string",
+      "description": "A set of one or more alphanumeric characters and/or symbol denoting the positioning of the statement being described in a sequential listing of statements. Use of the 'sequenceNumber' in the CFPckgAssociation class is preferred over the use of this property for sequencing.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFPckgItem/notes",
+      "kind": "property",
+      "path": "notes",
+      "jsonType": "string",
+      "description": "Information about the derivation of a CFItem statement.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFPckgItem/statusEndDate",
+      "kind": "property",
+      "path": "statusEndDate",
+      "jsonType": "string",
+      "description": "The date the CFItem status ended or changed to another status.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFPckgItem/statusStartDate",
+      "kind": "property",
+      "path": "statusStartDate",
+      "jsonType": "string",
+      "description": "The date the CFItem status started.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFPckgItem/subject",
+      "kind": "property",
+      "path": "subject",
+      "jsonType": "array",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFPckgItem/subject/[]",
+      "kind": "property",
+      "path": "subject/[]",
+      "jsonType": "string",
+      "description": "A new attribute added in Version 1.1. The topic or academic subject of the Item (this should use some appropriate K-12, HE, etc. based vocabulary)."
+    },
+    {
+      "key": "case:1.1:def:CFPckgItem/subjectURI",
+      "kind": "property",
+      "path": "subjectURI",
+      "jsonType": "array",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFPckgItem/subjectURI/[]",
+      "kind": "property",
+      "path": "subjectURI/[]"
+    },
+    {
+      "key": "case:1.1:def:CFPckgItem/uri",
+      "kind": "property",
+      "path": "uri",
+      "jsonType": "string",
+      "required": true,
+      "description": "An unambiguous reference to the CFItem using a network-resolvable URI.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFRubric",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "The container for the definition of a rubric which is addressed by the competency framework. This includes the set of associated CFRubricCriteria and CFRubricCriterionLevels."
+    },
+    {
+      "key": "case:1.1:def:CFRubric/CFRubricCriteria",
+      "kind": "property",
+      "path": "CFRubricCriteria",
+      "jsonType": "array",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFRubric/CFRubricCriteria/[]",
+      "kind": "property",
+      "path": "CFRubricCriteria/[]"
+    },
+    {
+      "key": "case:1.1:def:CFRubric/description",
+      "kind": "property",
+      "path": "description",
+      "jsonType": "string",
+      "description": "A human readable description of the CFRubric. In Version 1.1 the data-type for this attribute has been changed from NormalizedString.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFRubric/extensions",
+      "kind": "property",
+      "path": "extensions",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFRubric/identifier",
+      "kind": "property",
+      "path": "identifier",
+      "jsonType": "string",
+      "required": true,
+      "description": "An unambiguous, synthetic, globally unique identifier for the CFRubric. This is the primary way in which the exchange identification is achieved.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFRubric/lastChangeDateTime",
+      "kind": "property",
+      "path": "lastChangeDateTime",
+      "jsonType": "string",
+      "required": true,
+      "description": "A system generated timestamp of the most recent change to this record. This conforms to ISO 8601 dateTime definition [ISO 8601].",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFRubric/title",
+      "kind": "property",
+      "path": "title",
+      "jsonType": "string",
+      "description": "The title of the CFRubric.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFRubric/uri",
+      "kind": "property",
+      "path": "uri",
+      "jsonType": "string",
+      "required": true,
+      "description": "An unambiguous reference to the CFRubric using a network-resolvable URI.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFRubricCriterion",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "The container for the definition of a rubric criterion which is addressed by the competency framework."
+    },
+    {
+      "key": "case:1.1:def:CFRubricCriterion/category",
+      "kind": "property",
+      "path": "category",
+      "jsonType": "string",
+      "description": "A textual label for category by which CFRubricCriterion may be grouped.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFRubricCriterion/CFItemURI",
+      "kind": "property",
+      "path": "CFItemURI",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFRubricCriterion/CFRubricCriterionLevels",
+      "kind": "property",
+      "path": "CFRubricCriterionLevels",
+      "jsonType": "array",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFRubricCriterion/CFRubricCriterionLevels/[]",
+      "kind": "property",
+      "path": "CFRubricCriterionLevels/[]"
+    },
+    {
+      "key": "case:1.1:def:CFRubricCriterion/description",
+      "kind": "property",
+      "path": "description",
+      "jsonType": "string",
+      "description": "A human readable description of the CFRubricCriterion.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFRubricCriterion/extensions",
+      "kind": "property",
+      "path": "extensions",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFRubricCriterion/identifier",
+      "kind": "property",
+      "path": "identifier",
+      "jsonType": "string",
+      "required": true,
+      "description": "An unambiguous, synthetic, globally unique identifier for the CFRubricCriterion. This is the primary way in which the exchange identification is achieved.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFRubricCriterion/lastChangeDateTime",
+      "kind": "property",
+      "path": "lastChangeDateTime",
+      "jsonType": "string",
+      "required": true,
+      "description": "A system generated timestamp of the most recent change to this record. This conforms to ISO 8601 dateTime definition [ISO 8601].",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFRubricCriterion/position",
+      "kind": "property",
+      "path": "position",
+      "jsonType": "integer",
+      "description": "A numeric value representing this criterion's position in the criteria list for this CFRubric.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFRubricCriterion/rubricId",
+      "kind": "property",
+      "path": "rubricId",
+      "jsonType": "string",
+      "description": "The UUID for the parent CFRubric. This is included for forwards compatibility to enable access to the CFRubricCriterion without requiring embedding within the CFRubric itself.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFRubricCriterion/uri",
+      "kind": "property",
+      "path": "uri",
+      "jsonType": "string",
+      "required": true,
+      "description": "An unambiguous reference to the CFRubricCriterion using a network-resolvable URI.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFRubricCriterion/weight",
+      "kind": "property",
+      "path": "weight",
+      "jsonType": "number",
+      "description": "A numeric weight assigned to this CFRubricCriterion, used for scored rubrics.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFRubricCriterionExtension",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "The container for the proprietary extensions to the CFRubricCriterionExtension class."
+    },
+    {
+      "key": "case:1.1:def:CFRubricCriterionLevel",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "The container for the definition of a criterion level which is addressed by the competency framework."
+    },
+    {
+      "key": "case:1.1:def:CFRubricCriterionLevel/description",
+      "kind": "property",
+      "path": "description",
+      "jsonType": "string",
+      "description": "A human readable description of the CFRubricCriterionLevel.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFRubricCriterionLevel/extensions",
+      "kind": "property",
+      "path": "extensions",
+      "jsonType": "array",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFRubricCriterionLevel/extensions/[]",
+      "kind": "property",
+      "path": "extensions/[]"
+    },
+    {
+      "key": "case:1.1:def:CFRubricCriterionLevel/feedback",
+      "kind": "property",
+      "path": "feedback",
+      "jsonType": "string",
+      "description": "Pre-defined feedback text to be relayed to the person or organization being evaluated. This may include guidance and suggestions for improvement or development.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFRubricCriterionLevel/identifier",
+      "kind": "property",
+      "path": "identifier",
+      "jsonType": "string",
+      "required": true,
+      "description": "An unambiguous, synthetic, globally unique identifier for the CFRubricCriterionLevel. This is the primary way in which the exchange identification is achieved.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFRubricCriterionLevel/lastChangeDateTime",
+      "kind": "property",
+      "path": "lastChangeDateTime",
+      "jsonType": "string",
+      "required": true,
+      "description": "A system generated timestamp of the most recent change to this record. This conforms to ISO 8601 dateTime definition [ISO 8601].",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFRubricCriterionLevel/position",
+      "kind": "property",
+      "path": "position",
+      "jsonType": "integer",
+      "description": "A numeric value representing the level's position in the list of levels defined for the CFRubricCriterion.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFRubricCriterionLevel/quality",
+      "kind": "property",
+      "path": "quality",
+      "jsonType": "string",
+      "description": "A qualitative description of this degree of achievement used for column headers or row labels in tabular rubrics.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFRubricCriterionLevel/rubricCriterionId",
+      "kind": "property",
+      "path": "rubricCriterionId",
+      "jsonType": "string",
+      "description": "The UUID for the parent CFRubricCriterion. This is included for forwards compatibility to enable access to the CFRubricCriterionLevel without requiring embedding within the CFRubricCriterion itself.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFRubricCriterionLevel/score",
+      "kind": "property",
+      "path": "score",
+      "jsonType": "number",
+      "description": "The points awarded for achieving this level.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFRubricCriterionLevel/uri",
+      "kind": "property",
+      "path": "uri",
+      "jsonType": "string",
+      "required": true,
+      "description": "An unambiguous reference to the CFRubricCriterionLevel using a network-resolvable URI.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFRubricCriterionLevelExtension",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "The container for the proprietary extensions to the CFRubricCriterionLevel class."
+    },
+    {
+      "key": "case:1.1:def:CFRubricExtension",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "The container for the proprietary extensions to the CFRubric class."
+    },
+    {
+      "key": "case:1.1:def:CFSubject",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "The container for the definition of a topic or academic subject which is addressed by the competency framework."
+    },
+    {
+      "key": "case:1.1:def:CFSubject/description",
+      "kind": "property",
+      "path": "description",
+      "jsonType": "string",
+      "description": "A human readable description of the CFSubject.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFSubject/extensions",
+      "kind": "property",
+      "path": "extensions",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFSubject/hierarchyCode",
+      "kind": "property",
+      "path": "hierarchyCode",
+      "jsonType": "string",
+      "required": true,
+      "description": "A human-referenceable code designated by the publisher to identify the item in the hierarchy of the subjects.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFSubject/identifier",
+      "kind": "property",
+      "path": "identifier",
+      "jsonType": "string",
+      "required": true,
+      "description": "An unambiguous, synthetic, globally unique identifier for the CFSubject. This is the primary way in which the exchange identification is achieved.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFSubject/lastChangeDateTime",
+      "kind": "property",
+      "path": "lastChangeDateTime",
+      "jsonType": "string",
+      "required": true,
+      "description": "A system generated timestamp of the most recent change to this record. This conforms to ISO 8601 dateTime definition [ISO 8601].",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFSubject/title",
+      "kind": "property",
+      "path": "title",
+      "jsonType": "string",
+      "required": true,
+      "description": "The title of the CFSubject.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFSubject/uri",
+      "kind": "property",
+      "path": "uri",
+      "jsonType": "string",
+      "required": true,
+      "description": "An unambiguous reference to the CFSubject using a network-resolvable URI.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:CFSubjectExtension",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "The container for the proprietary extensions to the CFSubject class."
+    },
+    {
+      "key": "case:1.1:def:imsx_CodeMinor",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "This is the container for the set of code minor status codes reported in the responses from the Service Provider."
+    },
+    {
+      "key": "case:1.1:def:imsx_CodeMinor/imsx_codeMinorField",
+      "kind": "property",
+      "path": "imsx_codeMinorField",
+      "jsonType": "array",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:imsx_CodeMinor/imsx_codeMinorField/[]",
+      "kind": "property",
+      "path": "imsx_codeMinorField/[]"
+    },
+    {
+      "key": "case:1.1:def:imsx_CodeMinorField",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "This is the container for a single code minor status code."
+    },
+    {
+      "key": "case:1.1:def:imsx_CodeMinorField/imsx_codeMinorFieldName",
+      "kind": "property",
+      "path": "imsx_codeMinorFieldName",
+      "jsonType": "string",
+      "required": true,
+      "description": "This should contain the identity of the system that has produced the code minor status code report.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:imsx_CodeMinorField/imsx_codeMinorFieldValue",
+      "kind": "property",
+      "path": "imsx_codeMinorFieldValue",
+      "jsonType": "string",
+      "required": true,
+      "enumValues": [
+        "fullsuccess",
+        "invalid_sort_field",
+        "invalid_selection_field",
+        "forbidden",
+        "unauthorised_request",
+        "internal_server_error",
+        "unknownobject",
+        "server_busy",
+        "invalid_uuid"
+      ],
+      "description": "The code minor status code (this is a value from the corresponding enumerated vocabulary).",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:LinkGenURI",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "A container for the information that is used to achieve the link data reference."
+    },
+    {
+      "key": "case:1.1:def:LinkGenURI/identifier",
+      "kind": "property",
+      "path": "identifier",
+      "jsonType": "string",
+      "required": true,
+      "description": "An unambiguous, synthetic, globally unique identifier (this may or may not be a UUID) for the associated object.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:LinkGenURI/targetType",
+      "kind": "property",
+      "path": "targetType",
+      "description": "This is a new attribute added in Version 1.1. It is used to identify the type of the referenced association i.e. this MAY NOT be a CASE Framework.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:LinkGenURI/title",
+      "kind": "property",
+      "path": "title",
+      "jsonType": "string",
+      "required": true,
+      "description": "A human readable title for the associated object.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:LinkGenURI/uri",
+      "kind": "property",
+      "path": "uri",
+      "jsonType": "string",
+      "required": true,
+      "description": "A network-resolvable URI pointing to the authoritative reference for the associated object.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:LinkURI",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "description": "A container for the information that is used to achieve the link data reference."
+    },
+    {
+      "key": "case:1.1:def:LinkURI/identifier",
+      "kind": "property",
+      "path": "identifier",
+      "jsonType": "string",
+      "required": true,
+      "description": "An unambiguous, synthetic, globally unique identifier (UUID) for the associated object.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:LinkURI/title",
+      "kind": "property",
+      "path": "title",
+      "jsonType": "string",
+      "required": true,
+      "description": "A human readable title for the associated object.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:def:LinkURI/uri",
+      "kind": "property",
+      "path": "uri",
+      "jsonType": "string",
+      "required": true,
+      "description": "A network-resolvable URI pointing to the authoritative reference for the associated object.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cfassociation",
+      "kind": "document",
+      "path": "",
+      "jsonType": "object",
+      "description": "This is the container for the data about the relationship between two CFDocuments or between two CFItems outside of the context of a CFPackage or CFItem."
+    },
+    {
+      "key": "case:1.1:doc:cfassociation/associationType",
+      "kind": "property",
+      "path": "associationType",
+      "required": true,
+      "description": "The type of association. This uses an extensible enumerated vocabulary. Changed in CASE 1.1.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cfassociation/CFAssociationGroupingURI",
+      "kind": "property",
+      "path": "CFAssociationGroupingURI",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cfassociation/CFDocumentURI",
+      "kind": "property",
+      "path": "CFDocumentURI",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cfassociation/destinationNodeURI",
+      "kind": "property",
+      "path": "destinationNodeURI",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cfassociation/extensions",
+      "kind": "property",
+      "path": "extensions",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cfassociation/identifier",
+      "kind": "property",
+      "path": "identifier",
+      "jsonType": "string",
+      "required": true,
+      "description": "An unambiguous, synthetic, globally unique identifier for the CFAssociation. This is the primary way in which the exchange identification is achieved.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cfassociation/lastChangeDateTime",
+      "kind": "property",
+      "path": "lastChangeDateTime",
+      "jsonType": "string",
+      "required": true,
+      "description": "A system generated timestamp of the most recent change to this record. This conforms to ISO 8601 dateTime definition [ISO 8601].",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cfassociation/notes",
+      "kind": "property",
+      "path": "notes",
+      "jsonType": "string",
+      "description": "A new attribute added in Version 1.1. Information about the CFAssociation.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cfassociation/originNodeURI",
+      "kind": "property",
+      "path": "originNodeURI",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cfassociation/sequenceNumber",
+      "kind": "property",
+      "path": "sequenceNumber",
+      "jsonType": "integer",
+      "description": "This is used to order associated objects. Associations can be created through mapping rather than strict hierarchy. As such the presentation of the list cannot be ordered by the objects in the list. They may be different based on the parent being viewed. Use of this property for…",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cfassociation/uri",
+      "kind": "property",
+      "path": "uri",
+      "jsonType": "string",
+      "required": true,
+      "description": "An unambiguous reference to the CFAssociation using a network-resolvable URI.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cfassociationgrouping",
+      "kind": "document",
+      "path": "",
+      "jsonType": "object",
+      "description": "This is the container for information about a set of associations that have been labelled as a group (the nature of the group being defined by this container)."
+    },
+    {
+      "key": "case:1.1:doc:cfassociationgrouping/description",
+      "kind": "property",
+      "path": "description",
+      "jsonType": "string",
+      "description": "A human readable description of the CFAssociationGrouping.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cfassociationgrouping/extensions",
+      "kind": "property",
+      "path": "extensions",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cfassociationgrouping/identifier",
+      "kind": "property",
+      "path": "identifier",
+      "jsonType": "string",
+      "required": true,
+      "description": "An unambiguous, synthetic, globally unique identifier for the CFAssociationGrouping. This is the primary way in which the exchange identification is achieved.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cfassociationgrouping/lastChangeDateTime",
+      "kind": "property",
+      "path": "lastChangeDateTime",
+      "jsonType": "string",
+      "required": true,
+      "description": "A system generated timestamp of the most recent change to this record. This conforms to ISO 8601 dateTime definition [ISO 8601].",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cfassociationgrouping/title",
+      "kind": "property",
+      "path": "title",
+      "jsonType": "string",
+      "required": true,
+      "description": "The title of the CFAssociationGrouping.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cfassociationgrouping/uri",
+      "kind": "property",
+      "path": "uri",
+      "jsonType": "string",
+      "required": true,
+      "description": "An unambiguous reference to the CFAssociationGrouping using a network-resolvable URI.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cfassociationset",
+      "kind": "document",
+      "path": "",
+      "jsonType": "object",
+      "description": "This is the container for a collection of CFAssociations. There must be at least one CFAssociation. Note that the association can be between CFDocuments or between CFItems."
+    },
+    {
+      "key": "case:1.1:doc:cfassociationset/CFAssociations",
+      "kind": "property",
+      "path": "CFAssociations",
+      "jsonType": "array",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cfassociationset/CFAssociations/[]",
+      "kind": "property",
+      "path": "CFAssociations/[]"
+    },
+    {
+      "key": "case:1.1:doc:cfassociationset/CFItem",
+      "kind": "property",
+      "path": "CFItem",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cfconceptset",
+      "kind": "document",
+      "path": "",
+      "jsonType": "object",
+      "description": "The container for the set of CFConcepts supplied in the response payload. The relationship between the CFConcepts is determined by the 'hierarchyCode'. The first CFConcept is that which has been specified in the call. The other CFConcepts are the set of children as determined by…"
+    },
+    {
+      "key": "case:1.1:doc:cfconceptset/CFConcepts",
+      "kind": "property",
+      "path": "CFConcepts",
+      "jsonType": "array",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cfconceptset/CFConcepts/[]",
+      "kind": "property",
+      "path": "CFConcepts/[]"
+    },
+    {
+      "key": "case:1.1:doc:cfdocument",
+      "kind": "document",
+      "path": "",
+      "jsonType": "object",
+      "description": "The container for the data about a competency framework document (CFDocument) when exchanged outside of the context of a CFPackage. A CFDocument is the root for the creation of a learning standard/competency."
+    },
+    {
+      "key": "case:1.1:doc:cfdocument/adoptionStatus",
+      "kind": "property",
+      "path": "adoptionStatus",
+      "jsonType": "string",
+      "description": "The publication status of the document.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cfdocument/caseVersion",
+      "kind": "property",
+      "path": "caseVersion",
+      "jsonType": "string",
+      "enumValues": [
+        "1.1"
+      ],
+      "normative": true,
+      "description": "This is a new attribute added in version 1.1. Denotes the version of the CFDocument. If present it MUST have a value of '1.1'.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cfdocument/CFPackageURI",
+      "kind": "property",
+      "path": "CFPackageURI",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cfdocument/creator",
+      "kind": "property",
+      "path": "creator",
+      "jsonType": "string",
+      "required": true,
+      "description": "The entity with authority that promulgates the competency framework. This is the entity that authorized or created the competency framework. It could be an education agency, higher education institution, professional body. It is the owner of the competency framework.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cfdocument/description",
+      "kind": "property",
+      "path": "description",
+      "jsonType": "string",
+      "description": "A human readable description of the CFDocument. In Version 1.1 the data-type has been changed from NormalizedString.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cfdocument/extensions",
+      "kind": "property",
+      "path": "extensions",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cfdocument/frameworkType",
+      "kind": "property",
+      "path": "frameworkType",
+      "jsonType": "string",
+      "description": "This is a new attribute added in version 1.1. This attribute allows framework creators to indicate what type of framework this is, for example course codes. In CASE 1.1. the only predefined type of framework is 'CourseCodes'. Other standardized framework types will be defined.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cfdocument/identifier",
+      "kind": "property",
+      "path": "identifier",
+      "jsonType": "string",
+      "required": true,
+      "description": "An unambiguous, synthetic, globally unique identifier for the CFDocument. This is the primary way in which the exchange identification is achieved.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cfdocument/language",
+      "kind": "property",
+      "path": "language",
+      "jsonType": "string",
+      "description": "The default language of the text used for the content in the learning standard document (use ISO 639-2 [ISO 639]).",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cfdocument/lastChangeDateTime",
+      "kind": "property",
+      "path": "lastChangeDateTime",
+      "jsonType": "string",
+      "required": true,
+      "description": "A system generated timestamp of the most recent change to this record. This conforms to ISO 8601 dateTime definition [ISO 8601].",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cfdocument/licenseURI",
+      "kind": "property",
+      "path": "licenseURI",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cfdocument/notes",
+      "kind": "property",
+      "path": "notes",
+      "jsonType": "string",
+      "description": "Any text used to comment on the published CFDocument.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cfdocument/officialSourceURL",
+      "kind": "property",
+      "path": "officialSourceURL",
+      "jsonType": "string",
+      "description": "The URL link to the formal citation of the original achievement standards document created for humans.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cfdocument/publisher",
+      "kind": "property",
+      "path": "publisher",
+      "jsonType": "string",
+      "description": "The entity responsible for making the learning standards document available.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cfdocument/statusEndDate",
+      "kind": "property",
+      "path": "statusEndDate",
+      "jsonType": "string",
+      "description": "The date the CFDocument status ended or changed to another status.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cfdocument/statusStartDate",
+      "kind": "property",
+      "path": "statusStartDate",
+      "jsonType": "string",
+      "description": "The date the CFDocument status started.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cfdocument/subject",
+      "kind": "property",
+      "path": "subject",
+      "jsonType": "array",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cfdocument/subject/[]",
+      "kind": "property",
+      "path": "subject/[]",
+      "jsonType": "string",
+      "description": "The topic or academic subject of the Document (this should use some appropriate K-12, HE, etc. based vocabulary)."
+    },
+    {
+      "key": "case:1.1:doc:cfdocument/subjectURI",
+      "kind": "property",
+      "path": "subjectURI",
+      "jsonType": "array",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cfdocument/subjectURI/[]",
+      "kind": "property",
+      "path": "subjectURI/[]"
+    },
+    {
+      "key": "case:1.1:doc:cfdocument/title",
+      "kind": "property",
+      "path": "title",
+      "jsonType": "string",
+      "required": true,
+      "description": "The title of the CFDocument.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cfdocument/uri",
+      "kind": "property",
+      "path": "uri",
+      "jsonType": "string",
+      "required": true,
+      "description": "An unambiguous reference to the CFDocument using a network-resolvable URI.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cfdocument/version",
+      "kind": "property",
+      "path": "version",
+      "jsonType": "string",
+      "description": "Defines the revision of the document (the nature of this versioning is an implementation issue).",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cfdocumentset",
+      "kind": "document",
+      "path": "",
+      "jsonType": "object",
+      "description": "This is the container for a collection of CFDocuments. There must be at least one CFDocument."
+    },
+    {
+      "key": "case:1.1:doc:cfdocumentset/CFDocuments",
+      "kind": "property",
+      "path": "CFDocuments",
+      "jsonType": "array",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cfdocumentset/CFDocuments/[]",
+      "kind": "property",
+      "path": "CFDocuments/[]"
+    },
+    {
+      "key": "case:1.1:doc:cfitem",
+      "kind": "document",
+      "path": "",
+      "jsonType": "object",
+      "description": "This is the container for the CFItem data outside of the context of a CFPackage. This is the content that either describes a specific competency (learning objective) or describes a grouping of competencies within the taxonomy of a Competency Framework Document."
+    },
+    {
+      "key": "case:1.1:doc:cfitem/abbreviatedStatement",
+      "kind": "property",
+      "path": "abbreviatedStatement",
+      "jsonType": "string",
+      "description": "An abbreviated version of the Full Statement.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cfitem/alternativeLabel",
+      "kind": "property",
+      "path": "alternativeLabel",
+      "jsonType": "string",
+      "description": "An alternate 'term' for Competency. Some institutions may want to render their achievements as outcomes, or objectives, etc. Semantically they are the same as Competencies, but diversity of terms is used. This allows for the flexibility for the institution to define their own te…",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cfitem/CFDocumentURI",
+      "kind": "property",
+      "path": "CFDocumentURI",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cfitem/CFItemType",
+      "kind": "property",
+      "path": "CFItemType",
+      "jsonType": "string",
+      "description": "The textual label identifying the class of the statement as designated by the promulgating body.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cfitem/CFItemTypeURI",
+      "kind": "property",
+      "path": "CFItemTypeURI",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cfitem/conceptKeywords",
+      "kind": "property",
+      "path": "conceptKeywords",
+      "jsonType": "array",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cfitem/conceptKeywords/[]",
+      "kind": "property",
+      "path": "conceptKeywords/[]",
+      "jsonType": "string",
+      "description": "The significant topicality of the CFItem using free-text keywords and phrases."
+    },
+    {
+      "key": "case:1.1:doc:cfitem/conceptKeywordsURI",
+      "kind": "property",
+      "path": "conceptKeywordsURI",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cfitem/educationLevel",
+      "kind": "property",
+      "path": "educationLevel",
+      "jsonType": "array",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cfitem/educationLevel/[]",
+      "kind": "property",
+      "path": "educationLevel/[]",
+      "jsonType": "string",
+      "description": "The education level, grade level or primary instructional level at which a CFItem is intended"
+    },
+    {
+      "key": "case:1.1:doc:cfitem/extensions",
+      "kind": "property",
+      "path": "extensions",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cfitem/fullStatement",
+      "kind": "property",
+      "path": "fullStatement",
+      "jsonType": "string",
+      "required": true,
+      "description": "The text of the statement. The textual content that either describes a specific competency or describes a less granular group of competencies within the taxonomy of the standards document. In Version 1.1 the data-type was changed from NormalizedString.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cfitem/humanCodingScheme",
+      "kind": "property",
+      "path": "humanCodingScheme",
+      "jsonType": "string",
+      "description": "A human-referenceable code designated by the publisher to identify the item among learning standard items.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cfitem/identifier",
+      "kind": "property",
+      "path": "identifier",
+      "jsonType": "string",
+      "required": true,
+      "description": "An unambiguous, synthetic, globally unique identifier for the CFItem. This is the primary way in which the exchange identification is achieved.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cfitem/language",
+      "kind": "property",
+      "path": "language",
+      "jsonType": "string",
+      "description": "The default language of the text used for the content in the learning standard document (use ISO 639-2 [ISO 639]).",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cfitem/lastChangeDateTime",
+      "kind": "property",
+      "path": "lastChangeDateTime",
+      "jsonType": "string",
+      "required": true,
+      "description": "A system generated timestamp of the most recent change to this record. This conforms to ISO 8601 dateTime definition [ISO 8601].",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cfitem/licenseURI",
+      "kind": "property",
+      "path": "licenseURI",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cfitem/listEnumeration",
+      "kind": "property",
+      "path": "listEnumeration",
+      "jsonType": "string",
+      "description": "A set of one or more alphanumeric characters and/or symbol denoting the positioning of the statement being described in a sequential listing of statements. Use of the 'sequenceNumber' in the CFPckgAssociation class is preferred over the use of this property for sequencing.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cfitem/notes",
+      "kind": "property",
+      "path": "notes",
+      "jsonType": "string",
+      "description": "Information about the derivation of a CFItem statement.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cfitem/statusEndDate",
+      "kind": "property",
+      "path": "statusEndDate",
+      "jsonType": "string",
+      "description": "The date the CFItem status ended or changed to another status.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cfitem/statusStartDate",
+      "kind": "property",
+      "path": "statusStartDate",
+      "jsonType": "string",
+      "description": "The date the CFItem status started.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cfitem/subject",
+      "kind": "property",
+      "path": "subject",
+      "jsonType": "array",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cfitem/subject/[]",
+      "kind": "property",
+      "path": "subject/[]",
+      "jsonType": "string",
+      "description": "A new attribute added in Version 1.1. The topic or academic subject of the Item (this should use some appropriate K-12, HE, etc. based vocabulary)."
+    },
+    {
+      "key": "case:1.1:doc:cfitem/subjectURI",
+      "kind": "property",
+      "path": "subjectURI",
+      "jsonType": "array",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cfitem/subjectURI/[]",
+      "kind": "property",
+      "path": "subjectURI/[]"
+    },
+    {
+      "key": "case:1.1:doc:cfitem/uri",
+      "kind": "property",
+      "path": "uri",
+      "jsonType": "string",
+      "required": true,
+      "description": "An unambiguous reference to the CFItem using a network-resolvable URI.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cfitemtypeset",
+      "kind": "document",
+      "path": "",
+      "jsonType": "object",
+      "description": "The container for the set of CFItemTypes supplied in the response payload. The relationship between the CFItemTypes is determined by the 'hierarchyCode'. The first CFItemType is that which has been specified in the call. The other CFItemTypes are the set of children as determine…"
+    },
+    {
+      "key": "case:1.1:doc:cfitemtypeset/CFItemTypes",
+      "kind": "property",
+      "path": "CFItemTypes",
+      "jsonType": "array",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cfitemtypeset/CFItemTypes/[]",
+      "kind": "property",
+      "path": "CFItemTypes/[]"
+    },
+    {
+      "key": "case:1.1:doc:cflicense",
+      "kind": "document",
+      "path": "",
+      "jsonType": "object",
+      "description": "The container for the information about a license used within the competency framework."
+    },
+    {
+      "key": "case:1.1:doc:cflicense/description",
+      "kind": "property",
+      "path": "description",
+      "jsonType": "string",
+      "description": "A human readable description of the CFLicense.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cflicense/extensions",
+      "kind": "property",
+      "path": "extensions",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cflicense/identifier",
+      "kind": "property",
+      "path": "identifier",
+      "jsonType": "string",
+      "required": true,
+      "description": "An unambiguous, synthetic, globally unique identifier for the CFLicense. This is the primary way in which the exchange identification is achieved.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cflicense/lastChangeDateTime",
+      "kind": "property",
+      "path": "lastChangeDateTime",
+      "jsonType": "string",
+      "required": true,
+      "description": "A system generated timestamp of the most recent change to this record. This conforms to ISO 8601 dateTime definition [ISO 8601].",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cflicense/licenseText",
+      "kind": "property",
+      "path": "licenseText",
+      "jsonType": "string",
+      "required": true,
+      "description": "Legal license text used by the organization to convey license permissions. This may include the actual license text, or a link to a web location containing the license as a document or as text.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cflicense/title",
+      "kind": "property",
+      "path": "title",
+      "jsonType": "string",
+      "required": true,
+      "description": "The title of the CFLicense.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cflicense/uri",
+      "kind": "property",
+      "path": "uri",
+      "jsonType": "string",
+      "required": true,
+      "description": "An unambiguous reference to the CFLicense using a network-resolvable URI.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cfpackage",
+      "kind": "document",
+      "path": "",
+      "jsonType": "object",
+      "description": "This is the container for all of the data for a Competency Framework Package i.e. the root CFDocument and ALL of the corresponding components i.e. the CFItems, CFAssociations and CFDefinitions."
+    },
+    {
+      "key": "case:1.1:doc:cfpackage/CFAssociations",
+      "kind": "property",
+      "path": "CFAssociations",
+      "jsonType": "array",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cfpackage/CFAssociations/[]",
+      "kind": "property",
+      "path": "CFAssociations/[]"
+    },
+    {
+      "key": "case:1.1:doc:cfpackage/CFDefinitions",
+      "kind": "property",
+      "path": "CFDefinitions",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cfpackage/CFDocument",
+      "kind": "property",
+      "path": "CFDocument",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cfpackage/CFItems",
+      "kind": "property",
+      "path": "CFItems",
+      "jsonType": "array",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cfpackage/CFItems/[]",
+      "kind": "property",
+      "path": "CFItems/[]"
+    },
+    {
+      "key": "case:1.1:doc:cfpackage/CFRubrics",
+      "kind": "property",
+      "path": "CFRubrics",
+      "jsonType": "array",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cfpackage/CFRubrics/[]",
+      "kind": "property",
+      "path": "CFRubrics/[]"
+    },
+    {
+      "key": "case:1.1:doc:cfpackage/extensions",
+      "kind": "property",
+      "path": "extensions",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cfrubric",
+      "kind": "document",
+      "path": "",
+      "jsonType": "object",
+      "description": "The container for the definition of a rubric which is addressed by the competency framework. This includes the set of associated CFRubricCriteria and CFRubricCriterionLevels."
+    },
+    {
+      "key": "case:1.1:doc:cfrubric/CFRubricCriteria",
+      "kind": "property",
+      "path": "CFRubricCriteria",
+      "jsonType": "array",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cfrubric/CFRubricCriteria/[]",
+      "kind": "property",
+      "path": "CFRubricCriteria/[]"
+    },
+    {
+      "key": "case:1.1:doc:cfrubric/description",
+      "kind": "property",
+      "path": "description",
+      "jsonType": "string",
+      "description": "A human readable description of the CFRubric. In Version 1.1 the data-type for this attribute has been changed from NormalizedString.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cfrubric/extensions",
+      "kind": "property",
+      "path": "extensions",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cfrubric/identifier",
+      "kind": "property",
+      "path": "identifier",
+      "jsonType": "string",
+      "required": true,
+      "description": "An unambiguous, synthetic, globally unique identifier for the CFRubric. This is the primary way in which the exchange identification is achieved.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cfrubric/lastChangeDateTime",
+      "kind": "property",
+      "path": "lastChangeDateTime",
+      "jsonType": "string",
+      "required": true,
+      "description": "A system generated timestamp of the most recent change to this record. This conforms to ISO 8601 dateTime definition [ISO 8601].",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cfrubric/title",
+      "kind": "property",
+      "path": "title",
+      "jsonType": "string",
+      "description": "The title of the CFRubric.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cfrubric/uri",
+      "kind": "property",
+      "path": "uri",
+      "jsonType": "string",
+      "required": true,
+      "description": "An unambiguous reference to the CFRubric using a network-resolvable URI.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cfsubjectset",
+      "kind": "document",
+      "path": "",
+      "jsonType": "object",
+      "description": "The container for the set of CFSubjects supplied in the response payload. The relationship between the CFSubjects is determined by the 'hierarchyCode'. The first CFSubject is that which has been specified in the call. The other CFSubjects are the set of children as determined by…"
+    },
+    {
+      "key": "case:1.1:doc:cfsubjectset/CFSubjects",
+      "kind": "property",
+      "path": "CFSubjects",
+      "jsonType": "array",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:cfsubjectset/CFSubjects/[]",
+      "kind": "property",
+      "path": "CFSubjects/[]"
+    },
+    {
+      "key": "case:1.1:doc:imsx_statusinfo",
+      "kind": "document",
+      "path": "",
+      "jsonType": "object",
+      "description": "This is the container for the status code and associated information returned within the HTTP messages received from the Service Provider. For the CASE service this object will only be returned to provide information about a failed request i.e. it will NOT be in the payload for …"
+    },
+    {
+      "key": "case:1.1:doc:imsx_statusinfo/imsx_codeMajor",
+      "kind": "property",
+      "path": "imsx_codeMajor",
+      "jsonType": "string",
+      "required": true,
+      "enumValues": [
+        "success",
+        "processing",
+        "failure",
+        "unsupported"
+      ],
+      "description": "The code major value (from the corresponding enumerated vocabulary). See Appendix B for further information on the interpretation of this set of codes.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:imsx_statusinfo/imsx_codeMinor",
+      "kind": "property",
+      "path": "imsx_codeMinor",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:imsx_statusinfo/imsx_description",
+      "kind": "property",
+      "path": "imsx_description",
+      "jsonType": "string",
+      "description": "A human readable description supplied by the entity creating the status code information.",
+      "modelled": "yes"
+    },
+    {
+      "key": "case:1.1:doc:imsx_statusinfo/imsx_severity",
+      "kind": "property",
+      "path": "imsx_severity",
+      "jsonType": "string",
+      "required": true,
+      "enumValues": [
+        "status",
+        "warning",
+        "error"
+      ],
+      "description": "The severity value (from the corresponding enumerated vocabulary). See Appendix B for further information on the interpretation of this set of codes.",
+      "modelled": "yes"
+    }
+  ],
+  "edges": [
+    {
+      "from": "case:1.1:def:CFAssociationGrouping/extensions",
+      "to": "case:1.1:def:CFAssociationGroupingExtension"
+    },
+    {
+      "from": "case:1.1:def:CFConcept/extensions",
+      "to": "case:1.1:def:CFConceptExtension"
+    },
+    {
+      "from": "case:1.1:def:CFDefinition/CFAssociationGroupings/[]",
+      "to": "case:1.1:def:CFAssociationGrouping"
+    },
+    {
+      "from": "case:1.1:def:CFDefinition/CFConcepts/[]",
+      "to": "case:1.1:def:CFConcept"
+    },
+    {
+      "from": "case:1.1:def:CFDefinition/CFItemTypes/[]",
+      "to": "case:1.1:def:CFItemType"
+    },
+    {
+      "from": "case:1.1:def:CFDefinition/CFLicenses/[]",
+      "to": "case:1.1:def:CFLicense"
+    },
+    {
+      "from": "case:1.1:def:CFDefinition/CFSubjects/[]",
+      "to": "case:1.1:def:CFSubject"
+    },
+    {
+      "from": "case:1.1:def:CFDefinition/extensions",
+      "to": "case:1.1:def:CFDefinitionExtension"
+    },
+    {
+      "from": "case:1.1:def:CFDocument/CFPackageURI",
+      "to": "case:1.1:def:LinkURI"
+    },
+    {
+      "from": "case:1.1:def:CFDocument/extensions",
+      "to": "case:1.1:def:CFDocumentExtension"
+    },
+    {
+      "from": "case:1.1:def:CFDocument/licenseURI",
+      "to": "case:1.1:def:LinkURI"
+    },
+    {
+      "from": "case:1.1:def:CFDocument/subjectURI/[]",
+      "to": "case:1.1:def:LinkURI"
+    },
+    {
+      "from": "case:1.1:def:CFItem/CFDocumentURI",
+      "to": "case:1.1:def:LinkURI"
+    },
+    {
+      "from": "case:1.1:def:CFItem/CFItemTypeURI",
+      "to": "case:1.1:def:LinkURI"
+    },
+    {
+      "from": "case:1.1:def:CFItem/conceptKeywordsURI",
+      "to": "case:1.1:def:LinkURI"
+    },
+    {
+      "from": "case:1.1:def:CFItem/extensions",
+      "to": "case:1.1:def:CFItemExtension"
+    },
+    {
+      "from": "case:1.1:def:CFItem/licenseURI",
+      "to": "case:1.1:def:LinkURI"
+    },
+    {
+      "from": "case:1.1:def:CFItem/subjectURI/[]",
+      "to": "case:1.1:def:LinkURI"
+    },
+    {
+      "from": "case:1.1:def:CFItemType/extensions",
+      "to": "case:1.1:def:CFItemTypeExtension"
+    },
+    {
+      "from": "case:1.1:def:CFLicense/extensions",
+      "to": "case:1.1:def:CFLicenseExtension"
+    },
+    {
+      "from": "case:1.1:def:CFPckgAssociation/CFAssociationGroupingURI",
+      "to": "case:1.1:def:LinkURI"
+    },
+    {
+      "from": "case:1.1:def:CFPckgAssociation/destinationNodeURI",
+      "to": "case:1.1:def:LinkGenURI"
+    },
+    {
+      "from": "case:1.1:def:CFPckgAssociation/extensions",
+      "to": "case:1.1:def:CFAssociationExtension"
+    },
+    {
+      "from": "case:1.1:def:CFPckgAssociation/originNodeURI",
+      "to": "case:1.1:def:LinkGenURI"
+    },
+    {
+      "from": "case:1.1:def:CFPckgDocument/extensions",
+      "to": "case:1.1:def:CFDocumentExtension"
+    },
+    {
+      "from": "case:1.1:def:CFPckgDocument/licenseURI",
+      "to": "case:1.1:def:LinkURI"
+    },
+    {
+      "from": "case:1.1:def:CFPckgDocument/subjectURI/[]",
+      "to": "case:1.1:def:LinkURI"
+    },
+    {
+      "from": "case:1.1:def:CFPckgItem/CFItemTypeURI",
+      "to": "case:1.1:def:LinkURI"
+    },
+    {
+      "from": "case:1.1:def:CFPckgItem/conceptKeywordsURI",
+      "to": "case:1.1:def:LinkURI"
+    },
+    {
+      "from": "case:1.1:def:CFPckgItem/extensions",
+      "to": "case:1.1:def:CFItemExtension"
+    },
+    {
+      "from": "case:1.1:def:CFPckgItem/licenseURI",
+      "to": "case:1.1:def:LinkURI"
+    },
+    {
+      "from": "case:1.1:def:CFPckgItem/subjectURI/[]",
+      "to": "case:1.1:def:LinkURI"
+    },
+    {
+      "from": "case:1.1:def:CFRubric/CFRubricCriteria/[]",
+      "to": "case:1.1:def:CFRubricCriterion"
+    },
+    {
+      "from": "case:1.1:def:CFRubric/extensions",
+      "to": "case:1.1:def:CFRubricExtension"
+    },
+    {
+      "from": "case:1.1:def:CFRubricCriterion/CFItemURI",
+      "to": "case:1.1:def:LinkURI"
+    },
+    {
+      "from": "case:1.1:def:CFRubricCriterion/CFRubricCriterionLevels/[]",
+      "to": "case:1.1:def:CFRubricCriterionLevel"
+    },
+    {
+      "from": "case:1.1:def:CFRubricCriterion/extensions",
+      "to": "case:1.1:def:CFRubricCriterionExtension"
+    },
+    {
+      "from": "case:1.1:def:CFRubricCriterionLevel/extensions/[]",
+      "to": "case:1.1:def:CFRubricCriterionLevelExtension"
+    },
+    {
+      "from": "case:1.1:def:CFSubject/extensions",
+      "to": "case:1.1:def:CFSubjectExtension"
+    },
+    {
+      "from": "case:1.1:def:imsx_CodeMinor/imsx_codeMinorField/[]",
+      "to": "case:1.1:def:imsx_CodeMinorField"
+    },
+    {
+      "from": "case:1.1:doc:cfassociation/CFAssociationGroupingURI",
+      "to": "case:1.1:def:LinkURI"
+    },
+    {
+      "from": "case:1.1:doc:cfassociation/CFDocumentURI",
+      "to": "case:1.1:def:LinkURI"
+    },
+    {
+      "from": "case:1.1:doc:cfassociation/destinationNodeURI",
+      "to": "case:1.1:def:LinkGenURI"
+    },
+    {
+      "from": "case:1.1:doc:cfassociation/extensions",
+      "to": "case:1.1:def:CFAssociationExtension"
+    },
+    {
+      "from": "case:1.1:doc:cfassociation/originNodeURI",
+      "to": "case:1.1:def:LinkGenURI"
+    },
+    {
+      "from": "case:1.1:doc:cfassociationgrouping/extensions",
+      "to": "case:1.1:def:CFAssociationGroupingExtension"
+    },
+    {
+      "from": "case:1.1:doc:cfassociationset/CFAssociations/[]",
+      "to": "case:1.1:def:CFPckgAssociation"
+    },
+    {
+      "from": "case:1.1:doc:cfassociationset/CFItem",
+      "to": "case:1.1:def:CFItem"
+    },
+    {
+      "from": "case:1.1:doc:cfconceptset/CFConcepts/[]",
+      "to": "case:1.1:def:CFConcept"
+    },
+    {
+      "from": "case:1.1:doc:cfdocument/CFPackageURI",
+      "to": "case:1.1:def:LinkURI"
+    },
+    {
+      "from": "case:1.1:doc:cfdocument/extensions",
+      "to": "case:1.1:def:CFDocumentExtension"
+    },
+    {
+      "from": "case:1.1:doc:cfdocument/licenseURI",
+      "to": "case:1.1:def:LinkURI"
+    },
+    {
+      "from": "case:1.1:doc:cfdocument/subjectURI/[]",
+      "to": "case:1.1:def:LinkURI"
+    },
+    {
+      "from": "case:1.1:doc:cfdocumentset/CFDocuments/[]",
+      "to": "case:1.1:def:CFDocument"
+    },
+    {
+      "from": "case:1.1:doc:cfitem/CFDocumentURI",
+      "to": "case:1.1:def:LinkURI"
+    },
+    {
+      "from": "case:1.1:doc:cfitem/CFItemTypeURI",
+      "to": "case:1.1:def:LinkURI"
+    },
+    {
+      "from": "case:1.1:doc:cfitem/conceptKeywordsURI",
+      "to": "case:1.1:def:LinkURI"
+    },
+    {
+      "from": "case:1.1:doc:cfitem/extensions",
+      "to": "case:1.1:def:CFItemExtension"
+    },
+    {
+      "from": "case:1.1:doc:cfitem/licenseURI",
+      "to": "case:1.1:def:LinkURI"
+    },
+    {
+      "from": "case:1.1:doc:cfitem/subjectURI/[]",
+      "to": "case:1.1:def:LinkURI"
+    },
+    {
+      "from": "case:1.1:doc:cfitemtypeset/CFItemTypes/[]",
+      "to": "case:1.1:def:CFItemType"
+    },
+    {
+      "from": "case:1.1:doc:cflicense/extensions",
+      "to": "case:1.1:def:CFLicenseExtension"
+    },
+    {
+      "from": "case:1.1:doc:cfpackage/CFAssociations/[]",
+      "to": "case:1.1:def:CFPckgAssociation"
+    },
+    {
+      "from": "case:1.1:doc:cfpackage/CFDefinitions",
+      "to": "case:1.1:def:CFDefinition"
+    },
+    {
+      "from": "case:1.1:doc:cfpackage/CFDocument",
+      "to": "case:1.1:def:CFPckgDocument"
+    },
+    {
+      "from": "case:1.1:doc:cfpackage/CFItems/[]",
+      "to": "case:1.1:def:CFPckgItem"
+    },
+    {
+      "from": "case:1.1:doc:cfpackage/CFRubrics/[]",
+      "to": "case:1.1:def:CFRubric"
+    },
+    {
+      "from": "case:1.1:doc:cfpackage/extensions",
+      "to": "case:1.1:def:CFPackageExtension"
+    },
+    {
+      "from": "case:1.1:doc:cfrubric/CFRubricCriteria/[]",
+      "to": "case:1.1:def:CFRubricCriterion"
+    },
+    {
+      "from": "case:1.1:doc:cfrubric/extensions",
+      "to": "case:1.1:def:CFRubricExtension"
+    },
+    {
+      "from": "case:1.1:doc:cfsubjectset/CFSubjects/[]",
+      "to": "case:1.1:def:CFSubject"
+    },
+    {
+      "from": "case:1.1:doc:imsx_statusinfo/imsx_codeMinor",
+      "to": "case:1.1:def:imsx_CodeMinor"
+    }
+  ],
+  "conformance": [
+    {
+      "key": "case:1.1:conf:core/CASE-1",
+      "profile": "core",
+      "reqId": "CASE-1",
+      "level": "MUST",
+      "statement": "A CFPackage MUST contain exactly one CFDocument describing the framework.",
+      "constrains": [
+        "case:1.1:doc:cfpackage/CFDocument"
+      ],
+      "source": "CASE 1.1 §CFPackage — https://www.imsglobal.org/spec/case/v1p1"
+    },
+    {
+      "key": "case:1.1:conf:core/CASE-2",
+      "profile": "core",
+      "reqId": "CASE-2",
+      "level": "MUST",
+      "statement": "Every CFItem MUST be identified by a globally unique identifier (a UUID).",
+      "constrains": [
+        "case:1.1:doc:cfitem/identifier"
+      ],
+      "source": "CASE 1.1 §CFItem — https://www.imsglobal.org/spec/case/v1p1"
+    },
+    {
+      "key": "case:1.1:conf:core/CASE-3",
+      "profile": "core",
+      "reqId": "CASE-3",
+      "level": "MUST",
+      "statement": "Every CFAssociation MUST declare its associationType and both its origin and destination nodes.",
+      "constrains": [
+        "case:1.1:doc:cfassociation/associationType"
+      ],
+      "source": "CASE 1.1 §CFAssociation — https://www.imsglobal.org/spec/case/v1p1"
+    }
+  ],
+  "residues": {
+    "silentGaps": [],
+    "extensions": []
+  },
+  "rollup": {
+    "items": 344,
+    "modelledYes": 264,
+    "modelledPartial": 0,
+    "modelledNo": 0,
+    "normativeItems": 3,
+    "conformanceRequirements": 3
+  }
+}

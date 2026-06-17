@@ -1,0 +1,219 @@
+{
+  "$schema" : "https://json-schema.org/draft/2019-09/schema#",
+  "$id" : "https://purl.imsglobal.org/spec/case/v1p1/schema/json/case_v1p1_cfrubric-jsonschema1.json",
+  "title" : "JSON Schema for the CFRubric class.",
+  "description" : "The container for the definition of a rubric which is addressed by the competency framework. This includes the set of associated CFRubricCriteria and CFRubricCriterionLevels.",
+  "type" : "object",
+  "properties" : {
+    "identifier" : {
+      "description" : "An unambiguous, synthetic, globally unique identifier for the CFRubric. This is the primary way in which the exchange identification is achieved.",
+      "$comment" : "Origin: UUID (DerivedType); The data-type for establishing a Globally Unique Identifier (GUID). The form of the GUID is a Universally Unique Identifier (UUID) of 16 hexadecimal characters (lower case) in the format 8-4-4-4-12. All permitted versions (1-5) and variants (1-2) are supported.",
+      "type" : "string",
+      "format" : "uuid"
+    },
+    "uri" : {
+      "description" : "An unambiguous reference to the CFRubric using a network-resolvable URI.",
+      "$comment" : "Origin: AnyURI (PrimitiveType)",
+      "type" : "string"
+    },
+    "title" : {
+      "description" : "The title of the CFRubric.",
+      "$comment" : "Origin: NormalizedString (PrimitiveType)",
+      "type" : "string"
+    },
+    "description" : {
+      "description" : "A human readable description of the CFRubric. In Version 1.1 the data-type for this attribute has been changed from NormalizedString. ",
+      "$comment" : "Origin: String (PrimitiveType)",
+      "type" : "string"
+    },
+    "lastChangeDateTime" : {
+      "description" : "A system generated timestamp of the most recent change to this record. This conforms to ISO 8601 dateTime definition [ISO 8601].",
+      "$comment" : "Origin: DateTime (PrimitiveType)",
+      "type" : "string",
+      "format" : "date-time"
+    },
+    "CFRubricCriteria" : {
+      "type" : "array",
+      "items" : {
+        "$ref" : "#/$defs/CFRubricCriterion"
+      }
+    },
+    "extensions" : {
+      "$ref" : "#/$defs/CFRubricExtension"
+    }
+  },
+  "required" : [ "identifier", "uri", "lastChangeDateTime" ],
+  "additionalProperties" : false,
+  "$defs" : {
+    "CFRubricExtension" : {
+      "description" : "The container for the proprietary extensions to the CFRubric class.",
+      "type" : "object",
+      "properties" : { },
+      "required" : [ ],
+      "additionalProperties" : true
+    },
+    "CFRubricCriterion" : {
+      "description" : "The container for the definition of a rubric criterion which is addressed by the competency framework.",
+      "type" : "object",
+      "properties" : {
+        "identifier" : {
+          "description" : "An unambiguous, synthetic, globally unique identifier for the CFRubricCriterion. This is the primary way in which the exchange identification is achieved.",
+          "$comment" : "Origin: UUID (DerivedType); The data-type for establishing a Globally Unique Identifier (GUID). The form of the GUID is a Universally Unique Identifier (UUID) of 16 hexadecimal characters (lower case) in the format 8-4-4-4-12. All permitted versions (1-5) and variants (1-2) are supported.",
+          "type" : "string",
+          "format" : "uuid"
+        },
+        "uri" : {
+          "description" : "An unambiguous reference to the CFRubricCriterion using a network-resolvable URI.",
+          "$comment" : "Origin: AnyURI (PrimitiveType)",
+          "type" : "string"
+        },
+        "category" : {
+          "description" : "A textual label for category by which CFRubricCriterion may be grouped.",
+          "$comment" : "Origin: NormalizedString (PrimitiveType)",
+          "type" : "string"
+        },
+        "description" : {
+          "description" : "A human readable description of the CFRubricCriterion.",
+          "$comment" : "Origin: String (PrimitiveType)",
+          "type" : "string"
+        },
+        "CFItemURI" : {
+          "$ref" : "#/$defs/LinkURI"
+        },
+        "weight" : {
+          "description" : "A numeric weight assigned to this CFRubricCriterion, used for scored rubrics.",
+          "$comment" : "Origin: Float (PrimitiveType)",
+          "type" : "number"
+        },
+        "position" : {
+          "description" : "A numeric value representing this criterion's position in the criteria list for this CFRubric.",
+          "$comment" : "Origin: Integer (PrimitiveType)",
+          "type" : "integer"
+        },
+        "rubricId" : {
+          "description" : "The UUID for the parent CFRubric. This is included for forwards compatibility to enable access to the CFRubricCriterion without requiring embedding within the CFRubric itself.",
+          "$comment" : "Origin: UUID (DerivedType); The data-type for establishing a Globally Unique Identifier (GUID). The form of the GUID is a Universally Unique Identifier (UUID) of 16 hexadecimal characters (lower case) in the format 8-4-4-4-12. All permitted versions (1-5) and variants (1-2) are supported.",
+          "type" : "string",
+          "format" : "uuid"
+        },
+        "lastChangeDateTime" : {
+          "description" : "A system generated timestamp of the most recent change to this record. This conforms to ISO 8601 dateTime definition [ISO 8601].",
+          "$comment" : "Origin: DateTime (PrimitiveType)",
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "CFRubricCriterionLevels" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/$defs/CFRubricCriterionLevel"
+          }
+        },
+        "extensions" : {
+          "$ref" : "#/$defs/CFRubricCriterionExtension"
+        }
+      },
+      "required" : [ "identifier", "uri", "lastChangeDateTime" ],
+      "additionalProperties" : false
+    },
+    "CFRubricCriterionLevel" : {
+      "description" : "The container for the definition of a criterion level which is addressed by the competency framework.",
+      "type" : "object",
+      "properties" : {
+        "identifier" : {
+          "description" : "An unambiguous, synthetic, globally unique identifier for the CFRubricCriterionLevel. This is the primary way in which the exchange identification is achieved.",
+          "$comment" : "Origin: UUID (DerivedType); The data-type for establishing a Globally Unique Identifier (GUID). The form of the GUID is a Universally Unique Identifier (UUID) of 16 hexadecimal characters (lower case) in the format 8-4-4-4-12. All permitted versions (1-5) and variants (1-2) are supported.",
+          "type" : "string",
+          "format" : "uuid"
+        },
+        "uri" : {
+          "description" : "An unambiguous reference to the CFRubricCriterionLevel using a network-resolvable URI.",
+          "$comment" : "Origin: AnyURI (PrimitiveType)",
+          "type" : "string"
+        },
+        "description" : {
+          "description" : "A human readable description of the CFRubricCriterionLevel.",
+          "$comment" : "Origin: String (PrimitiveType)",
+          "type" : "string"
+        },
+        "quality" : {
+          "description" : "A qualitative description of this degree of achievement used for column headers or row labels in tabular rubrics.",
+          "$comment" : "Origin: NormalizedString (PrimitiveType)",
+          "type" : "string"
+        },
+        "score" : {
+          "description" : "The points awarded for achieving this level.",
+          "$comment" : "Origin: Float (PrimitiveType)",
+          "type" : "number"
+        },
+        "feedback" : {
+          "description" : "Pre-defined feedback text to be relayed to the person or organization being evaluated. This may include guidance and suggestions for improvement or development.",
+          "$comment" : "Origin: String (PrimitiveType)",
+          "type" : "string"
+        },
+        "position" : {
+          "description" : "A numeric value representing the level's position in the list of levels defined for the CFRubricCriterion.",
+          "$comment" : "Origin: Integer (PrimitiveType)",
+          "type" : "integer"
+        },
+        "rubricCriterionId" : {
+          "description" : "The UUID for the parent CFRubricCriterion. This is included for forwards compatibility to enable access to the CFRubricCriterionLevel without requiring embedding within the CFRubricCriterion itself.",
+          "$comment" : "Origin: UUID (DerivedType); The data-type for establishing a Globally Unique Identifier (GUID). The form of the GUID is a Universally Unique Identifier (UUID) of 16 hexadecimal characters (lower case) in the format 8-4-4-4-12. All permitted versions (1-5) and variants (1-2) are supported.",
+          "type" : "string",
+          "format" : "uuid"
+        },
+        "lastChangeDateTime" : {
+          "description" : "A system generated timestamp of the most recent change to this record. This conforms to ISO 8601 dateTime definition [ISO 8601].",
+          "$comment" : "Origin: DateTime (PrimitiveType)",
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "extensions" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/$defs/CFRubricCriterionLevelExtension"
+          }
+        }
+      },
+      "required" : [ "identifier", "uri", "lastChangeDateTime" ],
+      "additionalProperties" : false
+    },
+    "CFRubricCriterionExtension" : {
+      "description" : "The container for the proprietary extensions to the CFRubricCriterionExtension class.",
+      "type" : "object",
+      "properties" : { },
+      "required" : [ ],
+      "additionalProperties" : true
+    },
+    "LinkURI" : {
+      "description" : "A container for the information that is used to achieve the link data reference.",
+      "type" : "object",
+      "properties" : {
+        "title" : {
+          "description" : "A human readable title for the associated object.",
+          "$comment" : "Origin: NormalizedString (PrimitiveType)",
+          "type" : "string"
+        },
+        "identifier" : {
+          "description" : "An unambiguous, synthetic, globally unique identifier (UUID) for the associated object.",
+          "$comment" : "Origin: UUID (DerivedType); The data-type for establishing a Globally Unique Identifier (GUID). The form of the GUID is a Universally Unique Identifier (UUID) of 16 hexadecimal characters (lower case) in the format 8-4-4-4-12. All permitted versions (1-5) and variants (1-2) are supported.",
+          "type" : "string",
+          "format" : "uuid"
+        },
+        "uri" : {
+          "description" : "A network-resolvable URI pointing to the authoritative reference for the associated object.",
+          "$comment" : "Origin: AnyURI (PrimitiveType)",
+          "type" : "string"
+        }
+      },
+      "required" : [ "title", "identifier", "uri" ],
+      "additionalProperties" : false
+    },
+    "CFRubricCriterionLevelExtension" : {
+      "description" : "The container for the proprietary extensions to the CFRubricCriterionLevel class.",
+      "type" : "object",
+      "properties" : { },
+      "required" : [ ],
+      "additionalProperties" : true
+    }
+  }
+}

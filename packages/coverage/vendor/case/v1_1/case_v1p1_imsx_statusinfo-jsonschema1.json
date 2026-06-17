@@ -1,0 +1,67 @@
+{
+  "$schema" : "https://json-schema.org/draft/2019-09/schema#",
+  "$id" : "https://purl.imsglobal.org/spec/case/v1p1/schema/json/case_v1p1_imsx_statusinfo-jsonschema1.json",
+  "title" : "JSON Schema for the imsx_StatusInfo class.",
+  "description" : "This is the container for the status code and associated information returned within the HTTP messages received from the Service Provider. For the CASE service this object will only be returned to provide information about a failed request i.e. it will NOT be in the payload for a successful request. See Appendix B for further information on the interpretation of the information contained within this class",
+  "type" : "object",
+  "properties" : {
+    "imsx_codeMajor" : {
+      "description" : "The code major value (from the corresponding enumerated vocabulary). See Appendix B for further information on the interpretation of this set of codes.",
+      "$comment" : "Origin: imsx_CodeMajorEnum (Enumeration); This is the set of primary status report values i.e. the major code assigned to the status block. This is used in conjunction with the 'Severity' structure in the status object. See <a href=\"#AppB\">Appendix B</a> for further information on the interpretation of this set of codes.",
+      "type" : "string",
+      "enum" : [ "success", "processing", "failure", "unsupported" ]
+    },
+    "imsx_severity" : {
+      "description" : "The severity value (from the corresponding enumerated vocabulary). See Appendix B for further information on the interpretation of this set of codes.",
+      "$comment" : "Origin: imsx_SeverityEnum (Enumeration); This is the context for the status report values. This is used in conjunction with the 'CodeMajor' structure in the status object. See <a href=\"#AppB\">Appendix B</a> for further information on the interpretation of this set of codes.",
+      "type" : "string",
+      "enum" : [ "status", "warning", "error" ]
+    },
+    "imsx_description" : {
+      "description" : "A human readable description supplied by the entity creating the status code information.",
+      "$comment" : "Origin: String (PrimitiveType)",
+      "type" : "string"
+    },
+    "imsx_codeMinor" : {
+      "$ref" : "#/$defs/imsx_CodeMinor"
+    }
+  },
+  "required" : [ "imsx_codeMajor", "imsx_severity" ],
+  "additionalProperties" : false,
+  "$defs" : {
+    "imsx_CodeMinor" : {
+      "description" : "This is the container for the set of code minor status codes reported in the responses from the Service Provider.",
+      "type" : "object",
+      "properties" : {
+        "imsx_codeMinorField" : {
+          "type" : "array",
+          "minItems" : 1,
+          "items" : {
+            "$ref" : "#/$defs/imsx_CodeMinorField"
+          }
+        }
+      },
+      "required" : [ "imsx_codeMinorField" ],
+      "additionalProperties" : false
+    },
+    "imsx_CodeMinorField" : {
+      "description" : "This is the container for a single code minor status code.",
+      "type" : "object",
+      "properties" : {
+        "imsx_codeMinorFieldName" : {
+          "description" : "This should contain the identity of the system that has produced the code minor status code report.",
+          "$comment" : "Origin: NormalizedString (PrimitiveType)",
+          "type" : "string"
+        },
+        "imsx_codeMinorFieldValue" : {
+          "description" : "The code minor status code (this is a value from the corresponding enumerated vocabulary).",
+          "$comment" : "Origin: imsx_CodeMinorValueEnum (Enumeration); This is the set of codeMinor status codes that are used to provide further insight into the completion status of the end-to-end transaction i.e. this should be used to provide more information than would be supplied be a HTTP code. See <a href=\"#AppB\">Appendix B</a> for further information on the interpretation of this set of codes.",
+          "type" : "string",
+          "enum" : [ "fullsuccess", "invalid_sort_field", "invalid_selection_field", "forbidden", "unauthorised_request", "internal_server_error", "unknownobject", "server_busy", "invalid_uuid" ]
+        }
+      },
+      "required" : [ "imsx_codeMinorFieldName", "imsx_codeMinorFieldValue" ],
+      "additionalProperties" : false
+    }
+  }
+}
