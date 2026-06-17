@@ -102,6 +102,7 @@
       "name": "@conform-ed/coverage",
       "dependencies": {
         "@conform-ed/contracts": "workspace:*",
+        "fast-xml-parser": "^5.3.1",
       },
       "peerDependencies": {
         "zod": ">=4.4.0",

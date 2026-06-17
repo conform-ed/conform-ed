@@ -40,19 +40,28 @@ Adding a spec: vendor its source schema under `vendor/<spec>/<version>/`, declar
 
 ## Status
 
-- **Open Badges 3.0** — pilot, complete. 5 bindings, 340 items; conform-ed's
-  `validated` port reconciles with **0 silent gaps / 0 extensions** (39 items
-  `partial`, all recursive `Profile`/endorsement structures matched at varying
-  depths). Conformance catalog is a grounded **seed** (5 issuer-profile MUSTs);
-  full extraction from the published 1EdTech conformance guide is the next increment.
+- **Open Badges 3.0** (JSON-Schema family) — pilot, complete. 5 bindings, 340 items;
+  conform-ed's `validated` port reconciles with **0 silent gaps / 0 extensions** (39
+  items `partial`, all recursive `Profile`/endorsement structures matched at varying
+  depths). Conformance catalog is a grounded **seed** (5 issuer-profile MUSTs).
+- **Common Cartridge 1.3 — Web Link** (XSD family) — pilot, complete. Proves the
+  **direct XSD walker** (`src/walkers/xsd.ts`) end-to-end over the literal
+  `ccv1p3_imswl_v1p3.xsd`: 10 items, **0 silent gaps**, 5 `modelled` (title / url /
+  href / target / windowFeatures), and exactly one `extension` residue — conform-ed's
+  named `extensions` field, which corresponds to the XSD's nameless `xs:any` open
+  extension point (a documented normalisation, to be bridged by a `specRef` override).
+
+Full conformance-catalog extraction from the published 1EdTech guides is the next
+hand-curation increment for both.
 
 ### Rollout (emergent ADR-0028)
 
-JSON-Schema family first (OB → CLR / CASE / Caliper / VC), then the XSD family
-(QTI 3.0.1 / CC / QTI 2.x) via a **direct XSD walker** built on `fast-xml-parser`
-(already a `@conform-ed/qti-xml` dep) — XSD→JSON-Schema converters proved too
-unreliable on the 1EdTech bundles, so we walk the XSD itself; it emits the same
-`CoverageItem`/`UsageEdge` model, so the reconciler is reused unchanged. Then OpenAPI
-(OneRoster). The reconciler's automated structural join is layered with explicit
-`specRef` overrides for conform-ed's documented normalisations as those are annotated
-upstream in `@conform-ed/contracts`.
+JSON-Schema family (OB ✓ → CLR / CASE / Caliper / VC) and the XSD family (CC 1.3 Web
+Link ✓ → QTI 3.0.1 / rest of CC / QTI 2.x) are both proven; OpenAPI (OneRoster) is
+last. The XSD family uses a **direct XSD walker** on `fast-xml-parser` rather than an
+XSD→JSON-Schema converter (converters proved dead, lossy — they drop `xs:documentation`
+— or non-reproducible in CI); it walks the literal `.xsd` and emits the same
+`CoverageItem`/`UsageEdge` model, so the reconciler and Coverage Map contract are
+reused unchanged. The reconciler's automated structural join is layered with explicit
+`specRef` overrides for conform-ed's documented normalisations (e.g. the CC `xs:any`
+→ `extensions` rename) as those are annotated upstream in `@conform-ed/contracts`.

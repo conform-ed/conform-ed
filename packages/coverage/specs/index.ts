@@ -4,6 +4,7 @@
  */
 
 import type { SpecSource } from "../src/source";
+import { commonCartridgeV1_3 } from "./common-cartridge/v1_3";
 import { openBadgesV3_0 } from "./open-badges/v3_0";
 
 export interface CoverageMapEntry {
@@ -11,4 +12,7 @@ export interface CoverageMapEntry {
   readonly file: string;
 }
 
-export const COVERAGE_MAPS: readonly CoverageMapEntry[] = [{ source: openBadgesV3_0, file: "open-badges-v3.0.json" }];
+export const COVERAGE_MAPS: readonly CoverageMapEntry[] = [
+  { source: openBadgesV3_0, file: "open-badges-v3.0.json" },
+  { source: commonCartridgeV1_3, file: "common-cartridge-v1.3.json" },
+];

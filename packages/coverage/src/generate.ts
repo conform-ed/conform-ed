@@ -21,6 +21,7 @@ import { applyModelled, reconcile } from "./reconcile";
 import type { SpecSource } from "./source";
 import type { CoverageItem, CoverageMap, CoverageRollup, SourceArtifact, UsageEdge } from "./types";
 import { type JsonSchema, walkSchemaTree, type WalkContext } from "./walkers/json-schema";
+import { walkXsd } from "./walkers/xsd";
 
 function parseJson(path: string): { schema: JsonSchema; bytes: string } {
   const bytes = readFileSync(path, "utf8");
@@ -142,26 +143,48 @@ export interface BuildOptions {
 export function buildCoverageMap(source: SpecSource, options: BuildOptions = {}): CoverageMap {
   const ctx: WalkContext = { spec: source.spec, version: source.version };
 
-  const literalDocs: Array<{ binding: string; schema: JsonSchema }> = [];
+  const jsonLiteralDocs: Array<{ binding: string; schema: JsonSchema }> = [];
+  const xsdItems: CoverageItem[] = [];
+  const xsdEdges: UsageEdge[] = [];
   const zodDocs: Array<{ binding: string; schema: JsonSchema }> = [];
   const sources: SourceArtifact[] = [];
 
   for (const binding of source.bindings) {
-    const { schema, bytes } = parseJson(binding.schemaPath);
-    literalDocs.push({ binding: binding.binding, schema });
-    const id = typeof schema["$id"] === "string" ? schema["$id"] : binding.schemaPath;
-    sources.push({
-      binding: binding.binding,
-      language: binding.language,
-      id,
-      sha256: createHash("sha256").update(bytes).digest("hex"),
-    });
+    if (binding.language === "xsd") {
+      // Literal XSD: walked directly (no JSON-Schema conversion) — see walkers/xsd.ts.
+      const bytes = readFileSync(binding.schemaPath, "utf8");
+      const walked = walkXsd(bytes, binding.binding, ctx);
+      xsdItems.push(...walked.items);
+      xsdEdges.push(...walked.edges);
+      sources.push({
+        binding: binding.binding,
+        language: binding.language,
+        id: walked.sourceId ?? binding.schemaPath,
+        sha256: createHash("sha256").update(bytes).digest("hex"),
+      });
+    } else {
+      const { schema, bytes } = parseJson(binding.schemaPath);
+      jsonLiteralDocs.push({ binding: binding.binding, schema });
+      const id = typeof schema["$id"] === "string" ? schema["$id"] : binding.schemaPath;
+      sources.push({
+        binding: binding.binding,
+        language: binding.language,
+        id,
+        sha256: createHash("sha256").update(bytes).digest("hex"),
+      });
+    }
     if (binding.zod !== undefined) {
       zodDocs.push({ binding: binding.binding, schema: zodToJsonSchema(binding.zod) });
     }
   }
 
-  const literal = buildInventory(ctx, literalDocs, false);
+  // JSON document roots share `$defs` by global name (scopedDefs:false); the XSD
+  // walker already keys its own defs, so its items/edges are simply concatenated.
+  const jsonLiteral = buildInventory(ctx, jsonLiteralDocs, false);
+  const literal = {
+    items: [...jsonLiteral.items, ...xsdItems],
+    edges: [...jsonLiteral.edges, ...xsdEdges],
+  };
   const zod = buildInventory(ctx, zodDocs, true);
 
   const documentRootKeys = source.bindings.map((b) => `${ctx.spec}:${ctx.version}:doc:${b.binding}`);

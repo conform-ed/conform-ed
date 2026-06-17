@@ -17,7 +17,8 @@
     "typecheck": "tsgo --noEmit"
   },
   "dependencies": {
-    "@conform-ed/contracts": "workspace:*"
+    "@conform-ed/contracts": "workspace:*",
+    "fast-xml-parser": "^5.3.1"
   },
   "peerDependencies": {
     "zod": ">=4.4.0"
