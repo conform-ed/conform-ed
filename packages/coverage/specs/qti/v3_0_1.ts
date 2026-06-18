@@ -54,11 +54,13 @@ export const normalizeQtiName = (name: string): string =>
         .replace(/s$/, "");
 
 /**
- * Conformance seed — a grounded slice of QTI 3.0.1 item-side normative rules, each
- * cross-linked to the literal L1 item it constrains (keys are the XML-binding
- * attribute/element names). Requirement ids synthesised (`QTI-ITEM-n`); full
- * extraction from the published 1EdTech QTI 3.0 conformance guide is the next
- * hand-curation increment.
+ * Conformance catalogue — curated from the published 1EdTech QTI 3.0 Implementation /
+ * conformance guide (https://www.imsglobal.org/spec/qti/v3p0/impl), grouped by the ASI
+ * surface each rule governs: `item` (qti-assessment-item structure), `response-declaration`,
+ * `outcome-declaration`, `test` (qti-assessment-test / test-part), `section`, and
+ * `response-processing`. Keys are the literal XML-binding attribute/element names. This is the
+ * cert-aligned MUST checklist; the literal information-model inventory (every element/attribute
+ * of the ASI) is the map's L1, separate from this curated surface.
  */
 const conformance: readonly ConformanceRequirement[] = [
   {
@@ -78,6 +80,88 @@ const conformance: readonly ConformanceRequirement[] = [
     statement: "A qti-assessment-item MUST contain exactly one qti-item-body holding the candidate-facing content.",
     constrains: ["qti:3.0.1:def:AssessmentItemDType/qti-item-body"],
     source: "QTI 3.0 §item-body — https://www.imsglobal.org/spec/qti/v3p0/impl#h.item-body",
+  },
+  {
+    key: "qti:3.0.1:conf:item/QTI-ITEM-3",
+    profile: "item",
+    reqId: "QTI-ITEM-3",
+    level: "MUST",
+    statement: "A qti-assessment-item MUST carry the time-dependent attribute and declare whether it is adaptive.",
+    constrains: ["qti:3.0.1:def:AssessmentItemDType/time-dependent", "qti:3.0.1:def:AssessmentItemDType/adaptive"],
+    source: "QTI 3.0 §assessment-item (time-dependent/adaptive) — https://www.imsglobal.org/spec/qti/v3p0/impl",
+  },
+  {
+    key: "qti:3.0.1:conf:item/QTI-ITEM-4",
+    profile: "item",
+    reqId: "QTI-ITEM-4",
+    level: "MUST",
+    statement:
+      "A scored qti-assessment-item MUST declare its response variable(s) via qti-response-declaration and carry qti-response-processing to score them.",
+    constrains: [
+      "qti:3.0.1:def:AssessmentItemDType/qti-response-declaration",
+      "qti:3.0.1:def:AssessmentItemDType/qti-response-processing",
+    ],
+    source: "QTI 3.0 §response-declaration / §response-processing — https://www.imsglobal.org/spec/qti/v3p0/impl",
+  },
+  {
+    key: "qti:3.0.1:conf:response-declaration/QTI-RD-1",
+    profile: "response-declaration",
+    reqId: "QTI-RD-1",
+    level: "MUST",
+    statement:
+      "A qti-response-declaration MUST declare an identifier, a cardinality (single / multiple / ordered / record) and a base-type.",
+    constrains: [
+      "qti:3.0.1:def:ResponseDeclarationDType/identifier",
+      "qti:3.0.1:def:ResponseDeclarationDType/cardinality",
+      "qti:3.0.1:def:ResponseDeclarationDType/base-type",
+    ],
+    source: "QTI 3.0 §response-declaration — https://www.imsglobal.org/spec/qti/v3p0/impl",
+  },
+  {
+    key: "qti:3.0.1:conf:outcome-declaration/QTI-OD-1",
+    profile: "outcome-declaration",
+    reqId: "QTI-OD-1",
+    level: "MUST",
+    statement: "A qti-outcome-declaration MUST declare an identifier under which its computed value is stored.",
+    constrains: ["qti:3.0.1:def:OutcomeDeclarationDType/identifier"],
+    source: "QTI 3.0 §outcome-declaration — https://www.imsglobal.org/spec/qti/v3p0/impl",
+  },
+  {
+    key: "qti:3.0.1:conf:test/QTI-TEST-1",
+    profile: "test",
+    reqId: "QTI-TEST-1",
+    level: "MUST",
+    statement: "A qti-assessment-test MUST declare an identifier and contain at least one qti-test-part.",
+    constrains: ["qti:3.0.1:def:AssessmentTestDType/identifier", "qti:3.0.1:def:AssessmentTestDType/qti-test-part"],
+    source: "QTI 3.0 §assessment-test — https://www.imsglobal.org/spec/qti/v3p0/impl",
+  },
+  {
+    key: "qti:3.0.1:conf:test/QTI-TEST-2",
+    profile: "test",
+    reqId: "QTI-TEST-2",
+    level: "MUST",
+    statement: "A qti-test-part MUST contain at least one qti-assessment-section organising the items it delivers.",
+    constrains: ["qti:3.0.1:def:TestPartDType/qti-assessment-section"],
+    source: "QTI 3.0 §test-part — https://www.imsglobal.org/spec/qti/v3p0/impl",
+  },
+  {
+    key: "qti:3.0.1:conf:section/QTI-SEC-1",
+    profile: "section",
+    reqId: "QTI-SEC-1",
+    level: "MUST",
+    statement: "A qti-assessment-section MUST declare an identifier and a title for the grouping it represents.",
+    constrains: ["qti:3.0.1:def:AssessmentSectionDType/identifier"],
+    source: "QTI 3.0 §assessment-section — https://www.imsglobal.org/spec/qti/v3p0/impl",
+  },
+  {
+    key: "qti:3.0.1:conf:response-processing/QTI-RP-1",
+    profile: "response-processing",
+    reqId: "QTI-RP-1",
+    level: "MUST",
+    statement:
+      "A qti-response-processing block MUST either reference a standard processing template (via its template attribute) or carry custom processing rules.",
+    constrains: ["qti:3.0.1:def:ResponseProcessingDType/template"],
+    source: "QTI 3.0 §response-processing — https://www.imsglobal.org/spec/qti/v3p0/impl",
   },
 ];
 

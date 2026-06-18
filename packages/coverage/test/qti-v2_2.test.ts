@@ -68,7 +68,7 @@ describe("QTI 2.2 Coverage Map — XSD walker, source-scoped document family", (
 
   test("every conformance requirement cross-links to a real item key", () => {
     const keys = new Set(map.items.map((i) => i.key));
-    expect(map.rollup.conformanceRequirements).toBe(3);
+    expect(map.rollup.conformanceRequirements).toBe(11);
     for (const req of map.conformance) {
       expect(req.constrains.length).toBeGreaterThan(0);
       for (const key of req.constrains) expect(keys.has(key)).toBe(true);

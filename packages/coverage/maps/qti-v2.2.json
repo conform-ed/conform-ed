@@ -2,7 +2,7 @@
   "meta": {
     "spec": "qti",
     "version": "2.2",
-    "generatedAt": "2026-06-17",
+    "generatedAt": "2026-06-18",
     "sources": [
       {
         "binding": "apipAccessibility",
@@ -49286,6 +49286,65 @@
       "source": "QTI 2.2 §itemBody — https://www.imsglobal.org/question/qtiv2p2/imsqti_infov2p2.html"
     },
     {
+      "key": "qti:2.2:conf:item/QTI22-ITEM-3",
+      "profile": "item",
+      "reqId": "QTI22-ITEM-3",
+      "level": "MUST",
+      "statement": "An assessmentItem MUST carry the timeDependent attribute and declare whether it is adaptive.",
+      "constrains": [
+        "qti:2.2:def:imsqti_v2p2p4.timeDependent.AssessmentItem.Attr/timeDependent",
+        "qti:2.2:def:imsqti_v2p2p4.adaptive.AssessmentItem.Attr/adaptive"
+      ],
+      "source": "QTI 2.2 §assessmentItem (timeDependent/adaptive) — https://www.imsglobal.org/question/qtiv2p2/imsqti_infov2p2.html"
+    },
+    {
+      "key": "qti:2.2:conf:item/QTI22-ITEM-4",
+      "profile": "item",
+      "reqId": "QTI22-ITEM-4",
+      "level": "MUST",
+      "statement": "A scored assessmentItem MUST declare its response variable(s) via responseDeclaration and carry responseProcessing to score them.",
+      "constrains": [
+        "qti:2.2:def:imsqti_v2p2p4.AssessmentItemDType/responseDeclaration",
+        "qti:2.2:def:imsqti_v2p2p4.AssessmentItemDType/responseProcessing"
+      ],
+      "source": "QTI 2.2 §responseDeclaration / §responseProcessing — https://www.imsglobal.org/question/qtiv2p2/imsqti_infov2p2.html"
+    },
+    {
+      "key": "qti:2.2:conf:outcome-declaration/QTI22-OD-1",
+      "profile": "outcome-declaration",
+      "reqId": "QTI22-OD-1",
+      "level": "MUST",
+      "statement": "An outcomeDeclaration MUST declare an identifier under which its computed value is stored.",
+      "constrains": [
+        "qti:2.2:def:imsqti_v2p2p4.identifier.OutcomeDeclaration.Attr/identifier"
+      ],
+      "source": "QTI 2.2 §outcomeDeclaration — https://www.imsglobal.org/question/qtiv2p2/imsqti_infov2p2.html"
+    },
+    {
+      "key": "qti:2.2:conf:response-declaration/QTI22-RD-1",
+      "profile": "response-declaration",
+      "reqId": "QTI22-RD-1",
+      "level": "MUST",
+      "statement": "A responseDeclaration MUST declare an identifier, a cardinality (single / multiple / ordered / record) and a baseType.",
+      "constrains": [
+        "qti:2.2:def:imsqti_v2p2p4.identifier.ResponseDeclaration.Attr/identifier",
+        "qti:2.2:def:imsqti_v2p2p4.cardinality.ResponseDeclaration.Attr/cardinality",
+        "qti:2.2:def:imsqti_v2p2p4.baseType.ResponseDeclaration.Attr/baseType"
+      ],
+      "source": "QTI 2.2 §responseDeclaration — https://www.imsglobal.org/question/qtiv2p2/imsqti_infov2p2.html"
+    },
+    {
+      "key": "qti:2.2:conf:response-processing/QTI22-RP-1",
+      "profile": "response-processing",
+      "reqId": "QTI22-RP-1",
+      "level": "MUST",
+      "statement": "A responseProcessing block MUST either reference a standard processing template (via its template attribute) or carry custom processing rules.",
+      "constrains": [
+        "qti:2.2:def:imsqti_v2p2p4.template.ResponseProcessing.Attr/template"
+      ],
+      "source": "QTI 2.2 §responseProcessing — https://www.imsglobal.org/question/qtiv2p2/imsqti_infov2p2.html"
+    },
+    {
       "key": "qti:2.2:conf:results/QTI22-RES-1",
       "profile": "results",
       "reqId": "QTI22-RES-1",
@@ -49295,6 +49354,40 @@
         "qti:2.2:def:imsqti_result_v2p2.AssessmentResult.Type/context"
       ],
       "source": "QTI 2.2 Results Reporting §assessmentResult — https://www.imsglobal.org/question/qtiv2p2/imsqti_resultv2p2.html"
+    },
+    {
+      "key": "qti:2.2:conf:section/QTI22-SEC-1",
+      "profile": "section",
+      "reqId": "QTI22-SEC-1",
+      "level": "MUST",
+      "statement": "An assessmentSection MUST declare an identifier for the grouping it represents.",
+      "constrains": [
+        "qti:2.2:def:imsqti_v2p2p4.identifier.AssessmentSection.Attr/identifier"
+      ],
+      "source": "QTI 2.2 §assessmentSection — https://www.imsglobal.org/question/qtiv2p2/imsqti_infov2p2.html"
+    },
+    {
+      "key": "qti:2.2:conf:test/QTI22-TEST-1",
+      "profile": "test",
+      "reqId": "QTI22-TEST-1",
+      "level": "MUST",
+      "statement": "An assessmentTest MUST declare an identifier and contain at least one testPart.",
+      "constrains": [
+        "qti:2.2:def:imsqti_v2p2p4.identifier.AssessmentTest.Attr/identifier",
+        "qti:2.2:def:imsqti_v2p2p4.AssessmentTestDType/testPart"
+      ],
+      "source": "QTI 2.2 §assessmentTest — https://www.imsglobal.org/question/qtiv2p2/imsqti_infov2p2.html"
+    },
+    {
+      "key": "qti:2.2:conf:test/QTI22-TEST-2",
+      "profile": "test",
+      "reqId": "QTI22-TEST-2",
+      "level": "MUST",
+      "statement": "A testPart MUST contain at least one assessmentSection organising the items it delivers.",
+      "constrains": [
+        "qti:2.2:def:imsqti_v2p2p4.TestPartDType/assessmentSection"
+      ],
+      "source": "QTI 2.2 §testPart — https://www.imsglobal.org/question/qtiv2p2/imsqti_infov2p2.html"
     }
   ],
   "normativeStatements": [],
@@ -49957,7 +50050,7 @@
     "modelledPartial": 0,
     "modelledNo": 541,
     "normativeItems": 0,
-    "conformanceRequirements": 3,
+    "conformanceRequirements": 11,
     "normativeStatements": 0,
     "normativeStatementsCited": 0,
     "normalisations": 14

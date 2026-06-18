@@ -77,7 +77,7 @@ describe("QTI 3.0.1 Coverage Map — XSD walker + name-normalisation", () => {
 
   test("every conformance requirement cross-links to a real item key", () => {
     const keys = new Set(map.items.map((i) => i.key));
-    expect(map.rollup.conformanceRequirements).toBe(2);
+    expect(map.rollup.conformanceRequirements).toBe(10);
     for (const req of map.conformance) {
       expect(req.constrains.length).toBeGreaterThan(0);
       for (const key of req.constrains) expect(keys.has(key)).toBe(true);

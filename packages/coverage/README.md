@@ -67,9 +67,9 @@ the `Norm.` column counts the keys each map's `specRefOverrides` moved into `nor
 | `caliper-v1.2`          | JSON Schema | 1957  | 78       | 136         | 26         | 0     | 5          |
 | `common-cartridge-v1.3` | XSD         | 676   | 413      | 0           | 96         | 97    | 12         |
 | `common-cartridge-v1.4` | XSD         | 143   | 84       | 0           | 23         | 15    | 13         |
-| `qti-v2.1`              | XSD         | 4971  | 186      | 385         | 64         | 12    | 3          |
-| `qti-v2.2`              | XSD         | 5378  | 208      | 541         | 78         | 14    | 3          |
-| `qti-v3.0.1`            | XSD         | 5344  | 224      | 358         | 78         | 12    | 2          |
+| `qti-v2.1`              | XSD         | 4971  | 186      | 385         | 64         | 12    | 11         |
+| `qti-v2.2`              | XSD         | 5378  | 208      | 541         | 78         | 14    | 11         |
+| `qti-v3.0.1`            | XSD         | 5344  | 224      | 358         | 78         | 12    | 10         |
 | `oneroster-v1.2`        | OpenAPI     | 410   | 248      | 0           | 0          | 0     | 12         |
 
 - **Open Badges 3.0 / CLR 2.0** share the OB/VC credential machinery; **CASE 1.1** (all
@@ -164,8 +164,17 @@ schemaversion / single rooted-hierarchy organization / resource identifier+type+
 per-resource-type bindings the maps carry (web-link, discussion-topic, curriculum-standards-metadata,
 authorization, lti-link, and CC 1.4's assignment extension). CC is the guide-only case: the XSDs
 embed no RFC-2119 `xs:documentation`, so `normativeStatements` is empty and there is no `cited`
-metric — the curated catalogue is the entire conformance surface. The remaining maps' catalogs
-are grounded **seeds** pending the same per-guide curation.
+metric — the curated catalogue is the entire conformance surface. **QTI 2.1 / 2.2 / 3.0.1** are
+curated from the QTI Information-Model / Implementation guides (11 / 11 / 10 requirements), grouped
+by the ASI surface each rule governs — `item` (identifier/title/time-dependent/adaptive, item-body,
+response-declaration + response-processing), `response-declaration` (identifier/cardinality/base-type),
+`outcome-declaration`, `test` (identifier + test-part, test-part → section), `section`, and
+`response-processing` (template-or-custom-rules), plus the 2.x `results` assessmentResult rule.
+Like CC these are guide-only (the XSDs embed almost no RFC-2119 prose; QTI 3.0.1's two embedded
+MUSTs are niche base-type rules the structural catalogue does not reference, so `cited` stays 0).
+The curated catalogue is the cert-aligned MUST checklist; the literal ASI inventory — every
+element/attribute, including the deliberately-deferred content-model and expression-operator
+subtrees — is the map's L1.
 
 ### Rollout (emergent ADR-0028)
 
