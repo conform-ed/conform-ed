@@ -39,13 +39,13 @@ export default defineConfig({
         }),
         qtiReactTypeDoc({
           entryPoints: ["../../packages/qti-react/src/index.ts", "../../packages/qti-react/src/headless.ts"],
-          tsconfig: "../../packages/qti-react/tsconfig.json",
+          tsconfig: "../../packages/qti-react/tsconfig.typedoc.json",
           output: "api/qti-react",
           sidebar: { label: "qti-react" },
         }),
         qtiXmlTypeDoc({
           entryPoints: ["../../packages/qti-xml/src/index.ts"],
-          tsconfig: "../../packages/qti-xml/tsconfig.json",
+          tsconfig: "../../packages/qti-xml/tsconfig.typedoc.json",
           output: "api/qti-xml",
           sidebar: { label: "qti-xml" },
         }),

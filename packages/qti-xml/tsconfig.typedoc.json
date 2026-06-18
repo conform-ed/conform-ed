@@ -1,0 +1,10 @@
+{
+  // TypeDoc-only (apps/docs API reference): resolve workspace deps to their `src` via the
+  // `development` export condition, and limit to `src` (skip `test`), so the API docs generate
+  // from source without first building each package's `dist`.
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "customConditions": ["development"]
+  },
+  "include": ["src"]
+}
