@@ -1,0 +1,41 @@
+---
+title: conform-ed
+description: Open-source tooling to build and verify conformance to digital-education standards.
+template: splash
+hero:
+  tagline: All your conformance are belong to us.
+  image:
+    alt: conform-ed
+    light: ../../assets/conformed-hero-meme.svg
+    dark: ../../assets/conformed-hero-meme-dark.svg
+  actions:
+    - text: Get started
+      link: /start/overview/
+      icon: right-arrow
+      variant: primary
+    - text: View on GitHub
+      link: https://github.com/conform-ed/conform-ed
+      icon: external
+      variant: minimal
+---
+
+import { Card, CardGrid } from "@astrojs/starlight/components";
+
+conform-ed gives engineers **typed contracts** to produce standards-correct data, a **headless QTI
+runtime** to deliver assessments, and **conformance runners** to prove an implementation conforms —
+across xAPI, QTI, LTI 1.3, Common Cartridge, OneRoster, CASE, CLR, Open Badges, Caliper, and more.
+
+<CardGrid>
+  <Card title="Standards & contracts" icon="document">
+    Zod validators for ~13 standards in `@conform-ed/contracts`. [Browse the standards →](/contracts/)
+  </Card>
+  <Card title="QTI delivery runtime" icon="puzzle">
+    Headless, accessible QTI 3 delivery with `@conform-ed/qti-react` and `qti-xml`. [Deliver QTI →](/qti/)
+  </Card>
+  <Card title="Conformance runners" icon="approve-check-circle">
+    Verify xAPI, cmi5, and LTI 1.3 implementations with the runner images. [Run the suites →](/runners/)
+  </Card>
+  <Card title="Built for AI assistants" icon="open-book">
+    An `llms.txt` ships with every build. [Point your assistant at the docs →](/start/ai-assistants/)
+  </Card>
+</CardGrid>

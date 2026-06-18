@@ -1,0 +1,28 @@
+/* conform-ed brand theming for Starlight.
+   Tokens mirror brand/brand-tokens.css; the teal check is the one accent. */
+:root {
+  --ce-ink: #0e1726;
+  --ce-paper: #f7faf9;
+  --ce-teal: #14b8a6;
+  --ce-teal-bright: #2dd4bf;
+  --ce-mute: #8a94a0;
+
+  --sl-font: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+/* Dark theme (Starlight default): bright teal accent on ink. */
+:root,
+:root[data-theme="dark"] {
+  --sl-color-accent-low: #07332e;
+  --sl-color-accent: #14b8a6;
+  --sl-color-accent-high: #2dd4bf;
+  --sl-color-text-accent: #2dd4bf;
+}
+
+/* Light theme: deeper teal for contrast on paper. */
+:root[data-theme="light"] {
+  --sl-color-accent-low: #c9f2ea;
+  --sl-color-accent: #14b8a6;
+  --sl-color-accent-high: #0d6e63;
+  --sl-color-text-accent: #0d6e63;
+}

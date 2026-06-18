@@ -1,0 +1,39 @@
+name: Docs
+
+# Builds the Astro Starlight site (apps/docs) and deploys the static output to the
+# conform-ed/conform-ed.github.io repo (served at the bare root https://conform-ed.github.io)
+# via a least-privilege deploy key. See docs/adr/0014.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "apps/docs/**"
+      - "brand/**"
+      - ".github/workflows/docs.yml"
+  workflow_dispatch:
+
+concurrency:
+  group: docs-deploy
+  cancel-in-progress: true
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v6
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.3.14
+      - run: bun install
+      - run: bun run --cwd apps/docs build
+      - uses: peaceiris/actions-gh-pages@v4
+        with:
+          deploy_key: ${{ secrets.CONFORMED_PAGES_DEPLOY_KEY }}
+          external_repository: conform-ed/conform-ed.github.io
+          publish_dir: ./apps/docs/dist
+          publish_branch: main
+          force_orphan: true
+          commit_message: "deploy docs from conform-ed/conform-ed@${{ github.sha }}"

@@ -33,5 +33,7 @@
       "version": "19.2.7",
     },
   },
-  "ignorePatterns": ["node_modules/", "dist/", "build/", ".turbo/", "coverage/"],
+  // apps/docs is an Astro site with its own toolchain (astro:content virtual modules the
+  // type-aware linter can't resolve); it is gated by `astro build`, not oxlint.
+  "ignorePatterns": ["node_modules/", "dist/", "build/", ".turbo/", "coverage/", "apps/docs/"],
 }
