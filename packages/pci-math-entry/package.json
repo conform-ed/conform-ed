@@ -37,12 +37,12 @@
     "typecheck": "tsgo --noEmit"
   },
   "dependencies": {
-    "@cortex-js/compute-engine": "^0.59.0",
+    "@cortex-js/compute-engine": "^0.61.0",
     "mathlive": "^0.110.0"
   },
   "devDependencies": {
     "@conform-ed/qti-react": "workspace:*",
-    "happy-dom": "^20.10.3"
+    "happy-dom": "^20.10.6"
   },
   "peerDependencies": {
     "@conform-ed/qti-react": ">=0.0.12"

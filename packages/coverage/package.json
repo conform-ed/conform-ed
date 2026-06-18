@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "@conform-ed/contracts": "workspace:*",
-    "fast-xml-parser": "^5.3.1"
+    "fast-xml-parser": "^5.9.2"
   },
   "peerDependencies": {
     "zod": ">=4.4.0"
