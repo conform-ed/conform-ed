@@ -60,14 +60,16 @@ describe("Caliper 1.2 Coverage Map — bundled-bootcamp JSON-Schema walker", () 
     expect(map.rollup.normativeStatements).toBeGreaterThan(50);
     expect(map.normativeStatements.length).toBe(map.rollup.normativeStatements);
     for (const s of map.normativeStatements) expect(s.statement.length).toBeGreaterThan(0);
-    // CAL-ID-1 cites the Event/Entity id MUSTs, so curated coverage is non-zero.
-    expect(map.rollup.normativeStatementsCited).toBeGreaterThan(0);
+    // The embedded MUSTs are all the same `id` rule, carried on every type's id field; CAL-ID-1
+    // constrains all of them, so the whole extracted surface is cited (99/99).
+    expect(map.rollup.normativeStatementsCited).toBe(map.rollup.normativeStatements);
     expect(map.normativeStatements.find((s) => s.item === "caliper:1.2:def:Event/id")?.cited).toBe(true);
+    expect(map.normativeStatements.every((s) => s.cited)).toBe(true);
   });
 
   test("every conformance requirement cross-links to a real item key", () => {
     const keys = new Set(map.items.map((i) => i.key));
-    expect(map.rollup.conformanceRequirements).toBe(3);
+    expect(map.rollup.conformanceRequirements).toBe(5);
     for (const req of map.conformance) {
       expect(req.constrains.length).toBeGreaterThan(0);
       for (const key of req.constrains) expect(keys.has(key)).toBe(true);

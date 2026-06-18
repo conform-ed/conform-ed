@@ -2,7 +2,7 @@
   "meta": {
     "spec": "caliper",
     "version": "1.2",
-    "generatedAt": "2026-06-17",
+    "generatedAt": "2026-06-18",
     "sources": [
       {
         "binding": "Agent",
@@ -69537,6 +69537,18 @@
   ],
   "conformance": [
     {
+      "key": "caliper:1.2:conf:entity/CAL-ENT-1",
+      "profile": "entity",
+      "reqId": "CAL-ENT-1",
+      "level": "MUST",
+      "statement": "Every Caliper Entity MUST carry a type matching the Caliper term for the entity (e.g. Person) and an id that is a unique, persistent IRI.",
+      "constrains": [
+        "caliper:1.2:def:Entity/type",
+        "caliper:1.2:def:Entity/id"
+      ],
+      "source": "Caliper 1.2 §Entity (type/id) — https://www.imsglobal.org/spec/caliper/v1p2"
+    },
+    {
       "key": "caliper:1.2:conf:envelope/CAL-ENV-1",
       "profile": "envelope",
       "reqId": "CAL-ENV-1",
@@ -69564,14 +69576,124 @@
       "source": "Caliper 1.2 §Event — https://www.imsglobal.org/spec/caliper/v1p2"
     },
     {
+      "key": "caliper:1.2:conf:event/CAL-EVT-2",
+      "profile": "event",
+      "reqId": "CAL-EVT-2",
+      "level": "MUST",
+      "statement": "Every Caliper Event MUST also carry its id, a type matching the Caliper term for the event, and an eventTime expressed in UTC (YYYY-MM-DDTHH:mm:ss.SSSZ).",
+      "constrains": [
+        "caliper:1.2:def:Event/id",
+        "caliper:1.2:def:Event/type",
+        "caliper:1.2:def:Event/eventTime"
+      ],
+      "source": "Caliper 1.2 §Event (id/type/eventTime) — https://www.imsglobal.org/spec/caliper/v1p2"
+    },
+    {
       "key": "caliper:1.2:conf:identifier/CAL-ID-1",
       "profile": "identifier",
       "reqId": "CAL-ID-1",
       "level": "MUST",
       "statement": "Every Caliper Event id MUST be a UUID expressed as a urn:uuid:<UUID> (RFC 4122); every Entity id MUST be a unique, persistent IRI.",
       "constrains": [
+        "caliper:1.2:def:Agent/id",
+        "caliper:1.2:def:AggregateMeasure/id",
+        "caliper:1.2:def:AggregateMeasureCollection/id",
+        "caliper:1.2:def:Annotation/id",
+        "caliper:1.2:def:AnnotationEvent/id",
+        "caliper:1.2:def:Assessment/id",
+        "caliper:1.2:def:AssessmentEvent/id",
+        "caliper:1.2:def:AssessmentItem/id",
+        "caliper:1.2:def:AssessmentItemEvent/id",
+        "caliper:1.2:def:AssignableDigitalResource/id",
+        "caliper:1.2:def:AssignableEvent/id",
+        "caliper:1.2:def:Attempt/id",
+        "caliper:1.2:def:AudioObject/id",
+        "caliper:1.2:def:BookmarkAnnotation/id",
+        "caliper:1.2:def:Chapter/id",
+        "caliper:1.2:def:Collection/id",
+        "caliper:1.2:def:Comment/id",
+        "caliper:1.2:def:CourseOffering/id",
+        "caliper:1.2:def:CourseSection/id",
+        "caliper:1.2:def:DateTimeQuestion/id",
+        "caliper:1.2:def:DateTimeResponse/id",
+        "caliper:1.2:def:DigitalResource/id",
+        "caliper:1.2:def:DigitalResourceCollection/id",
+        "caliper:1.2:def:Document/id",
+        "caliper:1.2:def:Entity/id",
         "caliper:1.2:def:Event/id",
-        "caliper:1.2:def:Entity/id"
+        "caliper:1.2:def:FeedbackEvent/id",
+        "caliper:1.2:def:FillinBlankResponse/id",
+        "caliper:1.2:def:Forum/id",
+        "caliper:1.2:def:ForumEvent/id",
+        "caliper:1.2:def:Frame/id",
+        "caliper:1.2:def:GradeEvent/id",
+        "caliper:1.2:def:Group/id",
+        "caliper:1.2:def:HighlightAnnotation/id",
+        "caliper:1.2:def:ImageObject/id",
+        "caliper:1.2:def:LearningObjective/id",
+        "caliper:1.2:def:LikertScale/id",
+        "caliper:1.2:def:Link/id",
+        "caliper:1.2:def:LtiLink/id",
+        "caliper:1.2:def:LtiSession/id",
+        "caliper:1.2:def:MediaEvent/id",
+        "caliper:1.2:def:MediaLocation/id",
+        "caliper:1.2:def:MediaObject/id",
+        "caliper:1.2:def:Membership/id",
+        "caliper:1.2:def:Message/id",
+        "caliper:1.2:def:MessageEvent/id",
+        "caliper:1.2:def:MultipleChoiceResponse/id",
+        "caliper:1.2:def:MultipleResponseResponse/id",
+        "caliper:1.2:def:MultiselectQuestion/id",
+        "caliper:1.2:def:MultiselectResponse/id",
+        "caliper:1.2:def:MultiselectScale/id",
+        "caliper:1.2:def:NavigationEvent/id",
+        "caliper:1.2:def:NumericScale/id",
+        "caliper:1.2:def:OpenEndedQuestion/id",
+        "caliper:1.2:def:OpenEndedResponse/id",
+        "caliper:1.2:def:Organization/id",
+        "caliper:1.2:def:OutcomeEvent/id",
+        "caliper:1.2:def:Page/id",
+        "caliper:1.2:def:Person/id",
+        "caliper:1.2:def:Query/id",
+        "caliper:1.2:def:Question/id",
+        "caliper:1.2:def:Questionnaire/id",
+        "caliper:1.2:def:QuestionnaireEvent/id",
+        "caliper:1.2:def:QuestionnaireItem/id",
+        "caliper:1.2:def:QuestionnaireItemEvent/id",
+        "caliper:1.2:def:Rating/id",
+        "caliper:1.2:def:RatingScaleQuestion/id",
+        "caliper:1.2:def:RatingScaleResponse/id",
+        "caliper:1.2:def:Reading/id",
+        "caliper:1.2:def:ReadingEvent/id",
+        "caliper:1.2:def:ResourceManagementEvent/id",
+        "caliper:1.2:def:Response/id",
+        "caliper:1.2:def:Result/id",
+        "caliper:1.2:def:Scale/id",
+        "caliper:1.2:def:Score/id",
+        "caliper:1.2:def:SearchEvent/id",
+        "caliper:1.2:def:SearchResponse/id",
+        "caliper:1.2:def:SelectTextResponse/id",
+        "caliper:1.2:def:Session/id",
+        "caliper:1.2:def:SessionEvent/id",
+        "caliper:1.2:def:SharedAnnotation/id",
+        "caliper:1.2:def:SoftwareApplication/id",
+        "caliper:1.2:def:Survey/id",
+        "caliper:1.2:def:SurveyEvent/id",
+        "caliper:1.2:def:SurveyInvitation/id",
+        "caliper:1.2:def:SurveyInvitationEvent/id",
+        "caliper:1.2:def:TagAnnotation/id",
+        "caliper:1.2:def:Thread/id",
+        "caliper:1.2:def:ThreadEvent/id",
+        "caliper:1.2:def:ToolLaunchEvent/id",
+        "caliper:1.2:def:ToolUseEvent/id",
+        "caliper:1.2:def:TrueFalseResponse/id",
+        "caliper:1.2:def:VideoObject/id",
+        "caliper:1.2:def:ViewEvent/id",
+        "caliper:1.2:def:WebPage/id",
+        "caliper:1.2:def:epubChapter/id",
+        "caliper:1.2:def:epubPart/id",
+        "caliper:1.2:def:epubSubChapter/id",
+        "caliper:1.2:def:epubVolume/id"
       ],
       "source": "Caliper 1.2 §Event / §Entity identifier — https://www.imsglobal.org/spec/caliper/v1p2"
     }
@@ -69581,145 +69703,145 @@
       "item": "caliper:1.2:def:Agent/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:AggregateMeasure/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:AggregateMeasureCollection/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:Annotation/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:AnnotationEvent/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:Assessment/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:AssessmentEvent/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:AssessmentItem/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:AssessmentItemEvent/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:AssignableDigitalResource/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:AssignableEvent/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:Attempt/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:AudioObject/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:BookmarkAnnotation/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:Chapter/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:Collection/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:Comment/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:CourseOffering/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:CourseSection/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:DateTimeQuestion/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:DateTimeResponse/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:DigitalResource/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:DigitalResourceCollection/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:Document/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:Entity/id",
@@ -69731,25 +69853,25 @@
       "item": "caliper:1.2:def:epubChapter/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:epubPart/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:epubSubChapter/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:epubVolume/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:Event/id",
@@ -69761,415 +69883,415 @@
       "item": "caliper:1.2:def:FeedbackEvent/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:FillinBlankResponse/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:Forum/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:ForumEvent/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:Frame/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:GradeEvent/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:Group/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:HighlightAnnotation/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:ImageObject/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:LearningObjective/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:LikertScale/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:Link/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:LtiLink/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:LtiSession/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:MediaEvent/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:MediaLocation/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:MediaObject/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:Membership/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:Message/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:MessageEvent/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:MultipleChoiceResponse/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:MultipleResponseResponse/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:MultiselectQuestion/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:MultiselectResponse/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:MultiselectScale/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:NavigationEvent/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:NumericScale/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:OpenEndedQuestion/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:OpenEndedResponse/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:Organization/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:OutcomeEvent/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:Page/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:Person/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:Query/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:Question/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:Questionnaire/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:QuestionnaireEvent/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:QuestionnaireItem/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:QuestionnaireItemEvent/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:Rating/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:RatingScaleQuestion/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:RatingScaleResponse/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:Reading/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:ReadingEvent/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:ResourceManagementEvent/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:Response/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:Result/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:Scale/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:Score/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:SearchEvent/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:SearchResponse/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:SelectTextResponse/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:Session/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:SessionEvent/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:SharedAnnotation/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:SoftwareApplication/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:Survey/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:SurveyEvent/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:SurveyInvitation/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:SurveyInvitationEvent/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:TagAnnotation/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:Thread/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:ThreadEvent/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:ToolLaunchEvent/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:ToolUseEvent/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:TrueFalseResponse/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:VideoObject/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:ViewEvent/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     },
     {
       "item": "caliper:1.2:def:WebPage/id",
       "level": "MUST",
       "statement": "The Event or Entity identifier. For an Event, the id MUST be a UUID expressed as a URN using the form urn:uuid:<UUID> per RFC 4122. For Entities a valid IRI MUST be specified. The IRI MUST be unique and persistent. The IRI SHOULD also be dereferenceable, i.e., capable of returni…",
-      "cited": false
+      "cited": true
     }
   ],
   "residues": {
@@ -70347,9 +70469,9 @@
     "modelledPartial": 12,
     "modelledNo": 136,
     "normativeItems": 99,
-    "conformanceRequirements": 3,
+    "conformanceRequirements": 5,
     "normativeStatements": 99,
-    "normativeStatementsCited": 2,
+    "normativeStatementsCited": 99,
     "normalisations": 0
   }
 }

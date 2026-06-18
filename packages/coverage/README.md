@@ -64,7 +64,7 @@ the `Norm.` column counts the keys each map's `specRefOverrides` moved into `nor
 | `open-badges-v3.0`      | JSON Schema | 340   | 241      | 0           | 0          | 0     | 16         |
 | `clr-v2.0`              | JSON Schema | 409   | 299      | 0           | 0          | 0     | 14         |
 | `case-v1.1`             | JSON Schema | 344   | 264      | 0           | 0          | 0     | 9          |
-| `caliper-v1.2`          | JSON Schema | 1957  | 78       | 136         | 26         | 0     | 3          |
+| `caliper-v1.2`          | JSON Schema | 1957  | 78       | 136         | 26         | 0     | 5          |
 | `common-cartridge-v1.3` | XSD         | 676   | 413      | 0           | 96         | 97    | 12         |
 | `common-cartridge-v1.4` | XSD         | 143   | 84       | 0           | 23         | 15    | 13         |
 | `qti-v2.1`              | XSD         | 4971  | 186      | 385         | 64         | 12    | 3          |
@@ -83,6 +83,10 @@ the `Norm.` column counts the keys each map's `specRefOverrides` moved into `nor
   into one `$defs` map so the JSON-Schema walker applies unchanged. The Envelope transport
   and the full Event property set reconcile; the silent gaps are conform-ed's deliberately
   focused entity surface (it models the entry points, not every property of all 110 types).
+  Its `conformance` catalogue is guide-curated (5 requirements — Envelope, Event required
+  fields, Entity required fields, and the identifier rule): the schema's only embedded RFC-2119
+  prose is the `id` rule, carried identically on every one of the 99 inventoried types, so
+  CAL-ID-1 constrains them all and `normativeStatementsCited` reaches the whole surface (99/99).
 - **OneRoster 1.2** spans all three services in one map — Rostering (7 entities),
   Gradebook (LineItem / Result / Category / ScoreScale / AssessmentLineItem /
   AssessmentResult / LearningObjectiveSet) and Resources (Resource) — and reconciles `0/0`.
@@ -150,6 +154,10 @@ extension fields) and `consumer` (handle/recover every required field, tolerate 
 CASE-4 is the one curated rule that cross-links the spec's only embedded MUST — the
 `caseVersion` = '1.1' rule across the CFDocument variants — lifting `cited` to 3/3; the 11
 required GET endpoints and the `/ims/case/v1p1` base URL are the out-of-scope transport surface.
+**Caliper 1.2** is curated on the conform-ed side (5 requirements): its schema embeds a single
+RFC-2119 rule — the `id` MUST — repeated on every type, so one curated requirement (CAL-ID-1)
+cites the whole 99-statement surface; there is no emergent overlay for it yet (emergent emits no
+Caliper today, so a product overlay would be entirely deferred until an analytics emitter lands).
 **Common Cartridge 1.3 / 1.4** are curated from the CC profile Conformance + Implementation
 guides (12 and 13 requirements): the `manifest` packaging rules (identifier / schema /
 schemaversion / single rooted-hierarchy organization / resource identifier+type+href) and the
