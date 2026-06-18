@@ -12,7 +12,7 @@
 
 ---
 
-conform-ed gives engineers typed contracts to produce standards-correct data, a headless runtime to
+conform-ed [kənˈfɔːmɪd] gives engineers typed contracts to produce standards-correct data, a headless runtime to
 deliver QTI assessments, and conformance runners to prove an implementation conforms — across xAPI,
 QTI, LTI 1.3, Common Cartridge, OneRoster, CASE, CLR, Open Badges, Caliper, and more.
 
