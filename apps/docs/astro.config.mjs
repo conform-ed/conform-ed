@@ -49,6 +49,7 @@ export default defineConfig({
         { label: "Conformance runners", items: [{ autogenerate: { directory: "runners" } }] },
         { label: "CLI", items: [{ autogenerate: { directory: "cli" } }] },
         { label: "Coverage map", items: [{ autogenerate: { directory: "coverage" } }] },
+        { label: "Design decisions", items: [{ autogenerate: { directory: "decisions" } }] },
         { label: "Project", items: [{ autogenerate: { directory: "project" } }] },
       ],
     }),
