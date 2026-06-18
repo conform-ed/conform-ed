@@ -7,7 +7,6 @@
   ],
   "scripts": {
     "build": "turbo run build",
-    "changeset": "changeset",
     "check": "bun run typecheck && bun run lint && bun run test",
     "format": "oxfmt --config .oxfmtrc.jsonc --check . && turbo run format",
     "format:write": "oxfmt --config .oxfmtrc.jsonc --write . && turbo run format",
@@ -53,11 +52,9 @@
     "test:qti-xsd": "bun run qti:corpus:fetch && bun run qti:schemas:fetch && bun --cwd packages/qti-xml test xsd-conformance",
     "typecheck": "turbo run typecheck",
     "validate": "bun run format && bun run check",
-    "validate:full": "bun run validate",
-    "version-packages": "changeset version"
+    "validate:full": "bun run validate"
   },
   "devDependencies": {
-    "@changesets/cli": "^2.29.7",
     "@types/bun": "^1.3.14",
     "@typescript/native-preview": "^7.0.0-dev.20260614.1",
     "oxfmt": "^0.54.0",

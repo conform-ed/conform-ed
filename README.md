@@ -1,6 +1,20 @@
-# conform-ed
+<p align="center">
+  <a href="https://conform-ed.github.io">
+    <img src="./brand/banner/conformed-readme-banner.png" alt="conform-ed" width="720" />
+  </a>
+</p>
 
-conform-ed is an open-source monorepo for standards conformance tooling.
+<p align="center"><strong>Open-source tooling to build and verify conformance to digital-education standards.</strong></p>
+
+<p align="center"><em>All your conformance are belong to us.</em></p>
+
+<p align="center">📖 <a href="https://conform-ed.github.io">Documentation</a></p>
+
+---
+
+conform-ed gives engineers typed contracts to produce standards-correct data, a headless runtime to
+deliver QTI assessments, and conformance runners to prove an implementation conforms — across xAPI,
+QTI, LTI 1.3, Common Cartridge, OneRoster, CASE, CLR, Open Badges, Caliper, and more.
 
 ## Scope
 
@@ -56,10 +70,12 @@ Import patterns and usage examples are documented in `packages/contracts/<standa
 
 ## Release Strategy
 
-First release train is OCI-only.
+All publishable packages and OCI images ship together under a single bare semver tag.
 
-- Primary registry: GHCR
-- npm publishing: npmjs
+- npm packages (`@conform-ed/*`): npmjs
+- OCI runner images: GHCR (`ghcr.io/conform-ed/<image>`)
+
+See `docs/development/release.md` for the unified release flow.
 
 ## Quickstart
 

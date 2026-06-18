@@ -1,59 +1,48 @@
 # Release Process
 
-## v0.x Policy
-
-Release channel is OCI-only.
-
-Current OCI release surface:
-
-- `lrs-runner`
-- `cmi5-runner`
-
-These are the only OCI images published by the GitHub Actions image workflow.
-
-- publish target: GHCR
-- optional mirror: Docker Hub (disabled by default)
-- npm publish: deferred
+All publishable packages **and** the OCI runner images are released together under a single
+bare semver tag. Never publish a package or push an image tag individually — the tag is the single
+source of truth for every artifact version.
 
 ## Versioning
 
-- use Changesets for version intent and changelog.
-- release tags should follow semver-compatible form, including RC tags.
-
-Examples:
-
-- `v0.1.0-rc.1`
-- `v0.1.0`
+- Tags are **bare semver**: `0.1.0`, `0.1.0-rc.1` — **no `v` prefix**.
+- Every publishable package is bumped to the same version on each release.
+- npm packages (`@conform-ed/*`) publish to npmjs; OCI images publish to GHCR
+  (`ghcr.io/conform-ed/<image>`).
 
 ## Release Steps
 
-1. Ensure branch is green: `bun run validate`.
-2. Generate or update changesets.
-3. Run versioning step: `bun run version-packages`.
-4. Build images: `bun run images:build`.
-5. Publish images to GHCR: `bun run images:publish:ghcr`.
-6. Emit release manifest: `bun run images:manifest`.
-7. Run pull-based smoke verification: `bun run images:smoke`.
-8. Publish release notes/changelog.
+Use the unified release script:
 
-## Image Metadata
+```bash
+bun run release <version>
+# Example:  bun run release 0.1.0
+# Dry-run:  DRY_RUN=1 bun run release 0.1.0
+```
 
-Image builds should include OCI labels:
+The script:
 
-- source repository
-- revision SHA
-- version tag
-- creation timestamp
+1. Validates the version and that the working tree is clean.
+2. Builds every package (`bun run build`) so each publishable `dist/` is fresh.
+3. Bumps `version` in every publishable package's `package.json` and updates the lockfile.
+4. Commits `chore: release <version>` and creates the bare semver git tag.
+5. Pushes the branch and tag — the **tag push triggers the `Images` workflow**, which builds and
+   pushes the OCI images to GHCR and runs pull-based smoke verification.
+6. Runs `bun publish --access public` for all npm packages in parallel.
 
-Release tooling now emits a machine-readable OCI release manifest including image refs and compatibility hints.
+Before releasing, ensure the branch is green: `bun run validate`, and that you are authenticated to
+npm. The npm publish runs locally (it uses your credentials); the OCI build/publish runs in CI off
+the tag.
 
-Smoke verification validates:
+## OCI image surface
 
-- each published tag is pullable
-- required OCI labels are present (`title`, `version`, `revision`, `source`, `created`)
+The `Images` workflow publishes the runner images to GHCR with OCI labels (`title`, `version`,
+`revision`, `source`, `created`), emits a machine-readable release manifest, and smoke-verifies that
+each published tag is pullable and correctly labelled.
 
 ## Rollback Guidance
 
-- keep immutable SHA-tagged images for each publish.
-- avoid force-reusing version tags.
-- use previous SHA tag for rollback.
+- Each publish keeps immutable SHA-tagged images.
+- Never force-reuse a version tag.
+- Roll back by pointing at the previous SHA tag.

@@ -1,0 +1,7 @@
+:root {
+  --ce-ink: #0e1726;
+  --ce-paper: #f7faf9;
+  --ce-teal: #14b8a6; /* accent on light backgrounds */
+  --ce-teal-bright: #2dd4bf; /* accent on dark backgrounds */
+  --ce-mute: #8a94a0;
+}

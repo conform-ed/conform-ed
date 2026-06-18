@@ -18,7 +18,6 @@ Status: approved baseline
 ```text
 .github/
 .github/workflows/
-.changeset/
 apps/
 packages/
 docs/
@@ -63,7 +62,6 @@ scripts/
 - `.oxfmtrc.jsonc`
 - `mise.toml`
 - `.github/dependabot.yml`
-- `.changeset/config.json`
 
 3. Create root npm/bun scripts in `package.json`:
 
@@ -75,8 +73,6 @@ scripts/
 - `check`
 - `validate`
 - `validate:full`
-- `changeset`
-- `version-packages`
 - `release`
 - `images:build`
 - `images:publish:ghcr`
@@ -435,11 +431,12 @@ Policy to include in `source-policy.md`:
 - turbo test
 - schema/example validation
 
-3. Release workflow requirements:
+3. Release requirements:
 
-- changesets versioning
-- changelog update
-- no npm publish step in v0.x
+- unified single bare-semver-tag release (`bun run release <version>`)
+- all publishable packages + OCI images share one version
+- tag push triggers the image build/publish workflow
+- npm publish (`@conform-ed/*`) runs from the release script
 
 4. Image workflow requirements:
 
