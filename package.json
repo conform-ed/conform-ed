@@ -23,6 +23,7 @@
     "lrsql:up": "bash ./scripts/lrsql-up.sh",
     "lrsql:up:with-runner": "RUN_LRS_RUNNER_CONTAINER=true bash ./scripts/lrsql-up.sh",
     "lrsql:wait": "bash ./scripts/lrsql-wait.sh",
+    "publish:github-packages": "bun run scripts/publish-github-packages.ts",
     "qti:corpus:fetch": "bun run scripts/fetch-qti-corpus.ts",
     "qti:coverage:report": "bun run scripts/generate-qti-coverage-report.ts",
     "qti:delivery:report": "bun run scripts/generate-qti-delivery-report.ts",

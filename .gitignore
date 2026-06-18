@@ -12,6 +12,8 @@ coverage/
 .env
 .env.*
 !.env.example
+# CI-written GitHub Packages auth — never commit a token
+.npmrc
 tmp/**
 !tmp/agents/
 !tmp/agents/.gitkeep
