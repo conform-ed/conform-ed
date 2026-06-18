@@ -2,7 +2,7 @@
   "meta": {
     "spec": "cc",
     "version": "1.3",
-    "generatedAt": "2026-06-17",
+    "generatedAt": "2026-06-18",
     "sources": [
       {
         "binding": "authorizations",
@@ -6028,7 +6028,7 @@
       "constrains": [
         "cc:1.3:def:ccv1p3_imsccauth_v1p3.Authorizations.Type/authorization"
       ],
-      "source": "IMS CC 1.3 — Authorization (imsccauth_v1p3) — https://www.imsglobal.org/cc/CCv1p3/imscc_profilev1p3-Final.html"
+      "source": "IMS CC 1.3 Implementation §Authorization (imsccauth_v1p3) — https://www.imsglobal.org/cc/ccv1p3/imscc_Implementation-v1p3.html"
     },
     {
       "key": "cc:1.3:conf:curriculum-standards-metadata/CC-CSM-1",
@@ -6040,7 +6040,7 @@
         "cc:1.3:def:ccv1p3_imscsmd_v1p0.CurriculumStandardsMetadataSet.Type/curriculumStandardsMetadata",
         "cc:1.3:def:ccv1p3_imscsmd_v1p0.CurriculumStandardsMetadata.Type/setOfGUIDs"
       ],
-      "source": "IMS CC 1.3 — Curriculum Standards Metadata (imscsmd_v1p0) — https://www.imsglobal.org/cc/CCv1p3/imscc_profilev1p3-Final.html"
+      "source": "IMS CC 1.3 Implementation §Curriculum Standards Metadata (imscsmd) — https://www.imsglobal.org/cc/ccv1p3/imscc_Implementation-v1p3.html"
     },
     {
       "key": "cc:1.3:conf:discussion-topic/CC-DT-1",
@@ -6052,7 +6052,18 @@
         "cc:1.3:def:ccv1p3_imsdt_v1p3.Topic.Type/title",
         "cc:1.3:def:ccv1p3_imsdt_v1p3.Topic.Type/text"
       ],
-      "source": "IMS CC 1.3 — Discussion Topic resource (imsdt_v1p3) — https://www.imsglobal.org/cc/CCv1p3/imscc_profilev1p3-Final.html#DiscussionTopics"
+      "source": "IMS CC 1.3 Implementation §Discussion Topic (imsdt_v1p3) — https://www.imsglobal.org/cc/ccv1p3/imscc_Implementation-v1p3.html"
+    },
+    {
+      "key": "cc:1.3:conf:discussion-topic/CC-DT-2",
+      "profile": "discussion-topic",
+      "reqId": "CC-DT-2",
+      "level": "MUST",
+      "statement": "The text element MUST carry a texttype attribute whose value is 'text/html' or 'text/plain'.",
+      "constrains": [
+        "cc:1.3:def:ccv1p3_imsdt_v1p3.Text.Type/texttype"
+      ],
+      "source": "IMS CC 1.3 Implementation §Discussion Topic Text.Type/@texttype — https://www.imsglobal.org/cc/ccv1p3/imscc_Implementation-v1p3.html"
     },
     {
       "key": "cc:1.3:conf:lti-link/CC-LTI-1",
@@ -6063,7 +6074,7 @@
       "constrains": [
         "cc:1.3:def:ccv1p3_lomccltilink_v1p0.LOM.Type/general"
       ],
-      "source": "IMS CC 1.3 — Basic LTI Link (lomccltilink) — https://www.imsglobal.org/cc/CCv1p3/imscc_profilev1p3-Final.html"
+      "source": "IMS CC 1.3 Implementation §Basic LTI Link (lomccltilink) — https://www.imsglobal.org/cc/ccv1p3/imscc_Implementation-v1p3.html"
     },
     {
       "key": "cc:1.3:conf:manifest/CC-MAN-1",
@@ -6076,7 +6087,44 @@
         "cc:1.3:def:ccv1p3_imscp_v1p2_v1p0.Manifest.Type/organizations",
         "cc:1.3:def:ccv1p3_imscp_v1p2_v1p0.Manifest.Type/resources"
       ],
-      "source": "IMS CC 1.3 — Content Packaging manifest (imscp_v1p2) — https://www.imsglobal.org/cc/CCv1p3/imscc_profilev1p3-Final.html"
+      "source": "IMS CC 1.3 Conformance §manifest — https://www.imsglobal.org/cc/ccv1p3/imscc_Conformance-v1p3.html"
+    },
+    {
+      "key": "cc:1.3:conf:manifest/CC-MAN-2",
+      "profile": "manifest",
+      "reqId": "CC-MAN-2",
+      "level": "MUST",
+      "statement": "The manifest metadata MUST declare schema = 'IMS Common Cartridge' and schemaversion = '1.3.0', identifying the cartridge profile and version.",
+      "constrains": [
+        "cc:1.3:def:ccv1p3_imscp_v1p2_v1p0.ManifestMetadata.Type/schema",
+        "cc:1.3:def:ccv1p3_imscp_v1p2_v1p0.ManifestMetadata.Type/schemaversion"
+      ],
+      "source": "IMS CC 1.3 Conformance §schema/schemaversion — https://www.imsglobal.org/cc/ccv1p3/imscc_Conformance-v1p3.html"
+    },
+    {
+      "key": "cc:1.3:conf:manifest/CC-MAN-3",
+      "profile": "manifest",
+      "reqId": "CC-MAN-3",
+      "level": "MUST",
+      "statement": "The organizations element MUST contain at most one organization (the predefined rooted-hierarchy); multiple organizations are not permitted.",
+      "constrains": [
+        "cc:1.3:def:ccv1p3_imscp_v1p2_v1p0.Organizations.Type/organization"
+      ],
+      "source": "IMS CC 1.3 Conformance §organizations (single rooted-hierarchy) — https://www.imsglobal.org/cc/ccv1p3/imscc_Conformance-v1p3.html"
+    },
+    {
+      "key": "cc:1.3:conf:manifest/CC-RES-1",
+      "profile": "manifest",
+      "reqId": "CC-RES-1",
+      "level": "MUST",
+      "statement": "Every resource MUST carry an identifier and a type; a file-backed resource MUST reference its content via an href attribute or a file child element.",
+      "constrains": [
+        "cc:1.3:def:ccv1p3_imscp_v1p2_v1p0.Resource.Type/identifier",
+        "cc:1.3:def:ccv1p3_imscp_v1p2_v1p0.Resource.Type/type",
+        "cc:1.3:def:ccv1p3_imscp_v1p2_v1p0.Resource.Type/href",
+        "cc:1.3:def:ccv1p3_imscp_v1p2_v1p0.Resource.Type/file"
+      ],
+      "source": "IMS CC 1.3 Implementation §resources — https://www.imsglobal.org/cc/ccv1p3/imscc_Implementation-v1p3.html"
     },
     {
       "key": "cc:1.3:conf:web-link/CC-WL-1",
@@ -6088,7 +6136,7 @@
         "cc:1.3:def:ccv1p3_imswl_v1p3.WebLink.Type/title",
         "cc:1.3:def:ccv1p3_imswl_v1p3.WebLink.Type/url"
       ],
-      "source": "IMS CC 1.3 — Web Link resource (imswl_v1p3) — https://www.imsglobal.org/cc/CCv1p3/imscc_profilev1p3-Final.html#WebLinks"
+      "source": "IMS CC 1.3 Implementation §Web Link (imswl_v1p3) — https://www.imsglobal.org/cc/ccv1p3/imscc_Implementation-v1p3.html"
     },
     {
       "key": "cc:1.3:conf:web-link/CC-WL-2",
@@ -6099,7 +6147,18 @@
       "constrains": [
         "cc:1.3:def:ccv1p3_imswl_v1p3.URL.Type/href"
       ],
-      "source": "IMS CC 1.3 — Web Link resource (imswl_v1p3) URL.Type — https://www.imsglobal.org/cc/CCv1p3/imscc_profilev1p3-Final.html#WebLinks"
+      "source": "IMS CC 1.3 Implementation §Web Link URL.Type — https://www.imsglobal.org/cc/ccv1p3/imscc_Implementation-v1p3.html"
+    },
+    {
+      "key": "cc:1.3:conf:web-link/CC-WL-3",
+      "profile": "web-link",
+      "reqId": "CC-WL-3",
+      "level": "MAY",
+      "statement": "The url element MAY carry a target attribute selecting the HTML anchor target window (e.g. _blank / _self) for the launched link.",
+      "constrains": [
+        "cc:1.3:def:ccv1p3_imswl_v1p3.URL.Type/target"
+      ],
+      "source": "IMS CC 1.3 Implementation §Web Link URL.Type/@target — https://www.imsglobal.org/cc/ccv1p3/imscc_Implementation-v1p3.html"
     }
   ],
   "normativeStatements": [],
@@ -6328,7 +6387,7 @@
     "modelledPartial": 0,
     "modelledNo": 0,
     "normativeItems": 0,
-    "conformanceRequirements": 7,
+    "conformanceRequirements": 12,
     "normativeStatements": 0,
     "normativeStatementsCited": 0,
     "normalisations": 97

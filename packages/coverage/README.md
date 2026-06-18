@@ -65,8 +65,8 @@ the `Norm.` column counts the keys each map's `specRefOverrides` moved into `nor
 | `clr-v2.0`              | JSON Schema | 409   | 299      | 0           | 0          | 0     | 14         |
 | `case-v1.1`             | JSON Schema | 344   | 264      | 0           | 0          | 0     | 9          |
 | `caliper-v1.2`          | JSON Schema | 1957  | 78       | 136         | 26         | 0     | 3          |
-| `common-cartridge-v1.3` | XSD         | 676   | 413      | 0           | 96         | 97    | 7          |
-| `common-cartridge-v1.4` | XSD         | 143   | 84       | 0           | 23         | 15    | 5          |
+| `common-cartridge-v1.3` | XSD         | 676   | 413      | 0           | 96         | 97    | 12         |
+| `common-cartridge-v1.4` | XSD         | 143   | 84       | 0           | 23         | 15    | 13         |
 | `qti-v2.1`              | XSD         | 4971  | 186      | 385         | 64         | 12    | 3          |
 | `qti-v2.2`              | XSD         | 5378  | 208      | 541         | 78         | 14    | 3          |
 | `qti-v3.0.1`            | XSD         | 5344  | 224      | 358         | 78         | 12    | 2          |
@@ -150,7 +150,14 @@ extension fields) and `consumer` (handle/recover every required field, tolerate 
 CASE-4 is the one curated rule that cross-links the spec's only embedded MUST — the
 `caseVersion` = '1.1' rule across the CFDocument variants — lifting `cited` to 3/3; the 11
 required GET endpoints and the `/ims/case/v1p1` base URL are the out-of-scope transport surface.
-The remaining maps' catalogs are grounded **seeds** pending the same per-guide curation.
+**Common Cartridge 1.3 / 1.4** are curated from the CC profile Conformance + Implementation
+guides (12 and 13 requirements): the `manifest` packaging rules (identifier / schema /
+schemaversion / single rooted-hierarchy organization / resource identifier+type+href) and the
+per-resource-type bindings the maps carry (web-link, discussion-topic, curriculum-standards-metadata,
+authorization, lti-link, and CC 1.4's assignment extension). CC is the guide-only case: the XSDs
+embed no RFC-2119 `xs:documentation`, so `normativeStatements` is empty and there is no `cited`
+metric — the curated catalogue is the entire conformance surface. The remaining maps' catalogs
+are grounded **seeds** pending the same per-guide curation.
 
 ### Rollout (emergent ADR-0028)
 

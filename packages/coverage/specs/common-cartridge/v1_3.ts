@@ -35,13 +35,72 @@ import { SIMPLE_CONTENT_VALUE, XML_BASE, XS_ANY_EXTENSIONS } from "../xsd-normal
 const vendor = (file: string): string => join(import.meta.dir, "..", "..", "vendor", "common-cartridge", "v1_3", file);
 
 /**
- * Conformance seed — grounded slices of the CC 1.3 resource-type normative rules,
- * each cross-linked to the literal L1 item it constrains. Requirement ids are
- * synthesised per profile (`CC-WL-n`, `CC-DT-n`, `CC-CSM-n`); the published CC 1.3
- * conformance guide has no clean per-statement id scheme. Full extraction is the
- * next hand-curation increment.
+ * Conformance catalogue — curated from the published CC 1.3 Conformance and Implementation
+ * profile guides (https://www.imsglobal.org/cc/ccv1p3/imscc_Conformance-v1p3.html and
+ * .../imscc_Implementation-v1p3.html), which carry the normative rules as prose (the CC XSDs
+ * embed no RFC-2119 `xs:documentation`, so this map's `normativeStatements` is empty and the
+ * catalogue is the whole conformance surface — there is no machine-extractable half to cite).
+ * Requirement ids are synthesised per profile, grouped by the cartridge surface each governs:
+ * `manifest` (the imscp packaging rules), then the per-resource-type bindings the map carries
+ * (`web-link`, `discussion-topic`, `curriculum-standards-metadata`, `authorization`,
+ * `lti-link`). Resource types that conform-ed validates through *other* maps (QTI assessment /
+ * question bank, web content as plain files) have no L1 item here and are out of this catalogue.
  */
 const conformance: readonly ConformanceRequirement[] = [
+  {
+    key: "cc:1.3:conf:manifest/CC-MAN-1",
+    profile: "manifest",
+    reqId: "CC-MAN-1",
+    level: "MUST",
+    statement:
+      "A Common Cartridge manifest MUST carry an identifier and exactly one organizations and one resources element.",
+    constrains: [
+      "cc:1.3:def:ccv1p3_imscp_v1p2_v1p0.Manifest.Type/identifier",
+      "cc:1.3:def:ccv1p3_imscp_v1p2_v1p0.Manifest.Type/organizations",
+      "cc:1.3:def:ccv1p3_imscp_v1p2_v1p0.Manifest.Type/resources",
+    ],
+    source: "IMS CC 1.3 Conformance §manifest — https://www.imsglobal.org/cc/ccv1p3/imscc_Conformance-v1p3.html",
+  },
+  {
+    key: "cc:1.3:conf:manifest/CC-MAN-2",
+    profile: "manifest",
+    reqId: "CC-MAN-2",
+    level: "MUST",
+    statement:
+      "The manifest metadata MUST declare schema = 'IMS Common Cartridge' and schemaversion = '1.3.0', identifying the cartridge profile and version.",
+    constrains: [
+      "cc:1.3:def:ccv1p3_imscp_v1p2_v1p0.ManifestMetadata.Type/schema",
+      "cc:1.3:def:ccv1p3_imscp_v1p2_v1p0.ManifestMetadata.Type/schemaversion",
+    ],
+    source:
+      "IMS CC 1.3 Conformance §schema/schemaversion — https://www.imsglobal.org/cc/ccv1p3/imscc_Conformance-v1p3.html",
+  },
+  {
+    key: "cc:1.3:conf:manifest/CC-MAN-3",
+    profile: "manifest",
+    reqId: "CC-MAN-3",
+    level: "MUST",
+    statement:
+      "The organizations element MUST contain at most one organization (the predefined rooted-hierarchy); multiple organizations are not permitted.",
+    constrains: ["cc:1.3:def:ccv1p3_imscp_v1p2_v1p0.Organizations.Type/organization"],
+    source:
+      "IMS CC 1.3 Conformance §organizations (single rooted-hierarchy) — https://www.imsglobal.org/cc/ccv1p3/imscc_Conformance-v1p3.html",
+  },
+  {
+    key: "cc:1.3:conf:manifest/CC-RES-1",
+    profile: "manifest",
+    reqId: "CC-RES-1",
+    level: "MUST",
+    statement:
+      "Every resource MUST carry an identifier and a type; a file-backed resource MUST reference its content via an href attribute or a file child element.",
+    constrains: [
+      "cc:1.3:def:ccv1p3_imscp_v1p2_v1p0.Resource.Type/identifier",
+      "cc:1.3:def:ccv1p3_imscp_v1p2_v1p0.Resource.Type/type",
+      "cc:1.3:def:ccv1p3_imscp_v1p2_v1p0.Resource.Type/href",
+      "cc:1.3:def:ccv1p3_imscp_v1p2_v1p0.Resource.Type/file",
+    ],
+    source: "IMS CC 1.3 Implementation §resources — https://www.imsglobal.org/cc/ccv1p3/imscc_Implementation-v1p3.html",
+  },
   {
     key: "cc:1.3:conf:web-link/CC-WL-1",
     profile: "web-link",
@@ -50,7 +109,7 @@ const conformance: readonly ConformanceRequirement[] = [
     statement: "A Web Link resource MUST contain a webLink element carrying exactly one title and exactly one url.",
     constrains: ["cc:1.3:def:ccv1p3_imswl_v1p3.WebLink.Type/title", "cc:1.3:def:ccv1p3_imswl_v1p3.WebLink.Type/url"],
     source:
-      "IMS CC 1.3 — Web Link resource (imswl_v1p3) — https://www.imsglobal.org/cc/CCv1p3/imscc_profilev1p3-Final.html#WebLinks",
+      "IMS CC 1.3 Implementation §Web Link (imswl_v1p3) — https://www.imsglobal.org/cc/ccv1p3/imscc_Implementation-v1p3.html",
   },
   {
     key: "cc:1.3:conf:web-link/CC-WL-2",
@@ -60,7 +119,18 @@ const conformance: readonly ConformanceRequirement[] = [
     statement: "The url element MUST carry an href attribute identifying the link target.",
     constrains: ["cc:1.3:def:ccv1p3_imswl_v1p3.URL.Type/href"],
     source:
-      "IMS CC 1.3 — Web Link resource (imswl_v1p3) URL.Type — https://www.imsglobal.org/cc/CCv1p3/imscc_profilev1p3-Final.html#WebLinks",
+      "IMS CC 1.3 Implementation §Web Link URL.Type — https://www.imsglobal.org/cc/ccv1p3/imscc_Implementation-v1p3.html",
+  },
+  {
+    key: "cc:1.3:conf:web-link/CC-WL-3",
+    profile: "web-link",
+    reqId: "CC-WL-3",
+    level: "MAY",
+    statement:
+      "The url element MAY carry a target attribute selecting the HTML anchor target window (e.g. _blank / _self) for the launched link.",
+    constrains: ["cc:1.3:def:ccv1p3_imswl_v1p3.URL.Type/target"],
+    source:
+      "IMS CC 1.3 Implementation §Web Link URL.Type/@target — https://www.imsglobal.org/cc/ccv1p3/imscc_Implementation-v1p3.html",
   },
   {
     key: "cc:1.3:conf:discussion-topic/CC-DT-1",
@@ -70,7 +140,17 @@ const conformance: readonly ConformanceRequirement[] = [
     statement: "A Discussion Topic resource MUST carry exactly one title and exactly one text body.",
     constrains: ["cc:1.3:def:ccv1p3_imsdt_v1p3.Topic.Type/title", "cc:1.3:def:ccv1p3_imsdt_v1p3.Topic.Type/text"],
     source:
-      "IMS CC 1.3 — Discussion Topic resource (imsdt_v1p3) — https://www.imsglobal.org/cc/CCv1p3/imscc_profilev1p3-Final.html#DiscussionTopics",
+      "IMS CC 1.3 Implementation §Discussion Topic (imsdt_v1p3) — https://www.imsglobal.org/cc/ccv1p3/imscc_Implementation-v1p3.html",
+  },
+  {
+    key: "cc:1.3:conf:discussion-topic/CC-DT-2",
+    profile: "discussion-topic",
+    reqId: "CC-DT-2",
+    level: "MUST",
+    statement: "The text element MUST carry a texttype attribute whose value is 'text/html' or 'text/plain'.",
+    constrains: ["cc:1.3:def:ccv1p3_imsdt_v1p3.Text.Type/texttype"],
+    source:
+      "IMS CC 1.3 Implementation §Discussion Topic Text.Type/@texttype — https://www.imsglobal.org/cc/ccv1p3/imscc_Implementation-v1p3.html",
   },
   {
     key: "cc:1.3:conf:curriculum-standards-metadata/CC-CSM-1",
@@ -84,22 +164,7 @@ const conformance: readonly ConformanceRequirement[] = [
       "cc:1.3:def:ccv1p3_imscsmd_v1p0.CurriculumStandardsMetadata.Type/setOfGUIDs",
     ],
     source:
-      "IMS CC 1.3 — Curriculum Standards Metadata (imscsmd_v1p0) — https://www.imsglobal.org/cc/CCv1p3/imscc_profilev1p3-Final.html",
-  },
-  {
-    key: "cc:1.3:conf:manifest/CC-MAN-1",
-    profile: "manifest",
-    reqId: "CC-MAN-1",
-    level: "MUST",
-    statement:
-      "A Common Cartridge manifest MUST carry an identifier and exactly one organizations and one resources element.",
-    constrains: [
-      "cc:1.3:def:ccv1p3_imscp_v1p2_v1p0.Manifest.Type/identifier",
-      "cc:1.3:def:ccv1p3_imscp_v1p2_v1p0.Manifest.Type/organizations",
-      "cc:1.3:def:ccv1p3_imscp_v1p2_v1p0.Manifest.Type/resources",
-    ],
-    source:
-      "IMS CC 1.3 — Content Packaging manifest (imscp_v1p2) — https://www.imsglobal.org/cc/CCv1p3/imscc_profilev1p3-Final.html",
+      "IMS CC 1.3 Implementation §Curriculum Standards Metadata (imscsmd) — https://www.imsglobal.org/cc/ccv1p3/imscc_Implementation-v1p3.html",
   },
   {
     key: "cc:1.3:conf:authorization/CC-AUTH-1",
@@ -110,7 +175,7 @@ const conformance: readonly ConformanceRequirement[] = [
       "An authorizations document MUST contain at least one authorization describing how to access a resource.",
     constrains: ["cc:1.3:def:ccv1p3_imsccauth_v1p3.Authorizations.Type/authorization"],
     source:
-      "IMS CC 1.3 — Authorization (imsccauth_v1p3) — https://www.imsglobal.org/cc/CCv1p3/imscc_profilev1p3-Final.html",
+      "IMS CC 1.3 Implementation §Authorization (imsccauth_v1p3) — https://www.imsglobal.org/cc/ccv1p3/imscc_Implementation-v1p3.html",
   },
   {
     key: "cc:1.3:conf:lti-link/CC-LTI-1",
@@ -120,7 +185,7 @@ const conformance: readonly ConformanceRequirement[] = [
     statement: "A Basic LTI Link resource is carried as an IEEE LOM record whose general metadata identifies the link.",
     constrains: ["cc:1.3:def:ccv1p3_lomccltilink_v1p0.LOM.Type/general"],
     source:
-      "IMS CC 1.3 — Basic LTI Link (lomccltilink) — https://www.imsglobal.org/cc/CCv1p3/imscc_profilev1p3-Final.html",
+      "IMS CC 1.3 Implementation §Basic LTI Link (lomccltilink) — https://www.imsglobal.org/cc/ccv1p3/imscc_Implementation-v1p3.html",
   },
 ];
 

@@ -30,10 +30,15 @@ import { SIMPLE_CONTENT_VALUE, XML_BASE, XS_ANY_EXTENSIONS } from "../xsd-normal
 const vendor = (file: string): string => join(import.meta.dir, "..", "..", "vendor", "common-cartridge", "v1_4", file);
 
 /**
- * Conformance seed — grounded slices of the CC 1.4 resource-type normative rules, each
- * cross-linked to the literal L1 item it constrains. Requirement ids synthesised per
- * profile; full extraction from the published CC 1.4 conformance guide is the next
- * hand-curation increment.
+ * Conformance catalogue — curated from the published CC 1.4 profile
+ * (https://www.imsglobal.org/spec/cc/v1p4), carried in lockstep with CC 1.3's catalogue
+ * (the packaging and shared resource-type rules are unchanged across the two versions; CC 1.4
+ * adds the `assignment` extension). Like CC 1.3 the XSDs embed no RFC-2119 `xs:documentation`,
+ * so this map has no machine-extractable `normativeStatements` to cite — the catalogue is the
+ * whole conformance surface. Requirement ids are synthesised per profile, grouped by the
+ * cartridge surface each governs: `manifest`, then the per-resource-type bindings the map
+ * carries (`web-link`, `discussion-topic`, `curriculum-standards-metadata`, `authorization`,
+ * `assignment`).
  */
 const conformance: readonly ConformanceRequirement[] = [
   {
@@ -51,6 +56,44 @@ const conformance: readonly ConformanceRequirement[] = [
     source: "IMS CC 1.4 — Content Packaging manifest (imscp_v1p2) — https://www.imsglobal.org/spec/cc/v1p4",
   },
   {
+    key: "cc:1.4:conf:manifest/CC14-MAN-2",
+    profile: "manifest",
+    reqId: "CC14-MAN-2",
+    level: "MUST",
+    statement:
+      "The manifest metadata MUST declare schema = 'IMS Common Cartridge' and a schemaversion identifying the CC 1.4 profile.",
+    constrains: [
+      "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.ManifestMetadata.Type/schema",
+      "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.ManifestMetadata.Type/schemaversion",
+    ],
+    source: "IMS CC 1.4 — manifest schema/schemaversion — https://www.imsglobal.org/spec/cc/v1p4",
+  },
+  {
+    key: "cc:1.4:conf:manifest/CC14-MAN-3",
+    profile: "manifest",
+    reqId: "CC14-MAN-3",
+    level: "MUST",
+    statement:
+      "The organizations element MUST contain at most one organization (the predefined rooted-hierarchy); multiple organizations are not permitted.",
+    constrains: ["cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Organizations.Type/organization"],
+    source: "IMS CC 1.4 — organizations (single rooted-hierarchy) — https://www.imsglobal.org/spec/cc/v1p4",
+  },
+  {
+    key: "cc:1.4:conf:manifest/CC14-RES-1",
+    profile: "manifest",
+    reqId: "CC14-RES-1",
+    level: "MUST",
+    statement:
+      "Every resource MUST carry an identifier and a type; a file-backed resource MUST reference its content via an href attribute or a file child element.",
+    constrains: [
+      "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Resource.Type/identifier",
+      "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Resource.Type/type",
+      "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Resource.Type/href",
+      "cc:1.4:def:ccv1p4_imscp_v1p2_v1p0.Resource.Type/file",
+    ],
+    source: "IMS CC 1.4 — resources — https://www.imsglobal.org/spec/cc/v1p4",
+  },
+  {
     key: "cc:1.4:conf:web-link/CC14-WL-1",
     profile: "web-link",
     reqId: "CC14-WL-1",
@@ -60,6 +103,25 @@ const conformance: readonly ConformanceRequirement[] = [
     source: "IMS CC 1.4 — Web Link resource (imswl_v1p4) — https://www.imsglobal.org/spec/cc/v1p4",
   },
   {
+    key: "cc:1.4:conf:web-link/CC14-WL-2",
+    profile: "web-link",
+    reqId: "CC14-WL-2",
+    level: "MUST",
+    statement: "The url element MUST carry an href attribute identifying the link target.",
+    constrains: ["cc:1.4:def:ccv1p4_imswl_v1p4.URL.Type/href"],
+    source: "IMS CC 1.4 — Web Link URL.Type — https://www.imsglobal.org/spec/cc/v1p4",
+  },
+  {
+    key: "cc:1.4:conf:web-link/CC14-WL-3",
+    profile: "web-link",
+    reqId: "CC14-WL-3",
+    level: "MAY",
+    statement:
+      "The url element MAY carry a target attribute selecting the HTML anchor target window (e.g. _blank / _self) for the launched link.",
+    constrains: ["cc:1.4:def:ccv1p4_imswl_v1p4.URL.Type/target"],
+    source: "IMS CC 1.4 — Web Link URL.Type/@target — https://www.imsglobal.org/spec/cc/v1p4",
+  },
+  {
     key: "cc:1.4:conf:discussion-topic/CC14-DT-1",
     profile: "discussion-topic",
     reqId: "CC14-DT-1",
@@ -67,6 +129,28 @@ const conformance: readonly ConformanceRequirement[] = [
     statement: "A Discussion Topic resource MUST carry exactly one title and exactly one text body.",
     constrains: ["cc:1.4:def:ccv1p4_imsdt_v1p4.Topic.Type/title", "cc:1.4:def:ccv1p4_imsdt_v1p4.Topic.Type/text"],
     source: "IMS CC 1.4 — Discussion Topic resource (imsdt_v1p4) — https://www.imsglobal.org/spec/cc/v1p4",
+  },
+  {
+    key: "cc:1.4:conf:discussion-topic/CC14-DT-2",
+    profile: "discussion-topic",
+    reqId: "CC14-DT-2",
+    level: "MUST",
+    statement: "The text element MUST carry a texttype attribute whose value is 'text/html' or 'text/plain'.",
+    constrains: ["cc:1.4:def:ccv1p4_imsdt_v1p4.Text.Type/texttype"],
+    source: "IMS CC 1.4 — Discussion Topic Text.Type/@texttype — https://www.imsglobal.org/spec/cc/v1p4",
+  },
+  {
+    key: "cc:1.4:conf:curriculum-standards-metadata/CC14-CSM-1",
+    profile: "curriculum-standards-metadata",
+    reqId: "CC14-CSM-1",
+    level: "MUST",
+    statement:
+      "A CurriculumStandardsMetadataSet MUST contain at least one curriculumStandardsMetadata, each with at least one setOfGUIDs.",
+    constrains: [
+      "cc:1.4:def:ccv1p4_imscsmd_v1p1.CurriculumStandardsMetadataSet.Type/curriculumStandardsMetadata",
+      "cc:1.4:def:ccv1p4_imscsmd_v1p1.CurriculumStandardsMetadata.Type/setOfGUIDs",
+    ],
+    source: "IMS CC 1.4 — Curriculum Standards Metadata (imscsmd_v1p1) — https://www.imsglobal.org/spec/cc/v1p4",
   },
   {
     key: "cc:1.4:conf:authorization/CC14-AUTH-1",
@@ -89,6 +173,16 @@ const conformance: readonly ConformanceRequirement[] = [
       "cc:1.4:def:cc_extresource_assignmentv1p0_v1p0.Assignment.Type/text",
     ],
     source: "IMS CC 1.4 — Assignment extension (cc_extresource_assignment) — https://www.imsglobal.org/spec/cc/v1p4",
+  },
+  {
+    key: "cc:1.4:conf:assignment/CC14-ASN-2",
+    profile: "assignment",
+    reqId: "CC14-ASN-2",
+    level: "MUST",
+    statement:
+      "An Assignment resource MUST declare the submission_formats it accepts (the submission types — html / text / url / file — the learner may submit).",
+    constrains: ["cc:1.4:def:cc_extresource_assignmentv1p0_v1p0.Assignment.Type/submission_formats"],
+    source: "IMS CC 1.4 — Assignment submission_formats — https://www.imsglobal.org/spec/cc/v1p4",
   },
 ];
 
