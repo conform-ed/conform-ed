@@ -7,6 +7,8 @@ build/
 coverage/
 # ...but not the @conform-ed/coverage package (test-coverage output dirs only)
 !packages/coverage/
+# ...nor the docs site "Coverage map" section content
+!apps/docs/src/content/docs/coverage/
 .env
 .env.*
 !.env.example
