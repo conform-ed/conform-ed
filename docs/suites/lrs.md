@@ -1,5 +1,10 @@
 # LRS Suite
 
+> Results are conform-ed _assessments / interop evidence_, not official
+> certification, and conform-ed is not affiliated with or endorsed by ADL/ADLNet.
+> "xAPI" / "Experience API" are ADL marks, used nominatively. See
+> [DISCLAIMER.md](../../DISCLAIMER.md).
+
 ## Scope
 
 The LRS runner now uses the copied upstream xAPI conformance harness to test a target API endpoint with optional basic auth and emits runner output to stdout. The same entrypoint is intended to run directly from the command line, inside an OCI image, or as part of a podman-compose service.

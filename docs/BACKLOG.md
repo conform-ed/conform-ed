@@ -29,6 +29,21 @@ already made live in `docs/adr/`; this file holds the agreed-but-not-started.
    the package's items and asset references from a QTI package zip (the PCI
    _module_ slice of this landed with ADR-0012). CC 1.4 embeds QTI 3 packages
    as resources, so this is also the Common Cartridge entry point.
+3. **OneRoster interop, sequenced (ADR-0015).** Counterpart-backed lanes for a
+   spec that today has only a Coverage Map and no live tester. Order is fixed by
+   the observable/opaque asymmetry:
+   1. **OneRoster provider Conformance Scanner** — conform-ed-as-consumer,
+      `local-reference`, per-requirement assertions off the wire, no counterpart.
+      Reuses the OneRoster Coverage Map + the OpenAPI transport-axis walker
+      (`OR-TR-1..5`). Highest value, lowest friction.
+   2. **`go-oneroster` as the Scanner's validation target** — cheap
+      meta-conformance (`go-oneroster : Scanner :: LRSQL : LRS-tester`),
+      v1.2-vs-v1.2.
+   3. **OneRoster consumer lane (opaque direction)** — serve a real provider,
+      observe SUT ingest state via an Adapter. The genuinely counterpart-
+      load-bearing cell; drags in the Adapter/state-observation machinery, so
+      it follows the Scanner, not precedes it.
+      Caliper is parked until a named need (no emitter consumer yet).
 
 ## Elsewhere
 

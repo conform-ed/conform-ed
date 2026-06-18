@@ -1,5 +1,10 @@
 # LTI 1.3 Suite
 
+> Results are conform-ed _assessments / interop evidence_, not official
+> certification, and conform-ed is not affiliated with or endorsed by 1EdTech.
+> "LTI" is a trademark of 1EdTech, used nominatively. See
+> [DISCLAIMER.md](../../DISCLAIMER.md).
+
 ## Scope
 
 LTI runner scaffolds module-oriented conformance execution for:

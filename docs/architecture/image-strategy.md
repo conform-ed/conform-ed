@@ -54,3 +54,29 @@ For first release candidates:
 - Pin Bun runtime version in Containerfiles.
 - Keep container build context deterministic.
 - Keep image publishing scripts idempotent for reruns on the same commit.
+
+## Third-Party Counterpart Images (interop lanes)
+
+conform-ed's GHCR publishes **only conform-ed's own artifacts** (the runners and
+adapters above). Third-party Counterparts used by `oss-*` interop lanes
+(e.g. Moodle, MongoDB, `go-oneroster`, LRSQL — see ADR-0015) are **referenced
+from their upstream registry by pinned digest and pulled at runtime — never
+mirrored, rebuilt, or republished** into conform-ed's registry.
+
+This keeps conform-ed's redistribution surface to its own MIT-licensed code and
+avoids triggering the copyleft / source-available terms of those images (Moodle
+GPLv3, MongoDB SSPL, …), which permit pull-and-run for testing but not mirroring
+or managed-service offerings.
+
+## Counterpart Catalogue Entry Fields
+
+Each `(suite, role)` Counterpart Catalogue entry (ADR-0015) records, at minimum:
+
+- `counterpart` — name and project URL
+- `role` — the role it fills (the side _opposite_ the system under test)
+- `specVersion` — the spec version it implements (may differ from the SUT's)
+- `license` — the counterpart's license
+- `image` — upstream image reference **pinned by digest**
+- `seeding` — how the Fixture Dataset is loaded (spec-shaped PUT, backend import, …)
+- `provenance` — certification status / maturity note
+  (e.g. "alpha; IMS-certified OneRoster 1.1 rostering consumer")

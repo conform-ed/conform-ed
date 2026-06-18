@@ -89,3 +89,97 @@ The official 1EdTech `qtiv3-examples` set, inventoried by
 `@conform-ed/qti-xml`. **Corpus coverage** — the share of the Corpus that is
 deliverable (per the Capability Report) and correctly scored — is the
 runtime's public progress meter.
+
+## Language — interop & counterpart validation
+
+**System Under Test (SUT)**:
+The target a runner executes conformance flows against, named in the runner
+config `sut` section. Vendor-neutral: the runner makes no platform assumptions
+about it (see the Runner Contract's non-responsibilities).
+
+**Counterpart**:
+A real external system that conform-ed boots (via Podman Compose) or points at
+to exercise a suite against a realistic, non-deterministic peer — e.g. Moodle
+as an LTI platform, LTI.js as an LTI tool, LRSQL as an LRS. Its purpose is
+**development integration** and **interop demonstration**, not adjudication: a
+Counterpart is not assumed conformant, so a disagreement between conform-ed and
+a Counterpart does not establish which side is wrong.
+_Avoid_: reference system, oracle (a Counterpart is neither).
+
+**Oracle**:
+A system or suite trusted to be conformant, used to validate conform-ed's own
+testers (meta-conformance). The authoritative oracles are the 1EdTech certified
+reference implementations and certification suites; an uncertified OSS
+Counterpart is not one. (LRSQL approximates an oracle for LRS only because xAPI
+has a canonical reference and the ADL suite as an external check.) Holding an
+Oracle is an aspiration, not a current gate.
+_Avoid_: using "reference" loosely to mean either a Counterpart or an Oracle.
+
+**Interop Profile**:
+How a suite's interop lane is targeted: `local-reference` (the deterministic
+in-repo adapter — the hermetic default), `oss-platform` (a real OSS platform
+Counterpart), or `oss-tool` (a real OSS tool Counterpart). The profile selects
+which side of a two-party protocol conform-ed plays and what it validates
+against.
+_Avoid_: conflating `local-reference` (an Oracle-adjacent deterministic fixture)
+with the `oss-*` profiles (Counterparts).
+
+**Counterpart Catalogue**:
+The mapping conform-ed maintains from each `(suite, role)` **cell** — a protocol
+suite paired with the side under test — to the Counterpart(s) that fill the
+_opposite_ role for that cell. The catalogue, not a single system, is the unit:
+a given real LMS may fill several cells (e.g. Moodle as the LTI-platform cell),
+but each cell's lane stays independently runnable so suites are not coupled.
+_Avoid_: "the target LMS" (there is no single target; a full LMS is one
+catalogue entry among many).
+
+**Interop Evidence**:
+The artifact an `oss-*` lane emits: a record that a real, recognizable
+Counterpart completed an interaction with the system under test, plus the raw
+message transcript of that interaction. It is **coarse evidence of realism and
+interoperability**, not a per-requirement conformance verdict — conformance
+assertion of record stays in the `local-reference` path. The transcript is
+captured even when only coarse success is asserted, so a later protocol-aware
+observer (MITM) can add per-requirement assertions over the same format without
+new capture infrastructure.
+_Avoid_: calling a green `oss-*` lane "conformance" or "certified" — it is
+neither (the Counterpart is not an Oracle).
+
+**Observable direction / Opaque direction**:
+For a two-party protocol, the side whose protocol output is on the wire (a
+provider's responses; a tool's AGS/NRPS callbacks) is the **observable
+direction** — conform-ed plays the opposite role, reads the messages directly,
+and asserts per-requirement with no Counterpart and no Adapter. The side that
+ingests or acts internally (a consumer; a platform receiving a launch) is the
+**opaque direction** — its resulting state is not on the wire, so observation
+needs an Adapter (or out-of-band inspection), and not even a MITM recovers it.
+The observable direction is cheaper and ships first; the opaque direction is
+where Counterparts and Adapters earn their keep.
+_Avoid_: assuming a Counterpart is always required — the observable direction
+needs none.
+
+**Conformance Scanner**:
+conform-ed run in the observable direction directly against a system under test
+(no Counterpart): it plays the opposite role, exercises the SUT's surface, and
+emits a per-requirement conformance report (e.g. "point conform-ed at your
+OneRoster provider, get a report"). The headline first OneRoster deliverable.
+Runs in **blind mode** (against any provider's live data — structural and
+behavioural assertions only, no fixture) or **fixture mode** (the provider holds
+the Fixture Dataset → value-level completeness plus behaviours that need known
+data: `since`/delta, soft-deletion, pagination and filter boundaries). Blind
+mode ships first; fixture mode follows and is also how the Scanner self-validates.
+_Avoid_: conflating the Scanner with an `oss-*` interop lane (the Scanner needs
+no spun-up system).
+
+**Fixture Dataset**:
+The single canonical, fully-specified dataset conform-ed owns per spec:version
+(for OneRoster: known orgs/users/classes/enrollments/grades, including a
+soft-deleted record, a multi-page collection, and a filterable subset),
+versioned as a repo asset pinned to the spec version. One substrate, reused four
+ways: Scanner fixture-mode, Scanner self-validation against a Counterpart, the
+consumer lane (served to the SUT and compared against ingest), and the
+`local-reference` provider. Seeded **spec-shaped via PUT/upsert** where the
+counterpart supports writes (backend-agnostic, and exercises the write surface
+for free); each catalogue entry declares its seeding mechanism since spec-shaped
+seeding is preferred but not guaranteed (OneRoster REST core is read-only GET).
+_Avoid_: per-lane ad-hoc seed data (it drifts and isn't reusable).

@@ -12,6 +12,16 @@
 
 ---
 
+> [!IMPORTANT]
+> **conform-ed is an independent open-source project — not affiliated with,
+> endorsed by, or certified by 1EdTech, ADL/ADLNet, W3C, or any other standards
+> body.** It produces conformance _assessments_, not official certification.
+> All specification names and trademarks (QTI, LTI, OneRoster, Caliper, Common
+> Cartridge, Open Badges, CLR, CASE, xAPI, cmi5, SCORM, …) are the property of
+> their respective owners and are used nominatively. See [DISCLAIMER.md](./DISCLAIMER.md).
+
+---
+
 conform-ed [kənˈfɔːmɪd] gives engineers typed contracts to produce standards-correct data, a headless runtime to
 deliver QTI assessments, and conformance runners to prove an implementation conforms — across xAPI,
 QTI, LTI 1.3, Common Cartridge, OneRoster, CASE, CLR, Open Badges, Caliper, and more.
