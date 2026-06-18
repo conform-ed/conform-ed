@@ -3,6 +3,10 @@ import react from "@astrojs/react";
 import starlight from "@astrojs/starlight";
 import { defineConfig } from "astro/config";
 import starlightLlmsTxt from "starlight-llms-txt";
+import { createStarlightTypeDocPlugin } from "starlight-typedoc";
+
+const [qtiReactTypeDoc, qtiReactTypeDocSidebar] = createStarlightTypeDocPlugin();
+const [qtiXmlTypeDoc, qtiXmlTypeDocSidebar] = createStarlightTypeDocPlugin();
 
 const ogImage = "https://conform-ed.github.io/og-meme.png";
 
@@ -33,6 +37,18 @@ export default defineConfig({
           description:
             "conform-ed is open-source tooling to build and verify conformance to digital-education standards (xAPI, QTI, LTI 1.3, Common Cartridge, OneRoster, CASE, CLR, Open Badges, Caliper, and more). It provides typed Zod contracts, a headless QTI delivery runtime, and conformance runner images for engineers building or verifying ed-tech interoperability.",
         }),
+        qtiReactTypeDoc({
+          entryPoints: ["../../packages/qti-react/src/index.ts", "../../packages/qti-react/src/headless.ts"],
+          tsconfig: "../../packages/qti-react/tsconfig.json",
+          output: "api/qti-react",
+          sidebar: { label: "qti-react" },
+        }),
+        qtiXmlTypeDoc({
+          entryPoints: ["../../packages/qti-xml/src/index.ts"],
+          tsconfig: "../../packages/qti-xml/tsconfig.json",
+          output: "api/qti-xml",
+          sidebar: { label: "qti-xml" },
+        }),
       ],
       sidebar: [
         {
@@ -49,6 +65,7 @@ export default defineConfig({
         { label: "Conformance runners", items: [{ autogenerate: { directory: "runners" } }] },
         { label: "CLI", items: [{ autogenerate: { directory: "cli" } }] },
         { label: "Coverage map", items: [{ autogenerate: { directory: "coverage" } }] },
+        { label: "API reference", items: [qtiReactTypeDocSidebar, qtiXmlTypeDocSidebar] },
         { label: "Design decisions", items: [{ autogenerate: { directory: "decisions" } }] },
         { label: "Project", items: [{ autogenerate: { directory: "project" } }] },
       ],

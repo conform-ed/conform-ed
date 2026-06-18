@@ -13,3 +13,5 @@ coverage/
 tmp/**
 !tmp/agents/
 !tmp/agents/.gitkeep
+# starlight-typedoc generated API reference (regenerated on every docs build)
+apps/docs/src/content/docs/api/
