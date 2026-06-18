@@ -61,6 +61,21 @@ export interface SpecBindingSource {
   readonly zod?: ZodType;
 }
 
+/**
+ * One REST service document to inventory for its **transport surface** (conform-ed
+ * ADR-0013). Distinct from {@link SpecBindingSource}, which inventories an OpenAPI
+ * document's *information model* (`components.schemas`): this walks its `paths` —
+ * the required operations, the reusable query parameters and the security schemes —
+ * into L1-only `operation` / `parameter` / `security` items (never reconciled). The
+ * same vendored file usually backs both: its schemas via a binding, its paths here.
+ */
+export interface RestServiceSource {
+  /** Logical service name; becomes the `path:<service>/<METHOD> <template>` key scope. */
+  readonly service: string;
+  /** Absolute path to the vendored OpenAPI document. */
+  readonly schemaPath: string;
+}
+
 export interface SpecSource {
   /** Short spec id, e.g. `ob`. */
   readonly spec: string;
@@ -68,6 +83,15 @@ export interface SpecSource {
   readonly version: string;
   readonly bindings: readonly SpecBindingSource[];
   readonly conformance: readonly ConformanceRequirement[];
+  /**
+   * Optional REST transport surface to inventory: the OpenAPI documents whose `paths`
+   * carry the binding's required operations, security and query mechanisms. A distinct
+   * axis from the information model (no Zod counterpart, never reconciled), so each
+   * operation / query parameter / security scheme becomes an L1-only item a transport
+   * conformance requirement can `constrains`. Omitted ⇒ paths not walked (every
+   * non-REST map, and OpenAPI maps that curate only the data model).
+   */
+  readonly restServices?: readonly RestServiceSource[];
   /**
    * Optional canonicalisation of property names for the L2 name-based join, when the
    * literal schema and conform-ed's Zod use *different serialisation bindings* of the

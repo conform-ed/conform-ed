@@ -30,8 +30,9 @@ describe("OneRoster 1.2 Coverage Map — OpenAPI walker, all three services", ()
     for (const item of map.items) expect(item.key.startsWith("or:1.2:")).toBe(true);
   });
 
-  test("pins each binding against its vendored OpenAPI service document", () => {
-    expect(map.meta.sources).toHaveLength(15);
+  test("pins each binding and each REST service against its vendored OpenAPI document", () => {
+    // 15 component bindings + 3 restServices (rostering/gradebook/resources paths).
+    expect(map.meta.sources).toHaveLength(18);
     for (const source of map.meta.sources) {
       expect(source.language).toBe("openapi");
       expect(source.sha256).toMatch(/^[0-9a-f]{64}$/);
@@ -50,11 +51,11 @@ describe("OneRoster 1.2 Coverage Map — OpenAPI walker, all three services", ()
     for (const edge of map.edges) expect(keys.has(edge.to)).toBe(true);
   });
 
-  test("the curated catalogue spans all four certified service modes", () => {
+  test("the curated catalogue spans the data-model modes plus the transport profile", () => {
     const keys = new Set(map.items.map((i) => i.key));
-    expect(map.rollup.conformanceRequirements).toBe(12);
+    expect(map.rollup.conformanceRequirements).toBe(21);
     const profiles = new Set(map.conformance.map((r) => r.profile));
-    expect(profiles).toEqual(new Set(["rostering", "gradebook", "resources", "assessment-results"]));
+    expect(profiles).toEqual(new Set(["rostering", "gradebook", "resources", "assessment-results", "transport"]));
     for (const req of map.conformance) {
       expect(req.constrains.length).toBeGreaterThan(0);
       for (const key of req.constrains) expect(keys.has(key)).toBe(true);
@@ -62,6 +63,26 @@ describe("OneRoster 1.2 Coverage Map — OpenAPI walker, all three services", ()
     // The per-entity stable-identity requirements cross-link the schema's own sourcedId/
     // status/dateLastModified MUSTs across every service, so coverage is substantial.
     expect(map.rollup.normativeStatementsCited).toBeGreaterThanOrEqual(30);
+  });
+
+  test("the transport axis inventories the OpenAPI paths without polluting the model residues", () => {
+    const operations = map.items.filter((i) => i.kind === "operation");
+    const parameters = map.items.filter((i) => i.kind === "parameter");
+    const security = map.items.filter((i) => i.kind === "security");
+    // 81 operations across the three services, the six shared query mechanisms, and OAuth2CC.
+    expect(operations).toHaveLength(81);
+    expect(new Set(parameters.map((i) => i.key))).toEqual(
+      new Set(["limit", "offset", "filter", "sort", "orderBy", "fields"].map((p) => `or:1.2:param:${p}`)),
+    );
+    expect(security.map((i) => i.key)).toEqual(["or:1.2:sec:OAuth2CC"]);
+    // Transport items are a distinct axis: never reconciled, so never a gap or extension.
+    for (const item of [...operations, ...parameters, ...security]) expect(item.modelled).toBeUndefined();
+    expect(map.residues.silentGaps).toEqual([]);
+
+    // The §4 transport requirements cross-link to those items.
+    const transport = map.conformance.filter((r) => r.profile === "transport");
+    expect(transport.map((r) => r.reqId).sort()).toEqual(["OR-TR-1", "OR-TR-2", "OR-TR-3", "OR-TR-4", "OR-TR-5"]);
+    expect(map.conformance.find((r) => r.reqId === "OR-TR-1")?.constrains).toEqual(["or:1.2:sec:OAuth2CC"]);
   });
 
   test("the committed map is in sync with the generator", () => {

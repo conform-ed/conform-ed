@@ -8,8 +8,21 @@
 /** Which schema language a vendored source artifact is written in. */
 export type SchemaLanguage = "json-schema" | "xsd" | "openapi" | "caliper";
 
-/** The kind of node an information-model inventory item represents. */
-export type ItemKind = "document" | "definition" | "property";
+/**
+ * The kind of node an inventory item represents.
+ *
+ * - `document` / `definition` / `property` — the **information model** (the data
+ *   contracts), reconciled against conform-ed's Zod for an L2 verdict.
+ * - `operation` / `parameter` / `security` — the **transport surface** of an OpenAPI
+ *   REST binding (a request operation, a reusable query parameter, a security scheme).
+ *   A distinct axis with no Zod counterpart: these are L1-only, never reconciled, and
+ *   never appear in `silentGaps` / `extensions`. A transport {@link ConformanceRequirement}
+ *   cross-links to them. See `walkers/openapi.ts` (`walkOpenApiPaths`).
+ */
+export type ItemKind = "document" | "definition" | "property" | "operation" | "parameter" | "security";
+
+/** Item kinds that form the transport axis (excluded from L2 reconciliation). */
+export const TRANSPORT_KINDS: ReadonlySet<ItemKind> = new Set(["operation", "parameter", "security"]);
 
 /**
  * L2 verdict: is this literal item represented by the conform-ed Zod model?

@@ -70,7 +70,7 @@ the `Norm.` column counts the keys each map's `specRefOverrides` moved into `nor
 | `qti-v2.1`              | XSD         | 4971  | 186      | 385         | 64         | 12    | 11         |
 | `qti-v2.2`              | XSD         | 5378  | 208      | 541         | 78         | 14    | 11         |
 | `qti-v3.0.1`            | XSD         | 5344  | 224      | 358         | 78         | 12    | 10         |
-| `oneroster-v1.2`        | OpenAPI     | 410   | 248      | 0           | 0          | 0     | 12         |
+| `oneroster-v1.2`        | OpenAPI     | 498   | 248      | 0           | 0          | 0     | 21         |
 
 - **Open Badges 3.0 / CLR 2.0** share the OB/VC credential machinery; **CASE 1.1** (all
   13 entity schemas) reconciles `0/0` and is fully guide-curated (core / provider / consumer).
@@ -89,7 +89,12 @@ the `Norm.` column counts the keys each map's `specRefOverrides` moved into `nor
   CAL-ID-1 constrains them all and `normativeStatementsCited` reaches the whole surface (99/99).
 - **OneRoster 1.2** spans all three services in one map — Rostering (7 entities),
   Gradebook (LineItem / Result / Category / ScoreScale / AssessmentLineItem /
-  AssessmentResult / LearningObjectiveSet) and Resources (Resource) — and reconciles `0/0`.
+  AssessmentResult / LearningObjectiveSet) and Resources (Resource) — and the information
+  model reconciles `0/0`. It is also the first map to carry the **transport axis**: each
+  service document's OpenAPI `paths` are walked (`restServices` → `walkOpenApiPaths`) into
+  88 `operation` / `parameter` / `security` items (81 operations, the six shared query
+  mechanisms, OAuth2CC). These are L1-only — never reconciled, so they swell `Items` but add
+  no silent gaps — and the §4 REST-binding requirements cross-link to them (see below).
 - **Common Cartridge 1.3 / 1.4** — via the **direct XSD walker**, with `def:`s scoped by
   source schema (`scopeXsdDefsBySource`) so same-named complexTypes from different files
   stay distinct. CC 1.3 carries eight bindings: content-packaging Manifest, Web Link,
@@ -141,12 +146,16 @@ schema-validation requirement OB-ISS-8). The Badge Connect API **transport** req
 (endpoints, OAuth, pagination) are a separate surface with no L1 item in the data-model map and
 await an OpenAPI binding map. **CLR 2.0** is curated the same way (14 requirements across the
 same three roles; it shares OB's credential stack, so the displayer/host shapes match,
-`cited` 7/40). **OneRoster 1.2** is curated by its four certified service modes (rostering /
-gradebook / resources / assessment-results, 12 requirements): the per-entity stable-identity
-rules (every object carries sourcedId + status + dateLastModified) cross-link the schema's own
-MUSTs across every service, so `cited` reaches 38/48 — the REST/CSV transport conformance
-(endpoints, OAuth, query mechanisms) is the out-of-scope surface a future OpenAPI-paths walker
-would model. **CASE 1.1** is curated by its two certified roles plus a `core` profile (9
+`cited` 7/40). **OneRoster 1.2** is curated by its certified service modes plus a
+cross-cutting transport profile (rostering / gradebook / resources / assessment-results /
+transport, 21 requirements): the per-entity stable-identity rules (every object carries
+sourcedId + status + dateLastModified) cross-link the schema's own MUSTs across every service,
+so `cited` reaches 38/48. The REST-binding §4 transport conformance is now curated too, against
+the walked `paths` axis — the required GET/PUT endpoints per service (`OR-5`, `OR-GB-5`,
+`OR-RES-3`, `OR-AR-3`) and the cross-cutting OAuth 2.0 Client Credentials + pagination /
+filtering / sorting / field-selection query mechanisms (`OR-TR-1…5`). Those transport items
+embed no RFC-2119 prose, so they raise the requirement count without inflating `cited` (still
+38/48). (The CSV binding and OpenAPI service discovery remain prose-only.) **CASE 1.1** is curated by its two certified roles plus a `core` profile (9
 requirements): the `core` information-model invariants (a CFPackage has exactly one CFDocument,
 every CFItem a UUID, every CFAssociation a typed origin/destination, and `caseVersion` = '1.1'),
 then `provider` (supply every required field, be capable of every optional field, emit no
@@ -198,8 +207,13 @@ All three schema-language walkers are built and proven:
   distinct `doc:` label. QTI 2.1 / 2.2 now also cover Results Reporting, Usage Data,
   Metadata, the content-package manifest, APIP and (2.2) Curriculum Standards Metadata.
 - **OpenAPI** (`walkers/openapi.ts`) — OneRoster 1.2 ✓ across all three services —
-  Rostering, Gradebook and Resources (walks `components.schemas`, reusing the
-  JSON-Schema walker via `#/components/schemas/` refs).
+  Rostering, Gradebook and Resources. `walkOpenApi` walks the information model
+  (`components.schemas`, reusing the JSON-Schema walker via `#/components/schemas/` refs);
+  `walkOpenApiPaths` walks the **transport surface** (`paths` operations, query parameters and
+  `securitySchemes`) into the L1-only `operation` / `parameter` / `security` axis, opted in per
+  map via `SpecSource.restServices`. The transport items are never reconciled against Zod (no
+  data-contract counterpart), so they never enter the residues; a transport conformance
+  requirement cross-links to them instead.
 
 Where the literal and Zod bindings differ by a systematic naming convention (QTI's
 XML↔JSON kebab/camel/singular-plural), a per-spec `nameNormalizer` on the `SpecSource`

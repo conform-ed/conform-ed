@@ -2,7 +2,7 @@
   "meta": {
     "spec": "or",
     "version": "1.2",
-    "generatedAt": "2026-06-17",
+    "generatedAt": "2026-06-18",
     "sources": [
       {
         "binding": "AcademicSessionDType",
@@ -53,6 +53,12 @@
         "sha256": "06cafc2234ae1cdc58a2fe8ea03a8e0a5bf57d0e39830468d9adf7cc16acd26f"
       },
       {
+        "binding": "gradebook (paths)",
+        "language": "openapi",
+        "id": "OneRoster Gradebook Service OpenAPI (JSON) Definition v1.2",
+        "sha256": "547131deef5d05b411cf49cfaea101fa91b0f9875bc45e06d48125fad3787a5f"
+      },
+      {
         "binding": "LearningObjectiveSetDType",
         "language": "openapi",
         "id": "OneRoster Gradebook Service OpenAPI (JSON) Definition v1.2",
@@ -77,10 +83,22 @@
         "sha256": "92f9c351e774070bb8684b54251e60bc8d2496beb00f80b95ed5066081394503"
       },
       {
+        "binding": "resources (paths)",
+        "language": "openapi",
+        "id": "OneRoster Resources OpenAPI (JSON) Definition v1.2",
+        "sha256": "92f9c351e774070bb8684b54251e60bc8d2496beb00f80b95ed5066081394503"
+      },
+      {
         "binding": "ResultDType",
         "language": "openapi",
         "id": "OneRoster Gradebook Service OpenAPI (JSON) Definition v1.2",
         "sha256": "547131deef5d05b411cf49cfaea101fa91b0f9875bc45e06d48125fad3787a5f"
+      },
+      {
+        "binding": "rostering (paths)",
+        "language": "openapi",
+        "id": "OneRoster OpenAPI (JSON) Definition v1.2",
+        "sha256": "06cafc2234ae1cdc58a2fe8ea03a8e0a5bf57d0e39830468d9adf7cc16acd26f"
       },
       {
         "binding": "ScoreScaleDType",
@@ -3366,6 +3384,534 @@
       "key": "or:1.2:doc:UserDType",
       "kind": "document",
       "path": ""
+    },
+    {
+      "key": "or:1.2:param:fields",
+      "kind": "parameter",
+      "path": "fields",
+      "description": "To identify the range of fields that should be supplied in the response message."
+    },
+    {
+      "key": "or:1.2:param:filter",
+      "kind": "parameter",
+      "path": "filter",
+      "description": "The filtering rules to be applied when identifying the records to be supplied in the response message. The sort order should follow the [UNICODE, 16] standard."
+    },
+    {
+      "key": "or:1.2:param:limit",
+      "kind": "parameter",
+      "path": "limit",
+      "description": "To define the download segmentation value i.e. the maximum number of records to be contained in the response."
+    },
+    {
+      "key": "or:1.2:param:offset",
+      "kind": "parameter",
+      "path": "offset",
+      "description": "The number of the first record to be supplied in the segmented response message."
+    },
+    {
+      "key": "or:1.2:param:orderBy",
+      "kind": "parameter",
+      "path": "orderBy",
+      "description": "The form of ordering for response to the sorted request i.e. ascending (asc) or descending (desc). The sort order should follow the [UNICODE, 16] standard."
+    },
+    {
+      "key": "or:1.2:param:sort",
+      "kind": "parameter",
+      "path": "sort",
+      "description": "Identifies the sort criteria to be used for the records in the response message. Use with the orderBy parameter. The sort order should follow the [UNICODE, 16] standard."
+    },
+    {
+      "key": "or:1.2:path:gradebook/DELETE /assessmentLineItems/{sourcedId}",
+      "kind": "operation",
+      "path": "DELETE /assessmentLineItems/{sourcedId}",
+      "description": "The REST delete request message for the deleteAssessmentLineItem() API call."
+    },
+    {
+      "key": "or:1.2:path:gradebook/DELETE /assessmentResults/{sourcedId}",
+      "kind": "operation",
+      "path": "DELETE /assessmentResults/{sourcedId}",
+      "description": "The REST delete request message for the deleteAssessmentResult() API call."
+    },
+    {
+      "key": "or:1.2:path:gradebook/DELETE /categories/{sourcedId}",
+      "kind": "operation",
+      "path": "DELETE /categories/{sourcedId}",
+      "description": "The REST delete request message for the deleteCategory() API call."
+    },
+    {
+      "key": "or:1.2:path:gradebook/DELETE /lineItems/{sourcedId}",
+      "kind": "operation",
+      "path": "DELETE /lineItems/{sourcedId}",
+      "description": "The REST delete request message for the deleteLineItem() API call."
+    },
+    {
+      "key": "or:1.2:path:gradebook/DELETE /results/{sourcedId}",
+      "kind": "operation",
+      "path": "DELETE /results/{sourcedId}",
+      "description": "The REST delete request message for the deleteResult() API call."
+    },
+    {
+      "key": "or:1.2:path:gradebook/DELETE /scoreScales/{sourcedId}",
+      "kind": "operation",
+      "path": "DELETE /scoreScales/{sourcedId}",
+      "description": "The REST delete request message for the deleteScoreScale() API call."
+    },
+    {
+      "key": "or:1.2:path:gradebook/GET /assessmentLineItems",
+      "kind": "operation",
+      "path": "GET /assessmentLineItems",
+      "description": "The REST read request message for the getAllAssessmentLineItems() API call."
+    },
+    {
+      "key": "or:1.2:path:gradebook/GET /assessmentLineItems/{sourcedId}",
+      "kind": "operation",
+      "path": "GET /assessmentLineItems/{sourcedId}",
+      "description": "The REST read request message for the getAssessmentLineItem() API call."
+    },
+    {
+      "key": "or:1.2:path:gradebook/GET /assessmentResults",
+      "kind": "operation",
+      "path": "GET /assessmentResults",
+      "description": "The REST read request message for the getAllAssessmentResults() API call."
+    },
+    {
+      "key": "or:1.2:path:gradebook/GET /assessmentResults/{sourcedId}",
+      "kind": "operation",
+      "path": "GET /assessmentResults/{sourcedId}",
+      "description": "The REST read request message for the getAssessmentResult() API call."
+    },
+    {
+      "key": "or:1.2:path:gradebook/GET /categories",
+      "kind": "operation",
+      "path": "GET /categories",
+      "description": "The REST read request message for the getAllCategories() API call."
+    },
+    {
+      "key": "or:1.2:path:gradebook/GET /categories/{sourcedId}",
+      "kind": "operation",
+      "path": "GET /categories/{sourcedId}",
+      "description": "The REST read request message for the getCategory() API call."
+    },
+    {
+      "key": "or:1.2:path:gradebook/GET /classes/{classSourcedId}/categories",
+      "kind": "operation",
+      "path": "GET /classes/{classSourcedId}/categories",
+      "description": "The REST read request message for the getCategoriesForClass() API call."
+    },
+    {
+      "key": "or:1.2:path:gradebook/GET /classes/{classSourcedId}/lineItems",
+      "kind": "operation",
+      "path": "GET /classes/{classSourcedId}/lineItems",
+      "description": "The REST read request message for the getLineItemsForClass() API call."
+    },
+    {
+      "key": "or:1.2:path:gradebook/GET /classes/{classSourcedId}/lineItems/{lineItemSourcedId}/results",
+      "kind": "operation",
+      "path": "GET /classes/{classSourcedId}/lineItems/{lineItemSourcedId}/results",
+      "description": "The REST read request message for the getResultsForLineItemForClass() API call."
+    },
+    {
+      "key": "or:1.2:path:gradebook/GET /classes/{classSourcedId}/results",
+      "kind": "operation",
+      "path": "GET /classes/{classSourcedId}/results",
+      "description": "The REST read request message for the getResultsForClass() API call."
+    },
+    {
+      "key": "or:1.2:path:gradebook/GET /classes/{classSourcedId}/scoreScales",
+      "kind": "operation",
+      "path": "GET /classes/{classSourcedId}/scoreScales",
+      "description": "The REST read request message for the getScoreScalesForClass() API call."
+    },
+    {
+      "key": "or:1.2:path:gradebook/GET /classes/{classSourcedId}/students/{studentSourcedId}/results",
+      "kind": "operation",
+      "path": "GET /classes/{classSourcedId}/students/{studentSourcedId}/results",
+      "description": "The REST read request message for the getResultsForStudentForClass() API call."
+    },
+    {
+      "key": "or:1.2:path:gradebook/GET /lineItems",
+      "kind": "operation",
+      "path": "GET /lineItems",
+      "description": "The REST read request message for the getAllLineItems() API call."
+    },
+    {
+      "key": "or:1.2:path:gradebook/GET /lineItems/{sourcedId}",
+      "kind": "operation",
+      "path": "GET /lineItems/{sourcedId}",
+      "description": "The REST read request message for the getLineItem() API call."
+    },
+    {
+      "key": "or:1.2:path:gradebook/GET /results",
+      "kind": "operation",
+      "path": "GET /results",
+      "description": "The REST read request message for the getAllResults() API call."
+    },
+    {
+      "key": "or:1.2:path:gradebook/GET /results/{sourcedId}",
+      "kind": "operation",
+      "path": "GET /results/{sourcedId}",
+      "description": "The REST read request message for the getResult() API call."
+    },
+    {
+      "key": "or:1.2:path:gradebook/GET /schools/{schoolSourcedId}/scoreScales",
+      "kind": "operation",
+      "path": "GET /schools/{schoolSourcedId}/scoreScales",
+      "description": "The REST read request message for the getScoreScalesForSchool() API call."
+    },
+    {
+      "key": "or:1.2:path:gradebook/GET /scoreScales",
+      "kind": "operation",
+      "path": "GET /scoreScales",
+      "description": "The REST read request message for the getAllScoreScales() API call."
+    },
+    {
+      "key": "or:1.2:path:gradebook/GET /scoreScales/{sourcedId}",
+      "kind": "operation",
+      "path": "GET /scoreScales/{sourcedId}",
+      "description": "The REST read request message for the getScoreScale() API call."
+    },
+    {
+      "key": "or:1.2:path:gradebook/POST /classes/{classSourcedId}/academicSessions/{academicSessionSourcedId}/results",
+      "kind": "operation",
+      "path": "POST /classes/{classSourcedId}/academicSessions/{academicSessionSourcedId}/results",
+      "description": "The REST createbp request message for the postResultsForAcademicSessionForClass() API call."
+    },
+    {
+      "key": "or:1.2:path:gradebook/POST /classes/{classSourcedId}/lineItems",
+      "kind": "operation",
+      "path": "POST /classes/{classSourcedId}/lineItems",
+      "description": "The REST createbp request message for the postLineItemsForClass() API call."
+    },
+    {
+      "key": "or:1.2:path:gradebook/POST /lineItems/{lineItemSourcedId}/results",
+      "kind": "operation",
+      "path": "POST /lineItems/{lineItemSourcedId}/results",
+      "description": "The REST createbp request message for the postResultsForLineItem() API call."
+    },
+    {
+      "key": "or:1.2:path:gradebook/POST /schools/{schoolSourcedId}/lineItems",
+      "kind": "operation",
+      "path": "POST /schools/{schoolSourcedId}/lineItems",
+      "description": "The REST createbp request message for the postLineItemsForSchool() API call."
+    },
+    {
+      "key": "or:1.2:path:gradebook/PUT /assessmentLineItems/{sourcedId}",
+      "kind": "operation",
+      "path": "PUT /assessmentLineItems/{sourcedId}",
+      "description": "The REST create request message for the putAssessmentLineItem() API call."
+    },
+    {
+      "key": "or:1.2:path:gradebook/PUT /assessmentResults/{sourcedId}",
+      "kind": "operation",
+      "path": "PUT /assessmentResults/{sourcedId}",
+      "description": "The REST create request message for the putAssessmentResult() API call."
+    },
+    {
+      "key": "or:1.2:path:gradebook/PUT /categories/{sourcedId}",
+      "kind": "operation",
+      "path": "PUT /categories/{sourcedId}",
+      "description": "The REST create request message for the putCategory() API call."
+    },
+    {
+      "key": "or:1.2:path:gradebook/PUT /lineItems/{sourcedId}",
+      "kind": "operation",
+      "path": "PUT /lineItems/{sourcedId}",
+      "description": "The REST create request message for the putLineItem() API call."
+    },
+    {
+      "key": "or:1.2:path:gradebook/PUT /results/{sourcedId}",
+      "kind": "operation",
+      "path": "PUT /results/{sourcedId}",
+      "description": "The REST create request message for the putResult() API call."
+    },
+    {
+      "key": "or:1.2:path:gradebook/PUT /scoreScales/{sourcedId}",
+      "kind": "operation",
+      "path": "PUT /scoreScales/{sourcedId}",
+      "description": "The REST create request message for the putScoreScale() API call."
+    },
+    {
+      "key": "or:1.2:path:resources/GET /classes/{classSourcedId}/resources",
+      "kind": "operation",
+      "path": "GET /classes/{classSourcedId}/resources",
+      "description": "The REST read request message for the getResourcesForClass() API call."
+    },
+    {
+      "key": "or:1.2:path:resources/GET /courses/{courseSourcedId}/resources",
+      "kind": "operation",
+      "path": "GET /courses/{courseSourcedId}/resources",
+      "description": "The REST read request message for the getResourcesForCourse() API call."
+    },
+    {
+      "key": "or:1.2:path:resources/GET /resources",
+      "kind": "operation",
+      "path": "GET /resources",
+      "description": "The REST read request message for the getAllResources() API call."
+    },
+    {
+      "key": "or:1.2:path:resources/GET /resources/{sourcedId}",
+      "kind": "operation",
+      "path": "GET /resources/{sourcedId}",
+      "description": "The REST read request message for the getResource() API call."
+    },
+    {
+      "key": "or:1.2:path:resources/GET /users/{userSourcedId}/resources",
+      "kind": "operation",
+      "path": "GET /users/{userSourcedId}/resources",
+      "description": "The REST read request message for the getResourcesForUser() API call."
+    },
+    {
+      "key": "or:1.2:path:rostering/GET /academicSessions",
+      "kind": "operation",
+      "path": "GET /academicSessions",
+      "description": "The REST read request message for the getAllAcademicSessions() API call."
+    },
+    {
+      "key": "or:1.2:path:rostering/GET /academicSessions/{sourcedId}",
+      "kind": "operation",
+      "path": "GET /academicSessions/{sourcedId}",
+      "description": "The REST read request message for the getAcademicSession() API call."
+    },
+    {
+      "key": "or:1.2:path:rostering/GET /classes",
+      "kind": "operation",
+      "path": "GET /classes",
+      "description": "The REST read request message for the getAllClasses() API call."
+    },
+    {
+      "key": "or:1.2:path:rostering/GET /classes/{classSourcedId}/students",
+      "kind": "operation",
+      "path": "GET /classes/{classSourcedId}/students",
+      "description": "The REST read request message for the getStudentsForClass() API call."
+    },
+    {
+      "key": "or:1.2:path:rostering/GET /classes/{classSourcedId}/teachers",
+      "kind": "operation",
+      "path": "GET /classes/{classSourcedId}/teachers",
+      "description": "The REST read request message for the getTeachersForClass() API call."
+    },
+    {
+      "key": "or:1.2:path:rostering/GET /classes/{sourcedId}",
+      "kind": "operation",
+      "path": "GET /classes/{sourcedId}",
+      "description": "The REST read request message for the getClass() API call."
+    },
+    {
+      "key": "or:1.2:path:rostering/GET /courses",
+      "kind": "operation",
+      "path": "GET /courses",
+      "description": "The REST read request message for the getAllCourses() API call."
+    },
+    {
+      "key": "or:1.2:path:rostering/GET /courses/{courseSourcedId}/classes",
+      "kind": "operation",
+      "path": "GET /courses/{courseSourcedId}/classes",
+      "description": "The REST read request message for the getClassesForCourse() API call."
+    },
+    {
+      "key": "or:1.2:path:rostering/GET /courses/{sourcedId}",
+      "kind": "operation",
+      "path": "GET /courses/{sourcedId}",
+      "description": "The REST read request message for the getCourse() API call."
+    },
+    {
+      "key": "or:1.2:path:rostering/GET /demographics",
+      "kind": "operation",
+      "path": "GET /demographics",
+      "description": "The REST read request message for the getAllDemographics() API call."
+    },
+    {
+      "key": "or:1.2:path:rostering/GET /demographics/{sourcedId}",
+      "kind": "operation",
+      "path": "GET /demographics/{sourcedId}",
+      "description": "The REST read request message for the getDemographics() API call."
+    },
+    {
+      "key": "or:1.2:path:rostering/GET /enrollments",
+      "kind": "operation",
+      "path": "GET /enrollments",
+      "description": "The REST read request message for the getAllEnrollments() API call."
+    },
+    {
+      "key": "or:1.2:path:rostering/GET /enrollments/{sourcedId}",
+      "kind": "operation",
+      "path": "GET /enrollments/{sourcedId}",
+      "description": "The REST read request message for the getEnrollment() API call."
+    },
+    {
+      "key": "or:1.2:path:rostering/GET /gradingPeriods",
+      "kind": "operation",
+      "path": "GET /gradingPeriods",
+      "description": "The REST read request message for the getAllGradingPeriods() API call."
+    },
+    {
+      "key": "or:1.2:path:rostering/GET /gradingPeriods/{sourcedId}",
+      "kind": "operation",
+      "path": "GET /gradingPeriods/{sourcedId}",
+      "description": "The REST read request message for the getGradingPeriod() API call."
+    },
+    {
+      "key": "or:1.2:path:rostering/GET /orgs",
+      "kind": "operation",
+      "path": "GET /orgs",
+      "description": "The REST read request message for the getAllOrgs() API call."
+    },
+    {
+      "key": "or:1.2:path:rostering/GET /orgs/{sourcedId}",
+      "kind": "operation",
+      "path": "GET /orgs/{sourcedId}",
+      "description": "The REST read request message for the getOrg() API call."
+    },
+    {
+      "key": "or:1.2:path:rostering/GET /schools",
+      "kind": "operation",
+      "path": "GET /schools",
+      "description": "The REST read request message for the getAllSchools() API call."
+    },
+    {
+      "key": "or:1.2:path:rostering/GET /schools/{schoolSourcedId}/classes",
+      "kind": "operation",
+      "path": "GET /schools/{schoolSourcedId}/classes",
+      "description": "The REST read request message for the getClassesForSchool() API call."
+    },
+    {
+      "key": "or:1.2:path:rostering/GET /schools/{schoolSourcedId}/classes/{classSourcedId}/enrollments",
+      "kind": "operation",
+      "path": "GET /schools/{schoolSourcedId}/classes/{classSourcedId}/enrollments",
+      "description": "The REST read request message for the getEnrollmentsForClassInSchool() API call."
+    },
+    {
+      "key": "or:1.2:path:rostering/GET /schools/{schoolSourcedId}/classes/{classSourcedId}/students",
+      "kind": "operation",
+      "path": "GET /schools/{schoolSourcedId}/classes/{classSourcedId}/students",
+      "description": "The REST read request message for the getStudentsForClassInSchool() API call."
+    },
+    {
+      "key": "or:1.2:path:rostering/GET /schools/{schoolSourcedId}/classes/{classSourcedId}/teachers",
+      "kind": "operation",
+      "path": "GET /schools/{schoolSourcedId}/classes/{classSourcedId}/teachers",
+      "description": "The REST read request message for the getTeachersForClassInSchool() API call."
+    },
+    {
+      "key": "or:1.2:path:rostering/GET /schools/{schoolSourcedId}/courses",
+      "kind": "operation",
+      "path": "GET /schools/{schoolSourcedId}/courses",
+      "description": "The REST read request message for the getCoursesForSchool() API call."
+    },
+    {
+      "key": "or:1.2:path:rostering/GET /schools/{schoolSourcedId}/enrollments",
+      "kind": "operation",
+      "path": "GET /schools/{schoolSourcedId}/enrollments",
+      "description": "The REST read request message for the getEnrollmentsForSchool() API call."
+    },
+    {
+      "key": "or:1.2:path:rostering/GET /schools/{schoolSourcedId}/students",
+      "kind": "operation",
+      "path": "GET /schools/{schoolSourcedId}/students",
+      "description": "The REST read request message for the getStudentsForSchool() API call."
+    },
+    {
+      "key": "or:1.2:path:rostering/GET /schools/{schoolSourcedId}/teachers",
+      "kind": "operation",
+      "path": "GET /schools/{schoolSourcedId}/teachers",
+      "description": "The REST read request message for the getTeachersForSchool() API call."
+    },
+    {
+      "key": "or:1.2:path:rostering/GET /schools/{schoolSourcedId}/terms",
+      "kind": "operation",
+      "path": "GET /schools/{schoolSourcedId}/terms",
+      "description": "The REST read request message for the getTermsForSchool() API call."
+    },
+    {
+      "key": "or:1.2:path:rostering/GET /schools/{sourcedId}",
+      "kind": "operation",
+      "path": "GET /schools/{sourcedId}",
+      "description": "The REST read request message for the getSchool() API call."
+    },
+    {
+      "key": "or:1.2:path:rostering/GET /students",
+      "kind": "operation",
+      "path": "GET /students",
+      "description": "The REST read request message for the getAllStudents() API call."
+    },
+    {
+      "key": "or:1.2:path:rostering/GET /students/{sourcedId}",
+      "kind": "operation",
+      "path": "GET /students/{sourcedId}",
+      "description": "The REST read request message for the getStudent() API call."
+    },
+    {
+      "key": "or:1.2:path:rostering/GET /students/{studentSourcedId}/classes",
+      "kind": "operation",
+      "path": "GET /students/{studentSourcedId}/classes",
+      "description": "The REST read request message for the getClassesForStudent() API call."
+    },
+    {
+      "key": "or:1.2:path:rostering/GET /teachers",
+      "kind": "operation",
+      "path": "GET /teachers",
+      "description": "The REST read request message for the getAllTeachers() API call."
+    },
+    {
+      "key": "or:1.2:path:rostering/GET /teachers/{sourcedId}",
+      "kind": "operation",
+      "path": "GET /teachers/{sourcedId}",
+      "description": "The REST read request message for the getTeacher() API call."
+    },
+    {
+      "key": "or:1.2:path:rostering/GET /teachers/{teacherSourcedId}/classes",
+      "kind": "operation",
+      "path": "GET /teachers/{teacherSourcedId}/classes",
+      "description": "The REST read request message for the getClassesForTeacher() API call."
+    },
+    {
+      "key": "or:1.2:path:rostering/GET /terms",
+      "kind": "operation",
+      "path": "GET /terms",
+      "description": "The REST read request message for the getAllTerms() API call."
+    },
+    {
+      "key": "or:1.2:path:rostering/GET /terms/{sourcedId}",
+      "kind": "operation",
+      "path": "GET /terms/{sourcedId}",
+      "description": "The REST read request message for the getTerm() API call."
+    },
+    {
+      "key": "or:1.2:path:rostering/GET /terms/{termSourcedId}/classes",
+      "kind": "operation",
+      "path": "GET /terms/{termSourcedId}/classes",
+      "description": "The REST read request message for the getClassesForTerm() API call."
+    },
+    {
+      "key": "or:1.2:path:rostering/GET /terms/{termSourcedId}/gradingPeriods",
+      "kind": "operation",
+      "path": "GET /terms/{termSourcedId}/gradingPeriods",
+      "description": "The REST read request message for the getGradingPeriodsForTerm() API call."
+    },
+    {
+      "key": "or:1.2:path:rostering/GET /users",
+      "kind": "operation",
+      "path": "GET /users",
+      "description": "The REST read request message for the getAllUsers() API call."
+    },
+    {
+      "key": "or:1.2:path:rostering/GET /users/{sourcedId}",
+      "kind": "operation",
+      "path": "GET /users/{sourcedId}",
+      "description": "The REST read request message for the getUser() API call."
+    },
+    {
+      "key": "or:1.2:path:rostering/GET /users/{userSourcedId}/classes",
+      "kind": "operation",
+      "path": "GET /users/{userSourcedId}/classes",
+      "description": "The REST read request message for the getClassesForUser() API call."
+    },
+    {
+      "key": "or:1.2:sec:OAuth2CC",
+      "kind": "security",
+      "path": "OAuth2CC",
+      "description": "OAuth 2 Client Credentials (as per the requirements in the IMS Security Framework) is to be used."
     }
   ],
   "edges": [
@@ -3792,6 +4338,1510 @@
     {
       "from": "or:1.2:doc:UserDType",
       "to": "or:1.2:def:UserDType"
+    },
+    {
+      "from": "or:1.2:path:gradebook/DELETE /assessmentLineItems/{sourcedId}",
+      "to": "or:1.2:sec:OAuth2CC"
+    },
+    {
+      "from": "or:1.2:path:gradebook/DELETE /assessmentResults/{sourcedId}",
+      "to": "or:1.2:sec:OAuth2CC"
+    },
+    {
+      "from": "or:1.2:path:gradebook/DELETE /categories/{sourcedId}",
+      "to": "or:1.2:sec:OAuth2CC"
+    },
+    {
+      "from": "or:1.2:path:gradebook/DELETE /lineItems/{sourcedId}",
+      "to": "or:1.2:sec:OAuth2CC"
+    },
+    {
+      "from": "or:1.2:path:gradebook/DELETE /results/{sourcedId}",
+      "to": "or:1.2:sec:OAuth2CC"
+    },
+    {
+      "from": "or:1.2:path:gradebook/DELETE /scoreScales/{sourcedId}",
+      "to": "or:1.2:sec:OAuth2CC"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /assessmentLineItems",
+      "to": "or:1.2:param:fields"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /assessmentLineItems",
+      "to": "or:1.2:param:filter"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /assessmentLineItems",
+      "to": "or:1.2:param:limit"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /assessmentLineItems",
+      "to": "or:1.2:param:offset"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /assessmentLineItems",
+      "to": "or:1.2:param:orderBy"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /assessmentLineItems",
+      "to": "or:1.2:param:sort"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /assessmentLineItems",
+      "to": "or:1.2:sec:OAuth2CC"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /assessmentLineItems/{sourcedId}",
+      "to": "or:1.2:param:fields"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /assessmentLineItems/{sourcedId}",
+      "to": "or:1.2:sec:OAuth2CC"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /assessmentResults",
+      "to": "or:1.2:param:fields"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /assessmentResults",
+      "to": "or:1.2:param:filter"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /assessmentResults",
+      "to": "or:1.2:param:limit"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /assessmentResults",
+      "to": "or:1.2:param:offset"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /assessmentResults",
+      "to": "or:1.2:param:orderBy"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /assessmentResults",
+      "to": "or:1.2:param:sort"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /assessmentResults",
+      "to": "or:1.2:sec:OAuth2CC"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /assessmentResults/{sourcedId}",
+      "to": "or:1.2:param:fields"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /assessmentResults/{sourcedId}",
+      "to": "or:1.2:sec:OAuth2CC"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /categories",
+      "to": "or:1.2:param:fields"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /categories",
+      "to": "or:1.2:param:filter"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /categories",
+      "to": "or:1.2:param:limit"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /categories",
+      "to": "or:1.2:param:offset"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /categories",
+      "to": "or:1.2:param:orderBy"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /categories",
+      "to": "or:1.2:param:sort"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /categories",
+      "to": "or:1.2:sec:OAuth2CC"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /categories/{sourcedId}",
+      "to": "or:1.2:param:fields"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /categories/{sourcedId}",
+      "to": "or:1.2:sec:OAuth2CC"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /classes/{classSourcedId}/categories",
+      "to": "or:1.2:param:fields"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /classes/{classSourcedId}/categories",
+      "to": "or:1.2:param:filter"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /classes/{classSourcedId}/categories",
+      "to": "or:1.2:param:limit"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /classes/{classSourcedId}/categories",
+      "to": "or:1.2:param:offset"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /classes/{classSourcedId}/categories",
+      "to": "or:1.2:param:orderBy"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /classes/{classSourcedId}/categories",
+      "to": "or:1.2:param:sort"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /classes/{classSourcedId}/categories",
+      "to": "or:1.2:sec:OAuth2CC"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /classes/{classSourcedId}/lineItems",
+      "to": "or:1.2:param:fields"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /classes/{classSourcedId}/lineItems",
+      "to": "or:1.2:param:filter"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /classes/{classSourcedId}/lineItems",
+      "to": "or:1.2:param:limit"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /classes/{classSourcedId}/lineItems",
+      "to": "or:1.2:param:offset"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /classes/{classSourcedId}/lineItems",
+      "to": "or:1.2:param:orderBy"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /classes/{classSourcedId}/lineItems",
+      "to": "or:1.2:param:sort"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /classes/{classSourcedId}/lineItems",
+      "to": "or:1.2:sec:OAuth2CC"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /classes/{classSourcedId}/lineItems/{lineItemSourcedId}/results",
+      "to": "or:1.2:param:fields"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /classes/{classSourcedId}/lineItems/{lineItemSourcedId}/results",
+      "to": "or:1.2:param:filter"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /classes/{classSourcedId}/lineItems/{lineItemSourcedId}/results",
+      "to": "or:1.2:param:limit"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /classes/{classSourcedId}/lineItems/{lineItemSourcedId}/results",
+      "to": "or:1.2:param:offset"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /classes/{classSourcedId}/lineItems/{lineItemSourcedId}/results",
+      "to": "or:1.2:param:orderBy"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /classes/{classSourcedId}/lineItems/{lineItemSourcedId}/results",
+      "to": "or:1.2:param:sort"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /classes/{classSourcedId}/lineItems/{lineItemSourcedId}/results",
+      "to": "or:1.2:sec:OAuth2CC"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /classes/{classSourcedId}/results",
+      "to": "or:1.2:param:fields"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /classes/{classSourcedId}/results",
+      "to": "or:1.2:param:filter"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /classes/{classSourcedId}/results",
+      "to": "or:1.2:param:limit"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /classes/{classSourcedId}/results",
+      "to": "or:1.2:param:offset"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /classes/{classSourcedId}/results",
+      "to": "or:1.2:param:orderBy"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /classes/{classSourcedId}/results",
+      "to": "or:1.2:param:sort"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /classes/{classSourcedId}/results",
+      "to": "or:1.2:sec:OAuth2CC"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /classes/{classSourcedId}/scoreScales",
+      "to": "or:1.2:param:fields"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /classes/{classSourcedId}/scoreScales",
+      "to": "or:1.2:param:filter"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /classes/{classSourcedId}/scoreScales",
+      "to": "or:1.2:param:limit"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /classes/{classSourcedId}/scoreScales",
+      "to": "or:1.2:param:offset"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /classes/{classSourcedId}/scoreScales",
+      "to": "or:1.2:param:orderBy"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /classes/{classSourcedId}/scoreScales",
+      "to": "or:1.2:param:sort"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /classes/{classSourcedId}/scoreScales",
+      "to": "or:1.2:sec:OAuth2CC"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /classes/{classSourcedId}/students/{studentSourcedId}/results",
+      "to": "or:1.2:param:fields"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /classes/{classSourcedId}/students/{studentSourcedId}/results",
+      "to": "or:1.2:param:filter"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /classes/{classSourcedId}/students/{studentSourcedId}/results",
+      "to": "or:1.2:param:limit"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /classes/{classSourcedId}/students/{studentSourcedId}/results",
+      "to": "or:1.2:param:offset"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /classes/{classSourcedId}/students/{studentSourcedId}/results",
+      "to": "or:1.2:param:orderBy"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /classes/{classSourcedId}/students/{studentSourcedId}/results",
+      "to": "or:1.2:param:sort"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /classes/{classSourcedId}/students/{studentSourcedId}/results",
+      "to": "or:1.2:sec:OAuth2CC"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /lineItems",
+      "to": "or:1.2:param:fields"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /lineItems",
+      "to": "or:1.2:param:filter"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /lineItems",
+      "to": "or:1.2:param:limit"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /lineItems",
+      "to": "or:1.2:param:offset"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /lineItems",
+      "to": "or:1.2:param:orderBy"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /lineItems",
+      "to": "or:1.2:param:sort"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /lineItems",
+      "to": "or:1.2:sec:OAuth2CC"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /lineItems/{sourcedId}",
+      "to": "or:1.2:param:fields"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /lineItems/{sourcedId}",
+      "to": "or:1.2:sec:OAuth2CC"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /results",
+      "to": "or:1.2:param:fields"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /results",
+      "to": "or:1.2:param:filter"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /results",
+      "to": "or:1.2:param:limit"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /results",
+      "to": "or:1.2:param:offset"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /results",
+      "to": "or:1.2:param:orderBy"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /results",
+      "to": "or:1.2:param:sort"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /results",
+      "to": "or:1.2:sec:OAuth2CC"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /results/{sourcedId}",
+      "to": "or:1.2:param:fields"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /results/{sourcedId}",
+      "to": "or:1.2:sec:OAuth2CC"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /schools/{schoolSourcedId}/scoreScales",
+      "to": "or:1.2:param:fields"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /schools/{schoolSourcedId}/scoreScales",
+      "to": "or:1.2:param:filter"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /schools/{schoolSourcedId}/scoreScales",
+      "to": "or:1.2:param:limit"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /schools/{schoolSourcedId}/scoreScales",
+      "to": "or:1.2:param:offset"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /schools/{schoolSourcedId}/scoreScales",
+      "to": "or:1.2:param:orderBy"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /schools/{schoolSourcedId}/scoreScales",
+      "to": "or:1.2:param:sort"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /schools/{schoolSourcedId}/scoreScales",
+      "to": "or:1.2:sec:OAuth2CC"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /scoreScales",
+      "to": "or:1.2:param:fields"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /scoreScales",
+      "to": "or:1.2:param:filter"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /scoreScales",
+      "to": "or:1.2:param:limit"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /scoreScales",
+      "to": "or:1.2:param:offset"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /scoreScales",
+      "to": "or:1.2:param:orderBy"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /scoreScales",
+      "to": "or:1.2:param:sort"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /scoreScales",
+      "to": "or:1.2:sec:OAuth2CC"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /scoreScales/{sourcedId}",
+      "to": "or:1.2:param:fields"
+    },
+    {
+      "from": "or:1.2:path:gradebook/GET /scoreScales/{sourcedId}",
+      "to": "or:1.2:sec:OAuth2CC"
+    },
+    {
+      "from": "or:1.2:path:gradebook/POST /classes/{classSourcedId}/academicSessions/{academicSessionSourcedId}/results",
+      "to": "or:1.2:sec:OAuth2CC"
+    },
+    {
+      "from": "or:1.2:path:gradebook/POST /classes/{classSourcedId}/lineItems",
+      "to": "or:1.2:sec:OAuth2CC"
+    },
+    {
+      "from": "or:1.2:path:gradebook/POST /lineItems/{lineItemSourcedId}/results",
+      "to": "or:1.2:sec:OAuth2CC"
+    },
+    {
+      "from": "or:1.2:path:gradebook/POST /schools/{schoolSourcedId}/lineItems",
+      "to": "or:1.2:sec:OAuth2CC"
+    },
+    {
+      "from": "or:1.2:path:gradebook/PUT /assessmentLineItems/{sourcedId}",
+      "to": "or:1.2:sec:OAuth2CC"
+    },
+    {
+      "from": "or:1.2:path:gradebook/PUT /assessmentResults/{sourcedId}",
+      "to": "or:1.2:sec:OAuth2CC"
+    },
+    {
+      "from": "or:1.2:path:gradebook/PUT /categories/{sourcedId}",
+      "to": "or:1.2:sec:OAuth2CC"
+    },
+    {
+      "from": "or:1.2:path:gradebook/PUT /lineItems/{sourcedId}",
+      "to": "or:1.2:sec:OAuth2CC"
+    },
+    {
+      "from": "or:1.2:path:gradebook/PUT /results/{sourcedId}",
+      "to": "or:1.2:sec:OAuth2CC"
+    },
+    {
+      "from": "or:1.2:path:gradebook/PUT /scoreScales/{sourcedId}",
+      "to": "or:1.2:sec:OAuth2CC"
+    },
+    {
+      "from": "or:1.2:path:resources/GET /classes/{classSourcedId}/resources",
+      "to": "or:1.2:param:fields"
+    },
+    {
+      "from": "or:1.2:path:resources/GET /classes/{classSourcedId}/resources",
+      "to": "or:1.2:param:filter"
+    },
+    {
+      "from": "or:1.2:path:resources/GET /classes/{classSourcedId}/resources",
+      "to": "or:1.2:param:limit"
+    },
+    {
+      "from": "or:1.2:path:resources/GET /classes/{classSourcedId}/resources",
+      "to": "or:1.2:param:offset"
+    },
+    {
+      "from": "or:1.2:path:resources/GET /classes/{classSourcedId}/resources",
+      "to": "or:1.2:param:orderBy"
+    },
+    {
+      "from": "or:1.2:path:resources/GET /classes/{classSourcedId}/resources",
+      "to": "or:1.2:param:sort"
+    },
+    {
+      "from": "or:1.2:path:resources/GET /classes/{classSourcedId}/resources",
+      "to": "or:1.2:sec:OAuth2CC"
+    },
+    {
+      "from": "or:1.2:path:resources/GET /courses/{courseSourcedId}/resources",
+      "to": "or:1.2:param:fields"
+    },
+    {
+      "from": "or:1.2:path:resources/GET /courses/{courseSourcedId}/resources",
+      "to": "or:1.2:param:filter"
+    },
+    {
+      "from": "or:1.2:path:resources/GET /courses/{courseSourcedId}/resources",
+      "to": "or:1.2:param:limit"
+    },
+    {
+      "from": "or:1.2:path:resources/GET /courses/{courseSourcedId}/resources",
+      "to": "or:1.2:param:offset"
+    },
+    {
+      "from": "or:1.2:path:resources/GET /courses/{courseSourcedId}/resources",
+      "to": "or:1.2:param:orderBy"
+    },
+    {
+      "from": "or:1.2:path:resources/GET /courses/{courseSourcedId}/resources",
+      "to": "or:1.2:param:sort"
+    },
+    {
+      "from": "or:1.2:path:resources/GET /courses/{courseSourcedId}/resources",
+      "to": "or:1.2:sec:OAuth2CC"
+    },
+    {
+      "from": "or:1.2:path:resources/GET /resources",
+      "to": "or:1.2:param:fields"
+    },
+    {
+      "from": "or:1.2:path:resources/GET /resources",
+      "to": "or:1.2:param:filter"
+    },
+    {
+      "from": "or:1.2:path:resources/GET /resources",
+      "to": "or:1.2:param:limit"
+    },
+    {
+      "from": "or:1.2:path:resources/GET /resources",
+      "to": "or:1.2:param:offset"
+    },
+    {
+      "from": "or:1.2:path:resources/GET /resources",
+      "to": "or:1.2:param:orderBy"
+    },
+    {
+      "from": "or:1.2:path:resources/GET /resources",
+      "to": "or:1.2:param:sort"
+    },
+    {
+      "from": "or:1.2:path:resources/GET /resources",
+      "to": "or:1.2:sec:OAuth2CC"
+    },
+    {
+      "from": "or:1.2:path:resources/GET /resources/{sourcedId}",
+      "to": "or:1.2:param:fields"
+    },
+    {
+      "from": "or:1.2:path:resources/GET /resources/{sourcedId}",
+      "to": "or:1.2:sec:OAuth2CC"
+    },
+    {
+      "from": "or:1.2:path:resources/GET /users/{userSourcedId}/resources",
+      "to": "or:1.2:param:fields"
+    },
+    {
+      "from": "or:1.2:path:resources/GET /users/{userSourcedId}/resources",
+      "to": "or:1.2:param:filter"
+    },
+    {
+      "from": "or:1.2:path:resources/GET /users/{userSourcedId}/resources",
+      "to": "or:1.2:param:limit"
+    },
+    {
+      "from": "or:1.2:path:resources/GET /users/{userSourcedId}/resources",
+      "to": "or:1.2:param:offset"
+    },
+    {
+      "from": "or:1.2:path:resources/GET /users/{userSourcedId}/resources",
+      "to": "or:1.2:param:orderBy"
+    },
+    {
+      "from": "or:1.2:path:resources/GET /users/{userSourcedId}/resources",
+      "to": "or:1.2:param:sort"
+    },
+    {
+      "from": "or:1.2:path:resources/GET /users/{userSourcedId}/resources",
+      "to": "or:1.2:sec:OAuth2CC"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /academicSessions",
+      "to": "or:1.2:param:fields"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /academicSessions",
+      "to": "or:1.2:param:filter"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /academicSessions",
+      "to": "or:1.2:param:limit"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /academicSessions",
+      "to": "or:1.2:param:offset"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /academicSessions",
+      "to": "or:1.2:param:orderBy"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /academicSessions",
+      "to": "or:1.2:param:sort"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /academicSessions",
+      "to": "or:1.2:sec:OAuth2CC"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /academicSessions/{sourcedId}",
+      "to": "or:1.2:param:fields"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /academicSessions/{sourcedId}",
+      "to": "or:1.2:sec:OAuth2CC"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /classes",
+      "to": "or:1.2:param:fields"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /classes",
+      "to": "or:1.2:param:filter"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /classes",
+      "to": "or:1.2:param:limit"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /classes",
+      "to": "or:1.2:param:offset"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /classes",
+      "to": "or:1.2:param:orderBy"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /classes",
+      "to": "or:1.2:param:sort"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /classes",
+      "to": "or:1.2:sec:OAuth2CC"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /classes/{classSourcedId}/students",
+      "to": "or:1.2:param:fields"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /classes/{classSourcedId}/students",
+      "to": "or:1.2:param:filter"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /classes/{classSourcedId}/students",
+      "to": "or:1.2:param:limit"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /classes/{classSourcedId}/students",
+      "to": "or:1.2:param:offset"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /classes/{classSourcedId}/students",
+      "to": "or:1.2:param:orderBy"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /classes/{classSourcedId}/students",
+      "to": "or:1.2:param:sort"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /classes/{classSourcedId}/students",
+      "to": "or:1.2:sec:OAuth2CC"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /classes/{classSourcedId}/teachers",
+      "to": "or:1.2:param:fields"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /classes/{classSourcedId}/teachers",
+      "to": "or:1.2:param:filter"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /classes/{classSourcedId}/teachers",
+      "to": "or:1.2:param:limit"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /classes/{classSourcedId}/teachers",
+      "to": "or:1.2:param:offset"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /classes/{classSourcedId}/teachers",
+      "to": "or:1.2:param:orderBy"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /classes/{classSourcedId}/teachers",
+      "to": "or:1.2:param:sort"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /classes/{classSourcedId}/teachers",
+      "to": "or:1.2:sec:OAuth2CC"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /classes/{sourcedId}",
+      "to": "or:1.2:param:fields"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /classes/{sourcedId}",
+      "to": "or:1.2:sec:OAuth2CC"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /courses",
+      "to": "or:1.2:param:fields"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /courses",
+      "to": "or:1.2:param:filter"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /courses",
+      "to": "or:1.2:param:limit"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /courses",
+      "to": "or:1.2:param:offset"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /courses",
+      "to": "or:1.2:param:orderBy"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /courses",
+      "to": "or:1.2:param:sort"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /courses",
+      "to": "or:1.2:sec:OAuth2CC"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /courses/{courseSourcedId}/classes",
+      "to": "or:1.2:param:fields"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /courses/{courseSourcedId}/classes",
+      "to": "or:1.2:param:filter"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /courses/{courseSourcedId}/classes",
+      "to": "or:1.2:param:limit"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /courses/{courseSourcedId}/classes",
+      "to": "or:1.2:param:offset"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /courses/{courseSourcedId}/classes",
+      "to": "or:1.2:param:orderBy"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /courses/{courseSourcedId}/classes",
+      "to": "or:1.2:param:sort"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /courses/{courseSourcedId}/classes",
+      "to": "or:1.2:sec:OAuth2CC"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /courses/{sourcedId}",
+      "to": "or:1.2:param:fields"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /courses/{sourcedId}",
+      "to": "or:1.2:sec:OAuth2CC"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /demographics",
+      "to": "or:1.2:param:fields"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /demographics",
+      "to": "or:1.2:param:filter"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /demographics",
+      "to": "or:1.2:param:limit"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /demographics",
+      "to": "or:1.2:param:offset"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /demographics",
+      "to": "or:1.2:param:orderBy"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /demographics",
+      "to": "or:1.2:param:sort"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /demographics",
+      "to": "or:1.2:sec:OAuth2CC"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /demographics/{sourcedId}",
+      "to": "or:1.2:param:fields"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /demographics/{sourcedId}",
+      "to": "or:1.2:sec:OAuth2CC"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /enrollments",
+      "to": "or:1.2:param:fields"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /enrollments",
+      "to": "or:1.2:param:filter"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /enrollments",
+      "to": "or:1.2:param:limit"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /enrollments",
+      "to": "or:1.2:param:offset"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /enrollments",
+      "to": "or:1.2:param:orderBy"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /enrollments",
+      "to": "or:1.2:param:sort"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /enrollments",
+      "to": "or:1.2:sec:OAuth2CC"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /enrollments/{sourcedId}",
+      "to": "or:1.2:param:fields"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /enrollments/{sourcedId}",
+      "to": "or:1.2:sec:OAuth2CC"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /gradingPeriods",
+      "to": "or:1.2:param:fields"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /gradingPeriods",
+      "to": "or:1.2:param:filter"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /gradingPeriods",
+      "to": "or:1.2:param:limit"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /gradingPeriods",
+      "to": "or:1.2:param:offset"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /gradingPeriods",
+      "to": "or:1.2:param:orderBy"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /gradingPeriods",
+      "to": "or:1.2:param:sort"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /gradingPeriods",
+      "to": "or:1.2:sec:OAuth2CC"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /gradingPeriods/{sourcedId}",
+      "to": "or:1.2:param:fields"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /gradingPeriods/{sourcedId}",
+      "to": "or:1.2:sec:OAuth2CC"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /orgs",
+      "to": "or:1.2:param:fields"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /orgs",
+      "to": "or:1.2:param:filter"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /orgs",
+      "to": "or:1.2:param:limit"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /orgs",
+      "to": "or:1.2:param:offset"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /orgs",
+      "to": "or:1.2:param:orderBy"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /orgs",
+      "to": "or:1.2:param:sort"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /orgs",
+      "to": "or:1.2:sec:OAuth2CC"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /orgs/{sourcedId}",
+      "to": "or:1.2:param:fields"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /orgs/{sourcedId}",
+      "to": "or:1.2:sec:OAuth2CC"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /schools",
+      "to": "or:1.2:param:fields"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /schools",
+      "to": "or:1.2:param:filter"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /schools",
+      "to": "or:1.2:param:limit"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /schools",
+      "to": "or:1.2:param:offset"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /schools",
+      "to": "or:1.2:param:orderBy"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /schools",
+      "to": "or:1.2:param:sort"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /schools",
+      "to": "or:1.2:sec:OAuth2CC"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /schools/{schoolSourcedId}/classes",
+      "to": "or:1.2:param:fields"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /schools/{schoolSourcedId}/classes",
+      "to": "or:1.2:param:filter"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /schools/{schoolSourcedId}/classes",
+      "to": "or:1.2:param:limit"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /schools/{schoolSourcedId}/classes",
+      "to": "or:1.2:param:offset"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /schools/{schoolSourcedId}/classes",
+      "to": "or:1.2:param:orderBy"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /schools/{schoolSourcedId}/classes",
+      "to": "or:1.2:param:sort"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /schools/{schoolSourcedId}/classes",
+      "to": "or:1.2:sec:OAuth2CC"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /schools/{schoolSourcedId}/classes/{classSourcedId}/enrollments",
+      "to": "or:1.2:param:fields"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /schools/{schoolSourcedId}/classes/{classSourcedId}/enrollments",
+      "to": "or:1.2:param:filter"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /schools/{schoolSourcedId}/classes/{classSourcedId}/enrollments",
+      "to": "or:1.2:param:limit"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /schools/{schoolSourcedId}/classes/{classSourcedId}/enrollments",
+      "to": "or:1.2:param:offset"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /schools/{schoolSourcedId}/classes/{classSourcedId}/enrollments",
+      "to": "or:1.2:param:orderBy"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /schools/{schoolSourcedId}/classes/{classSourcedId}/enrollments",
+      "to": "or:1.2:param:sort"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /schools/{schoolSourcedId}/classes/{classSourcedId}/enrollments",
+      "to": "or:1.2:sec:OAuth2CC"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /schools/{schoolSourcedId}/classes/{classSourcedId}/students",
+      "to": "or:1.2:param:fields"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /schools/{schoolSourcedId}/classes/{classSourcedId}/students",
+      "to": "or:1.2:param:filter"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /schools/{schoolSourcedId}/classes/{classSourcedId}/students",
+      "to": "or:1.2:param:limit"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /schools/{schoolSourcedId}/classes/{classSourcedId}/students",
+      "to": "or:1.2:param:offset"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /schools/{schoolSourcedId}/classes/{classSourcedId}/students",
+      "to": "or:1.2:param:orderBy"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /schools/{schoolSourcedId}/classes/{classSourcedId}/students",
+      "to": "or:1.2:param:sort"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /schools/{schoolSourcedId}/classes/{classSourcedId}/students",
+      "to": "or:1.2:sec:OAuth2CC"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /schools/{schoolSourcedId}/classes/{classSourcedId}/teachers",
+      "to": "or:1.2:param:fields"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /schools/{schoolSourcedId}/classes/{classSourcedId}/teachers",
+      "to": "or:1.2:param:filter"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /schools/{schoolSourcedId}/classes/{classSourcedId}/teachers",
+      "to": "or:1.2:param:limit"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /schools/{schoolSourcedId}/classes/{classSourcedId}/teachers",
+      "to": "or:1.2:param:offset"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /schools/{schoolSourcedId}/classes/{classSourcedId}/teachers",
+      "to": "or:1.2:param:orderBy"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /schools/{schoolSourcedId}/classes/{classSourcedId}/teachers",
+      "to": "or:1.2:param:sort"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /schools/{schoolSourcedId}/classes/{classSourcedId}/teachers",
+      "to": "or:1.2:sec:OAuth2CC"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /schools/{schoolSourcedId}/courses",
+      "to": "or:1.2:param:fields"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /schools/{schoolSourcedId}/courses",
+      "to": "or:1.2:param:filter"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /schools/{schoolSourcedId}/courses",
+      "to": "or:1.2:param:limit"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /schools/{schoolSourcedId}/courses",
+      "to": "or:1.2:param:offset"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /schools/{schoolSourcedId}/courses",
+      "to": "or:1.2:param:orderBy"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /schools/{schoolSourcedId}/courses",
+      "to": "or:1.2:param:sort"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /schools/{schoolSourcedId}/courses",
+      "to": "or:1.2:sec:OAuth2CC"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /schools/{schoolSourcedId}/enrollments",
+      "to": "or:1.2:param:fields"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /schools/{schoolSourcedId}/enrollments",
+      "to": "or:1.2:param:filter"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /schools/{schoolSourcedId}/enrollments",
+      "to": "or:1.2:param:limit"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /schools/{schoolSourcedId}/enrollments",
+      "to": "or:1.2:param:offset"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /schools/{schoolSourcedId}/enrollments",
+      "to": "or:1.2:param:orderBy"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /schools/{schoolSourcedId}/enrollments",
+      "to": "or:1.2:param:sort"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /schools/{schoolSourcedId}/enrollments",
+      "to": "or:1.2:sec:OAuth2CC"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /schools/{schoolSourcedId}/students",
+      "to": "or:1.2:param:fields"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /schools/{schoolSourcedId}/students",
+      "to": "or:1.2:param:filter"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /schools/{schoolSourcedId}/students",
+      "to": "or:1.2:param:limit"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /schools/{schoolSourcedId}/students",
+      "to": "or:1.2:param:offset"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /schools/{schoolSourcedId}/students",
+      "to": "or:1.2:param:orderBy"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /schools/{schoolSourcedId}/students",
+      "to": "or:1.2:param:sort"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /schools/{schoolSourcedId}/students",
+      "to": "or:1.2:sec:OAuth2CC"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /schools/{schoolSourcedId}/teachers",
+      "to": "or:1.2:param:fields"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /schools/{schoolSourcedId}/teachers",
+      "to": "or:1.2:param:filter"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /schools/{schoolSourcedId}/teachers",
+      "to": "or:1.2:param:limit"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /schools/{schoolSourcedId}/teachers",
+      "to": "or:1.2:param:offset"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /schools/{schoolSourcedId}/teachers",
+      "to": "or:1.2:param:orderBy"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /schools/{schoolSourcedId}/teachers",
+      "to": "or:1.2:param:sort"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /schools/{schoolSourcedId}/teachers",
+      "to": "or:1.2:sec:OAuth2CC"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /schools/{schoolSourcedId}/terms",
+      "to": "or:1.2:param:fields"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /schools/{schoolSourcedId}/terms",
+      "to": "or:1.2:param:filter"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /schools/{schoolSourcedId}/terms",
+      "to": "or:1.2:param:limit"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /schools/{schoolSourcedId}/terms",
+      "to": "or:1.2:param:offset"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /schools/{schoolSourcedId}/terms",
+      "to": "or:1.2:param:orderBy"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /schools/{schoolSourcedId}/terms",
+      "to": "or:1.2:param:sort"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /schools/{schoolSourcedId}/terms",
+      "to": "or:1.2:sec:OAuth2CC"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /schools/{sourcedId}",
+      "to": "or:1.2:param:fields"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /schools/{sourcedId}",
+      "to": "or:1.2:sec:OAuth2CC"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /students",
+      "to": "or:1.2:param:fields"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /students",
+      "to": "or:1.2:param:filter"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /students",
+      "to": "or:1.2:param:limit"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /students",
+      "to": "or:1.2:param:offset"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /students",
+      "to": "or:1.2:param:orderBy"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /students",
+      "to": "or:1.2:param:sort"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /students",
+      "to": "or:1.2:sec:OAuth2CC"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /students/{sourcedId}",
+      "to": "or:1.2:param:fields"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /students/{sourcedId}",
+      "to": "or:1.2:sec:OAuth2CC"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /students/{studentSourcedId}/classes",
+      "to": "or:1.2:param:fields"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /students/{studentSourcedId}/classes",
+      "to": "or:1.2:param:filter"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /students/{studentSourcedId}/classes",
+      "to": "or:1.2:param:limit"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /students/{studentSourcedId}/classes",
+      "to": "or:1.2:param:offset"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /students/{studentSourcedId}/classes",
+      "to": "or:1.2:param:orderBy"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /students/{studentSourcedId}/classes",
+      "to": "or:1.2:param:sort"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /students/{studentSourcedId}/classes",
+      "to": "or:1.2:sec:OAuth2CC"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /teachers",
+      "to": "or:1.2:param:fields"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /teachers",
+      "to": "or:1.2:param:filter"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /teachers",
+      "to": "or:1.2:param:limit"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /teachers",
+      "to": "or:1.2:param:offset"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /teachers",
+      "to": "or:1.2:param:orderBy"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /teachers",
+      "to": "or:1.2:param:sort"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /teachers",
+      "to": "or:1.2:sec:OAuth2CC"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /teachers/{sourcedId}",
+      "to": "or:1.2:param:fields"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /teachers/{sourcedId}",
+      "to": "or:1.2:sec:OAuth2CC"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /teachers/{teacherSourcedId}/classes",
+      "to": "or:1.2:param:fields"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /teachers/{teacherSourcedId}/classes",
+      "to": "or:1.2:param:filter"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /teachers/{teacherSourcedId}/classes",
+      "to": "or:1.2:param:limit"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /teachers/{teacherSourcedId}/classes",
+      "to": "or:1.2:param:offset"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /teachers/{teacherSourcedId}/classes",
+      "to": "or:1.2:param:orderBy"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /teachers/{teacherSourcedId}/classes",
+      "to": "or:1.2:param:sort"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /teachers/{teacherSourcedId}/classes",
+      "to": "or:1.2:sec:OAuth2CC"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /terms",
+      "to": "or:1.2:param:fields"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /terms",
+      "to": "or:1.2:param:filter"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /terms",
+      "to": "or:1.2:param:limit"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /terms",
+      "to": "or:1.2:param:offset"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /terms",
+      "to": "or:1.2:param:orderBy"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /terms",
+      "to": "or:1.2:param:sort"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /terms",
+      "to": "or:1.2:sec:OAuth2CC"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /terms/{sourcedId}",
+      "to": "or:1.2:param:fields"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /terms/{sourcedId}",
+      "to": "or:1.2:sec:OAuth2CC"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /terms/{termSourcedId}/classes",
+      "to": "or:1.2:param:fields"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /terms/{termSourcedId}/classes",
+      "to": "or:1.2:param:filter"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /terms/{termSourcedId}/classes",
+      "to": "or:1.2:param:limit"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /terms/{termSourcedId}/classes",
+      "to": "or:1.2:param:offset"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /terms/{termSourcedId}/classes",
+      "to": "or:1.2:param:orderBy"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /terms/{termSourcedId}/classes",
+      "to": "or:1.2:param:sort"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /terms/{termSourcedId}/classes",
+      "to": "or:1.2:sec:OAuth2CC"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /terms/{termSourcedId}/gradingPeriods",
+      "to": "or:1.2:param:fields"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /terms/{termSourcedId}/gradingPeriods",
+      "to": "or:1.2:param:filter"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /terms/{termSourcedId}/gradingPeriods",
+      "to": "or:1.2:param:limit"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /terms/{termSourcedId}/gradingPeriods",
+      "to": "or:1.2:param:offset"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /terms/{termSourcedId}/gradingPeriods",
+      "to": "or:1.2:param:orderBy"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /terms/{termSourcedId}/gradingPeriods",
+      "to": "or:1.2:param:sort"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /terms/{termSourcedId}/gradingPeriods",
+      "to": "or:1.2:sec:OAuth2CC"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /users",
+      "to": "or:1.2:param:fields"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /users",
+      "to": "or:1.2:param:filter"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /users",
+      "to": "or:1.2:param:limit"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /users",
+      "to": "or:1.2:param:offset"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /users",
+      "to": "or:1.2:param:orderBy"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /users",
+      "to": "or:1.2:param:sort"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /users",
+      "to": "or:1.2:sec:OAuth2CC"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /users/{sourcedId}",
+      "to": "or:1.2:param:fields"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /users/{sourcedId}",
+      "to": "or:1.2:sec:OAuth2CC"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /users/{userSourcedId}/classes",
+      "to": "or:1.2:param:fields"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /users/{userSourcedId}/classes",
+      "to": "or:1.2:param:filter"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /users/{userSourcedId}/classes",
+      "to": "or:1.2:param:limit"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /users/{userSourcedId}/classes",
+      "to": "or:1.2:param:offset"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /users/{userSourcedId}/classes",
+      "to": "or:1.2:param:orderBy"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /users/{userSourcedId}/classes",
+      "to": "or:1.2:param:sort"
+    },
+    {
+      "from": "or:1.2:path:rostering/GET /users/{userSourcedId}/classes",
+      "to": "or:1.2:sec:OAuth2CC"
     }
   ],
   "conformance": [
@@ -3823,6 +5873,20 @@
         "or:1.2:def:AssessmentResultDType/scoreStatus"
       ],
       "source": "OneRoster 1.2 §AssessmentResult — https://www.imsglobal.org/spec/oneroster/v1p2"
+    },
+    {
+      "key": "or:1.2:conf:assessment-results/OR-AR-3",
+      "profile": "assessment-results",
+      "reqId": "OR-AR-3",
+      "level": "MUST",
+      "statement": "An assessment-results service provider MUST serve the assessmentLineItems and assessmentResults GET endpoints (collection and single-object).",
+      "constrains": [
+        "or:1.2:path:gradebook/GET /assessmentLineItems",
+        "or:1.2:path:gradebook/GET /assessmentLineItems/{sourcedId}",
+        "or:1.2:path:gradebook/GET /assessmentResults",
+        "or:1.2:path:gradebook/GET /assessmentResults/{sourcedId}"
+      ],
+      "source": "OneRoster 1.2 Cert §4.1.3 (Assessment Results provider endpoints — OR 1.2) — https://www.imsglobal.org/spec/oneroster/v1p2/cert/"
     },
     {
       "key": "or:1.2:conf:gradebook/OR-GB-1",
@@ -3883,6 +5947,22 @@
       "source": "OneRoster 1.2 Gradebook §Result (score/scoreDate) — https://www.imsglobal.org/spec/oneroster/v1p2"
     },
     {
+      "key": "or:1.2:conf:gradebook/OR-GB-5",
+      "profile": "gradebook",
+      "reqId": "OR-GB-5",
+      "level": "MUST",
+      "statement": "A gradebook service provider MUST serve either the pull endpoints (GET categories, lineItems, results, scoreScales) or the push endpoints (PUT lineItems/{id}, PUT results/{id}).",
+      "constrains": [
+        "or:1.2:path:gradebook/GET /categories",
+        "or:1.2:path:gradebook/GET /lineItems",
+        "or:1.2:path:gradebook/GET /results",
+        "or:1.2:path:gradebook/GET /scoreScales",
+        "or:1.2:path:gradebook/PUT /lineItems/{sourcedId}",
+        "or:1.2:path:gradebook/PUT /results/{sourcedId}"
+      ],
+      "source": "OneRoster 1.2 Cert §4.1.2 (Gradebook provider endpoints) — https://www.imsglobal.org/spec/oneroster/v1p2/cert/"
+    },
+    {
       "key": "or:1.2:conf:resources/OR-RES-1",
       "profile": "resources",
       "reqId": "OR-RES-1",
@@ -3906,6 +5986,18 @@
         "or:1.2:def:ResourceDType/dateLastModified"
       ],
       "source": "OneRoster 1.2 Cert §4.1.4 (Resources) — https://www.imsglobal.org/spec/oneroster/v1p2/cert/"
+    },
+    {
+      "key": "or:1.2:conf:resources/OR-RES-3",
+      "profile": "resources",
+      "reqId": "OR-RES-3",
+      "level": "MUST",
+      "statement": "A resources service provider MUST serve the GET /resources collection and GET /resources/{sourcedId} single-object endpoints.",
+      "constrains": [
+        "or:1.2:path:resources/GET /resources",
+        "or:1.2:path:resources/GET /resources/{sourcedId}"
+      ],
+      "source": "OneRoster 1.2 Cert §4.1.4 (Resources provider endpoints) — https://www.imsglobal.org/spec/oneroster/v1p2/cert/"
     },
     {
       "key": "or:1.2:conf:rostering/OR-1",
@@ -3973,6 +6065,95 @@
         "or:1.2:def:ClassDType/school"
       ],
       "source": "OneRoster 1.2 §Class — https://www.imsglobal.org/spec/oneroster/v1p2"
+    },
+    {
+      "key": "or:1.2:conf:rostering/OR-5",
+      "profile": "rostering",
+      "reqId": "OR-5",
+      "level": "MUST",
+      "statement": "A rostering service provider MUST serve the collection and single-object GET endpoints for every rostering entity (academicSessions, classes, courses, enrollments, gradingPeriods, orgs, schools, students, teachers, terms, users).",
+      "constrains": [
+        "or:1.2:path:rostering/GET /academicSessions",
+        "or:1.2:path:rostering/GET /academicSessions/{sourcedId}",
+        "or:1.2:path:rostering/GET /classes",
+        "or:1.2:path:rostering/GET /classes/{sourcedId}",
+        "or:1.2:path:rostering/GET /courses",
+        "or:1.2:path:rostering/GET /courses/{sourcedId}",
+        "or:1.2:path:rostering/GET /enrollments",
+        "or:1.2:path:rostering/GET /enrollments/{sourcedId}",
+        "or:1.2:path:rostering/GET /gradingPeriods",
+        "or:1.2:path:rostering/GET /gradingPeriods/{sourcedId}",
+        "or:1.2:path:rostering/GET /orgs",
+        "or:1.2:path:rostering/GET /orgs/{sourcedId}",
+        "or:1.2:path:rostering/GET /schools",
+        "or:1.2:path:rostering/GET /schools/{sourcedId}",
+        "or:1.2:path:rostering/GET /students",
+        "or:1.2:path:rostering/GET /students/{sourcedId}",
+        "or:1.2:path:rostering/GET /teachers",
+        "or:1.2:path:rostering/GET /teachers/{sourcedId}",
+        "or:1.2:path:rostering/GET /terms",
+        "or:1.2:path:rostering/GET /terms/{sourcedId}",
+        "or:1.2:path:rostering/GET /users",
+        "or:1.2:path:rostering/GET /users/{sourcedId}"
+      ],
+      "source": "OneRoster 1.2 Cert §4.1.1 (Rostering provider endpoints) — https://www.imsglobal.org/spec/oneroster/v1p2/cert/"
+    },
+    {
+      "key": "or:1.2:conf:transport/OR-TR-1",
+      "profile": "transport",
+      "reqId": "OR-TR-1",
+      "level": "MUST",
+      "statement": "Every REST endpoint MUST be protected by OAuth 2.0 using the Client Credentials grant, per the 1EdTech Security Framework.",
+      "constrains": [
+        "or:1.2:sec:OAuth2CC"
+      ],
+      "source": "OneRoster 1.2 Cert §4.3 (Security) — https://www.imsglobal.org/spec/oneroster/v1p2/cert/"
+    },
+    {
+      "key": "or:1.2:conf:transport/OR-TR-2",
+      "profile": "transport",
+      "reqId": "OR-TR-2",
+      "level": "MUST",
+      "statement": "A provider MUST support the pagination mechanism (the limit and offset query parameters) on every response that provides a collection.",
+      "constrains": [
+        "or:1.2:param:limit",
+        "or:1.2:param:offset"
+      ],
+      "source": "OneRoster 1.2 Cert §4.3.1 (Pagination) — https://www.imsglobal.org/spec/oneroster/v1p2/cert/"
+    },
+    {
+      "key": "or:1.2:conf:transport/OR-TR-3",
+      "profile": "transport",
+      "reqId": "OR-TR-3",
+      "level": "MUST",
+      "statement": "A provider MUST support the filtering mechanism (the filter query parameter) on collection responses.",
+      "constrains": [
+        "or:1.2:param:filter"
+      ],
+      "source": "OneRoster 1.2 Cert §4.3.1 (Filtering) — https://www.imsglobal.org/spec/oneroster/v1p2/cert/"
+    },
+    {
+      "key": "or:1.2:conf:transport/OR-TR-4",
+      "profile": "transport",
+      "reqId": "OR-TR-4",
+      "level": "MUST",
+      "statement": "A provider MUST support the sorting mechanism (the sort and orderBy query parameters) on every response that provides a collection.",
+      "constrains": [
+        "or:1.2:param:sort",
+        "or:1.2:param:orderBy"
+      ],
+      "source": "OneRoster 1.2 Cert §4.3.1 (Sorting) — https://www.imsglobal.org/spec/oneroster/v1p2/cert/"
+    },
+    {
+      "key": "or:1.2:conf:transport/OR-TR-5",
+      "profile": "transport",
+      "reqId": "OR-TR-5",
+      "level": "MUST",
+      "statement": "A provider MUST support the field-selection mechanism (the fields query parameter) on collection and singleton responses.",
+      "constrains": [
+        "or:1.2:param:fields"
+      ],
+      "source": "OneRoster 1.2 Cert §4.3.1 (Field selection) — https://www.imsglobal.org/spec/oneroster/v1p2/cert/"
     }
   ],
   "normativeStatements": [
@@ -4271,12 +6452,12 @@
     "normalisations": []
   },
   "rollup": {
-    "items": 410,
+    "items": 498,
     "modelledYes": 248,
     "modelledPartial": 0,
     "modelledNo": 0,
     "normativeItems": 48,
-    "conformanceRequirements": 12,
+    "conformanceRequirements": 21,
     "normativeStatements": 48,
     "normativeStatementsCited": 38,
     "normalisations": 0
