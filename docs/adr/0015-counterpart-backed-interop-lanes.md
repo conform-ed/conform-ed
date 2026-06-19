@@ -21,6 +21,16 @@ its Caliper plugin is an **emitter** at **v1.0**, and the most complete OSS OneR
 **v1.2 provider** is a single-maintainer project. A disagreement between conform-ed and
 such a system adjudicates nothing.
 
+## Approach
+
+The goal is **one defensible, fully-explained set of lanes shipped early** — put
+to use in the wild to attract community feedback — not exhaustive coverage on day
+one. Every choice below is recorded with its rationale precisely so external users
+(and future us) can challenge it; the lanes are expected to **evolve from real
+feedback**. The honest scoping that makes that evolution safe — Coverage-Map
+denominators, evidence tiers, and "a Counterpart is not an Oracle" — is therefore
+a feature, not a hedge.
+
 ## Decision
 
 1. **The unit is the Counterpart Catalogue, not a single LMS.** Each `(suite, role)`
@@ -75,8 +85,12 @@ such a system adjudicates nothing.
 
 ## Consequences
 
-- The CI gate stays on `local-reference`; `oss-*` lanes never block commits. Triaged
-  realism failures (off-version, plugin quirks) do not stop the line.
+- **Three CI tiers, and containers never gate a PR.** (1) Scanner/diff correctness
+  tests (fixture-based, against the in-repo reference, including crafted bad
+  responses) and (2) `local-reference` interop lanes (in-process) are the **PR
+  gate**; (3) all `oss-*` lanes — including the `go-oneroster` Scanner-validation
+  lane — need Podman and run **nightly / manual only**, with triaged realism
+  failures (off-version, plugin quirks) never stopping the line.
 - v1 must capture transcripts even without asserting on them — the only non-obvious "do
   it now or pay later" item.
 - The catalogue must record each counterpart's **provenance and version** (e.g. "Moodle

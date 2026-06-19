@@ -183,3 +183,20 @@ counterpart supports writes (backend-agnostic, and exercises the write surface
 for free); each catalogue entry declares its seeding mechanism since spec-shaped
 seeding is preferred but not guaranteed (OneRoster REST core is read-only GET).
 _Avoid_: per-lane ad-hoc seed data (it drifts and isn't reusable).
+
+**State-observation Adapter**:
+The contract by which a system under test in the **opaque direction** (e.g. a
+OneRoster consumer) exposes its post-ingest state for assertion. An HTTP+JSON
+Adapter (per the Adapter Contract) implementing a `oneroster-consumer-v1`
+profile alongside `cmi5-lms-v1` / `lti13-tool-v1`: it triggers the ingest and
+returns the SUT's ingested view in normalized OneRoster shape, which conform-ed
+diffs against the Fixture Dataset. A consumer's state-observation adapter is
+**almost a minimal OneRoster provider** ("expose what you ingested") — that
+mapping-back is the irreducible cost of testing the opaque direction. Two
+escape hatches: a **spec round-trip** fast-path for SUTs that already serve
+OneRoster (read the ingest back via the Scanner, no new surface — emergent's
+case), and a **self-report** degradation floor (a structured import report) for
+consumers that cannot expose ingested state. The lane records which of three
+honesty tiers a SUT reached: full diff → import-report check → coarse
+"didn't crash".
+_Avoid_: out-of-band DB inspection (the Runner/Adapter contracts disown it).

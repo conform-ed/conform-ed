@@ -39,11 +39,15 @@ already made live in `docs/adr/`; this file holds the agreed-but-not-started.
    2. **`go-oneroster` as the Scanner's validation target** — cheap
       meta-conformance (`go-oneroster : Scanner :: LRSQL : LRS-tester`),
       v1.2-vs-v1.2.
-   3. **OneRoster consumer lane (opaque direction)** — serve a real provider,
-      observe SUT ingest state via an Adapter. The genuinely counterpart-
-      load-bearing cell; drags in the Adapter/state-observation machinery, so
-      it follows the Scanner, not precedes it.
-      Caliper is parked until a named need (no emitter consumer yet).
+   3. **OneRoster consumer lane (opaque direction)** — the genuinely
+      counterpart-load-bearing cell, so it follows the Scanner. Observe SUT
+      ingest state via a **State-observation Adapter** (`oneroster-consumer-v1`;
+      spec-round-trip fast-path for bidirectional SUTs, self-report degradation
+      floor). Assert a **MUST/MAY-split diff** (identity, relationship
+      integrity, and `status` soft-delete are MUSTs; optional-field/entity drops
+      permitted) — not exact match. **CSV-bulk first, then REST-delta.**
+
+   Caliper is parked until a named need (no emitter consumer yet).
 
 ## Elsewhere
 
