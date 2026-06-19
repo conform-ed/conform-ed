@@ -1,45 +1,41 @@
 # Release Process
 
-All publishable packages **and** the OCI runner images are released together under a single
-bare semver tag. Never publish a package or push an image tag individually — the tag is the single
-source of truth for every artifact version.
+All publishable packages **and** the OCI runner images are released together under a single bare
+semver tag — the tag is the single source of truth for every artifact version. This implements the
+unified standard; see [ADR-0016](../adr/0016-unified-ts-release-versioning-tooling-standard.md).
 
 ## Versioning
 
 - Tags are **bare semver**: `0.1.0`, `0.1.0-rc.1` — **no `v` prefix**.
-- Every publishable package is bumped to the same version on each release.
-- npm packages (`@conform-ed/*`) publish to npmjs; OCI images publish to GHCR
-  (`ghcr.io/conform-ed/<image>`).
+- Publishable `package.json` versions are `"0.0.0"` placeholders that are **never hand-edited**. The
+  real version is derived from the tag at publish time; `git describe --tags` shows it locally.
+- There is no version-bump step and no release commit.
 
 ## Release Steps
 
-Use the unified release script:
-
 ```bash
-bun run release <version>
-# Example:  bun run release 0.1.0
-# Dry-run:  DRY_RUN=1 bun run release 0.1.0
+# 1. Tag a reviewed commit on main and push the single tag. CI validates (validate:full), then
+#    publishes release-parity to GitHub Packages AND builds + pushes the OCI images to GHCR.
+git tag 0.1.0 && git push upstream 0.1.0
+
+# 2. Once the GitHub Packages publish is green, mirror the packages to public npm
+#    (your npm token stays on your machine; this never runs in CI).
+bun run release:npm 0.1.0
 ```
 
-The script:
+`release:npm` downloads the exact tarballs GitHub Packages built for the tag and `bun publish`es them
+byte-identical to npm — no rebuild. Be logged in to npm (`bun pm whoami`); GitHub read uses
+`gh auth token` (needs `read:packages`). Preview with `DRY_RUN=1 bun run release:npm 0.1.0`.
 
-1. Validates the version and that the working tree is clean.
-2. Builds every package (`bun run build`) so each publishable `dist/` is fresh.
-3. Bumps `version` in every publishable package's `package.json` and updates the lockfile.
-4. Commits `chore: release <version>` and creates the bare semver git tag.
-5. Pushes the branch and tag — the **tag push triggers the `Images` workflow**, which builds and
-   pushes the OCI images to GHCR and runs pull-based smoke verification.
-6. Runs `bun publish --access public` for all npm packages in parallel.
-
-Before releasing, ensure the branch is green: `bun run validate`, and that you are authenticated to
-npm. The npm publish runs locally (it uses your credentials); the OCI build/publish runs in CI off
-the tag.
+> Push **one tag at a time** — GitHub suppresses workflow events when more than three tags are pushed
+> at once, which would silently skip the publish and the image builds.
 
 ## OCI image surface
 
-The `Images` workflow publishes the runner images to GHCR with OCI labels (`title`, `version`,
-`revision`, `source`, `created`), emits a machine-readable release manifest, and smoke-verifies that
-each published tag is pullable and correctly labelled.
+The `Images` workflow (tag-triggered) publishes the runner images to GHCR with OCI labels (`title`,
+`version`, `revision`, `source`, `created`), emits a machine-readable release manifest, and
+smoke-verifies that each published tag is pullable and correctly labelled. The interop/container test
+lanes (lrs/cmi5/lti13) keep their own cadence (ADR-0015) and are not part of the release gate.
 
 ## Rollback Guidance
 

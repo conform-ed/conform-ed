@@ -20,25 +20,18 @@ Never create such files in source directories or at repo root.
 
 ## Publishing Packages
 
-All packages and OCI images are released together using a single semver tag. Never publish
-individually or out-of-step. Use the unified release script:
+Packages and OCI images release together under a single **bare semver tag** — the tag is the _only_
+source of truth for every artifact version. Publishable `package.json` versions are `"0.0.0"`
+placeholders; **never hand-edit them**. Full detail: `docs/development/release.md` and
+[ADR-0016](docs/adr/0016-unified-ts-release-versioning-tooling-standard.md).
 
 ```
-bun run release <version>
-# Example: bun run release 0.0.8
-# Dry-run:  DRY_RUN=1 bun run release 0.0.8
+git tag 0.1.0 && git push upstream 0.1.0   # CI: GH release-parity (gated) + GHCR images
+bun run release:npm 0.1.0                   # mirror the GH tarballs to npm (token stays local)
 ```
 
-The script:
-
-1. Validates the version and checks the working tree is clean.
-2. Bumps `version` in every publishable package's `package.json`.
-3. Commits `chore: release <version>` and creates a bare semver git tag (`0.0.8`, not `v0.0.8`).
-4. Pushes the branch and tag — this triggers GitHub Actions to build and push OCI images.
-5. Runs `bun publish --access public` for all npm packages in parallel.
-
-**Never** publish an npm package or push an OCI image tag without going through this script.
-The bare semver tag is the single source of truth for all artifact versions.
+A push to `main` (not a tag) publishes a `@dev` build to GitHub Packages — **not** a release. There
+is no version-bump and no release commit.
 
 ## Package Scripts vs Direct Tool Invocation
 
