@@ -37,6 +37,14 @@ export type CcResource = {
   files: string[];
   /** `identifierref`s of `<dependency>` children. */
   dependencies: string[];
+  /**
+   * Curriculum-standard GUIDs declared by the resource's Curriculum Standards Metadata (CC `imscsmd`):
+   * `<metadata>` → `curriculumStandardsMetadataSet` → `curriculumStandardsMetadata` → `setOfGUIDs` →
+   * `labelledGUID` → `<GUID>`. De-duplicated, in document order; empty when no CSM is present. Each
+   * GUID identifies a curriculum standard the resource teaches (commonly a CASE node URI/identifier),
+   * letting a consumer align the resource to a competency framework.
+   */
+  standardsGuids: string[];
 };
 
 export type CcOrganizationItem = {
@@ -159,6 +167,31 @@ function mapOrganizationItem(item: QtiXmlElementNode): CcOrganizationItem {
   };
 }
 
+/**
+ * The curriculum-standard GUIDs a resource's Curriculum Standards Metadata associates with it,
+ * walking `<metadata>` → `curriculumStandardsMetadataSet` → `curriculumStandardsMetadata` →
+ * `setOfGUIDs` → `labelledGUID` → `<GUID>` (namespace-prefix tolerant via `localName`). De-duplicated
+ * in document order.
+ */
+function extractStandardsGuids(resource: QtiXmlElementNode): string[] {
+  const guids: string[] = [];
+  for (const metadata of elements(resource, "metadata")) {
+    for (const set of elements(metadata, "curriculumStandardsMetadataSet")) {
+      for (const meta of elements(set, "curriculumStandardsMetadata")) {
+        for (const guidSet of elements(meta, "setOfGUIDs")) {
+          for (const labelled of elements(guidSet, "labelledGUID")) {
+            for (const guid of elements(labelled, "GUID")) {
+              const value = textOf(guid);
+              if (value) guids.push(value);
+            }
+          }
+        }
+      }
+    }
+  }
+  return [...new Set(guids)];
+}
+
 function mapResource(resource: QtiXmlElementNode): CcResource {
   const type = attr(resource, "type") ?? "";
   return {
@@ -172,6 +205,7 @@ function mapResource(resource: QtiXmlElementNode): CcResource {
     dependencies: elements(resource, "dependency")
       .map((dependency) => attr(dependency, "identifierref"))
       .filter((ref): ref is string => ref !== undefined),
+    standardsGuids: extractStandardsGuids(resource),
   };
 }
 

@@ -63,7 +63,19 @@ const manifest = `<?xml version="1.0" encoding="UTF-8"?>
       <file href="quiz/assessment_qti.xml"/>
       <dependency identifierref="r_quiz_dep"/>
     </resource>
-    <resource identifier="r_page" type="webcontent" href="page.html"><file href="page.html"/><file href="img/diagram.png"/></resource>
+    <resource identifier="r_page" type="webcontent" href="page.html">
+      <metadata>
+        <csmd:curriculumStandardsMetadataSet xmlns:csmd="http://www.imsglobal.org/xsd/imsccv1p4/imscsmd_v1p1">
+          <csmd:curriculumStandardsMetadata providerId="CASE">
+            <csmd:setOfGUIDs>
+              <csmd:labelledGUID><csmd:GUID>https://example.org/ims/case/v1p1/CFItems/node-a</csmd:GUID><csmd:label>A.1</csmd:label></csmd:labelledGUID>
+              <csmd:labelledGUID><csmd:GUID>CASE-NODE-B</csmd:GUID></csmd:labelledGUID>
+            </csmd:setOfGUIDs>
+          </csmd:curriculumStandardsMetadata>
+        </csmd:curriculumStandardsMetadataSet>
+      </metadata>
+      <file href="page.html"/><file href="img/diagram.png"/>
+    </resource>
     <resource identifier="r_link" type="imswl_xmlv1p3" href="link.xml"><file href="link.xml"/></resource>
     <resource identifier="r_disc" type="imsdt_xmlv1p3" href="disc.xml"><file href="disc.xml"/></resource>
     <resource identifier="r_lti" type="imsbasiclti_xmlv1p0" href="lti.xml"><file href="lti.xml"/></resource>
@@ -120,6 +132,20 @@ test("decomposes a CC 1.4 cartridge into version, title, org tree, and classifie
 
   // Raw files are recoverable for downstream routing.
   expect(decomposed.readText("page.html")).toContain("<h1>Reading</h1>");
+});
+
+test("extracts a resource's Curriculum Standards Metadata GUIDs (de-duplicated, in order)", () => {
+  const decomposed = decomposeCommonCartridge(buildCartridge());
+  const byId = new Map(decomposed.resources.map((resource) => [resource.identifier, resource]));
+
+  // The webcontent page carries a curriculumStandardsMetadataSet of two labelled GUIDs.
+  expect(byId.get("r_page")?.standardsGuids).toEqual([
+    "https://example.org/ims/case/v1p1/CFItems/node-a",
+    "CASE-NODE-B",
+  ]);
+  // A resource with no CSM has an empty list (never undefined).
+  expect(byId.get("r_quiz")?.standardsGuids).toEqual([]);
+  expect(byId.get("r_link")?.standardsGuids).toEqual([]);
 });
 
 test("a decomposed QTI resource feeds straight into the QTI bridge", async () => {
