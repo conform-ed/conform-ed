@@ -15,21 +15,56 @@
 import { strToU8, zipSync } from "fflate";
 
 import {
+  CommonCartridgeManifestProfileSchema as CommonCartridgeV1p3ManifestProfileSchema,
+  type CommonCartridgeResourceType as CommonCartridgeV1p3ResourceType,
+} from "@conform-ed/contracts/common-cartridge/v1_3";
+import {
   type CommonCartridgeIntendedUse,
   CommonCartridgeManifestProfileSchema,
-  type CommonCartridgeManifestRaw,
   type CommonCartridgeResourceType,
 } from "@conform-ed/contracts/common-cartridge/v1_4";
 import { type AttributeValue, XmlWriter } from "@conform-ed/qti-xml";
 
 import { CommonCartridgeError } from "./decompose";
 
-/** The CC 1.4 content-packaging namespace; carries the `imsccv1p4` token decompose keys version off. */
-const CARTRIDGE_NAMESPACE = "http://www.imsglobal.org/xsd/imsccv1p4/imscp_v1p2";
+/** Which Common Cartridge version the producer emits. CC 1.4 carries QTI 3 natively; CC 1.3 reaches
+ * legacy LMSes (its QTI binding is the lossy 1.2.1 one, so the caller down-converts before composing). */
+export type CommonCartridgeVersion = "1.3" | "1.4";
+
 const XSI_NAMESPACE = "http://www.w3.org/2001/XMLSchema-instance";
-const LOM_MANIFEST_NAMESPACE = "http://ltsc.ieee.org/xsd/imsccv1p4/LOM/manifest";
-const CURRICULUM_STANDARDS_NAMESPACE = "http://www.imsglobal.org/xsd/imsccv1p4/imscsmd_v1p1";
 const MANIFEST_FILE_NAME = "imsmanifest.xml";
+
+/** Per-version namespaces, schemaversion, and the manifest profile contract (the conformance gate). */
+const VERSION_CONFIG: Record<
+  CommonCartridgeVersion,
+  {
+    cartridgeNamespace: string;
+    lomManifestNamespace: string;
+    curriculumStandardsNamespace: string;
+    schemaversion: string;
+    profileSchema: typeof CommonCartridgeManifestProfileSchema | typeof CommonCartridgeV1p3ManifestProfileSchema;
+  }
+> = {
+  // The `imsccv1pN` token in the content-packaging namespace is what decompose keys the version off.
+  "1.3": {
+    cartridgeNamespace: "http://www.imsglobal.org/xsd/imsccv1p3/imscp_v1p2",
+    lomManifestNamespace: "http://ltsc.ieee.org/xsd/imsccv1p3/LOM/manifest",
+    curriculumStandardsNamespace: "http://www.imsglobal.org/xsd/imsccv1p3/imscsmd_v1p0",
+    schemaversion: "1.3.0",
+    profileSchema: CommonCartridgeV1p3ManifestProfileSchema,
+  },
+  "1.4": {
+    cartridgeNamespace: "http://www.imsglobal.org/xsd/imsccv1p4/imscp_v1p2",
+    lomManifestNamespace: "http://ltsc.ieee.org/xsd/imsccv1p4/LOM/manifest",
+    curriculumStandardsNamespace: "http://www.imsglobal.org/xsd/imsccv1p4/imscsmd_v1p1",
+    schemaversion: "1.4.0",
+    profileSchema: CommonCartridgeManifestProfileSchema,
+  },
+};
+
+const DEFAULT_VERSION: CommonCartridgeVersion = "1.4";
+
+export type ComposeCartridgeOptions = { version?: CommonCartridgeVersion };
 
 /** A node in the organization (course-structure) tree the manifest carries. */
 export type ComposableOrganizationItem = {
@@ -46,10 +81,14 @@ export type ComposableFile = {
   bytes: Uint8Array;
 };
 
+/** A typed cartridge resource — the producer's analogue of a decomposed `CcResource`. The type is a
+ * CC 1.3 **or** 1.4 resource type; the version's profile contract rejects a type it does not allow. */
+export type ComposableResourceType = CommonCartridgeResourceType | CommonCartridgeV1p3ResourceType;
+
 /** A typed cartridge resource — the producer's analogue of a decomposed `CcResource`. */
 export type ComposableResource = {
   identifier: string;
-  type: CommonCartridgeResourceType;
+  type: ComposableResourceType;
   /** Entry href. Omit for the profile-forbidden types (imsdt / imswl / the QTI 1.2.1 bindings). */
   href?: string;
   intendedUse?: CommonCartridgeIntendedUse;
@@ -112,16 +151,17 @@ function toManifestResource(resource: ComposableResource): Record<string, unknow
 }
 
 /**
- * Map the neutral input onto the CC 1.4 manifest model and validate it against the profile
- * contract. Returns the validated model; throws `CommonCartridgeError` if non-conformant.
+ * Map the neutral input onto the manifest model and validate it against the version's profile
+ * contract. Throws `CommonCartridgeError` if non-conformant (the producer's conformance gate).
  */
-function buildManifestModel(cartridge: ComposableCartridge): CommonCartridgeManifestRaw {
+function validateManifestModel(cartridge: ComposableCartridge, version: CommonCartridgeVersion): void {
+  const config = VERSION_CONFIG[version];
   const organizationIdentifier = cartridge.organizationIdentifier ?? `${cartridge.identifier}-organization`;
   const model = {
     identifier: cartridge.identifier,
     metadata: {
       schema: "IMS Common Cartridge",
-      schemaversion: "1.4.0",
+      schemaversion: config.schemaversion,
       lom: { general: { title: { string: [{ value: cartridge.title }] } } },
     },
     organizations: {
@@ -137,15 +177,18 @@ function buildManifestModel(cartridge: ComposableCartridge): CommonCartridgeMani
     resources: { resource: cartridge.resources.map(toManifestResource) },
   };
 
-  const parsed = CommonCartridgeManifestProfileSchema.safeParse(model);
+  const parsed = config.profileSchema.safeParse(model);
   if (!parsed.success) {
-    throw new CommonCartridgeError(`Cartridge is not a conformant CC 1.4 manifest: ${parsed.error.message}`);
+    throw new CommonCartridgeError(`Cartridge is not a conformant CC ${version} manifest: ${parsed.error.message}`);
   }
-  return parsed.data;
 }
 
-function writeStandardsMetadata(writer: XmlWriter, guids: readonly string[]): void {
-  writer.element("curriculumStandardsMetadataSet", [["xmlns", CURRICULUM_STANDARDS_NAMESPACE]], () => {
+function writeStandardsMetadata(
+  writer: XmlWriter,
+  guids: readonly string[],
+  curriculumStandardsNamespace: string,
+): void {
+  writer.element("curriculumStandardsMetadataSet", [["xmlns", curriculumStandardsNamespace]], () => {
     writer.element("curriculumStandardsMetadata", [], () => {
       writer.element("setOfGUIDs", [], () => {
         for (const guid of guids) {
@@ -165,7 +208,7 @@ function writeOrganizationItem(writer: XmlWriter, item: ComposableOrganizationIt
   });
 }
 
-function writeResource(writer: XmlWriter, resource: ComposableResource): void {
+function writeResource(writer: XmlWriter, resource: ComposableResource, curriculumStandardsNamespace: string): void {
   const attributes: Array<readonly [string, AttributeValue]> = [
     ["identifier", resource.identifier],
     ["type", resource.type],
@@ -175,7 +218,9 @@ function writeResource(writer: XmlWriter, resource: ComposableResource): void {
   if (resource.protected === true) attributes.push(["protected", true]);
   writer.element("resource", attributes, () => {
     const guids = resource.standardsGuids ?? [];
-    if (guids.length > 0) writer.element("metadata", [], () => writeStandardsMetadata(writer, guids));
+    if (guids.length > 0) {
+      writer.element("metadata", [], () => writeStandardsMetadata(writer, guids, curriculumStandardsNamespace));
+    }
     for (const file of resource.files ?? []) writer.element("file", [["href", file.href]]);
     for (const identifierref of resource.dependencies ?? []) {
       writer.element("dependency", [["identifierref", identifierref]]);
@@ -183,10 +228,15 @@ function writeResource(writer: XmlWriter, resource: ComposableResource): void {
   });
 }
 
-/** Serialize a CC 1.4 cartridge to its `imsmanifest.xml` (validated against the profile contract). */
-export function serializeCommonCartridgeManifest(cartridge: ComposableCartridge): string {
-  // Validate the manifest against the CC 1.4 profile contract; throws if non-conformant.
-  buildManifestModel(cartridge);
+/** Serialize a cartridge to its `imsmanifest.xml` (validated against the version's profile contract). */
+export function serializeCommonCartridgeManifest(
+  cartridge: ComposableCartridge,
+  options?: ComposeCartridgeOptions,
+): string {
+  const version = options?.version ?? DEFAULT_VERSION;
+  const config = VERSION_CONFIG[version];
+  // Validate the manifest against the version's profile contract; throws if non-conformant.
+  validateManifestModel(cartridge, version);
 
   const organizationIdentifier = cartridge.organizationIdentifier ?? `${cartridge.identifier}-organization`;
   const writer = new XmlWriter();
@@ -194,15 +244,15 @@ export function serializeCommonCartridgeManifest(cartridge: ComposableCartridge)
   writer.element(
     "manifest",
     [
-      ["xmlns", CARTRIDGE_NAMESPACE],
+      ["xmlns", config.cartridgeNamespace],
       ["xmlns:xsi", XSI_NAMESPACE],
       ["identifier", cartridge.identifier],
     ],
     () => {
       writer.element("metadata", [], () => {
         writer.element("schema", [], "IMS Common Cartridge");
-        writer.element("schemaversion", [], "1.4.0");
-        writer.element("lom", [["xmlns", LOM_MANIFEST_NAMESPACE]], () => {
+        writer.element("schemaversion", [], config.schemaversion);
+        writer.element("lom", [["xmlns", config.lomManifestNamespace]], () => {
           writer.element("general", [], () => {
             writer.element("title", [], () => writer.element("string", [], cartridge.title));
           });
@@ -225,7 +275,9 @@ export function serializeCommonCartridgeManifest(cartridge: ComposableCartridge)
       });
 
       writer.element("resources", [], () => {
-        for (const resource of cartridge.resources) writeResource(writer, resource);
+        for (const resource of cartridge.resources) {
+          writeResource(writer, resource, config.curriculumStandardsNamespace);
+        }
       });
     },
   );
@@ -234,12 +286,12 @@ export function serializeCommonCartridgeManifest(cartridge: ComposableCartridge)
 }
 
 /**
- * Compose a CC 1.4 `.imscc` archive: `imsmanifest.xml` at the root plus every resource file at its
- * declared `href`. Deterministic (no timestamps), so identical inputs yield byte-identical archives.
- * Throws `CommonCartridgeError` if the manifest is not conformant.
+ * Compose a `.imscc` archive (CC 1.4 by default, or CC 1.3 via `options.version`): `imsmanifest.xml`
+ * at the root plus every resource file at its declared `href`. Deterministic (no timestamps), so
+ * identical inputs yield byte-identical archives. Throws `CommonCartridgeError` if not conformant.
  */
-export function composeCommonCartridge(cartridge: ComposableCartridge): Uint8Array {
-  const manifestXml = serializeCommonCartridgeManifest(cartridge);
+export function composeCommonCartridge(cartridge: ComposableCartridge, options?: ComposeCartridgeOptions): Uint8Array {
+  const manifestXml = serializeCommonCartridgeManifest(cartridge, options);
   const entries: Record<string, Uint8Array> = { [MANIFEST_FILE_NAME]: strToU8(manifestXml) };
   for (const resource of cartridge.resources) {
     for (const file of resource.files ?? []) {

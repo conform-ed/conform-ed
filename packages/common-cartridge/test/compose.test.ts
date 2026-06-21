@@ -108,6 +108,66 @@ test("the manifest declares the CC 1.4 namespace and schema version", () => {
   expect(manifest).toContain("<schemaversion>1.4.0</schemaversion>");
 });
 
+function sampleV1p3Cartridge(): ComposableCartridge {
+  return {
+    identifier: "course-13",
+    title: "Legacy Course",
+    organizations: [
+      {
+        identifier: "unit-1",
+        title: "Unit 1",
+        children: [
+          { identifier: "act-a", identifierref: "res-a", title: "Quiz" },
+          { identifier: "act-c", identifierref: "res-c", title: "External link" },
+        ],
+      },
+    ],
+    resources: [
+      {
+        identifier: "res-a",
+        // CC 1.3 carries QTI as the 1.2.1 binding; the assessment type forbids an href (file only).
+        type: "imsqti_xmlv1p2/imscc_xmlv1p3/assessment",
+        files: [{ href: "assessments/res-a.xml", bytes: qtiPackageBytes }],
+      },
+      {
+        identifier: "res-c",
+        type: "imswl_xmlv1p3",
+        files: [{ href: "weblinks/res-c.xml", bytes: webLinkBytes }],
+      },
+    ],
+  };
+}
+
+test("composes a CC 1.3 cartridge that decomposes back to version 1.3 with its 1.3 resource types", () => {
+  const manifest = serializeCommonCartridgeManifest(sampleV1p3Cartridge(), { version: "1.3" });
+  expect(manifest).toContain("imsccv1p3");
+  expect(manifest).toContain("<schemaversion>1.3.0</schemaversion>");
+
+  const decomposed = decomposeCommonCartridge(composeCommonCartridge(sampleV1p3Cartridge(), { version: "1.3" }));
+  expect(decomposed.version).toBe("1.3");
+  const resourcesById = new Map(decomposed.resources.map((resource) => [resource.identifier, resource]));
+  expect(resourcesById.get("res-a")!.type).toBe("imsqti_xmlv1p2/imscc_xmlv1p3/assessment");
+  expect(resourcesById.get("res-a")!.kind).toBe("qti-assessment");
+  expect(resourcesById.get("res-c")!.type).toBe("imswl_xmlv1p3");
+  expect(resourcesById.get("res-c")!.kind).toBe("web-link");
+});
+
+test("the CC 1.3 conformance gate rejects a 1.4-only resource type (imsqti_zipv3p0)", () => {
+  const cartridge = sampleV1p3Cartridge();
+  const offending = {
+    ...cartridge,
+    resources: [
+      {
+        identifier: "res-z",
+        type: "imsqti_zipv3p0" as const,
+        href: "z.zip",
+        files: [{ href: "z.zip", bytes: qtiPackageBytes }],
+      },
+    ],
+  };
+  expect(() => composeCommonCartridge(offending, { version: "1.3" })).toThrow(/conformant CC 1\.3 manifest/);
+});
+
 test("the conformance gate rejects a profile-forbidden manifest (imswl with an href)", () => {
   const cartridge = sampleCartridge();
   const offending = {
