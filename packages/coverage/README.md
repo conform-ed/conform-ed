@@ -54,7 +54,7 @@ Adding a spec: vendor its source schema under `vendor/<spec>/<version>/`, declar
 
 ## Status
 
-Ten `spec:version` maps across all three schema-language families:
+Eleven `spec:version` maps across all three schema-language families:
 
 Silent-gap / extension columns are the residues _after_ documented renames are absorbed;
 the `Norm.` column counts the keys each map's `specRefOverrides` moved into `normalisations`.
@@ -71,6 +71,7 @@ the `Norm.` column counts the keys each map's `specRefOverrides` moved into `nor
 | `qti-v2.2`              | XSD         | 5378  | 208      | 541         | 78         | 14    | 11         |
 | `qti-v3.0.1`            | XSD         | 5344  | 224      | 358         | 78         | 12    | 10         |
 | `oneroster-v1.2`        | OpenAPI     | 498   | 248      | 0           | 0          | 0     | 21         |
+| `lti-v1.3`              | OpenAPI+gd  | 46    | 21       | 0           | 6          | 0     | 27         |
 
 - **Open Badges 3.0 / CLR 2.0** share the OB/VC credential machinery; **CASE 1.1** (all
   13 entity schemas) reconciles `0/0` and is fully guide-curated (core / provider / consumer).
@@ -95,6 +96,20 @@ the `Norm.` column counts the keys each map's `specRefOverrides` moved into `nor
   88 `operation` / `parameter` / `security` items (81 operations, the six shared query
   mechanisms, OAuth2CC). These are L1-only — never reconciled, so they swell `Items` but add
   no silent gaps — and the §4 REST-binding requirements cross-link to them (see below).
+- **LTI 1.3 + Advantage** ⚠️ — a **hybrid** map (emergent ADR-0033): only **AGS 2.0** has
+  a machine-readable denominator, and even that is an _illustrative_ OpenAPI whose schemas
+  are inlined under the path media types. The vendored derived JSON lifts the five
+  1EdTech-named media-type schemas (lineitem / lineitemcontainer / score / result /
+  resultcontainer) into `components.schemas` — a documented, byte-faithful relocation of
+  1EdTech's own artifact (see `vendor/lti/v1_3/PROVENANCE.md`, the Caliper precedent). Those
+  reconcile `0` gaps against conform-ed's AGS Zod; the 6 `Extensions` are optional fields
+  conform-ed models that the illustrative OpenAPI omits (`gradesReleased`, `submission`,
+  `scorePublished`, `scoringUserId`). The AGS `paths` give the transport axis (7 operations,
+  6 query filters, **no** declared security scheme — AGS keeps OAuth out of band). The other
+  five profiles — **Core** launch, **Security**, **NRPS**, **Deep Linking**, **Proctoring**
+  — publish no schema at all (inline JSON + prose), so they are guide-only with
+  `constrains: []`. `cited` is 0 throughout: even the AGS schema prose is prose-case "must",
+  not RFC-2119 `MUST` (so AGS is "schema-backed" by `Modelled`, not `Norm.`/`cited`).
 - **Common Cartridge 1.3 / 1.4** — via the **direct XSD walker**, with `def:`s scoped by
   source schema (`scopeXsdDefsBySource`) so same-named complexTypes from different files
   stay distinct. CC 1.3 carries eight bindings: content-packaging Manifest, Web Link,
@@ -184,6 +199,19 @@ MUSTs are niche base-type rules the structural catalogue does not reference, so 
 The curated catalogue is the cert-aligned MUST checklist; the literal ASI inventory — every
 element/attribute, including the deliberately-deferred content-model and expression-operator
 subtrees — is the map's L1.
+**LTI 1.3 + Advantage** is curated from the LTI Advantage Conformance & Certification guide,
+the 1EdTech Security Framework 1.1 and the four service specs, for the **tool** role (emergent
+ADR-0033 — emergent is an LTI tool, not a platform). 27 requirements across six Advantage
+profiles: `core` (OIDC launch + id_token validation + required claims + roles + reject-bad),
+`security` (RSA-256 JWTs, TLS, JWKS exposure, the OAuth client-credentials grant), `nrps` (the
+NRPS claim, the membership container media type, member roles/status, the readonly scope), `ags`
+(the eight line-item/score/result rules), `deep-linking` (the request settings, message types,
+the signed content-items response, the return redirect) and `proctoring` (start/end-assessment).
+Only `ags` has a literal denominator, so only its requirements cross-link `def:`/`path:`/`param:`
+anchors; the other five are guide-only with `constrains: []` (1EdTech publishes no schema for the
+launch claims, the membership container or the deep-linking messages — recorded honestly rather
+than invented). `cited` is 0 even for AGS — the AGS OpenAPI uses prose-case "must", not RFC-2119
+`MUST` — so AGS is "schema-backed" by `Modelled` (its info model reconciles `0` gaps), not `cited`.
 
 ### Rollout (emergent ADR-0028)
 

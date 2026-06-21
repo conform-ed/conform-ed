@@ -59,13 +59,22 @@ export const ResultSchema = strictObject({
   comment: z.string().optional(),
 });
 
+// The AGS container media types (`application/vnd.ims.lis.v2.lineitemcontainer+json`,
+// `application/vnd.ims.lis.v2.resultcontainer+json`) are simply paged arrays of the
+// item resources — no envelope object. Modelled as arrays so the Coverage Map's
+// lineitemcontainer/resultcontainer bindings reconcile (conform-ed ADR-0013).
+export const LineItemContainerSchema = z.array(LineItemSchema);
+export const ResultContainerSchema = z.array(ResultSchema);
+
 export const LtiAgsV2_0 = {
   Schemas: {
     Endpoint: EndpointSchema,
     LineItem: LineItemSchema,
+    LineItemContainer: LineItemContainerSchema,
     Score: ScoreSchema,
     ScoreSubmission: ScoreSubmissionSchema,
     Result: ResultSchema,
+    ResultContainer: ResultContainerSchema,
     AgsScope: AgsScopeSchema,
     ScoreProgress: ScoreProgressSchema,
     GradingProgress: GradingProgressSchema,
@@ -95,3 +104,5 @@ export type GradingProgress = z.infer<typeof GradingProgressSchema>;
 export type ScoreSubmission = z.infer<typeof ScoreSubmissionSchema>;
 export type Score = z.infer<typeof ScoreSchema>;
 export type Result = z.infer<typeof ResultSchema>;
+export type LineItemContainer = z.infer<typeof LineItemContainerSchema>;
+export type ResultContainer = z.infer<typeof ResultContainerSchema>;
