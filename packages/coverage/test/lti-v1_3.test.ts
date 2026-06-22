@@ -22,21 +22,22 @@ describe("LTI 1.3 + Advantage Coverage Map — hybrid (AGS schema spine + curate
     for (const item of map.items) expect(item.key.startsWith("lti:1.3:")).toBe(true);
   });
 
-  test("pins each AGS binding/REST service (OpenAPI) and the curated content-item denominator", () => {
+  test("pins each AGS binding/REST service (OpenAPI) and the two curated denominators", () => {
     // 5 AGS component bindings + 1 restService (ags paths), all the same derived OpenAPI file,
-    // plus the ADR-0017 curated Deep Linking content-item denominator (a distinct provenance tier).
-    expect(map.meta.sources).toHaveLength(7);
+    // plus the ADR-0017 curated Deep Linking + NRPS denominators (a distinct provenance tier).
+    expect(map.meta.sources).toHaveLength(8);
     for (const source of map.meta.sources) expect(source.sha256).toMatch(/^[0-9a-f]{64}$/);
     const byBinding = new Map(map.meta.sources.map((s) => [s.binding, s.language]));
     for (const openapi of ["ags (paths)", "LineItem", "LineItemContainer", "Result", "ResultContainer", "Score"]) {
       expect(byBinding.get(openapi)).toBe("openapi");
     }
     expect(byBinding.get("DeepLinkingContentItem")).toBe("curated");
+    expect(byBinding.get("NrpsMembershipContainer")).toBe("curated");
   });
 
-  test("conform-ed reconciles every denominator (AGS OpenAPI + curated content items) with no silent gaps", () => {
+  test("conform-ed reconciles every denominator (AGS OpenAPI + curated content items + NRPS) with no silent gaps", () => {
     expect(map.rollup.modelledNo).toBe(0);
-    expect(map.rollup.modelledYes).toBe(61);
+    expect(map.rollup.modelledYes).toBe(78);
     expect(map.residues.silentGaps).toEqual([]);
     // Honest extensions: optional fields conform-ed models that the denominator omits (NOT gaps).
     // Six are AGS fields the *illustrative* OpenAPI omits; the seventh is the `alt` text on
@@ -67,6 +68,18 @@ describe("LTI 1.3 + Advantage Coverage Map — hybrid (AGS schema spine + curate
     expect(byKey.get("lti:1.3:doc:DeepLinkingContentItem")?.kind).toBe("document");
   });
 
+  test("the curated NRPS membership-container denominator reconciles the member shape", () => {
+    for (const key of [
+      "lti:1.3:def:NrpsMember/userId",
+      "lti:1.3:def:NrpsMember/roles",
+      "lti:1.3:def:NrpsMember/status",
+      "lti:1.3:doc:NrpsMembershipContainer/members",
+    ]) {
+      expect(byKey.get(key)?.modelled).toBe("yes");
+    }
+    expect(byKey.get("lti:1.3:doc:NrpsMembershipContainer")?.kind).toBe("document");
+  });
+
   test("#/components/schemas refs resolve — no dangling edges", () => {
     const keys = new Set(map.items.map((i) => i.key));
     for (const edge of map.edges) expect(keys.has(edge.to)).toBe(true);
@@ -78,19 +91,30 @@ describe("LTI 1.3 + Advantage Coverage Map — hybrid (AGS schema spine + curate
     expect(profiles).toEqual(new Set(["core", "security", "nrps", "ags", "deep-linking", "proctoring"]));
   });
 
-  test("AGS and the curated Deep Linking content-item requirement carry anchors; the rest carry none", () => {
+  test("AGS plus the curated Deep Linking + NRPS requirements carry anchors; the rest carry none", () => {
     const keys = new Set(map.items.map((i) => i.key));
     const anchored = new Set<string>();
     for (const req of map.conformance) {
       for (const key of req.constrains) expect(keys.has(key)).toBe(true);
       if (req.constrains.length > 0) anchored.add(req.reqId);
     }
-    // AGS (every requirement except the launch-claim LTI-AGS-1) plus Deep Linking's content-item
-    // requirement (LTI-DL-3, anchored to the ADR-0017 curated denominator) now have a literal
-    // denominator. Core, Security, NRPS, Proctoring and the other Deep Linking requirements stay
-    // guide-only — 1EdTech publishes no schema for those, recorded honestly as `constrains: []`.
+    // AGS (every requirement except the launch-claim LTI-AGS-1) plus the requirements now backed
+    // by an ADR-0017 curated denominator: Deep Linking content items (LTI-DL-3) and the NRPS
+    // membership container (LTI-NRPS-2/3). Core, Security, Proctoring and the remaining Deep
+    // Linking / NRPS requirements stay guide-only — recorded honestly as `constrains: []`.
     expect(anchored).toEqual(
-      new Set(["LTI-AGS-2", "LTI-AGS-3", "LTI-AGS-4", "LTI-AGS-5", "LTI-AGS-6", "LTI-AGS-7", "LTI-AGS-8", "LTI-DL-3"]),
+      new Set([
+        "LTI-AGS-2",
+        "LTI-AGS-3",
+        "LTI-AGS-4",
+        "LTI-AGS-5",
+        "LTI-AGS-6",
+        "LTI-AGS-7",
+        "LTI-AGS-8",
+        "LTI-DL-3",
+        "LTI-NRPS-2",
+        "LTI-NRPS-3",
+      ]),
     );
   });
 

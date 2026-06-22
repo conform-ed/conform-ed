@@ -29,6 +29,12 @@
         "sha256": "853f2783c6db4da23b8ba8b5c5dc9d2ddb5ee684745567fba653619d299041a6"
       },
       {
+        "binding": "NrpsMembershipContainer",
+        "language": "curated",
+        "id": "conform-ed:curated:lti/1.3/nrps/membership-container",
+        "sha256": "d9d1c4aafe481edffddfe72faae246567649f9eb5d46818278212b6b2c5ac872"
+      },
+      {
         "binding": "Result",
         "language": "openapi",
         "id": "Assignment and Grade Services v1.0.0",
@@ -622,6 +628,136 @@
       "path": "[]"
     },
     {
+      "key": "lti:1.3:def:NrpsContext",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object"
+    },
+    {
+      "key": "lti:1.3:def:NrpsContext/id",
+      "kind": "property",
+      "path": "id",
+      "jsonType": "string",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:NrpsContext/label",
+      "kind": "property",
+      "path": "label",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:NrpsContext/title",
+      "kind": "property",
+      "path": "title",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:NrpsMember",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object"
+    },
+    {
+      "key": "lti:1.3:def:NrpsMember/email",
+      "kind": "property",
+      "path": "email",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:NrpsMember/familyName",
+      "kind": "property",
+      "path": "familyName",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:NrpsMember/givenName",
+      "kind": "property",
+      "path": "givenName",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:NrpsMember/lisPersonSourcedId",
+      "kind": "property",
+      "path": "lisPersonSourcedId",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:NrpsMember/middleName",
+      "kind": "property",
+      "path": "middleName",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:NrpsMember/name",
+      "kind": "property",
+      "path": "name",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:NrpsMember/picture",
+      "kind": "property",
+      "path": "picture",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:NrpsMember/roles",
+      "kind": "property",
+      "path": "roles",
+      "jsonType": "array",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:NrpsMember/roles/[]",
+      "kind": "property",
+      "path": "roles/[]",
+      "jsonType": "string"
+    },
+    {
+      "key": "lti:1.3:def:NrpsMember/roleScopeMentor",
+      "kind": "property",
+      "path": "roleScopeMentor",
+      "jsonType": "array",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:NrpsMember/roleScopeMentor/[]",
+      "kind": "property",
+      "path": "roleScopeMentor/[]",
+      "jsonType": "string"
+    },
+    {
+      "key": "lti:1.3:def:NrpsMember/status",
+      "kind": "property",
+      "path": "status",
+      "jsonType": "string",
+      "enumValues": [
+        "Active",
+        "Inactive",
+        "Deleted"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:NrpsMember/userId",
+      "kind": "property",
+      "path": "userId",
+      "jsonType": "string",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
       "key": "lti:1.3:def:Result",
       "kind": "definition",
       "path": ""
@@ -781,6 +917,40 @@
       "key": "lti:1.3:doc:LineItemContainer",
       "kind": "document",
       "path": ""
+    },
+    {
+      "key": "lti:1.3:doc:NrpsMembershipContainer",
+      "kind": "document",
+      "path": "",
+      "jsonType": "object"
+    },
+    {
+      "key": "lti:1.3:doc:NrpsMembershipContainer/context",
+      "kind": "property",
+      "path": "context",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:doc:NrpsMembershipContainer/id",
+      "kind": "property",
+      "path": "id",
+      "jsonType": "string",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:doc:NrpsMembershipContainer/members",
+      "kind": "property",
+      "path": "members",
+      "jsonType": "array",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:doc:NrpsMembershipContainer/members/[]",
+      "kind": "property",
+      "path": "members/[]"
     },
     {
       "key": "lti:1.3:doc:Result",
@@ -976,6 +1146,14 @@
     {
       "from": "lti:1.3:doc:LineItemContainer",
       "to": "lti:1.3:def:LineItemContainer"
+    },
+    {
+      "from": "lti:1.3:doc:NrpsMembershipContainer/context",
+      "to": "lti:1.3:def:NrpsContext"
+    },
+    {
+      "from": "lti:1.3:doc:NrpsMembershipContainer/members/[]",
+      "to": "lti:1.3:def:NrpsMember"
     },
     {
       "from": "lti:1.3:doc:Result",
@@ -1235,7 +1413,10 @@
       "reqId": "LTI-NRPS-2",
       "level": "MUST",
       "statement": "A tool retrieves the membership container (media type application/vnd.ims.lti-nrps.v2.membershipcontainer+json) via GET on the context membership URL, following Link-header paging.",
-      "constrains": [],
+      "constrains": [
+        "lti:1.3:doc:NrpsMembershipContainer",
+        "lti:1.3:doc:NrpsMembershipContainer/members"
+      ],
       "source": "LTI NRPS 2.0 §2.1 (membership container) — https://www.imsglobal.org/spec/lti-nrps/v2p0"
     },
     {
@@ -1244,7 +1425,11 @@
       "reqId": "LTI-NRPS-3",
       "level": "MUST",
       "statement": "Each member carries a user_id (the launch sub) and a roles array; a member with status Inactive/Deleted MUST be honoured (not treated as active).",
-      "constrains": [],
+      "constrains": [
+        "lti:1.3:def:NrpsMember/userId",
+        "lti:1.3:def:NrpsMember/roles",
+        "lti:1.3:def:NrpsMember/status"
+      ],
       "source": "LTI NRPS 2.0 §4.2 (membership / member status) — https://www.imsglobal.org/spec/lti-nrps/v2p0"
     },
     {
@@ -1326,8 +1511,8 @@
     "normalisations": []
   },
   "rollup": {
-    "items": 121,
-    "modelledYes": 61,
+    "items": 144,
+    "modelledYes": 78,
     "modelledPartial": 0,
     "modelledNo": 0,
     "normativeItems": 0,

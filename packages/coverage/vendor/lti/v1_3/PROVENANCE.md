@@ -20,6 +20,10 @@ for that family — a JSON Schema written from the prose spec, not a vendored 1E
   the **lowest provenance tier** — a hand transcription of prose, not a machine artifact —
   and is re-reviewed on a spec version bump. Reconciled against conform-ed's
   `ContentItemSchema` discriminated union.
+- `curated/nrps-membership-container.schema.json` — the NRPS 2.0 membership container
+  (`id`, `context`, `members[]` with the per-member identity / roles / status fields),
+  authored from **LTI NRPS 2.0 §2.1 / §4.2** (<https://www.imsglobal.org/spec/lti-nrps/v2p0>).
+  Reconciled against conform-ed's `MembershipContainerSchema`.
 
 ## Source (the AGS OpenAPI)
 

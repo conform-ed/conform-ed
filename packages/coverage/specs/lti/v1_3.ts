@@ -1,16 +1,19 @@
 /**
  * LTI 1.3 + Advantage — {@link SpecSource} (conform-ed ADR-0013; emergent ADR-0033
  * rollout). The hybrid map: a thin **schema-reconciled spine** (Assignment & Grade
- * Services), a **curated denominator** for Deep Linking content items (ADR-0017), and a
- * **guide-curated catalogue** (Core launch, NRPS, Security) with no `cited` denominator —
- * the CC/QTI catalogue shape.
+ * Services), **curated denominators** for the prose-only payloads (Deep Linking content
+ * items + the NRPS membership container, ADR-0017), and a **guide-curated catalogue** (Core
+ * launch, Security, the remaining service requirements) with no `cited` denominator — the
+ * CC/QTI catalogue shape.
  *
- * The Deep Linking content-item types publish no machine-readable schema either, so before
- * ADR-0017 the conform-ed Zod was its own yardstick — and a real under-modelling (the html
- * content item's `html` payload, the image item's dimensions) sat undetected. The curated
- * JSON Schema under `vendor/lti/v1_3/curated/` now gives the content-item union a hand-
- * authored, spec-cited denominator (walked by `walkers/curated.ts`), reconciled against the
- * per-type discriminated union so a future regression surfaces as a silent gap.
+ * Deep Linking and NRPS publish no machine-readable schema, so before ADR-0017 the conform-ed
+ * Zod was its own yardstick — and a real under-modelling (the html content item's `html`
+ * payload, the image item's dimensions) sat undetected. The curated JSON Schemas under
+ * `vendor/lti/v1_3/curated/` now give those payloads a hand-authored, spec-cited denominator
+ * (walked by `walkers/curated.ts`), reconciled against the conform-ed contracts so a future
+ * regression surfaces as a silent gap. The LTI **role vocabulary** is the one prose family
+ * still un-denominated: it is a controlled value-set, not an object shape, so the structural
+ * property-join cannot verify it — it needs a value-set primitive (ADR-0017 follow-up).
  *
  * Why hybrid (verified against the published specs, 2026-06-21):
  *
@@ -58,6 +61,7 @@ import {
   ScoreSchema,
 } from "@conform-ed/contracts/lti/ags/v2_0";
 import { ContentItemSchema } from "@conform-ed/contracts/lti/deep-linking/v2_0";
+import { MembershipContainerSchema } from "@conform-ed/contracts/lti/nrps/v2_0";
 
 import type { SpecBindingSource, SpecSource } from "../../src/source";
 import type { ConformanceRequirement } from "../../src/types";
@@ -203,7 +207,8 @@ const conformance: readonly ConformanceRequirement[] = [
     level: "MUST",
     statement:
       "A tool retrieves the membership container (media type application/vnd.ims.lti-nrps.v2.membershipcontainer+json) via GET on the context membership URL, following Link-header paging.",
-    constrains: [],
+    // Anchored to the ADR-0017 curated membership-container denominator.
+    constrains: ["lti:1.3:doc:NrpsMembershipContainer", "lti:1.3:doc:NrpsMembershipContainer/members"],
     source: "LTI NRPS 2.0 §2.1 (membership container) — https://www.imsglobal.org/spec/lti-nrps/v2p0",
   },
   {
@@ -213,7 +218,8 @@ const conformance: readonly ConformanceRequirement[] = [
     level: "MUST",
     statement:
       "Each member carries a user_id (the launch sub) and a roles array; a member with status Inactive/Deleted MUST be honoured (not treated as active).",
-    constrains: [],
+    // Anchored to the curated member shape (the status field is conform-ed's enum gate).
+    constrains: ["lti:1.3:def:NrpsMember/userId", "lti:1.3:def:NrpsMember/roles", "lti:1.3:def:NrpsMember/status"],
     source: "LTI NRPS 2.0 §4.2 (membership / member status) — https://www.imsglobal.org/spec/lti-nrps/v2p0",
   },
   {
@@ -425,6 +431,14 @@ export const ltiV1_3: SpecSource = {
       schemaPath: vendor("curated/deep-linking-content-item.schema.json"),
       language: "curated",
       zod: ContentItemSchema,
+    },
+    // Curated denominator (ADR-0017): NRPS publishes no schema for the membership container,
+    // reconciled against conform-ed's MembershipContainerSchema.
+    {
+      binding: "NrpsMembershipContainer",
+      schemaPath: vendor("curated/nrps-membership-container.schema.json"),
+      language: "curated",
+      zod: MembershipContainerSchema,
     },
   ],
   // Transport axis: the AGS OpenAPI `paths` (operations + query filters; no security
