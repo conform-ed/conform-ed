@@ -68,6 +68,7 @@ import {
   DeepLinkingSettingsSchema,
 } from "@conform-ed/contracts/lti/deep-linking/v2_0";
 import { MembershipContainerSchema } from "@conform-ed/contracts/lti/nrps/v2_0";
+import { EndAssessmentMessageSchema, StartProctoringMessageSchema } from "@conform-ed/contracts/lti/proctoring/v1_0";
 import { CoreLaunchRequestSchema } from "@conform-ed/contracts/lti/v1_3";
 
 import type { SpecBindingSource, SpecSource } from "../../src/source";
@@ -420,7 +421,11 @@ const conformance: readonly ConformanceRequirement[] = [
     level: "MUST",
     statement:
       "A proctoring tool receives the LtiStartProctoring message (with the proctoring_settings and the start_assessment_url) and only launches the assessment via the start_assessment_url once proctoring setup completes.",
-    constrains: [],
+    // Anchored to the ADR-0017 curated StartProctoring message denominator.
+    constrains: [
+      "lti:1.3:doc:StartProctoringMessage/startAssessmentUrl",
+      "lti:1.3:doc:StartProctoringMessage/assessmentProctoringSettings",
+    ],
     source: "LTI Proctoring Services 1.0 §4 (start proctoring) — https://www.imsglobal.org/spec/proctoring/v1p0",
   },
   {
@@ -430,7 +435,8 @@ const conformance: readonly ConformanceRequirement[] = [
     level: "MUST",
     statement:
       "The tool returns control to the platform with an LtiEndAssessment message at the end of the attempt (and MAY surface an Assessment Control Service verdict during it).",
-    constrains: [],
+    // Anchored to the ADR-0017 curated EndAssessment message denominator.
+    constrains: ["lti:1.3:doc:EndAssessmentMessage/messageType", "lti:1.3:doc:EndAssessmentMessage/attemptNumber"],
     source: "LTI Proctoring Services 1.0 §5 (end assessment / ACS) — https://www.imsglobal.org/spec/proctoring/v1p0",
   },
 ];
@@ -476,6 +482,20 @@ export const ltiV1_3: SpecSource = {
       schemaPath: vendor("curated/deep-linking-settings.schema.json"),
       language: "curated",
       zod: DeepLinkingSettingsSchema,
+    },
+    // Curated denominators (ADR-0017): Proctoring 1.0 publishes no schema for its launch
+    // messages, reconciled against conform-ed's Start/End proctoring message schemas.
+    {
+      binding: "StartProctoringMessage",
+      schemaPath: vendor("curated/proctoring-start-message.schema.json"),
+      language: "curated",
+      zod: StartProctoringMessageSchema,
+    },
+    {
+      binding: "EndAssessmentMessage",
+      schemaPath: vendor("curated/proctoring-end-message.schema.json"),
+      language: "curated",
+      zod: EndAssessmentMessageSchema,
     },
     // Value-set-only (ADR-0017): the role vocabulary is a controlled value-set modelled by a
     // refinement, not an object shape — it contributes its members for value-set verification

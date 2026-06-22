@@ -22,11 +22,11 @@ describe("LTI 1.3 + Advantage Coverage Map — hybrid (AGS schema spine + curate
     for (const item of map.items) expect(item.key.startsWith("lti:1.3:")).toBe(true);
   });
 
-  test("pins each AGS binding/REST service (OpenAPI) and the five curated denominators", () => {
+  test("pins each AGS binding/REST service (OpenAPI) and the seven curated denominators", () => {
     // 5 AGS component bindings + 1 restService (ags paths), all the same derived OpenAPI file,
     // plus the ADR-0017 curated structural denominators (Deep Linking content items + settings,
-    // NRPS container, Core launch) and the role value-set vocabulary (a distinct provenance tier).
-    expect(map.meta.sources).toHaveLength(11);
+    // NRPS container, Core launch, the two proctoring messages) and the role value-set vocabulary.
+    expect(map.meta.sources).toHaveLength(13);
     for (const source of map.meta.sources) expect(source.sha256).toMatch(/^[0-9a-f]{64}$/);
     const byBinding = new Map(map.meta.sources.map((s) => [s.binding, s.language]));
     for (const openapi of ["ags (paths)", "LineItem", "LineItemContainer", "Result", "ResultContainer", "Score"]) {
@@ -37,6 +37,8 @@ describe("LTI 1.3 + Advantage Coverage Map — hybrid (AGS schema spine + curate
       "DeepLinkingSettings",
       "NrpsMembershipContainer",
       "CoreLaunchRequest",
+      "StartProctoringMessage",
+      "EndAssessmentMessage",
       "RoleVocabulary",
     ]) {
       expect(byBinding.get(curated)).toBe("curated");
@@ -62,7 +64,7 @@ describe("LTI 1.3 + Advantage Coverage Map — hybrid (AGS schema spine + curate
 
   test("conform-ed reconciles every denominator (AGS OpenAPI + curated content items + NRPS) with no silent gaps", () => {
     expect(map.rollup.modelledNo).toBe(0);
-    expect(map.rollup.modelledYes).toBe(119);
+    expect(map.rollup.modelledYes).toBe(189);
     expect(map.residues.silentGaps).toEqual([]);
     // Honest extensions: optional fields conform-ed models that the denominator omits (NOT gaps).
     // Six are AGS fields the *illustrative* OpenAPI omits; the seventh is the `alt` text on
@@ -124,10 +126,11 @@ describe("LTI 1.3 + Advantage Coverage Map — hybrid (AGS schema spine + curate
       if (req.constrains.length > 0) anchored.add(req.reqId);
     }
     // AGS (every requirement except the launch-claim LTI-AGS-1) plus the requirements now backed
-    // by an ADR-0017 denominator: Deep Linking content items (LTI-DL-3), the NRPS membership
-    // container (LTI-NRPS-2/3), and the roles claim (LTI-CORE-4, the value-set vocabulary).
-    // Security, Proctoring and the remaining Core / Deep Linking / NRPS requirements stay
-    // guide-only — recorded honestly as `constrains: []`.
+    // by an ADR-0017 denominator: Core launch claims (LTI-CORE-3), the roles value-set
+    // (LTI-CORE-4), Deep Linking settings + content items (LTI-DL-1/3), the NRPS container
+    // (LTI-NRPS-2/3) and the two proctoring messages (LTI-PROC-1/2). What stays guide-only is the
+    // behavioural/transport surface with no payload schema: the OIDC/JWT flow (LTI-CORE-1/2/5),
+    // the whole Security profile, the AGS endpoint claim (LTI-AGS-1) and NRPS-1/4.
     expect(anchored).toEqual(
       new Set([
         "LTI-AGS-2",
@@ -143,6 +146,8 @@ describe("LTI 1.3 + Advantage Coverage Map — hybrid (AGS schema spine + curate
         "LTI-DL-3",
         "LTI-NRPS-2",
         "LTI-NRPS-3",
+        "LTI-PROC-1",
+        "LTI-PROC-2",
       ]),
     );
   });

@@ -29,6 +29,12 @@
         "sha256": "34e61f2e9da3018e00b8b280d265663f752c175c251347d5cbbd3f33d5d3342b"
       },
       {
+        "binding": "EndAssessmentMessage",
+        "language": "curated",
+        "id": "conform-ed:curated:lti/1.3/proctoring/end-assessment-message",
+        "sha256": "dfa713a57dbada954f98f65c9bb0570be6af5c79010b93d500bf38d7b42d5135"
+      },
+      {
         "binding": "LineItem",
         "language": "openapi",
         "id": "Assignment and Grade Services v1.0.0",
@@ -69,6 +75,12 @@
         "language": "openapi",
         "id": "Assignment and Grade Services v1.0.0",
         "sha256": "853f2783c6db4da23b8ba8b5c5dc9d2ddb5ee684745567fba653619d299041a6"
+      },
+      {
+        "binding": "StartProctoringMessage",
+        "language": "curated",
+        "id": "conform-ed:curated:lti/1.3/proctoring/start-proctoring-message",
+        "sha256": "7b734774198b3e66049d3ab07c46b2779b77c37c19acda42ea84ce50b76d6290"
       }
     ]
   },
@@ -715,6 +727,178 @@
       "modelled": "yes"
     },
     {
+      "key": "lti:1.3:def:EaContext",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object"
+    },
+    {
+      "key": "lti:1.3:def:EaContext/id",
+      "kind": "property",
+      "path": "id",
+      "jsonType": "string",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:EaContext/label",
+      "kind": "property",
+      "path": "label",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:EaContext/title",
+      "kind": "property",
+      "path": "title",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:EaContext/type",
+      "kind": "property",
+      "path": "type",
+      "jsonType": "array",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:EaContext/type/[]",
+      "kind": "property",
+      "path": "type/[]",
+      "jsonType": "string"
+    },
+    {
+      "key": "lti:1.3:def:EaLaunchPresentation",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object"
+    },
+    {
+      "key": "lti:1.3:def:EaLaunchPresentation/documentTarget",
+      "kind": "property",
+      "path": "documentTarget",
+      "jsonType": "string",
+      "enumValues": [
+        "embed",
+        "frame",
+        "iframe",
+        "popup",
+        "tab",
+        "window"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:EaLaunchPresentation/height",
+      "kind": "property",
+      "path": "height",
+      "jsonType": "integer",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:EaLaunchPresentation/locale",
+      "kind": "property",
+      "path": "locale",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:EaLaunchPresentation/returnUrl",
+      "kind": "property",
+      "path": "returnUrl",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:EaLaunchPresentation/width",
+      "kind": "property",
+      "path": "width",
+      "jsonType": "integer",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:EaLis",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object"
+    },
+    {
+      "key": "lti:1.3:def:EaLis/courseOfferingSourcedId",
+      "kind": "property",
+      "path": "courseOfferingSourcedId",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:EaLis/courseSectionSourcedId",
+      "kind": "property",
+      "path": "courseSectionSourcedId",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:EaLis/membershipSourcedId",
+      "kind": "property",
+      "path": "membershipSourcedId",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:EaLis/personSourcedId",
+      "kind": "property",
+      "path": "personSourcedId",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:EaProctoringSettings",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object"
+    },
+    {
+      "key": "lti:1.3:def:EaProctoringSettings/assessmentControlUrl",
+      "kind": "property",
+      "path": "assessmentControlUrl",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:EaProctoringSettings/endAssessmentReturnUrl",
+      "kind": "property",
+      "path": "endAssessmentReturnUrl",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:EaProctoringSettings/extraTime",
+      "kind": "property",
+      "path": "extraTime",
+      "jsonType": "integer",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:EaProctoringSettings/proctoringUrl",
+      "kind": "property",
+      "path": "proctoringUrl",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:EaProctoringSettings/sessionData",
+      "kind": "property",
+      "path": "sessionData",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:EaProctoringSettings/startAssessmentUrl",
+      "kind": "property",
+      "path": "startAssessmentUrl",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
       "key": "lti:1.3:def:LineItem",
       "kind": "definition",
       "path": ""
@@ -1074,6 +1258,206 @@
       "modelled": "yes"
     },
     {
+      "key": "lti:1.3:def:SpContext",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object"
+    },
+    {
+      "key": "lti:1.3:def:SpContext/id",
+      "kind": "property",
+      "path": "id",
+      "jsonType": "string",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:SpContext/label",
+      "kind": "property",
+      "path": "label",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:SpContext/title",
+      "kind": "property",
+      "path": "title",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:SpContext/type",
+      "kind": "property",
+      "path": "type",
+      "jsonType": "array",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:SpContext/type/[]",
+      "kind": "property",
+      "path": "type/[]",
+      "jsonType": "string"
+    },
+    {
+      "key": "lti:1.3:def:SpLaunchPresentation",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object"
+    },
+    {
+      "key": "lti:1.3:def:SpLaunchPresentation/documentTarget",
+      "kind": "property",
+      "path": "documentTarget",
+      "jsonType": "string",
+      "enumValues": [
+        "embed",
+        "frame",
+        "iframe",
+        "popup",
+        "tab",
+        "window"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:SpLaunchPresentation/height",
+      "kind": "property",
+      "path": "height",
+      "jsonType": "integer",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:SpLaunchPresentation/locale",
+      "kind": "property",
+      "path": "locale",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:SpLaunchPresentation/returnUrl",
+      "kind": "property",
+      "path": "returnUrl",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:SpLaunchPresentation/width",
+      "kind": "property",
+      "path": "width",
+      "jsonType": "integer",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:SpLis",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object"
+    },
+    {
+      "key": "lti:1.3:def:SpLis/courseOfferingSourcedId",
+      "kind": "property",
+      "path": "courseOfferingSourcedId",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:SpLis/courseSectionSourcedId",
+      "kind": "property",
+      "path": "courseSectionSourcedId",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:SpLis/membershipSourcedId",
+      "kind": "property",
+      "path": "membershipSourcedId",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:SpLis/personSourcedId",
+      "kind": "property",
+      "path": "personSourcedId",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:SpProctoringSettings",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object"
+    },
+    {
+      "key": "lti:1.3:def:SpProctoringSettings/assessmentControlUrl",
+      "kind": "property",
+      "path": "assessmentControlUrl",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:SpProctoringSettings/endAssessmentReturnUrl",
+      "kind": "property",
+      "path": "endAssessmentReturnUrl",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:SpProctoringSettings/extraTime",
+      "kind": "property",
+      "path": "extraTime",
+      "jsonType": "integer",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:SpProctoringSettings/proctoringUrl",
+      "kind": "property",
+      "path": "proctoringUrl",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:SpProctoringSettings/sessionData",
+      "kind": "property",
+      "path": "sessionData",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:SpProctoringSettings/startAssessmentUrl",
+      "kind": "property",
+      "path": "startAssessmentUrl",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:SpResourceLink",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object"
+    },
+    {
+      "key": "lti:1.3:def:SpResourceLink/description",
+      "kind": "property",
+      "path": "description",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:SpResourceLink/id",
+      "kind": "property",
+      "path": "id",
+      "jsonType": "string",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:SpResourceLink/title",
+      "kind": "property",
+      "path": "title",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
       "key": "lti:1.3:doc:CoreLaunchRequest",
       "kind": "document",
       "path": "",
@@ -1314,6 +1698,123 @@
       "modelled": "yes"
     },
     {
+      "key": "lti:1.3:doc:EndAssessmentMessage",
+      "kind": "document",
+      "path": "",
+      "jsonType": "object"
+    },
+    {
+      "key": "lti:1.3:doc:EndAssessmentMessage/assessmentProctoringSettings",
+      "kind": "property",
+      "path": "assessmentProctoringSettings",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:doc:EndAssessmentMessage/attemptNumber",
+      "kind": "property",
+      "path": "attemptNumber",
+      "jsonType": "integer",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:doc:EndAssessmentMessage/context",
+      "kind": "property",
+      "path": "context",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:doc:EndAssessmentMessage/custom",
+      "kind": "property",
+      "path": "custom",
+      "jsonType": "object",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:doc:EndAssessmentMessage/deploymentId",
+      "kind": "property",
+      "path": "deploymentId",
+      "jsonType": "string",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:doc:EndAssessmentMessage/errorLog",
+      "kind": "property",
+      "path": "errorLog",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:doc:EndAssessmentMessage/errorMessage",
+      "kind": "property",
+      "path": "errorMessage",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:doc:EndAssessmentMessage/launchPresentation",
+      "kind": "property",
+      "path": "launchPresentation",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:doc:EndAssessmentMessage/lis",
+      "kind": "property",
+      "path": "lis",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:doc:EndAssessmentMessage/messageType",
+      "kind": "property",
+      "path": "messageType",
+      "required": true,
+      "enumValues": [
+        "EndAssessmentMessage"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:doc:EndAssessmentMessage/roles",
+      "kind": "property",
+      "path": "roles",
+      "jsonType": "array",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:doc:EndAssessmentMessage/roles/[]",
+      "kind": "property",
+      "path": "roles/[]",
+      "jsonType": "string"
+    },
+    {
+      "key": "lti:1.3:doc:EndAssessmentMessage/subject",
+      "kind": "property",
+      "path": "subject",
+      "jsonType": "string",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:doc:EndAssessmentMessage/targetLinkUri",
+      "kind": "property",
+      "path": "targetLinkUri",
+      "jsonType": "string",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:doc:EndAssessmentMessage/version",
+      "kind": "property",
+      "path": "version",
+      "required": true,
+      "enumValues": [
+        "1.3.0"
+      ],
+      "modelled": "yes"
+    },
+    {
       "key": "lti:1.3:doc:LineItem",
       "kind": "document",
       "path": ""
@@ -1420,6 +1921,132 @@
       "key": "lti:1.3:doc:Score",
       "kind": "document",
       "path": ""
+    },
+    {
+      "key": "lti:1.3:doc:StartProctoringMessage",
+      "kind": "document",
+      "path": "",
+      "jsonType": "object"
+    },
+    {
+      "key": "lti:1.3:doc:StartProctoringMessage/assessmentProctoringSettings",
+      "kind": "property",
+      "path": "assessmentProctoringSettings",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:doc:StartProctoringMessage/attemptNumber",
+      "kind": "property",
+      "path": "attemptNumber",
+      "jsonType": "integer",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:doc:StartProctoringMessage/context",
+      "kind": "property",
+      "path": "context",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:doc:StartProctoringMessage/custom",
+      "kind": "property",
+      "path": "custom",
+      "jsonType": "object",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:doc:StartProctoringMessage/deploymentId",
+      "kind": "property",
+      "path": "deploymentId",
+      "jsonType": "string",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:doc:StartProctoringMessage/launchPresentation",
+      "kind": "property",
+      "path": "launchPresentation",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:doc:StartProctoringMessage/lis",
+      "kind": "property",
+      "path": "lis",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:doc:StartProctoringMessage/messageType",
+      "kind": "property",
+      "path": "messageType",
+      "required": true,
+      "enumValues": [
+        "StartProctoringMessage"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:doc:StartProctoringMessage/resourceLink",
+      "kind": "property",
+      "path": "resourceLink",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:doc:StartProctoringMessage/roles",
+      "kind": "property",
+      "path": "roles",
+      "jsonType": "array",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:doc:StartProctoringMessage/roles/[]",
+      "kind": "property",
+      "path": "roles/[]",
+      "jsonType": "string"
+    },
+    {
+      "key": "lti:1.3:doc:StartProctoringMessage/sessionData",
+      "kind": "property",
+      "path": "sessionData",
+      "jsonType": "string",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:doc:StartProctoringMessage/startAssessmentUrl",
+      "kind": "property",
+      "path": "startAssessmentUrl",
+      "jsonType": "string",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:doc:StartProctoringMessage/subject",
+      "kind": "property",
+      "path": "subject",
+      "jsonType": "string",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:doc:StartProctoringMessage/targetLinkUri",
+      "kind": "property",
+      "path": "targetLinkUri",
+      "jsonType": "string",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:doc:StartProctoringMessage/version",
+      "kind": "property",
+      "path": "version",
+      "required": true,
+      "enumValues": [
+        "1.3.0"
+      ],
+      "modelled": "yes"
     },
     {
       "key": "lti:1.3:param:limit",
@@ -1610,6 +2237,22 @@
       "to": "lti:1.3:def:DlLtiResourceLink"
     },
     {
+      "from": "lti:1.3:doc:EndAssessmentMessage/assessmentProctoringSettings",
+      "to": "lti:1.3:def:EaProctoringSettings"
+    },
+    {
+      "from": "lti:1.3:doc:EndAssessmentMessage/context",
+      "to": "lti:1.3:def:EaContext"
+    },
+    {
+      "from": "lti:1.3:doc:EndAssessmentMessage/launchPresentation",
+      "to": "lti:1.3:def:EaLaunchPresentation"
+    },
+    {
+      "from": "lti:1.3:doc:EndAssessmentMessage/lis",
+      "to": "lti:1.3:def:EaLis"
+    },
+    {
       "from": "lti:1.3:doc:LineItem",
       "to": "lti:1.3:def:LineItem"
     },
@@ -1636,6 +2279,26 @@
     {
       "from": "lti:1.3:doc:Score",
       "to": "lti:1.3:def:Score"
+    },
+    {
+      "from": "lti:1.3:doc:StartProctoringMessage/assessmentProctoringSettings",
+      "to": "lti:1.3:def:SpProctoringSettings"
+    },
+    {
+      "from": "lti:1.3:doc:StartProctoringMessage/context",
+      "to": "lti:1.3:def:SpContext"
+    },
+    {
+      "from": "lti:1.3:doc:StartProctoringMessage/launchPresentation",
+      "to": "lti:1.3:def:SpLaunchPresentation"
+    },
+    {
+      "from": "lti:1.3:doc:StartProctoringMessage/lis",
+      "to": "lti:1.3:def:SpLis"
+    },
+    {
+      "from": "lti:1.3:doc:StartProctoringMessage/resourceLink",
+      "to": "lti:1.3:def:SpResourceLink"
     },
     {
       "from": "lti:1.3:path:ags/GET /{contextId}/lineitems",
@@ -1929,7 +2592,10 @@
       "reqId": "LTI-PROC-1",
       "level": "MUST",
       "statement": "A proctoring tool receives the LtiStartProctoring message (with the proctoring_settings and the start_assessment_url) and only launches the assessment via the start_assessment_url once proctoring setup completes.",
-      "constrains": [],
+      "constrains": [
+        "lti:1.3:doc:StartProctoringMessage/startAssessmentUrl",
+        "lti:1.3:doc:StartProctoringMessage/assessmentProctoringSettings"
+      ],
       "source": "LTI Proctoring Services 1.0 §4 (start proctoring) — https://www.imsglobal.org/spec/proctoring/v1p0"
     },
     {
@@ -1938,7 +2604,10 @@
       "reqId": "LTI-PROC-2",
       "level": "MUST",
       "statement": "The tool returns control to the platform with an LtiEndAssessment message at the end of the attempt (and MAY surface an Assessment Control Service verdict during it).",
-      "constrains": [],
+      "constrains": [
+        "lti:1.3:doc:EndAssessmentMessage/messageType",
+        "lti:1.3:doc:EndAssessmentMessage/attemptNumber"
+      ],
       "source": "LTI Proctoring Services 1.0 §5 (end assessment / ACS) — https://www.imsglobal.org/spec/proctoring/v1p0"
     },
     {
@@ -2019,8 +2688,8 @@
     }
   ],
   "rollup": {
-    "items": 198,
-    "modelledYes": 119,
+    "items": 283,
+    "modelledYes": 189,
     "modelledPartial": 0,
     "modelledNo": 0,
     "normativeItems": 0,

@@ -1,0 +1,100 @@
+{
+  "$id": "conform-ed:curated:lti/1.3/proctoring/start-proctoring-message",
+  "$comment": "Hand-authored denominator (conform-ed ADR-0017) — LTI Proctoring Services 1.0 publishes no machine-readable schema, only prose + inline JSON examples. Source: LTI Proctoring Services 1.0 §4 (start proctoring) — https://www.imsglobal.org/spec/proctoring/v1p0. Lowest provenance tier; re-review on spec version bump.",
+  "title": "LTI Proctoring 1.0 StartProctoring message (normalized)",
+  "type": "object",
+  "required": [
+    "messageType",
+    "version",
+    "deploymentId",
+    "targetLinkUri",
+    "resourceLink",
+    "subject",
+    "attemptNumber",
+    "startAssessmentUrl",
+    "sessionData",
+    "roles"
+  ],
+  "properties": {
+    "messageType": { "const": "StartProctoringMessage", "$comment": "specRef: §4 (message_type)" },
+    "version": { "const": "1.3.0", "$comment": "specRef: §4 (version)" },
+    "deploymentId": { "type": "string", "$comment": "specRef: §4 (deployment_id)" },
+    "targetLinkUri": { "type": "string", "$comment": "specRef: §4 (target_link_uri)" },
+    "resourceLink": { "$ref": "#/$defs/SpResourceLink", "$comment": "specRef: §4 (resource_link)" },
+    "subject": { "type": "string", "$comment": "specRef: §4 (sub)" },
+    "attemptNumber": { "type": "integer", "$comment": "specRef: §4 (attempt_number)" },
+    "startAssessmentUrl": { "type": "string", "$comment": "specRef: §4 (start_assessment_url)" },
+    "sessionData": { "type": "string", "$comment": "specRef: §4 (session_data)" },
+    "roles": { "type": "array", "items": { "type": "string" }, "$comment": "specRef: §4 (roles)" },
+    "context": { "$ref": "#/$defs/SpContext", "$comment": "specRef: §4 (context)" },
+    "launchPresentation": { "$ref": "#/$defs/SpLaunchPresentation", "$comment": "specRef: §4 (launch_presentation)" },
+    "lis": { "$ref": "#/$defs/SpLis", "$comment": "specRef: §4 (lis)" },
+    "custom": { "type": "object", "$comment": "specRef: §4 (custom)" },
+    "assessmentProctoringSettings": {
+      "$ref": "#/$defs/SpProctoringSettings",
+      "$comment": "specRef: §4 (proctoring_settings)"
+    }
+  },
+  "$defs": {
+    "SpResourceLink": {
+      "type": "object",
+      "required": ["id"],
+      "properties": {
+        "id": { "type": "string", "$comment": "specRef: §4 (resource_link.id)" },
+        "title": { "type": "string", "$comment": "specRef: §4 (resource_link.title)" },
+        "description": { "type": "string", "$comment": "specRef: §4 (resource_link.description)" }
+      }
+    },
+    "SpContext": {
+      "type": "object",
+      "required": ["id"],
+      "properties": {
+        "id": { "type": "string", "$comment": "specRef: §4 (context.id)" },
+        "label": { "type": "string", "$comment": "specRef: §4 (context.label)" },
+        "title": { "type": "string", "$comment": "specRef: §4 (context.title)" },
+        "type": { "type": "array", "items": { "type": "string" }, "$comment": "specRef: §4 (context.type)" }
+      }
+    },
+    "SpLaunchPresentation": {
+      "type": "object",
+      "properties": {
+        "documentTarget": {
+          "type": "string",
+          "enum": ["embed", "frame", "iframe", "popup", "tab", "window"],
+          "$comment": "specRef: §4 (launch_presentation.document_target)"
+        },
+        "locale": { "type": "string", "$comment": "specRef: §4 (launch_presentation.locale)" },
+        "height": { "type": "integer", "$comment": "specRef: §4 (launch_presentation.height)" },
+        "width": { "type": "integer", "$comment": "specRef: §4 (launch_presentation.width)" },
+        "returnUrl": { "type": "string", "$comment": "specRef: §4 (launch_presentation.return_url)" }
+      }
+    },
+    "SpLis": {
+      "type": "object",
+      "properties": {
+        "personSourcedId": { "type": "string", "$comment": "specRef: §4 (lis.person_sourcedid)" },
+        "courseOfferingSourcedId": { "type": "string", "$comment": "specRef: §4 (lis.course_offering_sourcedid)" },
+        "courseSectionSourcedId": { "type": "string", "$comment": "specRef: §4 (lis.course_section_sourcedid)" },
+        "membershipSourcedId": { "type": "string", "$comment": "specRef: §4 (lis.membership_sourcedid)" }
+      }
+    },
+    "SpProctoringSettings": {
+      "type": "object",
+      "title": "assessment proctoring settings",
+      "properties": {
+        "proctoringUrl": { "type": "string", "$comment": "specRef: §4 (proctoring_settings.proctoring_url)" },
+        "startAssessmentUrl": { "type": "string", "$comment": "specRef: §4 (proctoring_settings.start_assessment_url)" },
+        "endAssessmentReturnUrl": {
+          "type": "string",
+          "$comment": "specRef: §4 (proctoring_settings.end_assessment_return_url)"
+        },
+        "assessmentControlUrl": {
+          "type": "string",
+          "$comment": "specRef: §4 (proctoring_settings.assessment_control_url)"
+        },
+        "sessionData": { "type": "string", "$comment": "specRef: §4 (proctoring_settings.session_data)" },
+        "extraTime": { "type": "integer", "$comment": "specRef: §4 (proctoring_settings.extra_time)" }
+      }
+    }
+  }
+}
