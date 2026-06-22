@@ -16,6 +16,7 @@ import { openBadgesV3_0 } from "./open-badges/v3_0";
 import { qtiV2_1 } from "./qti/v2_1";
 import { qtiV2_2 } from "./qti/v2_2";
 import { qtiV3_0_1 } from "./qti/v3_0_1";
+import { xapiV2_0 } from "./xapi/v2_0";
 
 export interface CoverageMapEntry {
   readonly source: SpecSource;
@@ -35,4 +36,5 @@ export const COVERAGE_MAPS: readonly CoverageMapEntry[] = [
   { source: caliperV1_2, file: "caliper-v1.2.json" },
   { source: ltiV1_3, file: "lti-v1.3.json" },
   { source: cmi5V1_0, file: "cmi5-v1.0.json" },
+  { source: xapiV2_0, file: "xapi-v2.0.json" },
 ];

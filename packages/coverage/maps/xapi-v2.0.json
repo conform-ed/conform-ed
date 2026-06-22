@@ -1,0 +1,1237 @@
+{
+  "meta": {
+    "spec": "xapi",
+    "version": "2.0",
+    "generatedAt": "2026-06-22",
+    "sources": [
+      {
+        "binding": "Statement",
+        "language": "curated",
+        "id": "conform-ed:curated:xapi/2.0/statement",
+        "sha256": "39cee68ca0411066fca305e430921b63b3e29f5e8ba2d70b47b0bb7f7745bb8e"
+      }
+    ]
+  },
+  "items": [
+    {
+      "key": "xapi:2.0:def:Activity",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object"
+    },
+    {
+      "key": "xapi:2.0:def:Activity/definition",
+      "kind": "property",
+      "path": "definition",
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:def:Activity/id",
+      "kind": "property",
+      "path": "id",
+      "jsonType": "string",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:def:Activity/objectType",
+      "kind": "property",
+      "path": "objectType",
+      "enumValues": [
+        "Activity"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:def:ActivityDefinition",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "normative": true
+    },
+    {
+      "key": "xapi:2.0:def:ActivityDefinition/choices",
+      "kind": "property",
+      "path": "choices",
+      "jsonType": "array",
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:def:ActivityDefinition/choices/[]",
+      "kind": "property",
+      "path": "choices/[]"
+    },
+    {
+      "key": "xapi:2.0:def:ActivityDefinition/correctResponsesPattern",
+      "kind": "property",
+      "path": "correctResponsesPattern",
+      "jsonType": "array",
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:def:ActivityDefinition/correctResponsesPattern/[]",
+      "kind": "property",
+      "path": "correctResponsesPattern/[]",
+      "jsonType": "string"
+    },
+    {
+      "key": "xapi:2.0:def:ActivityDefinition/description",
+      "kind": "property",
+      "path": "description",
+      "jsonType": "object",
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:def:ActivityDefinition/extensions",
+      "kind": "property",
+      "path": "extensions",
+      "jsonType": "object",
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:def:ActivityDefinition/interactionType",
+      "kind": "property",
+      "path": "interactionType",
+      "jsonType": "string",
+      "enumValues": [
+        "true-false",
+        "choice",
+        "fill-in",
+        "long-fill-in",
+        "matching",
+        "performance",
+        "sequencing",
+        "likert",
+        "numeric",
+        "other"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:def:ActivityDefinition/moreInfo",
+      "kind": "property",
+      "path": "moreInfo",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:def:ActivityDefinition/name",
+      "kind": "property",
+      "path": "name",
+      "jsonType": "object",
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:def:ActivityDefinition/scale",
+      "kind": "property",
+      "path": "scale",
+      "jsonType": "array",
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:def:ActivityDefinition/scale/[]",
+      "kind": "property",
+      "path": "scale/[]"
+    },
+    {
+      "key": "xapi:2.0:def:ActivityDefinition/source",
+      "kind": "property",
+      "path": "source",
+      "jsonType": "array",
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:def:ActivityDefinition/source/[]",
+      "kind": "property",
+      "path": "source/[]"
+    },
+    {
+      "key": "xapi:2.0:def:ActivityDefinition/steps",
+      "kind": "property",
+      "path": "steps",
+      "jsonType": "array",
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:def:ActivityDefinition/steps/[]",
+      "kind": "property",
+      "path": "steps/[]"
+    },
+    {
+      "key": "xapi:2.0:def:ActivityDefinition/target",
+      "kind": "property",
+      "path": "target",
+      "jsonType": "array",
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:def:ActivityDefinition/target/[]",
+      "kind": "property",
+      "path": "target/[]"
+    },
+    {
+      "key": "xapi:2.0:def:ActivityDefinition/type",
+      "kind": "property",
+      "path": "type",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:def:Agent",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object"
+    },
+    {
+      "key": "xapi:2.0:def:Agent/account",
+      "kind": "property",
+      "path": "account",
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:def:Agent/mbox",
+      "kind": "property",
+      "path": "mbox",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:def:Agent/mbox_sha1sum",
+      "kind": "property",
+      "path": "mbox_sha1sum",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:def:Agent/name",
+      "kind": "property",
+      "path": "name",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:def:Agent/objectType",
+      "kind": "property",
+      "path": "objectType",
+      "enumValues": [
+        "Agent"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:def:Agent/openid",
+      "kind": "property",
+      "path": "openid",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:def:AgentAccount",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object"
+    },
+    {
+      "key": "xapi:2.0:def:AgentAccount/homePage",
+      "kind": "property",
+      "path": "homePage",
+      "jsonType": "string",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:def:AgentAccount/name",
+      "kind": "property",
+      "path": "name",
+      "jsonType": "string",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:def:Attachment",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object"
+    },
+    {
+      "key": "xapi:2.0:def:Attachment/contentType",
+      "kind": "property",
+      "path": "contentType",
+      "jsonType": "string",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:def:Attachment/description",
+      "kind": "property",
+      "path": "description",
+      "jsonType": "object",
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:def:Attachment/display",
+      "kind": "property",
+      "path": "display",
+      "jsonType": "object",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:def:Attachment/fileUrl",
+      "kind": "property",
+      "path": "fileUrl",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:def:Attachment/length",
+      "kind": "property",
+      "path": "length",
+      "jsonType": "integer",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:def:Attachment/sha2",
+      "kind": "property",
+      "path": "sha2",
+      "jsonType": "string",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:def:Attachment/usageType",
+      "kind": "property",
+      "path": "usageType",
+      "jsonType": "string",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:def:Context",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object"
+    },
+    {
+      "key": "xapi:2.0:def:Context/contextActivities",
+      "kind": "property",
+      "path": "contextActivities",
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:def:Context/contextAgents",
+      "kind": "property",
+      "path": "contextAgents",
+      "jsonType": "array",
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:def:Context/contextAgents/[]",
+      "kind": "property",
+      "path": "contextAgents/[]"
+    },
+    {
+      "key": "xapi:2.0:def:Context/contextGroups",
+      "kind": "property",
+      "path": "contextGroups",
+      "jsonType": "array",
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:def:Context/contextGroups/[]",
+      "kind": "property",
+      "path": "contextGroups/[]"
+    },
+    {
+      "key": "xapi:2.0:def:Context/extensions",
+      "kind": "property",
+      "path": "extensions",
+      "jsonType": "object",
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:def:Context/instructor",
+      "kind": "property",
+      "path": "instructor",
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:def:Context/language",
+      "kind": "property",
+      "path": "language",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:def:Context/platform",
+      "kind": "property",
+      "path": "platform",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:def:Context/registration",
+      "kind": "property",
+      "path": "registration",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:def:Context/revision",
+      "kind": "property",
+      "path": "revision",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:def:Context/statement",
+      "kind": "property",
+      "path": "statement",
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:def:Context/team",
+      "kind": "property",
+      "path": "team",
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:def:ContextActivities",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object"
+    },
+    {
+      "key": "xapi:2.0:def:ContextActivities/category",
+      "kind": "property",
+      "path": "category",
+      "jsonType": "array",
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:def:ContextActivities/category/[]",
+      "kind": "property",
+      "path": "category/[]"
+    },
+    {
+      "key": "xapi:2.0:def:ContextActivities/grouping",
+      "kind": "property",
+      "path": "grouping",
+      "jsonType": "array",
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:def:ContextActivities/grouping/[]",
+      "kind": "property",
+      "path": "grouping/[]"
+    },
+    {
+      "key": "xapi:2.0:def:ContextActivities/other",
+      "kind": "property",
+      "path": "other",
+      "jsonType": "array",
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:def:ContextActivities/other/[]",
+      "kind": "property",
+      "path": "other/[]"
+    },
+    {
+      "key": "xapi:2.0:def:ContextActivities/parent",
+      "kind": "property",
+      "path": "parent",
+      "jsonType": "array",
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:def:ContextActivities/parent/[]",
+      "kind": "property",
+      "path": "parent/[]"
+    },
+    {
+      "key": "xapi:2.0:def:ContextAgent",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object"
+    },
+    {
+      "key": "xapi:2.0:def:ContextAgent/agent",
+      "kind": "property",
+      "path": "agent",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:def:ContextAgent/objectType",
+      "kind": "property",
+      "path": "objectType",
+      "required": true,
+      "enumValues": [
+        "contextAgent"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:def:ContextAgent/relevantTypes",
+      "kind": "property",
+      "path": "relevantTypes",
+      "jsonType": "array",
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:def:ContextAgent/relevantTypes/[]",
+      "kind": "property",
+      "path": "relevantTypes/[]",
+      "jsonType": "string"
+    },
+    {
+      "key": "xapi:2.0:def:ContextGroup",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object"
+    },
+    {
+      "key": "xapi:2.0:def:ContextGroup/group",
+      "kind": "property",
+      "path": "group",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:def:ContextGroup/objectType",
+      "kind": "property",
+      "path": "objectType",
+      "required": true,
+      "enumValues": [
+        "contextGroup"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:def:ContextGroup/relevantTypes",
+      "kind": "property",
+      "path": "relevantTypes",
+      "jsonType": "array",
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:def:ContextGroup/relevantTypes/[]",
+      "kind": "property",
+      "path": "relevantTypes/[]",
+      "jsonType": "string"
+    },
+    {
+      "key": "xapi:2.0:def:Group",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "normative": true
+    },
+    {
+      "key": "xapi:2.0:def:Group/account",
+      "kind": "property",
+      "path": "account",
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:def:Group/mbox",
+      "kind": "property",
+      "path": "mbox",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:def:Group/mbox_sha1sum",
+      "kind": "property",
+      "path": "mbox_sha1sum",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:def:Group/member",
+      "kind": "property",
+      "path": "member",
+      "jsonType": "array",
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:def:Group/member/[]",
+      "kind": "property",
+      "path": "member/[]"
+    },
+    {
+      "key": "xapi:2.0:def:Group/name",
+      "kind": "property",
+      "path": "name",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:def:Group/objectType",
+      "kind": "property",
+      "path": "objectType",
+      "enumValues": [
+        "Group"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:def:Group/openid",
+      "kind": "property",
+      "path": "openid",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:def:InteractionComponent",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object"
+    },
+    {
+      "key": "xapi:2.0:def:InteractionComponent/description",
+      "kind": "property",
+      "path": "description",
+      "jsonType": "object",
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:def:InteractionComponent/id",
+      "kind": "property",
+      "path": "id",
+      "jsonType": "string",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:def:Result",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object"
+    },
+    {
+      "key": "xapi:2.0:def:Result/completion",
+      "kind": "property",
+      "path": "completion",
+      "jsonType": "boolean",
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:def:Result/duration",
+      "kind": "property",
+      "path": "duration",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:def:Result/extensions",
+      "kind": "property",
+      "path": "extensions",
+      "jsonType": "object",
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:def:Result/response",
+      "kind": "property",
+      "path": "response",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:def:Result/score",
+      "kind": "property",
+      "path": "score",
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:def:Result/success",
+      "kind": "property",
+      "path": "success",
+      "jsonType": "boolean",
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:def:Score",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "normative": true
+    },
+    {
+      "key": "xapi:2.0:def:Score/max",
+      "kind": "property",
+      "path": "max",
+      "jsonType": "number",
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:def:Score/min",
+      "kind": "property",
+      "path": "min",
+      "jsonType": "number",
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:def:Score/raw",
+      "kind": "property",
+      "path": "raw",
+      "jsonType": "number",
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:def:Score/scaled",
+      "kind": "property",
+      "path": "scaled",
+      "jsonType": "number",
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:def:StatementRef",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object"
+    },
+    {
+      "key": "xapi:2.0:def:StatementRef/id",
+      "kind": "property",
+      "path": "id",
+      "jsonType": "string",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:def:StatementRef/objectType",
+      "kind": "property",
+      "path": "objectType",
+      "required": true,
+      "enumValues": [
+        "StatementRef"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:def:SubStatement",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object",
+      "normative": true
+    },
+    {
+      "key": "xapi:2.0:def:SubStatement/actor",
+      "kind": "property",
+      "path": "actor",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:def:SubStatement/context",
+      "kind": "property",
+      "path": "context",
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:def:SubStatement/object",
+      "kind": "property",
+      "path": "object",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:def:SubStatement/objectType",
+      "kind": "property",
+      "path": "objectType",
+      "required": true,
+      "enumValues": [
+        "SubStatement"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:def:SubStatement/result",
+      "kind": "property",
+      "path": "result",
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:def:SubStatement/timestamp",
+      "kind": "property",
+      "path": "timestamp",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:def:SubStatement/verb",
+      "kind": "property",
+      "path": "verb",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:def:Verb",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object"
+    },
+    {
+      "key": "xapi:2.0:def:Verb/display",
+      "kind": "property",
+      "path": "display",
+      "jsonType": "object",
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:def:Verb/id",
+      "kind": "property",
+      "path": "id",
+      "jsonType": "string",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:doc:Statement",
+      "kind": "document",
+      "path": "",
+      "jsonType": "object"
+    },
+    {
+      "key": "xapi:2.0:doc:Statement/actor",
+      "kind": "property",
+      "path": "actor",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:doc:Statement/attachments",
+      "kind": "property",
+      "path": "attachments",
+      "jsonType": "array",
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:doc:Statement/attachments/[]",
+      "kind": "property",
+      "path": "attachments/[]"
+    },
+    {
+      "key": "xapi:2.0:doc:Statement/authority",
+      "kind": "property",
+      "path": "authority",
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:doc:Statement/context",
+      "kind": "property",
+      "path": "context",
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:doc:Statement/id",
+      "kind": "property",
+      "path": "id",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:doc:Statement/object",
+      "kind": "property",
+      "path": "object",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:doc:Statement/result",
+      "kind": "property",
+      "path": "result",
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:doc:Statement/stored",
+      "kind": "property",
+      "path": "stored",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:doc:Statement/timestamp",
+      "kind": "property",
+      "path": "timestamp",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:doc:Statement/verb",
+      "kind": "property",
+      "path": "verb",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "xapi:2.0:doc:Statement/version",
+      "kind": "property",
+      "path": "version",
+      "jsonType": "string",
+      "modelled": "yes"
+    }
+  ],
+  "edges": [
+    {
+      "from": "xapi:2.0:def:Activity/definition",
+      "to": "xapi:2.0:def:ActivityDefinition"
+    },
+    {
+      "from": "xapi:2.0:def:ActivityDefinition/choices/[]",
+      "to": "xapi:2.0:def:InteractionComponent"
+    },
+    {
+      "from": "xapi:2.0:def:ActivityDefinition/scale/[]",
+      "to": "xapi:2.0:def:InteractionComponent"
+    },
+    {
+      "from": "xapi:2.0:def:ActivityDefinition/source/[]",
+      "to": "xapi:2.0:def:InteractionComponent"
+    },
+    {
+      "from": "xapi:2.0:def:ActivityDefinition/steps/[]",
+      "to": "xapi:2.0:def:InteractionComponent"
+    },
+    {
+      "from": "xapi:2.0:def:ActivityDefinition/target/[]",
+      "to": "xapi:2.0:def:InteractionComponent"
+    },
+    {
+      "from": "xapi:2.0:def:Agent/account",
+      "to": "xapi:2.0:def:AgentAccount"
+    },
+    {
+      "from": "xapi:2.0:def:Context/contextActivities",
+      "to": "xapi:2.0:def:ContextActivities"
+    },
+    {
+      "from": "xapi:2.0:def:Context/contextAgents/[]",
+      "to": "xapi:2.0:def:ContextAgent"
+    },
+    {
+      "from": "xapi:2.0:def:Context/contextGroups/[]",
+      "to": "xapi:2.0:def:ContextGroup"
+    },
+    {
+      "from": "xapi:2.0:def:Context/instructor",
+      "to": "xapi:2.0:def:Agent"
+    },
+    {
+      "from": "xapi:2.0:def:Context/instructor",
+      "to": "xapi:2.0:def:Group"
+    },
+    {
+      "from": "xapi:2.0:def:Context/statement",
+      "to": "xapi:2.0:def:StatementRef"
+    },
+    {
+      "from": "xapi:2.0:def:Context/team",
+      "to": "xapi:2.0:def:Group"
+    },
+    {
+      "from": "xapi:2.0:def:ContextActivities/category/[]",
+      "to": "xapi:2.0:def:Activity"
+    },
+    {
+      "from": "xapi:2.0:def:ContextActivities/grouping/[]",
+      "to": "xapi:2.0:def:Activity"
+    },
+    {
+      "from": "xapi:2.0:def:ContextActivities/other/[]",
+      "to": "xapi:2.0:def:Activity"
+    },
+    {
+      "from": "xapi:2.0:def:ContextActivities/parent/[]",
+      "to": "xapi:2.0:def:Activity"
+    },
+    {
+      "from": "xapi:2.0:def:ContextAgent/agent",
+      "to": "xapi:2.0:def:Agent"
+    },
+    {
+      "from": "xapi:2.0:def:ContextGroup/group",
+      "to": "xapi:2.0:def:Group"
+    },
+    {
+      "from": "xapi:2.0:def:Group/account",
+      "to": "xapi:2.0:def:AgentAccount"
+    },
+    {
+      "from": "xapi:2.0:def:Group/member/[]",
+      "to": "xapi:2.0:def:Agent"
+    },
+    {
+      "from": "xapi:2.0:def:Result/score",
+      "to": "xapi:2.0:def:Score"
+    },
+    {
+      "from": "xapi:2.0:def:SubStatement/actor",
+      "to": "xapi:2.0:def:Agent"
+    },
+    {
+      "from": "xapi:2.0:def:SubStatement/actor",
+      "to": "xapi:2.0:def:Group"
+    },
+    {
+      "from": "xapi:2.0:def:SubStatement/context",
+      "to": "xapi:2.0:def:Context"
+    },
+    {
+      "from": "xapi:2.0:def:SubStatement/object",
+      "to": "xapi:2.0:def:Activity"
+    },
+    {
+      "from": "xapi:2.0:def:SubStatement/object",
+      "to": "xapi:2.0:def:Agent"
+    },
+    {
+      "from": "xapi:2.0:def:SubStatement/object",
+      "to": "xapi:2.0:def:Group"
+    },
+    {
+      "from": "xapi:2.0:def:SubStatement/object",
+      "to": "xapi:2.0:def:StatementRef"
+    },
+    {
+      "from": "xapi:2.0:def:SubStatement/result",
+      "to": "xapi:2.0:def:Result"
+    },
+    {
+      "from": "xapi:2.0:def:SubStatement/verb",
+      "to": "xapi:2.0:def:Verb"
+    },
+    {
+      "from": "xapi:2.0:doc:Statement/actor",
+      "to": "xapi:2.0:def:Agent"
+    },
+    {
+      "from": "xapi:2.0:doc:Statement/actor",
+      "to": "xapi:2.0:def:Group"
+    },
+    {
+      "from": "xapi:2.0:doc:Statement/attachments/[]",
+      "to": "xapi:2.0:def:Attachment"
+    },
+    {
+      "from": "xapi:2.0:doc:Statement/authority",
+      "to": "xapi:2.0:def:Agent"
+    },
+    {
+      "from": "xapi:2.0:doc:Statement/authority",
+      "to": "xapi:2.0:def:Group"
+    },
+    {
+      "from": "xapi:2.0:doc:Statement/context",
+      "to": "xapi:2.0:def:Context"
+    },
+    {
+      "from": "xapi:2.0:doc:Statement/object",
+      "to": "xapi:2.0:def:Activity"
+    },
+    {
+      "from": "xapi:2.0:doc:Statement/object",
+      "to": "xapi:2.0:def:Agent"
+    },
+    {
+      "from": "xapi:2.0:doc:Statement/object",
+      "to": "xapi:2.0:def:Group"
+    },
+    {
+      "from": "xapi:2.0:doc:Statement/object",
+      "to": "xapi:2.0:def:StatementRef"
+    },
+    {
+      "from": "xapi:2.0:doc:Statement/object",
+      "to": "xapi:2.0:def:SubStatement"
+    },
+    {
+      "from": "xapi:2.0:doc:Statement/result",
+      "to": "xapi:2.0:def:Result"
+    },
+    {
+      "from": "xapi:2.0:doc:Statement/verb",
+      "to": "xapi:2.0:def:Verb"
+    }
+  ],
+  "conformance": [
+    {
+      "key": "xapi:2.0:conf:attachment/XAPI-ATT-1",
+      "profile": "attachment",
+      "reqId": "XAPI-ATT-1",
+      "level": "MUST",
+      "statement": "An Attachment MUST carry a usageType (IRI), a display Language Map, a contentType, a length and the sha2 hash of its contents.",
+      "constrains": [
+        "xapi:2.0:def:Attachment/usageType",
+        "xapi:2.0:def:Attachment/display",
+        "xapi:2.0:def:Attachment/contentType",
+        "xapi:2.0:def:Attachment/length",
+        "xapi:2.0:def:Attachment/sha2"
+      ],
+      "source": "IEEE Std 9274.1.1-2023 (xAPI Base Standard, Part Two: Data) — https://opensource.ieee.org/xapi"
+    },
+    {
+      "key": "xapi:2.0:conf:context/XAPI-CTX-1",
+      "profile": "context",
+      "reqId": "XAPI-CTX-1",
+      "level": "MUST",
+      "statement": "When a Context references an Activity through contextActivities, each of parent, grouping, category and other is a list of Activities.",
+      "constrains": [
+        "xapi:2.0:def:Context/contextActivities",
+        "xapi:2.0:def:ContextActivities/parent",
+        "xapi:2.0:def:ContextActivities/grouping",
+        "xapi:2.0:def:ContextActivities/category",
+        "xapi:2.0:def:ContextActivities/other"
+      ],
+      "source": "IEEE Std 9274.1.1-2023 (xAPI Base Standard, Part Two: Data) — https://opensource.ieee.org/xapi"
+    },
+    {
+      "key": "xapi:2.0:conf:context/XAPI-CTX-2",
+      "profile": "context",
+      "reqId": "XAPI-CTX-2",
+      "level": "MUST",
+      "statement": "A Context's contextAgents / contextGroups entries (IEEE 9274.1.1) carry the correct objectType and the related Agent / Group; a context statement reference is a StatementRef.",
+      "constrains": [
+        "xapi:2.0:def:ContextAgent/objectType",
+        "xapi:2.0:def:ContextAgent/agent",
+        "xapi:2.0:def:ContextGroup/objectType",
+        "xapi:2.0:def:ContextGroup/group",
+        "xapi:2.0:def:Context/statement"
+      ],
+      "source": "IEEE Std 9274.1.1-2023 (xAPI Base Standard, Part Two: Data) — https://opensource.ieee.org/xapi"
+    },
+    {
+      "key": "xapi:2.0:conf:statement/XAPI-STMT-1",
+      "profile": "statement",
+      "reqId": "XAPI-STMT-1",
+      "level": "MUST",
+      "statement": "A Statement MUST carry an actor, a verb and an object.",
+      "constrains": [
+        "xapi:2.0:doc:Statement/actor",
+        "xapi:2.0:doc:Statement/verb",
+        "xapi:2.0:doc:Statement/object"
+      ],
+      "source": "IEEE Std 9274.1.1-2023 (xAPI Base Standard, Part Two: Data) — https://opensource.ieee.org/xapi"
+    },
+    {
+      "key": "xapi:2.0:conf:statement/XAPI-STMT-2",
+      "profile": "statement",
+      "reqId": "XAPI-STMT-2",
+      "level": "MUST",
+      "statement": "An Agent MUST be identified by exactly one Inverse Functional Identifier — mbox, mbox_sha1sum, openid or account.",
+      "constrains": [
+        "xapi:2.0:def:Agent/mbox",
+        "xapi:2.0:def:Agent/mbox_sha1sum",
+        "xapi:2.0:def:Agent/openid",
+        "xapi:2.0:def:Agent/account"
+      ],
+      "source": "IEEE Std 9274.1.1-2023 (xAPI Base Standard, Part Two: Data) — https://opensource.ieee.org/xapi"
+    },
+    {
+      "key": "xapi:2.0:conf:statement/XAPI-STMT-3",
+      "profile": "statement",
+      "reqId": "XAPI-STMT-3",
+      "level": "MUST",
+      "statement": "An identified Group MUST have exactly one IFI; an anonymous Group (no IFI) MUST carry a member list.",
+      "constrains": [
+        "xapi:2.0:def:Group/mbox",
+        "xapi:2.0:def:Group/mbox_sha1sum",
+        "xapi:2.0:def:Group/openid",
+        "xapi:2.0:def:Group/account",
+        "xapi:2.0:def:Group/member"
+      ],
+      "source": "IEEE Std 9274.1.1-2023 (xAPI Base Standard, Part Two: Data) — https://opensource.ieee.org/xapi"
+    },
+    {
+      "key": "xapi:2.0:conf:statement/XAPI-STMT-4",
+      "profile": "statement",
+      "reqId": "XAPI-STMT-4",
+      "level": "MUST",
+      "statement": "A Verb MUST carry an id that is an IRI.",
+      "constrains": [
+        "xapi:2.0:def:Verb/id"
+      ],
+      "source": "IEEE Std 9274.1.1-2023 (xAPI Base Standard, Part Two: Data) — https://opensource.ieee.org/xapi"
+    },
+    {
+      "key": "xapi:2.0:conf:statement/XAPI-STMT-5",
+      "profile": "statement",
+      "reqId": "XAPI-STMT-5",
+      "level": "MUST",
+      "statement": "An Activity object MUST be identified by an id that is an IRI.",
+      "constrains": [
+        "xapi:2.0:def:Activity/id"
+      ],
+      "source": "IEEE Std 9274.1.1-2023 (xAPI Base Standard, Part Two: Data) — https://opensource.ieee.org/xapi"
+    },
+    {
+      "key": "xapi:2.0:conf:statement/XAPI-STMT-6",
+      "profile": "statement",
+      "reqId": "XAPI-STMT-6",
+      "level": "MUST",
+      "statement": "An Activity Definition's interactionType MUST be one of the ten CMI interaction types (true-false, choice, fill-in, long-fill-in, matching, performance, sequencing, likert, numeric, other), and the interaction sub-components MUST NOT appear without it.",
+      "constrains": [
+        "xapi:2.0:def:ActivityDefinition/interactionType"
+      ],
+      "source": "IEEE Std 9274.1.1-2023 (xAPI Base Standard, Part Two: Data) — https://opensource.ieee.org/xapi"
+    },
+    {
+      "key": "xapi:2.0:conf:statement/XAPI-STMT-7",
+      "profile": "statement",
+      "reqId": "XAPI-STMT-7",
+      "level": "MUST",
+      "statement": "A Result Score's scaled MUST be a decimal between -1 and 1 inclusive; when present, raw MUST fall within min and max.",
+      "constrains": [
+        "xapi:2.0:def:Score/scaled",
+        "xapi:2.0:def:Score/raw",
+        "xapi:2.0:def:Score/min",
+        "xapi:2.0:def:Score/max"
+      ],
+      "source": "IEEE Std 9274.1.1-2023 (xAPI Base Standard, Part Two: Data) — https://opensource.ieee.org/xapi"
+    },
+    {
+      "key": "xapi:2.0:conf:statement/XAPI-STMT-8",
+      "profile": "statement",
+      "reqId": "XAPI-STMT-8",
+      "level": "MUST NOT",
+      "statement": "A SubStatement's object MUST NOT itself be a SubStatement (sub-statements do not nest).",
+      "constrains": [
+        "xapi:2.0:def:SubStatement/object"
+      ],
+      "source": "IEEE Std 9274.1.1-2023 (xAPI Base Standard, Part Two: Data) — https://opensource.ieee.org/xapi"
+    }
+  ],
+  "normativeStatements": [],
+  "residues": {
+    "silentGaps": [],
+    "extensions": [
+      "xapi:2.0:def:Statement.__schema49/contentBase64"
+    ],
+    "normalisations": []
+  },
+  "valueSets": [
+    {
+      "item": "xapi:2.0:def:ActivityDefinition/interactionType",
+      "members": 10,
+      "modelled": 10,
+      "gaps": []
+    }
+  ],
+  "rollup": {
+    "items": 125,
+    "modelledYes": 92,
+    "modelledPartial": 0,
+    "modelledNo": 0,
+    "normativeItems": 4,
+    "conformanceRequirements": 11,
+    "normativeStatements": 0,
+    "normativeStatementsCited": 0,
+    "normalisations": 0,
+    "valueSetMembers": 10,
+    "valueSetModelled": 10,
+    "valueSetGaps": 0
+  }
+}

@@ -1,0 +1,323 @@
+{
+  "$id": "conform-ed:curated:xapi/2.0/statement",
+  "$comment": "Hand-authored denominator (conform-ed ADR-0017) — xAPI (IEEE 9274.1.1-2023) publishes its information model as prose + inline JSON examples, not as a machine-readable schema. This curates the xAPI Statement information model — the heart of the standard. Source: IEEE Std 9274.1.1 xAPI Base Standard (Part Two: Data) — https://github.com/madebyraygun/xapi-base-standard-documentation/blob/134afd8c108b4d1b98294a1613db38a6b8fe73d8/9274.1.1%20xAPI%20Base%20Standard%20for%20Content.md. Lowest provenance tier; re-review on spec version bump. The LRS transport surface (statement/document/agent resources, queries, headers, error codes, concurrency) is prose + HTTP semantics and is out of scope here.",
+  "title": "xAPI 2.0 Statement",
+  "type": "object",
+  "required": ["actor", "verb", "object"],
+  "properties": {
+    "id": { "type": "string", "$comment": "specRef: §statement-properties (id — a UUID the LRS pins if absent)" },
+    "actor": {
+      "oneOf": [{ "$ref": "#/$defs/Agent" }, { "$ref": "#/$defs/Group" }],
+      "$comment": "specRef: §statement-properties (actor — whom the statement is about, an Agent or Group)"
+    },
+    "verb": { "$ref": "#/$defs/Verb", "$comment": "specRef: §statement-properties (verb — the action)" },
+    "object": {
+      "oneOf": [
+        { "$ref": "#/$defs/Activity" },
+        { "$ref": "#/$defs/Agent" },
+        { "$ref": "#/$defs/Group" },
+        { "$ref": "#/$defs/StatementRef" },
+        { "$ref": "#/$defs/SubStatement" }
+      ],
+      "$comment": "specRef: §statement-properties (object — an Activity, Agent/Group, StatementRef or SubStatement)"
+    },
+    "result": { "$ref": "#/$defs/Result", "$comment": "specRef: §statement-properties (result)" },
+    "context": { "$ref": "#/$defs/Context", "$comment": "specRef: §statement-properties (context)" },
+    "timestamp": { "type": "string", "$comment": "specRef: §statement-properties (timestamp — ISO 8601)" },
+    "stored": { "type": "string", "$comment": "specRef: §statement-properties (stored — ISO 8601, set by the LRS)" },
+    "authority": {
+      "oneOf": [{ "$ref": "#/$defs/Agent" }, { "$ref": "#/$defs/Group" }],
+      "$comment": "specRef: §statement-properties (authority — who asserted the statement)"
+    },
+    "version": { "type": "string", "$comment": "specRef: §statement-properties (version — the xAPI version)" },
+    "attachments": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/Attachment" },
+      "$comment": "specRef: §statement-properties (attachments)"
+    }
+  },
+  "$defs": {
+    "Agent": {
+      "type": "object",
+      "title": "Agent",
+      "$comment": "An xAPI Agent carries exactly one Inverse Functional Identifier (mbox, mbox_sha1sum, openid or account).",
+      "properties": {
+        "objectType": { "const": "Agent", "$comment": "specRef: §agent (objectType — required when used as a statement object)" },
+        "name": { "type": "string", "$comment": "specRef: §agent (name)" },
+        "mbox": { "type": "string", "$comment": "specRef: §agent (mbox — a mailto IRI, an IFI)" },
+        "mbox_sha1sum": { "type": "string", "$comment": "specRef: §agent (mbox_sha1sum — the SHA1 of a mailto IRI, an IFI)" },
+        "openid": { "type": "string", "$comment": "specRef: §agent (openid — an OpenID URI, an IFI)" },
+        "account": { "$ref": "#/$defs/AgentAccount", "$comment": "specRef: §agent (account — an account on a system, an IFI)" }
+      }
+    },
+    "AgentAccount": {
+      "type": "object",
+      "title": "Account",
+      "required": ["homePage", "name"],
+      "properties": {
+        "homePage": { "type": "string", "$comment": "specRef: §agent-account (homePage — the canonical home page of the account system)" },
+        "name": { "type": "string", "$comment": "specRef: §agent-account (name — the unique id of the account)" }
+      }
+    },
+    "Group": {
+      "type": "object",
+      "title": "Group",
+      "$comment": "An identified Group MUST have exactly one IFI; an anonymous Group MUST have a member list.",
+      "properties": {
+        "objectType": { "const": "Group", "$comment": "specRef: §group (objectType — Group)" },
+        "name": { "type": "string", "$comment": "specRef: §group (name)" },
+        "mbox": { "type": "string", "$comment": "specRef: §group (mbox — an IFI)" },
+        "mbox_sha1sum": { "type": "string", "$comment": "specRef: §group (mbox_sha1sum — an IFI)" },
+        "openid": { "type": "string", "$comment": "specRef: §group (openid — an IFI)" },
+        "account": { "$ref": "#/$defs/AgentAccount", "$comment": "specRef: §group (account — an IFI)" },
+        "member": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/Agent" },
+          "$comment": "specRef: §group (member — the Agents in the group; required when anonymous)"
+        }
+      }
+    },
+    "Verb": {
+      "type": "object",
+      "title": "Verb",
+      "required": ["id"],
+      "properties": {
+        "id": { "type": "string", "$comment": "specRef: §verb (id — an IRI identifying the action)" },
+        "display": { "type": "object", "$comment": "specRef: §verb (display — a Language Map of human-readable labels)" }
+      }
+    },
+    "Activity": {
+      "type": "object",
+      "title": "Activity",
+      "required": ["id"],
+      "properties": {
+        "objectType": { "const": "Activity", "$comment": "specRef: §activity (objectType — Activity)" },
+        "id": { "type": "string", "$comment": "specRef: §activity (id — an IRI uniquely identifying the activity)" },
+        "definition": { "$ref": "#/$defs/ActivityDefinition", "$comment": "specRef: §activity (definition)" }
+      }
+    },
+    "ActivityDefinition": {
+      "type": "object",
+      "title": "Activity Definition",
+      "$comment": "The interaction sub-properties (correctResponsesPattern, choices, scale, source, target, steps) MUST NOT be present unless interactionType is set.",
+      "properties": {
+        "name": { "type": "object", "$comment": "specRef: §activity-definition (name — a Language Map)" },
+        "description": { "type": "object", "$comment": "specRef: §activity-definition (description — a Language Map)" },
+        "type": { "type": "string", "$comment": "specRef: §activity-definition (type — an IRI)" },
+        "moreInfo": { "type": "string", "$comment": "specRef: §activity-definition (moreInfo — an IRI to a resource)" },
+        "interactionType": {
+          "type": "string",
+          "enum": [
+            "true-false",
+            "choice",
+            "fill-in",
+            "long-fill-in",
+            "matching",
+            "performance",
+            "sequencing",
+            "likert",
+            "numeric",
+            "other"
+          ],
+          "$comment": "specRef: §interaction-activities (interactionType — one of the CMI interaction types)"
+        },
+        "correctResponsesPattern": {
+          "type": "array",
+          "items": { "type": "string" },
+          "$comment": "specRef: §interaction-activities (correctResponsesPattern)"
+        },
+        "choices": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/InteractionComponent" },
+          "$comment": "specRef: §interaction-activities (choices)"
+        },
+        "scale": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/InteractionComponent" },
+          "$comment": "specRef: §interaction-activities (scale)"
+        },
+        "source": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/InteractionComponent" },
+          "$comment": "specRef: §interaction-activities (source)"
+        },
+        "target": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/InteractionComponent" },
+          "$comment": "specRef: §interaction-activities (target)"
+        },
+        "steps": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/InteractionComponent" },
+          "$comment": "specRef: §interaction-activities (steps)"
+        },
+        "extensions": { "type": "object", "$comment": "specRef: §activity-definition (extensions — an IRI-keyed extension map)" }
+      }
+    },
+    "InteractionComponent": {
+      "type": "object",
+      "title": "Interaction Component",
+      "required": ["id"],
+      "properties": {
+        "id": { "type": "string", "$comment": "specRef: §interaction-activities (id — unique within the component list)" },
+        "description": { "type": "object", "$comment": "specRef: §interaction-activities (description — a Language Map)" }
+      }
+    },
+    "StatementRef": {
+      "type": "object",
+      "title": "Statement Reference",
+      "required": ["objectType", "id"],
+      "properties": {
+        "objectType": { "const": "StatementRef", "$comment": "specRef: §statement-reference (objectType — StatementRef)" },
+        "id": { "type": "string", "$comment": "specRef: §statement-reference (id — the UUID of the referenced statement)" }
+      }
+    },
+    "SubStatement": {
+      "type": "object",
+      "title": "Sub-Statement",
+      "$comment": "A SubStatement's object MUST NOT itself be a SubStatement (no nesting).",
+      "required": ["objectType", "actor", "verb", "object"],
+      "properties": {
+        "objectType": { "const": "SubStatement", "$comment": "specRef: §sub-statement (objectType — SubStatement)" },
+        "actor": {
+          "oneOf": [{ "$ref": "#/$defs/Agent" }, { "$ref": "#/$defs/Group" }],
+          "$comment": "specRef: §sub-statement (actor)"
+        },
+        "verb": { "$ref": "#/$defs/Verb", "$comment": "specRef: §sub-statement (verb)" },
+        "object": {
+          "oneOf": [
+            { "$ref": "#/$defs/Activity" },
+            { "$ref": "#/$defs/Agent" },
+            { "$ref": "#/$defs/Group" },
+            { "$ref": "#/$defs/StatementRef" }
+          ],
+          "$comment": "specRef: §sub-statement (object — an Activity, Agent/Group or StatementRef; never a SubStatement)"
+        },
+        "result": { "$ref": "#/$defs/Result", "$comment": "specRef: §sub-statement (result)" },
+        "context": { "$ref": "#/$defs/Context", "$comment": "specRef: §sub-statement (context)" },
+        "timestamp": { "type": "string", "$comment": "specRef: §sub-statement (timestamp — ISO 8601)" }
+      }
+    },
+    "Result": {
+      "type": "object",
+      "title": "Result",
+      "properties": {
+        "score": { "$ref": "#/$defs/Score", "$comment": "specRef: §result (score)" },
+        "success": { "type": "boolean", "$comment": "specRef: §result (success)" },
+        "completion": { "type": "boolean", "$comment": "specRef: §result (completion)" },
+        "response": { "type": "string", "$comment": "specRef: §result (response — the learner's response)" },
+        "duration": { "type": "string", "$comment": "specRef: §result (duration — ISO 8601 duration)" },
+        "extensions": { "type": "object", "$comment": "specRef: §result (extensions — an IRI-keyed extension map)" }
+      }
+    },
+    "Score": {
+      "type": "object",
+      "title": "Score",
+      "$comment": "scaled MUST be between -1 and 1; raw MUST be between min and max when those are present.",
+      "properties": {
+        "scaled": { "type": "number", "$comment": "specRef: §score (scaled — a decimal between -1 and 1)" },
+        "raw": { "type": "number", "$comment": "specRef: §score (raw)" },
+        "min": { "type": "number", "$comment": "specRef: §score (min)" },
+        "max": { "type": "number", "$comment": "specRef: §score (max)" }
+      }
+    },
+    "Context": {
+      "type": "object",
+      "title": "Context",
+      "properties": {
+        "registration": { "type": "string", "$comment": "specRef: §context (registration — a UUID)" },
+        "instructor": {
+          "oneOf": [{ "$ref": "#/$defs/Agent" }, { "$ref": "#/$defs/Group" }],
+          "$comment": "specRef: §context (instructor)"
+        },
+        "team": { "$ref": "#/$defs/Group", "$comment": "specRef: §context (team — the Group acting)" },
+        "contextActivities": { "$ref": "#/$defs/ContextActivities", "$comment": "specRef: §context (contextActivities)" },
+        "revision": { "type": "string", "$comment": "specRef: §context (revision)" },
+        "platform": { "type": "string", "$comment": "specRef: §context (platform)" },
+        "language": { "type": "string", "$comment": "specRef: §context (language — an RFC 5646 tag)" },
+        "statement": { "$ref": "#/$defs/StatementRef", "$comment": "specRef: §context (statement — a StatementRef)" },
+        "extensions": { "type": "object", "$comment": "specRef: §context (extensions — an IRI-keyed extension map)" },
+        "contextAgents": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/ContextAgent" },
+          "$comment": "specRef: §context (contextAgents — IEEE 9274.1.1 2.0 addition)"
+        },
+        "contextGroups": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/ContextGroup" },
+          "$comment": "specRef: §context (contextGroups — IEEE 9274.1.1 2.0 addition)"
+        }
+      }
+    },
+    "ContextActivities": {
+      "type": "object",
+      "title": "Context Activities",
+      "properties": {
+        "parent": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/Activity" },
+          "$comment": "specRef: §context-activities (parent)"
+        },
+        "category": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/Activity" },
+          "$comment": "specRef: §context-activities (category)"
+        },
+        "grouping": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/Activity" },
+          "$comment": "specRef: §context-activities (grouping)"
+        },
+        "other": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/Activity" },
+          "$comment": "specRef: §context-activities (other)"
+        }
+      }
+    },
+    "ContextAgent": {
+      "type": "object",
+      "title": "Context Agent",
+      "$comment": "IEEE 9274.1.1 2.0 addition — relates an Agent to the statement with relevant type IRIs.",
+      "required": ["objectType", "agent"],
+      "properties": {
+        "objectType": { "const": "contextAgent", "$comment": "specRef: §context-agents (objectType — contextAgent)" },
+        "agent": { "$ref": "#/$defs/Agent", "$comment": "specRef: §context-agents (agent)" },
+        "relevantTypes": {
+          "type": "array",
+          "items": { "type": "string" },
+          "$comment": "specRef: §context-agents (relevantTypes — IRIs)"
+        }
+      }
+    },
+    "ContextGroup": {
+      "type": "object",
+      "title": "Context Group",
+      "$comment": "IEEE 9274.1.1 2.0 addition — relates a Group to the statement with relevant type IRIs.",
+      "required": ["objectType", "group"],
+      "properties": {
+        "objectType": { "const": "contextGroup", "$comment": "specRef: §context-groups (objectType — contextGroup)" },
+        "group": { "$ref": "#/$defs/Group", "$comment": "specRef: §context-groups (group)" },
+        "relevantTypes": {
+          "type": "array",
+          "items": { "type": "string" },
+          "$comment": "specRef: §context-groups (relevantTypes — IRIs)"
+        }
+      }
+    },
+    "Attachment": {
+      "type": "object",
+      "title": "Attachment",
+      "required": ["usageType", "display", "contentType", "length", "sha2"],
+      "properties": {
+        "usageType": { "type": "string", "$comment": "specRef: §attachments (usageType — an IRI)" },
+        "display": { "type": "object", "$comment": "specRef: §attachments (display — a Language Map)" },
+        "description": { "type": "object", "$comment": "specRef: §attachments (description — a Language Map)" },
+        "contentType": { "type": "string", "$comment": "specRef: §attachments (contentType — an internet media type)" },
+        "length": { "type": "integer", "$comment": "specRef: §attachments (length — the byte length)" },
+        "sha2": { "type": "string", "$comment": "specRef: §attachments (sha2 — the SHA-2 hash of the contents)" },
+        "fileUrl": { "type": "string", "$comment": "specRef: §attachments (fileUrl — an IRL the attachment can be retrieved from)" }
+      }
+    }
+  }
+}
