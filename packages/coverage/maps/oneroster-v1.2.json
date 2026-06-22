@@ -6451,7 +6451,38 @@
     "extensions": [],
     "normalisations": []
   },
-  "valueSets": [],
+  "valueSets": [
+    {
+      "item": "or:1.2:def:AcademicSessionDType/status",
+      "members": 2,
+      "modelled": 2,
+      "gaps": []
+    },
+    {
+      "item": "or:1.2:def:imsx_CodeMinorFieldDType/imsx_codeMinorFieldValue",
+      "members": 9,
+      "modelled": 9,
+      "gaps": []
+    },
+    {
+      "item": "or:1.2:def:imsx_StatusInfoDType/imsx_codeMajor",
+      "members": 4,
+      "modelled": 4,
+      "gaps": []
+    },
+    {
+      "item": "or:1.2:def:imsx_StatusInfoDType/imsx_severity",
+      "members": 3,
+      "modelled": 3,
+      "gaps": []
+    },
+    {
+      "item": "or:1.2:def:ResourceDType/importance",
+      "members": 2,
+      "modelled": 2,
+      "gaps": []
+    }
+  ],
   "rollup": {
     "items": 498,
     "modelledYes": 248,
@@ -6462,8 +6493,8 @@
     "normativeStatements": 48,
     "normativeStatementsCited": 38,
     "normalisations": 0,
-    "valueSetMembers": 0,
-    "valueSetModelled": 0,
+    "valueSetMembers": 20,
+    "valueSetModelled": 20,
     "valueSetGaps": 0
   }
 }

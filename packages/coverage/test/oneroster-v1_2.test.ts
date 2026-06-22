@@ -85,6 +85,17 @@ describe("OneRoster 1.2 Coverage Map — OpenAPI walker, all three services", ()
     expect(map.conformance.find((r) => r.reqId === "OR-TR-1")?.constrains).toEqual(["or:1.2:sec:OAuth2CC"]);
   });
 
+  test("the enumerated OneRoster vocabularies verify as value-sets with no gaps", () => {
+    // ADR-0017: the vocabularies the OpenAPI denominator actually enumerates — status,
+    // importance, and the imsx status-info codes — safeParse'd against conform-ed's z.enum.
+    // 2 + 2 + 4 + 3 + 9 = 20. (role/gender/grade are free CEDS strings, not enumerated.)
+    expect(map.rollup.valueSetMembers).toBe(20);
+    expect(map.rollup.valueSetGaps).toBe(0);
+    expect(map.valueSets).toHaveLength(5);
+    expect(map.valueSets.find((v) => v.item.endsWith("/imsx_codeMinorFieldValue"))?.modelled).toBe(9);
+    expect(map.valueSets.find((v) => v.item.endsWith("/status"))?.modelled).toBe(2);
+  });
+
   test("the committed map is in sync with the generator", () => {
     const committed = readFileSync(join(import.meta.dir, "..", "maps", "oneroster-v1.2.json"), "utf8");
     const parsed = JSON.parse(committed) as CoverageMap;

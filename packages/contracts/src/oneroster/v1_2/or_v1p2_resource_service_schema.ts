@@ -20,6 +20,9 @@ export const ResourceRoleSchema = extensibleEnum([
   "teacher",
 ]);
 
+// The OneRoster resource importance vocabulary (primary | secondary).
+export const ResourceImportanceSchema = z.enum(["primary", "secondary"]);
+
 export const ResourceSchema = strictObject({
   sourcedId: SourcedIdSchema,
   status: EntityStatusSchema,
@@ -27,7 +30,7 @@ export const ResourceSchema = strictObject({
   metadata: MetadataSchema.optional(),
   title: z.string().optional(),
   roles: z.array(ResourceRoleSchema).optional(),
-  importance: z.enum(["primary", "secondary"]).optional(),
+  importance: ResourceImportanceSchema.optional(),
   vendorResourceId: z.string(),
   vendorId: z.string().optional(),
   applicationId: z.string().optional(),

@@ -26,9 +26,14 @@ import {
   CourseSchema,
   DemographicsSchema,
   EnrollmentSchema,
+  EntityStatusSchema,
+  ImsxCodeMajorSchema,
+  ImsxCodeMinorFieldValueSchema,
+  ImsxSeveritySchema,
   LearningObjectiveSetSchema,
   LineItemSchema,
   OrgSchema,
+  ResourceImportanceSchema,
   ResourceSchema,
   ResultSchema,
   ScoreScaleSchema,
@@ -419,6 +424,21 @@ export const oneRosterV1_2: SpecSource = {
     { service: "rostering", schemaPath: vendor(rostering) },
     { service: "gradebook", schemaPath: vendor(gradebook) },
     { service: "resources", schemaPath: vendor(resources) },
+  ],
+  // Value-set verification (ADR-0017): the controlled vocabularies the OpenAPI denominator
+  // actually enumerates — the entity `status`, the resource `importance`, and the imsx
+  // status-info codes (codeMajor / severity / codeMinorFieldValue) — each safeParse'd
+  // member-by-member against conform-ed's z.enum. NB OneRoster's role / gender / grade / type
+  // are extensible CEDS vocabularies the OpenAPI carries as free strings (no enum to verify);
+  // conform-ed models several as extensibleEnum, but with no published denominator members
+  // there is nothing for a value-set to check. The `incomplete` boolean (serialised as the
+  // string-enum "true"/"false" in the OpenAPI) is not a vocabulary and is excluded.
+  valueSets: [
+    { item: "or:1.2:def:AcademicSessionDType/status", element: EntityStatusSchema },
+    { item: "or:1.2:def:ResourceDType/importance", element: ResourceImportanceSchema },
+    { item: "or:1.2:def:imsx_StatusInfoDType/imsx_codeMajor", element: ImsxCodeMajorSchema },
+    { item: "or:1.2:def:imsx_StatusInfoDType/imsx_severity", element: ImsxSeveritySchema },
+    { item: "or:1.2:def:imsx_CodeMinorFieldDType/imsx_codeMinorFieldValue", element: ImsxCodeMinorFieldValueSchema },
   ],
   conformance,
 };
