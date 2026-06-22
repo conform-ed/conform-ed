@@ -5,8 +5,18 @@
  * and cross-linked to a hand-curated conformance catalog.
  */
 
-/** Which schema language a vendored source artifact is written in. */
-export type SchemaLanguage = "json-schema" | "xsd" | "openapi" | "caliper";
+/**
+ * Which schema language a vendored source artifact is written in.
+ *
+ * `curated` is the lowest provenance tier (conform-ed ADR-0017): a **hand-authored**
+ * information-model inventory for a family the spec publishes only as prose + inline JSON
+ * examples (no XSD/JSON-Schema/OpenAPI to walk). It is written as a JSON Schema and walked
+ * by the same json-schema walker, so it reconciles against the Zod model exactly like a
+ * machine-vendored schema — but it is labelled distinctly here so a reader never mistakes a
+ * curated denominator for a machine-extracted one, and every node must cite its spec section
+ * (enforced by `walkers/curated.ts`).
+ */
+export type SchemaLanguage = "json-schema" | "xsd" | "openapi" | "caliper" | "curated";
 
 /**
  * The kind of node an inventory item represents.

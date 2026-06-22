@@ -2,13 +2,19 @@
   "meta": {
     "spec": "lti",
     "version": "1.3",
-    "generatedAt": "2026-06-21",
+    "generatedAt": "2026-06-22",
     "sources": [
       {
         "binding": "ags (paths)",
         "language": "openapi",
         "id": "Assignment and Grade Services v1.0.0",
         "sha256": "853f2783c6db4da23b8ba8b5c5dc9d2ddb5ee684745567fba653619d299041a6"
+      },
+      {
+        "binding": "DeepLinkingContentItem",
+        "language": "curated",
+        "id": "conform-ed:curated:lti/1.3/deep-linking/content-item",
+        "sha256": "036983b3203203b9df470b92d3dd080fbc8768cb984e16d3c76cd73821000edc"
       },
       {
         "binding": "LineItem",
@@ -43,6 +49,495 @@
     ]
   },
   "items": [
+    {
+      "key": "lti:1.3:def:DlAvailabilityWindow",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object"
+    },
+    {
+      "key": "lti:1.3:def:DlAvailabilityWindow/endDateTime",
+      "kind": "property",
+      "path": "endDateTime",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:DlAvailabilityWindow/startDateTime",
+      "kind": "property",
+      "path": "startDateTime",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:DlEmbed",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object"
+    },
+    {
+      "key": "lti:1.3:def:DlEmbed/html",
+      "kind": "property",
+      "path": "html",
+      "jsonType": "string",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:DlFile",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object"
+    },
+    {
+      "key": "lti:1.3:def:DlFile/expiresAt",
+      "kind": "property",
+      "path": "expiresAt",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:DlFile/icon",
+      "kind": "property",
+      "path": "icon"
+    },
+    {
+      "key": "lti:1.3:def:DlFile/mediaType",
+      "kind": "property",
+      "path": "mediaType",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:DlFile/text",
+      "kind": "property",
+      "path": "text",
+      "jsonType": "string"
+    },
+    {
+      "key": "lti:1.3:def:DlFile/thumbnail",
+      "kind": "property",
+      "path": "thumbnail"
+    },
+    {
+      "key": "lti:1.3:def:DlFile/title",
+      "kind": "property",
+      "path": "title",
+      "jsonType": "string"
+    },
+    {
+      "key": "lti:1.3:def:DlFile/type",
+      "kind": "property",
+      "path": "type",
+      "required": true,
+      "enumValues": [
+        "file"
+      ]
+    },
+    {
+      "key": "lti:1.3:def:DlFile/url",
+      "kind": "property",
+      "path": "url",
+      "jsonType": "string",
+      "required": true
+    },
+    {
+      "key": "lti:1.3:def:DlHtml",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object"
+    },
+    {
+      "key": "lti:1.3:def:DlHtml/html",
+      "kind": "property",
+      "path": "html",
+      "jsonType": "string",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:DlHtml/text",
+      "kind": "property",
+      "path": "text",
+      "jsonType": "string"
+    },
+    {
+      "key": "lti:1.3:def:DlHtml/title",
+      "kind": "property",
+      "path": "title",
+      "jsonType": "string"
+    },
+    {
+      "key": "lti:1.3:def:DlHtml/type",
+      "kind": "property",
+      "path": "type",
+      "required": true,
+      "enumValues": [
+        "html"
+      ]
+    },
+    {
+      "key": "lti:1.3:def:DlIframe",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object"
+    },
+    {
+      "key": "lti:1.3:def:DlIframe/height",
+      "kind": "property",
+      "path": "height",
+      "jsonType": "integer",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:DlIframe/src",
+      "kind": "property",
+      "path": "src",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:DlIframe/width",
+      "kind": "property",
+      "path": "width",
+      "jsonType": "integer",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:DlImage",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object"
+    },
+    {
+      "key": "lti:1.3:def:DlImage/height",
+      "kind": "property",
+      "path": "height",
+      "jsonType": "integer",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:DlImage/icon",
+      "kind": "property",
+      "path": "icon",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:DlImage/text",
+      "kind": "property",
+      "path": "text",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:DlImage/thumbnail",
+      "kind": "property",
+      "path": "thumbnail",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:DlImage/title",
+      "kind": "property",
+      "path": "title",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:DlImage/type",
+      "kind": "property",
+      "path": "type",
+      "required": true,
+      "enumValues": [
+        "image"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:DlImage/url",
+      "kind": "property",
+      "path": "url",
+      "jsonType": "string",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:DlImage/width",
+      "kind": "property",
+      "path": "width",
+      "jsonType": "integer",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:DlImageResource",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object"
+    },
+    {
+      "key": "lti:1.3:def:DlImageResource/height",
+      "kind": "property",
+      "path": "height",
+      "jsonType": "integer",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:DlImageResource/url",
+      "kind": "property",
+      "path": "url",
+      "jsonType": "string",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:DlImageResource/width",
+      "kind": "property",
+      "path": "width",
+      "jsonType": "integer",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:DlLineItem",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object"
+    },
+    {
+      "key": "lti:1.3:def:DlLineItem/endDateTime",
+      "kind": "property",
+      "path": "endDateTime",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:DlLineItem/gradesReleased",
+      "kind": "property",
+      "path": "gradesReleased",
+      "jsonType": "boolean",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:DlLineItem/id",
+      "kind": "property",
+      "path": "id",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:DlLineItem/label",
+      "kind": "property",
+      "path": "label",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:DlLineItem/resourceId",
+      "kind": "property",
+      "path": "resourceId",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:DlLineItem/resourceLinkId",
+      "kind": "property",
+      "path": "resourceLinkId",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:DlLineItem/scoreMaximum",
+      "kind": "property",
+      "path": "scoreMaximum",
+      "jsonType": "number",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:DlLineItem/startDateTime",
+      "kind": "property",
+      "path": "startDateTime",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:DlLineItem/tag",
+      "kind": "property",
+      "path": "tag",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:DlLink",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object"
+    },
+    {
+      "key": "lti:1.3:def:DlLink/embed",
+      "kind": "property",
+      "path": "embed",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:DlLink/icon",
+      "kind": "property",
+      "path": "icon"
+    },
+    {
+      "key": "lti:1.3:def:DlLink/iframe",
+      "kind": "property",
+      "path": "iframe"
+    },
+    {
+      "key": "lti:1.3:def:DlLink/text",
+      "kind": "property",
+      "path": "text",
+      "jsonType": "string"
+    },
+    {
+      "key": "lti:1.3:def:DlLink/thumbnail",
+      "kind": "property",
+      "path": "thumbnail"
+    },
+    {
+      "key": "lti:1.3:def:DlLink/title",
+      "kind": "property",
+      "path": "title",
+      "jsonType": "string"
+    },
+    {
+      "key": "lti:1.3:def:DlLink/type",
+      "kind": "property",
+      "path": "type",
+      "required": true,
+      "enumValues": [
+        "link"
+      ]
+    },
+    {
+      "key": "lti:1.3:def:DlLink/url",
+      "kind": "property",
+      "path": "url",
+      "jsonType": "string",
+      "required": true
+    },
+    {
+      "key": "lti:1.3:def:DlLink/window",
+      "kind": "property",
+      "path": "window"
+    },
+    {
+      "key": "lti:1.3:def:DlLtiResourceLink",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object"
+    },
+    {
+      "key": "lti:1.3:def:DlLtiResourceLink/available",
+      "kind": "property",
+      "path": "available",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:DlLtiResourceLink/custom",
+      "kind": "property",
+      "path": "custom",
+      "jsonType": "object",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:DlLtiResourceLink/icon",
+      "kind": "property",
+      "path": "icon"
+    },
+    {
+      "key": "lti:1.3:def:DlLtiResourceLink/iframe",
+      "kind": "property",
+      "path": "iframe",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:DlLtiResourceLink/lineItem",
+      "kind": "property",
+      "path": "lineItem",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:DlLtiResourceLink/submission",
+      "kind": "property",
+      "path": "submission",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:DlLtiResourceLink/text",
+      "kind": "property",
+      "path": "text",
+      "jsonType": "string"
+    },
+    {
+      "key": "lti:1.3:def:DlLtiResourceLink/thumbnail",
+      "kind": "property",
+      "path": "thumbnail"
+    },
+    {
+      "key": "lti:1.3:def:DlLtiResourceLink/title",
+      "kind": "property",
+      "path": "title",
+      "jsonType": "string"
+    },
+    {
+      "key": "lti:1.3:def:DlLtiResourceLink/type",
+      "kind": "property",
+      "path": "type",
+      "required": true,
+      "enumValues": [
+        "ltiResourceLink"
+      ]
+    },
+    {
+      "key": "lti:1.3:def:DlLtiResourceLink/url",
+      "kind": "property",
+      "path": "url",
+      "jsonType": "string"
+    },
+    {
+      "key": "lti:1.3:def:DlLtiResourceLink/window",
+      "kind": "property",
+      "path": "window",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:DlWindow",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object"
+    },
+    {
+      "key": "lti:1.3:def:DlWindow/height",
+      "kind": "property",
+      "path": "height",
+      "jsonType": "integer",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:DlWindow/targetName",
+      "kind": "property",
+      "path": "targetName",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:DlWindow/width",
+      "kind": "property",
+      "path": "width",
+      "jsonType": "integer",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:DlWindow/windowFeatures",
+      "kind": "property",
+      "path": "windowFeatures",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
     {
       "key": "lti:1.3:def:LineItem",
       "kind": "definition",
@@ -273,6 +768,11 @@
       "modelled": "yes"
     },
     {
+      "key": "lti:1.3:doc:DeepLinkingContentItem",
+      "kind": "document",
+      "path": ""
+    },
+    {
       "key": "lti:1.3:doc:LineItem",
       "kind": "document",
       "path": ""
@@ -378,12 +878,96 @@
   ],
   "edges": [
     {
+      "from": "lti:1.3:def:DlFile/icon",
+      "to": "lti:1.3:def:DlImageResource"
+    },
+    {
+      "from": "lti:1.3:def:DlFile/thumbnail",
+      "to": "lti:1.3:def:DlImageResource"
+    },
+    {
+      "from": "lti:1.3:def:DlImage/icon",
+      "to": "lti:1.3:def:DlImageResource"
+    },
+    {
+      "from": "lti:1.3:def:DlImage/thumbnail",
+      "to": "lti:1.3:def:DlImageResource"
+    },
+    {
+      "from": "lti:1.3:def:DlLink/embed",
+      "to": "lti:1.3:def:DlEmbed"
+    },
+    {
+      "from": "lti:1.3:def:DlLink/icon",
+      "to": "lti:1.3:def:DlImageResource"
+    },
+    {
+      "from": "lti:1.3:def:DlLink/iframe",
+      "to": "lti:1.3:def:DlIframe"
+    },
+    {
+      "from": "lti:1.3:def:DlLink/thumbnail",
+      "to": "lti:1.3:def:DlImageResource"
+    },
+    {
+      "from": "lti:1.3:def:DlLink/window",
+      "to": "lti:1.3:def:DlWindow"
+    },
+    {
+      "from": "lti:1.3:def:DlLtiResourceLink/available",
+      "to": "lti:1.3:def:DlAvailabilityWindow"
+    },
+    {
+      "from": "lti:1.3:def:DlLtiResourceLink/icon",
+      "to": "lti:1.3:def:DlImageResource"
+    },
+    {
+      "from": "lti:1.3:def:DlLtiResourceLink/iframe",
+      "to": "lti:1.3:def:DlIframe"
+    },
+    {
+      "from": "lti:1.3:def:DlLtiResourceLink/lineItem",
+      "to": "lti:1.3:def:DlLineItem"
+    },
+    {
+      "from": "lti:1.3:def:DlLtiResourceLink/submission",
+      "to": "lti:1.3:def:DlAvailabilityWindow"
+    },
+    {
+      "from": "lti:1.3:def:DlLtiResourceLink/thumbnail",
+      "to": "lti:1.3:def:DlImageResource"
+    },
+    {
+      "from": "lti:1.3:def:DlLtiResourceLink/window",
+      "to": "lti:1.3:def:DlWindow"
+    },
+    {
       "from": "lti:1.3:def:LineItemContainer/[]",
       "to": "lti:1.3:def:LineItem"
     },
     {
       "from": "lti:1.3:def:ResultContainer/[]",
       "to": "lti:1.3:def:Result"
+    },
+    {
+      "from": "lti:1.3:doc:DeepLinkingContentItem",
+      "to": "lti:1.3:def:DlFile"
+    },
+    {
+      "from": "lti:1.3:doc:DeepLinkingContentItem",
+      "to": "lti:1.3:def:DlHtml"
+    },
+    {
+      "from": "lti:1.3:doc:DeepLinkingContentItem",
+      "to": "lti:1.3:def:DlImage"
+    },
+    {
+      "from": "lti:1.3:doc:DeepLinkingContentItem",
+      "to": "lti:1.3:def:DlLink"
+    },
+    {
+      "from": "lti:1.3:doc:DeepLinkingContentItem",
+      "to": "lti:1.3:def:DlLtiResourceLink"
     },
     {
       "from": "lti:1.3:doc:LineItem",
@@ -617,7 +1201,14 @@
       "reqId": "LTI-DL-3",
       "level": "MUST",
       "statement": "The tool returns the selection as a signed JWT carrying the content_items claim (a JSON array of the selected content items: ltiResourceLink, link, file, html or image).",
-      "constrains": [],
+      "constrains": [
+        "lti:1.3:doc:DeepLinkingContentItem",
+        "lti:1.3:def:DlHtml/html",
+        "lti:1.3:def:DlImage/width",
+        "lti:1.3:def:DlImage/height",
+        "lti:1.3:def:DlFile/mediaType",
+        "lti:1.3:def:DlFile/expiresAt"
+      ],
       "source": "LTI Deep Linking 2.0 §3 / §4.5.6 (content items) — https://www.imsglobal.org/spec/lti-dl/v2p0"
     },
     {
@@ -724,6 +1315,7 @@
   "residues": {
     "silentGaps": [],
     "extensions": [
+      "lti:1.3:def:DeepLinkingContentItem.__schema1/alt",
       "lti:1.3:doc:LineItem/gradesReleased",
       "lti:1.3:doc:LineItemContainer/[]/gradesReleased",
       "lti:1.3:doc:Result/scoringUserId",
@@ -734,8 +1326,8 @@
     "normalisations": []
   },
   "rollup": {
-    "items": 46,
-    "modelledYes": 21,
+    "items": 121,
+    "modelledYes": 61,
     "modelledPartial": 0,
     "modelledNo": 0,
     "normativeItems": 0,

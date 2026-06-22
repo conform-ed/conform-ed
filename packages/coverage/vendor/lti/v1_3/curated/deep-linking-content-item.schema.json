@@ -1,0 +1,174 @@
+{
+  "$id": "conform-ed:curated:lti/1.3/deep-linking/content-item",
+  "$comment": "Hand-authored denominator (conform-ed ADR-0017) — LTI Deep Linking 2.0 publishes no machine-readable schema for content items, only prose + inline JSON examples. Source: LTI Deep Linking 2.0 §content-item-types — https://www.imsglobal.org/spec/lti-dl/v2p0/#content-item-types. Lowest provenance tier; re-review on spec version bump.",
+  "title": "LTI Deep Linking 2.0 content item",
+  "oneOf": [
+    { "$ref": "#/$defs/DlLink" },
+    { "$ref": "#/$defs/DlLtiResourceLink" },
+    { "$ref": "#/$defs/DlFile" },
+    { "$ref": "#/$defs/DlHtml" },
+    { "$ref": "#/$defs/DlImage" }
+  ],
+  "$defs": {
+    "DlLink": {
+      "type": "object",
+      "title": "link content item",
+      "required": ["type", "url"],
+      "properties": {
+        "type": { "const": "link", "$comment": "specRef: §content-item-types/link (type)" },
+        "url": { "type": "string", "$comment": "specRef: §content-item-types/link (url)" },
+        "title": { "type": "string", "$comment": "specRef: §content-item-types/link (title)" },
+        "text": { "type": "string", "$comment": "specRef: §content-item-types/link (text)" },
+        "icon": { "$ref": "#/$defs/DlImageResource", "$comment": "specRef: §content-item-types/link (icon)" },
+        "thumbnail": { "$ref": "#/$defs/DlImageResource", "$comment": "specRef: §content-item-types/link (thumbnail)" },
+        "embed": { "$ref": "#/$defs/DlEmbed", "$comment": "specRef: §content-item-types/link (embed)" },
+        "window": { "$ref": "#/$defs/DlWindow", "$comment": "specRef: §content-item-types/link (window)" },
+        "iframe": { "$ref": "#/$defs/DlIframe", "$comment": "specRef: §content-item-types/link (iframe)" }
+      }
+    },
+    "DlLtiResourceLink": {
+      "type": "object",
+      "title": "ltiResourceLink content item",
+      "required": ["type"],
+      "properties": {
+        "type": { "const": "ltiResourceLink", "$comment": "specRef: §content-item-types/ltiResourceLink (type)" },
+        "url": { "type": "string", "$comment": "specRef: §content-item-types/ltiResourceLink (url)" },
+        "title": { "type": "string", "$comment": "specRef: §content-item-types/ltiResourceLink (title)" },
+        "text": { "type": "string", "$comment": "specRef: §content-item-types/ltiResourceLink (text)" },
+        "icon": { "$ref": "#/$defs/DlImageResource", "$comment": "specRef: §content-item-types/ltiResourceLink (icon)" },
+        "thumbnail": {
+          "$ref": "#/$defs/DlImageResource",
+          "$comment": "specRef: §content-item-types/ltiResourceLink (thumbnail)"
+        },
+        "custom": {
+          "type": "object",
+          "$comment": "specRef: §content-item-types/ltiResourceLink (custom)"
+        },
+        "lineItem": { "$ref": "#/$defs/DlLineItem", "$comment": "specRef: §content-item-types/ltiResourceLink (lineItem)" },
+        "available": {
+          "$ref": "#/$defs/DlAvailabilityWindow",
+          "$comment": "specRef: §content-item-types/ltiResourceLink (available)"
+        },
+        "submission": {
+          "$ref": "#/$defs/DlAvailabilityWindow",
+          "$comment": "specRef: §content-item-types/ltiResourceLink (submission)"
+        },
+        "window": { "$ref": "#/$defs/DlWindow", "$comment": "specRef: §content-item-types/ltiResourceLink (window)" },
+        "iframe": { "$ref": "#/$defs/DlIframe", "$comment": "specRef: §content-item-types/ltiResourceLink (iframe)" }
+      }
+    },
+    "DlFile": {
+      "type": "object",
+      "title": "file content item",
+      "required": ["type", "url"],
+      "properties": {
+        "type": { "const": "file", "$comment": "specRef: §content-item-types/file (type)" },
+        "url": { "type": "string", "$comment": "specRef: §content-item-types/file (url)" },
+        "title": { "type": "string", "$comment": "specRef: §content-item-types/file (title)" },
+        "text": { "type": "string", "$comment": "specRef: §content-item-types/file (text)" },
+        "icon": { "$ref": "#/$defs/DlImageResource", "$comment": "specRef: §content-item-types/file (icon)" },
+        "thumbnail": { "$ref": "#/$defs/DlImageResource", "$comment": "specRef: §content-item-types/file (thumbnail)" },
+        "mediaType": { "type": "string", "$comment": "specRef: §content-item-types/file (mediaType)" },
+        "expiresAt": { "type": "string", "$comment": "specRef: §content-item-types/file (expiresAt, ISO 8601)" }
+      }
+    },
+    "DlHtml": {
+      "type": "object",
+      "title": "html content item",
+      "required": ["type", "html"],
+      "properties": {
+        "type": { "const": "html", "$comment": "specRef: §content-item-types/html (type)" },
+        "html": { "type": "string", "$comment": "specRef: §content-item-types/html (html — the markup fragment)" },
+        "title": { "type": "string", "$comment": "specRef: §content-item-types/html (title)" },
+        "text": { "type": "string", "$comment": "specRef: §content-item-types/html (text)" }
+      }
+    },
+    "DlImage": {
+      "type": "object",
+      "title": "image content item",
+      "required": ["type", "url"],
+      "properties": {
+        "type": { "const": "image", "$comment": "specRef: §content-item-types/image (type)" },
+        "url": { "type": "string", "$comment": "specRef: §content-item-types/image (url)" },
+        "title": { "type": "string", "$comment": "specRef: §content-item-types/image (title)" },
+        "text": { "type": "string", "$comment": "specRef: §content-item-types/image (text)" },
+        "icon": { "$ref": "#/$defs/DlImageResource", "$comment": "specRef: §content-item-types/image (icon)" },
+        "thumbnail": { "$ref": "#/$defs/DlImageResource", "$comment": "specRef: §content-item-types/image (thumbnail)" },
+        "width": { "type": "integer", "$comment": "specRef: §content-item-types/image (width)" },
+        "height": { "type": "integer", "$comment": "specRef: §content-item-types/image (height)" }
+      }
+    },
+    "DlImageResource": {
+      "type": "object",
+      "title": "image resource (icon / thumbnail)",
+      "required": ["url"],
+      "properties": {
+        "url": { "type": "string", "$comment": "specRef: §content-item-types (image resource url)" },
+        "width": { "type": "integer", "$comment": "specRef: §content-item-types (image resource width)" },
+        "height": { "type": "integer", "$comment": "specRef: §content-item-types (image resource height)" }
+      }
+    },
+    "DlEmbed": {
+      "type": "object",
+      "title": "embed (inline HTML for a link)",
+      "required": ["html"],
+      "properties": {
+        "html": { "type": "string", "$comment": "specRef: §content-item-types/link (embed.html)" }
+      }
+    },
+    "DlWindow": {
+      "type": "object",
+      "title": "window presentation hint",
+      "properties": {
+        "targetName": { "type": "string", "$comment": "specRef: §content-item-types (window.targetName)" },
+        "windowFeatures": { "type": "string", "$comment": "specRef: §content-item-types (window.windowFeatures)" },
+        "width": { "type": "integer", "$comment": "specRef: §content-item-types (window.width)" },
+        "height": { "type": "integer", "$comment": "specRef: §content-item-types (window.height)" }
+      }
+    },
+    "DlIframe": {
+      "type": "object",
+      "title": "iframe presentation hint",
+      "properties": {
+        "src": { "type": "string", "$comment": "specRef: §content-item-types (iframe.src)" },
+        "width": { "type": "integer", "$comment": "specRef: §content-item-types (iframe.width)" },
+        "height": { "type": "integer", "$comment": "specRef: §content-item-types (iframe.height)" }
+      }
+    },
+    "DlAvailabilityWindow": {
+      "type": "object",
+      "title": "availability / submission window",
+      "properties": {
+        "startDateTime": { "type": "string", "$comment": "specRef: §content-item-types/ltiResourceLink (startDateTime)" },
+        "endDateTime": { "type": "string", "$comment": "specRef: §content-item-types/ltiResourceLink (endDateTime)" }
+      }
+    },
+    "DlLineItem": {
+      "type": "object",
+      "title": "deep-linked line item (AGS subset)",
+      "properties": {
+        "id": { "type": "string", "$comment": "specRef: §content-item-types/ltiResourceLink (lineItem.id)" },
+        "label": { "type": "string", "$comment": "specRef: §content-item-types/ltiResourceLink (lineItem.label)" },
+        "scoreMaximum": { "type": "number", "$comment": "specRef: §content-item-types/ltiResourceLink (lineItem.scoreMaximum)" },
+        "resourceId": { "type": "string", "$comment": "specRef: §content-item-types/ltiResourceLink (lineItem.resourceId)" },
+        "resourceLinkId": {
+          "type": "string",
+          "$comment": "specRef: §content-item-types/ltiResourceLink (lineItem.resourceLinkId)"
+        },
+        "tag": { "type": "string", "$comment": "specRef: §content-item-types/ltiResourceLink (lineItem.tag)" },
+        "startDateTime": {
+          "type": "string",
+          "$comment": "specRef: §content-item-types/ltiResourceLink (lineItem.startDateTime)"
+        },
+        "endDateTime": {
+          "type": "string",
+          "$comment": "specRef: §content-item-types/ltiResourceLink (lineItem.endDateTime)"
+        },
+        "gradesReleased": {
+          "type": "boolean",
+          "$comment": "specRef: §content-item-types/ltiResourceLink (lineItem.gradesReleased)"
+        }
+      }
+    }
+  }
+}

@@ -1,8 +1,16 @@
 /**
  * LTI 1.3 + Advantage — {@link SpecSource} (conform-ed ADR-0013; emergent ADR-0033
  * rollout). The hybrid map: a thin **schema-reconciled spine** (Assignment & Grade
- * Services) plus a **guide-curated catalogue** (Core launch, NRPS, Deep Linking,
- * Security) with no `cited` denominator — the CC/QTI catalogue shape.
+ * Services), a **curated denominator** for Deep Linking content items (ADR-0017), and a
+ * **guide-curated catalogue** (Core launch, NRPS, Security) with no `cited` denominator —
+ * the CC/QTI catalogue shape.
+ *
+ * The Deep Linking content-item types publish no machine-readable schema either, so before
+ * ADR-0017 the conform-ed Zod was its own yardstick — and a real under-modelling (the html
+ * content item's `html` payload, the image item's dimensions) sat undetected. The curated
+ * JSON Schema under `vendor/lti/v1_3/curated/` now gives the content-item union a hand-
+ * authored, spec-cited denominator (walked by `walkers/curated.ts`), reconciled against the
+ * per-type discriminated union so a future regression surfaces as a silent gap.
  *
  * Why hybrid (verified against the published specs, 2026-06-21):
  *
@@ -49,6 +57,7 @@ import {
   ResultSchema,
   ScoreSchema,
 } from "@conform-ed/contracts/lti/ags/v2_0";
+import { ContentItemSchema } from "@conform-ed/contracts/lti/deep-linking/v2_0";
 
 import type { SpecBindingSource, SpecSource } from "../../src/source";
 import type { ConformanceRequirement } from "../../src/types";
@@ -353,7 +362,16 @@ const conformance: readonly ConformanceRequirement[] = [
     level: "MUST",
     statement:
       "The tool returns the selection as a signed JWT carrying the content_items claim (a JSON array of the selected content items: ltiResourceLink, link, file, html or image).",
-    constrains: [],
+    // Anchored to the ADR-0017 curated content-item denominator (the gap-prone per-type
+    // fields: the html item's payload, the image item's dimensions, the file item's metadata).
+    constrains: [
+      "lti:1.3:doc:DeepLinkingContentItem",
+      "lti:1.3:def:DlHtml/html",
+      "lti:1.3:def:DlImage/width",
+      "lti:1.3:def:DlImage/height",
+      "lti:1.3:def:DlFile/mediaType",
+      "lti:1.3:def:DlFile/expiresAt",
+    ],
     source: "LTI Deep Linking 2.0 §3 / §4.5.6 (content items) — https://www.imsglobal.org/spec/lti-dl/v2p0",
   },
   {
@@ -399,6 +417,15 @@ export const ltiV1_3: SpecSource = {
     binding("Score", ScoreSchema),
     binding("Result", ResultSchema),
     binding("ResultContainer", ResultContainerSchema),
+    // Curated denominator (ADR-0017): Deep Linking publishes no schema for content items,
+    // so this hand-authored JSON Schema gives the content-item union a real L2 denominator,
+    // reconciled against the per-type discriminated union in conform-ed's contracts.
+    {
+      binding: "DeepLinkingContentItem",
+      schemaPath: vendor("curated/deep-linking-content-item.schema.json"),
+      language: "curated",
+      zod: ContentItemSchema,
+    },
   ],
   // Transport axis: the AGS OpenAPI `paths` (operations + query filters; no security
   // scheme is declared — AGS keeps OAuth out of band), inventoried as L1-only items the

@@ -9,7 +9,7 @@ import type { CoverageMap } from "../src/types";
 const map = buildCoverageMap(ltiV1_3, { now: "2026-01-01" });
 const byKey = new Map(map.items.map((i) => [i.key, i]));
 
-describe("LTI 1.3 + Advantage Coverage Map — hybrid (AGS schema spine + guide catalogue)", () => {
+describe("LTI 1.3 + Advantage Coverage Map — hybrid (AGS schema spine + curated DL denominator + guide catalogue)", () => {
   test("walks the five lifted AGS media-type schemas into entity doc roots", () => {
     expect(map.meta.spec).toBe("lti");
     expect(map.meta.version).toBe("1.3");
@@ -22,22 +22,27 @@ describe("LTI 1.3 + Advantage Coverage Map — hybrid (AGS schema spine + guide 
     for (const item of map.items) expect(item.key.startsWith("lti:1.3:")).toBe(true);
   });
 
-  test("pins each lifted AGS binding and the AGS REST service against the vendored OpenAPI", () => {
-    // 5 component bindings + 1 restService (ags paths) — all the same derived OpenAPI file.
-    expect(map.meta.sources).toHaveLength(6);
-    for (const source of map.meta.sources) {
-      expect(source.language).toBe("openapi");
-      expect(source.sha256).toMatch(/^[0-9a-f]{64}$/);
+  test("pins each AGS binding/REST service (OpenAPI) and the curated content-item denominator", () => {
+    // 5 AGS component bindings + 1 restService (ags paths), all the same derived OpenAPI file,
+    // plus the ADR-0017 curated Deep Linking content-item denominator (a distinct provenance tier).
+    expect(map.meta.sources).toHaveLength(7);
+    for (const source of map.meta.sources) expect(source.sha256).toMatch(/^[0-9a-f]{64}$/);
+    const byBinding = new Map(map.meta.sources.map((s) => [s.binding, s.language]));
+    for (const openapi of ["ags (paths)", "LineItem", "LineItemContainer", "Result", "ResultContainer", "Score"]) {
+      expect(byBinding.get(openapi)).toBe("openapi");
     }
+    expect(byBinding.get("DeepLinkingContentItem")).toBe("curated");
   });
 
-  test("conform-ed's AGS contracts reconcile the OpenAPI with no silent gaps", () => {
+  test("conform-ed reconciles every denominator (AGS OpenAPI + curated content items) with no silent gaps", () => {
     expect(map.rollup.modelledNo).toBe(0);
-    expect(map.rollup.modelledYes).toBe(21);
+    expect(map.rollup.modelledYes).toBe(61);
     expect(map.residues.silentGaps).toEqual([]);
-    // Honest extensions: optional fields conform-ed models that the *illustrative* AGS
-    // OpenAPI omits (NOT silent gaps — these are Zod-side, conform-ed is the richer contract).
+    // Honest extensions: optional fields conform-ed models that the denominator omits (NOT gaps).
+    // Six are AGS fields the *illustrative* OpenAPI omits; the seventh is the `alt` text on
+    // conform-ed's shared image resource, which the LTI Deep Linking image resource never defines.
     expect(map.residues.extensions).toEqual([
+      "lti:1.3:def:DeepLinkingContentItem.__schema1/alt",
       "lti:1.3:doc:LineItem/gradesReleased",
       "lti:1.3:doc:LineItemContainer/[]/gradesReleased",
       "lti:1.3:doc:Result/scoringUserId",
@@ -45,6 +50,21 @@ describe("LTI 1.3 + Advantage Coverage Map — hybrid (AGS schema spine + guide 
       "lti:1.3:doc:Score/scorePublished",
       "lti:1.3:doc:Score/submission",
     ]);
+  });
+
+  test("the curated Deep Linking content-item denominator gives the gap-prone per-type fields a verdict", () => {
+    // The exact fields that sat under-modelled before the contract fix + ADR-0017 — now each is a
+    // real curated L1 item that conform-ed's ContentItemSchema reconciles as modelled `yes`.
+    for (const key of [
+      "lti:1.3:def:DlHtml/html",
+      "lti:1.3:def:DlImage/width",
+      "lti:1.3:def:DlImage/height",
+      "lti:1.3:def:DlFile/mediaType",
+      "lti:1.3:def:DlFile/expiresAt",
+    ]) {
+      expect(byKey.get(key)?.modelled).toBe("yes");
+    }
+    expect(byKey.get("lti:1.3:doc:DeepLinkingContentItem")?.kind).toBe("document");
   });
 
   test("#/components/schemas refs resolve — no dangling edges", () => {
@@ -58,23 +78,20 @@ describe("LTI 1.3 + Advantage Coverage Map — hybrid (AGS schema spine + guide 
     expect(profiles).toEqual(new Set(["core", "security", "nrps", "ags", "deep-linking", "proctoring"]));
   });
 
-  test("only AGS requirements carry schema/transport anchors; the guide-only profiles carry none", () => {
+  test("AGS and the curated Deep Linking content-item requirement carry anchors; the rest carry none", () => {
     const keys = new Set(map.items.map((i) => i.key));
+    const anchored = new Set<string>();
     for (const req of map.conformance) {
-      if (req.profile === "ags") {
-        // AGS is the only profile with a literal denominator — every anchor must exist.
-        // (LTI-AGS-1 is the launch-claim half, which has no OpenAPI schema, so it is exempt.)
-        if (req.reqId === "LTI-AGS-1") {
-          expect(req.constrains).toEqual([]);
-        } else {
-          expect(req.constrains.length).toBeGreaterThan(0);
-          for (const key of req.constrains) expect(keys.has(key)).toBe(true);
-        }
-      } else {
-        // Core / Security / NRPS / Deep-Linking / Proctoring publish no schema → no anchor.
-        expect(req.constrains).toEqual([]);
-      }
+      for (const key of req.constrains) expect(keys.has(key)).toBe(true);
+      if (req.constrains.length > 0) anchored.add(req.reqId);
     }
+    // AGS (every requirement except the launch-claim LTI-AGS-1) plus Deep Linking's content-item
+    // requirement (LTI-DL-3, anchored to the ADR-0017 curated denominator) now have a literal
+    // denominator. Core, Security, NRPS, Proctoring and the other Deep Linking requirements stay
+    // guide-only — 1EdTech publishes no schema for those, recorded honestly as `constrains: []`.
+    expect(anchored).toEqual(
+      new Set(["LTI-AGS-2", "LTI-AGS-3", "LTI-AGS-4", "LTI-AGS-5", "LTI-AGS-6", "LTI-AGS-7", "LTI-AGS-8", "LTI-DL-3"]),
+    );
   });
 
   test("cited is 0 throughout — the AGS OpenAPI carries no ALL-CAPS RFC-2119 prose", () => {

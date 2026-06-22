@@ -1,9 +1,25 @@
 # LTI 1.3 / AGS 2.0 vendored denominator — provenance ⚠️
 
 The `lti:1.3` Coverage Map is a **hybrid**: only **Assignment & Grade Services (AGS) 2.0**
-has any machine-readable denominator. Core 1.3, NRPS 2.0, Deep Linking 2.0 and Proctoring
-1.0 publish **no schema** (inline JSON examples + normative prose only, verified
-2026-06-21) and are guide-catalogue-only — they are *not* vendored here.
+has any machine-readable denominator 1EdTech publishes. Core 1.3, NRPS 2.0, Deep Linking
+2.0 and Proctoring 1.0 publish **no schema** (inline JSON examples + normative prose only,
+verified 2026-06-21) and are guide-catalogue-only — they are *not* vendored from 1EdTech.
+
+For Deep Linking content items, that catalogue-only treatment left the conform-ed Zod as
+its own yardstick, and a real under-modelling went undetected (the cause analysed in
+conform-ed ADR-0017). The `curated/` subdirectory now holds a **hand-authored** denominator
+for that family — a JSON Schema written from the prose spec, not a vendored 1EdTech artifact.
+
+## Curated denominators (`curated/`, ADR-0017)
+
+- `curated/deep-linking-content-item.schema.json` — the five Deep Linking 2.0 content-item
+  types (`link`, `ltiResourceLink`, `file`, `html`, `image`) and their shared presentation
+  sub-objects, authored from **LTI Deep Linking 2.0 §content-item-types**
+  (<https://www.imsglobal.org/spec/lti-dl/v2p0/#content-item-types>). Every property carries
+  a `specRef:` `$comment` citing its spec section (enforced by `walkers/curated.ts`). It is
+  the **lowest provenance tier** — a hand transcription of prose, not a machine artifact —
+  and is re-reviewed on a spec version bump. Reconciled against conform-ed's
+  `ContentItemSchema` discriminated union.
 
 ## Source (the AGS OpenAPI)
 
