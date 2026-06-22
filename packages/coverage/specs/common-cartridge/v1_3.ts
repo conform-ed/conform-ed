@@ -18,8 +18,11 @@
 import { join } from "node:path";
 
 import {
+  CommonCartridgeAuthorizationAccessSchema,
   CommonCartridgeAuthorizationsSchema,
+  CommonCartridgeIntendedUseSchema,
   CommonCartridgeManifestRawSchema,
+  CommonCartridgeResourceTypeSchema,
   CurriculumStandardsMetadataSetSchema,
   DiscussionTopicSchema,
   LomCcLtiLinkSchema,
@@ -194,6 +197,19 @@ export const commonCartridgeV1_3: SpecSource = {
   version: "1.3",
   // Multi-file map: `def:`s are scoped by source schema (the three LOM profiles all
   // define `LOM.Type`, and the resource XSDs share boilerplate type names).
+  // Value-set verification (ADR-0017): the closed CC manifest vocabularies the structural join
+  // cannot check — the resource type, intended use, and authorization access — each safeParse'd
+  // against conform-ed's z.enum. The LOM metadata vocabularies (difficulty, learningResourceType,
+  // …) are modelled via the LOM `vocabulary()` helper from a shared config rather than as named
+  // exported enums, so they are not individually value-set-verified here.
+  valueSets: [
+    { item: "cc:1.3:def:ccv1p3_imscp_v1p2_v1p0.Resource.Type/type", element: CommonCartridgeResourceTypeSchema },
+    { item: "cc:1.3:def:ccv1p3_imscp_v1p2_v1p0.Resource.Type/intendeduse", element: CommonCartridgeIntendedUseSchema },
+    {
+      item: "cc:1.3:def:ccv1p3_imsccauth_v1p3.Authorizations.Type/access",
+      element: CommonCartridgeAuthorizationAccessSchema,
+    },
+  ],
   scopeXsdDefsBySource: true,
   // conform-ed models xml:base (as xmlBase) here, so the `/base` items are renamed, not gaps.
   specRefOverrides: [XS_ANY_EXTENSIONS, SIMPLE_CONTENT_VALUE, XML_BASE],

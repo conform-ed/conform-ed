@@ -85,6 +85,13 @@ describe("Common Cartridge 1.4 Coverage Map — XSD walker (6 source-scoped bind
     }
   });
 
+  test("the CC 1.4 assignment vocabularies verify as value-sets with no gaps", () => {
+    // ADR-0017: the assignment-extension attachment role (4) and submission-format type (4) = 8.
+    expect(map.rollup.valueSetMembers).toBe(8);
+    expect(map.rollup.valueSetGaps).toBe(0);
+    expect(map.valueSets).toHaveLength(2);
+  });
+
   test("the committed map is in sync with the generator", () => {
     const committed = readFileSync(join(import.meta.dir, "..", "maps", "common-cartridge-v1.4.json"), "utf8");
     const parsed = JSON.parse(committed) as CoverageMap;

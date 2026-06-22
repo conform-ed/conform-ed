@@ -134,6 +134,15 @@ describe("Common Cartridge 1.3 Coverage Map — XSD walker (8 source-scoped bind
     expect(JSON.stringify(again)).toBe(JSON.stringify(map));
   });
 
+  test("the closed CC manifest vocabularies verify as value-sets with no gaps", () => {
+    // ADR-0017: resource type (11), intended use (4), authorization access (2) = 17. The LOM
+    // metadata vocabularies are built via the LOM vocabulary() helper, not named exported enums.
+    expect(map.rollup.valueSetMembers).toBe(17);
+    expect(map.rollup.valueSetGaps).toBe(0);
+    expect(map.valueSets).toHaveLength(3);
+    expect(map.valueSets.find((v) => v.item.endsWith("/type"))?.modelled).toBe(11);
+  });
+
   test("the committed map is in sync with the generator", () => {
     const committed = readFileSync(join(import.meta.dir, "..", "maps", "common-cartridge-v1.3.json"), "utf8");
     const parsed = JSON.parse(committed) as CoverageMap;

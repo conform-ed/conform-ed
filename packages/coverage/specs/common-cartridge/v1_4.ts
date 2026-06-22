@@ -15,7 +15,9 @@
 import { join } from "node:path";
 
 import {
+  AssignmentAttachmentRoleSchema,
   AssignmentSchema,
+  AssignmentSubmissionFormatTypeSchema,
   CommonCartridgeAuthorizationsSchema,
   CommonCartridgeManifestRawSchema,
   CurriculumStandardsMetadataSetSchema,
@@ -191,6 +193,20 @@ export const commonCartridgeV1_4: SpecSource = {
   version: "1.4",
   // Multi-file map: `def:`s are scoped by source schema so the `assignment` extension's
   // `Text.Type` / `Attachment.Type` stay distinct from Discussion Topic's.
+  // Value-set verification (ADR-0017): the closed vocabularies of the CC 1.4 assignment extension
+  // — the attachment role and the submission-format type — each safeParse'd against conform-ed's
+  // z.enum. (The shared manifest vocabularies are exercised by the cc:1.3 map; the LOM metadata
+  // vocabularies are modelled via the LOM `vocabulary()` helper, not named exported enums.)
+  valueSets: [
+    {
+      item: "cc:1.4:def:cc_extresource_assignmentv1p0_v1p0.Attachment.Type/role",
+      element: AssignmentAttachmentRoleSchema,
+    },
+    {
+      item: "cc:1.4:def:cc_extresource_assignmentv1p0_v1p0.Format.Type/type",
+      element: AssignmentSubmissionFormatTypeSchema,
+    },
+  ],
   scopeXsdDefsBySource: true,
   // Same documented renames as CC 1.3, including xml:base→xmlBase (conform-ed models it here).
   specRefOverrides: [XS_ANY_EXTENSIONS, SIMPLE_CONTENT_VALUE, XML_BASE],

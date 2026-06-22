@@ -1438,7 +1438,20 @@
       }
     ]
   },
-  "valueSets": [],
+  "valueSets": [
+    {
+      "item": "cc:1.4:def:cc_extresource_assignmentv1p0_v1p0.Attachment.Type/role",
+      "members": 4,
+      "modelled": 4,
+      "gaps": []
+    },
+    {
+      "item": "cc:1.4:def:cc_extresource_assignmentv1p0_v1p0.Format.Type/type",
+      "members": 4,
+      "modelled": 4,
+      "gaps": []
+    }
+  ],
   "rollup": {
     "items": 143,
     "modelledYes": 84,
@@ -1449,8 +1462,8 @@
     "normativeStatements": 0,
     "normativeStatementsCited": 0,
     "normalisations": 15,
-    "valueSetMembers": 0,
-    "valueSetModelled": 0,
+    "valueSetMembers": 8,
+    "valueSetModelled": 8,
     "valueSetGaps": 0
   }
 }
