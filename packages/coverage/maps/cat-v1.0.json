@@ -1,0 +1,864 @@
+{
+  "meta": {
+    "spec": "cat",
+    "version": "1.0",
+    "generatedAt": "2026-06-22",
+    "sources": [
+      {
+        "binding": "AssessmentResult",
+        "language": "curated",
+        "id": "conform-ed:curated:cat/1.0/assessment-result",
+        "sha256": "ac180ca2556a17bbdb109171cfd673f2b18f24190c22e125416df98a0cb407b2"
+      },
+      {
+        "binding": "CatEngineResultReport",
+        "language": "curated",
+        "id": "conform-ed:curated:cat/1.0/cat-engine-result-report",
+        "sha256": "0f84e502f606fa4669ddecc5d79ac403f348c1d399e69b806084fe55585cbbbb"
+      },
+      {
+        "binding": "ItemStage",
+        "language": "curated",
+        "id": "conform-ed:curated:cat/1.0/item-stage",
+        "sha256": "14dfd3316e2d85e729a18e04ab41466d8dd66052e825aede0f0cb9f596df808c"
+      },
+      {
+        "binding": "SectionData",
+        "language": "curated",
+        "id": "conform-ed:curated:cat/1.0/section-data",
+        "sha256": "4d29b1245ca23d7b258b31e526c9aa038bb524f5ee2ecb0d8e45bb901d4e016a"
+      },
+      {
+        "binding": "SessionInfo",
+        "language": "curated",
+        "id": "conform-ed:curated:cat/1.0/session-info",
+        "sha256": "3ce98b19c1b76efc4f82eb384135eca3b931b65572e3fbcb8d78a87e3d40d01e"
+      }
+    ]
+  },
+  "items": [
+    {
+      "key": "cat:1.0:def:CatConstraint",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object"
+    },
+    {
+      "key": "cat:1.0:def:CatConstraint/parameters",
+      "kind": "property",
+      "path": "parameters",
+      "jsonType": "object",
+      "modelled": "yes"
+    },
+    {
+      "key": "cat:1.0:def:CatConstraint/type",
+      "kind": "property",
+      "path": "type",
+      "jsonType": "string",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "cat:1.0:def:ItemAttempt",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object"
+    },
+    {
+      "key": "cat:1.0:def:ItemAttempt/attemptNumber",
+      "kind": "property",
+      "path": "attemptNumber",
+      "jsonType": "integer",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "cat:1.0:def:ItemAttempt/itemRef",
+      "kind": "property",
+      "path": "itemRef",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "cat:1.0:def:ItemPool",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object"
+    },
+    {
+      "key": "cat:1.0:def:ItemPool/itemRefs",
+      "kind": "property",
+      "path": "itemRefs",
+      "jsonType": "array",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "cat:1.0:def:ItemPool/itemRefs/[]",
+      "kind": "property",
+      "path": "itemRefs/[]"
+    },
+    {
+      "key": "cat:1.0:def:ItemRef",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object"
+    },
+    {
+      "key": "cat:1.0:def:ItemRef/href",
+      "kind": "property",
+      "path": "href",
+      "jsonType": "string",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "cat:1.0:def:ItemRef/identifier",
+      "kind": "property",
+      "path": "identifier",
+      "jsonType": "string",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "cat:1.0:def:ItemStage",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object"
+    },
+    {
+      "key": "cat:1.0:def:ItemStage/assessmentSectionId",
+      "kind": "property",
+      "path": "assessmentSectionId",
+      "jsonType": "string",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "cat:1.0:def:ItemStage/customProperties",
+      "kind": "property",
+      "path": "customProperties",
+      "jsonType": "object",
+      "modelled": "yes"
+    },
+    {
+      "key": "cat:1.0:def:ItemStage/items",
+      "kind": "property",
+      "path": "items",
+      "jsonType": "array",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "cat:1.0:def:ItemStage/items/[]",
+      "kind": "property",
+      "path": "items/[]"
+    },
+    {
+      "key": "cat:1.0:def:ItemStage/mustCompleteAll",
+      "kind": "property",
+      "path": "mustCompleteAll",
+      "jsonType": "boolean",
+      "modelled": "yes"
+    },
+    {
+      "key": "cat:1.0:def:ItemStage/stageId",
+      "kind": "property",
+      "path": "stageId",
+      "jsonType": "string",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "cat:1.0:def:ItemStage/stagePosition",
+      "kind": "property",
+      "path": "stagePosition",
+      "jsonType": "integer",
+      "modelled": "yes"
+    },
+    {
+      "key": "cat:1.0:def:ItemStage/stagesTotal",
+      "kind": "property",
+      "path": "stagesTotal",
+      "jsonType": "integer",
+      "modelled": "yes"
+    },
+    {
+      "key": "cat:1.0:def:OutcomeVariable",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object"
+    },
+    {
+      "key": "cat:1.0:def:OutcomeVariable/baseType",
+      "kind": "property",
+      "path": "baseType",
+      "jsonType": "string",
+      "required": true,
+      "enumValues": [
+        "float",
+        "integer",
+        "boolean",
+        "string",
+        "point",
+        "duration",
+        "pair",
+        "directedPair",
+        "ordered",
+        "multiple",
+        "record"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "cat:1.0:def:OutcomeVariable/cardinality",
+      "kind": "property",
+      "path": "cardinality",
+      "jsonType": "string",
+      "required": true,
+      "enumValues": [
+        "single",
+        "multiple",
+        "ordered",
+        "record"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "cat:1.0:def:OutcomeVariable/identifier",
+      "kind": "property",
+      "path": "identifier",
+      "jsonType": "string",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "cat:1.0:def:OutcomeVariable/value",
+      "kind": "property",
+      "path": "value",
+      "modelled": "yes"
+    },
+    {
+      "key": "cat:1.0:def:ResponseVariable",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object"
+    },
+    {
+      "key": "cat:1.0:def:ResponseVariable/baseType",
+      "kind": "property",
+      "path": "baseType",
+      "jsonType": "string",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "cat:1.0:def:ResponseVariable/cardinality",
+      "kind": "property",
+      "path": "cardinality",
+      "jsonType": "string",
+      "required": true,
+      "enumValues": [
+        "single",
+        "multiple",
+        "ordered",
+        "record"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "cat:1.0:def:ResponseVariable/identifier",
+      "kind": "property",
+      "path": "identifier",
+      "jsonType": "string",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "cat:1.0:def:ResponseVariable/value",
+      "kind": "property",
+      "path": "value",
+      "modelled": "yes"
+    },
+    {
+      "key": "cat:1.0:doc:AssessmentResult",
+      "kind": "document",
+      "path": "",
+      "jsonType": "object"
+    },
+    {
+      "key": "cat:1.0:doc:AssessmentResult/assessmentSectionId",
+      "kind": "property",
+      "path": "assessmentSectionId",
+      "jsonType": "string",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "cat:1.0:doc:AssessmentResult/continuationRequired",
+      "kind": "property",
+      "path": "continuationRequired",
+      "jsonType": "boolean",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "cat:1.0:doc:AssessmentResult/itemsAttempted",
+      "kind": "property",
+      "path": "itemsAttempted",
+      "jsonType": "array",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "cat:1.0:doc:AssessmentResult/itemsAttempted/[]",
+      "kind": "property",
+      "path": "itemsAttempted/[]"
+    },
+    {
+      "key": "cat:1.0:doc:AssessmentResult/outcomeVariables",
+      "kind": "property",
+      "path": "outcomeVariables",
+      "jsonType": "array",
+      "modelled": "yes"
+    },
+    {
+      "key": "cat:1.0:doc:AssessmentResult/outcomeVariables/[]",
+      "kind": "property",
+      "path": "outcomeVariables/[]"
+    },
+    {
+      "key": "cat:1.0:doc:AssessmentResult/responseVariables",
+      "kind": "property",
+      "path": "responseVariables",
+      "jsonType": "array",
+      "modelled": "yes"
+    },
+    {
+      "key": "cat:1.0:doc:AssessmentResult/responseVariables/[]",
+      "kind": "property",
+      "path": "responseVariables/[]"
+    },
+    {
+      "key": "cat:1.0:doc:AssessmentResult/resultId",
+      "kind": "property",
+      "path": "resultId",
+      "jsonType": "string",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "cat:1.0:doc:AssessmentResult/submittedAt",
+      "kind": "property",
+      "path": "submittedAt",
+      "jsonType": "string",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "cat:1.0:doc:CatEngineResultReport",
+      "kind": "document",
+      "path": "",
+      "jsonType": "object"
+    },
+    {
+      "key": "cat:1.0:doc:CatEngineResultReport/abilityStandardError",
+      "kind": "property",
+      "path": "abilityStandardError",
+      "jsonType": "number",
+      "modelled": "yes"
+    },
+    {
+      "key": "cat:1.0:doc:CatEngineResultReport/assessmentSectionId",
+      "kind": "property",
+      "path": "assessmentSectionId",
+      "jsonType": "string",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "cat:1.0:doc:CatEngineResultReport/diagnosticData",
+      "kind": "property",
+      "path": "diagnosticData",
+      "jsonType": "object",
+      "modelled": "yes"
+    },
+    {
+      "key": "cat:1.0:doc:CatEngineResultReport/estimatedAbility",
+      "kind": "property",
+      "path": "estimatedAbility",
+      "jsonType": "number",
+      "modelled": "yes"
+    },
+    {
+      "key": "cat:1.0:doc:CatEngineResultReport/generatedAt",
+      "kind": "property",
+      "path": "generatedAt",
+      "jsonType": "string",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "cat:1.0:doc:CatEngineResultReport/nextStage",
+      "kind": "property",
+      "path": "nextStage",
+      "modelled": "yes"
+    },
+    {
+      "key": "cat:1.0:doc:CatEngineResultReport/outcomeVariables",
+      "kind": "property",
+      "path": "outcomeVariables",
+      "jsonType": "array",
+      "modelled": "yes"
+    },
+    {
+      "key": "cat:1.0:doc:CatEngineResultReport/outcomeVariables/[]",
+      "kind": "property",
+      "path": "outcomeVariables/[]"
+    },
+    {
+      "key": "cat:1.0:doc:CatEngineResultReport/recommendation",
+      "kind": "property",
+      "path": "recommendation",
+      "jsonType": "string",
+      "required": true,
+      "enumValues": [
+        "continue",
+        "finish",
+        "suspend",
+        "abandon"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "cat:1.0:doc:CatEngineResultReport/reportId",
+      "kind": "property",
+      "path": "reportId",
+      "jsonType": "string",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "cat:1.0:doc:CatEngineResultReport/sectionScore",
+      "kind": "property",
+      "path": "sectionScore",
+      "jsonType": "number",
+      "modelled": "yes"
+    },
+    {
+      "key": "cat:1.0:doc:ItemStage",
+      "kind": "document",
+      "path": "",
+      "jsonType": "object"
+    },
+    {
+      "key": "cat:1.0:doc:ItemStage/assessmentSectionId",
+      "kind": "property",
+      "path": "assessmentSectionId",
+      "jsonType": "string",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "cat:1.0:doc:ItemStage/customProperties",
+      "kind": "property",
+      "path": "customProperties",
+      "jsonType": "object",
+      "modelled": "yes"
+    },
+    {
+      "key": "cat:1.0:doc:ItemStage/items",
+      "kind": "property",
+      "path": "items",
+      "jsonType": "array",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "cat:1.0:doc:ItemStage/items/[]",
+      "kind": "property",
+      "path": "items/[]"
+    },
+    {
+      "key": "cat:1.0:doc:ItemStage/mustCompleteAll",
+      "kind": "property",
+      "path": "mustCompleteAll",
+      "jsonType": "boolean",
+      "modelled": "yes"
+    },
+    {
+      "key": "cat:1.0:doc:ItemStage/stageId",
+      "kind": "property",
+      "path": "stageId",
+      "jsonType": "string",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "cat:1.0:doc:ItemStage/stagePosition",
+      "kind": "property",
+      "path": "stagePosition",
+      "jsonType": "integer",
+      "modelled": "yes"
+    },
+    {
+      "key": "cat:1.0:doc:ItemStage/stagesTotal",
+      "kind": "property",
+      "path": "stagesTotal",
+      "jsonType": "integer",
+      "modelled": "yes"
+    },
+    {
+      "key": "cat:1.0:doc:SectionData",
+      "kind": "document",
+      "path": "",
+      "jsonType": "object"
+    },
+    {
+      "key": "cat:1.0:doc:SectionData/assessmentSectionId",
+      "kind": "property",
+      "path": "assessmentSectionId",
+      "jsonType": "string",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "cat:1.0:doc:SectionData/constraints",
+      "kind": "property",
+      "path": "constraints",
+      "jsonType": "array",
+      "modelled": "yes"
+    },
+    {
+      "key": "cat:1.0:doc:SectionData/constraints/[]",
+      "kind": "property",
+      "path": "constraints/[]"
+    },
+    {
+      "key": "cat:1.0:doc:SectionData/createdAt",
+      "kind": "property",
+      "path": "createdAt",
+      "jsonType": "string",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "cat:1.0:doc:SectionData/customParameters",
+      "kind": "property",
+      "path": "customParameters",
+      "jsonType": "object",
+      "modelled": "yes"
+    },
+    {
+      "key": "cat:1.0:doc:SectionData/demographics",
+      "kind": "property",
+      "path": "demographics",
+      "jsonType": "object",
+      "modelled": "yes"
+    },
+    {
+      "key": "cat:1.0:doc:SectionData/itemMetadata",
+      "kind": "property",
+      "path": "itemMetadata",
+      "jsonType": "object",
+      "modelled": "yes"
+    },
+    {
+      "key": "cat:1.0:doc:SectionData/itemPool",
+      "kind": "property",
+      "path": "itemPool",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "cat:1.0:doc:SectionData/sectionHref",
+      "kind": "property",
+      "path": "sectionHref",
+      "jsonType": "string",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "cat:1.0:doc:SectionData/sectionIdentifier",
+      "kind": "property",
+      "path": "sectionIdentifier",
+      "jsonType": "string",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "cat:1.0:doc:SessionInfo",
+      "kind": "document",
+      "path": "",
+      "jsonType": "object"
+    },
+    {
+      "key": "cat:1.0:doc:SessionInfo/assessmentSectionId",
+      "kind": "property",
+      "path": "assessmentSectionId",
+      "jsonType": "string",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "cat:1.0:doc:SessionInfo/candidateId",
+      "kind": "property",
+      "path": "candidateId",
+      "jsonType": "string",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "cat:1.0:doc:SessionInfo/customData",
+      "kind": "property",
+      "path": "customData",
+      "jsonType": "object",
+      "modelled": "yes"
+    },
+    {
+      "key": "cat:1.0:doc:SessionInfo/endedAt",
+      "kind": "property",
+      "path": "endedAt",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "cat:1.0:doc:SessionInfo/itemsCompleted",
+      "kind": "property",
+      "path": "itemsCompleted",
+      "jsonType": "integer",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "cat:1.0:doc:SessionInfo/sessionId",
+      "kind": "property",
+      "path": "sessionId",
+      "jsonType": "string",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "cat:1.0:doc:SessionInfo/startedAt",
+      "kind": "property",
+      "path": "startedAt",
+      "jsonType": "string",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "cat:1.0:doc:SessionInfo/status",
+      "kind": "property",
+      "path": "status",
+      "jsonType": "string",
+      "required": true,
+      "enumValues": [
+        "active",
+        "complete",
+        "incomplete",
+        "paused",
+        "terminated",
+        "pending"
+      ],
+      "modelled": "yes"
+    }
+  ],
+  "edges": [
+    {
+      "from": "cat:1.0:def:ItemAttempt/itemRef",
+      "to": "cat:1.0:def:ItemRef"
+    },
+    {
+      "from": "cat:1.0:def:ItemPool/itemRefs/[]",
+      "to": "cat:1.0:def:ItemRef"
+    },
+    {
+      "from": "cat:1.0:def:ItemStage/items/[]",
+      "to": "cat:1.0:def:ItemRef"
+    },
+    {
+      "from": "cat:1.0:doc:AssessmentResult/itemsAttempted/[]",
+      "to": "cat:1.0:def:ItemAttempt"
+    },
+    {
+      "from": "cat:1.0:doc:AssessmentResult/outcomeVariables/[]",
+      "to": "cat:1.0:def:OutcomeVariable"
+    },
+    {
+      "from": "cat:1.0:doc:AssessmentResult/responseVariables/[]",
+      "to": "cat:1.0:def:ResponseVariable"
+    },
+    {
+      "from": "cat:1.0:doc:CatEngineResultReport/nextStage",
+      "to": "cat:1.0:def:ItemStage"
+    },
+    {
+      "from": "cat:1.0:doc:CatEngineResultReport/outcomeVariables/[]",
+      "to": "cat:1.0:def:OutcomeVariable"
+    },
+    {
+      "from": "cat:1.0:doc:ItemStage/items/[]",
+      "to": "cat:1.0:def:ItemRef"
+    },
+    {
+      "from": "cat:1.0:doc:SectionData/constraints/[]",
+      "to": "cat:1.0:def:CatConstraint"
+    },
+    {
+      "from": "cat:1.0:doc:SectionData/itemPool",
+      "to": "cat:1.0:def:ItemPool"
+    }
+  ],
+  "conformance": [
+    {
+      "key": "cat:1.0:conf:delivery/CAT-DEL-1",
+      "profile": "delivery",
+      "reqId": "CAT-DEL-1",
+      "level": "MUST",
+      "statement": "An ItemStage MUST carry a stageId, the items to present, and the owning assessmentSectionId.",
+      "constrains": [
+        "cat:1.0:doc:ItemStage/stageId",
+        "cat:1.0:doc:ItemStage/items",
+        "cat:1.0:doc:ItemStage/assessmentSectionId"
+      ],
+      "source": "1EdTech CAT 1.0 Implementation — https://www.imsglobal.org/spec/cat/v1p0/impl/"
+    },
+    {
+      "key": "cat:1.0:conf:delivery/CAT-DEL-2",
+      "profile": "delivery",
+      "reqId": "CAT-DEL-2",
+      "level": "MUST",
+      "statement": "An AssessmentResult MUST identify the result and section, list the items attempted (with attempt number), and state whether continuation is required; it carries the candidate response and outcome variables.",
+      "constrains": [
+        "cat:1.0:doc:AssessmentResult/resultId",
+        "cat:1.0:doc:AssessmentResult/itemsAttempted",
+        "cat:1.0:def:ItemAttempt/attemptNumber",
+        "cat:1.0:doc:AssessmentResult/continuationRequired",
+        "cat:1.0:def:ResponseVariable/identifier",
+        "cat:1.0:def:OutcomeVariable/identifier"
+      ],
+      "source": "1EdTech CAT 1.0 Implementation — https://www.imsglobal.org/spec/cat/v1p0/impl/"
+    },
+    {
+      "key": "cat:1.0:conf:delivery/CAT-DEL-3",
+      "profile": "delivery",
+      "reqId": "CAT-DEL-3",
+      "level": "MUST",
+      "statement": "A CatEngineResultReport MUST carry a reportId, the section, and a recommendation (continue/finish/suspend/abandon); it MAY carry the ability estimate, section score, delivered outcomes and the next item stage.",
+      "constrains": [
+        "cat:1.0:doc:CatEngineResultReport/reportId",
+        "cat:1.0:doc:CatEngineResultReport/recommendation",
+        "cat:1.0:doc:CatEngineResultReport/estimatedAbility",
+        "cat:1.0:doc:CatEngineResultReport/nextStage"
+      ],
+      "source": "1EdTech CAT 1.0 Implementation — https://www.imsglobal.org/spec/cat/v1p0/impl/"
+    },
+    {
+      "key": "cat:1.0:conf:delivery/CAT-DEL-4",
+      "profile": "delivery",
+      "reqId": "CAT-DEL-4",
+      "level": "MUST",
+      "statement": "An outcome/response variable MUST declare its cardinality (single/multiple/ordered/record) and base type; the SessionInfo status MUST be a value of the assessment-result status vocabulary.",
+      "constrains": [
+        "cat:1.0:def:OutcomeVariable/cardinality",
+        "cat:1.0:def:OutcomeVariable/baseType",
+        "cat:1.0:doc:SessionInfo/status"
+      ],
+      "source": "1EdTech CAT 1.0 Implementation — https://www.imsglobal.org/spec/cat/v1p0/impl/"
+    },
+    {
+      "key": "cat:1.0:conf:operations/CAT-OP-1",
+      "profile": "operations",
+      "reqId": "CAT-OP-1",
+      "level": "MUST",
+      "statement": "A CAT engine MUST expose section management: create an adaptive section (POST /sections, from SectionData) and retrieve it (GET /sections/:id).",
+      "constrains": [
+        "cat:1.0:doc:SectionData",
+        "cat:1.0:doc:SectionData/itemPool"
+      ],
+      "source": "1EdTech CAT 1.0 Implementation — https://www.imsglobal.org/spec/cat/v1p0/impl/"
+    },
+    {
+      "key": "cat:1.0:conf:operations/CAT-OP-2",
+      "profile": "operations",
+      "reqId": "CAT-OP-2",
+      "level": "MUST",
+      "statement": "A CAT engine MUST support the adaptive cycle: create a session (POST /sessions), submit results to receive the next stage (POST /sessions/:id/results — AssessmentResult in, CatEngineResultReport out), and end the session (POST /sessions/:id/end) and section (POST /sections/:id/end).",
+      "constrains": [
+        "cat:1.0:doc:SessionInfo/sessionId",
+        "cat:1.0:doc:AssessmentResult",
+        "cat:1.0:doc:CatEngineResultReport",
+        "cat:1.0:doc:CatEngineResultReport/nextStage"
+      ],
+      "source": "1EdTech CAT 1.0 Implementation — https://www.imsglobal.org/spec/cat/v1p0/impl/"
+    },
+    {
+      "key": "cat:1.0:conf:section/CAT-SEC-1",
+      "profile": "section",
+      "reqId": "CAT-SEC-1",
+      "level": "MUST",
+      "statement": "A SectionData MUST carry the section identifiers, the section resource href, an item pool of available items, and a creation timestamp.",
+      "constrains": [
+        "cat:1.0:doc:SectionData/sectionIdentifier",
+        "cat:1.0:doc:SectionData/assessmentSectionId",
+        "cat:1.0:doc:SectionData/sectionHref",
+        "cat:1.0:doc:SectionData/itemPool",
+        "cat:1.0:def:ItemPool/itemRefs",
+        "cat:1.0:def:ItemRef/href"
+      ],
+      "source": "1EdTech CAT 1.0 Implementation — https://www.imsglobal.org/spec/cat/v1p0/impl/"
+    },
+    {
+      "key": "cat:1.0:conf:section/CAT-SEC-2",
+      "profile": "section",
+      "reqId": "CAT-SEC-2",
+      "level": "MUST",
+      "statement": "Each item-selection constraint MUST declare its type; constraint parameters are constraint-specific.",
+      "constrains": [
+        "cat:1.0:def:CatConstraint/type",
+        "cat:1.0:def:CatConstraint/parameters"
+      ],
+      "source": "1EdTech CAT 1.0 Implementation — https://www.imsglobal.org/spec/cat/v1p0/impl/"
+    }
+  ],
+  "normativeStatements": [],
+  "residues": {
+    "silentGaps": [],
+    "extensions": [],
+    "normalisations": []
+  },
+  "valueSets": [
+    {
+      "item": "cat:1.0:def:OutcomeVariable/baseType",
+      "members": 11,
+      "modelled": 11,
+      "gaps": []
+    },
+    {
+      "item": "cat:1.0:def:OutcomeVariable/cardinality",
+      "members": 4,
+      "modelled": 4,
+      "gaps": []
+    },
+    {
+      "item": "cat:1.0:doc:SessionInfo/status",
+      "members": 6,
+      "modelled": 6,
+      "gaps": []
+    }
+  ],
+  "rollup": {
+    "items": 83,
+    "modelledYes": 63,
+    "modelledPartial": 0,
+    "modelledNo": 0,
+    "normativeItems": 0,
+    "conformanceRequirements": 8,
+    "normativeStatements": 0,
+    "normativeStatementsCited": 0,
+    "normalisations": 0,
+    "valueSetMembers": 21,
+    "valueSetModelled": 21,
+    "valueSetGaps": 0
+  }
+}

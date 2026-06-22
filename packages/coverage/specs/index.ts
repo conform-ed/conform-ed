@@ -6,6 +6,7 @@
 import type { SpecSource } from "../src/source";
 import { caliperV1_2 } from "./caliper/v1_2";
 import { caseV1_1 } from "./case/v1_1";
+import { catV1_0 } from "./cat/v1_0";
 import { clrV2_0 } from "./clr/v2_0";
 import { cmi5V1_0 } from "./cmi5/v1_0";
 import { commonCartridgeV1_3 } from "./common-cartridge/v1_3";
@@ -43,4 +44,5 @@ export const COVERAGE_MAPS: readonly CoverageMapEntry[] = [
   { source: xapiV2_0, file: "xapi-v2.0.json" },
   { source: h5pV1, file: "h5p-v1.json" },
   { source: vcDataModelV2_0, file: "vc-data-model-v2.0.json" },
+  { source: catV1_0, file: "cat-v1.0.json" },
 ];

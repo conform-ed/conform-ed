@@ -1,0 +1,82 @@
+{
+  "$id": "conform-ed:curated:cat/1.0/assessment-result",
+  "$comment": "Hand-authored denominator (conform-ed ADR-0017) — the 1EdTech CAT 1.0 service is prose + JSON examples with no machine-readable schema. This curates the AssessmentResult entity (the candidate responses and item outcomes the platform submits to the CAT engine). Source: 1EdTech CAT 1.0 Implementation — https://www.imsglobal.org/spec/cat/v1p0/impl/. Lowest provenance tier; re-review on spec version bump.",
+  "title": "CAT 1.0 AssessmentResult (candidate responses)",
+  "type": "object",
+  "required": ["resultId", "assessmentSectionId", "itemsAttempted", "continuationRequired", "submittedAt"],
+  "properties": {
+    "resultId": { "type": "string", "$comment": "specRef: §AssessmentResult (resultId — a UUID)" },
+    "assessmentSectionId": { "type": "string", "$comment": "specRef: §AssessmentResult (assessmentSectionId)" },
+    "itemsAttempted": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/ItemAttempt" },
+      "$comment": "specRef: §AssessmentResult (itemsAttempted — the items responded to)"
+    },
+    "responseVariables": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/ResponseVariable" },
+      "$comment": "specRef: §AssessmentResult (responseVariables — candidate responses)"
+    },
+    "outcomeVariables": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/OutcomeVariable" },
+      "$comment": "specRef: §AssessmentResult (outcomeVariables — item processing outcomes)"
+    },
+    "continuationRequired": { "type": "boolean", "$comment": "specRef: §AssessmentResult (continuationRequired — continuing vs finishing)" },
+    "submittedAt": { "type": "string", "$comment": "specRef: §AssessmentResult (submittedAt — ISO 8601)" }
+  },
+  "$defs": {
+    "ItemAttempt": {
+      "type": "object",
+      "title": "item attempt",
+      "required": ["itemRef", "attemptNumber"],
+      "properties": {
+        "itemRef": { "$ref": "#/$defs/ItemRef", "$comment": "specRef: §AssessmentResult (itemsAttempted[].itemRef)" },
+        "attemptNumber": { "type": "integer", "$comment": "specRef: §AssessmentResult (itemsAttempted[].attemptNumber)" }
+      }
+    },
+    "ItemRef": {
+      "type": "object",
+      "title": "item reference",
+      "required": ["identifier", "href"],
+      "properties": {
+        "identifier": { "type": "string", "$comment": "specRef: §ItemRef (identifier)" },
+        "href": { "type": "string", "$comment": "specRef: §ItemRef (href — the item resource URI)" }
+      }
+    },
+    "ResponseVariable": {
+      "type": "object",
+      "title": "response variable",
+      "required": ["identifier", "cardinality", "baseType"],
+      "properties": {
+        "identifier": { "type": "string", "$comment": "specRef: §ResponseVariable (identifier)" },
+        "cardinality": {
+          "type": "string",
+          "enum": ["single", "multiple", "ordered", "record"],
+          "$comment": "specRef: §ResponseVariable (cardinality — the QTI cardinality)"
+        },
+        "baseType": { "type": "string", "$comment": "specRef: §ResponseVariable (baseType — a free QTI base type)" },
+        "value": { "$comment": "specRef: §ResponseVariable (value — a scalar or array)" }
+      }
+    },
+    "OutcomeVariable": {
+      "type": "object",
+      "title": "outcome variable",
+      "required": ["identifier", "cardinality", "baseType"],
+      "properties": {
+        "identifier": { "type": "string", "$comment": "specRef: §OutcomeVariable (identifier)" },
+        "cardinality": {
+          "type": "string",
+          "enum": ["single", "multiple", "ordered", "record"],
+          "$comment": "specRef: §OutcomeVariable (cardinality — the QTI cardinality vocabulary)"
+        },
+        "baseType": {
+          "type": "string",
+          "enum": ["float", "integer", "boolean", "string", "point", "duration", "pair", "directedPair", "ordered", "multiple", "record"],
+          "$comment": "specRef: §OutcomeVariable (baseType — the CAT outcome-variable type vocabulary)"
+        },
+        "value": { "$comment": "specRef: §OutcomeVariable (value — a scalar or array)" }
+      }
+    }
+  }
+}

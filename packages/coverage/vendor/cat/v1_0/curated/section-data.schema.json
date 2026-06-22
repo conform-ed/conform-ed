@@ -1,0 +1,54 @@
+{
+  "$id": "conform-ed:curated:cat/1.0/section-data",
+  "$comment": "Hand-authored denominator (conform-ed ADR-0017) — the 1EdTech Computerized Adaptive Testing (CAT) 1.0 service is specified as prose + JSON examples (an implementation guide), with no machine-readable schema (no OpenAPI). This curates the SectionData entity (the adaptive section configuration the platform sends the CAT engine). Source: 1EdTech CAT 1.0 Implementation — https://www.imsglobal.org/spec/cat/v1p0/impl/. Lowest provenance tier; re-review on spec version bump.",
+  "title": "CAT 1.0 SectionData (adaptive section configuration)",
+  "type": "object",
+  "required": ["sectionIdentifier", "assessmentSectionId", "sectionHref", "itemPool", "createdAt"],
+  "properties": {
+    "sectionIdentifier": { "type": "string", "$comment": "specRef: §SectionData (sectionIdentifier — the section in the assessment)" },
+    "assessmentSectionId": { "type": "string", "$comment": "specRef: §SectionData (assessmentSectionId — this section instance, a UUID)" },
+    "sectionHref": { "type": "string", "$comment": "specRef: §SectionData (sectionHref — the section resource URI)" },
+    "itemPool": { "$ref": "#/$defs/ItemPool", "$comment": "specRef: §SectionData (itemPool — available items)" },
+    "constraints": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/CatConstraint" },
+      "$comment": "specRef: §SectionData (constraints — item-selection rules)"
+    },
+    "itemMetadata": { "type": "object", "$comment": "specRef: §SectionData (itemMetadata — e.g. IRT parameters; flexible)" },
+    "demographics": { "type": "object", "$comment": "specRef: §SectionData (demographics — optional personalisation)" },
+    "customParameters": { "type": "object", "$comment": "specRef: §SectionData (customParameters — engine-specific)" },
+    "createdAt": { "type": "string", "$comment": "specRef: §SectionData (createdAt — ISO 8601)" }
+  },
+  "$defs": {
+    "ItemPool": {
+      "type": "object",
+      "title": "item pool",
+      "required": ["itemRefs"],
+      "properties": {
+        "itemRefs": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/ItemRef" },
+          "$comment": "specRef: §ItemPool (itemRefs — the available item references)"
+        }
+      }
+    },
+    "ItemRef": {
+      "type": "object",
+      "title": "item reference",
+      "required": ["identifier", "href"],
+      "properties": {
+        "identifier": { "type": "string", "$comment": "specRef: §ItemRef (identifier)" },
+        "href": { "type": "string", "$comment": "specRef: §ItemRef (href — the item resource URI)" }
+      }
+    },
+    "CatConstraint": {
+      "type": "object",
+      "title": "CAT constraint",
+      "required": ["type"],
+      "properties": {
+        "type": { "type": "string", "$comment": "specRef: §CatConstraint (type — the constraint kind)" },
+        "parameters": { "type": "object", "$comment": "specRef: §CatConstraint (parameters — constraint-specific)" }
+      }
+    }
+  }
+}

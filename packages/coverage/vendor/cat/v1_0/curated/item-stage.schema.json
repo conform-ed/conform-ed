@@ -1,0 +1,31 @@
+{
+  "$id": "conform-ed:curated:cat/1.0/item-stage",
+  "$comment": "Hand-authored denominator (conform-ed ADR-0017) — the 1EdTech CAT 1.0 service is prose + JSON examples with no machine-readable schema. This curates the ItemStage entity (the set of items the CAT engine selects for the candidate to attempt next). Source: 1EdTech CAT 1.0 Implementation — https://www.imsglobal.org/spec/cat/v1p0/impl/. Lowest provenance tier; re-review on spec version bump.",
+  "title": "CAT 1.0 ItemStage (items to present)",
+  "type": "object",
+  "required": ["stageId", "items", "assessmentSectionId"],
+  "properties": {
+    "stageId": { "type": "string", "$comment": "specRef: §ItemStage (stageId — a UUID)" },
+    "items": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/ItemRef" },
+      "$comment": "specRef: §ItemStage (items — the items to present)"
+    },
+    "mustCompleteAll": { "type": "boolean", "$comment": "specRef: §ItemStage (mustCompleteAll — gate before proceeding)" },
+    "stagePosition": { "type": "integer", "$comment": "specRef: §ItemStage (stagePosition — sequence position)" },
+    "stagesTotal": { "type": "integer", "$comment": "specRef: §ItemStage (stagesTotal — total expected, null if unknown)" },
+    "assessmentSectionId": { "type": "string", "$comment": "specRef: §ItemStage (assessmentSectionId — the owning section)" },
+    "customProperties": { "type": "object", "$comment": "specRef: §ItemStage (customProperties — engine-specific)" }
+  },
+  "$defs": {
+    "ItemRef": {
+      "type": "object",
+      "title": "item reference",
+      "required": ["identifier", "href"],
+      "properties": {
+        "identifier": { "type": "string", "$comment": "specRef: §ItemRef (identifier)" },
+        "href": { "type": "string", "$comment": "specRef: §ItemRef (href — the item resource URI)" }
+      }
+    }
+  }
+}

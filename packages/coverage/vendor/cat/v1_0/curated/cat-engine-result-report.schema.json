@@ -1,0 +1,75 @@
+{
+  "$id": "conform-ed:curated:cat/1.0/cat-engine-result-report",
+  "$comment": "Hand-authored denominator (conform-ed ADR-0017) — the 1EdTech CAT 1.0 service is prose + JSON examples with no machine-readable schema. This curates the CatEngineResultReport entity (the CAT engine's scoring, ability estimate, recommendation and next item stage returned to the platform). Source: 1EdTech CAT 1.0 Implementation — https://www.imsglobal.org/spec/cat/v1p0/impl/. Lowest provenance tier; re-review on spec version bump.",
+  "title": "CAT 1.0 CatEngineResultReport (engine scoring + recommendation)",
+  "type": "object",
+  "required": ["reportId", "assessmentSectionId", "recommendation", "generatedAt"],
+  "properties": {
+    "reportId": { "type": "string", "$comment": "specRef: §CatEngineResultReport (reportId — a UUID)" },
+    "assessmentSectionId": { "type": "string", "$comment": "specRef: §CatEngineResultReport (assessmentSectionId)" },
+    "estimatedAbility": { "type": "number", "$comment": "specRef: §CatEngineResultReport (estimatedAbility — IRT theta)" },
+    "abilityStandardError": { "type": "number", "$comment": "specRef: §CatEngineResultReport (abilityStandardError)" },
+    "sectionScore": { "type": "number", "$comment": "specRef: §CatEngineResultReport (sectionScore)" },
+    "outcomeVariables": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/OutcomeVariable" },
+      "$comment": "specRef: §CatEngineResultReport (outcomeVariables — delivered to the platform)"
+    },
+    "recommendation": {
+      "type": "string",
+      "enum": ["continue", "finish", "suspend", "abandon"],
+      "$comment": "specRef: §CatEngineResultReport (recommendation — the engine's next-step advice)"
+    },
+    "nextStage": { "$ref": "#/$defs/ItemStage", "$comment": "specRef: §CatEngineResultReport (nextStage — optional next items)" },
+    "diagnosticData": { "type": "object", "$comment": "specRef: §CatEngineResultReport (diagnosticData — optional)" },
+    "generatedAt": { "type": "string", "$comment": "specRef: §CatEngineResultReport (generatedAt — ISO 8601)" }
+  },
+  "$defs": {
+    "OutcomeVariable": {
+      "type": "object",
+      "title": "outcome variable",
+      "required": ["identifier", "cardinality", "baseType"],
+      "properties": {
+        "identifier": { "type": "string", "$comment": "specRef: §OutcomeVariable (identifier)" },
+        "cardinality": {
+          "type": "string",
+          "enum": ["single", "multiple", "ordered", "record"],
+          "$comment": "specRef: §OutcomeVariable (cardinality — the QTI cardinality vocabulary)"
+        },
+        "baseType": {
+          "type": "string",
+          "enum": ["float", "integer", "boolean", "string", "point", "duration", "pair", "directedPair", "ordered", "multiple", "record"],
+          "$comment": "specRef: §OutcomeVariable (baseType — the CAT outcome-variable type vocabulary)"
+        },
+        "value": { "$comment": "specRef: §OutcomeVariable (value — a scalar or array)" }
+      }
+    },
+    "ItemStage": {
+      "type": "object",
+      "title": "item stage",
+      "required": ["stageId", "items", "assessmentSectionId"],
+      "properties": {
+        "stageId": { "type": "string", "$comment": "specRef: §ItemStage (stageId — a UUID)" },
+        "items": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/ItemRef" },
+          "$comment": "specRef: §ItemStage (items — the items to present)"
+        },
+        "mustCompleteAll": { "type": "boolean", "$comment": "specRef: §ItemStage (mustCompleteAll)" },
+        "stagePosition": { "type": "integer", "$comment": "specRef: §ItemStage (stagePosition)" },
+        "stagesTotal": { "type": "integer", "$comment": "specRef: §ItemStage (stagesTotal)" },
+        "assessmentSectionId": { "type": "string", "$comment": "specRef: §ItemStage (assessmentSectionId)" },
+        "customProperties": { "type": "object", "$comment": "specRef: §ItemStage (customProperties)" }
+      }
+    },
+    "ItemRef": {
+      "type": "object",
+      "title": "item reference",
+      "required": ["identifier", "href"],
+      "properties": {
+        "identifier": { "type": "string", "$comment": "specRef: §ItemRef (identifier)" },
+        "href": { "type": "string", "$comment": "specRef: §ItemRef (href — the item resource URI)" }
+      }
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "$id": "conform-ed:curated:cat/1.0/session-info",
+  "$comment": "Hand-authored denominator (conform-ed ADR-0017) — the 1EdTech CAT 1.0 service is prose + JSON examples with no machine-readable schema. This curates the SessionInfo entity (the CAT delivery session state). Source: 1EdTech CAT 1.0 Implementation — https://www.imsglobal.org/spec/cat/v1p0/impl/. Lowest provenance tier; re-review on spec version bump.",
+  "title": "CAT 1.0 SessionInfo (delivery session state)",
+  "type": "object",
+  "required": ["sessionId", "assessmentSectionId", "candidateId", "status", "itemsCompleted", "startedAt"],
+  "properties": {
+    "sessionId": { "type": "string", "$comment": "specRef: §SessionInfo (sessionId — a UUID)" },
+    "assessmentSectionId": { "type": "string", "$comment": "specRef: §SessionInfo (assessmentSectionId)" },
+    "candidateId": { "type": "string", "$comment": "specRef: §SessionInfo (candidateId)" },
+    "status": {
+      "type": "string",
+      "enum": ["active", "complete", "incomplete", "paused", "terminated", "pending"],
+      "$comment": "specRef: §SessionInfo (status — the assessment-result status vocabulary)"
+    },
+    "itemsCompleted": { "type": "integer", "$comment": "specRef: §SessionInfo (itemsCompleted)" },
+    "startedAt": { "type": "string", "$comment": "specRef: §SessionInfo (startedAt — ISO 8601)" },
+    "endedAt": { "type": "string", "$comment": "specRef: §SessionInfo (endedAt — ISO 8601, null if active)" },
+    "customData": { "type": "object", "$comment": "specRef: §SessionInfo (customData — optional)" }
+  }
+}
