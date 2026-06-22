@@ -1,6 +1,7 @@
 import { expect, test } from "bun:test";
 
 import { LtiAgsV2_0, LtiDeepLinkingV2_0, LtiNrpsV2_0, LtiProctoringV1_0, LtiV1_3 } from "@conform-ed/contracts";
+import { KnownLtiRoleSchema, LtiRoles, normalizeRole, RolesSchema } from "@conform-ed/contracts/lti";
 
 test("LTI core launch schema accepts a normalized resource link launch", () => {
   const parsed = LtiV1_3.CoreLaunchRequestSchema.safeParse({
@@ -51,6 +52,84 @@ test("LTI deep linking schema accepts request settings and response items", () =
   });
 
   expect(response.success).toBe(true);
+});
+
+test("LTI deep linking validates the per-type content-item shapes", () => {
+  const parsed = LtiDeepLinkingV2_0.DeepLinkingResponseSchema.safeParse({
+    messageType: "LtiDeepLinkingResponse",
+    version: "1.3.0",
+    contentItems: [
+      { type: "ltiResourceLink", title: "Launch", url: "https://tool.example/launch", custom: { unit: "3" } },
+      { type: "link", url: "https://tool.example/page", thumbnail: { url: "https://tool.example/thumb.png" } },
+      { type: "html", html: "<p>Embedded snippet</p>", title: "Snippet" },
+      { type: "image", url: "https://tool.example/diagram.png", width: 640, height: 480 },
+      {
+        type: "file",
+        url: "https://tool.example/handout.pdf",
+        mediaType: "application/pdf",
+        expiresAt: "2026-01-01T00:00:00Z",
+      },
+    ],
+  });
+
+  expect(parsed.success).toBe(true);
+});
+
+test("LTI deep linking rejects an html content item with no html payload", () => {
+  expect(LtiDeepLinkingV2_0.ContentItemSchema.safeParse({ type: "html", title: "No body" }).success).toBe(false);
+});
+
+test("LTI deep linking rejects unknown keys on a content item (strict)", () => {
+  expect(
+    LtiDeepLinkingV2_0.ContentItemSchema.safeParse({
+      type: "image",
+      url: "https://tool.example/diagram.png",
+      bogus: true,
+    }).success,
+  ).toBe(false);
+});
+
+test("normalizeRole classifies context, institution, system, and sub-roles", () => {
+  expect(normalizeRole("http://purl.imsglobal.org/vocab/lis/v2/membership#Instructor")).toEqual({
+    namespace: "context",
+    raw: "http://purl.imsglobal.org/vocab/lis/v2/membership#Instructor",
+    role: "Instructor",
+  });
+
+  expect(normalizeRole("http://purl.imsglobal.org/vocab/lis/v2/membership/Instructor#TeachingAssistant")).toEqual({
+    namespace: "context",
+    raw: "http://purl.imsglobal.org/vocab/lis/v2/membership/Instructor#TeachingAssistant",
+    role: "Instructor",
+    subRole: "TeachingAssistant",
+  });
+
+  expect(normalizeRole("http://purl.imsglobal.org/vocab/lis/v2/institution/person#Faculty")?.namespace).toBe(
+    "institution",
+  );
+  expect(normalizeRole("http://purl.imsglobal.org/vocab/lis/v2/system/person#SysAdmin")?.namespace).toBe("system");
+
+  // Bare simple names are accepted for context roles only (LTI 1.1 backward compatibility).
+  expect(normalizeRole("Learner")).toEqual({ namespace: "context", raw: "Learner", role: "Learner" });
+});
+
+test("normalizeRole returns null for extension and unrecognised roles", () => {
+  expect(normalizeRole("https://vendor.example/roles#Custom")).toBeNull();
+  expect(normalizeRole("Banana")).toBeNull();
+  expect(normalizeRole("")).toBeNull();
+});
+
+test("RolesSchema accepts extension URIs and simple context names; KnownLtiRoleSchema does not", () => {
+  // A launch roles array stays permissive: vendor-extension URIs and back-compat simple names pass.
+  expect(RolesSchema.safeParse(["Learner", "https://vendor.example/roles#Custom"]).success).toBe(true);
+  // The strict recogniser rejects the extension role but accepts a published one.
+  expect(KnownLtiRoleSchema.safeParse("https://vendor.example/roles#Custom").success).toBe(false);
+  expect(KnownLtiRoleSchema.safeParse("http://purl.imsglobal.org/vocab/lis/v2/membership#Mentor").success).toBe(true);
+});
+
+test("LtiRoles bundle exposes the published vocabulary and normalizer", () => {
+  expect(LtiRoles.context.core).toContain("Instructor");
+  expect(LtiRoles.system).toContain("SysAdmin");
+  expect(LtiRoles.normalize).toBe(normalizeRole);
 });
 
 test("LTI AGS schema accepts endpoint, line item, score, and result shapes", () => {

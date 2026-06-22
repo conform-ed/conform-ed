@@ -27,7 +27,10 @@ Namespaces: `LtiV1_3`, `LtiDeepLinkingV2_0`, `LtiAgsV2_0`, `LtiNrpsV2_0`, `LtiPr
 
 - **`LtiV1_3`** — normalized LTI 1.3 core launch claims (`CoreLaunchRequest`, `ResourceLink`,
   `Context`, `LaunchPresentation`, `Lis`, …).
-- **`LtiDeepLinkingV2_0`** — deep-linking request settings and response content items.
+- **`LtiDeepLinkingV2_0`** — deep-linking request settings and response content items. Content items
+  are a discriminated union on `type`: `link`, `ltiResourceLink`, `file`, `html` and `image` each
+  carry their own properties (the `html` item's `html` payload, the `image` item's dimensions, the
+  `file` item's `mediaType`/`expiresAt`).
 - **`LtiAgsV2_0`** — line item, score, and result payloads for the grade-services endpoints.
 - **`LtiNrpsV2_0`** — the names-and-roles claim plus the membership container.
 - **`LtiProctoringV1_0`** — proctoring launch messages and assessment-control payloads.
@@ -36,3 +39,8 @@ Namespaces: `LtiV1_3`, `LtiDeepLinkingV2_0`, `LtiAgsV2_0`, `LtiNrpsV2_0`, `LtiPr
 
 - Field names are normalized to camelCase so the schemas are easy to use from the
   [LTI 1.3 runner](/runners/) and adapter reference app.
+- **Roles** stay permissive in the launch `roles` array (vendor-extension URIs and the LTI 1.1
+  simple context-role names both validate). For classification, `normalizeRole(value)` resolves a
+  role into `{ namespace, role, subRole? }` against the system/institution/context vocabularies (and
+  returns `null` for extension roles), while `KnownLtiRoleSchema` strictly rejects anything outside
+  the published vocabulary.

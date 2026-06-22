@@ -77,6 +77,7 @@ export const Lti13DerivedZodTemplates = {
   notes: [
     "Normalized camelCase field names are used instead of raw JWT claim URIs.",
     "Identity fields remain optional beyond the subject claim to keep the schema useful for adapter stubs and launch fixtures.",
+    "The roles array stays permissive (vendor-extension URIs and LTI 1.1 simple context-role names both pass); `normalizeRole`/`KnownLtiRoleSchema` (in shared) classify against the published vocabulary.",
   ],
 } as const;
 // Inferred types from exported Zod validators.

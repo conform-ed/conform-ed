@@ -45,16 +45,96 @@ export const DeepLinkingRequestSchema = strictObject({
   custom: CustomParametersSchema.optional(),
 });
 
-export const ContentItemSchema = strictObject({
-  type: ContentItemTypeSchema,
+// Presentation sub-objects shared across link-like content items.
+const EmbedSchema = strictObject({
+  html: NonEmptyStringSchema,
+});
+
+const WindowSchema = strictObject({
+  targetName: z.string().optional(),
+  windowFeatures: z.string().optional(),
+  width: z.number().int().positive().optional(),
+  height: z.number().int().positive().optional(),
+});
+
+const IframeSchema = strictObject({
+  src: UrlSchema.optional(),
+  width: z.number().int().positive().optional(),
+  height: z.number().int().positive().optional(),
+});
+
+const AvailabilityWindowSchema = strictObject({
+  startDateTime: z.iso.datetime().optional(),
+  endDateTime: z.iso.datetime().optional(),
+});
+
+export const LinkContentItemSchema = strictObject({
+  type: z.literal("link"),
+  url: UrlSchema,
   title: z.string().optional(),
   text: z.string().optional(),
-  url: UrlSchema.optional(),
-  custom: CustomParametersSchema.optional(),
   icon: ImageResourceSchema.optional(),
   thumbnail: ImageResourceSchema.optional(),
-  lineItem: LineItemSchema.optional(),
+  embed: EmbedSchema.optional(),
+  window: WindowSchema.optional(),
+  iframe: IframeSchema.optional(),
 });
+
+export const LtiResourceLinkContentItemSchema = strictObject({
+  type: z.literal("ltiResourceLink"),
+  url: UrlSchema.optional(),
+  title: z.string().optional(),
+  text: z.string().optional(),
+  icon: ImageResourceSchema.optional(),
+  thumbnail: ImageResourceSchema.optional(),
+  custom: CustomParametersSchema.optional(),
+  lineItem: LineItemSchema.optional(),
+  available: AvailabilityWindowSchema.optional(),
+  submission: AvailabilityWindowSchema.optional(),
+  window: WindowSchema.optional(),
+  iframe: IframeSchema.optional(),
+});
+
+export const FileContentItemSchema = strictObject({
+  type: z.literal("file"),
+  url: UrlSchema,
+  title: z.string().optional(),
+  text: z.string().optional(),
+  icon: ImageResourceSchema.optional(),
+  thumbnail: ImageResourceSchema.optional(),
+  mediaType: NonEmptyStringSchema.optional(),
+  expiresAt: z.iso.datetime().optional(),
+});
+
+export const HtmlContentItemSchema = strictObject({
+  type: z.literal("html"),
+  html: NonEmptyStringSchema,
+  title: z.string().optional(),
+  text: z.string().optional(),
+});
+
+export const ImageContentItemSchema = strictObject({
+  type: z.literal("image"),
+  url: UrlSchema,
+  title: z.string().optional(),
+  text: z.string().optional(),
+  icon: ImageResourceSchema.optional(),
+  thumbnail: ImageResourceSchema.optional(),
+  width: z.number().int().positive().optional(),
+  height: z.number().int().positive().optional(),
+});
+
+// Each Deep Linking content-item type carries a distinct property set; modelling them as a
+// discriminated union makes the `html` payload of an `html` item required, validates an
+// `image` item's dimensions, and surfaces a `file` item's media metadata — none of which a
+// single permissive object could express (LTI Deep Linking 2.0 §content-item-types).
+export const ContentItemSchema = z.discriminatedUnion("type", [
+  LinkContentItemSchema,
+  LtiResourceLinkContentItemSchema,
+  FileContentItemSchema,
+  HtmlContentItemSchema,
+  ImageContentItemSchema,
+]);
 
 export const DeepLinkingResponseSchema = strictObject({
   messageType: z.literal("LtiDeepLinkingResponse"),
@@ -74,6 +154,11 @@ export const LtiDeepLinkingV2_0 = {
     DeepLinkingSettings: DeepLinkingSettingsSchema,
     DeepLinkingRequest: DeepLinkingRequestSchema,
     ContentItem: ContentItemSchema,
+    LinkContentItem: LinkContentItemSchema,
+    LtiResourceLinkContentItem: LtiResourceLinkContentItemSchema,
+    FileContentItem: FileContentItemSchema,
+    HtmlContentItem: HtmlContentItemSchema,
+    ImageContentItem: ImageContentItemSchema,
     DeepLinkingResponse: DeepLinkingResponseSchema,
   },
 } as const;
@@ -89,7 +174,8 @@ export const LtiDeepLinkingV2_0DerivedZodTemplates = {
   claims: ["deep_linking_settings", "content_items"],
   notes: [
     "Accept-media-types is intentionally permissive because implementations vary between comma-delimited strings and arrays.",
-    "Content items reuse the AGS line-item schema when a deep-linked resource declares grading metadata.",
+    "Content items are a discriminated union keyed on `type`: each of link, ltiResourceLink, file, html and image carries its own property set (e.g. the html item's `html` payload, the image item's dimensions, the file item's mediaType/expiresAt).",
+    "The ltiResourceLink item reuses the AGS line-item schema when a deep-linked resource declares grading metadata.",
   ],
 } as const;
 // Inferred types from exported Zod validators.
@@ -97,4 +183,9 @@ export type ContentItemType = z.infer<typeof ContentItemTypeSchema>;
 export type DeepLinkingSettings = z.infer<typeof DeepLinkingSettingsSchema>;
 export type DeepLinkingRequest = z.infer<typeof DeepLinkingRequestSchema>;
 export type ContentItem = z.infer<typeof ContentItemSchema>;
+export type LinkContentItem = z.infer<typeof LinkContentItemSchema>;
+export type LtiResourceLinkContentItem = z.infer<typeof LtiResourceLinkContentItemSchema>;
+export type FileContentItem = z.infer<typeof FileContentItemSchema>;
+export type HtmlContentItem = z.infer<typeof HtmlContentItemSchema>;
+export type ImageContentItem = z.infer<typeof ImageContentItemSchema>;
 export type DeepLinkingResponse = z.infer<typeof DeepLinkingResponseSchema>;
