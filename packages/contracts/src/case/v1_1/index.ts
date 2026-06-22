@@ -25,6 +25,9 @@ import {
   CFPackageSchema,
   CFRubricSchema,
   CFSubjectSetSchema,
+  ImsxCodeMajorSchema,
+  ImsxCodeMinorFieldValueSchema,
+  ImsxSeveritySchema,
   ImsxStatusInfoSchema,
   LinkUriSchema,
   LinkGenUriSchema,
@@ -72,6 +75,9 @@ export const CaseV1_1 = {
     Uuid: UuidSchema,
     DateTime: DateTimeSchema,
     ExtensionEnum: ExtensionEnumSchema,
+    ImsxCodeMajor: ImsxCodeMajorSchema,
+    ImsxSeverity: ImsxSeveritySchema,
+    ImsxCodeMinorFieldValue: ImsxCodeMinorFieldValueSchema,
   },
 
   RestBinding: {

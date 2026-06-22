@@ -72,6 +72,14 @@ describe("Open Badges 3.0 Coverage Map", () => {
     expect(JSON.stringify(again)).toBe(JSON.stringify(map));
   });
 
+  test("the OB controlled vocabularies verify as value-sets with no gaps", () => {
+    // ADR-0017: the result status (7) and the imsx REST status-info codes (4 + 3 + 13) = 27.
+    expect(map.rollup.valueSetMembers).toBe(27);
+    expect(map.rollup.valueSetGaps).toBe(0);
+    expect(map.valueSets).toHaveLength(4);
+    expect(map.valueSets.find((v) => v.item.endsWith("/status"))?.modelled).toBe(7);
+  });
+
   test("the committed map is in sync with the generator", () => {
     const committed = readFileSync(join(import.meta.dir, "..", "maps", "open-badges-v3.0.json"), "utf8");
     const parsed = JSON.parse(committed) as CoverageMap;

@@ -13,11 +13,16 @@ import { join } from "node:path";
 
 import {
   AchievementCredentialSchema,
+  AssociationTypeSchema,
   ClrCredentialSchema,
   EndorsementCredentialSchema,
   GetClrCredentialsResponseSchema,
+  ImsxCodeMajorSchema,
+  ImsxCodeMinorFieldValueSchema,
+  ImsxSeveritySchema,
   ImsxStatusInfoSchema,
   ProfileSchema,
+  ResultStatusTypeSchema,
 } from "@conform-ed/contracts/clr/v2_0";
 
 import type { SpecSource } from "../../src/source";
@@ -256,6 +261,16 @@ export const clrV2_0: SpecSource = {
       language: "json-schema",
       zod: ImsxStatusInfoSchema,
     },
+  ],
+  // Value-set verification (ADR-0017): the closed vocabularies the CLR 2.0 schemas enumerate that
+  // the structural name-join cannot check — the result status, the association type, and the imsx
+  // REST status-info codes — each safeParse'd member-by-member against conform-ed's z.enum.
+  valueSets: [
+    { item: "clr:2.0:def:Result/status", element: ResultStatusTypeSchema },
+    { item: "clr:2.0:def:Association/associationType", element: AssociationTypeSchema },
+    { item: "clr:2.0:doc:imsx_statusinfo/imsx_codeMajor", element: ImsxCodeMajorSchema },
+    { item: "clr:2.0:doc:imsx_statusinfo/imsx_severity", element: ImsxSeveritySchema },
+    { item: "clr:2.0:def:Imsx_CodeMinorField/imsx_codeMinorFieldValue", element: ImsxCodeMinorFieldValueSchema },
   ],
   conformance,
 };

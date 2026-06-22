@@ -63,6 +63,14 @@ describe("CASE 1.1 Coverage Map", () => {
     for (const edge of map.edges) expect(keys.has(edge.to)).toBe(true);
   });
 
+  test("the imsx status-info vocabularies verify as value-sets with no gaps", () => {
+    // ADR-0017: CASE's only enumerated vocabularies are the imsx codes (4 + 3 + 9) = 16; the
+    // content vocabularies are open ext:* extensible enums with no fixed members to verify.
+    expect(map.rollup.valueSetMembers).toBe(16);
+    expect(map.rollup.valueSetGaps).toBe(0);
+    expect(map.valueSets).toHaveLength(3);
+  });
+
   test("the committed map is in sync with the generator", () => {
     const committed = readFileSync(join(import.meta.dir, "..", "maps", "case-v1.1.json"), "utf8");
     const parsed = JSON.parse(committed) as CoverageMap;

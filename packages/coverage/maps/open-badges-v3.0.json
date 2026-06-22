@@ -3311,7 +3311,32 @@
     "extensions": [],
     "normalisations": []
   },
-  "valueSets": [],
+  "valueSets": [
+    {
+      "item": "ob:3.0:def:Imsx_CodeMinorField/imsx_codeMinorFieldValue",
+      "members": 13,
+      "modelled": 13,
+      "gaps": []
+    },
+    {
+      "item": "ob:3.0:def:Result/status",
+      "members": 7,
+      "modelled": 7,
+      "gaps": []
+    },
+    {
+      "item": "ob:3.0:doc:imsx_statusinfo/imsx_codeMajor",
+      "members": 4,
+      "modelled": 4,
+      "gaps": []
+    },
+    {
+      "item": "ob:3.0:doc:imsx_statusinfo/imsx_severity",
+      "members": 3,
+      "modelled": 3,
+      "gaps": []
+    }
+  ],
   "rollup": {
     "items": 340,
     "modelledYes": 241,
@@ -3322,8 +3347,8 @@
     "normativeStatements": 36,
     "normativeStatementsCited": 9,
     "normalisations": 0,
-    "valueSetMembers": 0,
-    "valueSetModelled": 0,
+    "valueSetMembers": 27,
+    "valueSetModelled": 27,
     "valueSetGaps": 0
   }
 }

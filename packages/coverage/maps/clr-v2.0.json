@@ -3956,7 +3956,38 @@
     "extensions": [],
     "normalisations": []
   },
-  "valueSets": [],
+  "valueSets": [
+    {
+      "item": "clr:2.0:def:Association/associationType",
+      "members": 8,
+      "modelled": 8,
+      "gaps": []
+    },
+    {
+      "item": "clr:2.0:def:Imsx_CodeMinorField/imsx_codeMinorFieldValue",
+      "members": 13,
+      "modelled": 13,
+      "gaps": []
+    },
+    {
+      "item": "clr:2.0:def:Result/status",
+      "members": 7,
+      "modelled": 7,
+      "gaps": []
+    },
+    {
+      "item": "clr:2.0:doc:imsx_statusinfo/imsx_codeMajor",
+      "members": 4,
+      "modelled": 4,
+      "gaps": []
+    },
+    {
+      "item": "clr:2.0:doc:imsx_statusinfo/imsx_severity",
+      "members": 3,
+      "modelled": 3,
+      "gaps": []
+    }
+  ],
   "rollup": {
     "items": 409,
     "modelledYes": 299,
@@ -3967,8 +3998,8 @@
     "normativeStatements": 40,
     "normativeStatementsCited": 7,
     "normalisations": 0,
-    "valueSetMembers": 0,
-    "valueSetModelled": 0,
+    "valueSetMembers": 35,
+    "valueSetModelled": 35,
     "valueSetGaps": 0
   }
 }

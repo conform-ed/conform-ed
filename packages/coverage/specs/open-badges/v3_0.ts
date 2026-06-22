@@ -14,8 +14,12 @@ import {
   AchievementCredentialSchema,
   EndorsementCredentialSchema,
   GetOpenBadgeCredentialsResponseSchema,
+  ImsxCodeMajorSchema,
+  ImsxCodeMinorFieldValueSchema,
+  ImsxSeveritySchema,
   ImsxStatusInfoSchema,
   ProfileSchema,
+  ResultStatusTypeSchema,
 } from "@conform-ed/contracts/open-badges/v3_0";
 
 import type { SpecSource } from "../../src/source";
@@ -275,6 +279,15 @@ export const openBadgesV3_0: SpecSource = {
       language: "json-schema",
       zod: ImsxStatusInfoSchema,
     },
+  ],
+  // Value-set verification (ADR-0017): the closed vocabularies the OB 3.0 schemas enumerate that
+  // the structural name-join cannot check — the result status and the imsx REST status-info codes
+  // — each safeParse'd member-by-member against conform-ed's z.enum.
+  valueSets: [
+    { item: "ob:3.0:def:Result/status", element: ResultStatusTypeSchema },
+    { item: "ob:3.0:doc:imsx_statusinfo/imsx_codeMajor", element: ImsxCodeMajorSchema },
+    { item: "ob:3.0:doc:imsx_statusinfo/imsx_severity", element: ImsxSeveritySchema },
+    { item: "ob:3.0:def:Imsx_CodeMinorField/imsx_codeMinorFieldValue", element: ImsxCodeMinorFieldValueSchema },
   ],
   conformance,
 };

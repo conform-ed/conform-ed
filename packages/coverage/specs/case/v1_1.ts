@@ -201,5 +201,18 @@ export const caseV1_1: SpecSource = {
     binding("cfsubjectset", S.CFSubjectSet),
     binding("imsx_statusinfo", S.ImsxStatusInfo),
   ],
+  // Value-set verification (ADR-0017): CASE's only enumerated vocabularies are the imsx REST
+  // status-info codes; each published member is safeParse'd against conform-ed's z.enum (extracted
+  // and exported on CaseV1_1.Shared for this check). CASE's substantive content vocabularies
+  // (association/item types, license, subjects) are open `ext:*` extensible vocabularies, not
+  // closed enumerations, so they carry no fixed denominator members to verify.
+  valueSets: [
+    { item: "case:1.1:doc:imsx_statusinfo/imsx_codeMajor", element: CaseV1_1.Shared.ImsxCodeMajor },
+    { item: "case:1.1:doc:imsx_statusinfo/imsx_severity", element: CaseV1_1.Shared.ImsxSeverity },
+    {
+      item: "case:1.1:def:imsx_CodeMinorField/imsx_codeMinorFieldValue",
+      element: CaseV1_1.Shared.ImsxCodeMinorFieldValue,
+    },
+  ],
   conformance,
 };

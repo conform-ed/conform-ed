@@ -54,6 +54,14 @@ describe("Comprehensive Learner Record 2.0 Coverage Map", () => {
     for (const edge of map.edges) expect(keys.has(edge.to)).toBe(true);
   });
 
+  test("the CLR controlled vocabularies verify as value-sets with no gaps", () => {
+    // ADR-0017: result status (7), association type (8), imsx status-info codes (4 + 3 + 13) = 35.
+    expect(map.rollup.valueSetMembers).toBe(35);
+    expect(map.rollup.valueSetGaps).toBe(0);
+    expect(map.valueSets).toHaveLength(5);
+    expect(map.valueSets.find((v) => v.item.endsWith("/associationType"))?.modelled).toBe(8);
+  });
+
   test("the committed map is in sync with the generator", () => {
     const committed = readFileSync(join(import.meta.dir, "..", "maps", "clr-v2.0.json"), "utf8");
     const parsed = JSON.parse(committed) as CoverageMap;

@@ -312,19 +312,24 @@ export const CFPackageSchema = strictObject({
   extensions: CFPackageExtensionSchema.optional(),
 });
 
+// The imsx status-info controlled vocabularies (the 1EdTech REST status envelope codes).
+export const ImsxCodeMinorFieldValueSchema = z.enum([
+  "forbidden",
+  "fullsuccess",
+  "internal_server_error",
+  "invalid_selection_field",
+  "invalid_sort_field",
+  "invalid_uuid",
+  "server_busy",
+  "unauthorised_request",
+  "unknownobject",
+]);
+export const ImsxCodeMajorSchema = z.enum(["failure", "processing", "success", "unsupported"]);
+export const ImsxSeveritySchema = z.enum(["error", "status", "warning"]);
+
 export const ImsxCodeMinorFieldSchema = strictObject({
   imsx_codeMinorFieldName: z.string(),
-  imsx_codeMinorFieldValue: z.enum([
-    "forbidden",
-    "fullsuccess",
-    "internal_server_error",
-    "invalid_selection_field",
-    "invalid_sort_field",
-    "invalid_uuid",
-    "server_busy",
-    "unauthorised_request",
-    "unknownobject",
-  ]),
+  imsx_codeMinorFieldValue: ImsxCodeMinorFieldValueSchema,
 });
 
 export const ImsxCodeMinorSchema = strictObject({
@@ -332,8 +337,8 @@ export const ImsxCodeMinorSchema = strictObject({
 });
 
 export const ImsxStatusInfoSchema = strictObject({
-  imsx_codeMajor: z.enum(["failure", "processing", "success", "unsupported"]),
-  imsx_severity: z.enum(["error", "status", "warning"]),
+  imsx_codeMajor: ImsxCodeMajorSchema,
+  imsx_severity: ImsxSeveritySchema,
   imsx_description: z.string().optional(),
   imsx_codeMinor: ImsxCodeMinorSchema.optional(),
 });
