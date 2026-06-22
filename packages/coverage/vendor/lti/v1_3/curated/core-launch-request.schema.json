@@ -1,0 +1,81 @@
+{
+  "$id": "conform-ed:curated:lti/1.3/core/launch-request",
+  "$comment": "Hand-authored denominator (conform-ed ADR-0017) — LTI Core 1.3 publishes no machine-readable schema for the resource-link launch claims, only prose + inline JSON examples. Source: LTI Core 1.3 §4.2 (required message claims) / §5 (message claims) — https://www.imsglobal.org/spec/lti/v1p3/. Lowest provenance tier; re-review on spec version bump.",
+  "title": "LTI 1.3 resource-link launch claims (normalized)",
+  "type": "object",
+  "required": ["messageType", "version", "deploymentId", "targetLinkUri", "resourceLink", "subject", "roles"],
+  "properties": {
+    "messageType": { "const": "LtiResourceLinkRequest", "$comment": "specRef: §4.2 (message_type)" },
+    "version": { "const": "1.3.0", "$comment": "specRef: §4.2 (version)" },
+    "deploymentId": { "type": "string", "$comment": "specRef: §4.2 (deployment_id)" },
+    "targetLinkUri": { "type": "string", "$comment": "specRef: §4.2 (target_link_uri)" },
+    "resourceLink": { "$ref": "#/$defs/ClResourceLink", "$comment": "specRef: §5.4.1 (resource_link)" },
+    "subject": { "type": "string", "$comment": "specRef: §4.2 (sub)" },
+    "roles": {
+      "type": "array",
+      "items": { "type": "string" },
+      "$comment": "specRef: §5.3.3 (roles — verified as a value-set, see role-vocabulary)"
+    },
+    "context": { "$ref": "#/$defs/ClContext", "$comment": "specRef: §5.4.1 (context)" },
+    "lis": { "$ref": "#/$defs/ClLis", "$comment": "specRef: §5.5 (lis)" },
+    "launchPresentation": { "$ref": "#/$defs/ClLaunchPresentation", "$comment": "specRef: §5.4 (launch_presentation)" },
+    "custom": { "type": "object", "$comment": "specRef: §5.6 (custom)" },
+    "name": { "type": "string", "$comment": "specRef: §5.1 (name)" },
+    "givenName": { "type": "string", "$comment": "specRef: §5.1 (given_name)" },
+    "familyName": { "type": "string", "$comment": "specRef: §5.1 (family_name)" },
+    "email": { "type": "string", "$comment": "specRef: §5.1 (email)" },
+    "locale": { "type": "string", "$comment": "specRef: §5.1 (locale)" }
+  },
+  "$defs": {
+    "ClResourceLink": {
+      "type": "object",
+      "title": "resource link claim",
+      "required": ["id"],
+      "properties": {
+        "id": { "type": "string", "$comment": "specRef: §5.4.1 (resource_link.id)" },
+        "title": { "type": "string", "$comment": "specRef: §5.4.1 (resource_link.title)" },
+        "description": { "type": "string", "$comment": "specRef: §5.4.1 (resource_link.description)" }
+      }
+    },
+    "ClContext": {
+      "type": "object",
+      "title": "context claim",
+      "required": ["id"],
+      "properties": {
+        "id": { "type": "string", "$comment": "specRef: §5.4.1 (context.id)" },
+        "label": { "type": "string", "$comment": "specRef: §5.4.1 (context.label)" },
+        "title": { "type": "string", "$comment": "specRef: §5.4.1 (context.title)" },
+        "type": {
+          "type": "array",
+          "items": { "type": "string" },
+          "$comment": "specRef: §5.4.1 (context.type)"
+        }
+      }
+    },
+    "ClLaunchPresentation": {
+      "type": "object",
+      "title": "launch presentation claim",
+      "properties": {
+        "documentTarget": {
+          "type": "string",
+          "enum": ["embed", "frame", "iframe", "popup", "tab", "window"],
+          "$comment": "specRef: §5.4 (launch_presentation.document_target)"
+        },
+        "locale": { "type": "string", "$comment": "specRef: §5.4 (launch_presentation.locale)" },
+        "height": { "type": "integer", "$comment": "specRef: §5.4 (launch_presentation.height)" },
+        "width": { "type": "integer", "$comment": "specRef: §5.4 (launch_presentation.width)" },
+        "returnUrl": { "type": "string", "$comment": "specRef: §5.4 (launch_presentation.return_url)" }
+      }
+    },
+    "ClLis": {
+      "type": "object",
+      "title": "LIS claim",
+      "properties": {
+        "personSourcedId": { "type": "string", "$comment": "specRef: §5.5 (lis.person_sourcedid)" },
+        "courseOfferingSourcedId": { "type": "string", "$comment": "specRef: §5.5 (lis.course_offering_sourcedid)" },
+        "courseSectionSourcedId": { "type": "string", "$comment": "specRef: §5.5 (lis.course_section_sourcedid)" },
+        "membershipSourcedId": { "type": "string", "$comment": "specRef: §5.5 (lis.membership_sourcedid)" }
+      }
+    }
+  }
+}

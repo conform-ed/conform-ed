@@ -54,7 +54,7 @@
 
 import { join } from "node:path";
 
-import { KnownLtiRoleSchema } from "@conform-ed/contracts/lti";
+import { DocumentTargetSchema, KnownLtiRoleSchema } from "@conform-ed/contracts/lti";
 import {
   LineItemContainerSchema,
   LineItemSchema,
@@ -62,8 +62,13 @@ import {
   ResultSchema,
   ScoreSchema,
 } from "@conform-ed/contracts/lti/ags/v2_0";
-import { ContentItemSchema } from "@conform-ed/contracts/lti/deep-linking/v2_0";
+import {
+  ContentItemSchema,
+  ContentItemTypeSchema,
+  DeepLinkingSettingsSchema,
+} from "@conform-ed/contracts/lti/deep-linking/v2_0";
 import { MembershipContainerSchema } from "@conform-ed/contracts/lti/nrps/v2_0";
+import { CoreLaunchRequestSchema } from "@conform-ed/contracts/lti/v1_3";
 
 import type { SpecBindingSource, SpecSource } from "../../src/source";
 import type { ConformanceRequirement } from "../../src/types";
@@ -125,7 +130,14 @@ const conformance: readonly ConformanceRequirement[] = [
     level: "MUST",
     statement:
       "A resource-link launch MUST carry the required claims: message_type=LtiResourceLinkRequest, version=1.3.0, the deployment_id, the target_link_uri, and the resource_link claim with an id.",
-    constrains: [],
+    // Anchored to the ADR-0017 curated launch-claim denominator.
+    constrains: [
+      "lti:1.3:doc:CoreLaunchRequest/messageType",
+      "lti:1.3:doc:CoreLaunchRequest/version",
+      "lti:1.3:doc:CoreLaunchRequest/deploymentId",
+      "lti:1.3:doc:CoreLaunchRequest/targetLinkUri",
+      "lti:1.3:def:ClResourceLink/id",
+    ],
     source: "LTI Core 1.3 §4.2 (required message claims) / §5 — https://www.imsglobal.org/spec/lti/v1p3/",
   },
   {
@@ -352,7 +364,12 @@ const conformance: readonly ConformanceRequirement[] = [
     level: "MUST",
     statement:
       "A LtiDeepLinkingRequest carries the deep_linking_settings claim with deep_link_return_url, accept_types and accept_presentation_document_targets.",
-    constrains: [],
+    // Anchored to the ADR-0017 curated settings denominator.
+    constrains: [
+      "lti:1.3:doc:DeepLinkingSettings/deepLinkReturnUrl",
+      "lti:1.3:doc:DeepLinkingSettings/acceptTypes",
+      "lti:1.3:doc:DeepLinkingSettings/acceptPresentationDocumentTargets",
+    ],
     source: "LTI Deep Linking 2.0 §4.4 (deep linking settings) — https://www.imsglobal.org/spec/lti-dl/v2p0",
   },
   {
@@ -444,6 +461,22 @@ export const ltiV1_3: SpecSource = {
       language: "curated",
       zod: MembershipContainerSchema,
     },
+    // Curated denominator (ADR-0017): Core 1.3 publishes no schema for the launch claims,
+    // reconciled against conform-ed's CoreLaunchRequestSchema.
+    {
+      binding: "CoreLaunchRequest",
+      schemaPath: vendor("curated/core-launch-request.schema.json"),
+      language: "curated",
+      zod: CoreLaunchRequestSchema,
+    },
+    // Curated denominator (ADR-0017): Deep Linking publishes no schema for the settings claim,
+    // reconciled against conform-ed's DeepLinkingSettingsSchema.
+    {
+      binding: "DeepLinkingSettings",
+      schemaPath: vendor("curated/deep-linking-settings.schema.json"),
+      language: "curated",
+      zod: DeepLinkingSettingsSchema,
+    },
     // Value-set-only (ADR-0017): the role vocabulary is a controlled value-set modelled by a
     // refinement, not an object shape — it contributes its members for value-set verification
     // and is excluded from the structural reconciliation.
@@ -454,10 +487,16 @@ export const ltiV1_3: SpecSource = {
       valueSetOnly: true,
     },
   ],
-  // Value-set verification (ADR-0017): every published role the curated vocabulary lists is
-  // safeParse'd against KnownLtiRoleSchema, so a member conform-ed's normalizeRole fails to
-  // recognise surfaces as a value-set gap — the check the structural property-join cannot do.
-  valueSets: [{ item: "lti:1.3:doc:RoleVocabulary/role", element: KnownLtiRoleSchema }],
+  // Value-set verification (ADR-0017): each published vocabulary member is safeParse'd against
+  // the conform-ed Zod that models one member, so a member conform-ed fails to accept surfaces
+  // as a value-set gap — the check the structural property-join cannot do. The role vocabulary
+  // (a refinement, invisible to JSON-Schema rendering) and the Deep Linking / launch enums.
+  valueSets: [
+    { item: "lti:1.3:doc:RoleVocabulary/role", element: KnownLtiRoleSchema },
+    { item: "lti:1.3:def:ClLaunchPresentation/documentTarget", element: DocumentTargetSchema },
+    { item: "lti:1.3:doc:DeepLinkingSettings/acceptTypes/[]", element: ContentItemTypeSchema },
+    { item: "lti:1.3:doc:DeepLinkingSettings/acceptPresentationDocumentTargets/[]", element: DocumentTargetSchema },
+  ],
   // Transport axis: the AGS OpenAPI `paths` (operations + query filters; no security
   // scheme is declared — AGS keeps OAuth out of band), inventoried as L1-only items the
   // AGS REST-binding requirements cross-link to.

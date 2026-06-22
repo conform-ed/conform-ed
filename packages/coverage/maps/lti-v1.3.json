@@ -11,10 +11,22 @@
         "sha256": "853f2783c6db4da23b8ba8b5c5dc9d2ddb5ee684745567fba653619d299041a6"
       },
       {
+        "binding": "CoreLaunchRequest",
+        "language": "curated",
+        "id": "conform-ed:curated:lti/1.3/core/launch-request",
+        "sha256": "e1228506646f2a1d6716f551136dc0e97363d799719cc94f33be794946fc1cdb"
+      },
+      {
         "binding": "DeepLinkingContentItem",
         "language": "curated",
         "id": "conform-ed:curated:lti/1.3/deep-linking/content-item",
         "sha256": "036983b3203203b9df470b92d3dd080fbc8768cb984e16d3c76cd73821000edc"
+      },
+      {
+        "binding": "DeepLinkingSettings",
+        "language": "curated",
+        "id": "conform-ed:curated:lti/1.3/deep-linking/settings",
+        "sha256": "34e61f2e9da3018e00b8b280d265663f752c175c251347d5cbbd3f33d5d3342b"
       },
       {
         "binding": "LineItem",
@@ -61,6 +73,158 @@
     ]
   },
   "items": [
+    {
+      "key": "lti:1.3:def:ClContext",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object"
+    },
+    {
+      "key": "lti:1.3:def:ClContext/id",
+      "kind": "property",
+      "path": "id",
+      "jsonType": "string",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:ClContext/label",
+      "kind": "property",
+      "path": "label",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:ClContext/title",
+      "kind": "property",
+      "path": "title",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:ClContext/type",
+      "kind": "property",
+      "path": "type",
+      "jsonType": "array",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:ClContext/type/[]",
+      "kind": "property",
+      "path": "type/[]",
+      "jsonType": "string"
+    },
+    {
+      "key": "lti:1.3:def:ClLaunchPresentation",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object"
+    },
+    {
+      "key": "lti:1.3:def:ClLaunchPresentation/documentTarget",
+      "kind": "property",
+      "path": "documentTarget",
+      "jsonType": "string",
+      "enumValues": [
+        "embed",
+        "frame",
+        "iframe",
+        "popup",
+        "tab",
+        "window"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:ClLaunchPresentation/height",
+      "kind": "property",
+      "path": "height",
+      "jsonType": "integer",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:ClLaunchPresentation/locale",
+      "kind": "property",
+      "path": "locale",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:ClLaunchPresentation/returnUrl",
+      "kind": "property",
+      "path": "returnUrl",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:ClLaunchPresentation/width",
+      "kind": "property",
+      "path": "width",
+      "jsonType": "integer",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:ClLis",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object"
+    },
+    {
+      "key": "lti:1.3:def:ClLis/courseOfferingSourcedId",
+      "kind": "property",
+      "path": "courseOfferingSourcedId",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:ClLis/courseSectionSourcedId",
+      "kind": "property",
+      "path": "courseSectionSourcedId",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:ClLis/membershipSourcedId",
+      "kind": "property",
+      "path": "membershipSourcedId",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:ClLis/personSourcedId",
+      "kind": "property",
+      "path": "personSourcedId",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:ClResourceLink",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object"
+    },
+    {
+      "key": "lti:1.3:def:ClResourceLink/description",
+      "kind": "property",
+      "path": "description",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:ClResourceLink/id",
+      "kind": "property",
+      "path": "id",
+      "jsonType": "string",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:def:ClResourceLink/title",
+      "kind": "property",
+      "path": "title",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
     {
       "key": "lti:1.3:def:DlAvailabilityWindow",
       "kind": "definition",
@@ -910,9 +1074,244 @@
       "modelled": "yes"
     },
     {
+      "key": "lti:1.3:doc:CoreLaunchRequest",
+      "kind": "document",
+      "path": "",
+      "jsonType": "object"
+    },
+    {
+      "key": "lti:1.3:doc:CoreLaunchRequest/context",
+      "kind": "property",
+      "path": "context",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:doc:CoreLaunchRequest/custom",
+      "kind": "property",
+      "path": "custom",
+      "jsonType": "object",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:doc:CoreLaunchRequest/deploymentId",
+      "kind": "property",
+      "path": "deploymentId",
+      "jsonType": "string",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:doc:CoreLaunchRequest/email",
+      "kind": "property",
+      "path": "email",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:doc:CoreLaunchRequest/familyName",
+      "kind": "property",
+      "path": "familyName",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:doc:CoreLaunchRequest/givenName",
+      "kind": "property",
+      "path": "givenName",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:doc:CoreLaunchRequest/launchPresentation",
+      "kind": "property",
+      "path": "launchPresentation",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:doc:CoreLaunchRequest/lis",
+      "kind": "property",
+      "path": "lis",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:doc:CoreLaunchRequest/locale",
+      "kind": "property",
+      "path": "locale",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:doc:CoreLaunchRequest/messageType",
+      "kind": "property",
+      "path": "messageType",
+      "required": true,
+      "enumValues": [
+        "LtiResourceLinkRequest"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:doc:CoreLaunchRequest/name",
+      "kind": "property",
+      "path": "name",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:doc:CoreLaunchRequest/resourceLink",
+      "kind": "property",
+      "path": "resourceLink",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:doc:CoreLaunchRequest/roles",
+      "kind": "property",
+      "path": "roles",
+      "jsonType": "array",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:doc:CoreLaunchRequest/roles/[]",
+      "kind": "property",
+      "path": "roles/[]",
+      "jsonType": "string"
+    },
+    {
+      "key": "lti:1.3:doc:CoreLaunchRequest/subject",
+      "kind": "property",
+      "path": "subject",
+      "jsonType": "string",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:doc:CoreLaunchRequest/targetLinkUri",
+      "kind": "property",
+      "path": "targetLinkUri",
+      "jsonType": "string",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:doc:CoreLaunchRequest/version",
+      "kind": "property",
+      "path": "version",
+      "required": true,
+      "enumValues": [
+        "1.3.0"
+      ],
+      "modelled": "yes"
+    },
+    {
       "key": "lti:1.3:doc:DeepLinkingContentItem",
       "kind": "document",
       "path": ""
+    },
+    {
+      "key": "lti:1.3:doc:DeepLinkingSettings",
+      "kind": "document",
+      "path": "",
+      "jsonType": "object"
+    },
+    {
+      "key": "lti:1.3:doc:DeepLinkingSettings/acceptMediaTypes",
+      "kind": "property",
+      "path": "acceptMediaTypes",
+      "jsonType": "array",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:doc:DeepLinkingSettings/acceptMediaTypes/[]",
+      "kind": "property",
+      "path": "acceptMediaTypes/[]",
+      "jsonType": "string"
+    },
+    {
+      "key": "lti:1.3:doc:DeepLinkingSettings/acceptMultiple",
+      "kind": "property",
+      "path": "acceptMultiple",
+      "jsonType": "boolean",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:doc:DeepLinkingSettings/acceptPresentationDocumentTargets",
+      "kind": "property",
+      "path": "acceptPresentationDocumentTargets",
+      "jsonType": "array",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:doc:DeepLinkingSettings/acceptPresentationDocumentTargets/[]",
+      "kind": "property",
+      "path": "acceptPresentationDocumentTargets/[]",
+      "jsonType": "string",
+      "enumValues": [
+        "embed",
+        "frame",
+        "iframe",
+        "popup",
+        "tab",
+        "window"
+      ]
+    },
+    {
+      "key": "lti:1.3:doc:DeepLinkingSettings/acceptTypes",
+      "kind": "property",
+      "path": "acceptTypes",
+      "jsonType": "array",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:doc:DeepLinkingSettings/acceptTypes/[]",
+      "kind": "property",
+      "path": "acceptTypes/[]",
+      "jsonType": "string",
+      "enumValues": [
+        "file",
+        "html",
+        "image",
+        "link",
+        "ltiResourceLink"
+      ]
+    },
+    {
+      "key": "lti:1.3:doc:DeepLinkingSettings/autoCreate",
+      "kind": "property",
+      "path": "autoCreate",
+      "jsonType": "boolean",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:doc:DeepLinkingSettings/data",
+      "kind": "property",
+      "path": "data",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:doc:DeepLinkingSettings/deepLinkReturnUrl",
+      "kind": "property",
+      "path": "deepLinkReturnUrl",
+      "jsonType": "string",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:doc:DeepLinkingSettings/text",
+      "kind": "property",
+      "path": "text",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "lti:1.3:doc:DeepLinkingSettings/title",
+      "kind": "property",
+      "path": "title",
+      "jsonType": "string",
+      "modelled": "yes"
     },
     {
       "key": "lti:1.3:doc:LineItem",
@@ -1175,6 +1574,22 @@
       "to": "lti:1.3:def:Result"
     },
     {
+      "from": "lti:1.3:doc:CoreLaunchRequest/context",
+      "to": "lti:1.3:def:ClContext"
+    },
+    {
+      "from": "lti:1.3:doc:CoreLaunchRequest/launchPresentation",
+      "to": "lti:1.3:def:ClLaunchPresentation"
+    },
+    {
+      "from": "lti:1.3:doc:CoreLaunchRequest/lis",
+      "to": "lti:1.3:def:ClLis"
+    },
+    {
+      "from": "lti:1.3:doc:CoreLaunchRequest/resourceLink",
+      "to": "lti:1.3:def:ClResourceLink"
+    },
+    {
       "from": "lti:1.3:doc:DeepLinkingContentItem",
       "to": "lti:1.3:def:DlFile"
     },
@@ -1389,7 +1804,13 @@
       "reqId": "LTI-CORE-3",
       "level": "MUST",
       "statement": "A resource-link launch MUST carry the required claims: message_type=LtiResourceLinkRequest, version=1.3.0, the deployment_id, the target_link_uri, and the resource_link claim with an id.",
-      "constrains": [],
+      "constrains": [
+        "lti:1.3:doc:CoreLaunchRequest/messageType",
+        "lti:1.3:doc:CoreLaunchRequest/version",
+        "lti:1.3:doc:CoreLaunchRequest/deploymentId",
+        "lti:1.3:doc:CoreLaunchRequest/targetLinkUri",
+        "lti:1.3:def:ClResourceLink/id"
+      ],
       "source": "LTI Core 1.3 §4.2 (required message claims) / §5 — https://www.imsglobal.org/spec/lti/v1p3/"
     },
     {
@@ -1418,7 +1839,11 @@
       "reqId": "LTI-DL-1",
       "level": "MUST",
       "statement": "A LtiDeepLinkingRequest carries the deep_linking_settings claim with deep_link_return_url, accept_types and accept_presentation_document_targets.",
-      "constrains": [],
+      "constrains": [
+        "lti:1.3:doc:DeepLinkingSettings/deepLinkReturnUrl",
+        "lti:1.3:doc:DeepLinkingSettings/acceptTypes",
+        "lti:1.3:doc:DeepLinkingSettings/acceptPresentationDocumentTargets"
+      ],
       "source": "LTI Deep Linking 2.0 §4.4 (deep linking settings) — https://www.imsglobal.org/spec/lti-dl/v2p0"
     },
     {
@@ -1569,6 +1994,24 @@
   },
   "valueSets": [
     {
+      "item": "lti:1.3:def:ClLaunchPresentation/documentTarget",
+      "members": 6,
+      "modelled": 6,
+      "gaps": []
+    },
+    {
+      "item": "lti:1.3:doc:DeepLinkingSettings/acceptPresentationDocumentTargets/[]",
+      "members": 6,
+      "modelled": 6,
+      "gaps": []
+    },
+    {
+      "item": "lti:1.3:doc:DeepLinkingSettings/acceptTypes/[]",
+      "members": 5,
+      "modelled": 5,
+      "gaps": []
+    },
+    {
       "item": "lti:1.3:doc:RoleVocabulary/role",
       "members": 35,
       "modelled": 35,
@@ -1576,8 +2019,8 @@
     }
   ],
   "rollup": {
-    "items": 146,
-    "modelledYes": 78,
+    "items": 198,
+    "modelledYes": 119,
     "modelledPartial": 0,
     "modelledNo": 0,
     "normativeItems": 0,
@@ -1585,8 +2028,8 @@
     "normativeStatements": 0,
     "normativeStatementsCited": 0,
     "normalisations": 0,
-    "valueSetMembers": 35,
-    "valueSetModelled": 35,
+    "valueSetMembers": 52,
+    "valueSetModelled": 52,
     "valueSetGaps": 0
   }
 }

@@ -22,34 +22,47 @@ describe("LTI 1.3 + Advantage Coverage Map — hybrid (AGS schema spine + curate
     for (const item of map.items) expect(item.key.startsWith("lti:1.3:")).toBe(true);
   });
 
-  test("pins each AGS binding/REST service (OpenAPI) and the three curated denominators", () => {
+  test("pins each AGS binding/REST service (OpenAPI) and the five curated denominators", () => {
     // 5 AGS component bindings + 1 restService (ags paths), all the same derived OpenAPI file,
-    // plus the ADR-0017 curated Deep Linking + NRPS structural denominators and the role
-    // value-set vocabulary (a distinct provenance tier).
-    expect(map.meta.sources).toHaveLength(9);
+    // plus the ADR-0017 curated structural denominators (Deep Linking content items + settings,
+    // NRPS container, Core launch) and the role value-set vocabulary (a distinct provenance tier).
+    expect(map.meta.sources).toHaveLength(11);
     for (const source of map.meta.sources) expect(source.sha256).toMatch(/^[0-9a-f]{64}$/);
     const byBinding = new Map(map.meta.sources.map((s) => [s.binding, s.language]));
     for (const openapi of ["ags (paths)", "LineItem", "LineItemContainer", "Result", "ResultContainer", "Score"]) {
       expect(byBinding.get(openapi)).toBe("openapi");
     }
-    expect(byBinding.get("DeepLinkingContentItem")).toBe("curated");
-    expect(byBinding.get("NrpsMembershipContainer")).toBe("curated");
-    expect(byBinding.get("RoleVocabulary")).toBe("curated");
+    for (const curated of [
+      "DeepLinkingContentItem",
+      "DeepLinkingSettings",
+      "NrpsMembershipContainer",
+      "CoreLaunchRequest",
+      "RoleVocabulary",
+    ]) {
+      expect(byBinding.get(curated)).toBe("curated");
+    }
   });
 
-  test("the role value-set verifies conform-ed accepts the whole published vocabulary", () => {
-    expect(map.rollup.valueSetMembers).toBe(35);
-    expect(map.rollup.valueSetModelled).toBe(35);
+  test("the value-sets verify conform-ed accepts every published vocabulary member", () => {
+    expect(map.rollup.valueSetMembers).toBe(52);
+    expect(map.rollup.valueSetModelled).toBe(52);
     expect(map.rollup.valueSetGaps).toBe(0);
-    const roles = map.valueSets.find((v) => v.item === "lti:1.3:doc:RoleVocabulary/role");
-    expect(roles?.gaps).toEqual([]);
+    // The role vocabulary (a refinement), plus the launch document-target and the Deep Linking
+    // accept-types / accept-presentation enums — each fully modelled, no value-set gaps.
+    expect(map.valueSets.map((v) => v.item)).toEqual([
+      "lti:1.3:def:ClLaunchPresentation/documentTarget",
+      "lti:1.3:doc:DeepLinkingSettings/acceptPresentationDocumentTargets/[]",
+      "lti:1.3:doc:DeepLinkingSettings/acceptTypes/[]",
+      "lti:1.3:doc:RoleVocabulary/role",
+    ]);
+    for (const verdict of map.valueSets) expect(verdict.gaps).toEqual([]);
     // The value-set-only vocabulary is excluded from the structural reconciliation (no false gap).
     expect(byKey.get("lti:1.3:doc:RoleVocabulary/role")?.modelled).toBeUndefined();
   });
 
   test("conform-ed reconciles every denominator (AGS OpenAPI + curated content items + NRPS) with no silent gaps", () => {
     expect(map.rollup.modelledNo).toBe(0);
-    expect(map.rollup.modelledYes).toBe(78);
+    expect(map.rollup.modelledYes).toBe(119);
     expect(map.residues.silentGaps).toEqual([]);
     // Honest extensions: optional fields conform-ed models that the denominator omits (NOT gaps).
     // Six are AGS fields the *illustrative* OpenAPI omits; the seventh is the `alt` text on
@@ -124,7 +137,9 @@ describe("LTI 1.3 + Advantage Coverage Map — hybrid (AGS schema spine + curate
         "LTI-AGS-6",
         "LTI-AGS-7",
         "LTI-AGS-8",
+        "LTI-CORE-3",
         "LTI-CORE-4",
+        "LTI-DL-1",
         "LTI-DL-3",
         "LTI-NRPS-2",
         "LTI-NRPS-3",

@@ -1,0 +1,36 @@
+{
+  "$id": "conform-ed:curated:lti/1.3/deep-linking/settings",
+  "$comment": "Hand-authored denominator (conform-ed ADR-0017) — LTI Deep Linking 2.0 publishes no machine-readable schema for the deep_linking_settings claim, only prose + inline JSON examples. Source: LTI Deep Linking 2.0 §4.4 (deep linking settings) — https://www.imsglobal.org/spec/lti-dl/v2p0. Lowest provenance tier; re-review on spec version bump.",
+  "title": "LTI Deep Linking 2.0 settings claim (normalized)",
+  "type": "object",
+  "required": ["deepLinkReturnUrl", "acceptTypes"],
+  "properties": {
+    "deepLinkReturnUrl": { "type": "string", "$comment": "specRef: §4.4 (deep_link_return_url)" },
+    "acceptTypes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["file", "html", "image", "link", "ltiResourceLink"]
+      },
+      "$comment": "specRef: §4.4 (accept_types — verified as a value-set)"
+    },
+    "acceptPresentationDocumentTargets": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["embed", "frame", "iframe", "popup", "tab", "window"]
+      },
+      "$comment": "specRef: §4.4 (accept_presentation_document_targets — verified as a value-set)"
+    },
+    "acceptMediaTypes": {
+      "type": "array",
+      "items": { "type": "string" },
+      "$comment": "specRef: §4.4 (accept_media_types — string or array form)"
+    },
+    "acceptMultiple": { "type": "boolean", "$comment": "specRef: §4.4 (accept_multiple)" },
+    "autoCreate": { "type": "boolean", "$comment": "specRef: §4.4 (auto_create)" },
+    "title": { "type": "string", "$comment": "specRef: §4.4 (title)" },
+    "text": { "type": "string", "$comment": "specRef: §4.4 (text)" },
+    "data": { "type": "string", "$comment": "specRef: §4.4 (data)" }
+  }
+}
