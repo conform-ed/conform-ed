@@ -129,6 +129,70 @@ export const CALIPER_PROFILES = [
 
 export const CALIPER_STATUSES = ["Active", "Inactive"] as const;
 
+/**
+ * The Caliper 1.2 `Role` vocabulary — the eight base roles plus their `Base#Subrole`
+ * specialisations (the LIS membership role terms). A Membership's `roles` are drawn from this
+ * list. Kept verbatim from the Caliper model so {@link RoleSchema} verifies the full vocabulary.
+ */
+export const CALIPER_ROLES = [
+  "Administrator",
+  "ContentDeveloper",
+  "Instructor",
+  "Learner",
+  "Manager",
+  "Member",
+  "Mentor",
+  "Officer",
+  "Administrator#Administrator",
+  "Administrator#Developer",
+  "Administrator#ExternalDeveloper",
+  "Administrator#ExternalSupport",
+  "Administrator#ExternalSystemAdministrator",
+  "Administrator#Support",
+  "Administrator#SystemAdministrator",
+  "ContentDeveloper#ContentDeveloper",
+  "ContentDeveloper#ContentExpert",
+  "ContentDeveloper#ExternalContentExpert",
+  "ContentDeveloper#Librarian",
+  "Instructor#ExternalInstructor",
+  "Instructor#Grader",
+  "Instructor#GuestInstructor",
+  "Instructor#Instructor",
+  "Instructor#Lecturer",
+  "Instructor#PrimaryInstructor",
+  "Instructor#SecondaryInstructor",
+  "Instructor#TeachingAssistant",
+  "Instructor#TeachingAssistantGroup",
+  "Instructor#TeachingAssistantOffering",
+  "Instructor#TeachingAssistantSection",
+  "Instructor#TeachingAssistantTemplate",
+  "Learner#ExternalLearner",
+  "Learner#GuestLearner",
+  "Learner#Learner",
+  "Learner#NonCreditLearner",
+  "Manager#AreaManager",
+  "Manager#CourseCoordinator",
+  "Manager#Observer",
+  "Manager#ExternalObserver",
+  "Member#Member",
+  "Mentor#Advisor",
+  "Mentor#Auditor",
+  "Mentor#ExternalAdvisor",
+  "Mentor#ExternalAuditor",
+  "Mentor#ExternalLearningFacilitator",
+  "Mentor#ExternalMentor",
+  "Mentor#ExternalReviewer",
+  "Mentor#ExternalTutor",
+  "Mentor#LearningFacilitator",
+  "Mentor#Mentor",
+  "Mentor#Reviewer",
+  "Mentor#Tutor",
+  "Officer#Chair",
+  "Officer#Secretary",
+  "Officer#Treasurer",
+  "Officer#Vice-Chair",
+] as const;
+
 export const ActionSchema = z.enum(CALIPER_ACTIONS);
 export const MetricSchema = z.enum(CALIPER_METRICS);
 export const ProfileSchema = z.enum(CALIPER_PROFILES);
@@ -292,7 +356,7 @@ export const CaliperTypeDefinitionsSchema = z
   })
   .loose();
 
-export const RoleSchema = z.looseObject({});
+export const RoleSchema = z.enum(CALIPER_ROLES);
 export const SelectorSchema = z.looseObject({});
 
 export const TextPositionSelectorSchema = z

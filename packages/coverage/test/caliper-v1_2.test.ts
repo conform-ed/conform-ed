@@ -67,24 +67,27 @@ describe("Caliper 1.2 Coverage Map — bundled-bootcamp JSON-Schema walker", () 
     expect(map.normativeStatements.every((s) => s.cited)).toBe(true);
   });
 
-  test("the four Caliper controlled vocabularies verify as value-sets with no gaps", () => {
-    // ADR-0017: the action/profile/metric/status term lists the structural join cannot check —
-    // every published member safeParse'd against conform-ed's z.enum. 80 + 15 + 8 + 2 = 105.
-    expect(map.rollup.valueSetMembers).toBe(105);
+  test("the five Caliper controlled vocabularies verify as value-sets with no gaps", () => {
+    // ADR-0017: the action/role/profile/metric/status term lists the structural join cannot check
+    // — every published member safeParse'd against conform-ed's z.enum. 80 + 56 + 15 + 8 + 2 = 161.
+    expect(map.rollup.valueSetMembers).toBe(161);
     expect(map.rollup.valueSetGaps).toBe(0);
     expect(map.valueSets.map((v) => v.item)).toEqual([
       "caliper:1.2:def:Action",
+      "caliper:1.2:def:Membership/roles/[]",
       "caliper:1.2:def:Metric",
       "caliper:1.2:def:Profile",
       "caliper:1.2:def:Status",
     ]);
     expect(map.valueSets.find((v) => v.item === "caliper:1.2:def:Action")?.modelled).toBe(80);
+    // The 56-term role vocabulary (now a CALIPER_ROLES enum, no longer a permissive looseObject).
+    expect(map.valueSets.find((v) => v.item === "caliper:1.2:def:Membership/roles/[]")?.modelled).toBe(56);
   });
 
   test("every conformance requirement cross-links to a real item key", () => {
     const keys = new Set(map.items.map((i) => i.key));
-    expect(map.rollup.conformanceRequirements).toBe(7);
-    expect(map.conformance.filter((r) => r.profile === "vocabulary")).toHaveLength(2);
+    expect(map.rollup.conformanceRequirements).toBe(8);
+    expect(map.conformance.filter((r) => r.profile === "vocabulary")).toHaveLength(3);
     for (const req of map.conformance) {
       expect(req.constrains.length).toBeGreaterThan(0);
       for (const key of req.constrains) expect(keys.has(key)).toBe(true);

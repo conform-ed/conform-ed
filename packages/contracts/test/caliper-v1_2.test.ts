@@ -7,6 +7,14 @@ test("ActionSchema validates Caliper action vocabulary", () => {
   expect(CaliperV1_2.ActionSchema.safeParse("ViewedSomethingElse").success).toBe(false);
 });
 
+test("RoleSchema validates the Caliper role vocabulary (base roles + Base#Subrole specialisations)", () => {
+  expect(CaliperV1_2.RoleSchema.safeParse("Learner").success).toBe(true);
+  expect(CaliperV1_2.RoleSchema.safeParse("Instructor#TeachingAssistant").success).toBe(true);
+  expect(CaliperV1_2.RoleSchema.safeParse("Officer#Vice-Chair").success).toBe(true);
+  expect(CaliperV1_2.RoleSchema.safeParse("SupremeOverlord").success).toBe(false);
+  expect(CaliperV1_2.CALIPER_ROLES).toHaveLength(56);
+});
+
 test("PersonSchema requires top-level @context for described entity documents", () => {
   const withContext = CaliperV1_2.PersonSchema.safeParse({
     id: "https://example.edu/users/ada",

@@ -18,18 +18,18 @@
  * JSON property names on both sides, so no name-normalisation is needed, and the bundle
  * is a single document, so no source-scoping.
  *
- * **Value-set verification (ADR-0017).** Caliper carries four controlled vocabularies in the
- * denominator — the `Action` term list (80), the `Profile` list (15), the `Metric` list (8) and
- * the entity `Status` (2) — that the structural property-join cannot check (it matches property
- * *names*, never enumerated *values*). Each is verified by safeParse'ing every published member
- * against the conform-ed `z.enum` that models it (`ActionSchema` / `ProfileSchema` / `MetricSchema`
- * / `StatusSchema`): all 105 members are accepted, so conform-ed's four vocabularies match the
- * bootcamp denominator exactly. Two further enum-bearing denominator items are deliberately NOT
- * value-set-verified: the `SystemIdentifier.identifierType` (the bootcamp lists a single
- * `LtiUserId`, which conform-ed mirrors as a `z.literal`), and the 56-term `Membership.roles`
- * vocabulary — conform-ed models a role as a permissive `z.looseObject({})`, i.e. it does **not**
- * model the role term vocabulary, so a value-set there would report all 56 as gaps; left out as a
- * known modelling limitation to raise rather than encode unilaterally.
+ * **Value-set verification (ADR-0017).** Caliper carries five controlled vocabularies in the
+ * denominator — the `Action` term list (80), the `Membership.roles` vocabulary (56), the
+ * `Profile` list (15), the `Metric` list (8) and the entity `Status` (2) — that the structural
+ * property-join cannot check (it matches property *names*, never enumerated *values*). Each is
+ * verified by safeParse'ing every published member against the conform-ed `z.enum` that models it
+ * (`ActionSchema` / `RoleSchema` / `ProfileSchema` / `MetricSchema` / `StatusSchema`): all 161
+ * members are accepted, so conform-ed's five vocabularies match the bootcamp denominator exactly.
+ * The role vocabulary was previously a permissive `z.looseObject({})`; it is now modelled as the
+ * `CALIPER_ROLES` enum (the eight base roles + their `Base#Subrole` LIS specialisations) so the
+ * value-set verifies the full 56-term list. The one remaining enum-bearing denominator item left
+ * unverified is `SystemIdentifier.identifierType` — the bootcamp lists a single `LtiUserId`, which
+ * conform-ed mirrors as a `z.literal`, so there is no multi-member vocabulary to check.
  */
 
 import { join } from "node:path";
@@ -44,6 +44,7 @@ import {
   MetricSchema,
   PersonSchema,
   ProfileSchema,
+  RoleSchema,
   SessionSchema,
   SoftwareApplicationSchema,
   StatusSchema,
@@ -275,6 +276,18 @@ const conformance: readonly ConformanceRequirement[] = [
     ],
     source: "Caliper 1.2 §Metric / §Status / metric profiles — https://www.imsglobal.org/spec/caliper/v1p2",
   },
+  {
+    // Anchored to the ADR-0017 role value-set: every published role term (the eight base roles
+    // and their Base#Subrole specialisations) is safeParse'd against RoleSchema (CALIPER_ROLES).
+    key: "caliper:1.2:conf:vocabulary/CAL-VOCAB-3",
+    profile: "vocabulary",
+    reqId: "CAL-VOCAB-3",
+    level: "MUST",
+    statement:
+      "A Membership's roles MUST be drawn from the Caliper role vocabulary — the eight base roles (Learner, Instructor, …) and their Base#Subrole specialisations.",
+    constrains: ["caliper:1.2:def:Membership/roles", "caliper:1.2:def:Membership/roles/[]"],
+    source: "Caliper 1.2 §Role vocabulary / Membership — https://www.imsglobal.org/spec/caliper/v1p2",
+  },
 ];
 
 export const caliperV1_2: SpecSource = {
@@ -290,12 +303,13 @@ export const caliperV1_2: SpecSource = {
     entity("Session", SessionSchema),
     entity("Agent", AgentSchema),
   ],
-  // Value-set verification (ADR-0017): the four Caliper controlled vocabularies the structural
+  // Value-set verification (ADR-0017): the five Caliper controlled vocabularies the structural
   // join cannot check, each safeParse'd member-by-member against the conform-ed z.enum that models
-  // it. roles (a permissive looseObject) and identifierType (a lone literal) are excluded — see
-  // the module docstring.
+  // it. Only identifierType (a lone literal, no multi-member vocabulary) is left out — see the
+  // module docstring.
   valueSets: [
     { item: "caliper:1.2:def:Action", element: ActionSchema },
+    { item: "caliper:1.2:def:Membership/roles/[]", element: RoleSchema },
     { item: "caliper:1.2:def:Profile", element: ProfileSchema },
     { item: "caliper:1.2:def:Metric", element: MetricSchema },
     { item: "caliper:1.2:def:Status", element: StatusSchema },

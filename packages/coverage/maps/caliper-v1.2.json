@@ -69723,6 +69723,18 @@
         "caliper:1.2:def:Profile"
       ],
       "source": "Caliper 1.2 §Metric / §Status / metric profiles — https://www.imsglobal.org/spec/caliper/v1p2"
+    },
+    {
+      "key": "caliper:1.2:conf:vocabulary/CAL-VOCAB-3",
+      "profile": "vocabulary",
+      "reqId": "CAL-VOCAB-3",
+      "level": "MUST",
+      "statement": "A Membership's roles MUST be drawn from the Caliper role vocabulary — the eight base roles (Learner, Instructor, …) and their Base#Subrole specialisations.",
+      "constrains": [
+        "caliper:1.2:def:Membership/roles",
+        "caliper:1.2:def:Membership/roles/[]"
+      ],
+      "source": "Caliper 1.2 §Role vocabulary / Membership — https://www.imsglobal.org/spec/caliper/v1p2"
     }
   ],
   "normativeStatements": [
@@ -70498,6 +70510,12 @@
       "gaps": []
     },
     {
+      "item": "caliper:1.2:def:Membership/roles/[]",
+      "members": 56,
+      "modelled": 56,
+      "gaps": []
+    },
+    {
       "item": "caliper:1.2:def:Metric",
       "members": 8,
       "modelled": 8,
@@ -70522,12 +70540,12 @@
     "modelledPartial": 12,
     "modelledNo": 136,
     "normativeItems": 99,
-    "conformanceRequirements": 7,
+    "conformanceRequirements": 8,
     "normativeStatements": 99,
     "normativeStatementsCited": 99,
     "normalisations": 0,
-    "valueSetMembers": 105,
-    "valueSetModelled": 105,
+    "valueSetMembers": 161,
+    "valueSetModelled": 161,
     "valueSetGaps": 0
   }
 }
