@@ -21,7 +21,7 @@ export type {
   UsageEdge,
   ValueSetVerdict,
 } from "./types";
-export type { SpecBindingSource, SpecSource, ValueSetSource } from "./source";
+export type { SpecBindingSource, SpecSource, StructuralAlias, ValueSetSource } from "./source";
 export { type BuildOptions, buildCoverageMap } from "./generate";
 export { applyModelled, type ReconcileResult, reconcile } from "./reconcile";
 export { type JsonSchema, refDefName, type WalkContext, type WalkResult, walkSchemaTree } from "./walkers/json-schema";

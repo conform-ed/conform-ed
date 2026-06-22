@@ -39,6 +39,25 @@ export interface SpecRefOverride {
   readonly literalSegment?: string;
 }
 
+/**
+ * A structural alias for the L2 join (conform-ed ADR-0017): bridges a Zod property to one or
+ * more **differently-named** literal elements the structural name-join could not otherwise
+ * pair, *and descends through it* (unlike a {@link SpecRefOverride}, which only absorbs leaf
+ * residue keys). Needed when conform-ed normalises a literal schema's **shape**, not just a
+ * name: the cmi5 XSD nests `<au>`/`<block>` as a repeated `choice`, while conform-ed regroups
+ * them into one `children: (Au | Block)[]` union array (`{ zodProperty: "children",
+ * literalElements: ["au", "block"] }`); likewise its `<langstring>` repeated element becomes a
+ * `langstrings` array. The reconciler aligns the Zod property's (array-unwrapped) node against
+ * each named literal element, so their subtrees reconcile normally. Author the names in their
+ * post-{@link SpecSource.nameNormalizer} form.
+ */
+export interface StructuralAlias {
+  /** The conform-ed Zod property name (its array layer is unwrapped before descent). */
+  readonly zodProperty: string;
+  /** The literal element name(s) it models — each aligned against the Zod node. */
+  readonly literalElements: readonly string[];
+}
+
 export interface SpecBindingSource {
   /** Short logical name of the source artifact; becomes the `doc:<binding>` scope. */
   readonly binding: string;
@@ -151,4 +170,17 @@ export interface SpecSource {
    * ⇒ none (the JSON-family maps need none; their residues are already genuine signal).
    */
   readonly specRefOverrides?: readonly SpecRefOverride[];
+  /**
+   * Structural aliases bridging Zod properties to differently-named literal elements the
+   * name-join cannot pair, where conform-ed normalised the literal *shape* (see
+   * {@link StructuralAlias}). Omitted ⇒ none (the structural shapes already line up by name).
+   */
+  readonly structuralAliases?: readonly StructuralAlias[];
+  /**
+   * Literal element names that are **transparent repetition wrappers** conform-ed elides:
+   * where the literal nests a repeated child element (the cmi5 `<objectives><objective>…`) but
+   * conform-ed flattens it into a direct array, the join descends through the wrapper like an
+   * array layer so the element's content reconciles against the array's element. Omitted ⇒ none.
+   */
+  readonly transparentLiteralWrappers?: readonly string[];
 }

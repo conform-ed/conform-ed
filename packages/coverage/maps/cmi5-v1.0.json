@@ -1,0 +1,563 @@
+{
+  "meta": {
+    "spec": "cmi5",
+    "version": "1.0",
+    "generatedAt": "2026-06-22",
+    "sources": [
+      {
+        "binding": "courseStructure",
+        "language": "xsd",
+        "id": "https://w3id.org/xapi/profiles/cmi5/v1/CourseStructure.xsd",
+        "sha256": "6a0b04962f5baa4603ee28e84ce4c74a122f322a548c8fdc14d93b2a23781d75"
+      }
+    ]
+  },
+  "items": [
+    {
+      "key": "cmi5:1.0:def:anyAttribute",
+      "kind": "definition",
+      "path": ""
+    },
+    {
+      "key": "cmi5:1.0:def:anyElement",
+      "kind": "definition",
+      "path": ""
+    },
+    {
+      "key": "cmi5:1.0:def:auType",
+      "kind": "definition",
+      "path": ""
+    },
+    {
+      "key": "cmi5:1.0:def:auType/activityType",
+      "kind": "property",
+      "path": "activityType",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "cmi5:1.0:def:auType/description",
+      "kind": "property",
+      "path": "description",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "cmi5:1.0:def:auType/entitlementKey",
+      "kind": "property",
+      "path": "entitlementKey",
+      "modelled": "yes"
+    },
+    {
+      "key": "cmi5:1.0:def:auType/id",
+      "kind": "property",
+      "path": "id",
+      "required": true,
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "cmi5:1.0:def:auType/launchMethod",
+      "kind": "property",
+      "path": "launchMethod",
+      "jsonType": "string",
+      "enumValues": [
+        "AnyWindow",
+        "OwnWindow"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "cmi5:1.0:def:auType/launchParameters",
+      "kind": "property",
+      "path": "launchParameters",
+      "modelled": "yes"
+    },
+    {
+      "key": "cmi5:1.0:def:auType/masteryScore",
+      "kind": "property",
+      "path": "masteryScore",
+      "jsonType": "number",
+      "modelled": "yes"
+    },
+    {
+      "key": "cmi5:1.0:def:auType/moveOn",
+      "kind": "property",
+      "path": "moveOn",
+      "jsonType": "string",
+      "enumValues": [
+        "NotApplicable",
+        "Passed",
+        "Completed",
+        "CompletedAndPassed",
+        "CompletedOrPassed"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "cmi5:1.0:def:auType/objectives",
+      "kind": "property",
+      "path": "objectives",
+      "modelled": "yes"
+    },
+    {
+      "key": "cmi5:1.0:def:auType/title",
+      "kind": "property",
+      "path": "title",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "cmi5:1.0:def:auType/url",
+      "kind": "property",
+      "path": "url",
+      "required": true,
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "cmi5:1.0:def:blockType",
+      "kind": "definition",
+      "path": ""
+    },
+    {
+      "key": "cmi5:1.0:def:blockType/au",
+      "kind": "property",
+      "path": "au",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "cmi5:1.0:def:blockType/block",
+      "kind": "property",
+      "path": "block",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "cmi5:1.0:def:blockType/description",
+      "kind": "property",
+      "path": "description",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "cmi5:1.0:def:blockType/id",
+      "kind": "property",
+      "path": "id",
+      "required": true,
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "cmi5:1.0:def:blockType/objectives",
+      "kind": "property",
+      "path": "objectives",
+      "modelled": "yes"
+    },
+    {
+      "key": "cmi5:1.0:def:blockType/title",
+      "kind": "property",
+      "path": "title",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "cmi5:1.0:def:courseType",
+      "kind": "definition",
+      "path": ""
+    },
+    {
+      "key": "cmi5:1.0:def:courseType/au",
+      "kind": "property",
+      "path": "au",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "cmi5:1.0:def:courseType/block",
+      "kind": "property",
+      "path": "block",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "cmi5:1.0:def:courseType/course",
+      "kind": "property",
+      "path": "course",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "cmi5:1.0:def:courseType/course/description",
+      "kind": "property",
+      "path": "course/description",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "cmi5:1.0:def:courseType/course/id",
+      "kind": "property",
+      "path": "course/id",
+      "required": true,
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "cmi5:1.0:def:courseType/course/title",
+      "kind": "property",
+      "path": "course/title",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "cmi5:1.0:def:courseType/objectives",
+      "kind": "property",
+      "path": "objectives",
+      "modelled": "yes"
+    },
+    {
+      "key": "cmi5:1.0:def:languagesType",
+      "kind": "definition",
+      "path": ""
+    },
+    {
+      "key": "cmi5:1.0:def:objectivesType",
+      "kind": "definition",
+      "path": ""
+    },
+    {
+      "key": "cmi5:1.0:def:objectivesType/objective",
+      "kind": "property",
+      "path": "objective",
+      "jsonType": "array",
+      "required": true
+    },
+    {
+      "key": "cmi5:1.0:def:objectivesType/objective/[]",
+      "kind": "property",
+      "path": "objective/[]"
+    },
+    {
+      "key": "cmi5:1.0:def:objectivesType/objective/[]/description",
+      "kind": "property",
+      "path": "objective/[]/description",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "cmi5:1.0:def:objectivesType/objective/[]/id",
+      "kind": "property",
+      "path": "objective/[]/id",
+      "required": true,
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "cmi5:1.0:def:objectivesType/objective/[]/title",
+      "kind": "property",
+      "path": "objective/[]/title",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "cmi5:1.0:def:referencesObjectivesType",
+      "kind": "definition",
+      "path": ""
+    },
+    {
+      "key": "cmi5:1.0:def:referencesObjectivesType/objective",
+      "kind": "property",
+      "path": "objective",
+      "jsonType": "array",
+      "required": true
+    },
+    {
+      "key": "cmi5:1.0:def:referencesObjectivesType/objective/[]",
+      "kind": "property",
+      "path": "objective/[]"
+    },
+    {
+      "key": "cmi5:1.0:def:referencesObjectivesType/objective/[]/idref",
+      "kind": "property",
+      "path": "objective/[]/idref",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "cmi5:1.0:def:textType",
+      "kind": "definition",
+      "path": ""
+    },
+    {
+      "key": "cmi5:1.0:def:textType/langstring",
+      "kind": "property",
+      "path": "langstring",
+      "jsonType": "array",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "cmi5:1.0:def:textType/langstring/[]",
+      "kind": "property",
+      "path": "langstring/[]"
+    },
+    {
+      "key": "cmi5:1.0:def:textType/langstring/[]/lang",
+      "kind": "property",
+      "path": "langstring/[]/lang",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "cmi5:1.0:doc:courseStructure",
+      "kind": "document",
+      "path": ""
+    }
+  ],
+  "edges": [
+    {
+      "from": "cmi5:1.0:def:auType",
+      "to": "cmi5:1.0:def:anyAttribute"
+    },
+    {
+      "from": "cmi5:1.0:def:auType",
+      "to": "cmi5:1.0:def:anyElement"
+    },
+    {
+      "from": "cmi5:1.0:def:auType/description",
+      "to": "cmi5:1.0:def:textType"
+    },
+    {
+      "from": "cmi5:1.0:def:auType/objectives",
+      "to": "cmi5:1.0:def:referencesObjectivesType"
+    },
+    {
+      "from": "cmi5:1.0:def:auType/title",
+      "to": "cmi5:1.0:def:textType"
+    },
+    {
+      "from": "cmi5:1.0:def:blockType",
+      "to": "cmi5:1.0:def:anyAttribute"
+    },
+    {
+      "from": "cmi5:1.0:def:blockType",
+      "to": "cmi5:1.0:def:anyElement"
+    },
+    {
+      "from": "cmi5:1.0:def:blockType/au",
+      "to": "cmi5:1.0:def:auType"
+    },
+    {
+      "from": "cmi5:1.0:def:blockType/block",
+      "to": "cmi5:1.0:def:blockType"
+    },
+    {
+      "from": "cmi5:1.0:def:blockType/description",
+      "to": "cmi5:1.0:def:textType"
+    },
+    {
+      "from": "cmi5:1.0:def:blockType/objectives",
+      "to": "cmi5:1.0:def:referencesObjectivesType"
+    },
+    {
+      "from": "cmi5:1.0:def:blockType/title",
+      "to": "cmi5:1.0:def:textType"
+    },
+    {
+      "from": "cmi5:1.0:def:courseType",
+      "to": "cmi5:1.0:def:anyAttribute"
+    },
+    {
+      "from": "cmi5:1.0:def:courseType",
+      "to": "cmi5:1.0:def:anyElement"
+    },
+    {
+      "from": "cmi5:1.0:def:courseType/au",
+      "to": "cmi5:1.0:def:auType"
+    },
+    {
+      "from": "cmi5:1.0:def:courseType/block",
+      "to": "cmi5:1.0:def:blockType"
+    },
+    {
+      "from": "cmi5:1.0:def:courseType/course",
+      "to": "cmi5:1.0:def:anyAttribute"
+    },
+    {
+      "from": "cmi5:1.0:def:courseType/course",
+      "to": "cmi5:1.0:def:anyElement"
+    },
+    {
+      "from": "cmi5:1.0:def:courseType/course/description",
+      "to": "cmi5:1.0:def:textType"
+    },
+    {
+      "from": "cmi5:1.0:def:courseType/course/title",
+      "to": "cmi5:1.0:def:textType"
+    },
+    {
+      "from": "cmi5:1.0:def:courseType/objectives",
+      "to": "cmi5:1.0:def:objectivesType"
+    },
+    {
+      "from": "cmi5:1.0:def:languagesType",
+      "to": "cmi5:1.0:def:anyAttribute"
+    },
+    {
+      "from": "cmi5:1.0:def:objectivesType",
+      "to": "cmi5:1.0:def:anyAttribute"
+    },
+    {
+      "from": "cmi5:1.0:def:objectivesType",
+      "to": "cmi5:1.0:def:anyElement"
+    },
+    {
+      "from": "cmi5:1.0:def:objectivesType/objective/[]/description",
+      "to": "cmi5:1.0:def:textType"
+    },
+    {
+      "from": "cmi5:1.0:def:objectivesType/objective/[]/title",
+      "to": "cmi5:1.0:def:textType"
+    },
+    {
+      "from": "cmi5:1.0:def:referencesObjectivesType",
+      "to": "cmi5:1.0:def:anyAttribute"
+    },
+    {
+      "from": "cmi5:1.0:def:referencesObjectivesType",
+      "to": "cmi5:1.0:def:anyElement"
+    },
+    {
+      "from": "cmi5:1.0:def:textType",
+      "to": "cmi5:1.0:def:anyAttribute"
+    },
+    {
+      "from": "cmi5:1.0:def:textType",
+      "to": "cmi5:1.0:def:anyElement"
+    },
+    {
+      "from": "cmi5:1.0:def:textType/langstring/[]",
+      "to": "cmi5:1.0:def:anyAttribute"
+    },
+    {
+      "from": "cmi5:1.0:doc:courseStructure",
+      "to": "cmi5:1.0:def:courseType"
+    }
+  ],
+  "conformance": [
+    {
+      "key": "cmi5:1.0:conf:course-structure/CMI5-CS-1",
+      "profile": "course-structure",
+      "reqId": "CMI5-CS-1",
+      "level": "MUST",
+      "statement": "A course-structure document has exactly one <course>, identified by an id (an IRI).",
+      "constrains": [
+        "cmi5:1.0:def:courseType/course",
+        "cmi5:1.0:def:courseType/course/id"
+      ],
+      "source": "cmi5 CourseStructure.xsd / cmi5 Quartz spec — https://github.com/AICC/CMI-5_Spec_Current/blob/quartz/cmi5_spec.md"
+    },
+    {
+      "key": "cmi5:1.0:conf:course-structure/CMI5-CS-2",
+      "profile": "course-structure",
+      "reqId": "CMI5-CS-2",
+      "level": "MUST",
+      "statement": "Each assignable unit (AU) MUST carry an id (an IRI, unique within the course) and a launchable url.",
+      "constrains": [
+        "cmi5:1.0:def:auType/id",
+        "cmi5:1.0:def:auType/url"
+      ],
+      "source": "cmi5 CourseStructure.xsd / cmi5 Quartz spec — https://github.com/AICC/CMI-5_Spec_Current/blob/quartz/cmi5_spec.md"
+    },
+    {
+      "key": "cmi5:1.0:conf:course-structure/CMI5-CS-3",
+      "profile": "course-structure",
+      "reqId": "CMI5-CS-3",
+      "level": "MUST",
+      "statement": "An AU's moveOn MUST be one of NotApplicable, Passed, Completed, CompletedAndPassed or CompletedOrPassed (default NotApplicable).",
+      "constrains": [
+        "cmi5:1.0:def:auType/moveOn"
+      ],
+      "source": "cmi5 CourseStructure.xsd / cmi5 Quartz spec — https://github.com/AICC/CMI-5_Spec_Current/blob/quartz/cmi5_spec.md"
+    },
+    {
+      "key": "cmi5:1.0:conf:course-structure/CMI5-CS-4",
+      "profile": "course-structure",
+      "reqId": "CMI5-CS-4",
+      "level": "MUST",
+      "statement": "masteryScore, when present, MUST be a decimal between 0 and 1 inclusive.",
+      "constrains": [
+        "cmi5:1.0:def:auType/masteryScore"
+      ],
+      "source": "cmi5 CourseStructure.xsd / cmi5 Quartz spec — https://github.com/AICC/CMI-5_Spec_Current/blob/quartz/cmi5_spec.md"
+    },
+    {
+      "key": "cmi5:1.0:conf:course-structure/CMI5-CS-5",
+      "profile": "course-structure",
+      "reqId": "CMI5-CS-5",
+      "level": "MUST",
+      "statement": "An AU's launchMethod MUST be AnyWindow or OwnWindow (default AnyWindow).",
+      "constrains": [
+        "cmi5:1.0:def:auType/launchMethod"
+      ],
+      "source": "cmi5 CourseStructure.xsd / cmi5 Quartz spec — https://github.com/AICC/CMI-5_Spec_Current/blob/quartz/cmi5_spec.md"
+    },
+    {
+      "key": "cmi5:1.0:conf:course-structure/CMI5-CS-6",
+      "profile": "course-structure",
+      "reqId": "CMI5-CS-6",
+      "level": "MUST",
+      "statement": "A block groups AUs and nested blocks, MUST carry an id, and references objectives by idref.",
+      "constrains": [
+        "cmi5:1.0:def:blockType/id",
+        "cmi5:1.0:def:blockType/objectives"
+      ],
+      "source": "cmi5 CourseStructure.xsd / cmi5 Quartz spec — https://github.com/AICC/CMI-5_Spec_Current/blob/quartz/cmi5_spec.md"
+    }
+  ],
+  "normativeStatements": [],
+  "residues": {
+    "silentGaps": [],
+    "extensions": [
+      "cmi5:1.0:def:courseStructure.__schema4/keywords"
+    ],
+    "normalisations": [
+      {
+        "note": "cmi5 <langstring> simpleContent text → conform-ed `value`",
+        "modelledKeys": [
+          "cmi5:1.0:def:courseStructure.__schema2/value"
+        ],
+        "literalKeys": []
+      }
+    ]
+  },
+  "valueSets": [
+    {
+      "item": "cmi5:1.0:def:auType/launchMethod",
+      "members": 2,
+      "modelled": 2,
+      "gaps": []
+    },
+    {
+      "item": "cmi5:1.0:def:auType/moveOn",
+      "members": 5,
+      "modelled": 5,
+      "gaps": []
+    }
+  ],
+  "rollup": {
+    "items": 45,
+    "modelledYes": 30,
+    "modelledPartial": 0,
+    "modelledNo": 0,
+    "normativeItems": 0,
+    "conformanceRequirements": 6,
+    "normativeStatements": 0,
+    "normativeStatementsCited": 0,
+    "normalisations": 1,
+    "valueSetMembers": 7,
+    "valueSetModelled": 7,
+    "valueSetGaps": 0
+  }
+}

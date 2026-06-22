@@ -12,7 +12,7 @@
  * terminate without the path-cross-product explosion a naive expansion produces.
  */
 
-import type { SpecRefOverride } from "./source";
+import type { SpecRefOverride, StructuralAlias } from "./source";
 import type { CoverageItem, ModelledStatus, ReconciliationResidues, SpecRefNormalisation, UsageEdge } from "./types";
 
 interface Inventory {
@@ -96,6 +96,8 @@ export function reconcile(
   zod: Inventory,
   documentRootKeys: readonly string[],
   normalize: (name: string) => string = (name) => name,
+  aliases: readonly StructuralAlias[] = [],
+  literalWrappers: readonly string[] = [],
 ): ReconcileResult {
   const lit = indexSide(literal);
   const zd = indexSide(zod);
@@ -117,20 +119,36 @@ export function reconcile(
   // the spec items, not the `[]` wrapper. One side may wrap a value in an array
   // (`type: [...]`, `credential: anyOf[array, ...]`) where the other refs it
   // directly, so unwrap any pure-array layer on each side before matching names.
-  const unwrapArray = (side: SideIndex, key: string): string => {
+  const litWrappers = new Set(literalWrappers.map(normalize));
+  const noWrappers: ReadonlySet<string> = new Set();
+  const unwrapArray = (side: SideIndex, key: string, wrappers: ReadonlySet<string>): string => {
     let cur = key;
     for (let i = 0; i < 8; i += 1) {
       const shape = shapeOf(side, cur, normalize);
-      const elem = shape.size === 1 ? shape.get("[]") : undefined;
+      let elem = shape.size === 1 ? shape.get("[]") : undefined;
+      if (elem === undefined && shape.size === 1 && wrappers.size > 0) {
+        // A transparent literal wrapper element conform-ed elides (e.g. the cmi5
+        // <objectives><objective>… repetition): descend through it like an array layer.
+        const only = [...shape][0];
+        if (only !== undefined && wrappers.has(only[0])) elem = only[1];
+      }
       if (elem === undefined) break;
       cur = elem;
     }
     return cur;
   };
 
+  // Structural aliases (ADR-0017), pre-normalised to the join's name form. Each bridges a Zod
+  // property to differently-named literal element(s) where conform-ed normalised the shape, and
+  // descends — so their subtrees reconcile as if the names had matched.
+  const aliasMap = aliases.map((alias) => ({
+    zodProperty: normalize(alias.zodProperty),
+    literalElements: alias.literalElements.map((element) => normalize(element)),
+  }));
+
   const align = (litKeyRaw: string, zodKeyRaw: string): void => {
-    const litKey = unwrapArray(lit, litKeyRaw);
-    const zodKey = unwrapArray(zd, zodKeyRaw);
+    const litKey = unwrapArray(lit, litKeyRaw, litWrappers);
+    const zodKey = unwrapArray(zd, zodKeyRaw, noWrappers);
     const pairId = `${litKey} ${zodKey}`;
     if (visited.has(pairId)) return;
     visited.add(pairId);
@@ -138,12 +156,37 @@ export function reconcile(
     const litShape = shapeOf(lit, litKey, normalize);
     const zodShape = shapeOf(zd, zodKey, normalize);
 
+    // Resolve structural aliases first, consuming the names they bridge so the name-based loops
+    // below do not then mis-score them as a gap (the literal element) or extension (the Zod prop).
+    const consumedLit = new Set<string>();
+    const consumedZod = new Set<string>();
+    for (const alias of aliasMap) {
+      const zodChild = zodShape.get(alias.zodProperty);
+      if (zodChild === undefined) continue;
+      let matchedAny = false;
+      for (const litName of alias.literalElements) {
+        const litChild = litShape.get(litName);
+        if (litChild === undefined) continue;
+        matchedAny = true;
+        consumedLit.add(litName);
+        bump(litChild, true);
+        align(litChild, zodChild);
+      }
+      if (matchedAny) {
+        consumedZod.add(alias.zodProperty);
+        zodSeen.add(zodChild);
+        zodMatched.add(zodChild);
+      }
+    }
+
     for (const [name, litChild] of litShape) {
+      if (consumedLit.has(name)) continue;
       const zodChild = zodShape.get(name);
       bump(litChild, zodChild !== undefined);
       if (zodChild !== undefined) align(litChild, zodChild);
     }
     for (const [name, zodChild] of zodShape) {
+      if (consumedZod.has(name)) continue;
       zodSeen.add(zodChild);
       if (litShape.has(name)) zodMatched.add(zodChild);
     }
