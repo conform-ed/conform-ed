@@ -69696,6 +69696,33 @@
         "caliper:1.2:def:epubVolume/id"
       ],
       "source": "Caliper 1.2 §Event / §Entity identifier — https://www.imsglobal.org/spec/caliper/v1p2"
+    },
+    {
+      "key": "caliper:1.2:conf:vocabulary/CAL-VOCAB-1",
+      "profile": "vocabulary",
+      "reqId": "CAL-VOCAB-1",
+      "level": "MUST",
+      "statement": "An Event's action MUST be a term drawn from the Caliper action vocabulary (the term appropriate to the event's metric profile).",
+      "constrains": [
+        "caliper:1.2:def:Action",
+        "caliper:1.2:def:Event/action"
+      ],
+      "source": "Caliper 1.2 §Actions / metric profiles — https://www.imsglobal.org/spec/caliper/v1p2"
+    },
+    {
+      "key": "caliper:1.2:conf:vocabulary/CAL-VOCAB-2",
+      "profile": "vocabulary",
+      "reqId": "CAL-VOCAB-2",
+      "level": "MUST",
+      "statement": "Caliper's controlled vocabularies MUST be honoured: an AggregateMeasure metric is a Caliper metric term, an entity status is Active or Inactive, and a sensor declares the metric profiles it supports as Caliper profile terms.",
+      "constrains": [
+        "caliper:1.2:def:Metric",
+        "caliper:1.2:def:AggregateMeasure/metric",
+        "caliper:1.2:def:Status",
+        "caliper:1.2:def:Membership/status",
+        "caliper:1.2:def:Profile"
+      ],
+      "source": "Caliper 1.2 §Metric / §Status / metric profiles — https://www.imsglobal.org/spec/caliper/v1p2"
     }
   ],
   "normativeStatements": [
@@ -70463,19 +70490,44 @@
     ],
     "normalisations": []
   },
-  "valueSets": [],
+  "valueSets": [
+    {
+      "item": "caliper:1.2:def:Action",
+      "members": 80,
+      "modelled": 80,
+      "gaps": []
+    },
+    {
+      "item": "caliper:1.2:def:Metric",
+      "members": 8,
+      "modelled": 8,
+      "gaps": []
+    },
+    {
+      "item": "caliper:1.2:def:Profile",
+      "members": 15,
+      "modelled": 15,
+      "gaps": []
+    },
+    {
+      "item": "caliper:1.2:def:Status",
+      "members": 2,
+      "modelled": 2,
+      "gaps": []
+    }
+  ],
   "rollup": {
     "items": 1957,
     "modelledYes": 78,
     "modelledPartial": 12,
     "modelledNo": 136,
     "normativeItems": 99,
-    "conformanceRequirements": 5,
+    "conformanceRequirements": 7,
     "normativeStatements": 99,
     "normativeStatementsCited": 99,
     "normalisations": 0,
-    "valueSetMembers": 0,
-    "valueSetModelled": 0,
+    "valueSetMembers": 105,
+    "valueSetModelled": 105,
     "valueSetGaps": 0
   }
 }

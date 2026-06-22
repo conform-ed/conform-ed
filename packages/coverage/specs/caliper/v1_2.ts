@@ -17,19 +17,36 @@
  * types so every referenced definition is inventoried regardless. Caliper uses camelCase
  * JSON property names on both sides, so no name-normalisation is needed, and the bundle
  * is a single document, so no source-scoping.
+ *
+ * **Value-set verification (ADR-0017).** Caliper carries four controlled vocabularies in the
+ * denominator — the `Action` term list (80), the `Profile` list (15), the `Metric` list (8) and
+ * the entity `Status` (2) — that the structural property-join cannot check (it matches property
+ * *names*, never enumerated *values*). Each is verified by safeParse'ing every published member
+ * against the conform-ed `z.enum` that models it (`ActionSchema` / `ProfileSchema` / `MetricSchema`
+ * / `StatusSchema`): all 105 members are accepted, so conform-ed's four vocabularies match the
+ * bootcamp denominator exactly. Two further enum-bearing denominator items are deliberately NOT
+ * value-set-verified: the `SystemIdentifier.identifierType` (the bootcamp lists a single
+ * `LtiUserId`, which conform-ed mirrors as a `z.literal`), and the 56-term `Membership.roles`
+ * vocabulary — conform-ed models a role as a permissive `z.looseObject({})`, i.e. it does **not**
+ * model the role term vocabulary, so a value-set there would report all 56 as gaps; left out as a
+ * known modelling limitation to raise rather than encode unilaterally.
  */
 
 import { join } from "node:path";
 
 import {
+  ActionSchema,
   AgentSchema,
   AssessmentEventSchema,
   EntitySchema,
   EnvelopeSchema,
   EventSchema,
+  MetricSchema,
   PersonSchema,
+  ProfileSchema,
   SessionSchema,
   SoftwareApplicationSchema,
+  StatusSchema,
 } from "@conform-ed/contracts/caliper/v1_2";
 
 import type { SpecBindingSource, SpecSource } from "../../src/source";
@@ -229,6 +246,35 @@ const conformance: readonly ConformanceRequirement[] = [
     constrains: EVERY_TYPE_ID,
     source: "Caliper 1.2 §Event / §Entity identifier — https://www.imsglobal.org/spec/caliper/v1p2",
   },
+  {
+    // Anchored to the ADR-0017 value-set denominators: each published action term is safeParse'd
+    // against ActionSchema (not merely accepted as a string), so a term conform-ed fails to
+    // recognise would surface as a value-set gap.
+    key: "caliper:1.2:conf:vocabulary/CAL-VOCAB-1",
+    profile: "vocabulary",
+    reqId: "CAL-VOCAB-1",
+    level: "MUST",
+    statement:
+      "An Event's action MUST be a term drawn from the Caliper action vocabulary (the term appropriate to the event's metric profile).",
+    constrains: ["caliper:1.2:def:Action", "caliper:1.2:def:Event/action"],
+    source: "Caliper 1.2 §Actions / metric profiles — https://www.imsglobal.org/spec/caliper/v1p2",
+  },
+  {
+    key: "caliper:1.2:conf:vocabulary/CAL-VOCAB-2",
+    profile: "vocabulary",
+    reqId: "CAL-VOCAB-2",
+    level: "MUST",
+    statement:
+      "Caliper's controlled vocabularies MUST be honoured: an AggregateMeasure metric is a Caliper metric term, an entity status is Active or Inactive, and a sensor declares the metric profiles it supports as Caliper profile terms.",
+    constrains: [
+      "caliper:1.2:def:Metric",
+      "caliper:1.2:def:AggregateMeasure/metric",
+      "caliper:1.2:def:Status",
+      "caliper:1.2:def:Membership/status",
+      "caliper:1.2:def:Profile",
+    ],
+    source: "Caliper 1.2 §Metric / §Status / metric profiles — https://www.imsglobal.org/spec/caliper/v1p2",
+  },
 ];
 
 export const caliperV1_2: SpecSource = {
@@ -243,6 +289,16 @@ export const caliperV1_2: SpecSource = {
     entity("SoftwareApplication", SoftwareApplicationSchema),
     entity("Session", SessionSchema),
     entity("Agent", AgentSchema),
+  ],
+  // Value-set verification (ADR-0017): the four Caliper controlled vocabularies the structural
+  // join cannot check, each safeParse'd member-by-member against the conform-ed z.enum that models
+  // it. roles (a permissive looseObject) and identifierType (a lone literal) are excluded — see
+  // the module docstring.
+  valueSets: [
+    { item: "caliper:1.2:def:Action", element: ActionSchema },
+    { item: "caliper:1.2:def:Profile", element: ProfileSchema },
+    { item: "caliper:1.2:def:Metric", element: MetricSchema },
+    { item: "caliper:1.2:def:Status", element: StatusSchema },
   ],
   conformance,
 };
