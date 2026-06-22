@@ -1,0 +1,1239 @@
+{
+  "meta": {
+    "spec": "h5p",
+    "version": "1",
+    "generatedAt": "2026-06-22",
+    "sources": [
+      {
+        "binding": "h5p-json",
+        "language": "curated",
+        "id": "conform-ed:curated:h5p/1/h5p-json",
+        "sha256": "87fff7c730221315b7e745075a33a4dc2f495721d7ebbeed2e7c055f7619d764"
+      },
+      {
+        "binding": "library-json",
+        "language": "curated",
+        "id": "conform-ed:curated:h5p/1/library-json",
+        "sha256": "842cd0080ae1e382fa17c21daed8ad8078967eacbf1f449fccdbdabb4299a911"
+      },
+      {
+        "binding": "semantics",
+        "language": "curated",
+        "id": "conform-ed:curated:h5p/1/semantics",
+        "sha256": "6429c895de8a5808dcb66262d4f027fecdadddb46db236d73e0d5f978badfc6c"
+      }
+    ]
+  },
+  "items": [
+    {
+      "key": "h5p:1:def:Author",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object"
+    },
+    {
+      "key": "h5p:1:def:Author/name",
+      "kind": "property",
+      "path": "name",
+      "jsonType": "string",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:def:Author/role",
+      "kind": "property",
+      "path": "role",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:def:ChangelogEntry",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object"
+    },
+    {
+      "key": "h5p:1:def:ChangelogEntry/changes",
+      "kind": "property",
+      "path": "changes",
+      "jsonType": "array",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:def:ChangelogEntry/changes/[]",
+      "kind": "property",
+      "path": "changes/[]",
+      "jsonType": "string"
+    },
+    {
+      "key": "h5p:1:def:ChangelogEntry/date",
+      "kind": "property",
+      "path": "date",
+      "jsonType": "string",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:def:CoreApi",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object"
+    },
+    {
+      "key": "h5p:1:def:CoreApi/majorVersion",
+      "kind": "property",
+      "path": "majorVersion",
+      "jsonType": "integer",
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:def:CoreApi/minorVersion",
+      "kind": "property",
+      "path": "minorVersion",
+      "jsonType": "integer",
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:def:FilePath",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object"
+    },
+    {
+      "key": "h5p:1:def:FilePath/path",
+      "kind": "property",
+      "path": "path",
+      "jsonType": "string",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:def:ListWidget",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object"
+    },
+    {
+      "key": "h5p:1:def:ListWidget/label",
+      "kind": "property",
+      "path": "label",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:def:ListWidget/name",
+      "kind": "property",
+      "path": "name",
+      "jsonType": "string",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:def:MetadataSettings",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object"
+    },
+    {
+      "key": "h5p:1:def:MetadataSettings/disable",
+      "kind": "property",
+      "path": "disable",
+      "jsonType": "integer",
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:def:MetadataSettings/disableExtraTitleField",
+      "kind": "property",
+      "path": "disableExtraTitleField",
+      "jsonType": "integer",
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:def:Regexp",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object"
+    },
+    {
+      "key": "h5p:1:def:Regexp/description",
+      "kind": "property",
+      "path": "description",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:def:Regexp/modifiers",
+      "kind": "property",
+      "path": "modifiers",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:def:Regexp/pattern",
+      "kind": "property",
+      "path": "pattern",
+      "jsonType": "string",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:def:SelectOption",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object"
+    },
+    {
+      "key": "h5p:1:def:SelectOption/label",
+      "kind": "property",
+      "path": "label",
+      "jsonType": "string",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:def:SelectOption/value",
+      "kind": "property",
+      "path": "value",
+      "jsonType": "string",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:def:SemanticsField",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object"
+    },
+    {
+      "key": "h5p:1:def:SemanticsField/allowedMimeTypes",
+      "kind": "property",
+      "path": "allowedMimeTypes",
+      "jsonType": "array",
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:def:SemanticsField/allowedMimeTypes/[]",
+      "kind": "property",
+      "path": "allowedMimeTypes/[]",
+      "jsonType": "string"
+    },
+    {
+      "key": "h5p:1:def:SemanticsField/columns",
+      "kind": "property",
+      "path": "columns",
+      "jsonType": "array",
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:def:SemanticsField/columns/[]",
+      "kind": "property",
+      "path": "columns/[]"
+    },
+    {
+      "key": "h5p:1:def:SemanticsField/common",
+      "kind": "property",
+      "path": "common",
+      "jsonType": "boolean",
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:def:SemanticsField/copy",
+      "kind": "property",
+      "path": "copy",
+      "jsonType": "boolean",
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:def:SemanticsField/decimals",
+      "kind": "property",
+      "path": "decimals",
+      "jsonType": "integer",
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:def:SemanticsField/default",
+      "kind": "property",
+      "path": "default",
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:def:SemanticsField/description",
+      "kind": "property",
+      "path": "description",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:def:SemanticsField/disableConversion",
+      "kind": "property",
+      "path": "disableConversion",
+      "jsonType": "boolean",
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:def:SemanticsField/disableCopyright",
+      "kind": "property",
+      "path": "disableCopyright",
+      "jsonType": "boolean",
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:def:SemanticsField/enterMode",
+      "kind": "property",
+      "path": "enterMode",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:def:SemanticsField/entity",
+      "kind": "property",
+      "path": "entity",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:def:SemanticsField/expanded",
+      "kind": "property",
+      "path": "expanded",
+      "jsonType": "boolean",
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:def:SemanticsField/field",
+      "kind": "property",
+      "path": "field",
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:def:SemanticsField/fields",
+      "kind": "property",
+      "path": "fields",
+      "jsonType": "array",
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:def:SemanticsField/fields/[]",
+      "kind": "property",
+      "path": "fields/[]"
+    },
+    {
+      "key": "h5p:1:def:SemanticsField/font",
+      "kind": "property",
+      "path": "font",
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:def:SemanticsField/importance",
+      "kind": "property",
+      "path": "importance",
+      "jsonType": "string",
+      "enumValues": [
+        "high",
+        "medium",
+        "low"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:def:SemanticsField/isSubContent",
+      "kind": "property",
+      "path": "isSubContent",
+      "jsonType": "boolean",
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:def:SemanticsField/label",
+      "kind": "property",
+      "path": "label",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:def:SemanticsField/max",
+      "kind": "property",
+      "path": "max",
+      "jsonType": "number",
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:def:SemanticsField/maxLength",
+      "kind": "property",
+      "path": "maxLength",
+      "jsonType": "integer",
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:def:SemanticsField/min",
+      "kind": "property",
+      "path": "min",
+      "jsonType": "number",
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:def:SemanticsField/minLength",
+      "kind": "property",
+      "path": "minLength",
+      "jsonType": "integer",
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:def:SemanticsField/multiple",
+      "kind": "property",
+      "path": "multiple",
+      "jsonType": "boolean",
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:def:SemanticsField/name",
+      "kind": "property",
+      "path": "name",
+      "jsonType": "string",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:def:SemanticsField/nullWhenHidden",
+      "kind": "property",
+      "path": "nullWhenHidden",
+      "jsonType": "boolean",
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:def:SemanticsField/optional",
+      "kind": "property",
+      "path": "optional",
+      "jsonType": "boolean",
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:def:SemanticsField/options",
+      "kind": "property",
+      "path": "options",
+      "jsonType": "array",
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:def:SemanticsField/options/[]",
+      "kind": "property",
+      "path": "options/[]"
+    },
+    {
+      "key": "h5p:1:def:SemanticsField/placeholder",
+      "kind": "property",
+      "path": "placeholder",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:def:SemanticsField/regexp",
+      "kind": "property",
+      "path": "regexp",
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:def:SemanticsField/rows",
+      "kind": "property",
+      "path": "rows",
+      "jsonType": "integer",
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:def:SemanticsField/showWhen",
+      "kind": "property",
+      "path": "showWhen",
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:def:SemanticsField/steps",
+      "kind": "property",
+      "path": "steps",
+      "jsonType": "number",
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:def:SemanticsField/tags",
+      "kind": "property",
+      "path": "tags",
+      "jsonType": "array",
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:def:SemanticsField/tags/[]",
+      "kind": "property",
+      "path": "tags/[]",
+      "jsonType": "string"
+    },
+    {
+      "key": "h5p:1:def:SemanticsField/type",
+      "kind": "property",
+      "path": "type",
+      "jsonType": "string",
+      "required": true,
+      "enumValues": [
+        "text",
+        "html",
+        "number",
+        "boolean",
+        "image",
+        "audio",
+        "video",
+        "file",
+        "select",
+        "library",
+        "group",
+        "list",
+        "table"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:def:SemanticsField/widget",
+      "kind": "property",
+      "path": "widget",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:def:SemanticsField/widgets",
+      "kind": "property",
+      "path": "widgets",
+      "jsonType": "array",
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:def:SemanticsField/widgets/[]",
+      "kind": "property",
+      "path": "widgets/[]"
+    },
+    {
+      "key": "h5p:1:def:ShowWhen",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object"
+    },
+    {
+      "key": "h5p:1:def:ShowWhen/rules",
+      "kind": "property",
+      "path": "rules",
+      "jsonType": "array",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:def:ShowWhen/rules/[]",
+      "kind": "property",
+      "path": "rules/[]"
+    },
+    {
+      "key": "h5p:1:def:ShowWhen/type",
+      "kind": "property",
+      "path": "type",
+      "jsonType": "string",
+      "enumValues": [
+        "and",
+        "or"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:def:ShowWhenRule",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object"
+    },
+    {
+      "key": "h5p:1:def:ShowWhenRule/equals",
+      "kind": "property",
+      "path": "equals",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:def:ShowWhenRule/field",
+      "kind": "property",
+      "path": "field",
+      "jsonType": "string",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:def:VersionRef",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object"
+    },
+    {
+      "key": "h5p:1:def:VersionRef/machineName",
+      "kind": "property",
+      "path": "machineName",
+      "jsonType": "string",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:def:VersionRef/majorVersion",
+      "kind": "property",
+      "path": "majorVersion",
+      "jsonType": "integer",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:def:VersionRef/minorVersion",
+      "kind": "property",
+      "path": "minorVersion",
+      "jsonType": "integer",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:doc:h5p-json",
+      "kind": "document",
+      "path": "",
+      "jsonType": "object"
+    },
+    {
+      "key": "h5p:1:doc:h5p-json/a11yTitle",
+      "kind": "property",
+      "path": "a11yTitle",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:doc:h5p-json/author",
+      "kind": "property",
+      "path": "author",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:doc:h5p-json/authorComments",
+      "kind": "property",
+      "path": "authorComments",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:doc:h5p-json/authors",
+      "kind": "property",
+      "path": "authors",
+      "jsonType": "array",
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:doc:h5p-json/authors/[]",
+      "kind": "property",
+      "path": "authors/[]"
+    },
+    {
+      "key": "h5p:1:doc:h5p-json/changes",
+      "kind": "property",
+      "path": "changes",
+      "jsonType": "array",
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:doc:h5p-json/changes/[]",
+      "kind": "property",
+      "path": "changes/[]"
+    },
+    {
+      "key": "h5p:1:doc:h5p-json/contentType",
+      "kind": "property",
+      "path": "contentType",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:doc:h5p-json/defaultLanguage",
+      "kind": "property",
+      "path": "defaultLanguage",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:doc:h5p-json/description",
+      "kind": "property",
+      "path": "description",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:doc:h5p-json/dynamicDependencies",
+      "kind": "property",
+      "path": "dynamicDependencies",
+      "jsonType": "array",
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:doc:h5p-json/dynamicDependencies/[]",
+      "kind": "property",
+      "path": "dynamicDependencies/[]"
+    },
+    {
+      "key": "h5p:1:doc:h5p-json/embedTypes",
+      "kind": "property",
+      "path": "embedTypes",
+      "jsonType": "array",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:doc:h5p-json/embedTypes/[]",
+      "kind": "property",
+      "path": "embedTypes/[]",
+      "jsonType": "string",
+      "enumValues": [
+        "iframe",
+        "div"
+      ]
+    },
+    {
+      "key": "h5p:1:doc:h5p-json/height",
+      "kind": "property",
+      "path": "height",
+      "jsonType": "integer",
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:doc:h5p-json/language",
+      "kind": "property",
+      "path": "language",
+      "jsonType": "string",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:doc:h5p-json/license",
+      "kind": "property",
+      "path": "license",
+      "jsonType": "string",
+      "enumValues": [
+        "CC BY",
+        "CC BY-SA",
+        "CC BY-NC",
+        "CC BY-NC-SA",
+        "CC BY-ND",
+        "CC BY-NC-ND",
+        "CC0",
+        "GNU GPL",
+        "PD",
+        "ODC PDDL",
+        "CC PDM",
+        "U"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:doc:h5p-json/licenseExtras",
+      "kind": "property",
+      "path": "licenseExtras",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:doc:h5p-json/licenseVersion",
+      "kind": "property",
+      "path": "licenseVersion",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:doc:h5p-json/machineName",
+      "kind": "property",
+      "path": "machineName",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:doc:h5p-json/mainLibrary",
+      "kind": "property",
+      "path": "mainLibrary",
+      "jsonType": "string",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:doc:h5p-json/metaDescription",
+      "kind": "property",
+      "path": "metaDescription",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:doc:h5p-json/metaKeywords",
+      "kind": "property",
+      "path": "metaKeywords",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:doc:h5p-json/preloadedDependencies",
+      "kind": "property",
+      "path": "preloadedDependencies",
+      "jsonType": "array",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:doc:h5p-json/preloadedDependencies/[]",
+      "kind": "property",
+      "path": "preloadedDependencies/[]"
+    },
+    {
+      "key": "h5p:1:doc:h5p-json/source",
+      "kind": "property",
+      "path": "source",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:doc:h5p-json/title",
+      "kind": "property",
+      "path": "title",
+      "jsonType": "string",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:doc:h5p-json/width",
+      "kind": "property",
+      "path": "width",
+      "jsonType": "integer",
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:doc:h5p-json/yearFrom",
+      "kind": "property",
+      "path": "yearFrom",
+      "jsonType": "integer",
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:doc:h5p-json/yearTo",
+      "kind": "property",
+      "path": "yearTo",
+      "jsonType": "integer",
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:doc:library-json",
+      "kind": "document",
+      "path": "",
+      "jsonType": "object"
+    },
+    {
+      "key": "h5p:1:doc:library-json/author",
+      "kind": "property",
+      "path": "author",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:doc:library-json/contentType",
+      "kind": "property",
+      "path": "contentType",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:doc:library-json/coreApi",
+      "kind": "property",
+      "path": "coreApi",
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:doc:library-json/description",
+      "kind": "property",
+      "path": "description",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:doc:library-json/dynamicDependencies",
+      "kind": "property",
+      "path": "dynamicDependencies",
+      "jsonType": "array",
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:doc:library-json/dynamicDependencies/[]",
+      "kind": "property",
+      "path": "dynamicDependencies/[]"
+    },
+    {
+      "key": "h5p:1:doc:library-json/editorDependencies",
+      "kind": "property",
+      "path": "editorDependencies",
+      "jsonType": "array",
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:doc:library-json/editorDependencies/[]",
+      "kind": "property",
+      "path": "editorDependencies/[]"
+    },
+    {
+      "key": "h5p:1:doc:library-json/embedTypes",
+      "kind": "property",
+      "path": "embedTypes",
+      "jsonType": "array",
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:doc:library-json/embedTypes/[]",
+      "kind": "property",
+      "path": "embedTypes/[]",
+      "jsonType": "string",
+      "enumValues": [
+        "iframe",
+        "div"
+      ]
+    },
+    {
+      "key": "h5p:1:doc:library-json/fullscreen",
+      "kind": "property",
+      "path": "fullscreen",
+      "jsonType": "integer",
+      "enumValues": [
+        0,
+        1
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:doc:library-json/h",
+      "kind": "property",
+      "path": "h",
+      "jsonType": "integer",
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:doc:library-json/license",
+      "kind": "property",
+      "path": "license",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:doc:library-json/machineName",
+      "kind": "property",
+      "path": "machineName",
+      "jsonType": "string",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:doc:library-json/majorVersion",
+      "kind": "property",
+      "path": "majorVersion",
+      "jsonType": "integer",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:doc:library-json/metadataSettings",
+      "kind": "property",
+      "path": "metadataSettings",
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:doc:library-json/minorVersion",
+      "kind": "property",
+      "path": "minorVersion",
+      "jsonType": "integer",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:doc:library-json/patchVersion",
+      "kind": "property",
+      "path": "patchVersion",
+      "jsonType": "integer",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:doc:library-json/preloadedCss",
+      "kind": "property",
+      "path": "preloadedCss",
+      "jsonType": "array",
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:doc:library-json/preloadedCss/[]",
+      "kind": "property",
+      "path": "preloadedCss/[]"
+    },
+    {
+      "key": "h5p:1:doc:library-json/preloadedDependencies",
+      "kind": "property",
+      "path": "preloadedDependencies",
+      "jsonType": "array",
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:doc:library-json/preloadedDependencies/[]",
+      "kind": "property",
+      "path": "preloadedDependencies/[]"
+    },
+    {
+      "key": "h5p:1:doc:library-json/preloadedJs",
+      "kind": "property",
+      "path": "preloadedJs",
+      "jsonType": "array",
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:doc:library-json/preloadedJs/[]",
+      "kind": "property",
+      "path": "preloadedJs/[]"
+    },
+    {
+      "key": "h5p:1:doc:library-json/runnable",
+      "kind": "property",
+      "path": "runnable",
+      "jsonType": "integer",
+      "required": true,
+      "enumValues": [
+        0,
+        1
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:doc:library-json/title",
+      "kind": "property",
+      "path": "title",
+      "jsonType": "string",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:doc:library-json/w",
+      "kind": "property",
+      "path": "w",
+      "jsonType": "integer",
+      "modelled": "yes"
+    },
+    {
+      "key": "h5p:1:doc:semantics",
+      "kind": "document",
+      "path": "",
+      "jsonType": "array"
+    },
+    {
+      "key": "h5p:1:doc:semantics/[]",
+      "kind": "property",
+      "path": "[]"
+    }
+  ],
+  "edges": [
+    {
+      "from": "h5p:1:def:SemanticsField/columns/[]",
+      "to": "h5p:1:def:SemanticsField"
+    },
+    {
+      "from": "h5p:1:def:SemanticsField/field",
+      "to": "h5p:1:def:SemanticsField"
+    },
+    {
+      "from": "h5p:1:def:SemanticsField/fields/[]",
+      "to": "h5p:1:def:SemanticsField"
+    },
+    {
+      "from": "h5p:1:def:SemanticsField/options/[]",
+      "to": "h5p:1:def:SelectOption"
+    },
+    {
+      "from": "h5p:1:def:SemanticsField/regexp",
+      "to": "h5p:1:def:Regexp"
+    },
+    {
+      "from": "h5p:1:def:SemanticsField/showWhen",
+      "to": "h5p:1:def:ShowWhen"
+    },
+    {
+      "from": "h5p:1:def:SemanticsField/widgets/[]",
+      "to": "h5p:1:def:ListWidget"
+    },
+    {
+      "from": "h5p:1:def:ShowWhen/rules/[]",
+      "to": "h5p:1:def:ShowWhenRule"
+    },
+    {
+      "from": "h5p:1:doc:h5p-json/authors/[]",
+      "to": "h5p:1:def:Author"
+    },
+    {
+      "from": "h5p:1:doc:h5p-json/changes/[]",
+      "to": "h5p:1:def:ChangelogEntry"
+    },
+    {
+      "from": "h5p:1:doc:h5p-json/dynamicDependencies/[]",
+      "to": "h5p:1:def:VersionRef"
+    },
+    {
+      "from": "h5p:1:doc:h5p-json/preloadedDependencies/[]",
+      "to": "h5p:1:def:VersionRef"
+    },
+    {
+      "from": "h5p:1:doc:library-json/coreApi",
+      "to": "h5p:1:def:CoreApi"
+    },
+    {
+      "from": "h5p:1:doc:library-json/dynamicDependencies/[]",
+      "to": "h5p:1:def:VersionRef"
+    },
+    {
+      "from": "h5p:1:doc:library-json/editorDependencies/[]",
+      "to": "h5p:1:def:VersionRef"
+    },
+    {
+      "from": "h5p:1:doc:library-json/metadataSettings",
+      "to": "h5p:1:def:MetadataSettings"
+    },
+    {
+      "from": "h5p:1:doc:library-json/preloadedCss/[]",
+      "to": "h5p:1:def:FilePath"
+    },
+    {
+      "from": "h5p:1:doc:library-json/preloadedDependencies/[]",
+      "to": "h5p:1:def:VersionRef"
+    },
+    {
+      "from": "h5p:1:doc:library-json/preloadedJs/[]",
+      "to": "h5p:1:def:FilePath"
+    },
+    {
+      "from": "h5p:1:doc:semantics/[]",
+      "to": "h5p:1:def:SemanticsField"
+    }
+  ],
+  "conformance": [
+    {
+      "key": "h5p:1:conf:library/H5P-LIB-1",
+      "profile": "library",
+      "reqId": "H5P-LIB-1",
+      "level": "MUST",
+      "statement": "library.json MUST declare the title, machineName, the full major/minor/patch version, and runnable (1 = standalone content type, 0 = helper library).",
+      "constrains": [
+        "h5p:1:doc:library-json/title",
+        "h5p:1:doc:library-json/machineName",
+        "h5p:1:doc:library-json/majorVersion",
+        "h5p:1:doc:library-json/minorVersion",
+        "h5p:1:doc:library-json/patchVersion",
+        "h5p:1:doc:library-json/runnable"
+      ],
+      "source": "H5P file format documentation — https://h5p.org/documentation/developers/json-file-descriptions"
+    },
+    {
+      "key": "h5p:1:conf:library/H5P-LIB-2",
+      "profile": "library",
+      "reqId": "H5P-LIB-2",
+      "level": "MUST",
+      "statement": "A runnable library using the iframe embed type MUST declare its embedding dimensions (w and h) and may preload JS/CSS assets and declare editor dependencies.",
+      "constrains": [
+        "h5p:1:doc:library-json/embedTypes",
+        "h5p:1:doc:library-json/w",
+        "h5p:1:doc:library-json/h",
+        "h5p:1:doc:library-json/preloadedJs",
+        "h5p:1:doc:library-json/editorDependencies"
+      ],
+      "source": "H5P file format documentation — https://h5p.org/documentation/developers/json-file-descriptions"
+    },
+    {
+      "key": "h5p:1:conf:package/H5P-PKG-1",
+      "profile": "package",
+      "reqId": "H5P-PKG-1",
+      "level": "MUST",
+      "statement": "h5p.json MUST declare the content title, language, the mainLibrary, at least one embedType (iframe or div) and at least one preloadedDependency.",
+      "constrains": [
+        "h5p:1:doc:h5p-json/title",
+        "h5p:1:doc:h5p-json/language",
+        "h5p:1:doc:h5p-json/mainLibrary",
+        "h5p:1:doc:h5p-json/embedTypes",
+        "h5p:1:doc:h5p-json/preloadedDependencies"
+      ],
+      "source": "H5P file format documentation — https://h5p.org/documentation/developers/json-file-descriptions"
+    },
+    {
+      "key": "h5p:1:conf:package/H5P-PKG-2",
+      "profile": "package",
+      "reqId": "H5P-PKG-2",
+      "level": "MUST",
+      "statement": "A library dependency reference MUST carry a machineName and the major/minor version (the patch is omitted by design — any patch of that major.minor is acceptable).",
+      "constrains": [
+        "h5p:1:def:VersionRef/machineName",
+        "h5p:1:def:VersionRef/majorVersion",
+        "h5p:1:def:VersionRef/minorVersion"
+      ],
+      "source": "H5P file format documentation — https://h5p.org/documentation/developers/json-file-descriptions"
+    },
+    {
+      "key": "h5p:1:conf:package/H5P-PKG-3",
+      "profile": "package",
+      "reqId": "H5P-PKG-3",
+      "level": "MUST",
+      "statement": "When present in h5p.json, the license MUST be one of the H5P content-license codes (CC BY, CC BY-SA, …, CC0, GNU GPL, PD, ODC PDDL, CC PDM, or U for undisclosed).",
+      "constrains": [
+        "h5p:1:doc:h5p-json/license"
+      ],
+      "source": "H5P file format documentation — https://h5p.org/documentation/developers/json-file-descriptions"
+    },
+    {
+      "key": "h5p:1:conf:semantics/H5P-SEM-1",
+      "profile": "semantics",
+      "reqId": "H5P-SEM-1",
+      "level": "MUST",
+      "statement": "Each semantics.json field MUST carry a name and a type drawn from the H5P field types (text, html, number, boolean, image, audio, video, file, select, library, group, list, table).",
+      "constrains": [
+        "h5p:1:def:SemanticsField/name",
+        "h5p:1:def:SemanticsField/type"
+      ],
+      "source": "H5P semantics — https://h5p.org/documentation/developers/semantics"
+    },
+    {
+      "key": "h5p:1:conf:semantics/H5P-SEM-2",
+      "profile": "semantics",
+      "reqId": "H5P-SEM-2",
+      "level": "MUST",
+      "statement": "Composite field types nest further field definitions: a group declares fields, a list declares its element field, and a table declares columns.",
+      "constrains": [
+        "h5p:1:def:SemanticsField/fields",
+        "h5p:1:def:SemanticsField/field",
+        "h5p:1:def:SemanticsField/columns"
+      ],
+      "source": "H5P semantics — https://h5p.org/documentation/developers/semantics"
+    }
+  ],
+  "normativeStatements": [],
+  "residues": {
+    "silentGaps": [],
+    "extensions": [],
+    "normalisations": []
+  },
+  "valueSets": [
+    {
+      "item": "h5p:1:doc:h5p-json/license",
+      "members": 12,
+      "modelled": 12,
+      "gaps": []
+    }
+  ],
+  "rollup": {
+    "items": 140,
+    "modelledYes": 105,
+    "modelledPartial": 0,
+    "modelledNo": 0,
+    "normativeItems": 0,
+    "conformanceRequirements": 7,
+    "normativeStatements": 0,
+    "normativeStatementsCited": 0,
+    "normalisations": 0,
+    "valueSetMembers": 12,
+    "valueSetModelled": 12,
+    "valueSetGaps": 0
+  }
+}

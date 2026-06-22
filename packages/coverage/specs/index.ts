@@ -10,6 +10,7 @@ import { clrV2_0 } from "./clr/v2_0";
 import { cmi5V1_0 } from "./cmi5/v1_0";
 import { commonCartridgeV1_3 } from "./common-cartridge/v1_3";
 import { commonCartridgeV1_4 } from "./common-cartridge/v1_4";
+import { h5pV1 } from "./h5p/v1";
 import { ltiV1_3 } from "./lti/v1_3";
 import { oneRosterV1_2 } from "./oneroster/v1_2";
 import { openBadgesV3_0 } from "./open-badges/v3_0";
@@ -39,4 +40,5 @@ export const COVERAGE_MAPS: readonly CoverageMapEntry[] = [
   { source: cmi5V1_0, file: "cmi5-v1.0.json" },
   { source: xapiV1_0_3, file: "xapi-v1.0.3.json" },
   { source: xapiV2_0, file: "xapi-v2.0.json" },
+  { source: h5pV1, file: "h5p-v1.json" },
 ];

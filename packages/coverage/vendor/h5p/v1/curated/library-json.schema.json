@@ -1,0 +1,90 @@
+{
+  "$id": "conform-ed:curated:h5p/1/library-json",
+  "$comment": "Hand-authored denominator (conform-ed ADR-0017) — H5P publishes its library format as prose on h5p.org, not as machine-readable JSON Schema. This curates library.json (the library manifest required in every H5P library directory). Source: H5P library definition / JSON file descriptions — https://h5p.org/documentation/developers/json-file-descriptions. Lowest provenance tier; re-review on spec version bump.",
+  "title": "H5P library.json library manifest",
+  "type": "object",
+  "required": ["title", "machineName", "majorVersion", "minorVersion", "patchVersion", "runnable"],
+  "properties": {
+    "title": { "type": "string", "$comment": "specRef: library.json (title)" },
+    "machineName": { "type": "string", "$comment": "specRef: library.json (machineName)" },
+    "majorVersion": { "type": "integer", "$comment": "specRef: library.json (majorVersion)" },
+    "minorVersion": { "type": "integer", "$comment": "specRef: library.json (minorVersion)" },
+    "patchVersion": { "type": "integer", "$comment": "specRef: library.json (patchVersion)" },
+    "runnable": { "type": "integer", "enum": [0, 1], "$comment": "specRef: library.json (runnable — 1 = standalone content type, 0 = helper)" },
+    "description": { "type": "string", "$comment": "specRef: library.json (description)" },
+    "author": { "type": "string", "$comment": "specRef: library.json (author)" },
+    "license": { "type": "string", "$comment": "specRef: library.json (license — any SPDX string, unlike h5p.json's enumerated codes)" },
+    "preloadedJs": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/FilePath" },
+      "$comment": "specRef: library.json (preloadedJs — JS assets to preload)"
+    },
+    "preloadedCss": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/FilePath" },
+      "$comment": "specRef: library.json (preloadedCss — CSS assets to preload)"
+    },
+    "preloadedDependencies": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/VersionRef" },
+      "$comment": "specRef: library.json (preloadedDependencies)"
+    },
+    "dynamicDependencies": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/VersionRef" },
+      "$comment": "specRef: library.json (dynamicDependencies)"
+    },
+    "editorDependencies": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/VersionRef" },
+      "$comment": "specRef: library.json (editorDependencies — required only with the editor)"
+    },
+    "w": { "type": "integer", "$comment": "specRef: library.json (w — iframe embed width)" },
+    "h": { "type": "integer", "$comment": "specRef: library.json (h — iframe embed height)" },
+    "embedTypes": {
+      "type": "array",
+      "items": { "type": "string", "enum": ["iframe", "div"] },
+      "$comment": "specRef: library.json (embedTypes)"
+    },
+    "fullscreen": { "type": "integer", "enum": [0, 1], "$comment": "specRef: library.json (fullscreen — 1 = supports fullscreen)" },
+    "contentType": { "type": "string", "$comment": "specRef: library.json (contentType)" },
+    "coreApi": { "$ref": "#/$defs/CoreApi", "$comment": "specRef: library.json (coreApi — minimum H5P core API version)" },
+    "metadataSettings": { "$ref": "#/$defs/MetadataSettings", "$comment": "specRef: library.json (metadataSettings)" }
+  },
+  "$defs": {
+    "VersionRef": {
+      "type": "object",
+      "title": "library version reference",
+      "required": ["machineName", "majorVersion", "minorVersion"],
+      "properties": {
+        "machineName": { "type": "string", "$comment": "specRef: dependency (machineName — patch omitted by design)" },
+        "majorVersion": { "type": "integer", "$comment": "specRef: dependency (majorVersion)" },
+        "minorVersion": { "type": "integer", "$comment": "specRef: dependency (minorVersion)" }
+      }
+    },
+    "FilePath": {
+      "type": "object",
+      "title": "asset file reference",
+      "required": ["path"],
+      "properties": {
+        "path": { "type": "string", "$comment": "specRef: library.json (preloaded asset path, relative to the library)" }
+      }
+    },
+    "CoreApi": {
+      "type": "object",
+      "title": "core API version",
+      "properties": {
+        "majorVersion": { "type": "integer", "$comment": "specRef: library.json (coreApi.majorVersion)" },
+        "minorVersion": { "type": "integer", "$comment": "specRef: library.json (coreApi.minorVersion)" }
+      }
+    },
+    "MetadataSettings": {
+      "type": "object",
+      "title": "metadata settings",
+      "properties": {
+        "disable": { "type": "integer", "$comment": "specRef: library.json (metadataSettings.disable)" },
+        "disableExtraTitleField": { "type": "integer", "$comment": "specRef: library.json (metadataSettings.disableExtraTitleField)" }
+      }
+    }
+  }
+}

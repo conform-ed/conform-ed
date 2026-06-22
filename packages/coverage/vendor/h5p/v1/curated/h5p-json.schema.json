@@ -1,0 +1,92 @@
+{
+  "$id": "conform-ed:curated:h5p/1/h5p-json",
+  "$comment": "Hand-authored denominator (conform-ed ADR-0017) — H5P publishes its package/library/semantics file formats as prose on h5p.org, not as machine-readable JSON Schema. This curates h5p.json (the package manifest). Source: H5P JSON file descriptions — https://h5p.org/documentation/developers/json-file-descriptions. Lowest provenance tier; re-review on spec version bump.",
+  "title": "H5P h5p.json package manifest",
+  "type": "object",
+  "required": ["title", "language", "mainLibrary", "embedTypes", "preloadedDependencies"],
+  "properties": {
+    "title": { "type": "string", "$comment": "specRef: h5p.json (title — the content title)" },
+    "language": { "type": "string", "$comment": "specRef: h5p.json (language — ISO-639-1 code, optional region)" },
+    "machineName": { "type": "string", "$comment": "specRef: h5p.json (machineName)" },
+    "mainLibrary": { "type": "string", "$comment": "specRef: h5p.json (mainLibrary — the machineName of the entry library)" },
+    "embedTypes": {
+      "type": "array",
+      "items": { "type": "string", "enum": ["iframe", "div"] },
+      "$comment": "specRef: h5p.json (embedTypes — iframe and/or div)"
+    },
+    "preloadedDependencies": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/VersionRef" },
+      "$comment": "specRef: h5p.json (preloadedDependencies — libraries loaded up front)"
+    },
+    "dynamicDependencies": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/VersionRef" },
+      "$comment": "specRef: h5p.json (dynamicDependencies — libraries loaded on demand)"
+    },
+    "contentType": { "type": "string", "$comment": "specRef: h5p.json (contentType)" },
+    "description": { "type": "string", "$comment": "specRef: h5p.json (description)" },
+    "author": { "type": "string", "$comment": "specRef: h5p.json (author — legacy single-author string)" },
+    "authors": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/Author" },
+      "$comment": "specRef: h5p.json (authors — structured author list)"
+    },
+    "source": { "type": "string", "$comment": "specRef: h5p.json (source — origin URL)" },
+    "license": {
+      "type": "string",
+      "enum": ["CC BY", "CC BY-SA", "CC BY-NC", "CC BY-NC-SA", "CC BY-ND", "CC BY-NC-ND", "CC0", "GNU GPL", "PD", "ODC PDDL", "CC PDM", "U"],
+      "$comment": "specRef: h5p.json (license — an H5P content license code; U = undisclosed)"
+    },
+    "licenseVersion": { "type": "string", "$comment": "specRef: h5p.json (licenseVersion)" },
+    "licenseExtras": { "type": "string", "$comment": "specRef: h5p.json (licenseExtras)" },
+    "authorComments": { "type": "string", "$comment": "specRef: h5p.json (authorComments)" },
+    "width": { "type": "integer", "$comment": "specRef: h5p.json (width — fixed pixel width)" },
+    "height": { "type": "integer", "$comment": "specRef: h5p.json (height — fixed pixel height)" },
+    "metaKeywords": { "type": "string", "$comment": "specRef: h5p.json (metaKeywords)" },
+    "metaDescription": { "type": "string", "$comment": "specRef: h5p.json (metaDescription)" },
+    "yearFrom": { "type": "integer", "$comment": "specRef: h5p.json (yearFrom — copyright year range start)" },
+    "yearTo": { "type": "integer", "$comment": "specRef: h5p.json (yearTo — copyright year range end)" },
+    "defaultLanguage": { "type": "string", "$comment": "specRef: h5p.json (defaultLanguage)" },
+    "a11yTitle": { "type": "string", "$comment": "specRef: h5p.json (a11yTitle — accessible title)" },
+    "changes": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/ChangelogEntry" },
+      "$comment": "specRef: h5p.json (changes — changelog entries)"
+    }
+  },
+  "$defs": {
+    "VersionRef": {
+      "type": "object",
+      "title": "library version reference",
+      "required": ["machineName", "majorVersion", "minorVersion"],
+      "properties": {
+        "machineName": { "type": "string", "$comment": "specRef: dependency (machineName — patch omitted by design)" },
+        "majorVersion": { "type": "integer", "$comment": "specRef: dependency (majorVersion)" },
+        "minorVersion": { "type": "integer", "$comment": "specRef: dependency (minorVersion)" }
+      }
+    },
+    "Author": {
+      "type": "object",
+      "title": "author",
+      "required": ["name"],
+      "properties": {
+        "name": { "type": "string", "$comment": "specRef: h5p.json (authors[].name)" },
+        "role": { "type": "string", "$comment": "specRef: h5p.json (authors[].role)" }
+      }
+    },
+    "ChangelogEntry": {
+      "type": "object",
+      "title": "changelog entry",
+      "required": ["date", "changes"],
+      "properties": {
+        "date": { "type": "string", "$comment": "specRef: h5p.json (changes[].date)" },
+        "changes": {
+          "type": "array",
+          "items": { "type": "string" },
+          "$comment": "specRef: h5p.json (changes[].changes — the change descriptions)"
+        }
+      }
+    }
+  }
+}

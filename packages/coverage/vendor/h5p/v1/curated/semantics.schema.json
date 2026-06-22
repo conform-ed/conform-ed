@@ -1,0 +1,127 @@
+{
+  "$id": "conform-ed:curated:h5p/1/semantics",
+  "$comment": "Hand-authored denominator (conform-ed ADR-0017) — H5P publishes its semantics.json content-authoring meta-schema as prose on h5p.org, not as machine-readable JSON Schema. This curates semantics.json: an array of field definitions whose per-type properties are unioned into a single SemanticsField shape (conform-ed models the 13 field types as a discriminated union; the structural join compares property names, so the merged shape is the faithful denominator). Source: H5P semantics — https://h5p.org/documentation/developers/semantics. Lowest provenance tier; re-review on spec version bump.",
+  "title": "H5P semantics.json (field definitions)",
+  "type": "array",
+  "items": { "$ref": "#/$defs/SemanticsField" },
+  "$defs": {
+    "SemanticsField": {
+      "type": "object",
+      "title": "semantics field",
+      "$comment": "The 13 H5P field types (text/html/number/boolean/image/audio/video/file/select/library/group/list/table) share the common base and add per-type properties; modelled here as one merged shape.",
+      "required": ["name", "type"],
+      "properties": {
+        "name": { "type": "string", "$comment": "specRef: semantics (name — the field's machine name)" },
+        "type": {
+          "type": "string",
+          "enum": ["text", "html", "number", "boolean", "image", "audio", "video", "file", "select", "library", "group", "list", "table"],
+          "$comment": "specRef: semantics (type — the field type discriminator)"
+        },
+        "label": { "type": "string", "$comment": "specRef: semantics (label — editor label)" },
+        "description": { "type": "string", "$comment": "specRef: semantics (description — editor help text)" },
+        "importance": { "type": "string", "enum": ["high", "medium", "low"], "$comment": "specRef: semantics (importance)" },
+        "optional": { "type": "boolean", "$comment": "specRef: semantics (optional)" },
+        "common": { "type": "boolean", "$comment": "specRef: semantics (common — translatable across instances)" },
+        "default": { "$comment": "specRef: semantics (default — the field's default value, type varies)" },
+        "widget": { "type": "string", "$comment": "specRef: semantics (widget — override editor widget)" },
+        "showWhen": { "$ref": "#/$defs/ShowWhen", "$comment": "specRef: semantics (showWhen — conditional visibility)" },
+        "nullWhenHidden": { "type": "boolean", "$comment": "specRef: semantics (nullWhenHidden)" },
+        "copy": { "type": "boolean", "$comment": "specRef: semantics (copy — copy/paste behaviour)" },
+        "maxLength": { "type": "integer", "$comment": "specRef: semantics (text/html maxLength)" },
+        "minLength": { "type": "integer", "$comment": "specRef: semantics (text/html minLength)" },
+        "regexp": { "$ref": "#/$defs/Regexp", "$comment": "specRef: semantics (text regexp constraint)" },
+        "placeholder": { "type": "string", "$comment": "specRef: semantics (text/html placeholder)" },
+        "enterMode": { "type": "string", "$comment": "specRef: semantics (text enterMode)" },
+        "tags": { "type": "array", "items": { "type": "string" }, "$comment": "specRef: semantics (html/text allowed tags)" },
+        "font": { "$comment": "specRef: semantics (text/html font options)" },
+        "min": { "type": "number", "$comment": "specRef: semantics (number min / list min)" },
+        "max": { "type": "number", "$comment": "specRef: semantics (number max / list max)" },
+        "steps": { "type": "number", "$comment": "specRef: semantics (number steps)" },
+        "decimals": { "type": "integer", "$comment": "specRef: semantics (number decimals)" },
+        "allowedMimeTypes": {
+          "type": "array",
+          "items": { "type": "string" },
+          "$comment": "specRef: semantics (image/audio/video/file allowedMimeTypes)"
+        },
+        "disableCopyright": { "type": "boolean", "$comment": "specRef: semantics (image disableCopyright)" },
+        "disableConversion": { "type": "boolean", "$comment": "specRef: semantics (audio/video disableConversion)" },
+        "options": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/SelectOption" },
+          "$comment": "specRef: semantics (select options; library options are machine-name strings)"
+        },
+        "multiple": { "type": "boolean", "$comment": "specRef: semantics (select multiple)" },
+        "fields": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/SemanticsField" },
+          "$comment": "specRef: semantics (group fields — nested field definitions)"
+        },
+        "isSubContent": { "type": "boolean", "$comment": "specRef: semantics (group isSubContent)" },
+        "expanded": { "type": "boolean", "$comment": "specRef: semantics (group expanded)" },
+        "field": { "$ref": "#/$defs/SemanticsField", "$comment": "specRef: semantics (list field — the element definition)" },
+        "entity": { "type": "string", "$comment": "specRef: semantics (list entity — singular item label)" },
+        "widgets": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/ListWidget" },
+          "$comment": "specRef: semantics (list widgets)"
+        },
+        "columns": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/SemanticsField" },
+          "$comment": "specRef: semantics (table columns — nested field definitions)"
+        },
+        "rows": { "type": "integer", "$comment": "specRef: semantics (table rows)" }
+      }
+    },
+    "ShowWhen": {
+      "type": "object",
+      "title": "conditional visibility",
+      "required": ["rules"],
+      "properties": {
+        "type": { "type": "string", "enum": ["and", "or"], "$comment": "specRef: semantics (showWhen.type — combine rules)" },
+        "rules": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/ShowWhenRule" },
+          "$comment": "specRef: semantics (showWhen.rules)"
+        }
+      }
+    },
+    "ShowWhenRule": {
+      "type": "object",
+      "title": "visibility rule",
+      "required": ["field", "equals"],
+      "properties": {
+        "field": { "type": "string", "$comment": "specRef: semantics (showWhen rule field)" },
+        "equals": { "$comment": "specRef: semantics (showWhen rule equals — string, boolean, number or string array)" }
+      }
+    },
+    "Regexp": {
+      "type": "object",
+      "title": "text regexp",
+      "required": ["pattern"],
+      "properties": {
+        "pattern": { "type": "string", "$comment": "specRef: semantics (regexp.pattern)" },
+        "modifiers": { "type": "string", "$comment": "specRef: semantics (regexp.modifiers)" },
+        "description": { "type": "string", "$comment": "specRef: semantics (regexp.description)" }
+      }
+    },
+    "SelectOption": {
+      "type": "object",
+      "title": "select option",
+      "required": ["value", "label"],
+      "properties": {
+        "value": { "type": "string", "$comment": "specRef: semantics (select option value)" },
+        "label": { "type": "string", "$comment": "specRef: semantics (select option label)" }
+      }
+    },
+    "ListWidget": {
+      "type": "object",
+      "title": "list widget",
+      "required": ["name"],
+      "properties": {
+        "name": { "type": "string", "$comment": "specRef: semantics (list widget name)" },
+        "label": { "type": "string", "$comment": "specRef: semantics (list widget label)" }
+      }
+    }
+  }
+}
