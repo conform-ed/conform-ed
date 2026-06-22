@@ -22,6 +22,15 @@ import {
   QtiAssessmentSectionSchema,
   QtiAssessmentStimulusSchema,
   QtiAssessmentTestSchema,
+  QtiBaseTypeSchema,
+  QtiCardinalitySchema,
+  QtiDirectionSchema,
+  QtiExternalScoredSchema,
+  QtiNavigationModeSchema,
+  QtiShapeSchema,
+  QtiShowHideSchema,
+  QtiSubmissionModeSchema,
+  QtiSuppressTtsSchema,
 } from "@conform-ed/contracts/qti/v3_0_1";
 
 import type { SpecSource } from "../../src/source";
@@ -197,6 +206,23 @@ export const qtiV3_0_1: SpecSource = {
       language: "xsd",
       zod: QtiAssessmentStimulusSchema,
     },
+  ],
+  // Value-set verification (ADR-0017): the QTI ASI binding enumerates many closed controlled
+  // vocabularies as XSD attribute types; the structural name-join cannot check their members, so
+  // each QTI-defined vocabulary is safeParse'd member-by-member against conform-ed's z.enum. One
+  // representative item is pinned per vocabulary (e.g. base-type recurs on 8 items, all identical).
+  // The HTML/ARIA attribute vocabularies (role, aria-*, crossorigin, …) are not QTI-defined and
+  // are modelled inline, so they are not value-set-checked here.
+  valueSets: [
+    { item: "qti:3.0.1:def:BaseValueDType/base-type", element: QtiBaseTypeSchema },
+    { item: "qti:3.0.1:def:ContextDeclarationDType/cardinality", element: QtiCardinalitySchema },
+    { item: "qti:3.0.1:def:TestPartDType/navigation-mode", element: QtiNavigationModeSchema },
+    { item: "qti:3.0.1:def:TestPartDType/submission-mode", element: QtiSubmissionModeSchema },
+    { item: "qti:3.0.1:def:AssociableHotspotDType/show-hide", element: QtiShowHideSchema },
+    { item: "qti:3.0.1:def:AreaMapEntryDType/shape", element: QtiShapeSchema },
+    { item: "qti:3.0.1:def:OutcomeDeclarationDType/external-scored", element: QtiExternalScoredSchema },
+    { item: "qti:3.0.1:def:BasePromptInteractionDType/data-qti-suppress-tts", element: QtiSuppressTtsSchema },
+    { item: "qti:3.0.1:def:BasePromptInteractionDType/dir", element: QtiDirectionSchema },
   ],
   conformance,
 };

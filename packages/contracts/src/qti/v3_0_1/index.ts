@@ -3,6 +3,22 @@ export {
   XmlExtensionNodeSchema as QtiXmlExtensionNodeSchema,
 } from "./shared";
 
+// QTI controlled-vocabulary enums (the closed value-sets the ASI binding enumerates) — public so
+// consumers (and the conformance Coverage Map's value-set verification) can validate against them.
+export {
+  QtiBaseTypeSchema,
+  QtiCardinalitySchema,
+  QtiDirectionSchema,
+  QtiExternalScoredSchema,
+  QtiNavigationModeSchema,
+  QtiOrientationSchema,
+  QtiShapeSchema,
+  QtiShowHideSchema,
+  QtiSubmissionModeSchema,
+  QtiSuppressTtsSchema,
+  QtiViewSchema,
+} from "./shared";
+
 export * from "./imsqti_asiv3p0p1_v1p0";
 export * from "./imsqti_itemv3p0p1_v1p0";
 export * from "./imsqti_metadatav3p0_v1p0";

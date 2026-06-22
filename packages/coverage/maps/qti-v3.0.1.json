@@ -50900,7 +50900,62 @@
       }
     ]
   },
-  "valueSets": [],
+  "valueSets": [
+    {
+      "item": "qti:3.0.1:def:AreaMapEntryDType/shape",
+      "members": 5,
+      "modelled": 5,
+      "gaps": []
+    },
+    {
+      "item": "qti:3.0.1:def:AssociableHotspotDType/show-hide",
+      "members": 2,
+      "modelled": 2,
+      "gaps": []
+    },
+    {
+      "item": "qti:3.0.1:def:BasePromptInteractionDType/data-qti-suppress-tts",
+      "members": 3,
+      "modelled": 3,
+      "gaps": []
+    },
+    {
+      "item": "qti:3.0.1:def:BasePromptInteractionDType/dir",
+      "members": 3,
+      "modelled": 3,
+      "gaps": []
+    },
+    {
+      "item": "qti:3.0.1:def:BaseValueDType/base-type",
+      "members": 11,
+      "modelled": 11,
+      "gaps": []
+    },
+    {
+      "item": "qti:3.0.1:def:ContextDeclarationDType/cardinality",
+      "members": 4,
+      "modelled": 4,
+      "gaps": []
+    },
+    {
+      "item": "qti:3.0.1:def:OutcomeDeclarationDType/external-scored",
+      "members": 2,
+      "modelled": 2,
+      "gaps": []
+    },
+    {
+      "item": "qti:3.0.1:def:TestPartDType/navigation-mode",
+      "members": 2,
+      "modelled": 2,
+      "gaps": []
+    },
+    {
+      "item": "qti:3.0.1:def:TestPartDType/submission-mode",
+      "members": 2,
+      "modelled": 2,
+      "gaps": []
+    }
+  ],
   "rollup": {
     "items": 5344,
     "modelledYes": 224,
@@ -50911,8 +50966,8 @@
     "normativeStatements": 2,
     "normativeStatementsCited": 0,
     "normalisations": 12,
-    "valueSetMembers": 0,
-    "valueSetModelled": 0,
+    "valueSetMembers": 34,
+    "valueSetModelled": 34,
     "valueSetGaps": 0
   }
 }

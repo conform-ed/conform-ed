@@ -84,6 +84,17 @@ describe("QTI 3.0.1 Coverage Map — XSD walker + name-normalisation", () => {
     }
   });
 
+  test("the QTI controlled vocabularies verify as value-sets with no gaps", () => {
+    // ADR-0017: the closed ASI attribute vocabularies (base-type, cardinality, navigation/
+    // submission mode, show-hide, shape, external-scored, suppress-tts, dir) the structural join
+    // cannot check — each safeParse'd against conform-ed's z.enum. 11+4+2+2+2+5+2+3+3 = 34.
+    expect(map.rollup.valueSetMembers).toBe(34);
+    expect(map.rollup.valueSetGaps).toBe(0);
+    expect(map.valueSets).toHaveLength(9);
+    expect(map.valueSets.find((v) => v.item.endsWith("/base-type"))?.modelled).toBe(11);
+    expect(map.valueSets.find((v) => v.item.endsWith("/cardinality"))?.modelled).toBe(4);
+  });
+
   test("the committed map is in sync with the generator", () => {
     const committed = readFileSync(join(import.meta.dir, "..", "maps", "qti-v3.0.1.json"), "utf8");
     const parsed = JSON.parse(committed) as CoverageMap;
