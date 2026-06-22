@@ -47,6 +47,12 @@
         "sha256": "853f2783c6db4da23b8ba8b5c5dc9d2ddb5ee684745567fba653619d299041a6"
       },
       {
+        "binding": "RoleVocabulary",
+        "language": "curated",
+        "id": "conform-ed:curated:lti/1.3/roles/vocabulary",
+        "sha256": "3b5a7017acdc1410a980cdbf9c1ad1f2ac7411a349fa68a1627e620837b2bc72"
+      },
+      {
         "binding": "Score",
         "language": "openapi",
         "id": "Assignment and Grade Services v1.0.0",
@@ -963,6 +969,55 @@
       "path": ""
     },
     {
+      "key": "lti:1.3:doc:RoleVocabulary",
+      "kind": "document",
+      "path": "",
+      "jsonType": "object"
+    },
+    {
+      "key": "lti:1.3:doc:RoleVocabulary/role",
+      "kind": "property",
+      "path": "role",
+      "jsonType": "string",
+      "enumValues": [
+        "http://purl.imsglobal.org/vocab/lis/v2/membership#Administrator",
+        "http://purl.imsglobal.org/vocab/lis/v2/membership#ContentDeveloper",
+        "http://purl.imsglobal.org/vocab/lis/v2/membership#Instructor",
+        "http://purl.imsglobal.org/vocab/lis/v2/membership#Learner",
+        "http://purl.imsglobal.org/vocab/lis/v2/membership#Mentor",
+        "http://purl.imsglobal.org/vocab/lis/v2/membership#Manager",
+        "http://purl.imsglobal.org/vocab/lis/v2/membership#Member",
+        "http://purl.imsglobal.org/vocab/lis/v2/membership#Officer",
+        "http://purl.imsglobal.org/vocab/lis/v2/membership/Instructor#TeachingAssistant",
+        "http://purl.imsglobal.org/vocab/lis/v2/system/person#Administrator",
+        "http://purl.imsglobal.org/vocab/lis/v2/system/person#None",
+        "http://purl.imsglobal.org/vocab/lis/v2/system/person#AccountAdmin",
+        "http://purl.imsglobal.org/vocab/lis/v2/system/person#Creator",
+        "http://purl.imsglobal.org/vocab/lis/v2/system/person#SysAdmin",
+        "http://purl.imsglobal.org/vocab/lis/v2/system/person#SysSupport",
+        "http://purl.imsglobal.org/vocab/lis/v2/system/person#User",
+        "http://purl.imsglobal.org/vocab/lis/v2/institution/person#Administrator",
+        "http://purl.imsglobal.org/vocab/lis/v2/institution/person#Faculty",
+        "http://purl.imsglobal.org/vocab/lis/v2/institution/person#Guest",
+        "http://purl.imsglobal.org/vocab/lis/v2/institution/person#None",
+        "http://purl.imsglobal.org/vocab/lis/v2/institution/person#Other",
+        "http://purl.imsglobal.org/vocab/lis/v2/institution/person#Staff",
+        "http://purl.imsglobal.org/vocab/lis/v2/institution/person#Student",
+        "http://purl.imsglobal.org/vocab/lis/v2/institution/person#Alumni",
+        "http://purl.imsglobal.org/vocab/lis/v2/institution/person#Instructor",
+        "http://purl.imsglobal.org/vocab/lis/v2/institution/person#Learner",
+        "http://purl.imsglobal.org/vocab/lis/v2/institution/person#Member",
+        "http://purl.imsglobal.org/vocab/lis/v2/institution/person#Mentor",
+        "http://purl.imsglobal.org/vocab/lis/v2/institution/person#Observer",
+        "http://purl.imsglobal.org/vocab/lis/v2/institution/person#ProspectiveStudent",
+        "Administrator",
+        "ContentDeveloper",
+        "Instructor",
+        "Learner",
+        "Mentor"
+      ]
+    },
+    {
       "key": "lti:1.3:doc:Score",
       "kind": "document",
       "path": ""
@@ -1343,7 +1398,9 @@
       "reqId": "LTI-CORE-4",
       "level": "MUST",
       "statement": "The launch MUST carry the roles claim (an array of role URIs) binding the user to the context; the tool authorizes from it.",
-      "constrains": [],
+      "constrains": [
+        "lti:1.3:doc:RoleVocabulary/role"
+      ],
       "source": "LTI Core 1.3 §5.3.3 (roles claim) — https://www.imsglobal.org/spec/lti/v1p3/"
     },
     {
@@ -1510,8 +1567,16 @@
     ],
     "normalisations": []
   },
+  "valueSets": [
+    {
+      "item": "lti:1.3:doc:RoleVocabulary/role",
+      "members": 35,
+      "modelled": 35,
+      "gaps": []
+    }
+  ],
   "rollup": {
-    "items": 144,
+    "items": 146,
     "modelledYes": 78,
     "modelledPartial": 0,
     "modelledNo": 0,
@@ -1519,6 +1584,9 @@
     "conformanceRequirements": 27,
     "normativeStatements": 0,
     "normativeStatementsCited": 0,
-    "normalisations": 0
+    "normalisations": 0,
+    "valueSetMembers": 35,
+    "valueSetModelled": 35,
+    "valueSetGaps": 0
   }
 }

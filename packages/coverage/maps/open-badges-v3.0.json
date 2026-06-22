@@ -2,7 +2,7 @@
   "meta": {
     "spec": "ob",
     "version": "3.0",
-    "generatedAt": "2026-06-17",
+    "generatedAt": "2026-06-22",
     "sources": [
       {
         "binding": "achievementcredential",
@@ -3311,6 +3311,7 @@
     "extensions": [],
     "normalisations": []
   },
+  "valueSets": [],
   "rollup": {
     "items": 340,
     "modelledYes": 241,
@@ -3320,6 +3321,9 @@
     "conformanceRequirements": 16,
     "normativeStatements": 36,
     "normativeStatementsCited": 9,
-    "normalisations": 0
+    "normalisations": 0,
+    "valueSetMembers": 0,
+    "valueSetModelled": 0,
+    "valueSetGaps": 0
   }
 }

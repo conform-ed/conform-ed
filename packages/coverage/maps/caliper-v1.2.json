@@ -2,7 +2,7 @@
   "meta": {
     "spec": "caliper",
     "version": "1.2",
-    "generatedAt": "2026-06-18",
+    "generatedAt": "2026-06-22",
     "sources": [
       {
         "binding": "Agent",
@@ -70463,6 +70463,7 @@
     ],
     "normalisations": []
   },
+  "valueSets": [],
   "rollup": {
     "items": 1957,
     "modelledYes": 78,
@@ -70472,6 +70473,9 @@
     "conformanceRequirements": 5,
     "normativeStatements": 99,
     "normativeStatementsCited": 99,
-    "normalisations": 0
+    "normalisations": 0,
+    "valueSetMembers": 0,
+    "valueSetModelled": 0,
+    "valueSetGaps": 0
   }
 }

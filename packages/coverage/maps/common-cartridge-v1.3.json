@@ -2,7 +2,7 @@
   "meta": {
     "spec": "cc",
     "version": "1.3",
-    "generatedAt": "2026-06-18",
+    "generatedAt": "2026-06-22",
     "sources": [
       {
         "binding": "authorizations",
@@ -6381,6 +6381,7 @@
       }
     ]
   },
+  "valueSets": [],
   "rollup": {
     "items": 676,
     "modelledYes": 413,
@@ -6390,6 +6391,9 @@
     "conformanceRequirements": 12,
     "normativeStatements": 0,
     "normativeStatementsCited": 0,
-    "normalisations": 97
+    "normalisations": 97,
+    "valueSetMembers": 0,
+    "valueSetModelled": 0,
+    "valueSetGaps": 0
   }
 }

@@ -24,6 +24,13 @@ for that family — a JSON Schema written from the prose spec, not a vendored 1E
   (`id`, `context`, `members[]` with the per-member identity / roles / status fields),
   authored from **LTI NRPS 2.0 §2.1 / §4.2** (<https://www.imsglobal.org/spec/lti-nrps/v2p0>).
   Reconciled against conform-ed's `MembershipContainerSchema`.
+- `curated/role-vocabulary.schema.json` — the published LTI role vocabulary (context core +
+  non-core, a context sub-role, the system and institution namespaces, and the LTI 1.1 simple
+  context names), authored from **LTI 1.3 core §5.3.3 + the LIS v2 role vocabularies**
+  (<https://www.imsglobal.org/spec/lti/v1p3/#role-vocabularies>). This is a **value-set**, not
+  an object shape: conform-ed models it as a refinement (`normalizeRole` / `KnownLtiRoleSchema`),
+  invisible to JSON-Schema rendering, so it is verified member-by-member via `safeParse`
+  (ADR-0017 value-set extension) rather than by the structural reconciliation.
 
 ## Source (the AGS OpenAPI)
 

@@ -2,7 +2,7 @@
   "meta": {
     "spec": "qti",
     "version": "3.0.1",
-    "generatedAt": "2026-06-18",
+    "generatedAt": "2026-06-22",
     "sources": [
       {
         "binding": "qti-assessment-item",
@@ -50900,6 +50900,7 @@
       }
     ]
   },
+  "valueSets": [],
   "rollup": {
     "items": 5344,
     "modelledYes": 224,
@@ -50909,6 +50910,9 @@
     "conformanceRequirements": 10,
     "normativeStatements": 2,
     "normativeStatementsCited": 0,
-    "normalisations": 12
+    "normalisations": 12,
+    "valueSetMembers": 0,
+    "valueSetModelled": 0,
+    "valueSetGaps": 0
   }
 }

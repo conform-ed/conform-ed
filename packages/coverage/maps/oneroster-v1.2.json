@@ -2,7 +2,7 @@
   "meta": {
     "spec": "or",
     "version": "1.2",
-    "generatedAt": "2026-06-18",
+    "generatedAt": "2026-06-22",
     "sources": [
       {
         "binding": "AcademicSessionDType",
@@ -6451,6 +6451,7 @@
     "extensions": [],
     "normalisations": []
   },
+  "valueSets": [],
   "rollup": {
     "items": 498,
     "modelledYes": 248,
@@ -6460,6 +6461,9 @@
     "conformanceRequirements": 21,
     "normativeStatements": 48,
     "normativeStatementsCited": 38,
-    "normalisations": 0
+    "normalisations": 0,
+    "valueSetMembers": 0,
+    "valueSetModelled": 0,
+    "valueSetGaps": 0
   }
 }

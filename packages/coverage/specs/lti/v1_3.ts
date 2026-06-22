@@ -2,18 +2,19 @@
  * LTI 1.3 + Advantage — {@link SpecSource} (conform-ed ADR-0013; emergent ADR-0033
  * rollout). The hybrid map: a thin **schema-reconciled spine** (Assignment & Grade
  * Services), **curated denominators** for the prose-only payloads (Deep Linking content
- * items + the NRPS membership container, ADR-0017), and a **guide-curated catalogue** (Core
- * launch, Security, the remaining service requirements) with no `cited` denominator — the
- * CC/QTI catalogue shape.
+ * items + the NRPS membership container, ADR-0017), a **value-set** check for the role
+ * vocabulary, and a **guide-curated catalogue** (Core launch, Security, the remaining service
+ * requirements) with no `cited` denominator — the CC/QTI catalogue shape.
  *
  * Deep Linking and NRPS publish no machine-readable schema, so before ADR-0017 the conform-ed
  * Zod was its own yardstick — and a real under-modelling (the html content item's `html`
  * payload, the image item's dimensions) sat undetected. The curated JSON Schemas under
  * `vendor/lti/v1_3/curated/` now give those payloads a hand-authored, spec-cited denominator
  * (walked by `walkers/curated.ts`), reconciled against the conform-ed contracts so a future
- * regression surfaces as a silent gap. The LTI **role vocabulary** is the one prose family
- * still un-denominated: it is a controlled value-set, not an object shape, so the structural
- * property-join cannot verify it — it needs a value-set primitive (ADR-0017 follow-up).
+ * regression surfaces as a silent gap. The LTI **role vocabulary** is a controlled value-set,
+ * not an object shape — the structural property-join cannot verify it — so it is checked by
+ * the ADR-0017 value-set extension: every published role is `safeParse`d against
+ * `KnownLtiRoleSchema`, and a member conform-ed fails to recognise is a value-set gap.
  *
  * Why hybrid (verified against the published specs, 2026-06-21):
  *
@@ -53,6 +54,7 @@
 
 import { join } from "node:path";
 
+import { KnownLtiRoleSchema } from "@conform-ed/contracts/lti";
 import {
   LineItemContainerSchema,
   LineItemSchema,
@@ -133,7 +135,9 @@ const conformance: readonly ConformanceRequirement[] = [
     level: "MUST",
     statement:
       "The launch MUST carry the roles claim (an array of role URIs) binding the user to the context; the tool authorizes from it.",
-    constrains: [],
+    // Anchored to the ADR-0017 value-set denominator: conform-ed must recognise every published
+    // role (verified by safeParse against KnownLtiRoleSchema), not merely accept an array.
+    constrains: ["lti:1.3:doc:RoleVocabulary/role"],
     source: "LTI Core 1.3 §5.3.3 (roles claim) — https://www.imsglobal.org/spec/lti/v1p3/",
   },
   {
@@ -440,7 +444,20 @@ export const ltiV1_3: SpecSource = {
       language: "curated",
       zod: MembershipContainerSchema,
     },
+    // Value-set-only (ADR-0017): the role vocabulary is a controlled value-set modelled by a
+    // refinement, not an object shape — it contributes its members for value-set verification
+    // and is excluded from the structural reconciliation.
+    {
+      binding: "RoleVocabulary",
+      schemaPath: vendor("curated/role-vocabulary.schema.json"),
+      language: "curated",
+      valueSetOnly: true,
+    },
   ],
+  // Value-set verification (ADR-0017): every published role the curated vocabulary lists is
+  // safeParse'd against KnownLtiRoleSchema, so a member conform-ed's normalizeRole fails to
+  // recognise surfaces as a value-set gap — the check the structural property-join cannot do.
+  valueSets: [{ item: "lti:1.3:doc:RoleVocabulary/role", element: KnownLtiRoleSchema }],
   // Transport axis: the AGS OpenAPI `paths` (operations + query filters; no security
   // scheme is declared — AGS keeps OAuth out of band), inventoried as L1-only items the
   // AGS REST-binding requirements cross-link to.

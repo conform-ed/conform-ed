@@ -59,6 +59,14 @@ export interface SpecBindingSource {
    * the whole binding then reconciles as a silent gap.
    */
   readonly zod?: ZodType;
+  /**
+   * Mark a curated binding as **value-set-only** (ADR-0017): it contributes its vocabulary
+   * items to L1 so a {@link ValueSetSource} can verify their members, but it is NOT a
+   * structural document root — its items never enter the structural reconciliation, so a
+   * standalone controlled vocabulary (the LTI role list, modelled by a `refine` with no object
+   * shape) does not surface as a false silent gap. Such a binding carries no {@link zod}.
+   */
+  readonly valueSetOnly?: boolean;
 }
 
 /**
@@ -74,6 +82,23 @@ export interface RestServiceSource {
   readonly service: string;
   /** Absolute path to the vendored OpenAPI document. */
   readonly schemaPath: string;
+}
+
+/**
+ * One controlled-vocabulary to verify (conform-ed ADR-0017 value-set extension). The
+ * structural reconciliation matches property names, never enumerated *values*, so a spec's
+ * vocabulary (LTI roles, a status enum) can be "modelled" structurally while conform-ed
+ * silently fails to accept some of its members. This pairs a curated L1 item carrying the
+ * published members (its `enumValues`) with the conform-ed Zod that models *one* member: the
+ * generator `safeParse`s every member, and the rejects become value-set gaps. Reading the
+ * real contract this way works for `z.enum` and for `refine`-based schemas alike (the latter
+ * vanish under JSON-Schema rendering, which is exactly why the structural join misses them).
+ */
+export interface ValueSetSource {
+  /** The curated L1 item key whose `enumValues` are the published vocabulary to verify. */
+  readonly item: string;
+  /** conform-ed Zod modelling one vocabulary member; each published member is `safeParse`d. */
+  readonly element: ZodType;
 }
 
 export interface SpecSource {
@@ -92,6 +117,13 @@ export interface SpecSource {
    * non-REST map, and OpenAPI maps that curate only the data model).
    */
   readonly restServices?: readonly RestServiceSource[];
+  /**
+   * Optional controlled-vocabularies to verify against conform-ed's model (ADR-0017 value-set
+   * extension). Each references a curated L1 item carrying the published members and the Zod
+   * that models one member. Omitted ⇒ no value-set verdicts (most maps; the structural join
+   * already covers their information model).
+   */
+  readonly valueSets?: readonly ValueSetSource[];
   /**
    * Optional canonicalisation of property names for the L2 name-based join, when the
    * literal schema and conform-ed's Zod use *different serialisation bindings* of the

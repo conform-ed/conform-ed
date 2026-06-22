@@ -2,7 +2,7 @@
   "meta": {
     "spec": "qti",
     "version": "2.2",
-    "generatedAt": "2026-06-18",
+    "generatedAt": "2026-06-22",
     "sources": [
       {
         "binding": "apipAccessibility",
@@ -50044,6 +50044,7 @@
       }
     ]
   },
+  "valueSets": [],
   "rollup": {
     "items": 5378,
     "modelledYes": 208,
@@ -50053,6 +50054,9 @@
     "conformanceRequirements": 11,
     "normativeStatements": 0,
     "normativeStatementsCited": 0,
-    "normalisations": 14
+    "normalisations": 14,
+    "valueSetMembers": 0,
+    "valueSetModelled": 0,
+    "valueSetGaps": 0
   }
 }

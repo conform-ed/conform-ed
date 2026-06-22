@@ -65,6 +65,25 @@ First targets (LTI, where the hole was found): the Deep Linking 2.0 content-item
 vocabulary, and the NRPS membership container. cmi5 and the credential REST surfaces (OB/CLR/CASE),
 which are likewise prose-and-example specs, are candidates once the LTI denominator proves the shape.
 
+## Value-set extension
+
+The structural reconciliation matches property **names**, so it answers "does conform-ed model this
+field" but never "does conform-ed accept every value this field's controlled vocabulary defines". A
+spec vocabulary (the LTI role URIs, a status enum, a document-target enum) can therefore be modelled
+structurally while conform-ed silently rejects some of its members — and worse, where conform-ed
+models the vocabulary as a Zod **refinement** (the LTI roles: `normalizeRole`), it vanishes entirely
+under JSON-Schema rendering, so the structural side sees nothing to compare.
+
+The **value-set verdict** closes this. A `ValueSetSource` pairs a curated L1 item carrying the
+published members (its `enumValues`, cited like any curated node) with the conform-ed Zod that models
+**one** member. The generator `safeParse`s every member against that Zod; the rejects are value-set
+gaps — the value analogue of `silentGaps`. Reading the real contract via `safeParse` is agnostic to
+enum-vs-refinement (it is precisely the refinement case the structural join cannot see). A standalone
+vocabulary with no object shape (the role list) is carried by a `valueSetOnly` binding: it contributes
+its members to L1 but is excluded from the structural reconciliation, so it is never a false silent
+gap. The map gains a `valueSets` array and `valueSetMembers` / `valueSetModelled` / `valueSetGaps`
+rollup counts; a value-set conformance requirement (LTI-CORE-4) anchors to the vocabulary item.
+
 ## Consequences
 
 - **Closes the blind spot honestly.** The prose-only families gain a real denominator, so the

@@ -2,7 +2,7 @@
   "meta": {
     "spec": "case",
     "version": "1.1",
-    "generatedAt": "2026-06-17",
+    "generatedAt": "2026-06-22",
     "sources": [
       {
         "binding": "cfassociation",
@@ -3160,6 +3160,7 @@
     "extensions": [],
     "normalisations": []
   },
+  "valueSets": [],
   "rollup": {
     "items": 344,
     "modelledYes": 264,
@@ -3169,6 +3170,9 @@
     "conformanceRequirements": 9,
     "normativeStatements": 3,
     "normativeStatementsCited": 3,
-    "normalisations": 0
+    "normalisations": 0,
+    "valueSetMembers": 0,
+    "valueSetModelled": 0,
+    "valueSetGaps": 0
   }
 }

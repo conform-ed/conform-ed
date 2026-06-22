@@ -2,7 +2,7 @@
   "meta": {
     "spec": "clr",
     "version": "2.0",
-    "generatedAt": "2026-06-17",
+    "generatedAt": "2026-06-22",
     "sources": [
       {
         "binding": "achievementcredential",
@@ -3956,6 +3956,7 @@
     "extensions": [],
     "normalisations": []
   },
+  "valueSets": [],
   "rollup": {
     "items": 409,
     "modelledYes": 299,
@@ -3965,6 +3966,9 @@
     "conformanceRequirements": 14,
     "normativeStatements": 40,
     "normativeStatementsCited": 7,
-    "normalisations": 0
+    "normalisations": 0,
+    "valueSetMembers": 0,
+    "valueSetModelled": 0,
+    "valueSetGaps": 0
   }
 }

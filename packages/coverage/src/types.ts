@@ -151,6 +151,28 @@ export interface SpecRefNormalisation {
   readonly literalKeys: readonly string[];
 }
 
+/**
+ * A value-set (controlled-vocabulary) verdict — the conform-ed ADR-0017 value-set extension.
+ *
+ * The structural reconciliation matches property *names*, so it cannot tell whether
+ * conform-ed's model actually accepts a spec's enumerated *values* (the LTI role vocabulary,
+ * a status enum, a document-target enum). This closes that blind spot: each published member
+ * of a curated vocabulary item is parsed against the conform-ed Zod that models one member,
+ * and the members it rejects are value-set gaps — the value analogue of `silentGaps`. It
+ * reads the real contract (a `safeParse`), so it works for enum *and* refinement schemas
+ * (the role vocabulary is a `refine`, invisible to JSON-Schema rendering).
+ */
+export interface ValueSetVerdict {
+  /** The curated L1 item whose `enumValues` are the published vocabulary. */
+  readonly item: string;
+  /** Total published members checked. */
+  readonly members: number;
+  /** Members the conform-ed model accepts. */
+  readonly modelled: number;
+  /** Published members the conform-ed model rejects (value-set silent gaps). */
+  readonly gaps: readonly string[];
+}
+
 /** The reconciliation residues that are the point of the literal denominator. */
 export interface ReconciliationResidues {
   /** Literal expanded paths with no Zod counterpart — candidate silent gaps. */
@@ -177,6 +199,12 @@ export interface CoverageRollup {
   readonly normativeStatementsCited: number;
   /** Residue keys absorbed by documented `specRef` renames (gaps + extensions). */
   readonly normalisations: number;
+  /** Published controlled-vocabulary members checked across all value-sets (ADR-0017). */
+  readonly valueSetMembers: number;
+  /** Of those, how many the conform-ed model accepts. */
+  readonly valueSetModelled: number;
+  /** Published members the conform-ed model rejects (value-set silent gaps). */
+  readonly valueSetGaps: number;
 }
 
 /** Provenance of a single vendored source artifact in the denominator. */
@@ -206,5 +234,7 @@ export interface CoverageMap {
   /** Normative statements extracted from the schema's own documentation (regenerated). */
   readonly normativeStatements: readonly NormativeStatement[];
   readonly residues: ReconciliationResidues;
+  /** Controlled-vocabulary verdicts (ADR-0017 value-set extension); `[]` when none declared. */
+  readonly valueSets: readonly ValueSetVerdict[];
   readonly rollup: CoverageRollup;
 }
