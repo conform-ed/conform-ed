@@ -1,0 +1,626 @@
+{
+  "meta": {
+    "spec": "vc",
+    "version": "2.0",
+    "generatedAt": "2026-06-22",
+    "sources": [
+      {
+        "binding": "VerifiableCredential",
+        "language": "curated",
+        "id": "conform-ed:curated:vc-data-model/2.0/verifiable-credential",
+        "sha256": "47912f3f61b88f97b471b1318849d578b45185a173d41fa1fea5681538fbb31f"
+      },
+      {
+        "binding": "VerifiablePresentation",
+        "language": "curated",
+        "id": "conform-ed:curated:vc-data-model/2.0/verifiable-presentation",
+        "sha256": "085cd318b0f8bedbbda28360de5bb0bb34d3d3d31ff8647a867aaeb005096adc"
+      }
+    ]
+  },
+  "items": [
+    {
+      "key": "vc:2.0:def:CredentialSchema",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object"
+    },
+    {
+      "key": "vc:2.0:def:CredentialSchema/id",
+      "kind": "property",
+      "path": "id",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "vc:2.0:def:CredentialSchema/type",
+      "kind": "property",
+      "path": "type",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "vc:2.0:def:CredentialStatus",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object"
+    },
+    {
+      "key": "vc:2.0:def:CredentialStatus/id",
+      "kind": "property",
+      "path": "id",
+      "modelled": "yes"
+    },
+    {
+      "key": "vc:2.0:def:CredentialStatus/type",
+      "kind": "property",
+      "path": "type",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "vc:2.0:def:CredentialSubject",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object"
+    },
+    {
+      "key": "vc:2.0:def:CredentialSubject/id",
+      "kind": "property",
+      "path": "id",
+      "modelled": "yes"
+    },
+    {
+      "key": "vc:2.0:def:Evidence",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object"
+    },
+    {
+      "key": "vc:2.0:def:Evidence/description",
+      "kind": "property",
+      "path": "description",
+      "modelled": "yes"
+    },
+    {
+      "key": "vc:2.0:def:Evidence/id",
+      "kind": "property",
+      "path": "id",
+      "modelled": "yes"
+    },
+    {
+      "key": "vc:2.0:def:Evidence/name",
+      "kind": "property",
+      "path": "name",
+      "modelled": "yes"
+    },
+    {
+      "key": "vc:2.0:def:Evidence/narrative",
+      "kind": "property",
+      "path": "narrative",
+      "modelled": "yes"
+    },
+    {
+      "key": "vc:2.0:def:Evidence/type",
+      "kind": "property",
+      "path": "type",
+      "modelled": "yes"
+    },
+    {
+      "key": "vc:2.0:def:Proof",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object"
+    },
+    {
+      "key": "vc:2.0:def:Proof/challenge",
+      "kind": "property",
+      "path": "challenge",
+      "modelled": "yes"
+    },
+    {
+      "key": "vc:2.0:def:Proof/created",
+      "kind": "property",
+      "path": "created",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "vc:2.0:def:Proof/cryptosuite",
+      "kind": "property",
+      "path": "cryptosuite",
+      "modelled": "yes"
+    },
+    {
+      "key": "vc:2.0:def:Proof/domain",
+      "kind": "property",
+      "path": "domain",
+      "modelled": "yes"
+    },
+    {
+      "key": "vc:2.0:def:Proof/nonce",
+      "kind": "property",
+      "path": "nonce",
+      "modelled": "yes"
+    },
+    {
+      "key": "vc:2.0:def:Proof/proofPurpose",
+      "kind": "property",
+      "path": "proofPurpose",
+      "modelled": "yes"
+    },
+    {
+      "key": "vc:2.0:def:Proof/proofValue",
+      "kind": "property",
+      "path": "proofValue",
+      "modelled": "yes"
+    },
+    {
+      "key": "vc:2.0:def:Proof/type",
+      "kind": "property",
+      "path": "type",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "vc:2.0:def:Proof/verificationMethod",
+      "kind": "property",
+      "path": "verificationMethod",
+      "modelled": "yes"
+    },
+    {
+      "key": "vc:2.0:def:RefreshService",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object"
+    },
+    {
+      "key": "vc:2.0:def:RefreshService/id",
+      "kind": "property",
+      "path": "id",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "vc:2.0:def:RefreshService/type",
+      "kind": "property",
+      "path": "type",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "vc:2.0:def:TermsOfUse",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object"
+    },
+    {
+      "key": "vc:2.0:def:TermsOfUse/id",
+      "kind": "property",
+      "path": "id",
+      "modelled": "yes"
+    },
+    {
+      "key": "vc:2.0:def:TermsOfUse/type",
+      "kind": "property",
+      "path": "type",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "vc:2.0:def:VerifiableCredential",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object"
+    },
+    {
+      "key": "vc:2.0:def:VerifiableCredential/@context",
+      "kind": "property",
+      "path": "@context",
+      "jsonType": "array",
+      "required": true,
+      "normative": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "vc:2.0:def:VerifiableCredential/@context/[]",
+      "kind": "property",
+      "path": "@context/[]",
+      "jsonType": "string"
+    },
+    {
+      "key": "vc:2.0:def:VerifiableCredential/credentialSchema",
+      "kind": "property",
+      "path": "credentialSchema",
+      "modelled": "yes"
+    },
+    {
+      "key": "vc:2.0:def:VerifiableCredential/credentialSchema/[]",
+      "kind": "property",
+      "path": "credentialSchema/[]",
+      "modelled": "yes"
+    },
+    {
+      "key": "vc:2.0:def:VerifiableCredential/credentialStatus",
+      "kind": "property",
+      "path": "credentialStatus",
+      "modelled": "yes"
+    },
+    {
+      "key": "vc:2.0:def:VerifiableCredential/credentialStatus/[]",
+      "kind": "property",
+      "path": "credentialStatus/[]",
+      "modelled": "yes"
+    },
+    {
+      "key": "vc:2.0:def:VerifiableCredential/credentialSubject",
+      "kind": "property",
+      "path": "credentialSubject",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "vc:2.0:def:VerifiableCredential/credentialSubject/[]",
+      "kind": "property",
+      "path": "credentialSubject/[]",
+      "modelled": "yes"
+    },
+    {
+      "key": "vc:2.0:def:VerifiableCredential/description",
+      "kind": "property",
+      "path": "description",
+      "modelled": "yes"
+    },
+    {
+      "key": "vc:2.0:def:VerifiableCredential/evidence",
+      "kind": "property",
+      "path": "evidence",
+      "modelled": "yes"
+    },
+    {
+      "key": "vc:2.0:def:VerifiableCredential/evidence/[]",
+      "kind": "property",
+      "path": "evidence/[]",
+      "modelled": "yes"
+    },
+    {
+      "key": "vc:2.0:def:VerifiableCredential/id",
+      "kind": "property",
+      "path": "id",
+      "modelled": "yes"
+    },
+    {
+      "key": "vc:2.0:def:VerifiableCredential/issuer",
+      "kind": "property",
+      "path": "issuer",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "vc:2.0:def:VerifiableCredential/name",
+      "kind": "property",
+      "path": "name",
+      "modelled": "yes"
+    },
+    {
+      "key": "vc:2.0:def:VerifiableCredential/proof",
+      "kind": "property",
+      "path": "proof",
+      "modelled": "yes"
+    },
+    {
+      "key": "vc:2.0:def:VerifiableCredential/proof/[]",
+      "kind": "property",
+      "path": "proof/[]",
+      "modelled": "yes"
+    },
+    {
+      "key": "vc:2.0:def:VerifiableCredential/refreshService",
+      "kind": "property",
+      "path": "refreshService",
+      "modelled": "yes"
+    },
+    {
+      "key": "vc:2.0:def:VerifiableCredential/refreshService/[]",
+      "kind": "property",
+      "path": "refreshService/[]",
+      "modelled": "yes"
+    },
+    {
+      "key": "vc:2.0:def:VerifiableCredential/termsOfUse",
+      "kind": "property",
+      "path": "termsOfUse",
+      "modelled": "yes"
+    },
+    {
+      "key": "vc:2.0:def:VerifiableCredential/termsOfUse/[]",
+      "kind": "property",
+      "path": "termsOfUse/[]",
+      "modelled": "yes"
+    },
+    {
+      "key": "vc:2.0:def:VerifiableCredential/type",
+      "kind": "property",
+      "path": "type",
+      "required": true,
+      "normative": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "vc:2.0:def:VerifiableCredential/type/[]",
+      "kind": "property",
+      "path": "type/[]",
+      "jsonType": "string"
+    },
+    {
+      "key": "vc:2.0:def:VerifiableCredential/validFrom",
+      "kind": "property",
+      "path": "validFrom",
+      "jsonType": "string",
+      "required": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "vc:2.0:def:VerifiableCredential/validUntil",
+      "kind": "property",
+      "path": "validUntil",
+      "jsonType": "string",
+      "modelled": "yes"
+    },
+    {
+      "key": "vc:2.0:def:VerifiablePresentation",
+      "kind": "definition",
+      "path": "",
+      "jsonType": "object"
+    },
+    {
+      "key": "vc:2.0:def:VerifiablePresentation/@context",
+      "kind": "property",
+      "path": "@context",
+      "jsonType": "array",
+      "required": true,
+      "normative": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "vc:2.0:def:VerifiablePresentation/@context/[]",
+      "kind": "property",
+      "path": "@context/[]",
+      "jsonType": "string"
+    },
+    {
+      "key": "vc:2.0:def:VerifiablePresentation/holder",
+      "kind": "property",
+      "path": "holder",
+      "modelled": "yes"
+    },
+    {
+      "key": "vc:2.0:def:VerifiablePresentation/id",
+      "kind": "property",
+      "path": "id",
+      "modelled": "yes"
+    },
+    {
+      "key": "vc:2.0:def:VerifiablePresentation/proof",
+      "kind": "property",
+      "path": "proof",
+      "modelled": "yes"
+    },
+    {
+      "key": "vc:2.0:def:VerifiablePresentation/proof/[]",
+      "kind": "property",
+      "path": "proof/[]",
+      "modelled": "yes"
+    },
+    {
+      "key": "vc:2.0:def:VerifiablePresentation/type",
+      "kind": "property",
+      "path": "type",
+      "required": true,
+      "normative": true,
+      "modelled": "yes"
+    },
+    {
+      "key": "vc:2.0:def:VerifiablePresentation/type/[]",
+      "kind": "property",
+      "path": "type/[]",
+      "jsonType": "string"
+    },
+    {
+      "key": "vc:2.0:def:VerifiablePresentation/verifiableCredential",
+      "kind": "property",
+      "path": "verifiableCredential",
+      "modelled": "yes"
+    },
+    {
+      "key": "vc:2.0:def:VerifiablePresentation/verifiableCredential/[]",
+      "kind": "property",
+      "path": "verifiableCredential/[]",
+      "modelled": "yes"
+    },
+    {
+      "key": "vc:2.0:doc:VerifiableCredential",
+      "kind": "document",
+      "path": ""
+    },
+    {
+      "key": "vc:2.0:doc:VerifiablePresentation",
+      "kind": "document",
+      "path": ""
+    }
+  ],
+  "edges": [
+    {
+      "from": "vc:2.0:def:VerifiableCredential/credentialSchema",
+      "to": "vc:2.0:def:CredentialSchema"
+    },
+    {
+      "from": "vc:2.0:def:VerifiableCredential/credentialSchema/[]",
+      "to": "vc:2.0:def:CredentialSchema"
+    },
+    {
+      "from": "vc:2.0:def:VerifiableCredential/credentialStatus",
+      "to": "vc:2.0:def:CredentialStatus"
+    },
+    {
+      "from": "vc:2.0:def:VerifiableCredential/credentialStatus/[]",
+      "to": "vc:2.0:def:CredentialStatus"
+    },
+    {
+      "from": "vc:2.0:def:VerifiableCredential/credentialSubject",
+      "to": "vc:2.0:def:CredentialSubject"
+    },
+    {
+      "from": "vc:2.0:def:VerifiableCredential/credentialSubject/[]",
+      "to": "vc:2.0:def:CredentialSubject"
+    },
+    {
+      "from": "vc:2.0:def:VerifiableCredential/evidence",
+      "to": "vc:2.0:def:Evidence"
+    },
+    {
+      "from": "vc:2.0:def:VerifiableCredential/evidence/[]",
+      "to": "vc:2.0:def:Evidence"
+    },
+    {
+      "from": "vc:2.0:def:VerifiableCredential/proof",
+      "to": "vc:2.0:def:Proof"
+    },
+    {
+      "from": "vc:2.0:def:VerifiableCredential/proof/[]",
+      "to": "vc:2.0:def:Proof"
+    },
+    {
+      "from": "vc:2.0:def:VerifiableCredential/refreshService",
+      "to": "vc:2.0:def:RefreshService"
+    },
+    {
+      "from": "vc:2.0:def:VerifiableCredential/refreshService/[]",
+      "to": "vc:2.0:def:RefreshService"
+    },
+    {
+      "from": "vc:2.0:def:VerifiableCredential/termsOfUse",
+      "to": "vc:2.0:def:TermsOfUse"
+    },
+    {
+      "from": "vc:2.0:def:VerifiableCredential/termsOfUse/[]",
+      "to": "vc:2.0:def:TermsOfUse"
+    },
+    {
+      "from": "vc:2.0:def:VerifiablePresentation/proof",
+      "to": "vc:2.0:def:Proof"
+    },
+    {
+      "from": "vc:2.0:def:VerifiablePresentation/proof/[]",
+      "to": "vc:2.0:def:Proof"
+    },
+    {
+      "from": "vc:2.0:def:VerifiablePresentation/verifiableCredential",
+      "to": "vc:2.0:def:VerifiableCredential"
+    },
+    {
+      "from": "vc:2.0:def:VerifiablePresentation/verifiableCredential/[]",
+      "to": "vc:2.0:def:VerifiableCredential"
+    },
+    {
+      "from": "vc:2.0:doc:VerifiableCredential",
+      "to": "vc:2.0:def:VerifiableCredential"
+    },
+    {
+      "from": "vc:2.0:doc:VerifiablePresentation",
+      "to": "vc:2.0:def:VerifiablePresentation"
+    }
+  ],
+  "conformance": [
+    {
+      "key": "vc:2.0:conf:credential/VC-1",
+      "profile": "credential",
+      "reqId": "VC-1",
+      "level": "MUST",
+      "statement": "A verifiable credential MUST have a @context whose first value is https://www.w3.org/ns/credentials/v2, a type that includes VerifiableCredential, an issuer, a validFrom, and a credentialSubject.",
+      "constrains": [
+        "vc:2.0:def:VerifiableCredential/@context",
+        "vc:2.0:def:VerifiableCredential/type",
+        "vc:2.0:def:VerifiableCredential/issuer",
+        "vc:2.0:def:VerifiableCredential/validFrom",
+        "vc:2.0:def:VerifiableCredential/credentialSubject"
+      ],
+      "source": "W3C Verifiable Credentials Data Model 2.0 — https://www.w3.org/TR/vc-data-model-2.0/"
+    },
+    {
+      "key": "vc:2.0:conf:credential/VC-2",
+      "profile": "credential",
+      "reqId": "VC-2",
+      "level": "MUST",
+      "statement": "An id, when present, MUST be a single URL; validUntil, when present, MUST be an XMLSchema dateTime; a credentialSubject identifies the subject via an optional id.",
+      "constrains": [
+        "vc:2.0:def:VerifiableCredential/id",
+        "vc:2.0:def:VerifiableCredential/validUntil",
+        "vc:2.0:def:CredentialSubject/id"
+      ],
+      "source": "W3C Verifiable Credentials Data Model 2.0 — https://www.w3.org/TR/vc-data-model-2.0/"
+    },
+    {
+      "key": "vc:2.0:conf:credential/VC-3",
+      "profile": "credential",
+      "reqId": "VC-3",
+      "level": "MUST",
+      "statement": "Each credentialSchema, credentialStatus, refreshService, termsOfUse and evidence entry MUST carry a type (and an id where the property requires one).",
+      "constrains": [
+        "vc:2.0:def:CredentialSchema/type",
+        "vc:2.0:def:CredentialStatus/type",
+        "vc:2.0:def:RefreshService/type",
+        "vc:2.0:def:TermsOfUse/type",
+        "vc:2.0:def:Evidence/type"
+      ],
+      "source": "W3C Verifiable Credentials Data Model 2.0 — https://www.w3.org/TR/vc-data-model-2.0/"
+    },
+    {
+      "key": "vc:2.0:conf:credential/VC-4",
+      "profile": "credential",
+      "reqId": "VC-4",
+      "level": "MUST",
+      "statement": "A credential secured with an embedded proof MUST carry a proof with a type (the Data Integrity / Data Model securing mechanism).",
+      "constrains": [
+        "vc:2.0:def:VerifiableCredential/proof",
+        "vc:2.0:def:Proof/type"
+      ],
+      "source": "W3C VC Data Model 2.0 §securing-mechanisms — https://www.w3.org/TR/vc-data-model-2.0/"
+    },
+    {
+      "key": "vc:2.0:conf:presentation/VP-1",
+      "profile": "presentation",
+      "reqId": "VP-1",
+      "level": "MUST",
+      "statement": "A verifiable presentation MUST have a @context whose first value is https://www.w3.org/ns/credentials/v2 and a type that includes VerifiablePresentation; it MAY declare a holder and enclose verifiableCredential(s).",
+      "constrains": [
+        "vc:2.0:def:VerifiablePresentation/@context",
+        "vc:2.0:def:VerifiablePresentation/type",
+        "vc:2.0:def:VerifiablePresentation/holder",
+        "vc:2.0:def:VerifiablePresentation/verifiableCredential"
+      ],
+      "source": "W3C Verifiable Credentials Data Model 2.0 — https://www.w3.org/TR/vc-data-model-2.0/"
+    }
+  ],
+  "normativeStatements": [],
+  "residues": {
+    "silentGaps": [],
+    "extensions": [],
+    "normalisations": []
+  },
+  "valueSets": [],
+  "rollup": {
+    "items": 68,
+    "modelledYes": 53,
+    "modelledPartial": 0,
+    "modelledNo": 0,
+    "normativeItems": 4,
+    "conformanceRequirements": 5,
+    "normativeStatements": 0,
+    "normativeStatementsCited": 0,
+    "normalisations": 0,
+    "valueSetMembers": 0,
+    "valueSetModelled": 0,
+    "valueSetGaps": 0
+  }
+}

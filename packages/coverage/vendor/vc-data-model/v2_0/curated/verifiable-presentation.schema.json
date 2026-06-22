@@ -1,0 +1,155 @@
+{
+  "$id": "conform-ed:curated:vc-data-model/2.0/verifiable-presentation",
+  "$comment": "Hand-authored denominator (conform-ed ADR-0017) — the W3C Verifiable Credentials Data Model 2.0 is defined as prose + a JSON-LD @context (https://www.w3.org/ns/credentials/v2), with no normative validation schema. This curates the VerifiablePresentation core terms. Source: W3C VC Data Model 2.0 — https://www.w3.org/TR/vc-data-model-2.0/. Lowest provenance tier; re-review on spec version bump. The model is JSON-LD-extensible (open), so conform-ed models these terms with passthrough objects. The shared $defs block is byte-identical with the verifiable-credential denominator so the two reconcile against one set of definition keys.",
+  "title": "W3C Verifiable Presentation (VC Data Model 2.0)",
+  "$ref": "#/$defs/VerifiablePresentation",
+  "$defs": {
+    "VerifiableCredential": {
+      "type": "object",
+      "title": "verifiable credential",
+      "required": ["@context", "type", "issuer", "validFrom", "credentialSubject"],
+      "properties": {
+        "@context": {
+          "type": "array",
+          "items": { "type": "string" },
+          "$comment": "specRef: §contexts (the first entry MUST be https://www.w3.org/ns/credentials/v2)"
+        },
+        "id": { "$comment": "specRef: §identifiers (id — a single URL)" },
+        "type": {
+          "oneOf": [{ "type": "string" }, { "type": "array", "items": { "type": "string" } }],
+          "$comment": "specRef: §types (type — MUST include VerifiableCredential)"
+        },
+        "issuer": { "$comment": "specRef: §issuer (issuer — a URL or an object with an id)" },
+        "validFrom": { "type": "string", "$comment": "specRef: §validity-period (validFrom — an XMLSchema dateTime)" },
+        "validUntil": { "type": "string", "$comment": "specRef: §validity-period (validUntil — an XMLSchema dateTime)" },
+        "credentialSubject": {
+          "oneOf": [{ "$ref": "#/$defs/CredentialSubject" }, { "type": "array", "items": { "$ref": "#/$defs/CredentialSubject" } }],
+          "$comment": "specRef: §credential-subject (credentialSubject — one or many subjects)"
+        },
+        "name": { "$comment": "specRef: §names-and-descriptions (name — a string or language map)" },
+        "description": { "$comment": "specRef: §names-and-descriptions (description — a string or language map)" },
+        "proof": {
+          "oneOf": [{ "$ref": "#/$defs/Proof" }, { "type": "array", "items": { "$ref": "#/$defs/Proof" } }],
+          "$comment": "specRef: §securing-mechanisms (proof — embedded proof(s); VC Data Integrity)"
+        },
+        "credentialSchema": {
+          "oneOf": [{ "$ref": "#/$defs/CredentialSchema" }, { "type": "array", "items": { "$ref": "#/$defs/CredentialSchema" } }],
+          "$comment": "specRef: §data-schemas (credentialSchema)"
+        },
+        "credentialStatus": {
+          "oneOf": [{ "$ref": "#/$defs/CredentialStatus" }, { "type": "array", "items": { "$ref": "#/$defs/CredentialStatus" } }],
+          "$comment": "specRef: §status (credentialStatus)"
+        },
+        "refreshService": {
+          "oneOf": [{ "$ref": "#/$defs/RefreshService" }, { "type": "array", "items": { "$ref": "#/$defs/RefreshService" } }],
+          "$comment": "specRef: §refreshing (refreshService)"
+        },
+        "termsOfUse": {
+          "oneOf": [{ "$ref": "#/$defs/TermsOfUse" }, { "type": "array", "items": { "$ref": "#/$defs/TermsOfUse" } }],
+          "$comment": "specRef: §terms-of-use (termsOfUse)"
+        },
+        "evidence": {
+          "oneOf": [{ "$ref": "#/$defs/Evidence" }, { "type": "array", "items": { "$ref": "#/$defs/Evidence" } }],
+          "$comment": "specRef: §evidence (evidence)"
+        }
+      }
+    },
+    "VerifiablePresentation": {
+      "type": "object",
+      "title": "verifiable presentation",
+      "required": ["@context", "type"],
+      "properties": {
+        "@context": {
+          "type": "array",
+          "items": { "type": "string" },
+          "$comment": "specRef: §presentations (the first entry MUST be https://www.w3.org/ns/credentials/v2)"
+        },
+        "id": { "$comment": "specRef: §identifiers (id — a single URL)" },
+        "type": {
+          "oneOf": [{ "type": "string" }, { "type": "array", "items": { "type": "string" } }],
+          "$comment": "specRef: §presentations (type — MUST include VerifiablePresentation)"
+        },
+        "holder": { "$comment": "specRef: §presentations (holder — a URL or an object with an id)" },
+        "verifiableCredential": {
+          "oneOf": [{ "$ref": "#/$defs/VerifiableCredential" }, { "type": "array", "items": { "$ref": "#/$defs/VerifiableCredential" } }],
+          "$comment": "specRef: §presentations (verifiableCredential — enclosed credential(s), embedded or as a secured JWT)"
+        },
+        "proof": {
+          "oneOf": [{ "$ref": "#/$defs/Proof" }, { "type": "array", "items": { "$ref": "#/$defs/Proof" } }],
+          "$comment": "specRef: §securing-mechanisms (proof — the presentation proof)"
+        }
+      }
+    },
+    "CredentialSubject": {
+      "type": "object",
+      "title": "credential subject",
+      "$comment": "Open per JSON-LD — the only VCDM-defined property is the optional id; claims are application-specific.",
+      "properties": {
+        "id": { "$comment": "specRef: §credential-subject (credentialSubject.id — identifies the subject)" }
+      }
+    },
+    "CredentialSchema": {
+      "type": "object",
+      "title": "credential schema",
+      "required": ["id", "type"],
+      "properties": {
+        "id": { "$comment": "specRef: §data-schemas (credentialSchema.id — the schema location)" },
+        "type": { "$comment": "specRef: §data-schemas (credentialSchema.type)" }
+      }
+    },
+    "CredentialStatus": {
+      "type": "object",
+      "title": "credential status",
+      "required": ["type"],
+      "properties": {
+        "id": { "$comment": "specRef: §status (credentialStatus.id)" },
+        "type": { "$comment": "specRef: §status (credentialStatus.type — e.g. BitstringStatusListEntry)" }
+      }
+    },
+    "RefreshService": {
+      "type": "object",
+      "title": "refresh service",
+      "required": ["id", "type"],
+      "properties": {
+        "id": { "$comment": "specRef: §refreshing (refreshService.id)" },
+        "type": { "$comment": "specRef: §refreshing (refreshService.type)" }
+      }
+    },
+    "TermsOfUse": {
+      "type": "object",
+      "title": "terms of use",
+      "required": ["type"],
+      "properties": {
+        "id": { "$comment": "specRef: §terms-of-use (termsOfUse.id)" },
+        "type": { "$comment": "specRef: §terms-of-use (termsOfUse.type)" }
+      }
+    },
+    "Proof": {
+      "type": "object",
+      "title": "embedded proof (Data Integrity)",
+      "required": ["type"],
+      "properties": {
+        "type": { "$comment": "specRef: VC Data Integrity (proof.type — e.g. DataIntegrityProof)" },
+        "created": { "type": "string", "$comment": "specRef: VC Data Integrity (proof.created — dateTime)" },
+        "cryptosuite": { "$comment": "specRef: VC Data Integrity (proof.cryptosuite)" },
+        "challenge": { "$comment": "specRef: VC Data Integrity (proof.challenge)" },
+        "domain": { "$comment": "specRef: VC Data Integrity (proof.domain)" },
+        "nonce": { "$comment": "specRef: VC Data Integrity (proof.nonce)" },
+        "proofPurpose": { "$comment": "specRef: VC Data Integrity (proof.proofPurpose — e.g. assertionMethod)" },
+        "proofValue": { "$comment": "specRef: VC Data Integrity (proof.proofValue)" },
+        "verificationMethod": { "$comment": "specRef: VC Data Integrity (proof.verificationMethod)" }
+      }
+    },
+    "Evidence": {
+      "type": "object",
+      "title": "evidence",
+      "properties": {
+        "id": { "$comment": "specRef: §evidence (evidence.id)" },
+        "type": { "$comment": "specRef: §evidence (evidence.type)" },
+        "narrative": { "$comment": "specRef: §evidence (evidence.narrative)" },
+        "name": { "$comment": "specRef: §evidence (evidence.name)" },
+        "description": { "$comment": "specRef: §evidence (evidence.description)" }
+      }
+    }
+  }
+}
