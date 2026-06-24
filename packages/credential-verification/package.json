@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "files": [
     "src",
-    "dist"
+    "dist",
+    "vendor"
   ],
   "type": "module",
   "module": "src/index.ts",
@@ -15,7 +16,7 @@
     }
   },
   "scripts": {
-    "build": "bun build ./src/index.ts --outdir dist --format esm --target node --external @conform-ed/contracts --external jose && tsgo -p tsconfig.build.json",
+    "build": "bun build ./src/index.ts --outdir dist --format esm --target node --external @conform-ed/contracts --external jose --external jsonld && tsgo -p tsconfig.build.json",
     "format": "oxfmt --config ../../.oxfmtrc.jsonc --check .",
     "lint": "oxlint --config ../../.oxlintrc.jsonc .",
     "test": "bun test",
@@ -23,6 +24,10 @@
   },
   "dependencies": {
     "@conform-ed/contracts": "workspace:*",
-    "jose": "^6.2.3"
+    "jose": "^6.2.3",
+    "jsonld": "^9.0.0"
+  },
+  "devDependencies": {
+    "@types/jsonld": "^1.5.15"
   }
 }

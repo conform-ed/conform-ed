@@ -44,6 +44,18 @@ export type SchemaCheck = {
   issues?: string[];
 };
 
+/**
+ * The output of a single proof check (VC-JOSE or Data Integrity), before the validity /
+ * status / schema axes are layered on. Shared by both mechanisms.
+ */
+export type ProofVerification = {
+  signature: SignatureCheck;
+  /** The decoded credential body, present whenever it could be parsed (even if forged). */
+  credential?: Record<string, unknown>;
+  /** The `issuer` id read from the (unverified) body, for issuer reporting. */
+  issuerId?: string;
+};
+
 /** The single rollup a simple consumer can switch on. */
 export type VerificationVerdict =
   // Authentic, inside its window, not revoked/suspended, schema-valid (where checked).

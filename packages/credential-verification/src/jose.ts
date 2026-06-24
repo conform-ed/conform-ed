@@ -7,17 +7,9 @@
 import { compactVerify, decodeProtectedHeader, importJWK } from "jose";
 
 import type { KeyResolver } from "./resolvers";
-import type { SignatureCheck } from "./result";
+import type { ProofVerification } from "./result";
 
 const SIGNING_ALG = "EdDSA";
-
-export type JoseVerification = {
-  signature: SignatureCheck;
-  /** The decoded credential body, present whenever it could be parsed (even if forged). */
-  credential?: Record<string, unknown>;
-  /** The `issuer` id read from the (unverified) body, for issuer reporting. */
-  issuerId?: string;
-};
 
 function base64UrlToString(segment: string): string {
   return new TextDecoder().decode(Uint8Array.from(Buffer.from(segment, "base64url")));
@@ -54,7 +46,7 @@ function readIssuerId(body: Record<string, unknown> | undefined): string | undef
  * decoded body; never throws for an attacker-controlled input — a malformed token, missing
  * key, or bad signature all resolve to an `invalid`/`unverifiable` check.
  */
-export async function verifyJoseCredential(jws: string, keyResolver: KeyResolver): Promise<JoseVerification> {
+export async function verifyJoseCredential(jws: string, keyResolver: KeyResolver): Promise<ProofVerification> {
   const body = decodeUnverifiedBody(jws);
   const issuerId = readIssuerId(body);
 

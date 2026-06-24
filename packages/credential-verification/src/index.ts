@@ -8,4 +8,7 @@ export * from "./result";
 export * from "./resolvers";
 export * from "./validity";
 export * from "./jose";
+export * from "./data-integrity";
+export * from "./base58";
+export * from "./document-loader";
 export * from "./verify";

@@ -1,17 +1,20 @@
-// The verification orchestrator. Detects the securing mechanism, runs the proof check,
-// evaluates the validity window, and (slices 3+) status + schema, then rolls the axes into
-// a single verdict. Pure: all I/O is via the injected resolvers.
+// The verification orchestrator. Detects the securing mechanism (enveloping VC-JOSE vs
+// embedded Data Integrity), runs the proof check, evaluates the validity window, and
+// (slice 3) status + schema, then rolls the axes into a single verdict. Pure: all I/O is
+// via the injected resolvers.
 
+import { verifyDataIntegrityCredential } from "./data-integrity";
+import { staticDocumentLoader } from "./document-loader";
 import { verifyJoseCredential } from "./jose";
-import type { KeyResolver, StatusResolver, DocumentLoader } from "./resolvers";
-import { deriveVerdict, type CredentialVerificationResult, type SchemaCheck } from "./result";
+import type { DocumentLoader, KeyResolver, StatusResolver } from "./resolvers";
+import { deriveVerdict, type CredentialVerificationResult, type ProofVerification, type SchemaCheck } from "./result";
 import { evaluateValidityWindow } from "./validity";
 
 export type VerifyDeps = {
   keyResolver: KeyResolver;
   /** Optional until slice 3 — without it, revocation is reported `not-checked`. */
   statusResolver?: StatusResolver;
-  /** Required only for Data Integrity (`di-*`) canonicalization. */
+  /** JSON-LD context loader for Data Integrity (`di-*`); defaults to the vendored, no-network loader. */
   documentLoader?: DocumentLoader;
   /** Clock injection for deterministic window tests. */
   now?: Date;
@@ -34,24 +37,11 @@ export async function verifyCredential(
   deps: VerifyDeps,
 ): Promise<CredentialVerificationResult> {
   if (typeof input === "string") {
-    return await verifyJose(input, deps);
+    return assembleResult(await verifyJoseCredential(input, deps.keyResolver), deps);
   }
   if (hasEmbeddedProof(input)) {
-    // Data Integrity (eddsa-rdfc-2022) lands in slice 2; until then it is honestly
-    // reported as unevaluable rather than silently passed.
-    return {
-      verdict: "unverifiable",
-      signature: {
-        state: "unverifiable",
-        reason: "Embedded Data Integrity proof verification is not yet available in this build.",
-      },
-      validityWindow: evaluateValidityWindow(input, deps.now),
-      revocation: { state: "not-checked" },
-      schema: NOT_CHECKED_SCHEMA,
-      issuer: readIssuer(input),
-      credential: input,
-      reasons: ["Embedded Data Integrity proof (di-*) verification is not yet supported."],
-    };
+    const documentLoader = deps.documentLoader ?? staticDocumentLoader;
+    return assembleResult(await verifyDataIntegrityCredential(input, deps.keyResolver, documentLoader), deps);
   }
   return {
     verdict: "unverifiable",
@@ -65,24 +55,25 @@ export async function verifyCredential(
   };
 }
 
-async function verifyJose(jws: string, deps: VerifyDeps): Promise<CredentialVerificationResult> {
-  const jose = await verifyJoseCredential(jws, deps.keyResolver);
-  const body = jose.credential ?? {};
+/** Assemble the multi-axis result around a completed proof check (shared by both mechanisms). */
+function assembleResult(proof: ProofVerification, deps: VerifyDeps): CredentialVerificationResult {
+  const body = proof.credential ?? {};
   const validityWindow = evaluateValidityWindow(body, deps.now);
+  // Revocation (status list) + schema validation land in slice 3.
   const revocation = { state: "not-checked" as const };
   const schema = NOT_CHECKED_SCHEMA;
 
-  const verdict = deriveVerdict({ signature: jose.signature, validityWindow, revocation, schema });
+  const verdict = deriveVerdict({ signature: proof.signature, validityWindow, revocation, schema });
 
   return {
     verdict,
-    signature: jose.signature,
+    signature: proof.signature,
     validityWindow,
     revocation,
     schema,
-    issuer: { resolved: jose.signature.state === "valid", ...(jose.issuerId ? { id: jose.issuerId } : {}) },
-    ...(jose.credential ? { credential: jose.credential } : {}),
-    reasons: buildReasons(jose.signature, validityWindow),
+    issuer: { resolved: proof.signature.state === "valid", ...(proof.issuerId ? { id: proof.issuerId } : {}) },
+    ...(proof.credential ? { credential: proof.credential } : {}),
+    reasons: buildReasons(proof.signature, validityWindow),
   };
 }
 

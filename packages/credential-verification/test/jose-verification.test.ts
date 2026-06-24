@@ -115,12 +115,12 @@ describe("VC-JOSE credential verification", () => {
     expect(result.signature.state).toBe("unverifiable");
   });
 
-  test("an embedded Data Integrity proof is reported unverifiable until slice 2", async () => {
+  test("an object with a proof routes to the Data Integrity path (here: unsupported suite)", async () => {
     const result = await verifyCredential(achievementCredential({ proof: { type: "DataIntegrityProof" } }), {
       keyResolver: keyResolverFor(),
     });
     expect(result.verdict).toBe("unverifiable");
-    expect(result.reasons.join(" ")).toContain("Data Integrity");
+    expect(result.reasons.join(" ")).toContain("eddsa-rdfc-2022");
   });
 });
 
