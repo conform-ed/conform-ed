@@ -11,4 +11,6 @@ export * from "./jose";
 export * from "./data-integrity";
 export * from "./base58";
 export * from "./document-loader";
+export * from "./status";
+export * from "./schema";
 export * from "./verify";

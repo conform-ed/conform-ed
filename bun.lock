@@ -132,6 +132,7 @@
         "@conform-ed/contracts": "workspace:*",
         "jose": "^6.2.3",
         "jsonld": "^9.0.0",
+        "zod": "^4.4.3",
       },
       "devDependencies": {
         "@types/jsonld": "^1.5.15",

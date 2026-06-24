@@ -57,3 +57,16 @@ export type LoadedDocument = { documentUrl: string; document: unknown };
 export interface DocumentLoader {
   load(url: string): Promise<LoadedDocument>;
 }
+
+/** The outcome of validating a credential body against its model schema. */
+export type SchemaValidation = {
+  state: "valid" | "invalid";
+  /** The schema the body was matched against (e.g. "OpenBadgeCredential"). */
+  schema?: string;
+  issues?: string[];
+};
+
+export interface SchemaValidator {
+  /** Validate a (verified) credential body against the appropriate model schema. */
+  validate(credential: Record<string, unknown>): SchemaValidation;
+}
