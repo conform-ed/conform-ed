@@ -4,6 +4,7 @@ export * from "./clr_v2p0_endorsementcredential_schema";
 export * from "./clr_v2p0_profile_schema";
 export * from "./clr_v2p0_getclrcredentialsresponse_schema";
 export * from "./clr_v2p0_imsx_statusinfo_schema";
+export * from "./clr_v2p0_badgeconnect";
 
 import { AchievementCredentialSchema } from "./clr_v2p0_achievementcredential_schema";
 import { ClrCredentialSchema } from "./clr_v2p0_clrcredential_schema";

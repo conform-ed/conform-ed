@@ -1,4 +1,5 @@
 export * from "./shared";
+export * from "./or_v1p2_scopes";
 export * from "./or_v1p2_rostering_service_schema";
 export * from "./or_v1p2_gradebook_service_schema";
 export * from "./or_v1p2_resource_service_schema";
