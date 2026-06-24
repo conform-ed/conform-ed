@@ -95,7 +95,7 @@
     },
     "packages/common-cartridge": {
       "name": "@conform-ed/common-cartridge",
-      "version": "0.1.0",
+      "version": "0.0.0",
       "dependencies": {
         "@conform-ed/contracts": "workspace:*",
         "@conform-ed/qti-xml": "workspace:*",
@@ -104,7 +104,7 @@
     },
     "packages/contracts": {
       "name": "@conform-ed/contracts",
-      "version": "0.1.0",
+      "version": "0.0.0",
       "devDependencies": {
         "fast-xml-parser": "^5.9.2",
       },
@@ -125,9 +125,17 @@
         "zod": ">=4.4.0",
       },
     },
+    "packages/credential-verification": {
+      "name": "@conform-ed/credential-verification",
+      "version": "0.0.0",
+      "dependencies": {
+        "@conform-ed/contracts": "workspace:*",
+        "jose": "^6.2.3",
+      },
+    },
     "packages/pci-math-entry": {
       "name": "@conform-ed/pci-math-entry",
-      "version": "0.1.0",
+      "version": "0.0.0",
       "dependencies": {
         "@cortex-js/compute-engine": "^0.61.0",
         "mathlive": "^0.110.0",
@@ -145,7 +153,7 @@
     },
     "packages/qti-react": {
       "name": "@conform-ed/qti-react",
-      "version": "0.1.0",
+      "version": "0.0.0",
       "dependencies": {
         "xspattern": "^3.1.0",
       },
@@ -165,7 +173,7 @@
     },
     "packages/qti-xml": {
       "name": "@conform-ed/qti-xml",
-      "version": "0.1.0",
+      "version": "0.0.0",
       "dependencies": {
         "@conform-ed/contracts": "workspace:*",
         "fast-xml-parser": "^5.9.2",
@@ -261,6 +269,8 @@
     "@conform-ed/core": ["@conform-ed/core@workspace:packages/core"],
 
     "@conform-ed/coverage": ["@conform-ed/coverage@workspace:packages/coverage"],
+
+    "@conform-ed/credential-verification": ["@conform-ed/credential-verification@workspace:packages/credential-verification"],
 
     "@conform-ed/docs": ["@conform-ed/docs@workspace:apps/docs"],
 

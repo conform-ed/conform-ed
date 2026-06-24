@@ -1,0 +1,28 @@
+{
+  "name": "@conform-ed/credential-verification",
+  "version": "0.0.0",
+  "files": [
+    "src",
+    "dist"
+  ],
+  "type": "module",
+  "module": "src/index.ts",
+  "exports": {
+    ".": {
+      "development": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "bun build ./src/index.ts --outdir dist --format esm --target node --external @conform-ed/contracts --external jose && tsgo -p tsconfig.build.json",
+    "format": "oxfmt --config ../../.oxfmtrc.jsonc --check .",
+    "lint": "oxlint --config ../../.oxlintrc.jsonc .",
+    "test": "bun test",
+    "typecheck": "tsgo --noEmit"
+  },
+  "dependencies": {
+    "@conform-ed/contracts": "workspace:*",
+    "jose": "^6.2.3"
+  }
+}
