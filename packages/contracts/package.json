@@ -38,7 +38,7 @@
     "typecheck": "tsgo --noEmit"
   },
   "devDependencies": {
-    "fast-xml-parser": "^5.9.2"
+    "fast-xml-parser": "^5.9.3"
   },
   "peerDependencies": {
     "zod": ">=4.4.0"
