@@ -9502,7 +9502,7 @@
       "kind": "property",
       "path": "navigatedFrom",
       "description": "The DigitalResource or SoftwareApplication that constitutes the referring context of a Navigation Event. Deprecated.",
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:NavigationEvent/object",
@@ -73318,9 +73318,7 @@
     }
   ],
   "residues": {
-    "silentGaps": [
-      "caliper:1.2:def:NavigationEvent/navigatedFrom"
-    ],
+    "silentGaps": [],
     "extensions": [
       "caliper:1.2:def:Envelope.__schema3/@context",
       "caliper:1.2:def:Envelope.__schema3/LtiMessageType",
@@ -73403,6 +73401,7 @@
       "caliper:1.2:def:Envelope.__schema3/minValue",
       "caliper:1.2:def:Envelope.__schema3/muted",
       "caliper:1.2:def:Envelope.__schema3/name",
+      "caliper:1.2:def:Envelope.__schema3/navigatedFrom",
       "caliper:1.2:def:Envelope.__schema3/normalScore",
       "caliper:1.2:def:Envelope.__schema3/object",
       "caliper:1.2:def:Envelope.__schema3/objectType",
@@ -73455,8 +73454,8 @@
       "caliper:1.2:def:Envelope.__schema3/volumeMin",
       "caliper:1.2:def:Envelope.__schema3/weight",
       "caliper:1.2:def:Envelope.__schema3/withAgents",
-      "caliper:1.2:def:Envelope.__schema56/end",
-      "caliper:1.2:def:Envelope.__schema56/start",
+      "caliper:1.2:def:Envelope.__schema57/end",
+      "caliper:1.2:def:Envelope.__schema57/start",
       "caliper:1.2:doc:BookmarkAnnotation/@context",
       "caliper:1.2:doc:BookmarkAnnotation/dateCreated",
       "caliper:1.2:doc:BookmarkAnnotation/dateModified",
@@ -73535,9 +73534,9 @@
   ],
   "rollup": {
     "items": 2052,
-    "modelledYes": 1692,
+    "modelledYes": 1693,
     "modelledPartial": 0,
-    "modelledNo": 1,
+    "modelledNo": 0,
     "normativeItems": 99,
     "conformanceRequirements": 16,
     "normativeStatements": 99,

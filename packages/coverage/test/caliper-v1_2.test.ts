@@ -55,18 +55,20 @@ describe("Caliper 1.2 Coverage Map — bundled-bootcamp JSON-Schema walker", () 
     expect(map.rollup.modelledYes).toBeGreaterThan(50);
   });
 
-  test("conform-ed's full Caliper surface leaves a single honest silent gap, no false partials", () => {
-    // ADR-0018 deepened every type and `referenceIdentityProps` resolves Caliper's reference-or-
-    // inline duality: a type fully modelled at its own document root but reached *by reference*
-    // elsewhere (CaliperReferenceSchema = id/type/@context/extensions) is N/A there, not a miss — so
-    // the band of false `partial`s collapses to ZERO. 1692 modelled, no partials, and exactly ONE
-    // silent gap: NavigationEvent/navigatedFrom (left unmodelled to keep the rule superRefine typed).
-    expect(map.rollup.modelledYes).toBe(1692);
+  test("conform-ed's full Caliper surface reconciles with zero residue — no gaps, no false partials", () => {
+    // ADR-0018 deepened every type, modelled NavigationEvent's `navigatedFrom`, and resolves
+    // Caliper's reference-or-inline duality via `referenceIdentityProps`: a type fully modelled at
+    // its own document root but reached *by reference* elsewhere (CaliperReferenceSchema =
+    // id/type/@context/extensions) is N/A there, not a miss — so the band of false `partial`s
+    // collapses to ZERO. The result is complete: 1693 modelled, no partials, no silent gaps.
+    expect(map.rollup.modelledYes).toBe(1693);
     expect(map.rollup.modelledPartial).toBe(0);
-    expect(map.rollup.modelledNo).toBe(1);
-    expect(map.residues.silentGaps).toEqual(["caliper:1.2:def:NavigationEvent/navigatedFrom"]);
-    // The N/A reclassification must mark a by-reference field `yes` (proven at its document root),
-    // never erase it: a representative previously-`partial` deep field now reads `yes`.
+    expect(map.rollup.modelledNo).toBe(0);
+    expect(map.residues.silentGaps).toEqual([]);
+    // The last gap closed: NavigationEvent's deprecated `navigatedFrom` reference is now modelled.
+    expect(byKey.get("caliper:1.2:def:NavigationEvent/navigatedFrom")?.modelled).toBe("yes");
+    // The N/A reclassification marks a by-reference field `yes` (proven at its document root),
+    // never erases it: a representative previously-`partial` deep field now reads `yes`.
     expect(byKey.get("caliper:1.2:def:Message/body")?.modelled).toBe("yes");
   });
 

@@ -56,8 +56,15 @@ event validator, and a strengthened-but-honest denominator.
    binding, so this collapses the false band to `yes`; the safeguard restores any field reached *only*
    by reference (never modelled inline anywhere) to a genuine `no`, so the option never hides a gap.
    The option is **opt-in per spec** (empty ⇒ inert), leaving every other map's scoring unchanged.
-   Result: the Caliper map reads 1692 modelled / 0 partial / 1 silent gap
-   (`NavigationEvent/navigatedFrom`, kept unmodelled to keep the rule `superRefine` strongly typed).
+
+6. **Model NavigationEvent's `navigatedFrom` explicitly.** The base event object is `.strict()`, so
+   NavigationEvent's one non-base property (the deprecated reference to the location navigated from)
+   was the last unmodelled field. Routing an extra-props shape through the generic rule helper would
+   widen the refinement's inferred event type to an index signature, so instead the rule body is
+   extracted to a reusable `buildEventRuleRefiner` and NavigationEvent is special-cased: extend the
+   base with `navigatedFrom` *before* the refinement, then apply the same rule body. No type
+   precision is lost and the last gap closes. Result: the Caliper map reads **1693 modelled / 0
+   partial / 0 silent gaps** — full information-model coverage with no residue.
 
 ## Considered alternatives
 

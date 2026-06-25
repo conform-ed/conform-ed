@@ -14,7 +14,11 @@ import {
   createCaliperEventSchema,
   getReferenceType,
 } from "./shared";
-import { CALIPER_BOOTCAMP_ONLY_EVENT_TYPES, CALIPER_TEXTUAL_EVENT_RULES } from "./textual_requirements";
+import {
+  CALIPER_BOOTCAMP_ONLY_EVENT_TYPES,
+  CALIPER_TEXTUAL_EVENT_RULES,
+  type CaliperTextualEventRule,
+} from "./textual_requirements";
 
 export const CALIPER_ACTIONS = [
   "Abandoned",
@@ -294,14 +298,22 @@ const addReferenceTypeIssue = (
   }
 };
 
-const createCaliperEventWithRules = <TType extends string>(eventType: TType) => {
-  const baseSchema = createCaliperEventSchema(eventType, ActionValueSchema);
-  const textualRule = CALIPER_TEXTUAL_EVENT_RULES[eventType];
+// The structural slice of an event the textual rule inspects. Both the generic helper's inferred
+// event type and NavigationEvent's `navigatedFrom`-extended type are subtypes of this, so the same
+// rule body serves both without the index-signature widening that extending the helper generically
+// would cause (the reference / inline `.strict()` base keeps its concrete keys visible here).
+interface CaliperEventRuleFields {
+  readonly action: string;
+  readonly actor: unknown;
+  readonly object: unknown;
+  readonly generated?: unknown;
+  readonly target?: unknown;
+  readonly profile?: string | undefined;
+}
 
-  if (!textualRule) {
-    return baseSchema;
-  }
-
+// Build the per-profile refinement once (allowed action/actor/object/generated/target sets are
+// computed at schema-construction time, not per parse) and return the closure that applies it.
+const buildEventRuleRefiner = (eventType: string, textualRule: CaliperTextualEventRule) => {
   const allowedActionValues = new Set<string>(
     [...textualRule.supportedActions, ...textualRule.deprecatedActions].map((action) => normalizeAction(action)),
   );
@@ -310,7 +322,7 @@ const createCaliperEventWithRules = <TType extends string>(eventType: TType) => 
   const allowedGeneratedTypes = expandAllowedTypes(textualRule.supportedGeneratedEntities);
   const allowedTargetTypes = expandAllowedTypes(textualRule.supportedTargetEntities);
 
-  return baseSchema.superRefine((event, ctx) => {
+  return (event: CaliperEventRuleFields, ctx: z.RefinementCtx): void => {
     const action = normalizeAction(event.action);
     if (!allowedActionValues.has(action)) {
       ctx.addIssue({
@@ -354,7 +366,19 @@ const createCaliperEventWithRules = <TType extends string>(eventType: TType) => 
         message: `Expected profile "${textualRule.profile}" for ${eventType}`,
       });
     }
-  });
+  };
+};
+
+const createCaliperEventWithRules = <TType extends string>(eventType: TType) => {
+  const baseSchema = createCaliperEventSchema(eventType, ActionValueSchema);
+  const textualRule = CALIPER_TEXTUAL_EVENT_RULES[eventType];
+
+  if (!textualRule) {
+    return baseSchema;
+  }
+
+  const refine = buildEventRuleRefiner(eventType, textualRule);
+  return baseSchema.superRefine((event, ctx) => refine(event, ctx));
 };
 
 export const CaliperTypeDefinitionsSchema = z
@@ -754,10 +778,25 @@ export const ForumEventSchema = createCaliperEventWithRules("ForumEvent");
 export const GradeEventSchema = createCaliperEventWithRules("GradeEvent");
 export const MediaEventSchema = createCaliperEventWithRules("MediaEvent");
 export const MessageEventSchema = createCaliperEventWithRules("MessageEvent");
-// `navigatedFrom` (NavigationEvent's one non-base property) is left unmodelled: a single honest
-// silent gap (1/1957). Adding it via the rule helper would widen the rule superRefine's inferred
-// event type; not worth it for one optional reference.
-export const NavigationEventSchema = createCaliperEventWithRules("NavigationEvent");
+// NavigationEvent carries one non-base property — `navigatedFrom`, a (deprecated) reference to the
+// location navigated from. The base event object is `.strict()`, so it must be a declared key; we
+// extend the base with it *before* the rule refinement and apply the SAME rule body via
+// `buildEventRuleRefiner`. Special-casing here (rather than routing an extra-props shape through the
+// generic helper, which would widen the refiner's inferred event type) closes the last Caliper
+// information-model gap with no loss of type precision.
+const navigationRule = CALIPER_TEXTUAL_EVENT_RULES["NavigationEvent"];
+const navigationBaseSchema = createCaliperEventSchema("NavigationEvent", ActionValueSchema).extend({
+  navigatedFrom: CaliperReferenceSchema.optional(),
+});
+export const NavigationEventSchema =
+  navigationRule === undefined
+    ? navigationBaseSchema
+    : navigationBaseSchema.superRefine(
+        (
+          (refine) => (event: z.infer<typeof navigationBaseSchema>, ctx: z.RefinementCtx) =>
+            refine(event, ctx)
+        )(buildEventRuleRefiner("NavigationEvent", navigationRule)),
+      );
 export const OutcomeEventSchema = createCaliperEventWithRules("OutcomeEvent");
 export const QuestionnaireEventSchema = createCaliperEventWithRules("QuestionnaireEvent");
 export const QuestionnaireItemEventSchema = createCaliperEventWithRules("QuestionnaireItemEvent");
