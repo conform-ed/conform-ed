@@ -103,12 +103,14 @@ describe("Caliper 1.2 Coverage Map — bundled-bootcamp JSON-Schema walker", () 
 
   test("every conformance requirement cross-links to a real item key", () => {
     const keys = new Set(map.items.map((i) => i.key));
-    // 8 cross-profile data-model MUSTs + the sender/endpoint role profiles (ADR-0018).
-    expect(map.rollup.conformanceRequirements).toBe(16);
+    // 8 cross-profile data-model MUSTs + a serialization tier + the sender/endpoint role profiles,
+    // deepened by the ADR-0018 second pass across §4 / §5.1 / §5.2 / §5.4 / §6.1 / §6.2.
+    expect(map.rollup.conformanceRequirements).toBe(24);
     expect(map.conformance.filter((r) => r.profile === "vocabulary")).toHaveLength(3);
-    expect(map.conformance.filter((r) => r.profile === "sender")).toHaveLength(4);
-    expect(map.conformance.filter((r) => r.profile === "endpoint")).toHaveLength(4);
-    // The transport obligations are honestly RFC-2119-levelled, not all forced to MUST.
+    expect(map.conformance.filter((r) => r.profile === "serialization")).toHaveLength(3);
+    expect(map.conformance.filter((r) => r.profile === "sender")).toHaveLength(6);
+    expect(map.conformance.filter((r) => r.profile === "endpoint")).toHaveLength(6);
+    // The obligations are honestly RFC-2119-levelled, not all forced to MUST (CAL-SND-4, CAL-EP-3/6).
     expect(map.conformance.some((r) => r.level === "SHOULD")).toBe(true);
     for (const req of map.conformance) {
       expect(req.constrains.length).toBeGreaterThan(0);

@@ -73,11 +73,17 @@ const entity = (id: string, zod: SpecBindingSource["zod"]): SpecBindingSource =>
  *
  * Per ADR-0018 the whole Caliper information model is now modelled (every object type is a binding,
  * reconciling against its deepened conform-ed Zod schema), in support of emergent adopting Caliper as
- * a second analytics rail in both Sensor and Endpoint roles (emergent ADR-0041/0042). The board has
- * three tiers: the 8 cross-profile data-model MUSTs (the spine), and the `sender` / `endpoint` role
- * profiles carrying the transport obligations from the spec's §5.4 / §6 (each at its true RFC-2119
- * level — MUST vs SHOULD). Per-profile event constraints (which actions/objects each metric profile
- * permits) live in the information model + `validateCaliperEvent`, sourced from the §3 profile tables.
+ * a second analytics rail in both Sensor and Endpoint roles (emergent ADR-0041/0042). The board (24
+ * requirements) spans: the 8 cross-profile data-model MUSTs (the spine, incl. Envelope value
+ * constraints CAL-ENV-1/2); a `serialization` tier carrying the JSON-LD obligations from §4 / §2.1
+ * (top-level @context shape, the object-or-IRI reference duality, the extensions rule); and the
+ * `sender` / `endpoint` role profiles carrying the transport, behaviour and configuration obligations
+ * from §5.1 / §5.2 / §5.4 / §6.1 / §6.2 — each at its true RFC-2119 level (MUST vs SHOULD), never
+ * inflated. Per-profile event constraints (which actions/objects each metric profile permits) live in
+ * the information model + `validateCaliperEvent`, sourced from the §3 profile tables. A second pass
+ * (ADR-0018) deepened the role board beyond the initial §5.4 / §6.1 transport rules to cover the
+ * serialization axis, the Sensor behaviour list (§5.1), Envelope property constraints (§5.2) and the
+ * Endpoint configuration/ping endpoint (§6.2), all transcribed verbatim from the published prose.
  *
  * Provenance (strengthened, ADR-0018): the structural denominator remains the CaliperBootcamp JSON
  * schemas (1EdTech publishes no canonical Caliper schema release — see `vendor/.../PROVENANCE.md`),
@@ -211,6 +217,20 @@ const conformance: readonly ConformanceRequirement[] = [
     source: "Caliper 1.2 §Envelope — https://www.imsglobal.org/spec/caliper/v1p2",
   },
   {
+    key: "caliper:1.2:conf:envelope/CAL-ENV-2",
+    profile: "envelope",
+    reqId: "CAL-ENV-2",
+    level: "MUST",
+    statement:
+      "The Envelope sendTime MUST be expressed in UTC with millisecond precision (YYYY-MM-DDTHH:mm:ss.SSSZ, no offset); the dataVersion MUST be set to the 1EdTech Caliper context IRI governing the payload; the data array MUST carry one or more Event/Entity describe objects; and each Envelope property MUST be referenced only once with no custom properties permitted.",
+    constrains: [
+      "caliper:1.2:def:Envelope/sendTime",
+      "caliper:1.2:def:Envelope/dataVersion",
+      "caliper:1.2:def:Envelope/data",
+    ],
+    source: "Caliper 1.2 §5.2 Envelope (Properties) — https://www.imsglobal.org/spec/caliper/v1p2",
+  },
+  {
     key: "caliper:1.2:conf:event/CAL-EVT-1",
     profile: "event",
     reqId: "CAL-EVT-1",
@@ -293,6 +313,48 @@ const conformance: readonly ConformanceRequirement[] = [
     source: "Caliper 1.2 §Role vocabulary / Membership — https://www.imsglobal.org/spec/caliper/v1p2",
   },
 
+  // Serialization profile — the JSON-LD serialization obligations a conformant Sensor's output must
+  // satisfy (Caliper 1.2 §4 Serialization, §2.1 Event). This axis was absent from the first board,
+  // which covered the information model + transport but not how documents are serialized as JSON-LD.
+  {
+    key: "caliper:1.2:conf:serialization/CAL-SER-1",
+    profile: "serialization",
+    reqId: "CAL-SER-1",
+    level: "MUST",
+    statement:
+      'Each Caliper Event and Entity describe document MUST carry a top-level @context property defined as a string or an array. If a string it MUST be the Caliper remote context URL "http://purl.imsglobal.org/ctx/caliper/v1p2"; if an array the remote Caliper context MUST be listed last. The remote context\'s terms MUST NOT be redefined inline as an object, nor overridden by nested local contexts.',
+    constrains: ["caliper:1.2:def:Event/@context", "caliper:1.2:def:Entity/@context"],
+    source: "Caliper 1.2 §4.1 JSON-LD Context (Requirements) — https://www.imsglobal.org/spec/caliper/v1p2",
+  },
+  {
+    key: "caliper:1.2:conf:serialization/CAL-SER-2",
+    profile: "serialization",
+    reqId: "CAL-SER-2",
+    level: "MUST",
+    statement:
+      "An Event's entity-valued properties — the actor and object, and any edApp, generated, target, referrer or group — MUST each be expressed either as an object or as a string corresponding to the resource's IRI (Caliper's reference-or-inline duality).",
+    constrains: [
+      "caliper:1.2:def:Event/actor",
+      "caliper:1.2:def:Event/object",
+      "caliper:1.2:def:Event/edApp",
+      "caliper:1.2:def:Event/generated",
+      "caliper:1.2:def:Event/target",
+      "caliper:1.2:def:Event/referrer",
+      "caliper:1.2:def:Event/group",
+    ],
+    source: "Caliper 1.2 §2.1 Event (Properties) / §5.1 Behavior — https://www.imsglobal.org/spec/caliper/v1p2",
+  },
+  {
+    key: "caliper:1.2:conf:serialization/CAL-SER-3",
+    profile: "serialization",
+    reqId: "CAL-SER-3",
+    level: "MUST",
+    statement:
+      "Within an Event or Entity each property MUST be referenced only once, and any custom attribute not described by the Caliper model MUST be added to the extensions property rather than as an ad-hoc top-level term.",
+    constrains: ["caliper:1.2:def:Event/extensions", "caliper:1.2:def:Entity/extensions"],
+    source: "Caliper 1.2 §2.1 Event / §2.2 Entity (extensions) — https://www.imsglobal.org/spec/caliper/v1p2",
+  },
+
   // Sender role — the transport obligations of a conformant Caliper Sensor (Caliper 1.2 §5.4 HTTP
   // Requests). RFC-2119 levels are quoted verbatim from the spec; constrains anchor to the Envelope
   // fields each obligation carries (Caliper has no OpenAPI transport axis to cross-link to).
@@ -336,6 +398,27 @@ const conformance: readonly ConformanceRequirement[] = [
     constrains: ["caliper:1.2:def:Envelope/sensor"],
     source: "Caliper 1.2 §5.4 HTTP Requests (Authorization) — https://www.imsglobal.org/spec/caliper/v1p2",
   },
+  {
+    key: "caliper:1.2:conf:sender/CAL-SND-5",
+    profile: "sender",
+    reqId: "CAL-SND-5",
+    level: "MUST",
+    statement:
+      "A Sensor MUST serialize each Event and Entity describe as a JSON-LD document, and Caliper Event and Entity data MUST be transmitted inside a Caliper Envelope (never outside one).",
+    constrains: ["caliper:1.2:def:Envelope/data"],
+    source: "Caliper 1.2 §5.1 Behavior / §5.3 JSON-LD Payload — https://www.imsglobal.org/spec/caliper/v1p2",
+  },
+  {
+    key: "caliper:1.2:conf:sender/CAL-SND-6",
+    profile: "sender",
+    reqId: "CAL-SND-6",
+    level: "MUST",
+    statement:
+      "A Sensor MUST ensure that the Caliper data it sends is based on one of the Caliper JSON-LD context document versions listed in the Endpoint's caliperSupportedVersions configuration.",
+    constrains: ["caliper:1.2:def:Envelope/dataVersion"],
+    source:
+      "Caliper 1.2 §6.2 Configuration Information (caliperSupportedVersions) — https://www.imsglobal.org/spec/caliper/v1p2",
+  },
 
   // Endpoint role — the receipt + response obligations of a conformant Caliper Endpoint (Caliper 1.2
   // §6 Endpoint, §6.1 HTTP Responses).
@@ -378,6 +461,26 @@ const conformance: readonly ConformanceRequirement[] = [
       "When an Endpoint replies with a non-2xx response it MUST adhere to the defined status codes: 400 Bad Request for a missing or malformed Envelope, 401 Unauthorized for an unauthorized request, 415 Unsupported Media Type for a non-application/json content type, and 422 Unprocessable Entity when it cannot support the Envelope's dataVersion.",
     constrains: ["caliper:1.2:def:Envelope/data", "caliper:1.2:def:Envelope/dataVersion"],
     source: "Caliper 1.2 §6.1 HTTP Responses (error status codes) — https://www.imsglobal.org/spec/caliper/v1p2",
+  },
+  {
+    key: "caliper:1.2:conf:endpoint/CAL-EP-5",
+    profile: "endpoint",
+    reqId: "CAL-EP-5",
+    level: "MUST",
+    statement:
+      "On receiving a GET status (ping) request with appropriate authorization, an Endpoint MUST respond with 200 OK and a JSON body containing its configuration parameters, including the required caliperSupportedVersions list; each configuration property MUST be included no more than once and no custom properties are permitted.",
+    constrains: ["caliper:1.2:def:Envelope/dataVersion", "caliper:1.2:def:Envelope/sensor"],
+    source: "Caliper 1.2 §6.2 Configuration Information — https://www.imsglobal.org/spec/caliper/v1p2",
+  },
+  {
+    key: "caliper:1.2:conf:endpoint/CAL-EP-6",
+    profile: "endpoint",
+    reqId: "CAL-EP-6",
+    level: "SHOULD",
+    statement:
+      "If a status (ping) request arrives without an Authorization header of the RECOMMENDED form, or with a token the Endpoint cannot validate or that lacks sufficient privilege, the Endpoint SHOULD reply with a 401 Unauthorized response.",
+    constrains: ["caliper:1.2:def:Envelope/sensor"],
+    source: "Caliper 1.2 §6.2 Configuration Information — https://www.imsglobal.org/spec/caliper/v1p2",
   },
 ];
 

@@ -27,7 +27,12 @@ event validator, and a strengthened-but-honest denominator.
    the Caliper 1.2 transport + certification text. This honours ADR-0013's no-invented-MUSTs rule:
    "richer" means more granular and correctly-levelled (auth header, `application/json`, Envelope
    POST well-formedness, batch `data[]`, accept-conformant / reject-malformed, the sensor's
-   per-profile event obligation), not everything promoted to MUST.
+   per-profile event obligation), not everything promoted to MUST. A second pass over the spec's
+   conformance surface deepened the board from 16 to **24** requirements: a new `serialization`
+   profile (the §4 JSON-LD `@context` shape, the object-or-IRI reference duality, the `extensions`
+   rule), Envelope value constraints (§5.2), the Sensor behaviour list and JSON-LD payload rule
+   (§5.1 / §5.3), version negotiation and the Endpoint configuration/ping endpoint (§6.2) — each
+   transcribed verbatim at its true level.
 
 3. **Export `validateCaliperEvent` from `@conform-ed/contracts`.** Promote
    `CALIPER_TEXTUAL_EVENT_RULES` (the per-profile supported actors/actions/objects) into a reusable

@@ -72475,6 +72475,29 @@
       "source": "Caliper 1.2 §6.1 HTTP Responses (error status codes) — https://www.imsglobal.org/spec/caliper/v1p2"
     },
     {
+      "key": "caliper:1.2:conf:endpoint/CAL-EP-5",
+      "profile": "endpoint",
+      "reqId": "CAL-EP-5",
+      "level": "MUST",
+      "statement": "On receiving a GET status (ping) request with appropriate authorization, an Endpoint MUST respond with 200 OK and a JSON body containing its configuration parameters, including the required caliperSupportedVersions list; each configuration property MUST be included no more than once and no custom properties are permitted.",
+      "constrains": [
+        "caliper:1.2:def:Envelope/dataVersion",
+        "caliper:1.2:def:Envelope/sensor"
+      ],
+      "source": "Caliper 1.2 §6.2 Configuration Information — https://www.imsglobal.org/spec/caliper/v1p2"
+    },
+    {
+      "key": "caliper:1.2:conf:endpoint/CAL-EP-6",
+      "profile": "endpoint",
+      "reqId": "CAL-EP-6",
+      "level": "SHOULD",
+      "statement": "If a status (ping) request arrives without an Authorization header of the RECOMMENDED form, or with a token the Endpoint cannot validate or that lacks sufficient privilege, the Endpoint SHOULD reply with a 401 Unauthorized response.",
+      "constrains": [
+        "caliper:1.2:def:Envelope/sensor"
+      ],
+      "source": "Caliper 1.2 §6.2 Configuration Information — https://www.imsglobal.org/spec/caliper/v1p2"
+    },
+    {
       "key": "caliper:1.2:conf:entity/CAL-ENT-1",
       "profile": "entity",
       "reqId": "CAL-ENT-1",
@@ -72499,6 +72522,19 @@
         "caliper:1.2:def:Envelope/data"
       ],
       "source": "Caliper 1.2 §Envelope — https://www.imsglobal.org/spec/caliper/v1p2"
+    },
+    {
+      "key": "caliper:1.2:conf:envelope/CAL-ENV-2",
+      "profile": "envelope",
+      "reqId": "CAL-ENV-2",
+      "level": "MUST",
+      "statement": "The Envelope sendTime MUST be expressed in UTC with millisecond precision (YYYY-MM-DDTHH:mm:ss.SSSZ, no offset); the dataVersion MUST be set to the 1EdTech Caliper context IRI governing the payload; the data array MUST carry one or more Event/Entity describe objects; and each Envelope property MUST be referenced only once with no custom properties permitted.",
+      "constrains": [
+        "caliper:1.2:def:Envelope/sendTime",
+        "caliper:1.2:def:Envelope/dataVersion",
+        "caliper:1.2:def:Envelope/data"
+      ],
+      "source": "Caliper 1.2 §5.2 Envelope (Properties) — https://www.imsglobal.org/spec/caliper/v1p2"
     },
     {
       "key": "caliper:1.2:conf:event/CAL-EVT-1",
@@ -72680,6 +72716,69 @@
         "caliper:1.2:def:Envelope/sensor"
       ],
       "source": "Caliper 1.2 §5.4 HTTP Requests (Authorization) — https://www.imsglobal.org/spec/caliper/v1p2"
+    },
+    {
+      "key": "caliper:1.2:conf:sender/CAL-SND-5",
+      "profile": "sender",
+      "reqId": "CAL-SND-5",
+      "level": "MUST",
+      "statement": "A Sensor MUST serialize each Event and Entity describe as a JSON-LD document, and Caliper Event and Entity data MUST be transmitted inside a Caliper Envelope (never outside one).",
+      "constrains": [
+        "caliper:1.2:def:Envelope/data"
+      ],
+      "source": "Caliper 1.2 §5.1 Behavior / §5.3 JSON-LD Payload — https://www.imsglobal.org/spec/caliper/v1p2"
+    },
+    {
+      "key": "caliper:1.2:conf:sender/CAL-SND-6",
+      "profile": "sender",
+      "reqId": "CAL-SND-6",
+      "level": "MUST",
+      "statement": "A Sensor MUST ensure that the Caliper data it sends is based on one of the Caliper JSON-LD context document versions listed in the Endpoint's caliperSupportedVersions configuration.",
+      "constrains": [
+        "caliper:1.2:def:Envelope/dataVersion"
+      ],
+      "source": "Caliper 1.2 §6.2 Configuration Information (caliperSupportedVersions) — https://www.imsglobal.org/spec/caliper/v1p2"
+    },
+    {
+      "key": "caliper:1.2:conf:serialization/CAL-SER-1",
+      "profile": "serialization",
+      "reqId": "CAL-SER-1",
+      "level": "MUST",
+      "statement": "Each Caliper Event and Entity describe document MUST carry a top-level @context property defined as a string or an array. If a string it MUST be the Caliper remote context URL \"http://purl.imsglobal.org/ctx/caliper/v1p2\"; if an array the remote Caliper context MUST be listed last. The remote context's terms MUST NOT be redefined inline as an object, nor overridden by nested local contexts.",
+      "constrains": [
+        "caliper:1.2:def:Event/@context",
+        "caliper:1.2:def:Entity/@context"
+      ],
+      "source": "Caliper 1.2 §4.1 JSON-LD Context (Requirements) — https://www.imsglobal.org/spec/caliper/v1p2"
+    },
+    {
+      "key": "caliper:1.2:conf:serialization/CAL-SER-2",
+      "profile": "serialization",
+      "reqId": "CAL-SER-2",
+      "level": "MUST",
+      "statement": "An Event's entity-valued properties — the actor and object, and any edApp, generated, target, referrer or group — MUST each be expressed either as an object or as a string corresponding to the resource's IRI (Caliper's reference-or-inline duality).",
+      "constrains": [
+        "caliper:1.2:def:Event/actor",
+        "caliper:1.2:def:Event/object",
+        "caliper:1.2:def:Event/edApp",
+        "caliper:1.2:def:Event/generated",
+        "caliper:1.2:def:Event/target",
+        "caliper:1.2:def:Event/referrer",
+        "caliper:1.2:def:Event/group"
+      ],
+      "source": "Caliper 1.2 §2.1 Event (Properties) / §5.1 Behavior — https://www.imsglobal.org/spec/caliper/v1p2"
+    },
+    {
+      "key": "caliper:1.2:conf:serialization/CAL-SER-3",
+      "profile": "serialization",
+      "reqId": "CAL-SER-3",
+      "level": "MUST",
+      "statement": "Within an Event or Entity each property MUST be referenced only once, and any custom attribute not described by the Caliper model MUST be added to the extensions property rather than as an ad-hoc top-level term.",
+      "constrains": [
+        "caliper:1.2:def:Event/extensions",
+        "caliper:1.2:def:Entity/extensions"
+      ],
+      "source": "Caliper 1.2 §2.1 Event / §2.2 Entity (extensions) — https://www.imsglobal.org/spec/caliper/v1p2"
     },
     {
       "key": "caliper:1.2:conf:vocabulary/CAL-VOCAB-1",
@@ -73538,7 +73637,7 @@
     "modelledPartial": 0,
     "modelledNo": 0,
     "normativeItems": 99,
-    "conformanceRequirements": 16,
+    "conformanceRequirements": 24,
     "normativeStatements": 99,
     "normativeStatementsCited": 99,
     "normalisations": 0,
