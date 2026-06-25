@@ -46,6 +46,19 @@ event validator, and a strengthened-but-honest denominator.
    structural denominator stays bootcamp, strengthened by independent vocabulary/profile
    verification.
 
+5. **Score the reference-or-inline duality as N/A, not `partial`.** Caliper lets every entity
+   association slot carry its target inline (the full object) or by reference (`CaliperReferenceSchema`
+   — `id` / `type` / `@context` / `extensions` only). The L2 join reaches a type's full definition in
+   *both* kinds of slot, so a fully-modelled type showed a band of false `partial`s (its deep fields
+   "missing" wherever it was referenced). Add a `referenceIdentityProps` option to the ADR-0013 engine:
+   in a context where the Zod side is exactly the reference form while the literal is richer, the
+   non-identity fields are **not applicable**, not misses. A type is proven at its own document-root
+   binding, so this collapses the false band to `yes`; the safeguard restores any field reached *only*
+   by reference (never modelled inline anywhere) to a genuine `no`, so the option never hides a gap.
+   The option is **opt-in per spec** (empty ⇒ inert), leaving every other map's scoring unchanged.
+   Result: the Caliper map reads 1692 modelled / 0 partial / 1 silent gap
+   (`NavigationEvent/navigatedFrom`, kept unmodelled to keep the rule `superRefine` strongly typed).
+
 ## Considered alternatives
 
 - **Codegen the ~90 types from the bootcamp JSON Schema.** Faster and faithful-by-construction,
@@ -62,6 +75,8 @@ event validator, and a strengthened-but-honest denominator.
 
 - The Caliper map regenerates with a near-complete model and the new role requirements; emergent
   re-pins the map + updates its overlay (emergent ADR-0028/0041).
+- The ADR-0013 engine gains a reusable `referenceIdentityProps` option for reference/inline specs;
+  Caliper is its first user, every other map opts out and is unchanged.
 - `@conform-ed/contracts` gains `validateCaliperEvent` as public API.
 - Release flows per ADR-0016: a `main` push publishes the `@dev` build emergent previews; the
   public release rides the next semver tag.

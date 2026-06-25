@@ -98,6 +98,7 @@ export function reconcile(
   normalize: (name: string) => string = (name) => name,
   aliases: readonly StructuralAlias[] = [],
   literalWrappers: readonly string[] = [],
+  referenceIdentityProps: readonly string[] = [],
 ): ReconcileResult {
   const lit = indexSide(literal);
   const zd = indexSide(zod);
@@ -114,6 +115,15 @@ export function reconcile(
   const zodSeen = new Set<string>(); // Zod property keys encountered during alignment
   const zodMatched = new Set<string>(); // ...of those, the ones matched to a literal name
   const visited = new Set<string>();
+
+  // Reference/inline duality (e.g. Caliper, ADR-0018): the property set a by-reference form carries.
+  // In a context where the Zod side is exactly such a reference (shape ⊆ this set) while the literal
+  // is a richer type, the literal's non-identity fields are N/A — not modelled-misses. We skip them
+  // here and, after the walk, restore any that were *only ever* N/A-skipped (so never modelled in
+  // any inline context) to a genuine `no`. Empty ⇒ the feature is off and every context scores as
+  // before. The `[]` array marker is never an identity property.
+  const identitySet = new Set(referenceIdentityProps.map(normalize));
+  const referenceNaSkips = new Set<string>();
 
   // Arrays are transparent containers for coverage: the element's *properties* are
   // the spec items, not the `[]` wrapper. One side may wrap a value in an array
@@ -156,6 +166,15 @@ export function reconcile(
     const litShape = shapeOf(lit, litKey, normalize);
     const zodShape = shapeOf(zd, zodKey, normalize);
 
+    // A by-reference context: the Zod node carries only identity properties (it is the reference
+    // form of an entity) while the literal node is a richer type. Its non-identity literal fields
+    // are not applicable to a reference, so below we skip tallying them as misses.
+    const isReferenceContext =
+      identitySet.size > 0 &&
+      zodShape.size > 0 &&
+      [...zodShape.keys()].every((name) => name === "[]" || identitySet.has(name)) &&
+      [...litShape.keys()].some((name) => name !== "[]" && !identitySet.has(name));
+
     // Resolve structural aliases first, consuming the names they bridge so the name-based loops
     // below do not then mis-score them as a gap (the literal element) or extension (the Zod prop).
     const consumedLit = new Set<string>();
@@ -182,6 +201,12 @@ export function reconcile(
     for (const [name, litChild] of litShape) {
       if (consumedLit.has(name)) continue;
       const zodChild = zodShape.get(name);
+      // N/A: a non-identity field of an entity carried here only by reference. Record it so a field
+      // that is never reached inline anywhere can be restored to a real gap after the walk.
+      if (zodChild === undefined && isReferenceContext && !identitySet.has(name)) {
+        referenceNaSkips.add(litChild);
+        continue;
+      }
       bump(litChild, zodChild !== undefined);
       if (zodChild !== undefined) align(litChild, zodChild);
     }
@@ -197,6 +222,11 @@ export function reconcile(
   const modelled = new Map<string, ModelledStatus>();
   for (const [key, { matched, total }] of tally) {
     modelled.set(key, matched === 0 ? "no" : matched === total ? "yes" : "partial");
+  }
+  // A field reached *only* by reference (N/A-skipped everywhere, never modelled in any inline
+  // context) is a genuine silent gap, not an N/A — restore it to `no`.
+  for (const key of referenceNaSkips) {
+    if (!tally.has(key)) modelled.set(key, "no");
   }
 
   // Silent gaps: literal items the Zod model never represents in any aligned context.

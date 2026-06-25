@@ -736,7 +736,7 @@
       "path": "dateCreated",
       "jsonType": "string",
       "description": "A date and time value expressed with millisecond precision that describes when an Entity was created.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Agent/dateModified",
@@ -744,7 +744,7 @@
       "path": "dateModified",
       "jsonType": "string",
       "description": "A date and time value expressed with millisecond precision that describes when an Entity was last changed or modified.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Agent/description",
@@ -752,7 +752,7 @@
       "path": "description",
       "jsonType": "string",
       "description": "A brief, plain-text representation of the resource.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Agent/extensions",
@@ -775,7 +775,7 @@
       "kind": "property",
       "path": "isPartOf",
       "description": "A related Entity that includes or incorporates the resource as a part of its whole.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Agent/name",
@@ -783,7 +783,7 @@
       "path": "name",
       "jsonType": "string",
       "description": "A string value comprising a word or phrase by which the resource is known.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Agent/type",
@@ -870,14 +870,14 @@
       "path": "maxMetricValue",
       "jsonType": "number",
       "description": "An integer value representing the total possible curricular progress the actor can make in the context of the application.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:AggregateMeasure/metric",
       "kind": "property",
       "path": "metric",
       "description": "The standard of measurement associated with the progress value.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:AggregateMeasure/metricValue",
@@ -885,7 +885,7 @@
       "path": "metricValue",
       "jsonType": "number",
       "description": "An integer value representing the total curricular progress the actor has made in the context of the application.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:AggregateMeasure/name",
@@ -1368,7 +1368,7 @@
       "path": "items",
       "jsonType": "array",
       "description": "An ordered collection of resources that comprise the collection.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Assessment/items/[]",
@@ -1746,7 +1746,7 @@
       "path": "isTimeDependent",
       "jsonType": "boolean",
       "description": "A boolean value indicating whether or not interacting with the item is time dependent.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:AssessmentItem/keywords",
@@ -2370,14 +2370,14 @@
       "kind": "property",
       "path": "assignable",
       "description": "The DigitalResource that constitutes the object of the assignment.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Attempt/assignee",
       "kind": "property",
       "path": "assignee",
       "description": "The Person who initiated the Attempt of an assigned DigitalResource.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Attempt/count",
@@ -2385,7 +2385,7 @@
       "path": "count",
       "jsonType": "number",
       "description": "The total number of attempts inclusive of the current Attempt that have been registered by the learner against the assigned resource.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Attempt/dateCreated",
@@ -2393,7 +2393,7 @@
       "path": "dateCreated",
       "jsonType": "string",
       "description": "A date and time value expressed with millisecond precision that describes when an Entity was created.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Attempt/dateModified",
@@ -2401,7 +2401,7 @@
       "path": "dateModified",
       "jsonType": "string",
       "description": "A date and time value expressed with millisecond precision that describes when an Entity was last changed or modified.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Attempt/description",
@@ -2409,7 +2409,7 @@
       "path": "description",
       "jsonType": "string",
       "description": "A brief, plain-text representation of the resource.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Attempt/duration",
@@ -2417,7 +2417,7 @@
       "path": "duration",
       "jsonType": "string",
       "description": "A time interval that represents the total time required to complete an activity.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Attempt/endedAtTime",
@@ -2425,7 +2425,7 @@
       "path": "endedAtTime",
       "jsonType": "string",
       "description": "A date and time value expressed with millisecond precision that describes when the activity was completed or terminated.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Attempt/extensions",
@@ -2448,7 +2448,7 @@
       "kind": "property",
       "path": "isPartOf",
       "description": "A related Entity that includes or incorporates the resource as a part of its whole.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Attempt/name",
@@ -2456,7 +2456,7 @@
       "path": "name",
       "jsonType": "string",
       "description": "A string value comprising a word or phrase by which the resource is known.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Attempt/startedAtTime",
@@ -2464,7 +2464,7 @@
       "path": "startedAtTime",
       "jsonType": "string",
       "description": "A date and time value expressed with millisecond precision that describes when the activity commenced.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Attempt/type",
@@ -2676,7 +2676,7 @@
       "path": "muted",
       "jsonType": "boolean",
       "description": "An optional boolean value indicating whether or not the MediaObject has been muted .",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:AudioObject/name",
@@ -2724,7 +2724,7 @@
       "path": "volumeLevel",
       "jsonType": "string",
       "description": "The current volume level.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:AudioObject/volumeMax",
@@ -2732,7 +2732,7 @@
       "path": "volumeMax",
       "jsonType": "string",
       "description": "A string value indicating the maximum volume level permitted.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:AudioObject/volumeMin",
@@ -2740,7 +2740,7 @@
       "path": "volumeMin",
       "jsonType": "string",
       "description": "A string value indicating the minimum volume level permitted.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:BookmarkAnnotation",
@@ -2772,7 +2772,7 @@
       "path": "bookmarkNotes",
       "jsonType": "string",
       "description": "A plain text rendering of the note associated with a BookmarkAnnotation.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:BookmarkAnnotation/extensions",
@@ -3248,14 +3248,14 @@
       "kind": "property",
       "path": "commentedOn",
       "description": "The Entity which received the comment.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Comment/commenter",
       "kind": "property",
       "path": "commenter",
       "description": "The Person who provided the comment.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Comment/dateCreated",
@@ -3263,7 +3263,7 @@
       "path": "dateCreated",
       "jsonType": "string",
       "description": "A date and time value expressed with millisecond precision that describes when an Entity was created.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Comment/dateModified",
@@ -3271,7 +3271,7 @@
       "path": "dateModified",
       "jsonType": "string",
       "description": "A date and time value expressed with millisecond precision that describes when an Entity was last changed or modified.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Comment/description",
@@ -3279,7 +3279,7 @@
       "path": "description",
       "jsonType": "string",
       "description": "A brief, plain-text representation of the resource.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Comment/extensions",
@@ -3302,7 +3302,7 @@
       "kind": "property",
       "path": "isPartOf",
       "description": "A related Entity that includes or incorporates the resource as a part of its whole.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Comment/name",
@@ -3310,7 +3310,7 @@
       "path": "name",
       "jsonType": "string",
       "description": "A string value comprising a word or phrase by which the resource is known.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Comment/type",
@@ -3457,7 +3457,7 @@
       "path": "academicSession",
       "jsonType": "string",
       "description": "A human-readable identifier of the designated period in which a CourseOffering occurs.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:CourseSection/category",
@@ -3465,7 +3465,7 @@
       "path": "category",
       "jsonType": "string",
       "description": "A plain-text descriptor that characterizes the purpose of the CourseSection such as \"lecture\", \"lab\" or \"seminar\".",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:CourseSection/courseNumber",
@@ -3473,7 +3473,7 @@
       "path": "courseNumber",
       "jsonType": "string",
       "description": "A human-readable identifier of the CourseOffering or CourseSection.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:CourseSection/dateCreated",
@@ -3728,7 +3728,7 @@
       "path": "maxDateTime",
       "jsonType": "string",
       "description": "A date and time value used to determine the maximum value allowed.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:DateTimeQuestion/maxLabel",
@@ -3736,7 +3736,7 @@
       "path": "maxLabel",
       "jsonType": "string",
       "description": "The label for the maximum value.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:DateTimeQuestion/maxScore",
@@ -3768,7 +3768,7 @@
       "path": "minDateTime",
       "jsonType": "string",
       "description": "A date and time value used to determine the minimum value allowed.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:DateTimeQuestion/minLabel",
@@ -3776,7 +3776,7 @@
       "path": "minLabel",
       "jsonType": "string",
       "description": "The label for the minimum value.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:DateTimeQuestion/name",
@@ -3870,7 +3870,7 @@
       "path": "dateTimeSelected",
       "jsonType": "string",
       "description": "The date and time selected in response to the Question.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:DateTimeResponse/description",
@@ -3965,7 +3965,7 @@
       "path": "alignedLearningObjective",
       "jsonType": "array",
       "description": "An ordered collection of one or more LearningObjective entities that describe what a learner is expected to comprehend or accomplish after engaging with the resource. Deprecated. Use learningObjectives.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:DigitalResource/alignedLearningObjective/[]",
@@ -3978,7 +3978,7 @@
       "path": "creators",
       "jsonType": "array",
       "description": "An ordered collection of Agent entities, typically of type Person, that are responsible for bringing resource into being",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:DigitalResource/creators/[]",
@@ -3991,7 +3991,7 @@
       "path": "dateCreated",
       "jsonType": "string",
       "description": "A date and time value expressed with millisecond precision that describes when an Entity was created.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:DigitalResource/dateModified",
@@ -3999,7 +3999,7 @@
       "path": "dateModified",
       "jsonType": "string",
       "description": "A date and time value expressed with millisecond precision that describes when an Entity was last changed or modified.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:DigitalResource/datePublished",
@@ -4007,7 +4007,7 @@
       "path": "datePublished",
       "jsonType": "string",
       "description": "A date and time value expressed with millisecond precision that provides the publication date of a resource.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:DigitalResource/dateToActivate",
@@ -4015,7 +4015,7 @@
       "path": "dateToActivate",
       "jsonType": "string",
       "description": "A date and time value expressed with millisecond precision that describes when a resource was activated.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:DigitalResource/dateToShow",
@@ -4023,7 +4023,7 @@
       "path": "dateToShow",
       "jsonType": "string",
       "description": "A date and time value expressed with millisecond precision that describes when a resource should be shown or made available.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:DigitalResource/dateToStartOn",
@@ -4031,7 +4031,7 @@
       "path": "dateToStartOn",
       "jsonType": "string",
       "description": "A date and time value expressed with millisecond precision that describes when the resource can be started.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:DigitalResource/dateToSubmit",
@@ -4039,7 +4039,7 @@
       "path": "dateToSubmit",
       "jsonType": "string",
       "description": "A date and time value expressed with millisecond precision that describes when the resource is to be submitted for evaluation.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:DigitalResource/description",
@@ -4047,7 +4047,7 @@
       "path": "description",
       "jsonType": "string",
       "description": "A brief, plain-text representation of the resource.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:DigitalResource/extensions",
@@ -4070,7 +4070,7 @@
       "kind": "property",
       "path": "isPartOf",
       "description": "A related Entity that includes or incorporates the resource as a part of its whole.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:DigitalResource/keywords",
@@ -4078,7 +4078,7 @@
       "path": "keywords",
       "jsonType": "array",
       "description": "An ordered collection of one or more string values that represent tags or labels used to identify the resource.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:DigitalResource/keywords/[]",
@@ -4092,7 +4092,7 @@
       "path": "learningObjectives",
       "jsonType": "array",
       "description": "An ordered collection of one or more LearningObjective entities that describe what a learner is expected to comprehend or accomplish after engaging with the resource.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:DigitalResource/learningObjectives/[]",
@@ -4105,7 +4105,7 @@
       "path": "maxAttempts",
       "jsonType": "number",
       "description": "A non-negative integer indicating the number of permitted attempts.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:DigitalResource/maxScore",
@@ -4113,7 +4113,7 @@
       "path": "maxScore",
       "jsonType": "number",
       "description": "A non-negative integer indicating the maximum score permitted.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:DigitalResource/maxSubmits",
@@ -4121,7 +4121,7 @@
       "path": "maxSubmits",
       "jsonType": "number",
       "description": "A non-negative integer indicating the number of permitted submissions.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:DigitalResource/mediaType",
@@ -4129,7 +4129,7 @@
       "path": "mediaType",
       "jsonType": "string",
       "description": "A string value drawn from the list of IANA approved media types and subtypes that identifies the file format of a resource.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:DigitalResource/name",
@@ -4137,7 +4137,7 @@
       "path": "name",
       "jsonType": "string",
       "description": "A string value comprising a word or phrase by which the resource is known.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:DigitalResource/objectType",
@@ -4145,7 +4145,7 @@
       "path": "objectType",
       "jsonType": "boolean",
       "description": "A string value that designates the resource type.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:DigitalResource/storageName",
@@ -4153,7 +4153,7 @@
       "path": "storageName",
       "jsonType": "string",
       "description": "The name of resource when stored in a file system.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:DigitalResource/type",
@@ -4169,7 +4169,7 @@
       "path": "version",
       "jsonType": "string",
       "description": "A string value that designates the current form or version of the resource.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:DigitalResourceCollection",
@@ -5320,7 +5320,7 @@
       "path": "alignedLearningObjective",
       "jsonType": "array",
       "description": "An ordered collection of one or more LearningObjective entities that describe what a learner is expected to comprehend or accomplish after engaging with the resource. Deprecated. Use learningObjectives.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:epubVolume/alignedLearningObjective/[]",
@@ -5333,7 +5333,7 @@
       "path": "creators",
       "jsonType": "array",
       "description": "An ordered collection of Agent entities, typically of type Person, that are responsible for bringing resource into being",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:epubVolume/creators/[]",
@@ -5362,7 +5362,7 @@
       "path": "datePublished",
       "jsonType": "string",
       "description": "A date and time value expressed with millisecond precision that provides the publication date of a resource.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:epubVolume/dateToActivate",
@@ -5370,7 +5370,7 @@
       "path": "dateToActivate",
       "jsonType": "string",
       "description": "A date and time value expressed with millisecond precision that describes when a resource was activated.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:epubVolume/dateToShow",
@@ -5378,7 +5378,7 @@
       "path": "dateToShow",
       "jsonType": "string",
       "description": "A date and time value expressed with millisecond precision that describes when a resource should be shown or made available.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:epubVolume/dateToStartOn",
@@ -5386,7 +5386,7 @@
       "path": "dateToStartOn",
       "jsonType": "string",
       "description": "A date and time value expressed with millisecond precision that describes when the resource can be started.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:epubVolume/dateToSubmit",
@@ -5394,7 +5394,7 @@
       "path": "dateToSubmit",
       "jsonType": "string",
       "description": "A date and time value expressed with millisecond precision that describes when the resource is to be submitted for evaluation.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:epubVolume/description",
@@ -5433,7 +5433,7 @@
       "path": "keywords",
       "jsonType": "array",
       "description": "An ordered collection of one or more string values that represent tags or labels used to identify the resource.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:epubVolume/keywords/[]",
@@ -5447,7 +5447,7 @@
       "path": "learningObjectives",
       "jsonType": "array",
       "description": "An ordered collection of one or more LearningObjective entities that describe what a learner is expected to comprehend or accomplish after engaging with the resource.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:epubVolume/learningObjectives/[]",
@@ -5460,7 +5460,7 @@
       "path": "maxAttempts",
       "jsonType": "number",
       "description": "A non-negative integer indicating the number of permitted attempts.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:epubVolume/maxScore",
@@ -5476,7 +5476,7 @@
       "path": "maxSubmits",
       "jsonType": "number",
       "description": "A non-negative integer indicating the number of permitted submissions.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:epubVolume/mediaType",
@@ -5484,7 +5484,7 @@
       "path": "mediaType",
       "jsonType": "string",
       "description": "A string value drawn from the list of IANA approved media types and subtypes that identifies the file format of a resource.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:epubVolume/name",
@@ -5500,7 +5500,7 @@
       "path": "objectType",
       "jsonType": "boolean",
       "description": "A string value that designates the resource type.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:epubVolume/storageName",
@@ -5508,7 +5508,7 @@
       "path": "storageName",
       "jsonType": "string",
       "description": "The name of resource when stored in a file system.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:epubVolume/type",
@@ -5524,7 +5524,7 @@
       "path": "version",
       "jsonType": "string",
       "description": "A string value that designates the current form or version of the resource.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Event",
@@ -6220,7 +6220,7 @@
       "path": "index",
       "jsonType": "number",
       "description": "A non-negative integer that represents the position of the Frame.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Frame/isPartOf",
@@ -6534,7 +6534,7 @@
       "path": "members",
       "jsonType": "array",
       "description": "An ordered collection of entities of type Agent that belong to a particular group.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Group/members/[]",
@@ -6554,7 +6554,7 @@
       "kind": "property",
       "path": "subOrganizationOf",
       "description": "The parent Organization of an Organization.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Group/type",
@@ -6608,7 +6608,7 @@
       "kind": "property",
       "path": "selection",
       "description": "A Selector that describes a fragment or segment of a resource.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:HighlightAnnotation/selectionText",
@@ -6616,7 +6616,7 @@
       "path": "selectionText",
       "jsonType": "string",
       "description": "A string value representing a plain-text rendering of the selected segment of the annotated resource.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:HighlightAnnotation/type",
@@ -6883,7 +6883,7 @@
       "path": "dateCreated",
       "jsonType": "string",
       "description": "A date and time value expressed with millisecond precision that describes when an Entity was created.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:LearningObjective/dateModified",
@@ -6891,7 +6891,7 @@
       "path": "dateModified",
       "jsonType": "string",
       "description": "A date and time value expressed with millisecond precision that describes when an Entity was last changed or modified.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:LearningObjective/description",
@@ -6899,7 +6899,7 @@
       "path": "description",
       "jsonType": "string",
       "description": "A brief, plain-text representation of the resource.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:LearningObjective/extensions",
@@ -6922,7 +6922,7 @@
       "kind": "property",
       "path": "isPartOf",
       "description": "A related Entity that includes or incorporates the resource as a part of its whole.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:LearningObjective/name",
@@ -6930,7 +6930,7 @@
       "path": "name",
       "jsonType": "string",
       "description": "A string value comprising a word or phrase by which the resource is known.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:LearningObjective/type",
@@ -7280,7 +7280,7 @@
       "path": "LtiMessageType",
       "jsonType": "string",
       "description": "The LTI specification defines a number of message types that are exchanged between platforms and tools. Each LTI message type describes or asserts a set of required and optional sender claims that are communicated to a receiver at particular moments in the workflow. The value of…",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:LtiLink/maxAttempts",
@@ -7375,7 +7375,7 @@
       "kind": "property",
       "path": "client",
       "description": "The SoftwareApplication that is hosting a Session.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:LtiSession/dateCreated",
@@ -7383,7 +7383,7 @@
       "path": "dateCreated",
       "jsonType": "string",
       "description": "A date and time value expressed with millisecond precision that describes when an Entity was created.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:LtiSession/dateModified",
@@ -7391,7 +7391,7 @@
       "path": "dateModified",
       "jsonType": "string",
       "description": "A date and time value expressed with millisecond precision that describes when an Entity was last changed or modified.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:LtiSession/description",
@@ -7399,7 +7399,7 @@
       "path": "description",
       "jsonType": "string",
       "description": "A brief, plain-text representation of the resource.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:LtiSession/duration",
@@ -7407,7 +7407,7 @@
       "path": "duration",
       "jsonType": "string",
       "description": "A time interval that represents the total time required to complete an activity.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:LtiSession/endedAtTime",
@@ -7415,7 +7415,7 @@
       "path": "endedAtTime",
       "jsonType": "string",
       "description": "A date and time value expressed with millisecond precision that describes when the activity was completed or terminated.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:LtiSession/extensions",
@@ -7438,7 +7438,7 @@
       "kind": "property",
       "path": "isPartOf",
       "description": "A related Entity that includes or incorporates the resource as a part of its whole.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:LtiSession/messageParameters",
@@ -7446,7 +7446,7 @@
       "path": "messageParameters",
       "jsonType": "object",
       "description": "A map of LTI-specified message parameters that provide Tool Consumer-related contextual information MAY be specified. LTI message parameters of whatever type (i.e., required, recommended, optional, custom and extension) MAY be referenced.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:LtiSession/name",
@@ -7454,7 +7454,7 @@
       "path": "name",
       "jsonType": "string",
       "description": "A string value comprising a word or phrase by which the resource is known.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:LtiSession/startedAtTime",
@@ -7462,7 +7462,7 @@
       "path": "startedAtTime",
       "jsonType": "string",
       "description": "A date and time value expressed with millisecond precision that describes when the activity commenced.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:LtiSession/type",
@@ -7477,7 +7477,7 @@
       "kind": "property",
       "path": "user",
       "description": "The Person who initiated a Session.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:MediaEvent",
@@ -7664,7 +7664,7 @@
       "path": "currentTime",
       "jsonType": "string",
       "description": "A time interval or duration that represents the current playback position measured from the beginning of a MediaObject.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:MediaLocation/dateCreated",
@@ -8110,7 +8110,7 @@
       "path": "dateCreated",
       "jsonType": "string",
       "description": "A date and time value expressed with millisecond precision that describes when an Entity was created.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Membership/dateModified",
@@ -8118,7 +8118,7 @@
       "path": "dateModified",
       "jsonType": "string",
       "description": "A date and time value expressed with millisecond precision that describes when an Entity was last changed or modified.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Membership/description",
@@ -8126,7 +8126,7 @@
       "path": "description",
       "jsonType": "string",
       "description": "A brief, plain-text representation of the resource.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Membership/extensions",
@@ -8149,14 +8149,14 @@
       "kind": "property",
       "path": "isPartOf",
       "description": "A related Entity that includes or incorporates the resource as a part of its whole.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Membership/member",
       "kind": "property",
       "path": "member",
       "description": "The Person associated with a Membership.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Membership/name",
@@ -8164,14 +8164,14 @@
       "path": "name",
       "jsonType": "string",
       "description": "A string value comprising a word or phrase by which the resource is known.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Membership/organization",
       "kind": "property",
       "path": "organization",
       "description": "The Organization associated with a Membership.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Membership/roles",
@@ -8179,7 +8179,7 @@
       "path": "roles",
       "jsonType": "array",
       "description": "An ordered collection of organizational roles assigned to a member.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Membership/roles/[]",
@@ -8250,7 +8250,7 @@
       "kind": "property",
       "path": "status",
       "description": "The current standing of a member.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Membership/type",
@@ -8282,7 +8282,7 @@
       "path": "alignedLearningObjective",
       "jsonType": "array",
       "description": "An ordered collection of one or more LearningObjective entities that describe what a learner is expected to comprehend or accomplish after engaging with the resource. Deprecated. Use learningObjectives.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Message/alignedLearningObjective/[]",
@@ -8295,7 +8295,7 @@
       "path": "attachments",
       "jsonType": "array",
       "description": "An ordered collection of one or more DigitalResource entities attached to a Message.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Message/attachments/[]",
@@ -8308,7 +8308,7 @@
       "path": "body",
       "jsonType": "string",
       "description": "A plain-text rendering of the body content of a Message.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Message/creators",
@@ -8316,7 +8316,7 @@
       "path": "creators",
       "jsonType": "array",
       "description": "An ordered collection of Agent entities, typically of type Person, that are responsible for bringing resource into being",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Message/creators/[]",
@@ -8329,7 +8329,7 @@
       "path": "dateCreated",
       "jsonType": "string",
       "description": "A date and time value expressed with millisecond precision that describes when an Entity was created.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Message/dateModified",
@@ -8337,7 +8337,7 @@
       "path": "dateModified",
       "jsonType": "string",
       "description": "A date and time value expressed with millisecond precision that describes when an Entity was last changed or modified.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Message/datePublished",
@@ -8345,7 +8345,7 @@
       "path": "datePublished",
       "jsonType": "string",
       "description": "A date and time value expressed with millisecond precision that provides the publication date of a resource.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Message/dateToActivate",
@@ -8353,7 +8353,7 @@
       "path": "dateToActivate",
       "jsonType": "string",
       "description": "A date and time value expressed with millisecond precision that describes when a resource was activated.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Message/dateToShow",
@@ -8361,7 +8361,7 @@
       "path": "dateToShow",
       "jsonType": "string",
       "description": "A date and time value expressed with millisecond precision that describes when a resource should be shown or made available.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Message/dateToStartOn",
@@ -8369,7 +8369,7 @@
       "path": "dateToStartOn",
       "jsonType": "string",
       "description": "A date and time value expressed with millisecond precision that describes when the resource can be started.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Message/dateToSubmit",
@@ -8377,7 +8377,7 @@
       "path": "dateToSubmit",
       "jsonType": "string",
       "description": "A date and time value expressed with millisecond precision that describes when the resource is to be submitted for evaluation.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Message/description",
@@ -8385,7 +8385,7 @@
       "path": "description",
       "jsonType": "string",
       "description": "A brief, plain-text representation of the resource.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Message/extensions",
@@ -8408,7 +8408,7 @@
       "kind": "property",
       "path": "isPartOf",
       "description": "A related Entity that includes or incorporates the resource as a part of its whole.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Message/keywords",
@@ -8416,7 +8416,7 @@
       "path": "keywords",
       "jsonType": "array",
       "description": "An ordered collection of one or more string values that represent tags or labels used to identify the resource.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Message/keywords/[]",
@@ -8430,7 +8430,7 @@
       "path": "learningObjectives",
       "jsonType": "array",
       "description": "An ordered collection of one or more LearningObjective entities that describe what a learner is expected to comprehend or accomplish after engaging with the resource.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Message/learningObjectives/[]",
@@ -8443,7 +8443,7 @@
       "path": "maxAttempts",
       "jsonType": "number",
       "description": "A non-negative integer indicating the number of permitted attempts.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Message/maxScore",
@@ -8451,7 +8451,7 @@
       "path": "maxScore",
       "jsonType": "number",
       "description": "A non-negative integer indicating the maximum score permitted.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Message/maxSubmits",
@@ -8459,7 +8459,7 @@
       "path": "maxSubmits",
       "jsonType": "number",
       "description": "A non-negative integer indicating the number of permitted submissions.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Message/mediaType",
@@ -8467,7 +8467,7 @@
       "path": "mediaType",
       "jsonType": "string",
       "description": "A string value drawn from the list of IANA approved media types and subtypes that identifies the file format of a resource.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Message/name",
@@ -8475,7 +8475,7 @@
       "path": "name",
       "jsonType": "string",
       "description": "A string value comprising a word or phrase by which the resource is known.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Message/objectType",
@@ -8483,14 +8483,14 @@
       "path": "objectType",
       "jsonType": "boolean",
       "description": "A string value that designates the resource type.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Message/replyTo",
       "kind": "property",
       "path": "replyTo",
       "description": "A prior Message that represents the post to which a Message is directed in reply.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Message/storageName",
@@ -8498,7 +8498,7 @@
       "path": "storageName",
       "jsonType": "string",
       "description": "The name of resource when stored in a file system.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Message/type",
@@ -8514,7 +8514,7 @@
       "path": "version",
       "jsonType": "string",
       "description": "A string value that designates the current form or version of the resource.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:MessageEvent",
@@ -9043,13 +9043,13 @@
       "key": "caliper:1.2:def:MultiselectQuestion/itemLabels",
       "kind": "property",
       "path": "itemLabels",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:MultiselectQuestion/itemValues",
       "kind": "property",
       "path": "itemValues",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:MultiselectQuestion/keywords",
@@ -9132,7 +9132,7 @@
       "path": "points",
       "jsonType": "number",
       "description": "A integer value used to determine the amount of points on the MultiselectQuestion.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:MultiselectQuestion/questionPosed",
@@ -9348,13 +9348,13 @@
       "key": "caliper:1.2:def:MultiselectScale/itemLabels",
       "kind": "property",
       "path": "itemLabels",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:MultiselectScale/itemValues",
       "kind": "property",
       "path": "itemValues",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:MultiselectScale/maxSelections",
@@ -9362,7 +9362,7 @@
       "path": "maxSelections",
       "jsonType": "number",
       "description": "Indicates the maximum number of selections that can be chosen.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:MultiselectScale/minSelections",
@@ -9370,7 +9370,7 @@
       "path": "minSelections",
       "jsonType": "number",
       "description": "Indicates the minimum number of selections that can be chosen.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:MultiselectScale/name",
@@ -9386,7 +9386,7 @@
       "path": "orderedSelection",
       "jsonType": "boolean",
       "description": "Indicates whether the order of the selected items is important.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:MultiselectScale/scalePoints",
@@ -9394,7 +9394,7 @@
       "path": "scalePoints",
       "jsonType": "number",
       "description": "A integer value used to determine the amount of points on the LikertScale.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:MultiselectScale/type",
@@ -9617,7 +9617,7 @@
       "path": "maxLabel",
       "jsonType": "string",
       "description": "The label for the maximum value.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:NumericScale/maxValue",
@@ -9625,7 +9625,7 @@
       "path": "maxValue",
       "jsonType": "number",
       "description": "A decimal value used to determine the maximum value of the NumericScale.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:NumericScale/minLabel",
@@ -9633,7 +9633,7 @@
       "path": "minLabel",
       "jsonType": "string",
       "description": "The label for the minimum value.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:NumericScale/minValue",
@@ -9641,7 +9641,7 @@
       "path": "minValue",
       "jsonType": "number",
       "description": "A decimal value used to determine the minimum value of the NumericScale.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:NumericScale/name",
@@ -9657,7 +9657,7 @@
       "path": "step",
       "jsonType": "number",
       "description": "Indicates the decimal step used for determining the options between the minimum and maximum values.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:NumericScale/type",
@@ -10042,7 +10042,7 @@
       "path": "dateCreated",
       "jsonType": "string",
       "description": "A date and time value expressed with millisecond precision that describes when an Entity was created.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Organization/dateModified",
@@ -10050,7 +10050,7 @@
       "path": "dateModified",
       "jsonType": "string",
       "description": "A date and time value expressed with millisecond precision that describes when an Entity was last changed or modified.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Organization/description",
@@ -10058,7 +10058,7 @@
       "path": "description",
       "jsonType": "string",
       "description": "A brief, plain-text representation of the resource.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Organization/extensions",
@@ -10081,7 +10081,7 @@
       "kind": "property",
       "path": "isPartOf",
       "description": "A related Entity that includes or incorporates the resource as a part of its whole.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Organization/members",
@@ -10089,7 +10089,7 @@
       "path": "members",
       "jsonType": "array",
       "description": "An ordered collection of entities of type Agent that belong to a particular group.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Organization/members/[]",
@@ -10102,14 +10102,14 @@
       "path": "name",
       "jsonType": "string",
       "description": "A string value comprising a word or phrase by which the resource is known.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Organization/subOrganizationOf",
       "kind": "property",
       "path": "subOrganizationOf",
       "description": "The parent Organization of an Organization.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Organization/type",
@@ -10506,7 +10506,7 @@
       "path": "dateCreated",
       "jsonType": "string",
       "description": "A date and time value expressed with millisecond precision that describes when an Entity was created.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Person/dateModified",
@@ -10514,7 +10514,7 @@
       "path": "dateModified",
       "jsonType": "string",
       "description": "A date and time value expressed with millisecond precision that describes when an Entity was last changed or modified.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Person/description",
@@ -10522,7 +10522,7 @@
       "path": "description",
       "jsonType": "string",
       "description": "A brief, plain-text representation of the resource.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Person/extensions",
@@ -10545,7 +10545,7 @@
       "kind": "property",
       "path": "isPartOf",
       "description": "A related Entity that includes or incorporates the resource as a part of its whole.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Person/name",
@@ -10553,7 +10553,7 @@
       "path": "name",
       "jsonType": "string",
       "description": "A string value comprising a word or phrase by which the resource is known.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Person/type",
@@ -10607,7 +10607,7 @@
       "kind": "property",
       "path": "creator",
       "description": "The Person who authored, devised or otherwise brought into being a resource.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Query/dateCreated",
@@ -10615,7 +10615,7 @@
       "path": "dateCreated",
       "jsonType": "string",
       "description": "A date and time value expressed with millisecond precision that describes when an Entity was created.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Query/dateModified",
@@ -10623,7 +10623,7 @@
       "path": "dateModified",
       "jsonType": "string",
       "description": "A date and time value expressed with millisecond precision that describes when an Entity was last changed or modified.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Query/description",
@@ -10631,7 +10631,7 @@
       "path": "description",
       "jsonType": "string",
       "description": "A brief, plain-text representation of the resource.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Query/extensions",
@@ -10654,7 +10654,7 @@
       "kind": "property",
       "path": "isPartOf",
       "description": "A related Entity that includes or incorporates the resource as a part of its whole.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Query/name",
@@ -10662,13 +10662,13 @@
       "path": "name",
       "jsonType": "string",
       "description": "A string value comprising a word or phrase by which the resource is known.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Query/searchTarget",
       "kind": "property",
       "path": "searchTarget",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Query/searchTerms",
@@ -10676,7 +10676,7 @@
       "path": "searchTerms",
       "jsonType": "string",
       "description": "The search terms employed by the creator of a Query.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Query/type",
@@ -10708,7 +10708,7 @@
       "path": "alignedLearningObjective",
       "jsonType": "array",
       "description": "An ordered collection of one or more LearningObjective entities that describe what a learner is expected to comprehend or accomplish after engaging with the resource. Deprecated. Use learningObjectives.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Question/alignedLearningObjective/[]",
@@ -10721,7 +10721,7 @@
       "path": "creators",
       "jsonType": "array",
       "description": "An ordered collection of Agent entities, typically of type Person, that are responsible for bringing resource into being",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Question/creators/[]",
@@ -10734,7 +10734,7 @@
       "path": "dateCreated",
       "jsonType": "string",
       "description": "A date and time value expressed with millisecond precision that describes when an Entity was created.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Question/dateModified",
@@ -10742,7 +10742,7 @@
       "path": "dateModified",
       "jsonType": "string",
       "description": "A date and time value expressed with millisecond precision that describes when an Entity was last changed or modified.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Question/datePublished",
@@ -10750,7 +10750,7 @@
       "path": "datePublished",
       "jsonType": "string",
       "description": "A date and time value expressed with millisecond precision that provides the publication date of a resource.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Question/dateToActivate",
@@ -10758,7 +10758,7 @@
       "path": "dateToActivate",
       "jsonType": "string",
       "description": "A date and time value expressed with millisecond precision that describes when a resource was activated.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Question/dateToShow",
@@ -10766,7 +10766,7 @@
       "path": "dateToShow",
       "jsonType": "string",
       "description": "A date and time value expressed with millisecond precision that describes when a resource should be shown or made available.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Question/dateToStartOn",
@@ -10774,7 +10774,7 @@
       "path": "dateToStartOn",
       "jsonType": "string",
       "description": "A date and time value expressed with millisecond precision that describes when the resource can be started.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Question/dateToSubmit",
@@ -10782,7 +10782,7 @@
       "path": "dateToSubmit",
       "jsonType": "string",
       "description": "A date and time value expressed with millisecond precision that describes when the resource is to be submitted for evaluation.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Question/description",
@@ -10790,7 +10790,7 @@
       "path": "description",
       "jsonType": "string",
       "description": "A brief, plain-text representation of the resource.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Question/extensions",
@@ -10813,7 +10813,7 @@
       "kind": "property",
       "path": "isPartOf",
       "description": "A related Entity that includes or incorporates the resource as a part of its whole.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Question/keywords",
@@ -10821,7 +10821,7 @@
       "path": "keywords",
       "jsonType": "array",
       "description": "An ordered collection of one or more string values that represent tags or labels used to identify the resource.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Question/keywords/[]",
@@ -10835,7 +10835,7 @@
       "path": "learningObjectives",
       "jsonType": "array",
       "description": "An ordered collection of one or more LearningObjective entities that describe what a learner is expected to comprehend or accomplish after engaging with the resource.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Question/learningObjectives/[]",
@@ -10848,7 +10848,7 @@
       "path": "maxAttempts",
       "jsonType": "number",
       "description": "A non-negative integer indicating the number of permitted attempts.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Question/maxScore",
@@ -10856,7 +10856,7 @@
       "path": "maxScore",
       "jsonType": "number",
       "description": "A non-negative integer indicating the maximum score permitted.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Question/maxSubmits",
@@ -10864,7 +10864,7 @@
       "path": "maxSubmits",
       "jsonType": "number",
       "description": "A non-negative integer indicating the number of permitted submissions.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Question/mediaType",
@@ -10872,7 +10872,7 @@
       "path": "mediaType",
       "jsonType": "string",
       "description": "A string value drawn from the list of IANA approved media types and subtypes that identifies the file format of a resource.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Question/name",
@@ -10880,7 +10880,7 @@
       "path": "name",
       "jsonType": "string",
       "description": "A string value comprising a word or phrase by which the resource is known.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Question/objectType",
@@ -10888,7 +10888,7 @@
       "path": "objectType",
       "jsonType": "boolean",
       "description": "A string value that designates the resource type.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Question/questionPosed",
@@ -10896,7 +10896,7 @@
       "path": "questionPosed",
       "jsonType": "string",
       "description": "A string value comprising the question posed.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Question/storageName",
@@ -10904,7 +10904,7 @@
       "path": "storageName",
       "jsonType": "string",
       "description": "The name of resource when stored in a file system.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Question/type",
@@ -10920,7 +10920,7 @@
       "path": "version",
       "jsonType": "string",
       "description": "A string value that designates the current form or version of the resource.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Questionnaire",
@@ -11126,7 +11126,7 @@
       "path": "categories",
       "jsonType": "array",
       "description": "An array of category items.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:QuestionnaireItem/categories/[]",
@@ -11313,7 +11313,7 @@
       "key": "caliper:1.2:def:QuestionnaireItem/question",
       "kind": "property",
       "path": "question",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:QuestionnaireItem/storageName",
@@ -11345,7 +11345,7 @@
       "path": "weight",
       "jsonType": "number",
       "description": "A decimal value used to determine the weight of the QuestionnaireItem.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:QuestionnaireItemEvent",
@@ -11559,33 +11559,33 @@
       "key": "caliper:1.2:def:Rating/question",
       "kind": "property",
       "path": "question",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Rating/rated",
       "kind": "property",
       "path": "rated",
       "description": "The Entity which received the rating.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Rating/rater",
       "kind": "property",
       "path": "rater",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Rating/ratingComment",
       "kind": "property",
       "path": "ratingComment",
       "description": "The Comment left with the Rating.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Rating/scale",
       "kind": "property",
       "path": "scale",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Rating/selections",
@@ -11811,13 +11811,13 @@
       "path": "questionPosed",
       "jsonType": "string",
       "description": "A string value comprising the question posed.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:RatingScaleQuestion/scale",
       "kind": "property",
       "path": "scale",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:RatingScaleQuestion/storageName",
@@ -11940,7 +11940,7 @@
       "key": "caliper:1.2:def:RatingScaleResponse/selections",
       "kind": "property",
       "path": "selections",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:RatingScaleResponse/startedAtTime",
@@ -12597,7 +12597,7 @@
       "path": "comment",
       "jsonType": "string",
       "description": "Plain text feedback provided by the scorer of a Result.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Result/curvedTotalScore",
@@ -12605,7 +12605,7 @@
       "path": "curvedTotalScore",
       "jsonType": "number",
       "description": "The total score earned by the learner after applying a curveFactor to a method for computing a scaled score; e.g., adjusting the score equal to the sum of 100 - curvedFactor(100 - totalScore).",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Result/curveFactor",
@@ -12613,7 +12613,7 @@
       "path": "curveFactor",
       "jsonType": "number",
       "description": "A scale factor to be used in adjusting the totalScore.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Result/dateCreated",
@@ -12651,7 +12651,7 @@
       "path": "extraCreditScore",
       "jsonType": "number",
       "description": "The number of extra credit points earned by the learner.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Result/id",
@@ -12676,7 +12676,7 @@
       "path": "maxResultScore",
       "jsonType": "number",
       "description": "The maximum score permitted for a Result.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Result/name",
@@ -12692,7 +12692,7 @@
       "path": "normalScore",
       "jsonType": "number",
       "description": "The score earned by the learner before adding the extraCreditScore, subtracting the penaltyScore or applying the curveFactor, if any.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Result/penaltyScore",
@@ -12700,7 +12700,7 @@
       "path": "penaltyScore",
       "jsonType": "number",
       "description": "The number of points deducted from the normalScore due to an infraction such as submitting an Attempt after the due date.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Result/resultScore",
@@ -12708,7 +12708,7 @@
       "path": "resultScore",
       "jsonType": "number",
       "description": "The result score awarded to the learner. A result score can be updated.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Result/scoredBy",
@@ -12722,7 +12722,7 @@
       "path": "totalScore",
       "jsonType": "number",
       "description": "A score earned by the learner equal to the sum of normalScore + extraCreditScore - penaltyScore. This value does not take into account the effects of curving.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Result/type",
@@ -12761,7 +12761,7 @@
       "path": "dateCreated",
       "jsonType": "string",
       "description": "A date and time value expressed with millisecond precision that describes when an Entity was created.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Scale/dateModified",
@@ -12769,7 +12769,7 @@
       "path": "dateModified",
       "jsonType": "string",
       "description": "A date and time value expressed with millisecond precision that describes when an Entity was last changed or modified.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Scale/description",
@@ -12777,7 +12777,7 @@
       "path": "description",
       "jsonType": "string",
       "description": "A brief, plain-text representation of the resource.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Scale/extensions",
@@ -12800,7 +12800,7 @@
       "kind": "property",
       "path": "isPartOf",
       "description": "A related Entity that includes or incorporates the resource as a part of its whole.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Scale/name",
@@ -12808,7 +12808,7 @@
       "path": "name",
       "jsonType": "string",
       "description": "A string value comprising a word or phrase by which the resource is known.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Scale/type",
@@ -12838,7 +12838,7 @@
       "key": "caliper:1.2:def:Score/attempt",
       "kind": "property",
       "path": "attempt",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Score/dateCreated",
@@ -12893,7 +12893,7 @@
       "path": "maxScore",
       "jsonType": "number",
       "description": "A non-negative integer indicating the maximum score permitted.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Score/name",
@@ -12907,7 +12907,7 @@
       "key": "caliper:1.2:def:Score/scoredBy",
       "kind": "property",
       "path": "scoredBy",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Score/scoreGiven",
@@ -12915,7 +12915,7 @@
       "path": "scoreGiven",
       "jsonType": "number",
       "description": "The score value.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Score/type",
@@ -13138,14 +13138,14 @@
       "kind": "property",
       "path": "query",
       "description": "The Query submitted by an actor.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:SearchResponse/searchProvider",
       "kind": "property",
       "path": "searchProvider",
       "description": "The SoftwareApplication that is the provider of a SearchResponse.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:SearchResponse/searchResultsItemCount",
@@ -13153,13 +13153,13 @@
       "path": "searchResultsItemCount",
       "jsonType": "number",
       "description": "A total count of searchResults returned. If the Query submitted returned no results the count equal to zero (0).",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:SearchResponse/searchTarget",
       "kind": "property",
       "path": "searchTarget",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:SearchResponse/type",
@@ -13291,7 +13291,7 @@
       "path": "values",
       "jsonType": "array",
       "description": "An ordered collection of one or more selected options.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:SelectTextResponse/values/[]",
@@ -13320,7 +13320,7 @@
       "kind": "property",
       "path": "client",
       "description": "The SoftwareApplication that is hosting a Session.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Session/dateCreated",
@@ -13328,7 +13328,7 @@
       "path": "dateCreated",
       "jsonType": "string",
       "description": "A date and time value expressed with millisecond precision that describes when an Entity was created.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Session/dateModified",
@@ -13336,7 +13336,7 @@
       "path": "dateModified",
       "jsonType": "string",
       "description": "A date and time value expressed with millisecond precision that describes when an Entity was last changed or modified.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Session/description",
@@ -13344,7 +13344,7 @@
       "path": "description",
       "jsonType": "string",
       "description": "A brief, plain-text representation of the resource.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Session/duration",
@@ -13352,7 +13352,7 @@
       "path": "duration",
       "jsonType": "string",
       "description": "A time interval that represents the total time required to complete an activity.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Session/endedAtTime",
@@ -13360,7 +13360,7 @@
       "path": "endedAtTime",
       "jsonType": "string",
       "description": "A date and time value expressed with millisecond precision that describes when the activity was completed or terminated.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Session/extensions",
@@ -13383,7 +13383,7 @@
       "kind": "property",
       "path": "isPartOf",
       "description": "A related Entity that includes or incorporates the resource as a part of its whole.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Session/name",
@@ -13391,7 +13391,7 @@
       "path": "name",
       "jsonType": "string",
       "description": "A string value comprising a word or phrase by which the resource is known.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Session/startedAtTime",
@@ -13399,7 +13399,7 @@
       "path": "startedAtTime",
       "jsonType": "string",
       "description": "A date and time value expressed with millisecond precision that describes when the activity commenced.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Session/type",
@@ -13414,7 +13414,7 @@
       "kind": "property",
       "path": "user",
       "description": "The Person who initiated a Session.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:SessionEvent",
@@ -13605,7 +13605,7 @@
       "path": "withAgents",
       "jsonType": "array",
       "description": "An ordered collection of one or more Agent entities, typically of type Person, with whom the annotated DigitalResource has been shared.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:SharedAnnotation/withAgents/[]",
@@ -13634,7 +13634,7 @@
       "path": "dateCreated",
       "jsonType": "string",
       "description": "A date and time value expressed with millisecond precision that describes when an Entity was created.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:SoftwareApplication/dateModified",
@@ -13642,7 +13642,7 @@
       "path": "dateModified",
       "jsonType": "string",
       "description": "A date and time value expressed with millisecond precision that describes when an Entity was last changed or modified.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:SoftwareApplication/description",
@@ -13650,7 +13650,7 @@
       "path": "description",
       "jsonType": "string",
       "description": "A brief, plain-text representation of the resource.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:SoftwareApplication/extensions",
@@ -13664,7 +13664,7 @@
       "path": "host",
       "jsonType": "string",
       "description": "Identifies the host of a SoftwareApplication. This property can be used to indicate the back-end service or domain hosting a front-end web application.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:SoftwareApplication/id",
@@ -13682,14 +13682,14 @@
       "path": "ipAddress",
       "jsonType": "string",
       "description": "Indicates the IPv4 or IPv6 address of a SoftwareApplication. This property can be used to indicate the user agent (browser) running a front-end web application.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:SoftwareApplication/isPartOf",
       "kind": "property",
       "path": "isPartOf",
       "description": "A related Entity that includes or incorporates the resource as a part of its whole.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:SoftwareApplication/name",
@@ -13697,7 +13697,7 @@
       "path": "name",
       "jsonType": "string",
       "description": "A string value comprising a word or phrase by which the resource is known.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:SoftwareApplication/type",
@@ -13713,7 +13713,7 @@
       "path": "userAgent",
       "jsonType": "string",
       "description": "Describes the properties of the user agent hosting a SoftwareApplication. This field can be used to carry the user agent string reported by the browser running a front-end web application.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:SoftwareApplication/version",
@@ -13721,7 +13721,7 @@
       "path": "version",
       "jsonType": "string",
       "description": "A string value that designates the current form or version of the resource.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Status",
@@ -13756,7 +13756,7 @@
       "path": "dateCreated",
       "jsonType": "string",
       "description": "A date and time value expressed with millisecond precision that describes when an Entity was created.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Survey/dateModified",
@@ -13764,7 +13764,7 @@
       "path": "dateModified",
       "jsonType": "string",
       "description": "A date and time value expressed with millisecond precision that describes when an Entity was last changed or modified.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Survey/description",
@@ -13772,7 +13772,7 @@
       "path": "description",
       "jsonType": "string",
       "description": "A brief, plain-text representation of the resource.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Survey/extensions",
@@ -13795,7 +13795,7 @@
       "kind": "property",
       "path": "isPartOf",
       "description": "A related Entity that includes or incorporates the resource as a part of its whole.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Survey/items",
@@ -13803,7 +13803,7 @@
       "path": "items",
       "jsonType": "array",
       "description": "An ordered collection of resources that comprise the collection.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Survey/items/[]",
@@ -13816,7 +13816,7 @@
       "path": "name",
       "jsonType": "string",
       "description": "A string value comprising a word or phrase by which the resource is known.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:Survey/type",
@@ -14035,7 +14035,7 @@
       "path": "dateSent",
       "jsonType": "string",
       "description": "A date and time value expressed with millisecond precision that describes when the SurveyInvitation was sent.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:SurveyInvitation/dateToActivate",
@@ -14179,7 +14179,7 @@
       "key": "caliper:1.2:def:SurveyInvitation/rater",
       "kind": "property",
       "path": "rater",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:SurveyInvitation/sentCount",
@@ -14187,7 +14187,7 @@
       "path": "sentCount",
       "jsonType": "number",
       "description": "An integer value used to determine the amount of times a SurveyInvitation was sent to the rater.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:SurveyInvitation/storageName",
@@ -14202,7 +14202,7 @@
       "kind": "property",
       "path": "survey",
       "description": "The Survey that the invitation is for.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:SurveyInvitation/type",
@@ -14424,14 +14424,14 @@
       "kind": "property",
       "path": "annotated",
       "description": "The DigitalResource that was annotated by the annotator.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:TagAnnotation/annotator",
       "kind": "property",
       "path": "annotator",
       "description": "The Person who created the Annotation.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:TagAnnotation/extensions",
@@ -14454,7 +14454,7 @@
       "path": "tags",
       "jsonType": "array",
       "description": "An ordered collection of one or more string values that represent labels or tags associated with the annotated DigitalResource.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:TagAnnotation/tags/[]",
@@ -15050,7 +15050,7 @@
       "path": "value",
       "jsonType": "string",
       "description": "A string value that represents the options selected.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:VideoObject",
@@ -15164,7 +15164,7 @@
       "path": "duration",
       "jsonType": "string",
       "description": "A time interval that represents the total time required to complete an activity.",
-      "modelled": "partial"
+      "modelled": "yes"
     },
     {
       "key": "caliper:1.2:def:VideoObject/extensions",
@@ -73535,8 +73535,8 @@
   ],
   "rollup": {
     "items": 2052,
-    "modelledYes": 1434,
-    "modelledPartial": 258,
+    "modelledYes": 1692,
+    "modelledPartial": 0,
     "modelledNo": 1,
     "normativeItems": 99,
     "conformanceRequirements": 16,

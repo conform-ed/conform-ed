@@ -413,5 +413,12 @@ export const caliperV1_2: SpecSource = {
     { item: "caliper:1.2:def:Metric", element: MetricSchema },
     { item: "caliper:1.2:def:Status", element: StatusSchema },
   ],
+  // Caliper's reference-or-inline duality (ADR-0018): every entity association slot may carry its
+  // target inline (the full object) or by reference (`CaliperReferenceSchema` — id / type /
+  // @context / extensions only). A type is fully modelled at its own document-root binding, so when
+  // it is reached *by reference* elsewhere its deeper fields are N/A there, not modelled-misses.
+  // Listing the reference form's identity properties lets the reconciler treat such contexts as N/A
+  // — collapsing the false `partial` band into the honest `yes` the document root already proves.
+  referenceIdentityProps: ["id", "type", "@context", "extensions"],
   conformance,
 };

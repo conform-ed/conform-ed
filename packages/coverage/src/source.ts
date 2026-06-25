@@ -191,4 +191,17 @@ export interface SpecSource {
    * array layer so the element's content reconciles against the array's element. Omitted ⇒ none.
    */
   readonly transparentLiteralWrappers?: readonly string[];
+  /**
+   * The property set a **by-reference** form of an entity carries, for specs (e.g. Caliper) whose
+   * data model lets an association slot hold its target either *inline* (the full object) or *by
+   * reference* (an identifier-only object). When the Zod side of an aligned context is exactly such
+   * a reference — its shape is a subset of these identity properties — while the literal node is a
+   * richer type, the literal's non-identity fields are **not applicable** to a reference, not
+   * *missing*. The reconciler then skips tallying them as misses in that context, so an entity that
+   * is fully modelled at its own document root but reached by reference elsewhere reconciles `yes`
+   * rather than `partial`. A field that appears in **no** non-reference context (never modelled
+   * inline anywhere) is still a genuine silent gap and is restored to `no`. Omitted ⇒ disabled (the
+   * spec has no reference/inline duality, so every context is scored structurally as before).
+   */
+  readonly referenceIdentityProps?: readonly string[];
 }
