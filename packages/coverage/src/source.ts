@@ -25,18 +25,26 @@ export interface SpecRefOverride {
   readonly note: string;
   /**
    * Absorb `extensions` residues whose final path segment equals this — the conform-ed
-   * property name modelling the literal construct the name-join could not pair.
+   * property name modelling the literal construct the name-join could not pair. Use
+   * {@link modelledSegments} when one rename covers several conform-ed property names (e.g. the
+   * expression union is reached via both `expression` and `expressions`).
    */
-  readonly modelledSegment: string;
+  readonly modelledSegment?: string;
+  /** Plural form of {@link modelledSegment}; matched as a set (union with the singular). */
+  readonly modelledSegments?: readonly string[];
   /**
    * For a rename of a *named* literal construct only (e.g. `xml:base`): the literal side's
    * final path segment. Silent gaps matching it are flipped to `modelled: "yes"` (conform-ed
    * does model them, under the conform-ed name) and recorded. Omit for unnamed constructs
    * (`xs:any`, simpleContent text), which have no literal item — and crucially omit it where
    * conform-ed does **not** model the construct at all (QTI 2.x names no `xmlBase`, so its
-   * `/base` gaps are genuine and must stay).
+   * `/base` gaps are genuine and must stay). Use {@link literalSegments} when one documented
+   * rename covers a whole vocabulary the XSD names per-element but conform-ed folds into one
+   * union/array (e.g. the 64 QTI expression operators reached via the Zod `expression` union).
    */
   readonly literalSegment?: string;
+  /** Plural form of {@link literalSegment}; matched as a set (union with the singular). */
+  readonly literalSegments?: readonly string[];
 }
 
 /**

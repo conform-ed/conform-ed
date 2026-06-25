@@ -10,6 +10,17 @@ import {
   QtiTemplateProcessingSchema,
 } from "./processing-internal";
 import {
+  QtiAriaAutocompleteSchema,
+  QtiAriaCheckedSchema,
+  QtiAriaCurrentSchema,
+  QtiAriaExpandedSchema,
+  QtiAriaInvalidSchema,
+  QtiAriaLiveSchema,
+  QtiAriaOrientationSchema,
+  QtiAriaPressedSchema,
+  QtiAriaRoleSchema,
+  QtiAriaSelectedSchema,
+  QtiAriaSortSchema,
   QtiDirectionSchema,
   QtiIdentifierListSchema,
   QtiIdentifierSchema,
@@ -42,6 +53,63 @@ import {
   QtiWeightSchema,
 } from "./variables-internal";
 
+/**
+ * The WAI-ARIA characteristics (ASI §2.13.3, XSD attribute group `ARIABaseDType`) every QTI
+ * content node may carry. Modelled as named fields (kebab-cased to mirror the XML/ARIA binding
+ * exactly, so the parser/serializer round-trip the literal attribute names) — value-set enums for
+ * the closed vocabularies, plain strings for the IDREF/string/integer ones. Authored ARIA on a QTI
+ * element is preserved through emit and rendered to the delivery DOM (ADR-0039).
+ */
+const QtiAriaAttributesShape = {
+  role: QtiAriaRoleSchema.optional(),
+  "aria-activedescendant": z.string().optional(),
+  "aria-atomic": z.string().optional(),
+  "aria-autocomplete": QtiAriaAutocompleteSchema.optional(),
+  "aria-busy": z.string().optional(),
+  "aria-checked": QtiAriaCheckedSchema.optional(),
+  "aria-colcount": z.string().optional(),
+  "aria-colindex": z.string().optional(),
+  "aria-colspan": z.string().optional(),
+  "aria-controls": z.string().optional(),
+  "aria-current": QtiAriaCurrentSchema.optional(),
+  "aria-describedby": z.string().optional(),
+  "aria-details": z.string().optional(),
+  "aria-disabled": z.string().optional(),
+  "aria-errormessage": z.string().optional(),
+  "aria-expanded": QtiAriaExpandedSchema.optional(),
+  "aria-flowto": z.string().optional(),
+  "aria-haspopup": z.string().optional(),
+  "aria-hidden": z.string().optional(),
+  "aria-invalid": QtiAriaInvalidSchema.optional(),
+  "aria-keyshortcuts": z.string().optional(),
+  "aria-label": z.string().optional(),
+  "aria-labelledby": z.string().optional(),
+  "aria-level": z.string().optional(),
+  "aria-live": QtiAriaLiveSchema.optional(),
+  "aria-modal": z.string().optional(),
+  "aria-multiline": z.string().optional(),
+  "aria-multiselectable": z.string().optional(),
+  "aria-orientation": QtiAriaOrientationSchema.optional(),
+  "aria-owns": z.string().optional(),
+  "aria-placeholder": z.string().optional(),
+  "aria-posinset": z.string().optional(),
+  "aria-pressed": QtiAriaPressedSchema.optional(),
+  "aria-readonly": z.string().optional(),
+  "aria-relevant": z.string().optional(),
+  "aria-required": z.string().optional(),
+  "aria-roledescription": z.string().optional(),
+  "aria-rowcount": z.string().optional(),
+  "aria-rowindex": z.string().optional(),
+  "aria-rowspan": z.string().optional(),
+  "aria-selected": QtiAriaSelectedSchema.optional(),
+  "aria-setsize": z.string().optional(),
+  "aria-sort": QtiAriaSortSchema.optional(),
+  "aria-valuemax": z.string().optional(),
+  "aria-valuemin": z.string().optional(),
+  "aria-valuenow": z.string().optional(),
+  "aria-valuetext": z.string().optional(),
+};
+
 const QtiCommonNodeShape = {
   id: QtiIdentifierSchema.optional(),
   class: QtiStringListSchema.optional(),
@@ -53,7 +121,7 @@ const QtiCommonNodeShape = {
   dataCatalogIdref: z.string().optional(),
   dataQtiSuppressTts: QtiSuppressTtsSchema.optional(),
   dataSsml: z.string().optional(),
-  ariaAttributes: XmlForeignAttributesSchema.optional(),
+  ...QtiAriaAttributesShape,
   foreignAttributes: XmlForeignAttributesSchema.optional(),
 };
 
@@ -756,6 +824,15 @@ export const QtiContentFragmentSchema: z.ZodType = z.lazy(() =>
 
 export const QtiItemBodySchema: z.ZodType = z.lazy(() =>
   strictObject({
+    // qti-item-body (ASI ItemBodyDType) carries exactly id/class/xml:lang/label/dir/
+    // data-catalog-idref — NOT the ARIA group, so it models those attributes directly rather
+    // than spreading the full common node shape (which would over-model ARIA it does not allow).
+    id: QtiIdentifierSchema.optional(),
+    class: QtiStringListSchema.optional(),
+    xmlLang: z.string().optional(),
+    label: z.string().optional(),
+    dir: QtiDirectionSchema.optional(),
+    dataCatalogIdref: z.string().optional(),
     content: z.array(QtiContentFragmentSchema).min(1),
   }),
 );

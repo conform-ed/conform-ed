@@ -171,6 +171,61 @@ function dataAttributePairs(node: Node): Array<readonly [string, AttributeValue]
   return Object.entries(data as Record<string, unknown>).map(([key, value]) => [`data-${key}`, scalar(value)]);
 }
 
+/** WAI-ARIA characteristics (role + aria-*) the node carries, emitted verbatim (ADR-0039). */
+const ARIA_ATTRIBUTE_NAMES: readonly string[] = [
+  "role",
+  "aria-activedescendant",
+  "aria-atomic",
+  "aria-autocomplete",
+  "aria-busy",
+  "aria-checked",
+  "aria-colcount",
+  "aria-colindex",
+  "aria-colspan",
+  "aria-controls",
+  "aria-current",
+  "aria-describedby",
+  "aria-details",
+  "aria-disabled",
+  "aria-errormessage",
+  "aria-expanded",
+  "aria-flowto",
+  "aria-haspopup",
+  "aria-hidden",
+  "aria-invalid",
+  "aria-keyshortcuts",
+  "aria-label",
+  "aria-labelledby",
+  "aria-level",
+  "aria-live",
+  "aria-modal",
+  "aria-multiline",
+  "aria-multiselectable",
+  "aria-orientation",
+  "aria-owns",
+  "aria-placeholder",
+  "aria-posinset",
+  "aria-pressed",
+  "aria-readonly",
+  "aria-relevant",
+  "aria-required",
+  "aria-roledescription",
+  "aria-rowcount",
+  "aria-rowindex",
+  "aria-rowspan",
+  "aria-selected",
+  "aria-setsize",
+  "aria-sort",
+  "aria-valuemax",
+  "aria-valuemin",
+  "aria-valuenow",
+  "aria-valuetext",
+];
+
+function ariaAttributePairs(node: Node): Array<readonly [string, AttributeValue]> {
+  return ARIA_ATTRIBUTE_NAMES.flatMap((name) => (typeof node[name] === "string" ? [[name, node[name]] as const] : []));
+}
+
 function writeCatalogHtmlContent(writer: XmlWriter, html: Node): void {
   const attributes: Attrs = [["xml:lang", str(html, "xmlLang")], ...dataAttributePairs(html)];
   const content = fragments(html, "content");
@@ -948,6 +1003,7 @@ function writeDomainNode(writer: XmlWriter, node: Node, ambient: string): void {
         kind === "choiceInteraction" ? "qti-choice-interaction" : "qti-order-interaction",
         [
           ["response-identifier", str(node, "responseIdentifier")],
+          ...ariaAttributePairs(node),
           ["shuffle", attr(node, "shuffle")],
           ["max-choices", attr(node, "maxChoices")],
           ["min-choices", attr(node, "minChoices")],
@@ -978,6 +1034,7 @@ function writeDomainNode(writer: XmlWriter, node: Node, ambient: string): void {
         "qti-inline-choice-interaction",
         [
           ["response-identifier", str(node, "responseIdentifier")],
+          ...ariaAttributePairs(node),
           ["shuffle", attr(node, "shuffle")],
           ["required", attr(node, "required")],
           ["min-choices", attr(node, "minChoices")],
@@ -990,6 +1047,7 @@ function writeDomainNode(writer: XmlWriter, node: Node, ambient: string): void {
     case "textEntryInteraction":
       writer.element("qti-text-entry-interaction", [
         ["response-identifier", str(node, "responseIdentifier")],
+        ...ariaAttributePairs(node),
         ["base", attr(node, "base")],
         ["string-identifier", str(node, "stringIdentifier")],
         ["expected-length", attr(node, "expectedLength")],
@@ -1004,6 +1062,7 @@ function writeDomainNode(writer: XmlWriter, node: Node, ambient: string): void {
         "qti-extended-text-interaction",
         [
           ["response-identifier", str(node, "responseIdentifier")],
+          ...ariaAttributePairs(node),
           ["base", attr(node, "base")],
           ["string-identifier", str(node, "stringIdentifier")],
           ["expected-length", attr(node, "expectedLength")],
@@ -1035,6 +1094,7 @@ function writeDomainNode(writer: XmlWriter, node: Node, ambient: string): void {
         "qti-hottext-interaction",
         [
           ["response-identifier", str(node, "responseIdentifier")],
+          ...ariaAttributePairs(node),
           ["max-choices", attr(node, "maxChoices")],
           ["min-choices", attr(node, "minChoices")],
         ],
@@ -1050,6 +1110,7 @@ function writeDomainNode(writer: XmlWriter, node: Node, ambient: string): void {
         "qti-match-interaction",
         [
           ["response-identifier", str(node, "responseIdentifier")],
+          ...ariaAttributePairs(node),
           ["shuffle", attr(node, "shuffle")],
           ["max-associations", attr(node, "maxAssociations")],
           ["min-associations", attr(node, "minAssociations")],
@@ -1087,6 +1148,7 @@ function writeDomainNode(writer: XmlWriter, node: Node, ambient: string): void {
         "qti-associate-interaction",
         [
           ["response-identifier", str(node, "responseIdentifier")],
+          ...ariaAttributePairs(node),
           ["shuffle", attr(node, "shuffle")],
           ["max-associations", attr(node, "maxAssociations")],
           ["min-associations", attr(node, "minAssociations")],
@@ -1141,6 +1203,7 @@ function writeDomainNode(writer: XmlWriter, node: Node, ambient: string): void {
         "qti-gap-match-interaction",
         [
           ["response-identifier", str(node, "responseIdentifier")],
+          ...ariaAttributePairs(node),
           ["shuffle", attr(node, "shuffle")],
           ["max-associations", attr(node, "maxAssociations")],
           ["min-associations", attr(node, "minAssociations")],
@@ -1169,6 +1232,7 @@ function writeDomainNode(writer: XmlWriter, node: Node, ambient: string): void {
         kind === "hotspotInteraction" ? "qti-hotspot-interaction" : "qti-graphic-order-interaction",
         [
           ["response-identifier", str(node, "responseIdentifier")],
+          ...ariaAttributePairs(node),
           ["max-choices", attr(node, "maxChoices")],
           ["min-choices", attr(node, "minChoices")],
         ],
@@ -1187,6 +1251,7 @@ function writeDomainNode(writer: XmlWriter, node: Node, ambient: string): void {
         "qti-graphic-associate-interaction",
         [
           ["response-identifier", str(node, "responseIdentifier")],
+          ...ariaAttributePairs(node),
           ["max-associations", attr(node, "maxAssociations")],
           ["min-associations", attr(node, "minAssociations")],
         ],
@@ -1205,6 +1270,7 @@ function writeDomainNode(writer: XmlWriter, node: Node, ambient: string): void {
         "qti-graphic-gap-match-interaction",
         [
           ["response-identifier", str(node, "responseIdentifier")],
+          ...ariaAttributePairs(node),
           ["max-associations", attr(node, "maxAssociations")],
           ["min-associations", attr(node, "minAssociations")],
         ],
@@ -1226,6 +1292,7 @@ function writeDomainNode(writer: XmlWriter, node: Node, ambient: string): void {
         "qti-select-point-interaction",
         [
           ["response-identifier", str(node, "responseIdentifier")],
+          ...ariaAttributePairs(node),
           ["max-choices", attr(node, "maxChoices")],
           ["min-choices", attr(node, "minChoices")],
         ],
@@ -1252,6 +1319,7 @@ function writeDomainNode(writer: XmlWriter, node: Node, ambient: string): void {
         "qti-position-object-interaction",
         [
           ["response-identifier", str(node, "responseIdentifier")],
+          ...ariaAttributePairs(node),
           ["center-point", list(node, "centerPoint")],
           ["min-choices", attr(node, "minChoices")],
           ["max-choices", attr(node, "maxChoices")],
@@ -1265,6 +1333,7 @@ function writeDomainNode(writer: XmlWriter, node: Node, ambient: string): void {
         "qti-media-interaction",
         [
           ["response-identifier", str(node, "responseIdentifier")],
+          ...ariaAttributePairs(node),
           ["autostart", attr(node, "autostart")],
           ["min-plays", attr(node, "minPlays")],
           ["max-plays", attr(node, "maxPlays")],
@@ -1283,6 +1352,7 @@ function writeDomainNode(writer: XmlWriter, node: Node, ambient: string): void {
         "qti-upload-interaction",
         [
           ["response-identifier", str(node, "responseIdentifier")],
+          ...ariaAttributePairs(node),
           ["type", list(node, "acceptedTypes")],
         ],
         () => writePrompt(writer, node, ambient),
@@ -1294,6 +1364,7 @@ function writeDomainNode(writer: XmlWriter, node: Node, ambient: string): void {
         "qti-slider-interaction",
         [
           ["response-identifier", str(node, "responseIdentifier")],
+          ...ariaAttributePairs(node),
           ["lower-bound", attr(node, "lowerBound")],
           ["upper-bound", attr(node, "upperBound")],
           ["step", attr(node, "step")],
@@ -1308,6 +1379,7 @@ function writeDomainNode(writer: XmlWriter, node: Node, ambient: string): void {
     case "endAttemptInteraction":
       writer.element("qti-end-attempt-interaction", [
         ["response-identifier", str(node, "responseIdentifier")],
+        ...ariaAttributePairs(node),
         ["title", str(node, "title")],
       ]);
       return;

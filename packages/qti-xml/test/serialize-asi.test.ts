@@ -56,6 +56,30 @@ test("a choice item with response processing round-trips", async () => {
   await roundTrip(xml, "qtiAssessmentItemDocument");
 });
 
+test("WAI-ARIA roles and states authored on an interaction survive emit (ADR-0039 QTI-A11Y-1)", async () => {
+  const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<qti-assessment-item ${asiHeader} identifier="aria" title="Aria" time-dependent="false">
+  <qti-response-declaration identifier="RESPONSE" cardinality="single" base-type="identifier"/>
+  <qti-outcome-declaration identifier="SCORE" cardinality="single" base-type="float"/>
+  <qti-item-body>
+    <qti-choice-interaction response-identifier="RESPONSE" max-choices="1" role="radiogroup" aria-label="Pick a letter" aria-describedby="hint" aria-orientation="vertical">
+      <qti-simple-choice identifier="ChoiceA">A</qti-simple-choice>
+      <qti-simple-choice identifier="ChoiceB">B</qti-simple-choice>
+    </qti-choice-interaction>
+  </qti-item-body>
+  <qti-response-processing template="https://www.imsglobal.org/question/qti_v3p0/rptemplates/match_correct"/>
+</qti-assessment-item>`;
+  // The round-trip asserts deep equality, so ARIA dropped at either parse or serialize would fail it.
+  await roundTrip(xml, "qtiAssessmentItemDocument");
+
+  // And assert the ARIA is genuinely present in the emitted XML (not merely symmetric loss).
+  const { normalizedDocument } = await validateQtiXmlContent(xml);
+  const serialized = serializeQtiDocument("3.0.1", "qtiAssessmentItemDocument", normalizedDocument);
+  for (const attr of ['role="radiogroup"', 'aria-label="Pick a letter"', 'aria-describedby="hint"']) {
+    expect(serialized).toContain(attr);
+  }
+});
+
 test("an item with template processing, modal feedback and a catalog round-trips", async () => {
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <qti-assessment-item ${asiHeader} identifier="templated" title="Templated" time-dependent="false">

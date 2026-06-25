@@ -6,6 +6,17 @@ export {
 // QTI controlled-vocabulary enums (the closed value-sets the ASI binding enumerates) — public so
 // consumers (and the conformance Coverage Map's value-set verification) can validate against them.
 export {
+  QtiAriaAutocompleteSchema,
+  QtiAriaCheckedSchema,
+  QtiAriaCurrentSchema,
+  QtiAriaExpandedSchema,
+  QtiAriaInvalidSchema,
+  QtiAriaLiveSchema,
+  QtiAriaOrientationSchema,
+  QtiAriaPressedSchema,
+  QtiAriaRoleSchema,
+  QtiAriaSelectedSchema,
+  QtiAriaSortSchema,
   QtiBaseTypeSchema,
   QtiCardinalitySchema,
   QtiDirectionSchema,

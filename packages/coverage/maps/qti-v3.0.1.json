@@ -2,7 +2,7 @@
   "meta": {
     "spec": "qti",
     "version": "3.0.1",
-    "generatedAt": "2026-06-22",
+    "generatedAt": "2026-06-25",
     "sources": [
       {
         "binding": "qti-assessment-item",
@@ -867,7 +867,7 @@
       "path": "qti-area-map-entry",
       "jsonType": "array",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:AreaMappingDType/qti-area-map-entry/[]",
@@ -892,14 +892,14 @@
       "kind": "property",
       "path": "aria-activedescendant",
       "jsonType": "string",
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ARIABaseDType/aria-atomic",
       "kind": "property",
       "path": "aria-atomic",
       "jsonType": "boolean",
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ARIABaseDType/aria-autocomplete",
@@ -912,14 +912,14 @@
         "both",
         "none"
       ],
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ARIABaseDType/aria-busy",
       "kind": "property",
       "path": "aria-busy",
       "jsonType": "boolean",
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ARIABaseDType/aria-checked",
@@ -932,35 +932,35 @@
         "mixed",
         "undefined"
       ],
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ARIABaseDType/aria-colcount",
       "kind": "property",
       "path": "aria-colcount",
       "jsonType": "number",
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ARIABaseDType/aria-colindex",
       "kind": "property",
       "path": "aria-colindex",
       "jsonType": "number",
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ARIABaseDType/aria-colspan",
       "kind": "property",
       "path": "aria-colspan",
       "jsonType": "number",
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ARIABaseDType/aria-controls",
       "kind": "property",
       "path": "aria-controls",
       "jsonType": "string",
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ARIABaseDType/aria-current",
@@ -977,35 +977,35 @@
         "false",
         "undefined"
       ],
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ARIABaseDType/aria-describedby",
       "kind": "property",
       "path": "aria-describedby",
       "jsonType": "string",
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ARIABaseDType/aria-details",
       "kind": "property",
       "path": "aria-details",
       "jsonType": "string",
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ARIABaseDType/aria-disabled",
       "kind": "property",
       "path": "aria-disabled",
       "jsonType": "boolean",
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ARIABaseDType/aria-errormessage",
       "kind": "property",
       "path": "aria-errormessage",
       "jsonType": "string",
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ARIABaseDType/aria-expanded",
@@ -1017,28 +1017,28 @@
         "false",
         "undefined"
       ],
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ARIABaseDType/aria-flowto",
       "kind": "property",
       "path": "aria-flowto",
       "jsonType": "string",
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ARIABaseDType/aria-haspopup",
       "kind": "property",
       "path": "aria-haspopup",
       "jsonType": "boolean",
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ARIABaseDType/aria-hidden",
       "kind": "property",
       "path": "aria-hidden",
       "jsonType": "boolean",
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ARIABaseDType/aria-invalid",
@@ -1051,35 +1051,35 @@
         "grammar",
         "spelling"
       ],
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ARIABaseDType/aria-keyshortcuts",
       "kind": "property",
       "path": "aria-keyshortcuts",
       "jsonType": "string",
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ARIABaseDType/aria-label",
       "kind": "property",
       "path": "aria-label",
       "jsonType": "string",
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ARIABaseDType/aria-labelledby",
       "kind": "property",
       "path": "aria-labelledby",
       "jsonType": "string",
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ARIABaseDType/aria-level",
       "kind": "property",
       "path": "aria-level",
       "jsonType": "number",
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ARIABaseDType/aria-live",
@@ -1091,28 +1091,28 @@
         "polite",
         "assertive"
       ],
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ARIABaseDType/aria-modal",
       "kind": "property",
       "path": "aria-modal",
       "jsonType": "boolean",
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ARIABaseDType/aria-multiline",
       "kind": "property",
       "path": "aria-multiline",
       "jsonType": "boolean",
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ARIABaseDType/aria-multiselectable",
       "kind": "property",
       "path": "aria-multiselectable",
       "jsonType": "boolean",
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ARIABaseDType/aria-orientation",
@@ -1123,28 +1123,28 @@
         "vertical",
         "horizontal"
       ],
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ARIABaseDType/aria-owns",
       "kind": "property",
       "path": "aria-owns",
       "jsonType": "string",
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ARIABaseDType/aria-placeholder",
       "kind": "property",
       "path": "aria-placeholder",
       "jsonType": "string",
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ARIABaseDType/aria-posinset",
       "kind": "property",
       "path": "aria-posinset",
       "jsonType": "number",
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ARIABaseDType/aria-pressed",
@@ -1157,56 +1157,56 @@
         "mixed",
         "undefined"
       ],
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ARIABaseDType/aria-readonly",
       "kind": "property",
       "path": "aria-readonly",
       "jsonType": "boolean",
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ARIABaseDType/aria-relevant",
       "kind": "property",
       "path": "aria-relevant",
       "jsonType": "string",
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ARIABaseDType/aria-required",
       "kind": "property",
       "path": "aria-required",
       "jsonType": "boolean",
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ARIABaseDType/aria-roledescription",
       "kind": "property",
       "path": "aria-roledescription",
       "jsonType": "string",
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ARIABaseDType/aria-rowcount",
       "kind": "property",
       "path": "aria-rowcount",
       "jsonType": "number",
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ARIABaseDType/aria-rowindex",
       "kind": "property",
       "path": "aria-rowindex",
       "jsonType": "number",
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ARIABaseDType/aria-rowspan",
       "kind": "property",
       "path": "aria-rowspan",
       "jsonType": "number",
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ARIABaseDType/aria-selected",
@@ -1218,14 +1218,14 @@
         "false",
         "undefined"
       ],
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ARIABaseDType/aria-setsize",
       "kind": "property",
       "path": "aria-setsize",
       "jsonType": "number",
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ARIABaseDType/aria-sort",
@@ -1238,35 +1238,35 @@
         "none",
         "other"
       ],
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ARIABaseDType/aria-valuemax",
       "kind": "property",
       "path": "aria-valuemax",
       "jsonType": "number",
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ARIABaseDType/aria-valuemin",
       "kind": "property",
       "path": "aria-valuemin",
       "jsonType": "number",
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ARIABaseDType/aria-valuenow",
       "kind": "property",
       "path": "aria-valuenow",
       "jsonType": "number",
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ARIABaseDType/aria-valuetext",
       "kind": "property",
       "path": "aria-valuetext",
       "jsonType": "string",
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ARIABaseDType/role",
@@ -1349,7 +1349,7 @@
         "strong",
         "emphasis"
       ],
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ARIABaseEmptyDType",
@@ -1807,7 +1807,7 @@
       "kind": "property",
       "path": "lang",
       "jsonType": "string",
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:AssessmentItemDType/qti-assessment-stimulus-ref",
@@ -2095,7 +2095,7 @@
       "kind": "property",
       "path": "include",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:AssessmentSectionDType/keep-together",
@@ -2116,21 +2116,21 @@
       "kind": "property",
       "path": "qti-assessment-item-ref",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:AssessmentSectionDType/qti-assessment-section",
       "kind": "property",
       "path": "qti-assessment-section",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:AssessmentSectionDType/qti-assessment-section-ref",
       "kind": "property",
       "path": "qti-assessment-section-ref",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:AssessmentSectionDType/qti-branch-rule",
@@ -2267,7 +2267,7 @@
       "kind": "property",
       "path": "lang",
       "jsonType": "string",
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:AssessmentStimulusDType/qti-catalog-info",
@@ -4945,448 +4945,448 @@
       "kind": "property",
       "path": "qti-and",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:BranchRuleDType/qti-any-n",
       "kind": "property",
       "path": "qti-any-n",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:BranchRuleDType/qti-base-value",
       "kind": "property",
       "path": "qti-base-value",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:BranchRuleDType/qti-container-size",
       "kind": "property",
       "path": "qti-container-size",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:BranchRuleDType/qti-contains",
       "kind": "property",
       "path": "qti-contains",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:BranchRuleDType/qti-correct",
       "kind": "property",
       "path": "qti-correct",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:BranchRuleDType/qti-custom-operator",
       "kind": "property",
       "path": "qti-custom-operator",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:BranchRuleDType/qti-default",
       "kind": "property",
       "path": "qti-default",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:BranchRuleDType/qti-delete",
       "kind": "property",
       "path": "qti-delete",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:BranchRuleDType/qti-divide",
       "kind": "property",
       "path": "qti-divide",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:BranchRuleDType/qti-duration-gte",
       "kind": "property",
       "path": "qti-duration-gte",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:BranchRuleDType/qti-duration-lt",
       "kind": "property",
       "path": "qti-duration-lt",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:BranchRuleDType/qti-equal",
       "kind": "property",
       "path": "qti-equal",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:BranchRuleDType/qti-equal-rounded",
       "kind": "property",
       "path": "qti-equal-rounded",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:BranchRuleDType/qti-field-value",
       "kind": "property",
       "path": "qti-field-value",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:BranchRuleDType/qti-gcd",
       "kind": "property",
       "path": "qti-gcd",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:BranchRuleDType/qti-gt",
       "kind": "property",
       "path": "qti-gt",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:BranchRuleDType/qti-gte",
       "kind": "property",
       "path": "qti-gte",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:BranchRuleDType/qti-index",
       "kind": "property",
       "path": "qti-index",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:BranchRuleDType/qti-inside",
       "kind": "property",
       "path": "qti-inside",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:BranchRuleDType/qti-integer-divide",
       "kind": "property",
       "path": "qti-integer-divide",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:BranchRuleDType/qti-integer-modulus",
       "kind": "property",
       "path": "qti-integer-modulus",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:BranchRuleDType/qti-integer-to-float",
       "kind": "property",
       "path": "qti-integer-to-float",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:BranchRuleDType/qti-is-null",
       "kind": "property",
       "path": "qti-is-null",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:BranchRuleDType/qti-lcm",
       "kind": "property",
       "path": "qti-lcm",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:BranchRuleDType/qti-lt",
       "kind": "property",
       "path": "qti-lt",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:BranchRuleDType/qti-lte",
       "kind": "property",
       "path": "qti-lte",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:BranchRuleDType/qti-map-response",
       "kind": "property",
       "path": "qti-map-response",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:BranchRuleDType/qti-map-response-point",
       "kind": "property",
       "path": "qti-map-response-point",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:BranchRuleDType/qti-match",
       "kind": "property",
       "path": "qti-match",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:BranchRuleDType/qti-math-constant",
       "kind": "property",
       "path": "qti-math-constant",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:BranchRuleDType/qti-math-operator",
       "kind": "property",
       "path": "qti-math-operator",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:BranchRuleDType/qti-max",
       "kind": "property",
       "path": "qti-max",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:BranchRuleDType/qti-member",
       "kind": "property",
       "path": "qti-member",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:BranchRuleDType/qti-min",
       "kind": "property",
       "path": "qti-min",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:BranchRuleDType/qti-multiple",
       "kind": "property",
       "path": "qti-multiple",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:BranchRuleDType/qti-not",
       "kind": "property",
       "path": "qti-not",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:BranchRuleDType/qti-null",
       "kind": "property",
       "path": "qti-null",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:BranchRuleDType/qti-number-correct",
       "kind": "property",
       "path": "qti-number-correct",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:BranchRuleDType/qti-number-incorrect",
       "kind": "property",
       "path": "qti-number-incorrect",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:BranchRuleDType/qti-number-presented",
       "kind": "property",
       "path": "qti-number-presented",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:BranchRuleDType/qti-number-responded",
       "kind": "property",
       "path": "qti-number-responded",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:BranchRuleDType/qti-number-selected",
       "kind": "property",
       "path": "qti-number-selected",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:BranchRuleDType/qti-or",
       "kind": "property",
       "path": "qti-or",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:BranchRuleDType/qti-ordered",
       "kind": "property",
       "path": "qti-ordered",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:BranchRuleDType/qti-outcome-maximum",
       "kind": "property",
       "path": "qti-outcome-maximum",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:BranchRuleDType/qti-outcome-minimum",
       "kind": "property",
       "path": "qti-outcome-minimum",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:BranchRuleDType/qti-pattern-match",
       "kind": "property",
       "path": "qti-pattern-match",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:BranchRuleDType/qti-power",
       "kind": "property",
       "path": "qti-power",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:BranchRuleDType/qti-product",
       "kind": "property",
       "path": "qti-product",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:BranchRuleDType/qti-random",
       "kind": "property",
       "path": "qti-random",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:BranchRuleDType/qti-random-float",
       "kind": "property",
       "path": "qti-random-float",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:BranchRuleDType/qti-random-integer",
       "kind": "property",
       "path": "qti-random-integer",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:BranchRuleDType/qti-repeat",
       "kind": "property",
       "path": "qti-repeat",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:BranchRuleDType/qti-round",
       "kind": "property",
       "path": "qti-round",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:BranchRuleDType/qti-round-to",
       "kind": "property",
       "path": "qti-round-to",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:BranchRuleDType/qti-stats-operator",
       "kind": "property",
       "path": "qti-stats-operator",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:BranchRuleDType/qti-string-match",
       "kind": "property",
       "path": "qti-string-match",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:BranchRuleDType/qti-substring",
       "kind": "property",
       "path": "qti-substring",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:BranchRuleDType/qti-subtract",
       "kind": "property",
       "path": "qti-subtract",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:BranchRuleDType/qti-sum",
       "kind": "property",
       "path": "qti-sum",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:BranchRuleDType/qti-test-variables",
       "kind": "property",
       "path": "qti-test-variables",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:BranchRuleDType/qti-truncate",
       "kind": "property",
       "path": "qti-truncate",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:BranchRuleDType/qti-variable",
       "kind": "property",
       "path": "qti-variable",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:BranchRuleDType/target",
@@ -6005,7 +6005,7 @@
       "kind": "property",
       "path": "lang",
       "jsonType": "string",
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:CardDType/qti-card-entry",
@@ -6013,7 +6013,7 @@
       "path": "qti-card-entry",
       "jsonType": "array",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:CardDType/qti-card-entry/[]",
@@ -13250,455 +13250,455 @@
       "kind": "property",
       "path": "a",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:HTMLContentDType/abbr",
       "kind": "property",
       "path": "abbr",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:HTMLContentDType/acronym",
       "kind": "property",
       "path": "acronym",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:HTMLContentDType/address",
       "kind": "property",
       "path": "address",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:HTMLContentDType/article",
       "kind": "property",
       "path": "article",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:HTMLContentDType/aside",
       "kind": "property",
       "path": "aside",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:HTMLContentDType/audio",
       "kind": "property",
       "path": "audio",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:HTMLContentDType/b",
       "kind": "property",
       "path": "b",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:HTMLContentDType/bdi",
       "kind": "property",
       "path": "bdi",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:HTMLContentDType/bdo",
       "kind": "property",
       "path": "bdo",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:HTMLContentDType/big",
       "kind": "property",
       "path": "big",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:HTMLContentDType/blockquote",
       "kind": "property",
       "path": "blockquote",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:HTMLContentDType/br",
       "kind": "property",
       "path": "br",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:HTMLContentDType/break",
       "kind": "property",
       "path": "break",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:HTMLContentDType/cite",
       "kind": "property",
       "path": "cite",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:HTMLContentDType/code",
       "kind": "property",
       "path": "code",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:HTMLContentDType/details",
       "kind": "property",
       "path": "details",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:HTMLContentDType/dfn",
       "kind": "property",
       "path": "dfn",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:HTMLContentDType/div",
       "kind": "property",
       "path": "div",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:HTMLContentDType/dl",
       "kind": "property",
       "path": "dl",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:HTMLContentDType/em",
       "kind": "property",
       "path": "em",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:HTMLContentDType/emphasis",
       "kind": "property",
       "path": "emphasis",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:HTMLContentDType/figure",
       "kind": "property",
       "path": "figure",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:HTMLContentDType/footer",
       "kind": "property",
       "path": "footer",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:HTMLContentDType/h1",
       "kind": "property",
       "path": "h1",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:HTMLContentDType/h2",
       "kind": "property",
       "path": "h2",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:HTMLContentDType/h3",
       "kind": "property",
       "path": "h3",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:HTMLContentDType/h4",
       "kind": "property",
       "path": "h4",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:HTMLContentDType/h5",
       "kind": "property",
       "path": "h5",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:HTMLContentDType/h6",
       "kind": "property",
       "path": "h6",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:HTMLContentDType/header",
       "kind": "property",
       "path": "header",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:HTMLContentDType/hr",
       "kind": "property",
       "path": "hr",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:HTMLContentDType/i",
       "kind": "property",
       "path": "i",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:HTMLContentDType/img",
       "kind": "property",
       "path": "img",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:HTMLContentDType/kbd",
       "kind": "property",
       "path": "kbd",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:HTMLContentDType/label",
       "kind": "property",
       "path": "label",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:HTMLContentDType/lang",
       "kind": "property",
       "path": "lang",
       "jsonType": "string",
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:HTMLContentDType/mark",
       "kind": "property",
       "path": "mark",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:HTMLContentDType/math",
       "kind": "property",
       "path": "math",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:HTMLContentDType/nav",
       "kind": "property",
       "path": "nav",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:HTMLContentDType/object",
       "kind": "property",
       "path": "object",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:HTMLContentDType/ol",
       "kind": "property",
       "path": "ol",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:HTMLContentDType/p",
       "kind": "property",
       "path": "p",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:HTMLContentDType/phoneme",
       "kind": "property",
       "path": "phoneme",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:HTMLContentDType/picture",
       "kind": "property",
       "path": "picture",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:HTMLContentDType/pre",
       "kind": "property",
       "path": "pre",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:HTMLContentDType/prosody",
       "kind": "property",
       "path": "prosody",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:HTMLContentDType/q",
       "kind": "property",
       "path": "q",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:HTMLContentDType/ruby",
       "kind": "property",
       "path": "ruby",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:HTMLContentDType/s",
       "kind": "property",
       "path": "s",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:HTMLContentDType/samp",
       "kind": "property",
       "path": "samp",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:HTMLContentDType/say-as",
       "kind": "property",
       "path": "say-as",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:HTMLContentDType/section",
       "kind": "property",
       "path": "section",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:HTMLContentDType/small",
       "kind": "property",
       "path": "small",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:HTMLContentDType/span",
       "kind": "property",
       "path": "span",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:HTMLContentDType/speak",
       "kind": "property",
       "path": "speak",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:HTMLContentDType/strong",
       "kind": "property",
       "path": "strong",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:HTMLContentDType/sub",
       "kind": "property",
       "path": "sub",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:HTMLContentDType/sup",
       "kind": "property",
       "path": "sup",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:HTMLContentDType/table",
       "kind": "property",
       "path": "table",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:HTMLContentDType/tt",
       "kind": "property",
       "path": "tt",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:HTMLContentDType/ul",
       "kind": "property",
       "path": "ul",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:HTMLContentDType/var",
       "kind": "property",
       "path": "var",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:HTMLContentDType/video",
       "kind": "property",
       "path": "video",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:HTMLContentDType/voice",
       "kind": "property",
       "path": "voice",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:HTMLTextDType",
@@ -15753,7 +15753,7 @@
       "path": "qti-interpolation-table-entry",
       "jsonType": "array",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:InterpolationTableDType/qti-interpolation-table-entry/[]",
@@ -15797,49 +15797,49 @@
       "kind": "property",
       "path": "address",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ItemBodyDType/article",
       "kind": "property",
       "path": "article",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ItemBodyDType/aside",
       "kind": "property",
       "path": "aside",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ItemBodyDType/audio",
       "kind": "property",
       "path": "audio",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ItemBodyDType/blockquote",
       "kind": "property",
       "path": "blockquote",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ItemBodyDType/class",
       "kind": "property",
       "path": "class",
       "jsonType": "string",
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ItemBodyDType/data-catalog-idref",
       "kind": "property",
       "path": "data-catalog-idref",
       "jsonType": "string",
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ItemBodyDType/dir",
@@ -15851,336 +15851,336 @@
         "rtl",
         "auto"
       ],
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ItemBodyDType/div",
       "kind": "property",
       "path": "div",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ItemBodyDType/dl",
       "kind": "property",
       "path": "dl",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ItemBodyDType/figure",
       "kind": "property",
       "path": "figure",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ItemBodyDType/footer",
       "kind": "property",
       "path": "footer",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ItemBodyDType/h1",
       "kind": "property",
       "path": "h1",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ItemBodyDType/h2",
       "kind": "property",
       "path": "h2",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ItemBodyDType/h3",
       "kind": "property",
       "path": "h3",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ItemBodyDType/h4",
       "kind": "property",
       "path": "h4",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ItemBodyDType/h5",
       "kind": "property",
       "path": "h5",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ItemBodyDType/h6",
       "kind": "property",
       "path": "h6",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ItemBodyDType/header",
       "kind": "property",
       "path": "header",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ItemBodyDType/hr",
       "kind": "property",
       "path": "hr",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ItemBodyDType/id",
       "kind": "property",
       "path": "id",
       "jsonType": "string",
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ItemBodyDType/include",
       "kind": "property",
       "path": "include",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ItemBodyDType/label",
       "kind": "property",
       "path": "label",
       "jsonType": "string",
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ItemBodyDType/lang",
       "kind": "property",
       "path": "lang",
       "jsonType": "string",
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ItemBodyDType/math",
       "kind": "property",
       "path": "math",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ItemBodyDType/nav",
       "kind": "property",
       "path": "nav",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ItemBodyDType/ol",
       "kind": "property",
       "path": "ol",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ItemBodyDType/p",
       "kind": "property",
       "path": "p",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ItemBodyDType/pre",
       "kind": "property",
       "path": "pre",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ItemBodyDType/qti-associate-interaction",
       "kind": "property",
       "path": "qti-associate-interaction",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ItemBodyDType/qti-choice-interaction",
       "kind": "property",
       "path": "qti-choice-interaction",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ItemBodyDType/qti-custom-interaction",
       "kind": "property",
       "path": "qti-custom-interaction",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ItemBodyDType/qti-drawing-interaction",
       "kind": "property",
       "path": "qti-drawing-interaction",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ItemBodyDType/qti-extended-text-interaction",
       "kind": "property",
       "path": "qti-extended-text-interaction",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ItemBodyDType/qti-feedback-block",
       "kind": "property",
       "path": "qti-feedback-block",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ItemBodyDType/qti-gap-match-interaction",
       "kind": "property",
       "path": "qti-gap-match-interaction",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ItemBodyDType/qti-graphic-associate-interaction",
       "kind": "property",
       "path": "qti-graphic-associate-interaction",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ItemBodyDType/qti-graphic-gap-match-interaction",
       "kind": "property",
       "path": "qti-graphic-gap-match-interaction",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ItemBodyDType/qti-graphic-order-interaction",
       "kind": "property",
       "path": "qti-graphic-order-interaction",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ItemBodyDType/qti-hotspot-interaction",
       "kind": "property",
       "path": "qti-hotspot-interaction",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ItemBodyDType/qti-hottext-interaction",
       "kind": "property",
       "path": "qti-hottext-interaction",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ItemBodyDType/qti-match-interaction",
       "kind": "property",
       "path": "qti-match-interaction",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ItemBodyDType/qti-media-interaction",
       "kind": "property",
       "path": "qti-media-interaction",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ItemBodyDType/qti-order-interaction",
       "kind": "property",
       "path": "qti-order-interaction",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ItemBodyDType/qti-portable-custom-interaction",
       "kind": "property",
       "path": "qti-portable-custom-interaction",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ItemBodyDType/qti-position-object-stage",
       "kind": "property",
       "path": "qti-position-object-stage",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ItemBodyDType/qti-rubric-block",
       "kind": "property",
       "path": "qti-rubric-block",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ItemBodyDType/qti-select-point-interaction",
       "kind": "property",
       "path": "qti-select-point-interaction",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ItemBodyDType/qti-slider-interaction",
       "kind": "property",
       "path": "qti-slider-interaction",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ItemBodyDType/qti-template-block",
       "kind": "property",
       "path": "qti-template-block",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ItemBodyDType/qti-upload-interaction",
       "kind": "property",
       "path": "qti-upload-interaction",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ItemBodyDType/section",
       "kind": "property",
       "path": "section",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ItemBodyDType/table",
       "kind": "property",
       "path": "table",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ItemBodyDType/ul",
       "kind": "property",
       "path": "ul",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ItemBodyDType/video",
       "kind": "property",
       "path": "video",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ItemFileInfoDType",
@@ -18281,448 +18281,448 @@
       "kind": "property",
       "path": "qti-and",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:LogicSingleDType/qti-any-n",
       "kind": "property",
       "path": "qti-any-n",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:LogicSingleDType/qti-base-value",
       "kind": "property",
       "path": "qti-base-value",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:LogicSingleDType/qti-container-size",
       "kind": "property",
       "path": "qti-container-size",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:LogicSingleDType/qti-contains",
       "kind": "property",
       "path": "qti-contains",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:LogicSingleDType/qti-correct",
       "kind": "property",
       "path": "qti-correct",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:LogicSingleDType/qti-custom-operator",
       "kind": "property",
       "path": "qti-custom-operator",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:LogicSingleDType/qti-default",
       "kind": "property",
       "path": "qti-default",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:LogicSingleDType/qti-delete",
       "kind": "property",
       "path": "qti-delete",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:LogicSingleDType/qti-divide",
       "kind": "property",
       "path": "qti-divide",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:LogicSingleDType/qti-duration-gte",
       "kind": "property",
       "path": "qti-duration-gte",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:LogicSingleDType/qti-duration-lt",
       "kind": "property",
       "path": "qti-duration-lt",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:LogicSingleDType/qti-equal",
       "kind": "property",
       "path": "qti-equal",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:LogicSingleDType/qti-equal-rounded",
       "kind": "property",
       "path": "qti-equal-rounded",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:LogicSingleDType/qti-field-value",
       "kind": "property",
       "path": "qti-field-value",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:LogicSingleDType/qti-gcd",
       "kind": "property",
       "path": "qti-gcd",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:LogicSingleDType/qti-gt",
       "kind": "property",
       "path": "qti-gt",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:LogicSingleDType/qti-gte",
       "kind": "property",
       "path": "qti-gte",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:LogicSingleDType/qti-index",
       "kind": "property",
       "path": "qti-index",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:LogicSingleDType/qti-inside",
       "kind": "property",
       "path": "qti-inside",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:LogicSingleDType/qti-integer-divide",
       "kind": "property",
       "path": "qti-integer-divide",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:LogicSingleDType/qti-integer-modulus",
       "kind": "property",
       "path": "qti-integer-modulus",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:LogicSingleDType/qti-integer-to-float",
       "kind": "property",
       "path": "qti-integer-to-float",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:LogicSingleDType/qti-is-null",
       "kind": "property",
       "path": "qti-is-null",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:LogicSingleDType/qti-lcm",
       "kind": "property",
       "path": "qti-lcm",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:LogicSingleDType/qti-lt",
       "kind": "property",
       "path": "qti-lt",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:LogicSingleDType/qti-lte",
       "kind": "property",
       "path": "qti-lte",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:LogicSingleDType/qti-map-response",
       "kind": "property",
       "path": "qti-map-response",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:LogicSingleDType/qti-map-response-point",
       "kind": "property",
       "path": "qti-map-response-point",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:LogicSingleDType/qti-match",
       "kind": "property",
       "path": "qti-match",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:LogicSingleDType/qti-math-constant",
       "kind": "property",
       "path": "qti-math-constant",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:LogicSingleDType/qti-math-operator",
       "kind": "property",
       "path": "qti-math-operator",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:LogicSingleDType/qti-max",
       "kind": "property",
       "path": "qti-max",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:LogicSingleDType/qti-member",
       "kind": "property",
       "path": "qti-member",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:LogicSingleDType/qti-min",
       "kind": "property",
       "path": "qti-min",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:LogicSingleDType/qti-multiple",
       "kind": "property",
       "path": "qti-multiple",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:LogicSingleDType/qti-not",
       "kind": "property",
       "path": "qti-not",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:LogicSingleDType/qti-null",
       "kind": "property",
       "path": "qti-null",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:LogicSingleDType/qti-number-correct",
       "kind": "property",
       "path": "qti-number-correct",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:LogicSingleDType/qti-number-incorrect",
       "kind": "property",
       "path": "qti-number-incorrect",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:LogicSingleDType/qti-number-presented",
       "kind": "property",
       "path": "qti-number-presented",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:LogicSingleDType/qti-number-responded",
       "kind": "property",
       "path": "qti-number-responded",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:LogicSingleDType/qti-number-selected",
       "kind": "property",
       "path": "qti-number-selected",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:LogicSingleDType/qti-or",
       "kind": "property",
       "path": "qti-or",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:LogicSingleDType/qti-ordered",
       "kind": "property",
       "path": "qti-ordered",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:LogicSingleDType/qti-outcome-maximum",
       "kind": "property",
       "path": "qti-outcome-maximum",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:LogicSingleDType/qti-outcome-minimum",
       "kind": "property",
       "path": "qti-outcome-minimum",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:LogicSingleDType/qti-pattern-match",
       "kind": "property",
       "path": "qti-pattern-match",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:LogicSingleDType/qti-power",
       "kind": "property",
       "path": "qti-power",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:LogicSingleDType/qti-product",
       "kind": "property",
       "path": "qti-product",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:LogicSingleDType/qti-random",
       "kind": "property",
       "path": "qti-random",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:LogicSingleDType/qti-random-float",
       "kind": "property",
       "path": "qti-random-float",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:LogicSingleDType/qti-random-integer",
       "kind": "property",
       "path": "qti-random-integer",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:LogicSingleDType/qti-repeat",
       "kind": "property",
       "path": "qti-repeat",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:LogicSingleDType/qti-round",
       "kind": "property",
       "path": "qti-round",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:LogicSingleDType/qti-round-to",
       "kind": "property",
       "path": "qti-round-to",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:LogicSingleDType/qti-stats-operator",
       "kind": "property",
       "path": "qti-stats-operator",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:LogicSingleDType/qti-string-match",
       "kind": "property",
       "path": "qti-string-match",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:LogicSingleDType/qti-substring",
       "kind": "property",
       "path": "qti-substring",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:LogicSingleDType/qti-subtract",
       "kind": "property",
       "path": "qti-subtract",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:LogicSingleDType/qti-sum",
       "kind": "property",
       "path": "qti-sum",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:LogicSingleDType/qti-test-variables",
       "kind": "property",
       "path": "qti-test-variables",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:LogicSingleDType/qti-truncate",
       "kind": "property",
       "path": "qti-truncate",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:LogicSingleDType/qti-variable",
       "kind": "property",
       "path": "qti-variable",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:LookupOutcomeValueDType",
@@ -19173,7 +19173,7 @@
       "path": "qti-map-entry",
       "jsonType": "array",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:MappingDType/qti-map-entry/[]",
@@ -19273,7 +19273,7 @@
       "path": "qti-match-table-entry",
       "jsonType": "array",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:MatchTableDType/qti-match-table-entry/[]",
@@ -19845,7 +19845,7 @@
       "kind": "property",
       "path": "qti-content-body",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ModalFeedbackDType/qti-stylesheet",
@@ -21366,42 +21366,42 @@
       "kind": "property",
       "path": "include",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:OutcomeProcessingDType/qti-exit-test",
       "kind": "property",
       "path": "qti-exit-test",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:OutcomeProcessingDType/qti-lookup-outcome-value",
       "kind": "property",
       "path": "qti-lookup-outcome-value",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:OutcomeProcessingDType/qti-outcome-condition",
       "kind": "property",
       "path": "qti-outcome-condition",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:OutcomeProcessingDType/qti-outcome-processing-fragment",
       "kind": "property",
       "path": "qti-outcome-processing-fragment",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:OutcomeProcessingDType/qti-set-outcome-value",
       "kind": "property",
       "path": "qti-set-outcome-value",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:OutcomeProcessingFragmentDType",
@@ -22130,7 +22130,7 @@
       "kind": "property",
       "path": "lang",
       "jsonType": "string",
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:PrintedVariableDType/mapping-indicator",
@@ -23932,42 +23932,42 @@
       "kind": "property",
       "path": "include",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ResponseProcessingDType/qti-exit-response",
       "kind": "property",
       "path": "qti-exit-response",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ResponseProcessingDType/qti-lookup-outcome-value",
       "kind": "property",
       "path": "qti-lookup-outcome-value",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ResponseProcessingDType/qti-response-condition",
       "kind": "property",
       "path": "qti-response-condition",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ResponseProcessingDType/qti-response-processing-fragment",
       "kind": "property",
       "path": "qti-response-processing-fragment",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ResponseProcessingDType/qti-set-outcome-value",
       "kind": "property",
       "path": "qti-set-outcome-value",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:ResponseProcessingDType/template",
@@ -27979,189 +27979,189 @@
       "kind": "property",
       "path": "address",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:StimulusBodyDType/article",
       "kind": "property",
       "path": "article",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:StimulusBodyDType/aside",
       "kind": "property",
       "path": "aside",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:StimulusBodyDType/audio",
       "kind": "property",
       "path": "audio",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:StimulusBodyDType/blockquote",
       "kind": "property",
       "path": "blockquote",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:StimulusBodyDType/div",
       "kind": "property",
       "path": "div",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:StimulusBodyDType/dl",
       "kind": "property",
       "path": "dl",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:StimulusBodyDType/figure",
       "kind": "property",
       "path": "figure",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:StimulusBodyDType/footer",
       "kind": "property",
       "path": "footer",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:StimulusBodyDType/h1",
       "kind": "property",
       "path": "h1",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:StimulusBodyDType/h2",
       "kind": "property",
       "path": "h2",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:StimulusBodyDType/h3",
       "kind": "property",
       "path": "h3",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:StimulusBodyDType/h4",
       "kind": "property",
       "path": "h4",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:StimulusBodyDType/h5",
       "kind": "property",
       "path": "h5",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:StimulusBodyDType/h6",
       "kind": "property",
       "path": "h6",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:StimulusBodyDType/header",
       "kind": "property",
       "path": "header",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:StimulusBodyDType/hr",
       "kind": "property",
       "path": "hr",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:StimulusBodyDType/include",
       "kind": "property",
       "path": "include",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:StimulusBodyDType/math",
       "kind": "property",
       "path": "math",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:StimulusBodyDType/nav",
       "kind": "property",
       "path": "nav",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:StimulusBodyDType/ol",
       "kind": "property",
       "path": "ol",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:StimulusBodyDType/p",
       "kind": "property",
       "path": "p",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:StimulusBodyDType/pre",
       "kind": "property",
       "path": "pre",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:StimulusBodyDType/section",
       "kind": "property",
       "path": "section",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:StimulusBodyDType/table",
       "kind": "property",
       "path": "table",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:StimulusBodyDType/ul",
       "kind": "property",
       "path": "ul",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:StimulusBodyDType/video",
       "kind": "property",
       "path": "video",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:StringMatchDType",
@@ -31895,42 +31895,42 @@
       "kind": "property",
       "path": "qti-exit-template",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:TemplateProcessingDType/qti-set-correct-response",
       "kind": "property",
       "path": "qti-set-correct-response",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:TemplateProcessingDType/qti-set-default-value",
       "kind": "property",
       "path": "qti-set-default-value",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:TemplateProcessingDType/qti-set-template-value",
       "kind": "property",
       "path": "qti-set-template-value",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:TemplateProcessingDType/qti-template-condition",
       "kind": "property",
       "path": "qti-template-condition",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:TemplateProcessingDType/qti-template-constraint",
       "kind": "property",
       "path": "qti-template-constraint",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:TemplateUniqueIDRefDType",
@@ -31989,7 +31989,7 @@
       "key": "qti:3.0.1:def:TestFeedbackDType/qti-content-body",
       "kind": "property",
       "path": "qti-content-body",
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:TestFeedbackDType/qti-stylesheet",
@@ -32456,14 +32456,14 @@
       "kind": "property",
       "path": "qti-assessment-section",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:TestPartDType/qti-assessment-section-ref",
       "kind": "property",
       "path": "qti-assessment-section-ref",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:TestPartDType/qti-branch-rule",
@@ -32958,7 +32958,7 @@
       "kind": "property",
       "path": "qti-content-body",
       "required": true,
-      "modelled": "no"
+      "modelled": "yes"
     },
     {
       "key": "qti:3.0.1:def:TestRubricBlockDType/qti-printed-variable",
@@ -50295,6 +50295,19 @@
   ],
   "conformance": [
     {
+      "key": "qti:3.0.1:conf:accessibility/QTI-A11Y-1",
+      "profile": "accessibility",
+      "reqId": "QTI-A11Y-1",
+      "level": "MUST",
+      "statement": "WAI-ARIA roles and states authored on a qti-assessment-item's content and interactions (the ARIABaseDType attribute group) MUST be preserved through serialization and delivered to assistive technology unchanged.",
+      "constrains": [
+        "qti:3.0.1:def:ARIABaseDType/role",
+        "qti:3.0.1:def:ARIABaseDType/aria-label",
+        "qti:3.0.1:def:ARIABaseDType/aria-describedby"
+      ],
+      "source": "QTI 3.0 §2.13.3 WAI-ARIA characteristics — https://www.imsglobal.org/spec/qti/v3p0/impl#h.wai-aria"
+    },
+    {
       "key": "qti:3.0.1:conf:item/QTI-ITEM-1",
       "profile": "item",
       "reqId": "QTI-ITEM-1",
@@ -50426,444 +50439,38 @@
     }
   ],
   "residues": {
-    "silentGaps": [
-      "qti:3.0.1:def:ARIABaseDType/aria-activedescendant",
-      "qti:3.0.1:def:ARIABaseDType/aria-atomic",
-      "qti:3.0.1:def:ARIABaseDType/aria-autocomplete",
-      "qti:3.0.1:def:ARIABaseDType/aria-busy",
-      "qti:3.0.1:def:ARIABaseDType/aria-checked",
-      "qti:3.0.1:def:ARIABaseDType/aria-colcount",
-      "qti:3.0.1:def:ARIABaseDType/aria-colindex",
-      "qti:3.0.1:def:ARIABaseDType/aria-colspan",
-      "qti:3.0.1:def:ARIABaseDType/aria-controls",
-      "qti:3.0.1:def:ARIABaseDType/aria-current",
-      "qti:3.0.1:def:ARIABaseDType/aria-describedby",
-      "qti:3.0.1:def:ARIABaseDType/aria-details",
-      "qti:3.0.1:def:ARIABaseDType/aria-disabled",
-      "qti:3.0.1:def:ARIABaseDType/aria-errormessage",
-      "qti:3.0.1:def:ARIABaseDType/aria-expanded",
-      "qti:3.0.1:def:ARIABaseDType/aria-flowto",
-      "qti:3.0.1:def:ARIABaseDType/aria-haspopup",
-      "qti:3.0.1:def:ARIABaseDType/aria-hidden",
-      "qti:3.0.1:def:ARIABaseDType/aria-invalid",
-      "qti:3.0.1:def:ARIABaseDType/aria-keyshortcuts",
-      "qti:3.0.1:def:ARIABaseDType/aria-label",
-      "qti:3.0.1:def:ARIABaseDType/aria-labelledby",
-      "qti:3.0.1:def:ARIABaseDType/aria-level",
-      "qti:3.0.1:def:ARIABaseDType/aria-live",
-      "qti:3.0.1:def:ARIABaseDType/aria-modal",
-      "qti:3.0.1:def:ARIABaseDType/aria-multiline",
-      "qti:3.0.1:def:ARIABaseDType/aria-multiselectable",
-      "qti:3.0.1:def:ARIABaseDType/aria-orientation",
-      "qti:3.0.1:def:ARIABaseDType/aria-owns",
-      "qti:3.0.1:def:ARIABaseDType/aria-placeholder",
-      "qti:3.0.1:def:ARIABaseDType/aria-posinset",
-      "qti:3.0.1:def:ARIABaseDType/aria-pressed",
-      "qti:3.0.1:def:ARIABaseDType/aria-readonly",
-      "qti:3.0.1:def:ARIABaseDType/aria-relevant",
-      "qti:3.0.1:def:ARIABaseDType/aria-required",
-      "qti:3.0.1:def:ARIABaseDType/aria-roledescription",
-      "qti:3.0.1:def:ARIABaseDType/aria-rowcount",
-      "qti:3.0.1:def:ARIABaseDType/aria-rowindex",
-      "qti:3.0.1:def:ARIABaseDType/aria-rowspan",
-      "qti:3.0.1:def:ARIABaseDType/aria-selected",
-      "qti:3.0.1:def:ARIABaseDType/aria-setsize",
-      "qti:3.0.1:def:ARIABaseDType/aria-sort",
-      "qti:3.0.1:def:ARIABaseDType/aria-valuemax",
-      "qti:3.0.1:def:ARIABaseDType/aria-valuemin",
-      "qti:3.0.1:def:ARIABaseDType/aria-valuenow",
-      "qti:3.0.1:def:ARIABaseDType/aria-valuetext",
-      "qti:3.0.1:def:ARIABaseDType/role",
-      "qti:3.0.1:def:AreaMappingDType/qti-area-map-entry",
-      "qti:3.0.1:def:AssessmentItemDType/lang",
-      "qti:3.0.1:def:AssessmentSectionDType/include",
-      "qti:3.0.1:def:AssessmentSectionDType/qti-assessment-item-ref",
-      "qti:3.0.1:def:AssessmentSectionDType/qti-assessment-section",
-      "qti:3.0.1:def:AssessmentSectionDType/qti-assessment-section-ref",
-      "qti:3.0.1:def:AssessmentStimulusDType/lang",
-      "qti:3.0.1:def:BranchRuleDType/qti-and",
-      "qti:3.0.1:def:BranchRuleDType/qti-any-n",
-      "qti:3.0.1:def:BranchRuleDType/qti-base-value",
-      "qti:3.0.1:def:BranchRuleDType/qti-container-size",
-      "qti:3.0.1:def:BranchRuleDType/qti-contains",
-      "qti:3.0.1:def:BranchRuleDType/qti-correct",
-      "qti:3.0.1:def:BranchRuleDType/qti-custom-operator",
-      "qti:3.0.1:def:BranchRuleDType/qti-default",
-      "qti:3.0.1:def:BranchRuleDType/qti-delete",
-      "qti:3.0.1:def:BranchRuleDType/qti-divide",
-      "qti:3.0.1:def:BranchRuleDType/qti-duration-gte",
-      "qti:3.0.1:def:BranchRuleDType/qti-duration-lt",
-      "qti:3.0.1:def:BranchRuleDType/qti-equal",
-      "qti:3.0.1:def:BranchRuleDType/qti-equal-rounded",
-      "qti:3.0.1:def:BranchRuleDType/qti-field-value",
-      "qti:3.0.1:def:BranchRuleDType/qti-gcd",
-      "qti:3.0.1:def:BranchRuleDType/qti-gt",
-      "qti:3.0.1:def:BranchRuleDType/qti-gte",
-      "qti:3.0.1:def:BranchRuleDType/qti-index",
-      "qti:3.0.1:def:BranchRuleDType/qti-inside",
-      "qti:3.0.1:def:BranchRuleDType/qti-integer-divide",
-      "qti:3.0.1:def:BranchRuleDType/qti-integer-modulus",
-      "qti:3.0.1:def:BranchRuleDType/qti-integer-to-float",
-      "qti:3.0.1:def:BranchRuleDType/qti-is-null",
-      "qti:3.0.1:def:BranchRuleDType/qti-lcm",
-      "qti:3.0.1:def:BranchRuleDType/qti-lt",
-      "qti:3.0.1:def:BranchRuleDType/qti-lte",
-      "qti:3.0.1:def:BranchRuleDType/qti-map-response",
-      "qti:3.0.1:def:BranchRuleDType/qti-map-response-point",
-      "qti:3.0.1:def:BranchRuleDType/qti-match",
-      "qti:3.0.1:def:BranchRuleDType/qti-math-constant",
-      "qti:3.0.1:def:BranchRuleDType/qti-math-operator",
-      "qti:3.0.1:def:BranchRuleDType/qti-max",
-      "qti:3.0.1:def:BranchRuleDType/qti-member",
-      "qti:3.0.1:def:BranchRuleDType/qti-min",
-      "qti:3.0.1:def:BranchRuleDType/qti-multiple",
-      "qti:3.0.1:def:BranchRuleDType/qti-not",
-      "qti:3.0.1:def:BranchRuleDType/qti-null",
-      "qti:3.0.1:def:BranchRuleDType/qti-number-correct",
-      "qti:3.0.1:def:BranchRuleDType/qti-number-incorrect",
-      "qti:3.0.1:def:BranchRuleDType/qti-number-presented",
-      "qti:3.0.1:def:BranchRuleDType/qti-number-responded",
-      "qti:3.0.1:def:BranchRuleDType/qti-number-selected",
-      "qti:3.0.1:def:BranchRuleDType/qti-or",
-      "qti:3.0.1:def:BranchRuleDType/qti-ordered",
-      "qti:3.0.1:def:BranchRuleDType/qti-outcome-maximum",
-      "qti:3.0.1:def:BranchRuleDType/qti-outcome-minimum",
-      "qti:3.0.1:def:BranchRuleDType/qti-pattern-match",
-      "qti:3.0.1:def:BranchRuleDType/qti-power",
-      "qti:3.0.1:def:BranchRuleDType/qti-product",
-      "qti:3.0.1:def:BranchRuleDType/qti-random",
-      "qti:3.0.1:def:BranchRuleDType/qti-random-float",
-      "qti:3.0.1:def:BranchRuleDType/qti-random-integer",
-      "qti:3.0.1:def:BranchRuleDType/qti-repeat",
-      "qti:3.0.1:def:BranchRuleDType/qti-round",
-      "qti:3.0.1:def:BranchRuleDType/qti-round-to",
-      "qti:3.0.1:def:BranchRuleDType/qti-stats-operator",
-      "qti:3.0.1:def:BranchRuleDType/qti-string-match",
-      "qti:3.0.1:def:BranchRuleDType/qti-substring",
-      "qti:3.0.1:def:BranchRuleDType/qti-subtract",
-      "qti:3.0.1:def:BranchRuleDType/qti-sum",
-      "qti:3.0.1:def:BranchRuleDType/qti-test-variables",
-      "qti:3.0.1:def:BranchRuleDType/qti-truncate",
-      "qti:3.0.1:def:BranchRuleDType/qti-variable",
-      "qti:3.0.1:def:CardDType/lang",
-      "qti:3.0.1:def:CardDType/qti-card-entry",
-      "qti:3.0.1:def:HTMLContentDType/a",
-      "qti:3.0.1:def:HTMLContentDType/abbr",
-      "qti:3.0.1:def:HTMLContentDType/acronym",
-      "qti:3.0.1:def:HTMLContentDType/address",
-      "qti:3.0.1:def:HTMLContentDType/article",
-      "qti:3.0.1:def:HTMLContentDType/aside",
-      "qti:3.0.1:def:HTMLContentDType/audio",
-      "qti:3.0.1:def:HTMLContentDType/b",
-      "qti:3.0.1:def:HTMLContentDType/bdi",
-      "qti:3.0.1:def:HTMLContentDType/bdo",
-      "qti:3.0.1:def:HTMLContentDType/big",
-      "qti:3.0.1:def:HTMLContentDType/blockquote",
-      "qti:3.0.1:def:HTMLContentDType/br",
-      "qti:3.0.1:def:HTMLContentDType/break",
-      "qti:3.0.1:def:HTMLContentDType/cite",
-      "qti:3.0.1:def:HTMLContentDType/code",
-      "qti:3.0.1:def:HTMLContentDType/details",
-      "qti:3.0.1:def:HTMLContentDType/dfn",
-      "qti:3.0.1:def:HTMLContentDType/div",
-      "qti:3.0.1:def:HTMLContentDType/dl",
-      "qti:3.0.1:def:HTMLContentDType/em",
-      "qti:3.0.1:def:HTMLContentDType/emphasis",
-      "qti:3.0.1:def:HTMLContentDType/figure",
-      "qti:3.0.1:def:HTMLContentDType/footer",
-      "qti:3.0.1:def:HTMLContentDType/h1",
-      "qti:3.0.1:def:HTMLContentDType/h2",
-      "qti:3.0.1:def:HTMLContentDType/h3",
-      "qti:3.0.1:def:HTMLContentDType/h4",
-      "qti:3.0.1:def:HTMLContentDType/h5",
-      "qti:3.0.1:def:HTMLContentDType/h6",
-      "qti:3.0.1:def:HTMLContentDType/header",
-      "qti:3.0.1:def:HTMLContentDType/hr",
-      "qti:3.0.1:def:HTMLContentDType/i",
-      "qti:3.0.1:def:HTMLContentDType/img",
-      "qti:3.0.1:def:HTMLContentDType/kbd",
-      "qti:3.0.1:def:HTMLContentDType/label",
-      "qti:3.0.1:def:HTMLContentDType/lang",
-      "qti:3.0.1:def:HTMLContentDType/mark",
-      "qti:3.0.1:def:HTMLContentDType/math",
-      "qti:3.0.1:def:HTMLContentDType/nav",
-      "qti:3.0.1:def:HTMLContentDType/object",
-      "qti:3.0.1:def:HTMLContentDType/ol",
-      "qti:3.0.1:def:HTMLContentDType/p",
-      "qti:3.0.1:def:HTMLContentDType/phoneme",
-      "qti:3.0.1:def:HTMLContentDType/picture",
-      "qti:3.0.1:def:HTMLContentDType/pre",
-      "qti:3.0.1:def:HTMLContentDType/prosody",
-      "qti:3.0.1:def:HTMLContentDType/q",
-      "qti:3.0.1:def:HTMLContentDType/ruby",
-      "qti:3.0.1:def:HTMLContentDType/s",
-      "qti:3.0.1:def:HTMLContentDType/samp",
-      "qti:3.0.1:def:HTMLContentDType/say-as",
-      "qti:3.0.1:def:HTMLContentDType/section",
-      "qti:3.0.1:def:HTMLContentDType/small",
-      "qti:3.0.1:def:HTMLContentDType/span",
-      "qti:3.0.1:def:HTMLContentDType/speak",
-      "qti:3.0.1:def:HTMLContentDType/strong",
-      "qti:3.0.1:def:HTMLContentDType/sub",
-      "qti:3.0.1:def:HTMLContentDType/sup",
-      "qti:3.0.1:def:HTMLContentDType/table",
-      "qti:3.0.1:def:HTMLContentDType/tt",
-      "qti:3.0.1:def:HTMLContentDType/ul",
-      "qti:3.0.1:def:HTMLContentDType/var",
-      "qti:3.0.1:def:HTMLContentDType/video",
-      "qti:3.0.1:def:HTMLContentDType/voice",
-      "qti:3.0.1:def:InterpolationTableDType/qti-interpolation-table-entry",
-      "qti:3.0.1:def:ItemBodyDType/address",
-      "qti:3.0.1:def:ItemBodyDType/article",
-      "qti:3.0.1:def:ItemBodyDType/aside",
-      "qti:3.0.1:def:ItemBodyDType/audio",
-      "qti:3.0.1:def:ItemBodyDType/blockquote",
-      "qti:3.0.1:def:ItemBodyDType/class",
-      "qti:3.0.1:def:ItemBodyDType/data-catalog-idref",
-      "qti:3.0.1:def:ItemBodyDType/dir",
-      "qti:3.0.1:def:ItemBodyDType/div",
-      "qti:3.0.1:def:ItemBodyDType/dl",
-      "qti:3.0.1:def:ItemBodyDType/figure",
-      "qti:3.0.1:def:ItemBodyDType/footer",
-      "qti:3.0.1:def:ItemBodyDType/h1",
-      "qti:3.0.1:def:ItemBodyDType/h2",
-      "qti:3.0.1:def:ItemBodyDType/h3",
-      "qti:3.0.1:def:ItemBodyDType/h4",
-      "qti:3.0.1:def:ItemBodyDType/h5",
-      "qti:3.0.1:def:ItemBodyDType/h6",
-      "qti:3.0.1:def:ItemBodyDType/header",
-      "qti:3.0.1:def:ItemBodyDType/hr",
-      "qti:3.0.1:def:ItemBodyDType/id",
-      "qti:3.0.1:def:ItemBodyDType/include",
-      "qti:3.0.1:def:ItemBodyDType/label",
-      "qti:3.0.1:def:ItemBodyDType/lang",
-      "qti:3.0.1:def:ItemBodyDType/math",
-      "qti:3.0.1:def:ItemBodyDType/nav",
-      "qti:3.0.1:def:ItemBodyDType/ol",
-      "qti:3.0.1:def:ItemBodyDType/p",
-      "qti:3.0.1:def:ItemBodyDType/pre",
-      "qti:3.0.1:def:ItemBodyDType/qti-associate-interaction",
-      "qti:3.0.1:def:ItemBodyDType/qti-choice-interaction",
-      "qti:3.0.1:def:ItemBodyDType/qti-custom-interaction",
-      "qti:3.0.1:def:ItemBodyDType/qti-drawing-interaction",
-      "qti:3.0.1:def:ItemBodyDType/qti-extended-text-interaction",
-      "qti:3.0.1:def:ItemBodyDType/qti-feedback-block",
-      "qti:3.0.1:def:ItemBodyDType/qti-gap-match-interaction",
-      "qti:3.0.1:def:ItemBodyDType/qti-graphic-associate-interaction",
-      "qti:3.0.1:def:ItemBodyDType/qti-graphic-gap-match-interaction",
-      "qti:3.0.1:def:ItemBodyDType/qti-graphic-order-interaction",
-      "qti:3.0.1:def:ItemBodyDType/qti-hotspot-interaction",
-      "qti:3.0.1:def:ItemBodyDType/qti-hottext-interaction",
-      "qti:3.0.1:def:ItemBodyDType/qti-match-interaction",
-      "qti:3.0.1:def:ItemBodyDType/qti-media-interaction",
-      "qti:3.0.1:def:ItemBodyDType/qti-order-interaction",
-      "qti:3.0.1:def:ItemBodyDType/qti-portable-custom-interaction",
-      "qti:3.0.1:def:ItemBodyDType/qti-position-object-stage",
-      "qti:3.0.1:def:ItemBodyDType/qti-rubric-block",
-      "qti:3.0.1:def:ItemBodyDType/qti-select-point-interaction",
-      "qti:3.0.1:def:ItemBodyDType/qti-slider-interaction",
-      "qti:3.0.1:def:ItemBodyDType/qti-template-block",
-      "qti:3.0.1:def:ItemBodyDType/qti-upload-interaction",
-      "qti:3.0.1:def:ItemBodyDType/section",
-      "qti:3.0.1:def:ItemBodyDType/table",
-      "qti:3.0.1:def:ItemBodyDType/ul",
-      "qti:3.0.1:def:ItemBodyDType/video",
-      "qti:3.0.1:def:LogicSingleDType/qti-and",
-      "qti:3.0.1:def:LogicSingleDType/qti-any-n",
-      "qti:3.0.1:def:LogicSingleDType/qti-base-value",
-      "qti:3.0.1:def:LogicSingleDType/qti-container-size",
-      "qti:3.0.1:def:LogicSingleDType/qti-contains",
-      "qti:3.0.1:def:LogicSingleDType/qti-correct",
-      "qti:3.0.1:def:LogicSingleDType/qti-custom-operator",
-      "qti:3.0.1:def:LogicSingleDType/qti-default",
-      "qti:3.0.1:def:LogicSingleDType/qti-delete",
-      "qti:3.0.1:def:LogicSingleDType/qti-divide",
-      "qti:3.0.1:def:LogicSingleDType/qti-duration-gte",
-      "qti:3.0.1:def:LogicSingleDType/qti-duration-lt",
-      "qti:3.0.1:def:LogicSingleDType/qti-equal",
-      "qti:3.0.1:def:LogicSingleDType/qti-equal-rounded",
-      "qti:3.0.1:def:LogicSingleDType/qti-field-value",
-      "qti:3.0.1:def:LogicSingleDType/qti-gcd",
-      "qti:3.0.1:def:LogicSingleDType/qti-gt",
-      "qti:3.0.1:def:LogicSingleDType/qti-gte",
-      "qti:3.0.1:def:LogicSingleDType/qti-index",
-      "qti:3.0.1:def:LogicSingleDType/qti-inside",
-      "qti:3.0.1:def:LogicSingleDType/qti-integer-divide",
-      "qti:3.0.1:def:LogicSingleDType/qti-integer-modulus",
-      "qti:3.0.1:def:LogicSingleDType/qti-integer-to-float",
-      "qti:3.0.1:def:LogicSingleDType/qti-is-null",
-      "qti:3.0.1:def:LogicSingleDType/qti-lcm",
-      "qti:3.0.1:def:LogicSingleDType/qti-lt",
-      "qti:3.0.1:def:LogicSingleDType/qti-lte",
-      "qti:3.0.1:def:LogicSingleDType/qti-map-response",
-      "qti:3.0.1:def:LogicSingleDType/qti-map-response-point",
-      "qti:3.0.1:def:LogicSingleDType/qti-match",
-      "qti:3.0.1:def:LogicSingleDType/qti-math-constant",
-      "qti:3.0.1:def:LogicSingleDType/qti-math-operator",
-      "qti:3.0.1:def:LogicSingleDType/qti-max",
-      "qti:3.0.1:def:LogicSingleDType/qti-member",
-      "qti:3.0.1:def:LogicSingleDType/qti-min",
-      "qti:3.0.1:def:LogicSingleDType/qti-multiple",
-      "qti:3.0.1:def:LogicSingleDType/qti-not",
-      "qti:3.0.1:def:LogicSingleDType/qti-null",
-      "qti:3.0.1:def:LogicSingleDType/qti-number-correct",
-      "qti:3.0.1:def:LogicSingleDType/qti-number-incorrect",
-      "qti:3.0.1:def:LogicSingleDType/qti-number-presented",
-      "qti:3.0.1:def:LogicSingleDType/qti-number-responded",
-      "qti:3.0.1:def:LogicSingleDType/qti-number-selected",
-      "qti:3.0.1:def:LogicSingleDType/qti-or",
-      "qti:3.0.1:def:LogicSingleDType/qti-ordered",
-      "qti:3.0.1:def:LogicSingleDType/qti-outcome-maximum",
-      "qti:3.0.1:def:LogicSingleDType/qti-outcome-minimum",
-      "qti:3.0.1:def:LogicSingleDType/qti-pattern-match",
-      "qti:3.0.1:def:LogicSingleDType/qti-power",
-      "qti:3.0.1:def:LogicSingleDType/qti-product",
-      "qti:3.0.1:def:LogicSingleDType/qti-random",
-      "qti:3.0.1:def:LogicSingleDType/qti-random-float",
-      "qti:3.0.1:def:LogicSingleDType/qti-random-integer",
-      "qti:3.0.1:def:LogicSingleDType/qti-repeat",
-      "qti:3.0.1:def:LogicSingleDType/qti-round",
-      "qti:3.0.1:def:LogicSingleDType/qti-round-to",
-      "qti:3.0.1:def:LogicSingleDType/qti-stats-operator",
-      "qti:3.0.1:def:LogicSingleDType/qti-string-match",
-      "qti:3.0.1:def:LogicSingleDType/qti-substring",
-      "qti:3.0.1:def:LogicSingleDType/qti-subtract",
-      "qti:3.0.1:def:LogicSingleDType/qti-sum",
-      "qti:3.0.1:def:LogicSingleDType/qti-test-variables",
-      "qti:3.0.1:def:LogicSingleDType/qti-truncate",
-      "qti:3.0.1:def:LogicSingleDType/qti-variable",
-      "qti:3.0.1:def:MappingDType/qti-map-entry",
-      "qti:3.0.1:def:MatchTableDType/qti-match-table-entry",
-      "qti:3.0.1:def:ModalFeedbackDType/qti-content-body",
-      "qti:3.0.1:def:OutcomeProcessingDType/include",
-      "qti:3.0.1:def:OutcomeProcessingDType/qti-exit-test",
-      "qti:3.0.1:def:OutcomeProcessingDType/qti-lookup-outcome-value",
-      "qti:3.0.1:def:OutcomeProcessingDType/qti-outcome-condition",
-      "qti:3.0.1:def:OutcomeProcessingDType/qti-outcome-processing-fragment",
-      "qti:3.0.1:def:OutcomeProcessingDType/qti-set-outcome-value",
-      "qti:3.0.1:def:PrintedVariableDType/lang",
-      "qti:3.0.1:def:ResponseProcessingDType/include",
-      "qti:3.0.1:def:ResponseProcessingDType/qti-exit-response",
-      "qti:3.0.1:def:ResponseProcessingDType/qti-lookup-outcome-value",
-      "qti:3.0.1:def:ResponseProcessingDType/qti-response-condition",
-      "qti:3.0.1:def:ResponseProcessingDType/qti-response-processing-fragment",
-      "qti:3.0.1:def:ResponseProcessingDType/qti-set-outcome-value",
-      "qti:3.0.1:def:StimulusBodyDType/address",
-      "qti:3.0.1:def:StimulusBodyDType/article",
-      "qti:3.0.1:def:StimulusBodyDType/aside",
-      "qti:3.0.1:def:StimulusBodyDType/audio",
-      "qti:3.0.1:def:StimulusBodyDType/blockquote",
-      "qti:3.0.1:def:StimulusBodyDType/div",
-      "qti:3.0.1:def:StimulusBodyDType/dl",
-      "qti:3.0.1:def:StimulusBodyDType/figure",
-      "qti:3.0.1:def:StimulusBodyDType/footer",
-      "qti:3.0.1:def:StimulusBodyDType/h1",
-      "qti:3.0.1:def:StimulusBodyDType/h2",
-      "qti:3.0.1:def:StimulusBodyDType/h3",
-      "qti:3.0.1:def:StimulusBodyDType/h4",
-      "qti:3.0.1:def:StimulusBodyDType/h5",
-      "qti:3.0.1:def:StimulusBodyDType/h6",
-      "qti:3.0.1:def:StimulusBodyDType/header",
-      "qti:3.0.1:def:StimulusBodyDType/hr",
-      "qti:3.0.1:def:StimulusBodyDType/include",
-      "qti:3.0.1:def:StimulusBodyDType/math",
-      "qti:3.0.1:def:StimulusBodyDType/nav",
-      "qti:3.0.1:def:StimulusBodyDType/ol",
-      "qti:3.0.1:def:StimulusBodyDType/p",
-      "qti:3.0.1:def:StimulusBodyDType/pre",
-      "qti:3.0.1:def:StimulusBodyDType/section",
-      "qti:3.0.1:def:StimulusBodyDType/table",
-      "qti:3.0.1:def:StimulusBodyDType/ul",
-      "qti:3.0.1:def:StimulusBodyDType/video",
-      "qti:3.0.1:def:TemplateProcessingDType/qti-exit-template",
-      "qti:3.0.1:def:TemplateProcessingDType/qti-set-correct-response",
-      "qti:3.0.1:def:TemplateProcessingDType/qti-set-default-value",
-      "qti:3.0.1:def:TemplateProcessingDType/qti-set-template-value",
-      "qti:3.0.1:def:TemplateProcessingDType/qti-template-condition",
-      "qti:3.0.1:def:TemplateProcessingDType/qti-template-constraint",
-      "qti:3.0.1:def:TestFeedbackDType/qti-content-body",
-      "qti:3.0.1:def:TestPartDType/qti-assessment-section",
-      "qti:3.0.1:def:TestPartDType/qti-assessment-section-ref",
-      "qti:3.0.1:def:TestRubricBlockDType/qti-content-body"
-    ],
+    "silentGaps": [],
     "extensions": [
-      "qti:3.0.1:def:qti-assessment-item.__schema102/href",
-      "qti:3.0.1:def:qti-assessment-item.__schema11/mapEntries",
-      "qti:3.0.1:def:qti-assessment-item.__schema120/rules",
-      "qti:3.0.1:def:qti-assessment-item.__schema123/content",
-      "qti:3.0.1:def:qti-assessment-item.__schema123/foreignAttributes",
-      "qti:3.0.1:def:qti-assessment-item.__schema123/kind",
-      "qti:3.0.1:def:qti-assessment-item.__schema13/areaMapEntries",
-      "qti:3.0.1:def:qti-assessment-item.__schema19/matchTableEntries",
-      "qti:3.0.1:def:qti-assessment-item.__schema21/interpolationTableEntries",
-      "qti:3.0.1:def:qti-assessment-item.__schema36/rules",
+      "qti:3.0.1:def:qti-assessment-item.__schema146/dataAttributes",
+      "qti:3.0.1:def:qti-assessment-item.__schema149/href",
+      "qti:3.0.1:def:qti-assessment-item.__schema170/foreignAttributes",
+      "qti:3.0.1:def:qti-assessment-item.__schema170/kind",
       "qti:3.0.1:def:qti-assessment-item.__schema66/foreignAttributes",
-      "qti:3.0.1:def:qti-assessment-item.__schema74/content",
-      "qti:3.0.1:def:qti-assessment-item.__schema95/cardEntries",
-      "qti:3.0.1:def:qti-assessment-item.__schema95/xmlLang",
-      "qti:3.0.1:def:qti-assessment-item.__schema99/content",
-      "qti:3.0.1:def:qti-assessment-item.__schema99/dataAttributes",
-      "qti:3.0.1:def:qti-assessment-item.__schema99/xmlLang",
-      "qti:3.0.1:def:qti-assessment-section.__schema3/expression",
+      "qti:3.0.1:def:qti-assessment-section.__schema107/kind",
+      "qti:3.0.1:def:qti-assessment-section.__schema115/dataAttributes",
+      "qti:3.0.1:def:qti-assessment-section.__schema118/href",
       "qti:3.0.1:def:qti-assessment-section.__schema3/kind",
-      "qti:3.0.1:def:qti-assessment-section.__schema33/expression",
       "qti:3.0.1:def:qti-assessment-section.__schema33/kind",
       "qti:3.0.1:def:qti-assessment-section.__schema41/foreignAttributes",
       "qti:3.0.1:def:qti-assessment-section.__schema43/foreignAttributes",
-      "qti:3.0.1:def:qti-assessment-section.__schema44/ariaAttributes",
-      "qti:3.0.1:def:qti-assessment-section.__schema44/content",
       "qti:3.0.1:def:qti-assessment-section.__schema44/foreignAttributes",
       "qti:3.0.1:def:qti-assessment-section.__schema44/kind",
-      "qti:3.0.1:def:qti-assessment-section.__schema44/xmlLang",
-      "qti:3.0.1:def:qti-assessment-section.__schema61/kind",
-      "qti:3.0.1:def:qti-assessment-section.__schema61/xmlLang",
-      "qti:3.0.1:def:qti-assessment-section.__schema65/cardEntries",
-      "qti:3.0.1:def:qti-assessment-section.__schema65/xmlLang",
-      "qti:3.0.1:def:qti-assessment-section.__schema69/content",
-      "qti:3.0.1:def:qti-assessment-section.__schema69/dataAttributes",
-      "qti:3.0.1:def:qti-assessment-section.__schema69/xmlLang",
-      "qti:3.0.1:def:qti-assessment-section.__schema72/href",
-      "qti:3.0.1:def:qti-assessment-stimulus.__schema24/cardEntries",
-      "qti:3.0.1:def:qti-assessment-stimulus.__schema24/xmlLang",
-      "qti:3.0.1:def:qti-assessment-stimulus.__schema28/content",
-      "qti:3.0.1:def:qti-assessment-stimulus.__schema28/dataAttributes",
-      "qti:3.0.1:def:qti-assessment-stimulus.__schema28/xmlLang",
-      "qti:3.0.1:def:qti-assessment-stimulus.__schema31/href",
-      "qti:3.0.1:def:qti-assessment-test.__schema106/expression",
-      "qti:3.0.1:def:qti-assessment-test.__schema106/kind",
-      "qti:3.0.1:def:qti-assessment-test.__schema116/content",
-      "qti:3.0.1:def:qti-assessment-test.__schema116/foreignAttributes",
-      "qti:3.0.1:def:qti-assessment-test.__schema116/kind",
-      "qti:3.0.1:def:qti-assessment-test.__schema117/rules",
-      "qti:3.0.1:def:qti-assessment-test.__schema12/matchTableEntries",
-      "qti:3.0.1:def:qti-assessment-test.__schema14/interpolationTableEntries",
-      "qti:3.0.1:def:qti-assessment-test.__schema30/ariaAttributes",
-      "qti:3.0.1:def:qti-assessment-test.__schema30/content",
+      "qti:3.0.1:def:qti-assessment-stimulus.__schema74/dataAttributes",
+      "qti:3.0.1:def:qti-assessment-stimulus.__schema77/href",
+      "qti:3.0.1:def:qti-assessment-test.__schema101/dataAttributes",
+      "qti:3.0.1:def:qti-assessment-test.__schema104/href",
+      "qti:3.0.1:def:qti-assessment-test.__schema124/foreignAttributes",
+      "qti:3.0.1:def:qti-assessment-test.__schema125/kind",
+      "qti:3.0.1:def:qti-assessment-test.__schema152/kind",
+      "qti:3.0.1:def:qti-assessment-test.__schema162/foreignAttributes",
+      "qti:3.0.1:def:qti-assessment-test.__schema162/kind",
       "qti:3.0.1:def:qti-assessment-test.__schema30/foreignAttributes",
       "qti:3.0.1:def:qti-assessment-test.__schema30/kind",
-      "qti:3.0.1:def:qti-assessment-test.__schema30/xmlLang",
-      "qti:3.0.1:def:qti-assessment-test.__schema47/kind",
-      "qti:3.0.1:def:qti-assessment-test.__schema47/xmlLang",
-      "qti:3.0.1:def:qti-assessment-test.__schema51/cardEntries",
-      "qti:3.0.1:def:qti-assessment-test.__schema51/xmlLang",
-      "qti:3.0.1:def:qti-assessment-test.__schema55/content",
-      "qti:3.0.1:def:qti-assessment-test.__schema55/dataAttributes",
-      "qti:3.0.1:def:qti-assessment-test.__schema55/xmlLang",
-      "qti:3.0.1:def:qti-assessment-test.__schema58/href",
-      "qti:3.0.1:def:qti-assessment-test.__schema78/children",
-      "qti:3.0.1:def:qti-assessment-test.__schema78/foreignAttributes",
-      "qti:3.0.1:def:qti-assessment-test.__schema79/expression",
-      "qti:3.0.1:def:qti-assessment-test.__schema79/kind",
+      "qti:3.0.1:def:qti-assessment-test.__schema93/kind",
       "qti:3.0.1:doc:qti-assessment-item/foreignAttributes",
-      "qti:3.0.1:doc:qti-assessment-item/xmlLang",
-      "qti:3.0.1:doc:qti-assessment-section/children",
       "qti:3.0.1:doc:qti-assessment-section/foreignAttributes",
-      "qti:3.0.1:doc:qti-assessment-stimulus/stimulusBody/ariaAttributes",
-      "qti:3.0.1:doc:qti-assessment-stimulus/stimulusBody/content",
       "qti:3.0.1:doc:qti-assessment-stimulus/stimulusBody/dataSsml",
       "qti:3.0.1:doc:qti-assessment-stimulus/stimulusBody/foreignAttributes",
-      "qti:3.0.1:doc:qti-assessment-stimulus/stimulusBody/xmlLang",
-      "qti:3.0.1:doc:qti-assessment-stimulus/xmlLang",
       "qti:3.0.1:doc:qti-assessment-test/foreignAttributes"
     ],
     "normalisations": [
@@ -50888,14 +50495,413 @@
       {
         "note": "Foreign `xml:base` attribute (local name `base`) → conform-ed `xmlBase` (a named rename; the literal items are modelled).",
         "modelledKeys": [
+          "qti:3.0.1:def:qti-assessment-section.__schema107/xmlBase",
           "qti:3.0.1:def:qti-assessment-section.__schema44/xmlBase",
-          "qti:3.0.1:def:qti-assessment-section.__schema61/xmlBase",
           "qti:3.0.1:def:qti-assessment-test.__schema30/xmlBase",
-          "qti:3.0.1:def:qti-assessment-test.__schema47/xmlBase",
+          "qti:3.0.1:def:qti-assessment-test.__schema93/xmlBase",
           "qti:3.0.1:doc:qti-assessment-stimulus/stimulusBody/xmlBase"
         ],
         "literalKeys": [
           "qti:3.0.1:def:BaseSequenceXBaseDType/base"
+        ]
+      },
+      {
+        "note": "Foreign `xml:lang` attribute (local name `lang`) → conform-ed `xmlLang` (a named rename; the literal items are modelled).",
+        "modelledKeys": [
+          "qti:3.0.1:def:qti-assessment-item.__schema142/xmlLang",
+          "qti:3.0.1:def:qti-assessment-item.__schema146/xmlLang",
+          "qti:3.0.1:def:qti-assessment-item.__schema74/xmlLang",
+          "qti:3.0.1:def:qti-assessment-section.__schema107/xmlLang",
+          "qti:3.0.1:def:qti-assessment-section.__schema111/xmlLang",
+          "qti:3.0.1:def:qti-assessment-section.__schema115/xmlLang",
+          "qti:3.0.1:def:qti-assessment-section.__schema44/xmlLang",
+          "qti:3.0.1:def:qti-assessment-stimulus.__schema70/xmlLang",
+          "qti:3.0.1:def:qti-assessment-stimulus.__schema74/xmlLang",
+          "qti:3.0.1:def:qti-assessment-test.__schema101/xmlLang",
+          "qti:3.0.1:def:qti-assessment-test.__schema30/xmlLang",
+          "qti:3.0.1:def:qti-assessment-test.__schema93/xmlLang",
+          "qti:3.0.1:def:qti-assessment-test.__schema97/xmlLang",
+          "qti:3.0.1:doc:qti-assessment-item/xmlLang",
+          "qti:3.0.1:doc:qti-assessment-stimulus/stimulusBody/xmlLang",
+          "qti:3.0.1:doc:qti-assessment-stimulus/xmlLang"
+        ],
+        "literalKeys": [
+          "qti:3.0.1:def:AssessmentItemDType/lang",
+          "qti:3.0.1:def:AssessmentStimulusDType/lang",
+          "qti:3.0.1:def:CardDType/lang",
+          "qti:3.0.1:def:HTMLContentDType/lang",
+          "qti:3.0.1:def:ItemBodyDType/lang",
+          "qti:3.0.1:def:PrintedVariableDType/lang"
+        ]
+      },
+      {
+        "note": "QTI expression operators (qti-and, qti-sum, qti-map-response, …) → conform-ed's `kind`-discriminated expression union (the unary/binary/one-to-many/container enums + named operators) reached via the Zod `expression`/`expressions` operands.",
+        "modelledKeys": [
+          "qti:3.0.1:def:qti-assessment-section.__schema3/expression",
+          "qti:3.0.1:def:qti-assessment-section.__schema33/expression",
+          "qti:3.0.1:def:qti-assessment-test.__schema125/expression",
+          "qti:3.0.1:def:qti-assessment-test.__schema152/expression"
+        ],
+        "literalKeys": [
+          "qti:3.0.1:def:BranchRuleDType/qti-and",
+          "qti:3.0.1:def:BranchRuleDType/qti-any-n",
+          "qti:3.0.1:def:BranchRuleDType/qti-base-value",
+          "qti:3.0.1:def:BranchRuleDType/qti-container-size",
+          "qti:3.0.1:def:BranchRuleDType/qti-contains",
+          "qti:3.0.1:def:BranchRuleDType/qti-correct",
+          "qti:3.0.1:def:BranchRuleDType/qti-custom-operator",
+          "qti:3.0.1:def:BranchRuleDType/qti-default",
+          "qti:3.0.1:def:BranchRuleDType/qti-delete",
+          "qti:3.0.1:def:BranchRuleDType/qti-divide",
+          "qti:3.0.1:def:BranchRuleDType/qti-duration-gte",
+          "qti:3.0.1:def:BranchRuleDType/qti-duration-lt",
+          "qti:3.0.1:def:BranchRuleDType/qti-equal",
+          "qti:3.0.1:def:BranchRuleDType/qti-equal-rounded",
+          "qti:3.0.1:def:BranchRuleDType/qti-field-value",
+          "qti:3.0.1:def:BranchRuleDType/qti-gcd",
+          "qti:3.0.1:def:BranchRuleDType/qti-gt",
+          "qti:3.0.1:def:BranchRuleDType/qti-gte",
+          "qti:3.0.1:def:BranchRuleDType/qti-index",
+          "qti:3.0.1:def:BranchRuleDType/qti-inside",
+          "qti:3.0.1:def:BranchRuleDType/qti-integer-divide",
+          "qti:3.0.1:def:BranchRuleDType/qti-integer-modulus",
+          "qti:3.0.1:def:BranchRuleDType/qti-integer-to-float",
+          "qti:3.0.1:def:BranchRuleDType/qti-is-null",
+          "qti:3.0.1:def:BranchRuleDType/qti-lcm",
+          "qti:3.0.1:def:BranchRuleDType/qti-lt",
+          "qti:3.0.1:def:BranchRuleDType/qti-lte",
+          "qti:3.0.1:def:BranchRuleDType/qti-map-response",
+          "qti:3.0.1:def:BranchRuleDType/qti-map-response-point",
+          "qti:3.0.1:def:BranchRuleDType/qti-match",
+          "qti:3.0.1:def:BranchRuleDType/qti-math-constant",
+          "qti:3.0.1:def:BranchRuleDType/qti-math-operator",
+          "qti:3.0.1:def:BranchRuleDType/qti-max",
+          "qti:3.0.1:def:BranchRuleDType/qti-member",
+          "qti:3.0.1:def:BranchRuleDType/qti-min",
+          "qti:3.0.1:def:BranchRuleDType/qti-multiple",
+          "qti:3.0.1:def:BranchRuleDType/qti-not",
+          "qti:3.0.1:def:BranchRuleDType/qti-null",
+          "qti:3.0.1:def:BranchRuleDType/qti-number-correct",
+          "qti:3.0.1:def:BranchRuleDType/qti-number-incorrect",
+          "qti:3.0.1:def:BranchRuleDType/qti-number-presented",
+          "qti:3.0.1:def:BranchRuleDType/qti-number-responded",
+          "qti:3.0.1:def:BranchRuleDType/qti-number-selected",
+          "qti:3.0.1:def:BranchRuleDType/qti-or",
+          "qti:3.0.1:def:BranchRuleDType/qti-ordered",
+          "qti:3.0.1:def:BranchRuleDType/qti-outcome-maximum",
+          "qti:3.0.1:def:BranchRuleDType/qti-outcome-minimum",
+          "qti:3.0.1:def:BranchRuleDType/qti-pattern-match",
+          "qti:3.0.1:def:BranchRuleDType/qti-power",
+          "qti:3.0.1:def:BranchRuleDType/qti-product",
+          "qti:3.0.1:def:BranchRuleDType/qti-random",
+          "qti:3.0.1:def:BranchRuleDType/qti-random-float",
+          "qti:3.0.1:def:BranchRuleDType/qti-random-integer",
+          "qti:3.0.1:def:BranchRuleDType/qti-repeat",
+          "qti:3.0.1:def:BranchRuleDType/qti-round",
+          "qti:3.0.1:def:BranchRuleDType/qti-round-to",
+          "qti:3.0.1:def:BranchRuleDType/qti-stats-operator",
+          "qti:3.0.1:def:BranchRuleDType/qti-string-match",
+          "qti:3.0.1:def:BranchRuleDType/qti-substring",
+          "qti:3.0.1:def:BranchRuleDType/qti-subtract",
+          "qti:3.0.1:def:BranchRuleDType/qti-sum",
+          "qti:3.0.1:def:BranchRuleDType/qti-test-variables",
+          "qti:3.0.1:def:BranchRuleDType/qti-truncate",
+          "qti:3.0.1:def:BranchRuleDType/qti-variable",
+          "qti:3.0.1:def:LogicSingleDType/qti-and",
+          "qti:3.0.1:def:LogicSingleDType/qti-any-n",
+          "qti:3.0.1:def:LogicSingleDType/qti-base-value",
+          "qti:3.0.1:def:LogicSingleDType/qti-container-size",
+          "qti:3.0.1:def:LogicSingleDType/qti-contains",
+          "qti:3.0.1:def:LogicSingleDType/qti-correct",
+          "qti:3.0.1:def:LogicSingleDType/qti-custom-operator",
+          "qti:3.0.1:def:LogicSingleDType/qti-default",
+          "qti:3.0.1:def:LogicSingleDType/qti-delete",
+          "qti:3.0.1:def:LogicSingleDType/qti-divide",
+          "qti:3.0.1:def:LogicSingleDType/qti-duration-gte",
+          "qti:3.0.1:def:LogicSingleDType/qti-duration-lt",
+          "qti:3.0.1:def:LogicSingleDType/qti-equal",
+          "qti:3.0.1:def:LogicSingleDType/qti-equal-rounded",
+          "qti:3.0.1:def:LogicSingleDType/qti-field-value",
+          "qti:3.0.1:def:LogicSingleDType/qti-gcd",
+          "qti:3.0.1:def:LogicSingleDType/qti-gt",
+          "qti:3.0.1:def:LogicSingleDType/qti-gte",
+          "qti:3.0.1:def:LogicSingleDType/qti-index",
+          "qti:3.0.1:def:LogicSingleDType/qti-inside",
+          "qti:3.0.1:def:LogicSingleDType/qti-integer-divide",
+          "qti:3.0.1:def:LogicSingleDType/qti-integer-modulus",
+          "qti:3.0.1:def:LogicSingleDType/qti-integer-to-float",
+          "qti:3.0.1:def:LogicSingleDType/qti-is-null",
+          "qti:3.0.1:def:LogicSingleDType/qti-lcm",
+          "qti:3.0.1:def:LogicSingleDType/qti-lt",
+          "qti:3.0.1:def:LogicSingleDType/qti-lte",
+          "qti:3.0.1:def:LogicSingleDType/qti-map-response",
+          "qti:3.0.1:def:LogicSingleDType/qti-map-response-point",
+          "qti:3.0.1:def:LogicSingleDType/qti-match",
+          "qti:3.0.1:def:LogicSingleDType/qti-math-constant",
+          "qti:3.0.1:def:LogicSingleDType/qti-math-operator",
+          "qti:3.0.1:def:LogicSingleDType/qti-max",
+          "qti:3.0.1:def:LogicSingleDType/qti-member",
+          "qti:3.0.1:def:LogicSingleDType/qti-min",
+          "qti:3.0.1:def:LogicSingleDType/qti-multiple",
+          "qti:3.0.1:def:LogicSingleDType/qti-not",
+          "qti:3.0.1:def:LogicSingleDType/qti-null",
+          "qti:3.0.1:def:LogicSingleDType/qti-number-correct",
+          "qti:3.0.1:def:LogicSingleDType/qti-number-incorrect",
+          "qti:3.0.1:def:LogicSingleDType/qti-number-presented",
+          "qti:3.0.1:def:LogicSingleDType/qti-number-responded",
+          "qti:3.0.1:def:LogicSingleDType/qti-number-selected",
+          "qti:3.0.1:def:LogicSingleDType/qti-or",
+          "qti:3.0.1:def:LogicSingleDType/qti-ordered",
+          "qti:3.0.1:def:LogicSingleDType/qti-outcome-maximum",
+          "qti:3.0.1:def:LogicSingleDType/qti-outcome-minimum",
+          "qti:3.0.1:def:LogicSingleDType/qti-pattern-match",
+          "qti:3.0.1:def:LogicSingleDType/qti-power",
+          "qti:3.0.1:def:LogicSingleDType/qti-product",
+          "qti:3.0.1:def:LogicSingleDType/qti-random",
+          "qti:3.0.1:def:LogicSingleDType/qti-random-float",
+          "qti:3.0.1:def:LogicSingleDType/qti-random-integer",
+          "qti:3.0.1:def:LogicSingleDType/qti-repeat",
+          "qti:3.0.1:def:LogicSingleDType/qti-round",
+          "qti:3.0.1:def:LogicSingleDType/qti-round-to",
+          "qti:3.0.1:def:LogicSingleDType/qti-stats-operator",
+          "qti:3.0.1:def:LogicSingleDType/qti-string-match",
+          "qti:3.0.1:def:LogicSingleDType/qti-substring",
+          "qti:3.0.1:def:LogicSingleDType/qti-subtract",
+          "qti:3.0.1:def:LogicSingleDType/qti-sum",
+          "qti:3.0.1:def:LogicSingleDType/qti-test-variables",
+          "qti:3.0.1:def:LogicSingleDType/qti-truncate",
+          "qti:3.0.1:def:LogicSingleDType/qti-variable"
+        ]
+      },
+      {
+        "note": "QTI response/outcome/template processing-rule elements → conform-ed's `kind`-discriminated rule union (Zod `rules`); `include` → QtiIncludeSchema.",
+        "modelledKeys": [
+          "qti:3.0.1:def:qti-assessment-item.__schema167/rules",
+          "qti:3.0.1:def:qti-assessment-item.__schema36/rules",
+          "qti:3.0.1:def:qti-assessment-test.__schema163/rules"
+        ],
+        "literalKeys": [
+          "qti:3.0.1:def:AssessmentSectionDType/include",
+          "qti:3.0.1:def:ItemBodyDType/include",
+          "qti:3.0.1:def:OutcomeProcessingDType/include",
+          "qti:3.0.1:def:OutcomeProcessingDType/qti-exit-test",
+          "qti:3.0.1:def:OutcomeProcessingDType/qti-lookup-outcome-value",
+          "qti:3.0.1:def:OutcomeProcessingDType/qti-outcome-condition",
+          "qti:3.0.1:def:OutcomeProcessingDType/qti-outcome-processing-fragment",
+          "qti:3.0.1:def:OutcomeProcessingDType/qti-set-outcome-value",
+          "qti:3.0.1:def:ResponseProcessingDType/include",
+          "qti:3.0.1:def:ResponseProcessingDType/qti-exit-response",
+          "qti:3.0.1:def:ResponseProcessingDType/qti-lookup-outcome-value",
+          "qti:3.0.1:def:ResponseProcessingDType/qti-response-condition",
+          "qti:3.0.1:def:ResponseProcessingDType/qti-response-processing-fragment",
+          "qti:3.0.1:def:ResponseProcessingDType/qti-set-outcome-value",
+          "qti:3.0.1:def:StimulusBodyDType/include",
+          "qti:3.0.1:def:TemplateProcessingDType/qti-exit-template",
+          "qti:3.0.1:def:TemplateProcessingDType/qti-set-correct-response",
+          "qti:3.0.1:def:TemplateProcessingDType/qti-set-default-value",
+          "qti:3.0.1:def:TemplateProcessingDType/qti-set-template-value",
+          "qti:3.0.1:def:TemplateProcessingDType/qti-template-condition",
+          "qti:3.0.1:def:TemplateProcessingDType/qti-template-constraint"
+        ]
+      },
+      {
+        "note": "QTI interaction + feedback/template/rubric block elements → typed members of conform-ed's QtiContentFragment union (Zod `content`); every interaction emergent authors.",
+        "modelledKeys": [
+          "qti:3.0.1:def:qti-assessment-item.__schema146/content",
+          "qti:3.0.1:def:qti-assessment-item.__schema170/content",
+          "qti:3.0.1:def:qti-assessment-item.__schema74/content",
+          "qti:3.0.1:def:qti-assessment-section.__schema115/content",
+          "qti:3.0.1:def:qti-assessment-section.__schema44/content",
+          "qti:3.0.1:def:qti-assessment-stimulus.__schema74/content",
+          "qti:3.0.1:def:qti-assessment-test.__schema101/content",
+          "qti:3.0.1:def:qti-assessment-test.__schema162/content",
+          "qti:3.0.1:def:qti-assessment-test.__schema30/content",
+          "qti:3.0.1:doc:qti-assessment-stimulus/stimulusBody/content"
+        ],
+        "literalKeys": [
+          "qti:3.0.1:def:ItemBodyDType/qti-associate-interaction",
+          "qti:3.0.1:def:ItemBodyDType/qti-choice-interaction",
+          "qti:3.0.1:def:ItemBodyDType/qti-custom-interaction",
+          "qti:3.0.1:def:ItemBodyDType/qti-drawing-interaction",
+          "qti:3.0.1:def:ItemBodyDType/qti-extended-text-interaction",
+          "qti:3.0.1:def:ItemBodyDType/qti-feedback-block",
+          "qti:3.0.1:def:ItemBodyDType/qti-gap-match-interaction",
+          "qti:3.0.1:def:ItemBodyDType/qti-graphic-associate-interaction",
+          "qti:3.0.1:def:ItemBodyDType/qti-graphic-gap-match-interaction",
+          "qti:3.0.1:def:ItemBodyDType/qti-graphic-order-interaction",
+          "qti:3.0.1:def:ItemBodyDType/qti-hotspot-interaction",
+          "qti:3.0.1:def:ItemBodyDType/qti-hottext-interaction",
+          "qti:3.0.1:def:ItemBodyDType/qti-match-interaction",
+          "qti:3.0.1:def:ItemBodyDType/qti-media-interaction",
+          "qti:3.0.1:def:ItemBodyDType/qti-order-interaction",
+          "qti:3.0.1:def:ItemBodyDType/qti-portable-custom-interaction",
+          "qti:3.0.1:def:ItemBodyDType/qti-position-object-stage",
+          "qti:3.0.1:def:ItemBodyDType/qti-rubric-block",
+          "qti:3.0.1:def:ItemBodyDType/qti-select-point-interaction",
+          "qti:3.0.1:def:ItemBodyDType/qti-slider-interaction",
+          "qti:3.0.1:def:ItemBodyDType/qti-template-block",
+          "qti:3.0.1:def:ItemBodyDType/qti-upload-interaction",
+          "qti:3.0.1:def:ModalFeedbackDType/qti-content-body",
+          "qti:3.0.1:def:TestFeedbackDType/qti-content-body",
+          "qti:3.0.1:def:TestRubricBlockDType/qti-content-body"
+        ]
+      },
+      {
+        "note": "XHTML flow/inline (+ embedded MathML/SSML) content → conform-ed's generic opaque XML content node (createXmlNodeSchema: {kind:'xml', name, attributes, children}) — a lossless round-trip reached via Zod `content`/`children`, NOT a per-element schema.",
+        "modelledKeys": [
+          "qti:3.0.1:def:qti-assessment-test.__schema124/children",
+          "qti:3.0.1:doc:qti-assessment-section/children"
+        ],
+        "literalKeys": [
+          "qti:3.0.1:def:HTMLContentDType/a",
+          "qti:3.0.1:def:HTMLContentDType/abbr",
+          "qti:3.0.1:def:HTMLContentDType/acronym",
+          "qti:3.0.1:def:HTMLContentDType/address",
+          "qti:3.0.1:def:HTMLContentDType/article",
+          "qti:3.0.1:def:HTMLContentDType/aside",
+          "qti:3.0.1:def:HTMLContentDType/audio",
+          "qti:3.0.1:def:HTMLContentDType/b",
+          "qti:3.0.1:def:HTMLContentDType/bdi",
+          "qti:3.0.1:def:HTMLContentDType/bdo",
+          "qti:3.0.1:def:HTMLContentDType/big",
+          "qti:3.0.1:def:HTMLContentDType/blockquote",
+          "qti:3.0.1:def:HTMLContentDType/br",
+          "qti:3.0.1:def:HTMLContentDType/break",
+          "qti:3.0.1:def:HTMLContentDType/cite",
+          "qti:3.0.1:def:HTMLContentDType/code",
+          "qti:3.0.1:def:HTMLContentDType/details",
+          "qti:3.0.1:def:HTMLContentDType/dfn",
+          "qti:3.0.1:def:HTMLContentDType/div",
+          "qti:3.0.1:def:HTMLContentDType/dl",
+          "qti:3.0.1:def:HTMLContentDType/em",
+          "qti:3.0.1:def:HTMLContentDType/emphasis",
+          "qti:3.0.1:def:HTMLContentDType/figure",
+          "qti:3.0.1:def:HTMLContentDType/footer",
+          "qti:3.0.1:def:HTMLContentDType/h1",
+          "qti:3.0.1:def:HTMLContentDType/h2",
+          "qti:3.0.1:def:HTMLContentDType/h3",
+          "qti:3.0.1:def:HTMLContentDType/h4",
+          "qti:3.0.1:def:HTMLContentDType/h5",
+          "qti:3.0.1:def:HTMLContentDType/h6",
+          "qti:3.0.1:def:HTMLContentDType/header",
+          "qti:3.0.1:def:HTMLContentDType/hr",
+          "qti:3.0.1:def:HTMLContentDType/i",
+          "qti:3.0.1:def:HTMLContentDType/img",
+          "qti:3.0.1:def:HTMLContentDType/kbd",
+          "qti:3.0.1:def:HTMLContentDType/label",
+          "qti:3.0.1:def:HTMLContentDType/mark",
+          "qti:3.0.1:def:HTMLContentDType/math",
+          "qti:3.0.1:def:HTMLContentDType/nav",
+          "qti:3.0.1:def:HTMLContentDType/object",
+          "qti:3.0.1:def:HTMLContentDType/ol",
+          "qti:3.0.1:def:HTMLContentDType/p",
+          "qti:3.0.1:def:HTMLContentDType/phoneme",
+          "qti:3.0.1:def:HTMLContentDType/picture",
+          "qti:3.0.1:def:HTMLContentDType/pre",
+          "qti:3.0.1:def:HTMLContentDType/prosody",
+          "qti:3.0.1:def:HTMLContentDType/q",
+          "qti:3.0.1:def:HTMLContentDType/ruby",
+          "qti:3.0.1:def:HTMLContentDType/s",
+          "qti:3.0.1:def:HTMLContentDType/samp",
+          "qti:3.0.1:def:HTMLContentDType/say-as",
+          "qti:3.0.1:def:HTMLContentDType/section",
+          "qti:3.0.1:def:HTMLContentDType/small",
+          "qti:3.0.1:def:HTMLContentDType/span",
+          "qti:3.0.1:def:HTMLContentDType/speak",
+          "qti:3.0.1:def:HTMLContentDType/strong",
+          "qti:3.0.1:def:HTMLContentDType/sub",
+          "qti:3.0.1:def:HTMLContentDType/sup",
+          "qti:3.0.1:def:HTMLContentDType/table",
+          "qti:3.0.1:def:HTMLContentDType/tt",
+          "qti:3.0.1:def:HTMLContentDType/ul",
+          "qti:3.0.1:def:HTMLContentDType/var",
+          "qti:3.0.1:def:HTMLContentDType/video",
+          "qti:3.0.1:def:HTMLContentDType/voice",
+          "qti:3.0.1:def:ItemBodyDType/address",
+          "qti:3.0.1:def:ItemBodyDType/article",
+          "qti:3.0.1:def:ItemBodyDType/aside",
+          "qti:3.0.1:def:ItemBodyDType/audio",
+          "qti:3.0.1:def:ItemBodyDType/blockquote",
+          "qti:3.0.1:def:ItemBodyDType/div",
+          "qti:3.0.1:def:ItemBodyDType/dl",
+          "qti:3.0.1:def:ItemBodyDType/figure",
+          "qti:3.0.1:def:ItemBodyDType/footer",
+          "qti:3.0.1:def:ItemBodyDType/h1",
+          "qti:3.0.1:def:ItemBodyDType/h2",
+          "qti:3.0.1:def:ItemBodyDType/h3",
+          "qti:3.0.1:def:ItemBodyDType/h4",
+          "qti:3.0.1:def:ItemBodyDType/h5",
+          "qti:3.0.1:def:ItemBodyDType/h6",
+          "qti:3.0.1:def:ItemBodyDType/header",
+          "qti:3.0.1:def:ItemBodyDType/hr",
+          "qti:3.0.1:def:ItemBodyDType/math",
+          "qti:3.0.1:def:ItemBodyDType/nav",
+          "qti:3.0.1:def:ItemBodyDType/ol",
+          "qti:3.0.1:def:ItemBodyDType/p",
+          "qti:3.0.1:def:ItemBodyDType/pre",
+          "qti:3.0.1:def:ItemBodyDType/section",
+          "qti:3.0.1:def:ItemBodyDType/table",
+          "qti:3.0.1:def:ItemBodyDType/ul",
+          "qti:3.0.1:def:ItemBodyDType/video",
+          "qti:3.0.1:def:StimulusBodyDType/address",
+          "qti:3.0.1:def:StimulusBodyDType/article",
+          "qti:3.0.1:def:StimulusBodyDType/aside",
+          "qti:3.0.1:def:StimulusBodyDType/audio",
+          "qti:3.0.1:def:StimulusBodyDType/blockquote",
+          "qti:3.0.1:def:StimulusBodyDType/div",
+          "qti:3.0.1:def:StimulusBodyDType/dl",
+          "qti:3.0.1:def:StimulusBodyDType/figure",
+          "qti:3.0.1:def:StimulusBodyDType/footer",
+          "qti:3.0.1:def:StimulusBodyDType/h1",
+          "qti:3.0.1:def:StimulusBodyDType/h2",
+          "qti:3.0.1:def:StimulusBodyDType/h3",
+          "qti:3.0.1:def:StimulusBodyDType/h4",
+          "qti:3.0.1:def:StimulusBodyDType/h5",
+          "qti:3.0.1:def:StimulusBodyDType/h6",
+          "qti:3.0.1:def:StimulusBodyDType/header",
+          "qti:3.0.1:def:StimulusBodyDType/hr",
+          "qti:3.0.1:def:StimulusBodyDType/math",
+          "qti:3.0.1:def:StimulusBodyDType/nav",
+          "qti:3.0.1:def:StimulusBodyDType/ol",
+          "qti:3.0.1:def:StimulusBodyDType/p",
+          "qti:3.0.1:def:StimulusBodyDType/pre",
+          "qti:3.0.1:def:StimulusBodyDType/section",
+          "qti:3.0.1:def:StimulusBodyDType/table",
+          "qti:3.0.1:def:StimulusBodyDType/ul",
+          "qti:3.0.1:def:StimulusBodyDType/video"
+        ]
+      },
+      {
+        "note": "Nested section structure (qti-assessment-section/-ref, item-ref) → conform-ed's typed section `children` union.",
+        "modelledKeys": [],
+        "literalKeys": [
+          "qti:3.0.1:def:AssessmentSectionDType/qti-assessment-item-ref",
+          "qti:3.0.1:def:AssessmentSectionDType/qti-assessment-section",
+          "qti:3.0.1:def:AssessmentSectionDType/qti-assessment-section-ref",
+          "qti:3.0.1:def:TestPartDType/qti-assessment-section",
+          "qti:3.0.1:def:TestPartDType/qti-assessment-section-ref"
+        ]
+      },
+      {
+        "note": "QTI map/table entry elements (XML singular `-entry` ↔ JSON `*Entries` array; the y→ies plural the name-normaliser misses) → conform-ed's typed entry arrays.",
+        "modelledKeys": [
+          "qti:3.0.1:def:qti-assessment-item.__schema11/mapEntries",
+          "qti:3.0.1:def:qti-assessment-item.__schema13/areaMapEntries",
+          "qti:3.0.1:def:qti-assessment-item.__schema142/cardEntries",
+          "qti:3.0.1:def:qti-assessment-item.__schema19/matchTableEntries",
+          "qti:3.0.1:def:qti-assessment-item.__schema21/interpolationTableEntries",
+          "qti:3.0.1:def:qti-assessment-section.__schema111/cardEntries",
+          "qti:3.0.1:def:qti-assessment-stimulus.__schema70/cardEntries",
+          "qti:3.0.1:def:qti-assessment-test.__schema12/matchTableEntries",
+          "qti:3.0.1:def:qti-assessment-test.__schema14/interpolationTableEntries",
+          "qti:3.0.1:def:qti-assessment-test.__schema97/cardEntries"
+        ],
+        "literalKeys": [
+          "qti:3.0.1:def:AreaMappingDType/qti-area-map-entry",
+          "qti:3.0.1:def:CardDType/qti-card-entry",
+          "qti:3.0.1:def:InterpolationTableDType/qti-interpolation-table-entry",
+          "qti:3.0.1:def:MappingDType/qti-map-entry",
+          "qti:3.0.1:def:MatchTableDType/qti-match-table-entry"
         ]
       }
     ]
@@ -50905,6 +50911,72 @@
       "item": "qti:3.0.1:def:AreaMapEntryDType/shape",
       "members": 5,
       "modelled": 5,
+      "gaps": []
+    },
+    {
+      "item": "qti:3.0.1:def:ARIABaseDType/aria-autocomplete",
+      "members": 4,
+      "modelled": 4,
+      "gaps": []
+    },
+    {
+      "item": "qti:3.0.1:def:ARIABaseDType/aria-checked",
+      "members": 4,
+      "modelled": 4,
+      "gaps": []
+    },
+    {
+      "item": "qti:3.0.1:def:ARIABaseDType/aria-current",
+      "members": 8,
+      "modelled": 8,
+      "gaps": []
+    },
+    {
+      "item": "qti:3.0.1:def:ARIABaseDType/aria-expanded",
+      "members": 3,
+      "modelled": 3,
+      "gaps": []
+    },
+    {
+      "item": "qti:3.0.1:def:ARIABaseDType/aria-invalid",
+      "members": 4,
+      "modelled": 4,
+      "gaps": []
+    },
+    {
+      "item": "qti:3.0.1:def:ARIABaseDType/aria-live",
+      "members": 3,
+      "modelled": 3,
+      "gaps": []
+    },
+    {
+      "item": "qti:3.0.1:def:ARIABaseDType/aria-orientation",
+      "members": 2,
+      "modelled": 2,
+      "gaps": []
+    },
+    {
+      "item": "qti:3.0.1:def:ARIABaseDType/aria-pressed",
+      "members": 4,
+      "modelled": 4,
+      "gaps": []
+    },
+    {
+      "item": "qti:3.0.1:def:ARIABaseDType/aria-selected",
+      "members": 3,
+      "modelled": 3,
+      "gaps": []
+    },
+    {
+      "item": "qti:3.0.1:def:ARIABaseDType/aria-sort",
+      "members": 4,
+      "modelled": 4,
+      "gaps": []
+    },
+    {
+      "item": "qti:3.0.1:def:ARIABaseDType/role",
+      "members": 74,
+      "modelled": 74,
       "gaps": []
     },
     {
@@ -50958,16 +51030,16 @@
   ],
   "rollup": {
     "items": 5344,
-    "modelledYes": 224,
+    "modelledYes": 582,
     "modelledPartial": 0,
-    "modelledNo": 358,
+    "modelledNo": 0,
     "normativeItems": 2,
-    "conformanceRequirements": 10,
+    "conformanceRequirements": 11,
     "normativeStatements": 2,
     "normativeStatementsCited": 0,
-    "normalisations": 12,
-    "valueSetMembers": 34,
-    "valueSetModelled": 34,
+    "normalisations": 363,
+    "valueSetMembers": 147,
+    "valueSetModelled": 147,
     "valueSetGaps": 0
   }
 }

@@ -722,8 +722,72 @@ function promptOf(node: QtiXmlElementNode): { prompt?: unknown } {
   return prompt ? { prompt: mapV3Prompt(prompt) } : {};
 }
 
+/**
+ * WAI-ARIA characteristics (ASI §2.13.3, attribute group `ARIABaseDType`) every QTI content node
+ * may carry (ADR-0039). Authored ARIA on a QTI element is preserved through ingest by collecting
+ * these literal attributes verbatim onto the normalised node (the contract names them kebab-cased,
+ * matching the XML binding, so no name mapping is needed).
+ */
+const ARIA_ATTRIBUTE_NAMES = new Set<string>([
+  "role",
+  "aria-activedescendant",
+  "aria-atomic",
+  "aria-autocomplete",
+  "aria-busy",
+  "aria-checked",
+  "aria-colcount",
+  "aria-colindex",
+  "aria-colspan",
+  "aria-controls",
+  "aria-current",
+  "aria-describedby",
+  "aria-details",
+  "aria-disabled",
+  "aria-errormessage",
+  "aria-expanded",
+  "aria-flowto",
+  "aria-haspopup",
+  "aria-hidden",
+  "aria-invalid",
+  "aria-keyshortcuts",
+  "aria-label",
+  "aria-labelledby",
+  "aria-level",
+  "aria-live",
+  "aria-modal",
+  "aria-multiline",
+  "aria-multiselectable",
+  "aria-orientation",
+  "aria-owns",
+  "aria-placeholder",
+  "aria-posinset",
+  "aria-pressed",
+  "aria-readonly",
+  "aria-relevant",
+  "aria-required",
+  "aria-roledescription",
+  "aria-rowcount",
+  "aria-rowindex",
+  "aria-rowspan",
+  "aria-selected",
+  "aria-setsize",
+  "aria-sort",
+  "aria-valuemax",
+  "aria-valuemin",
+  "aria-valuenow",
+  "aria-valuetext",
+]);
+
+export function ariaAttributesOf(node: QtiXmlElementNode): Record<string, string> {
+  const aria: Record<string, string> = {};
+  for (const [name, value] of Object.entries(node.attributes)) {
+    if (ARIA_ATTRIBUTE_NAMES.has(name)) aria[name] = value;
+  }
+  return aria;
+}
+
 function interactionBase(node: QtiXmlElementNode) {
-  return { responseIdentifier: requireAttribute(node, "response-identifier") };
+  return { responseIdentifier: requireAttribute(node, "response-identifier"), ...ariaAttributesOf(node) };
 }
 
 /** The stage media of graphic/media interactions: the first non-QTI element child. */

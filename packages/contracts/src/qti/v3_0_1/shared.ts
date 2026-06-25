@@ -50,6 +50,96 @@ export const QtiScoreStatusSchema = z.enum(["notscored", "scored"]);
 export const QtiAnsweredStatusSchema = z.enum(["notpresented", "presented", "attempted", "answered"]);
 export const QtiSupportAssignmentSchema = z.enum(["assigned", "universal", "prohibited", "inherit"]);
 
+// WAI-ARIA characteristics (ASI §2.13.3, attribute group `ARIABaseDType`). The XSD enumerates a
+// closed vocabulary for these; the rest of the ARIA attributes are IDREF/string/integer and are
+// modelled as plain strings on the node (the XML binding carries every attribute value as a string).
+export const QtiAriaRoleSchema = z.enum([
+  "article",
+  "columnheader",
+  "definition",
+  "document",
+  "group",
+  "heading",
+  "img",
+  "list",
+  "listitem",
+  "math",
+  "note",
+  "presentation",
+  "region",
+  "row",
+  "rowgroup",
+  "rowheader",
+  "separator",
+  "toolbar",
+  "button",
+  "checkbox",
+  "gridcell",
+  "link",
+  "log",
+  "option",
+  "radio",
+  "slider",
+  "spinbutton",
+  "status",
+  "tab",
+  "tabpanel",
+  "textbox",
+  "timer",
+  "listbox",
+  "radiogroup",
+  "tablist",
+  "complementary",
+  "contentinfo",
+  "alert",
+  "alertdialog",
+  "application",
+  "banner",
+  "combobox",
+  "dialog",
+  "form",
+  "grid",
+  "main",
+  "marquee",
+  "menu",
+  "menubar",
+  "menuitem",
+  "menuitemcheckbox",
+  "menuitemradio",
+  "navigation",
+  "progressbar",
+  "scrollbar",
+  "search",
+  "tooltip",
+  "tree",
+  "treegrid",
+  "treeitem",
+  "searchbox",
+  "switch",
+  "term",
+  "figure",
+  "code",
+  "time",
+  "subscript",
+  "superscript",
+  "meter",
+  "generic",
+  "insertion",
+  "deletion",
+  "strong",
+  "emphasis",
+]);
+export const QtiAriaCheckedSchema = z.enum(["true", "false", "mixed", "undefined"]);
+export const QtiAriaPressedSchema = z.enum(["true", "false", "mixed", "undefined"]);
+export const QtiAriaExpandedSchema = z.enum(["true", "false", "undefined"]);
+export const QtiAriaSelectedSchema = z.enum(["true", "false", "undefined"]);
+export const QtiAriaLiveSchema = z.enum(["off", "polite", "assertive"]);
+export const QtiAriaOrientationSchema = z.enum(["vertical", "horizontal"]);
+export const QtiAriaAutocompleteSchema = z.enum(["inline", "list", "both", "none"]);
+export const QtiAriaInvalidSchema = z.enum(["true", "false", "grammar", "spelling"]);
+export const QtiAriaSortSchema = z.enum(["ascending", "descending", "none", "other"]);
+export const QtiAriaCurrentSchema = z.enum(["page", "step", "location", "date", "time", "true", "false", "undefined"]);
+
 export const XmlForeignAttributesSchema = z.record(z.string(), z.unknown());
 
 export const XmlExtensionNodeSchema = z

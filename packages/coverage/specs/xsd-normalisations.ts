@@ -47,3 +47,15 @@ export const XML_BASE: SpecRefOverride = {
   modelledSegment: "xmlBase",
   literalSegment: "base",
 };
+
+/**
+ * The foreign `xml:lang` attribute (local name `lang` once the namespace is stripped) is
+ * modelled by conform-ed as `xmlLang` on the nodes that do not also carry the plain `lang`
+ * field. A named rename of a *named* construct, like {@link XML_BASE}: the `/lang` items are
+ * modelled (flipped to `yes`), not gaps.
+ */
+export const XML_LANG: SpecRefOverride = {
+  note: "Foreign `xml:lang` attribute (local name `lang`) → conform-ed `xmlLang` (a named rename; the literal items are modelled).",
+  modelledSegment: "xmlLang",
+  literalSegment: "lang",
+};

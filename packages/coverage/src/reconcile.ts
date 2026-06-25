@@ -235,9 +235,14 @@ export function applySpecRefOverrides(
   const normalisations: SpecRefNormalisation[] = [];
 
   for (const override of overrides) {
-    const modelledKeys = extensions.filter((k) => lastSegment(k) === override.modelledSegment);
-    const literalKeys =
-      override.literalSegment === undefined ? [] : silentGaps.filter((k) => lastSegment(k) === override.literalSegment);
+    const modelledSegments = new Set(
+      [override.modelledSegment, ...(override.modelledSegments ?? [])].filter((s): s is string => s !== undefined),
+    );
+    const literalSegments = new Set(
+      [override.literalSegment, ...(override.literalSegments ?? [])].filter((s): s is string => s !== undefined),
+    );
+    const modelledKeys = extensions.filter((k) => modelledSegments.has(lastSegment(k)));
+    const literalKeys = literalSegments.size === 0 ? [] : silentGaps.filter((k) => literalSegments.has(lastSegment(k)));
     if (modelledKeys.length === 0 && literalKeys.length === 0) continue;
 
     const absorbedExt = new Set(modelledKeys);

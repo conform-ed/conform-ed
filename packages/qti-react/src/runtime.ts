@@ -376,6 +376,71 @@ function isInteractionNode(node: BodyNode): node is InteractionNode {
   return node.kind !== "xml" && typeof (node as { responseIdentifier?: unknown }).responseIdentifier === "string";
 }
 
+/**
+ * WAI-ARIA characteristics (role + aria-*) authored on a QTI interaction element (ADR-0039). The
+ * delivery wraps the interaction in a container carrying these so authored accessibility semantics
+ * reach assistive technology — the parallel of the per-element `aria-`/`role` already rendered for
+ * generic content nodes ({@link sanitizeAttributes}).
+ */
+const ARIA_RENDER_NAMES: readonly string[] = [
+  "role",
+  "aria-activedescendant",
+  "aria-atomic",
+  "aria-autocomplete",
+  "aria-busy",
+  "aria-checked",
+  "aria-colcount",
+  "aria-colindex",
+  "aria-colspan",
+  "aria-controls",
+  "aria-current",
+  "aria-describedby",
+  "aria-details",
+  "aria-disabled",
+  "aria-errormessage",
+  "aria-expanded",
+  "aria-flowto",
+  "aria-haspopup",
+  "aria-hidden",
+  "aria-invalid",
+  "aria-keyshortcuts",
+  "aria-label",
+  "aria-labelledby",
+  "aria-level",
+  "aria-live",
+  "aria-modal",
+  "aria-multiline",
+  "aria-multiselectable",
+  "aria-orientation",
+  "aria-owns",
+  "aria-placeholder",
+  "aria-posinset",
+  "aria-pressed",
+  "aria-readonly",
+  "aria-relevant",
+  "aria-required",
+  "aria-roledescription",
+  "aria-rowcount",
+  "aria-rowindex",
+  "aria-rowspan",
+  "aria-selected",
+  "aria-setsize",
+  "aria-sort",
+  "aria-valuemax",
+  "aria-valuemin",
+  "aria-valuenow",
+  "aria-valuetext",
+];
+
+function ariaPropsOf(node: InteractionNode): Record<string, string> {
+  const props: Record<string, string> = {};
+  const bag = node as Record<string, unknown>;
+  for (const name of ARIA_RENDER_NAMES) {
+    if (typeof bag[name] === "string") props[name] = bag[name];
+  }
+  return props;
+}
+
 const feedbackKinds = new Set(["feedbackInline", "feedbackBlock"]);
 
 function isFeedbackNode(node: BodyNode): boolean {
@@ -846,7 +911,7 @@ export function createQtiRuntime(config: QtiRuntimeConfig): QtiRuntime {
       return null;
     }
 
-    return createElement(Skin, {
+    const skinElement = createElement(Skin, {
       node,
       responseIdentifier,
       value,
@@ -866,6 +931,13 @@ export function createQtiRuntime(config: QtiRuntimeConfig): QtiRuntime {
       initialState: store.getSnapshot().interactionStates[responseIdentifier],
       registerStateCollector: (collector) => store.registerStateCollector(responseIdentifier, collector),
     });
+
+    // Author-supplied WAI-ARIA on the interaction element is delivered on a wrapper so it reaches
+    // assistive technology; absent ARIA renders the skin unwrapped (no layout change).
+    const ariaProps = ariaPropsOf(node);
+    return Object.keys(ariaProps).length > 0
+      ? createElement("div", { ...ariaProps, "data-qti-interaction": node.kind }, skinElement)
+      : skinElement;
   }
 
   function ContentRenderer({ nodes, outcomes, catalogs, pnp, activeSupports }: ContentRendererProps): ReactNode {

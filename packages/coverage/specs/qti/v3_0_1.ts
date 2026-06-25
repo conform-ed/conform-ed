@@ -18,6 +18,17 @@
 import { join } from "node:path";
 
 import {
+  QtiAriaAutocompleteSchema,
+  QtiAriaCheckedSchema,
+  QtiAriaCurrentSchema,
+  QtiAriaExpandedSchema,
+  QtiAriaInvalidSchema,
+  QtiAriaLiveSchema,
+  QtiAriaOrientationSchema,
+  QtiAriaPressedSchema,
+  QtiAriaRoleSchema,
+  QtiAriaSelectedSchema,
+  QtiAriaSortSchema,
   QtiAssessmentItemSchema,
   QtiAssessmentSectionSchema,
   QtiAssessmentStimulusSchema,
@@ -35,7 +46,7 @@ import {
 
 import type { SpecSource } from "../../src/source";
 import type { ConformanceRequirement } from "../../src/types";
-import { SIMPLE_CONTENT_VALUE, XML_BASE, XS_ANY_EXTENSIONS } from "../xsd-normalisations";
+import { SIMPLE_CONTENT_VALUE, XML_BASE, XML_LANG, XS_ANY_EXTENSIONS } from "../xsd-normalisations";
 
 const vendor = (file: string): string => join(import.meta.dir, "..", "..", "vendor", "qti", "v3_0_1", file);
 
@@ -61,6 +72,217 @@ export const normalizeQtiName = (name: string): string =>
         .replace(/^qti-/, "")
         .replace(/[^a-z0-9]/g, "")
         .replace(/s$/, "");
+
+/**
+ * The QTI expression grammar (ADR-0017 structural alias). The ASI XSD names every operator
+ * as its own element under the expression-group types (`BranchRuleDType`, `LogicSingleDType`,
+ * and recursively as operands), while conform-ed models the whole grammar as a single
+ * `kind`-discriminated union reached via the Zod `expression` / `expressions` operand
+ * properties (`processing-internal.ts`: `QtiExpressionSchema`, the unary/binary/one-to-many/
+ * container enums plus the named operators). The structural name-join therefore never pairs
+ * them; these aliases bridge each operator element to the union operand and descend.
+ */
+const expressionOperatorElements = [
+  "qti-and",
+  "qti-any-n",
+  "qti-base-value",
+  "qti-container-size",
+  "qti-contains",
+  "qti-correct",
+  "qti-custom-operator",
+  "qti-default",
+  "qti-delete",
+  "qti-divide",
+  "qti-duration-gte",
+  "qti-duration-lt",
+  "qti-equal",
+  "qti-equal-rounded",
+  "qti-field-value",
+  "qti-gcd",
+  "qti-gt",
+  "qti-gte",
+  "qti-index",
+  "qti-inside",
+  "qti-integer-divide",
+  "qti-integer-modulus",
+  "qti-integer-to-float",
+  "qti-is-null",
+  "qti-lcm",
+  "qti-lt",
+  "qti-lte",
+  "qti-map-response",
+  "qti-map-response-point",
+  "qti-match",
+  "qti-math-constant",
+  "qti-math-operator",
+  "qti-max",
+  "qti-member",
+  "qti-min",
+  "qti-multiple",
+  "qti-not",
+  "qti-null",
+  "qti-number-correct",
+  "qti-number-incorrect",
+  "qti-number-presented",
+  "qti-number-responded",
+  "qti-number-selected",
+  "qti-or",
+  "qti-ordered",
+  "qti-outcome-maximum",
+  "qti-outcome-minimum",
+  "qti-pattern-match",
+  "qti-power",
+  "qti-product",
+  "qti-random",
+  "qti-random-float",
+  "qti-random-integer",
+  "qti-repeat",
+  "qti-round",
+  "qti-round-to",
+  "qti-stats-operator",
+  "qti-string-match",
+  "qti-substring",
+  "qti-subtract",
+  "qti-sum",
+  "qti-test-variables",
+  "qti-truncate",
+  "qti-variable",
+] as const;
+
+/**
+ * The response/outcome/template processing-rule elements, modelled by conform-ed as the
+ * `kind`-discriminated rule union reached via the Zod `rules` property (plus the `include`
+ * XInclude element, modelled as `QtiIncludeSchema`).
+ */
+const processingRuleElements = [
+  "include",
+  "qti-exit-response",
+  "qti-exit-template",
+  "qti-exit-test",
+  "qti-lookup-outcome-value",
+  "qti-outcome-condition",
+  "qti-outcome-processing-fragment",
+  "qti-response-condition",
+  "qti-response-processing-fragment",
+  "qti-set-correct-response",
+  "qti-set-default-value",
+  "qti-set-outcome-value",
+  "qti-set-template-value",
+  "qti-template-condition",
+  "qti-template-constraint",
+] as const;
+
+/**
+ * Flow/inline XHTML (+ embedded MathML/SSML) content elements. conform-ed represents these via
+ * a single generic opaque XML content node (`createXmlNodeSchema`: `{kind:"xml", name, attributes,
+ * children}`) — a lossless round-trip, NOT a per-element schema — reached via the Zod `content`
+ * array and the XML node's own `children`. Modelled differently (opaquely), not absent.
+ */
+const htmlFlowContentElements = [
+  "a",
+  "abbr",
+  "acronym",
+  "address",
+  "article",
+  "aside",
+  "audio",
+  "b",
+  "bdi",
+  "bdo",
+  "big",
+  "blockquote",
+  "br",
+  "break",
+  "cite",
+  "code",
+  "details",
+  "dfn",
+  "div",
+  "dl",
+  "em",
+  "emphasis",
+  "figure",
+  "footer",
+  "h1",
+  "h2",
+  "h3",
+  "h4",
+  "h5",
+  "h6",
+  "header",
+  "hr",
+  "i",
+  "img",
+  "kbd",
+  "label",
+  "mark",
+  "math",
+  "nav",
+  "object",
+  "ol",
+  "p",
+  "phoneme",
+  "picture",
+  "pre",
+  "prosody",
+  "q",
+  "ruby",
+  "s",
+  "samp",
+  "say-as",
+  "section",
+  "small",
+  "span",
+  "speak",
+  "strong",
+  "sub",
+  "sup",
+  "table",
+  "tt",
+  "ul",
+  "var",
+  "video",
+  "voice",
+] as const;
+
+/**
+ * Interaction + feedback/template/rubric block elements that appear in item/stimulus body content.
+ * conform-ed models all of them as typed members of the `QtiContentFragment` union (every
+ * interaction emergent authors), reached via the Zod `content` array — and `qti-content-body`,
+ * the wrapper modal/test feedback + test rubric blocks carry as their `content` array.
+ */
+const bodyInteractionAndBlockElements = [
+  "qti-associate-interaction",
+  "qti-choice-interaction",
+  "qti-content-body",
+  "qti-custom-interaction",
+  "qti-drawing-interaction",
+  "qti-extended-text-interaction",
+  "qti-feedback-block",
+  "qti-gap-match-interaction",
+  "qti-graphic-associate-interaction",
+  "qti-graphic-gap-match-interaction",
+  "qti-graphic-order-interaction",
+  "qti-hotspot-interaction",
+  "qti-hottext-interaction",
+  "qti-match-interaction",
+  "qti-media-interaction",
+  "qti-order-interaction",
+  "qti-portable-custom-interaction",
+  "qti-position-object-stage",
+  "qti-rubric-block",
+  "qti-select-point-interaction",
+  "qti-slider-interaction",
+  "qti-template-block",
+  "qti-upload-interaction",
+] as const;
+
+/** Nested section structure: conform-ed models the section/item ref children as a typed `children` union. */
+const sectionChildElements = [
+  "qti-assessment-item-ref",
+  "qti-assessment-section",
+  "qti-assessment-section-ref",
+] as const;
 
 /**
  * Conformance catalogue — curated from the published 1EdTech QTI 3.0 Implementation /
@@ -172,6 +394,20 @@ const conformance: readonly ConformanceRequirement[] = [
     constrains: ["qti:3.0.1:def:ResponseProcessingDType/template"],
     source: "QTI 3.0 §response-processing — https://www.imsglobal.org/spec/qti/v3p0/impl",
   },
+  {
+    key: "qti:3.0.1:conf:accessibility/QTI-A11Y-1",
+    profile: "accessibility",
+    reqId: "QTI-A11Y-1",
+    level: "MUST",
+    statement:
+      "WAI-ARIA roles and states authored on a qti-assessment-item's content and interactions (the ARIABaseDType attribute group) MUST be preserved through serialization and delivered to assistive technology unchanged.",
+    constrains: [
+      "qti:3.0.1:def:ARIABaseDType/role",
+      "qti:3.0.1:def:ARIABaseDType/aria-label",
+      "qti:3.0.1:def:ARIABaseDType/aria-describedby",
+    ],
+    source: "QTI 3.0 §2.13.3 WAI-ARIA characteristics — https://www.imsglobal.org/spec/qti/v3p0/impl#h.wai-aria",
+  },
 ];
 
 export const qtiV3_0_1: SpecSource = {
@@ -180,7 +416,59 @@ export const qtiV3_0_1: SpecSource = {
   nameNormalizer: normalizeQtiName,
   // The flattened 3.0.1 ASI models xml:base (as xmlBase), so its single `/base` item is a
   // rename, not a gap — unlike QTI 2.x, which names no xmlBase (see those specs).
-  specRefOverrides: [XS_ANY_EXTENSIONS, SIMPLE_CONTENT_VALUE, XML_BASE],
+  // The XSD→Zod renames absorbed out of the residues (ADR-0013/0017). The three shared overrides
+  // (xs:any/value/xml:base) plus QTI-specific ones that reclassify the per-element XSD vocabulary
+  // conform-ed models under a different SHAPE — the `kind`-discriminated expression/rule unions, the
+  // QtiContentFragment content union, the generic opaque XML content node, and the map/table entry
+  // arrays. These match the residues by LEAF segment post-reconcile (non-descending): they resolve
+  // exactly the reached gap surface the map measures, without re-opening the recursive grammar.
+  specRefOverrides: [
+    XS_ANY_EXTENSIONS,
+    SIMPLE_CONTENT_VALUE,
+    XML_BASE,
+    XML_LANG,
+    {
+      note: "QTI expression operators (qti-and, qti-sum, qti-map-response, …) → conform-ed's `kind`-discriminated expression union (the unary/binary/one-to-many/container enums + named operators) reached via the Zod `expression`/`expressions` operands.",
+      modelledSegments: ["expression", "expressions"],
+      literalSegments: expressionOperatorElements,
+    },
+    {
+      note: "QTI response/outcome/template processing-rule elements → conform-ed's `kind`-discriminated rule union (Zod `rules`); `include` → QtiIncludeSchema.",
+      modelledSegments: ["rules"],
+      literalSegments: processingRuleElements,
+    },
+    {
+      note: "QTI interaction + feedback/template/rubric block elements → typed members of conform-ed's QtiContentFragment union (Zod `content`); every interaction emergent authors.",
+      modelledSegments: ["content"],
+      literalSegments: bodyInteractionAndBlockElements,
+    },
+    {
+      note: "XHTML flow/inline (+ embedded MathML/SSML) content → conform-ed's generic opaque XML content node (createXmlNodeSchema: {kind:'xml', name, attributes, children}) — a lossless round-trip reached via Zod `content`/`children`, NOT a per-element schema.",
+      modelledSegments: ["children"],
+      literalSegments: htmlFlowContentElements,
+    },
+    {
+      note: "Nested section structure (qti-assessment-section/-ref, item-ref) → conform-ed's typed section `children` union.",
+      literalSegments: sectionChildElements,
+    },
+    {
+      note: "QTI map/table entry elements (XML singular `-entry` ↔ JSON `*Entries` array; the y→ies plural the name-normaliser misses) → conform-ed's typed entry arrays.",
+      modelledSegments: [
+        "mapEntries",
+        "areaMapEntries",
+        "matchTableEntries",
+        "interpolationTableEntries",
+        "cardEntries",
+      ],
+      literalSegments: [
+        "qti-map-entry",
+        "qti-area-map-entry",
+        "qti-match-table-entry",
+        "qti-interpolation-table-entry",
+        "qti-card-entry",
+      ],
+    },
+  ],
   bindings: [
     {
       binding: "qti-assessment-item",
@@ -223,6 +511,19 @@ export const qtiV3_0_1: SpecSource = {
     { item: "qti:3.0.1:def:OutcomeDeclarationDType/external-scored", element: QtiExternalScoredSchema },
     { item: "qti:3.0.1:def:BasePromptInteractionDType/data-qti-suppress-tts", element: QtiSuppressTtsSchema },
     { item: "qti:3.0.1:def:BasePromptInteractionDType/dir", element: QtiDirectionSchema },
+    // WAI-ARIA characteristics with a closed XSD vocabulary (ADR-0039). The remaining ARIA
+    // attributes are IDREF/string/integer and are modelled as plain strings (no value-set).
+    { item: "qti:3.0.1:def:ARIABaseDType/role", element: QtiAriaRoleSchema },
+    { item: "qti:3.0.1:def:ARIABaseDType/aria-checked", element: QtiAriaCheckedSchema },
+    { item: "qti:3.0.1:def:ARIABaseDType/aria-expanded", element: QtiAriaExpandedSchema },
+    { item: "qti:3.0.1:def:ARIABaseDType/aria-pressed", element: QtiAriaPressedSchema },
+    { item: "qti:3.0.1:def:ARIABaseDType/aria-selected", element: QtiAriaSelectedSchema },
+    { item: "qti:3.0.1:def:ARIABaseDType/aria-live", element: QtiAriaLiveSchema },
+    { item: "qti:3.0.1:def:ARIABaseDType/aria-orientation", element: QtiAriaOrientationSchema },
+    { item: "qti:3.0.1:def:ARIABaseDType/aria-autocomplete", element: QtiAriaAutocompleteSchema },
+    { item: "qti:3.0.1:def:ARIABaseDType/aria-invalid", element: QtiAriaInvalidSchema },
+    { item: "qti:3.0.1:def:ARIABaseDType/aria-sort", element: QtiAriaSortSchema },
+    { item: "qti:3.0.1:def:ARIABaseDType/aria-current", element: QtiAriaCurrentSchema },
   ],
   conformance,
 };

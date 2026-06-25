@@ -47,6 +47,34 @@ describe("extendedTextInteraction", () => {
   });
 });
 
+describe("WAI-ARIA on an interaction (ADR-0039 QTI-A11Y-1)", () => {
+  const item: AssessmentItemView = {
+    responseDeclarations: [{ identifier: "RESPONSE", cardinality: "single", baseType: "identifier" }],
+    itemBody: {
+      content: [
+        {
+          kind: "choiceInteraction",
+          responseIdentifier: "RESPONSE",
+          role: "radiogroup",
+          "aria-label": "Pick a letter",
+          "aria-describedby": "hint",
+          simpleChoices: [
+            { kind: "simpleChoice", identifier: "ChoiceA", content: [{ kind: "xml", name: "p", value: "A" }] },
+            { kind: "simpleChoice", identifier: "ChoiceB", content: [{ kind: "xml", name: "p", value: "B" }] },
+          ],
+        },
+      ],
+    },
+  };
+
+  test("delivers the authored ARIA onto the interaction's DOM for assistive technology", () => {
+    const html = render(item);
+    expect(html).toContain('role="radiogroup"');
+    expect(html).toContain('aria-label="Pick a letter"');
+    expect(html).toContain('aria-describedby="hint"');
+  });
+});
+
 describe("orderInteraction", () => {
   const item: AssessmentItemView = {
     responseDeclarations: [

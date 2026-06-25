@@ -59,9 +59,20 @@ describe("QTI 3.0.1 Coverage Map — XSD walker + name-normalisation", () => {
     expect(map.rollup.modelledYes).toBeGreaterThan(150);
   });
 
-  test("genuine non-modelled structures surface as honest silent gaps (e.g. ARIA attributes)", () => {
-    expect(map.rollup.modelledNo).toBeGreaterThan(0);
-    expect(map.residues.silentGaps.some((k) => k.includes("/aria-"))).toBe(true);
+  test("every model-coverage gap is dispositioned: ARIA typed, the rest normalised (ADR-0039)", () => {
+    // The 358 reached silent gaps are resolved: ~311 absorbed into residues.normalisations (the
+    // expression/rule kind-unions, the QtiContentFragment content union, the generic opaque XML
+    // content node, the map/table entry arrays, xml:lang) and the 47 WAI-ARIA attributes typed onto
+    // the common node shape so they reconcile.
+    expect(map.residues.silentGaps).toEqual([]);
+    expect(map.rollup.modelledNo).toBe(0);
+    // ARIA is now genuinely modelled (typed fields + value-set enums), not a silent gap.
+    expect(byKey.get("qti:3.0.1:def:ARIABaseDType/role")?.modelled).toBe("yes");
+    expect(byKey.get("qti:3.0.1:def:ARIABaseDType/aria-checked")?.modelled).toBe("yes");
+    // The expression operators are modelled differently (the kind-discriminated union) → normalised.
+    const exprNote = map.residues.normalisations.find((n) => n.note.includes("expression operators"));
+    expect(exprNote?.literalKeys.some((k) => k.endsWith("/qti-and"))).toBe(true);
+    expect(exprNote?.literalKeys.some((k) => k.endsWith("/qti-map-response"))).toBe(true);
   });
 
   test("xml:base is a named rename here (flipped to modelled), unlike QTI 2.x", () => {
@@ -77,7 +88,9 @@ describe("QTI 3.0.1 Coverage Map — XSD walker + name-normalisation", () => {
 
   test("every conformance requirement cross-links to a real item key", () => {
     const keys = new Set(map.items.map((i) => i.key));
-    expect(map.rollup.conformanceRequirements).toBe(10);
+    expect(map.rollup.conformanceRequirements).toBe(11);
+    // The accessibility profile (ADR-0039) constrains the typed ARIA items.
+    expect(map.conformance.some((r) => r.reqId === "QTI-A11Y-1")).toBe(true);
     for (const req of map.conformance) {
       expect(req.constrains.length).toBeGreaterThan(0);
       for (const key of req.constrains) expect(keys.has(key)).toBe(true);
@@ -87,12 +100,15 @@ describe("QTI 3.0.1 Coverage Map — XSD walker + name-normalisation", () => {
   test("the QTI controlled vocabularies verify as value-sets with no gaps", () => {
     // ADR-0017: the closed ASI attribute vocabularies (base-type, cardinality, navigation/
     // submission mode, show-hide, shape, external-scored, suppress-tts, dir) the structural join
-    // cannot check — each safeParse'd against conform-ed's z.enum. 11+4+2+2+2+5+2+3+3 = 34.
-    expect(map.rollup.valueSetMembers).toBe(34);
+    // cannot check — each safeParse'd against conform-ed's z.enum (11+4+2+2+2+5+2+3+3 = 34) — plus
+    // the 11 closed WAI-ARIA vocabularies (ADR-0039: role 74 + the aria state/property enums = 113).
+    expect(map.rollup.valueSetMembers).toBe(147);
     expect(map.rollup.valueSetGaps).toBe(0);
-    expect(map.valueSets).toHaveLength(9);
+    expect(map.valueSets).toHaveLength(20);
     expect(map.valueSets.find((v) => v.item.endsWith("/base-type"))?.modelled).toBe(11);
     expect(map.valueSets.find((v) => v.item.endsWith("/cardinality"))?.modelled).toBe(4);
+    expect(map.valueSets.find((v) => v.item.endsWith("/role"))?.modelled).toBe(74);
+    expect(map.valueSets.find((v) => v.item.endsWith("/aria-checked"))?.modelled).toBe(4);
   });
 
   test("the committed map is in sync with the generator", () => {
