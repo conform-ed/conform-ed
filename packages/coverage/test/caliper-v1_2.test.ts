@@ -27,7 +27,9 @@ describe("Caliper 1.2 Coverage Map — bundled-bootcamp JSON-Schema walker", () 
   });
 
   test("records the weaker bootcamp-repo provenance in meta.sources", () => {
-    expect(map.meta.sources).toHaveLength(8);
+    // Every Caliper object type is now a binding (ADR-0018), so the full bootcamp file set is
+    // sourced — and every one of the 103 files is still verified as CaliperBootcamp-provenanced.
+    expect(map.meta.sources).toHaveLength(103);
     for (const source of map.meta.sources) {
       expect(source.language).toBe("caliper");
       expect(source.id).toContain("CaliperBootcamp");
@@ -35,10 +37,13 @@ describe("Caliper 1.2 Coverage Map — bundled-bootcamp JSON-Schema walker", () 
     }
   });
 
+  // Every Caliper type is now bound, so the reconciliation (and these per-edge / map-rebuild checks)
+  // is far heavier than the original 8-binding map — give the two big ones a generous timeout so
+  // they do not flake under parallel-suite load.
   test("the bootcamp `File`/`File#/key` refs are rewritten so no edge dangles", () => {
     const keys = new Set(map.items.map((i) => i.key));
     for (const edge of map.edges) expect(keys.has(edge.to)).toBe(true);
-  });
+  }, 30000);
 
   test("the Envelope transport and the Event core reconcile with conform-ed's Zod", () => {
     for (const m of ["sensor", "dataVersion", "sendTime", "data"]) {
@@ -50,9 +55,13 @@ describe("Caliper 1.2 Coverage Map — bundled-bootcamp JSON-Schema walker", () 
     expect(map.rollup.modelledYes).toBeGreaterThan(50);
   });
 
-  test("conform-ed's focused Caliper surface leaves honest silent gaps across the entity zoo", () => {
-    expect(map.rollup.modelledNo).toBeGreaterThan(0);
-    expect(map.residues.silentGaps.length).toBeGreaterThan(0);
+  test("conform-ed's full Caliper surface leaves a single honest silent gap", () => {
+    // ADR-0018 deepened every type, so the information model is near-complete: 1434 modelled, a band
+    // of honest `partial`s (entities reached only as references), and exactly ONE silent gap —
+    // NavigationEvent/navigatedFrom (left unmodelled to keep the rule superRefine strongly typed).
+    expect(map.rollup.modelledYes).toBeGreaterThan(1400);
+    expect(map.rollup.modelledNo).toBe(1);
+    expect(map.residues.silentGaps).toEqual(["caliper:1.2:def:NavigationEvent/navigatedFrom"]);
   });
 
   test("extracts the rich embedded normative surface (the JSON-family schemas carry MUST prose)", () => {
@@ -99,5 +108,5 @@ describe("Caliper 1.2 Coverage Map — bundled-bootcamp JSON-Schema walker", () 
     const parsed = JSON.parse(committed) as CoverageMap;
     const rebuilt = buildCoverageMap(caliperV1_2, { now: parsed.meta.generatedAt });
     expect(`${JSON.stringify(rebuilt, null, 2)}\n`).toBe(committed);
-  });
+  }, 30000);
 });

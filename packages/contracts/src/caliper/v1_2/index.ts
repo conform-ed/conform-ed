@@ -1,6 +1,7 @@
 export * from "./shared";
 export * from "./textual_requirements";
 export * from "./caliper_v1p2_bootcamp_schema";
+export * from "./validate-event";
 
 import {
   ActionSchema,

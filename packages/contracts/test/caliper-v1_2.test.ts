@@ -276,3 +276,59 @@ test("Caliper12DerivedZodTemplates exposes key Caliper entry points and conforma
   expect(annotationRule).toBeDefined();
   expect(annotationRule?.profile).toBe("AnnotationProfile");
 });
+
+const annotationEvent = (action: string, objectType: string) => ({
+  type: "AnnotationEvent",
+  "@context": "http://purl.imsglobal.org/ctx/caliper/v1p2",
+  id: "urn:uuid:87a9fdf1-2f57-4d2d-b7e9-963cb0f89f9f",
+  actor: { id: "https://example.edu/users/ada", type: "Person" },
+  action,
+  object: { id: "https://example.edu/resources/chapter-1", type: objectType },
+  eventTime: "2026-01-15T12:45:00.000Z",
+});
+
+test("validateCaliperEvent applies the per-profile rule for a profile-ruled event", () => {
+  const ok = CaliperV1_2.validateCaliperEvent(annotationEvent("Bookmarked", "DigitalResource"));
+  expect(ok.valid).toBe(true);
+  expect(ok.eventType).toBe("AnnotationEvent");
+  expect(ok.profile).toBe("AnnotationProfile");
+  expect(ok.hasProfileRule).toBe(true);
+  expect(ok.errors).toHaveLength(0);
+
+  const badAction = CaliperV1_2.validateCaliperEvent(annotationEvent("NavigatedTo", "DigitalResource"));
+  expect(badAction.valid).toBe(false);
+  expect(badAction.hasProfileRule).toBe(true);
+  expect(badAction.errors.length).toBeGreaterThan(0);
+});
+
+test("validateCaliperEvent validates a bootcamp-only event structurally (no per-profile rule)", () => {
+  const search = CaliperV1_2.validateCaliperEvent({
+    type: "SearchEvent",
+    "@context": "http://purl.imsglobal.org/ctx/caliper/v1p2",
+    id: "urn:uuid:87a9fdf1-2f57-4d2d-b7e9-963cb0f89f9f",
+    actor: { id: "https://example.edu/users/ada", type: "Person" },
+    action: "Searched",
+    object: { id: "https://example.edu/search", type: "SoftwareApplication" },
+    eventTime: "2026-01-15T12:45:00.000Z",
+  });
+  expect(search.valid).toBe(true);
+  expect(search.eventType).toBe("SearchEvent");
+  expect(search.hasProfileRule).toBe(false);
+  expect(search.profile).toBeNull();
+});
+
+test("validateCaliperEvent rejects a non-event type and a missing type", () => {
+  const notEvent = CaliperV1_2.validateCaliperEvent({ type: "Person", id: "https://example.edu/users/ada" });
+  expect(notEvent.valid).toBe(false);
+  expect(notEvent.eventType).toBe("Person");
+
+  const noType = CaliperV1_2.validateCaliperEvent({ id: "https://example.edu/x" });
+  expect(noType.valid).toBe(false);
+  expect(noType.eventType).toBeNull();
+});
+
+test("CALIPER_EVENT_TYPES enumerates all 24 Caliper event types", () => {
+  expect(CaliperV1_2.CALIPER_EVENT_TYPES).toHaveLength(24);
+  expect(CaliperV1_2.CALIPER_EVENT_TYPES).toContain("AnnotationEvent");
+  expect(CaliperV1_2.CALIPER_EVENT_TYPES).toContain("ToolLaunchEvent");
+});

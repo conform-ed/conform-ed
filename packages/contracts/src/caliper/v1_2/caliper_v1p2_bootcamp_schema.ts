@@ -9,6 +9,7 @@ import {
   CaliperExtensionsSchema,
   CaliperIriSchema,
   CaliperNestedContextSchema,
+  CaliperReferenceSchema,
   createCaliperEntitySchema,
   createCaliperEventSchema,
   getReferenceType,
@@ -389,80 +390,352 @@ export const SystemIdentifierSchema = z
   })
   .strict();
 
-export const AgentSchema = createCaliperEntitySchema("Agent");
-export const AggregateMeasureSchema = createCaliperEntitySchema("AggregateMeasure");
-export const AggregateMeasureCollectionSchema = createCaliperEntitySchema("AggregateMeasureCollection");
-export const AnnotationSchema = createCaliperEntitySchema("Annotation");
-export const AssessmentSchema = createCaliperEntitySchema("Assessment");
-export const AssessmentItemSchema = createCaliperEntitySchema("AssessmentItem");
-export const AssignableDigitalResourceSchema = createCaliperEntitySchema("AssignableDigitalResource");
-export const AttemptSchema = createCaliperEntitySchema("Attempt");
-export const AudioObjectSchema = createCaliperEntitySchema("AudioObject");
-export const ChapterSchema = createCaliperEntitySchema("Chapter");
-export const CollectionSchema = createCaliperEntitySchema("Collection");
-export const CommentSchema = createCaliperEntitySchema("Comment");
-export const CourseOfferingSchema = createCaliperEntitySchema("CourseOffering");
-export const CourseSectionSchema = createCaliperEntitySchema("CourseSection");
-export const DateTimeQuestionSchema = createCaliperEntitySchema("DateTimeQuestion");
-export const DateTimeResponseSchema = createCaliperEntitySchema("DateTimeResponse");
-export const DigitalResourceSchema = createCaliperEntitySchema("DigitalResource");
-export const DigitalResourceCollectionSchema = createCaliperEntitySchema("DigitalResourceCollection");
-export const DocumentSchema = createCaliperEntitySchema("Document");
-export const EntitySchema = createCaliperEntitySchema("Entity");
-export const FillinBlankResponseSchema = createCaliperEntitySchema("FillinBlankResponse");
-export const FrameSchema = createCaliperEntitySchema("Frame");
-export const GroupSchema = createCaliperEntitySchema("Group");
-export const ImageObjectSchema = createCaliperEntitySchema("ImageObject");
-export const LearningObjectiveSchema = createCaliperEntitySchema("LearningObjective");
-export const LikertScaleSchema = createCaliperEntitySchema("LikertScale");
-export const LinkSchema = createCaliperEntitySchema("Link");
-export const LtiLinkSchema = createCaliperEntitySchema("LtiLink");
-export const LtiSessionSchema = createCaliperEntitySchema("LtiSession");
-export const MediaLocationSchema = createCaliperEntitySchema("MediaLocation");
-export const MediaObjectSchema = createCaliperEntitySchema("MediaObject");
-export const MembershipSchema = createCaliperEntitySchema("Membership");
-export const MessageSchema = createCaliperEntitySchema("Message");
-export const MultipleChoiceResponseSchema = createCaliperEntitySchema("MultipleChoiceResponse");
-export const MultipleResponseResponseSchema = createCaliperEntitySchema("MultipleResponseResponse");
-export const MultiselectQuestionSchema = createCaliperEntitySchema("MultiselectQuestion");
-export const MultiselectResponseSchema = createCaliperEntitySchema("MultiselectResponse");
-export const MultiselectScaleSchema = createCaliperEntitySchema("MultiselectScale");
-export const NumericScaleSchema = createCaliperEntitySchema("NumericScale");
-export const OpenEndedQuestionSchema = createCaliperEntitySchema("OpenEndedQuestion");
-export const OpenEndedResponseSchema = createCaliperEntitySchema("OpenEndedResponse");
-export const OrganizationSchema = createCaliperEntitySchema("Organization");
-export const PageSchema = createCaliperEntitySchema("Page");
-export const PersonSchema = createCaliperEntitySchema("Person");
-export const QuerySchema = createCaliperEntitySchema("Query");
-export const QuestionSchema = createCaliperEntitySchema("Question");
-export const QuestionnaireItemSchema = createCaliperEntitySchema("QuestionnaireItem");
-export const RatingSchema = createCaliperEntitySchema("Rating");
-export const RatingScaleQuestionSchema = createCaliperEntitySchema("RatingScaleQuestion");
-export const RatingScaleResponseSchema = createCaliperEntitySchema("RatingScaleResponse");
-export const ReadingSchema = createCaliperEntitySchema("Reading");
-export const ResponseSchema = createCaliperEntitySchema("Response");
-export const ResultSchema = createCaliperEntitySchema("Result");
-export const ScaleSchema = createCaliperEntitySchema("Scale");
-export const ScoreSchema = createCaliperEntitySchema("Score");
-export const SearchResponseSchema = createCaliperEntitySchema("SearchResponse");
-export const SelectTextResponseSchema = createCaliperEntitySchema("SelectTextResponse");
-export const SessionSchema = createCaliperEntitySchema("Session");
-export const SoftwareApplicationSchema = createCaliperEntitySchema("SoftwareApplication");
-export const SurveySchema = createCaliperEntitySchema("Survey");
-export const SurveyInvitationSchema = createCaliperEntitySchema("SurveyInvitation");
-export const TrueFalseResponseSchema = createCaliperEntitySchema("TrueFalseResponse");
-export const VideoObjectSchema = createCaliperEntitySchema("VideoObject");
-export const WebPageSchema = createCaliperEntitySchema("WebPage");
-export const EpubChapterSchema = createCaliperEntitySchema("epubChapter");
-export const EpubPartSchema = createCaliperEntitySchema("epubPart");
-export const EpubSubChapterSchema = createCaliperEntitySchema("epubSubChapter");
-export const EpubVolumeSchema = createCaliperEntitySchema("epubVolume");
-export const BookmarkAnnotationSchema = createCaliperEntitySchema("BookmarkAnnotation");
+// Shared property groups, mirroring the bootcamp type hierarchy. The L2 reconciler (ADR-0013)
+// matches by property *name*, so each subtype must name every property it inherits — these mixins
+// keep the ~25 DigitalResource subtypes (and the Response / Organization families) faithful to the
+// denominator without re-typing the shared field set each time. Values are honestly typed (refs,
+// dates, numbers) but it is the property name that the coverage join consumes.
+const refProp = CaliperReferenceSchema.optional();
+const refArrayProp = z.array(CaliperReferenceSchema).optional();
+const numProp = z.number().optional();
+const strProp = z.string().optional();
+const boolProp = z.boolean().optional();
+const dateProp = CaliperDateTimeSchema.optional();
+const strArrayProp = z.array(z.string()).optional();
+
+const isPartOfProps = { isPartOf: refProp } as const;
+const timeBoundProps = { duration: strProp, startedAtTime: dateProp, endedAtTime: dateProp } as const;
+const digitalResourceProps = {
+  alignedLearningObjective: refArrayProp,
+  creators: refArrayProp,
+  learningObjectives: refArrayProp,
+  keywords: strArrayProp,
+  mediaType: strProp,
+  datePublished: dateProp,
+  version: strProp,
+  dateToActivate: dateProp,
+  dateToShow: dateProp,
+  dateToStartOn: dateProp,
+  dateToSubmit: dateProp,
+  maxAttempts: numProp,
+  maxSubmits: numProp,
+  maxScore: numProp,
+  objectType: boolProp,
+  storageName: strProp,
+  isPartOf: refProp,
+} as const;
+const responseProps = {
+  attempt: refProp,
+  duration: strProp,
+  startedAtTime: dateProp,
+  endedAtTime: dateProp,
+  isPartOf: refProp,
+} as const;
+const organizationProps = { members: refArrayProp, subOrganizationOf: refProp, isPartOf: refProp } as const;
+const annotationProps = { annotated: refProp, annotator: refProp } as const;
+
+export const AgentSchema = createCaliperEntitySchema("Agent").extend({ ...isPartOfProps });
+export const AggregateMeasureSchema = createCaliperEntitySchema("AggregateMeasure").extend({
+  metric: MetricSchema.optional(),
+  maxMetricValue: numProp,
+  metricValue: numProp,
+  startedAtTime: dateProp,
+  endedAtTime: dateProp,
+  ...isPartOfProps,
+});
+export const AggregateMeasureCollectionSchema = createCaliperEntitySchema("AggregateMeasureCollection").extend({
+  items: refArrayProp,
+  ...isPartOfProps,
+});
+export const AnnotationSchema = createCaliperEntitySchema("Annotation").extend({
+  ...annotationProps,
+  ...isPartOfProps,
+});
+export const AssessmentSchema = createCaliperEntitySchema("Assessment").extend({
+  ...digitalResourceProps,
+  items: refArrayProp,
+});
+export const AssessmentItemSchema = createCaliperEntitySchema("AssessmentItem").extend({
+  ...digitalResourceProps,
+  isTimeDependent: boolProp,
+});
+export const AssignableDigitalResourceSchema = createCaliperEntitySchema("AssignableDigitalResource").extend({
+  ...digitalResourceProps,
+});
+export const AttemptSchema = createCaliperEntitySchema("Attempt").extend({
+  assignable: refProp,
+  assignee: refProp,
+  count: numProp,
+  ...timeBoundProps,
+  ...isPartOfProps,
+});
+export const AudioObjectSchema = createCaliperEntitySchema("AudioObject").extend({
+  ...digitalResourceProps,
+  duration: strProp,
+  muted: boolProp,
+  volumeLevel: strProp,
+  volumeMax: strProp,
+  volumeMin: strProp,
+});
+export const ChapterSchema = createCaliperEntitySchema("Chapter").extend({ ...digitalResourceProps });
+export const CollectionSchema = createCaliperEntitySchema("Collection").extend({
+  items: refArrayProp,
+  ...isPartOfProps,
+});
+export const CommentSchema = createCaliperEntitySchema("Comment").extend({
+  commentedOn: refProp,
+  commenter: refProp,
+  ...isPartOfProps,
+});
+export const CourseOfferingSchema = createCaliperEntitySchema("CourseOffering").extend({
+  academicSession: strProp,
+  courseNumber: strProp,
+  ...organizationProps,
+});
+export const CourseSectionSchema = createCaliperEntitySchema("CourseSection").extend({
+  category: strProp,
+  academicSession: strProp,
+  courseNumber: strProp,
+  ...organizationProps,
+});
+export const DateTimeQuestionSchema = createCaliperEntitySchema("DateTimeQuestion").extend({
+  ...digitalResourceProps,
+  questionPosed: strProp,
+  maxDateTime: dateProp,
+  maxLabel: strProp,
+  minDateTime: dateProp,
+  minLabel: strProp,
+});
+export const DateTimeResponseSchema = createCaliperEntitySchema("DateTimeResponse").extend({
+  ...responseProps,
+  dateTimeSelected: dateProp,
+});
+export const DigitalResourceSchema = createCaliperEntitySchema("DigitalResource").extend({ ...digitalResourceProps });
+export const DigitalResourceCollectionSchema = createCaliperEntitySchema("DigitalResourceCollection").extend({
+  items: refArrayProp,
+  ...isPartOfProps,
+});
+export const DocumentSchema = createCaliperEntitySchema("Document").extend({ ...digitalResourceProps });
+export const EntitySchema = createCaliperEntitySchema("Entity").extend({ ...isPartOfProps });
+export const FillinBlankResponseSchema = createCaliperEntitySchema("FillinBlankResponse").extend({
+  ...responseProps,
+  values: strArrayProp,
+});
+export const FrameSchema = createCaliperEntitySchema("Frame").extend({ ...digitalResourceProps, index: numProp });
+export const GroupSchema = createCaliperEntitySchema("Group").extend({ ...organizationProps });
+export const ImageObjectSchema = createCaliperEntitySchema("ImageObject").extend({
+  ...digitalResourceProps,
+  duration: strProp,
+});
+export const LearningObjectiveSchema = createCaliperEntitySchema("LearningObjective").extend({ ...isPartOfProps });
+export const LikertScaleSchema = createCaliperEntitySchema("LikertScale").extend({
+  itemLabels: strArrayProp,
+  itemValues: strArrayProp,
+  scalePoints: numProp,
+  ...isPartOfProps,
+});
+export const LinkSchema = createCaliperEntitySchema("Link").extend({ ...isPartOfProps });
+export const LtiLinkSchema = createCaliperEntitySchema("LtiLink").extend({
+  ...digitalResourceProps,
+  LtiMessageType: strProp,
+});
+export const LtiSessionSchema = createCaliperEntitySchema("LtiSession").extend({
+  messageParameters: z.record(z.string(), z.unknown()).optional(),
+  client: refProp,
+  user: refProp,
+  ...timeBoundProps,
+  ...isPartOfProps,
+});
+export const MediaLocationSchema = createCaliperEntitySchema("MediaLocation").extend({
+  ...digitalResourceProps,
+  currentTime: strProp,
+});
+export const MediaObjectSchema = createCaliperEntitySchema("MediaObject").extend({
+  ...digitalResourceProps,
+  duration: strProp,
+});
+export const MembershipSchema = createCaliperEntitySchema("Membership").extend({
+  member: refProp,
+  organization: refProp,
+  roles: z.array(RoleSchema).optional(),
+  status: StatusSchema.optional(),
+  ...isPartOfProps,
+});
+export const MessageSchema = createCaliperEntitySchema("Message").extend({
+  ...digitalResourceProps,
+  attachments: refArrayProp,
+  replyTo: refProp,
+  body: strProp,
+});
+export const MultipleChoiceResponseSchema = createCaliperEntitySchema("MultipleChoiceResponse").extend({
+  ...responseProps,
+  value: strProp,
+});
+export const MultipleResponseResponseSchema = createCaliperEntitySchema("MultipleResponseResponse").extend({
+  ...responseProps,
+  values: strArrayProp,
+});
+export const MultiselectQuestionSchema = createCaliperEntitySchema("MultiselectQuestion").extend({
+  ...digitalResourceProps,
+  questionPosed: strProp,
+  itemLabels: strArrayProp,
+  itemValues: strArrayProp,
+  points: numProp,
+});
+export const MultiselectResponseSchema = createCaliperEntitySchema("MultiselectResponse").extend({
+  ...responseProps,
+  selections: strArrayProp,
+});
+export const MultiselectScaleSchema = createCaliperEntitySchema("MultiselectScale").extend({
+  itemLabels: strArrayProp,
+  itemValues: strArrayProp,
+  maxSelections: numProp,
+  minSelections: numProp,
+  orderedSelection: boolProp,
+  scalePoints: numProp,
+  ...isPartOfProps,
+});
+export const NumericScaleSchema = createCaliperEntitySchema("NumericScale").extend({
+  maxLabel: strProp,
+  maxValue: numProp,
+  minLabel: strProp,
+  minValue: numProp,
+  step: numProp,
+  ...isPartOfProps,
+});
+export const OpenEndedQuestionSchema = createCaliperEntitySchema("OpenEndedQuestion").extend({
+  ...digitalResourceProps,
+  questionPosed: strProp,
+});
+export const OpenEndedResponseSchema = createCaliperEntitySchema("OpenEndedResponse").extend({
+  ...responseProps,
+  value: strProp,
+});
+export const OrganizationSchema = createCaliperEntitySchema("Organization").extend({ ...organizationProps });
+export const PageSchema = createCaliperEntitySchema("Page").extend({ ...digitalResourceProps });
+export const PersonSchema = createCaliperEntitySchema("Person").extend({ ...isPartOfProps });
+export const QuerySchema = createCaliperEntitySchema("Query").extend({
+  creator: refProp,
+  searchTarget: refProp,
+  searchTerms: strProp,
+  ...isPartOfProps,
+});
+export const QuestionSchema = createCaliperEntitySchema("Question").extend({
+  ...digitalResourceProps,
+  questionPosed: strProp,
+});
+export const QuestionnaireItemSchema = createCaliperEntitySchema("QuestionnaireItem").extend({
+  ...digitalResourceProps,
+  question: refProp,
+  categories: strArrayProp,
+  weight: numProp,
+});
+export const RatingSchema = createCaliperEntitySchema("Rating").extend({
+  question: refProp,
+  rated: refProp,
+  rater: refProp,
+  ratingComment: refProp,
+  scale: refProp,
+  selections: strArrayProp,
+  ...isPartOfProps,
+});
+export const RatingScaleQuestionSchema = createCaliperEntitySchema("RatingScaleQuestion").extend({
+  ...digitalResourceProps,
+  questionPosed: strProp,
+  scale: refProp,
+});
+export const RatingScaleResponseSchema = createCaliperEntitySchema("RatingScaleResponse").extend({
+  ...responseProps,
+  selections: strArrayProp,
+});
+export const ReadingSchema = createCaliperEntitySchema("Reading").extend({ ...digitalResourceProps });
+export const ResponseSchema = createCaliperEntitySchema("Response").extend({ ...responseProps });
+export const ResultSchema = createCaliperEntitySchema("Result").extend({
+  attempt: refProp,
+  scoredBy: refProp,
+  comment: strProp,
+  curveFactor: numProp,
+  curvedTotalScore: numProp,
+  extraCreditScore: numProp,
+  maxResultScore: numProp,
+  normalScore: numProp,
+  penaltyScore: numProp,
+  resultScore: numProp,
+  totalScore: numProp,
+  ...isPartOfProps,
+});
+export const ScaleSchema = createCaliperEntitySchema("Scale").extend({ ...isPartOfProps });
+export const ScoreSchema = createCaliperEntitySchema("Score").extend({
+  attempt: refProp,
+  scoredBy: refProp,
+  maxScore: numProp,
+  scoreGiven: numProp,
+  ...isPartOfProps,
+});
+export const SearchResponseSchema = createCaliperEntitySchema("SearchResponse").extend({
+  query: refProp,
+  searchProvider: refProp,
+  searchTarget: refProp,
+  searchResultsItemCount: numProp,
+  ...isPartOfProps,
+});
+export const SelectTextResponseSchema = createCaliperEntitySchema("SelectTextResponse").extend({
+  ...responseProps,
+  values: strArrayProp,
+});
+export const SessionSchema = createCaliperEntitySchema("Session").extend({
+  client: refProp,
+  user: refProp,
+  ...timeBoundProps,
+  ...isPartOfProps,
+});
+export const SoftwareApplicationSchema = createCaliperEntitySchema("SoftwareApplication").extend({
+  host: strProp,
+  ipAddress: strProp,
+  userAgent: strProp,
+  version: strProp,
+  ...isPartOfProps,
+});
+export const SurveySchema = createCaliperEntitySchema("Survey").extend({ items: refArrayProp, ...isPartOfProps });
+export const SurveyInvitationSchema = createCaliperEntitySchema("SurveyInvitation").extend({
+  ...digitalResourceProps,
+  rater: refProp,
+  survey: refProp,
+  dateSent: dateProp,
+  sentCount: numProp,
+});
+export const TrueFalseResponseSchema = createCaliperEntitySchema("TrueFalseResponse").extend({
+  ...responseProps,
+  value: strProp,
+});
+export const VideoObjectSchema = createCaliperEntitySchema("VideoObject").extend({
+  ...digitalResourceProps,
+  duration: strProp,
+});
+export const WebPageSchema = createCaliperEntitySchema("WebPage").extend({ ...digitalResourceProps });
+export const EpubChapterSchema = createCaliperEntitySchema("epubChapter").extend({ ...digitalResourceProps });
+export const EpubPartSchema = createCaliperEntitySchema("epubPart").extend({ ...digitalResourceProps });
+export const EpubSubChapterSchema = createCaliperEntitySchema("epubSubChapter").extend({ ...digitalResourceProps });
+export const EpubVolumeSchema = createCaliperEntitySchema("epubVolume").extend({ ...digitalResourceProps });
+export const BookmarkAnnotationSchema = createCaliperEntitySchema("BookmarkAnnotation").extend({
+  bookmarkNotes: strProp,
+  ...annotationProps,
+});
 export const ForumSchema = createCaliperEntitySchema("Forum");
-export const HighlightAnnotationSchema = createCaliperEntitySchema("HighlightAnnotation");
+export const HighlightAnnotationSchema = createCaliperEntitySchema("HighlightAnnotation").extend({
+  selection: TextPositionSelectorSchema.optional(),
+  selectionText: strProp,
+  ...annotationProps,
+});
 export const QuestionnaireSchema = createCaliperEntitySchema("Questionnaire");
-export const SharedAnnotationSchema = createCaliperEntitySchema("SharedAnnotation");
-export const TagAnnotationSchema = createCaliperEntitySchema("TagAnnotation");
+export const SharedAnnotationSchema = createCaliperEntitySchema("SharedAnnotation").extend({
+  withAgents: refArrayProp,
+  ...annotationProps,
+});
+export const TagAnnotationSchema = createCaliperEntitySchema("TagAnnotation").extend({
+  tags: strArrayProp,
+  ...annotationProps,
+});
 export const ThreadSchema = createCaliperEntitySchema("Thread");
 
 export const AnnotationEventSchema = createCaliperEventWithRules("AnnotationEvent");
@@ -475,6 +748,9 @@ export const ForumEventSchema = createCaliperEventWithRules("ForumEvent");
 export const GradeEventSchema = createCaliperEventWithRules("GradeEvent");
 export const MediaEventSchema = createCaliperEventWithRules("MediaEvent");
 export const MessageEventSchema = createCaliperEventWithRules("MessageEvent");
+// `navigatedFrom` (NavigationEvent's one non-base property) is left unmodelled: a single honest
+// silent gap (1/1957). Adding it via the rule helper would widen the rule superRefine's inferred
+// event type; not worth it for one optional reference.
 export const NavigationEventSchema = createCaliperEventWithRules("NavigationEvent");
 export const OutcomeEventSchema = createCaliperEventWithRules("OutcomeEvent");
 export const QuestionnaireEventSchema = createCaliperEventWithRules("QuestionnaireEvent");

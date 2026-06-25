@@ -36,17 +36,10 @@ import { join } from "node:path";
 
 import {
   ActionSchema,
-  AgentSchema,
-  AssessmentEventSchema,
-  EntitySchema,
-  EnvelopeSchema,
-  EventSchema,
+  CaliperV1P2JsonSchemaEntryPoints,
   MetricSchema,
-  PersonSchema,
   ProfileSchema,
   RoleSchema,
-  SessionSchema,
-  SoftwareApplicationSchema,
   StatusSchema,
 } from "@conform-ed/contracts/caliper/v1_2";
 
@@ -78,9 +71,11 @@ const entity = (id: string, zod: SpecBindingSource["zod"]): SpecBindingSource =>
  * genuinely governs each, so `normativeStatementsCited` reflects the full extracted surface
  * (99/99), not an arbitrary sample.
  *
- * NB this is the conform-ed side only: emergent emits no Caliper today, so there is deliberately
- * no ADR-0028 product overlay pinning this map yet (it would be entirely deferred/not-applicable
- * until an analytics emitter exists).
+ * Per ADR-0018 the whole Caliper information model is now modelled (every object type is a binding,
+ * reconciling against its deepened conform-ed Zod schema), in support of emergent adopting Caliper as
+ * a second analytics rail in both Sensor and Endpoint roles (emergent ADR-0041/0042). The 8
+ * cross-profile data-model MUSTs below are the spine; the per-profile event constraints live in the
+ * information model + `validateCaliperEvent`, and Sender/Endpoint role requirements are added next.
  */
 
 /**
@@ -290,19 +285,27 @@ const conformance: readonly ConformanceRequirement[] = [
   },
 ];
 
+// Every Caliper object type is now a structural binding: each entity / event / Envelope entry point
+// (all but the five controlled-vocabulary enums — verified as value-sets — and the two JSON-LD meta
+// wrappers CaliperData / CaliperTypeDefinitions) becomes a document root reconciled against its
+// deepened conform-ed Zod schema (ADR-0018). Derived from the entry-point map so it cannot drift.
+const VALUE_SET_OR_META = new Set([
+  "Action",
+  "Metric",
+  "Profile",
+  "Status",
+  "Role",
+  "CaliperData",
+  "CaliperTypeDefinitions",
+]);
+const bindings: readonly SpecBindingSource[] = Object.entries(CaliperV1P2JsonSchemaEntryPoints)
+  .filter(([id]) => !VALUE_SET_OR_META.has(id))
+  .map(([id, zod]) => entity(id, zod as SpecBindingSource["zod"]));
+
 export const caliperV1_2: SpecSource = {
   spec: "caliper",
   version: "1.2",
-  bindings: [
-    entity("Envelope", EnvelopeSchema),
-    entity("Event", EventSchema),
-    entity("AssessmentEvent", AssessmentEventSchema),
-    entity("Entity", EntitySchema),
-    entity("Person", PersonSchema),
-    entity("SoftwareApplication", SoftwareApplicationSchema),
-    entity("Session", SessionSchema),
-    entity("Agent", AgentSchema),
-  ],
+  bindings,
   // Value-set verification (ADR-0017): the five Caliper controlled vocabularies the structural
   // join cannot check, each safeParse'd member-by-member against the conform-ed z.enum that models
   // it. Only identifierType (a lone literal, no multi-member vocabulary) is left out — see the
