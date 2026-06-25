@@ -301,7 +301,7 @@ test("validateCaliperEvent applies the per-profile rule for a profile-ruled even
   expect(badAction.errors.length).toBeGreaterThan(0);
 });
 
-test("validateCaliperEvent validates a bootcamp-only event structurally (no per-profile rule)", () => {
+test("validateCaliperEvent applies the 1.2 Search Profile rule to a SearchEvent", () => {
   const search = CaliperV1_2.validateCaliperEvent({
     type: "SearchEvent",
     "@context": "http://purl.imsglobal.org/ctx/caliper/v1p2",
@@ -309,12 +309,42 @@ test("validateCaliperEvent validates a bootcamp-only event structurally (no per-
     actor: { id: "https://example.edu/users/ada", type: "Person" },
     action: "Searched",
     object: { id: "https://example.edu/search", type: "SoftwareApplication" },
+    generated: { id: "https://example.edu/search/1", type: "SearchResponse" },
     eventTime: "2026-01-15T12:45:00.000Z",
   });
   expect(search.valid).toBe(true);
-  expect(search.eventType).toBe("SearchEvent");
-  expect(search.hasProfileRule).toBe(false);
-  expect(search.profile).toBeNull();
+  expect(search.profile).toBe("SearchProfile");
+  expect(search.hasProfileRule).toBe(true);
+
+  // ToolLaunchEvent's target range is Link | LtiLink (1.2 Tool Launch Profile).
+  const badTarget = CaliperV1_2.validateCaliperEvent({
+    type: "ToolLaunchEvent",
+    "@context": "http://purl.imsglobal.org/ctx/caliper/v1p2",
+    id: "urn:uuid:87a9fdf1-2f57-4d2d-b7e9-963cb0f89f9f",
+    actor: { id: "https://example.edu/users/ada", type: "Person" },
+    action: "Launched",
+    object: { id: "https://example.edu/tool", type: "SoftwareApplication" },
+    target: { id: "https://example.edu/x", type: "Assessment" },
+    eventTime: "2026-01-15T12:45:00.000Z",
+  });
+  expect(badTarget.valid).toBe(false);
+  expect(badTarget.profile).toBe("ToolLaunchProfile");
+});
+
+test("validateCaliperEvent validates a rule-less event structurally (deprecated OutcomeEvent)", () => {
+  const outcome = CaliperV1_2.validateCaliperEvent({
+    type: "OutcomeEvent",
+    "@context": "http://purl.imsglobal.org/ctx/caliper/v1p2",
+    id: "urn:uuid:87a9fdf1-2f57-4d2d-b7e9-963cb0f89f9f",
+    actor: { id: "https://example.edu/users/ada", type: "Person" },
+    action: "Graded",
+    object: { id: "https://example.edu/attempts/1", type: "Attempt" },
+    eventTime: "2026-01-15T12:45:00.000Z",
+  });
+  expect(outcome.valid).toBe(true);
+  expect(outcome.eventType).toBe("OutcomeEvent");
+  expect(outcome.hasProfileRule).toBe(false);
+  expect(outcome.profile).toBeNull();
 });
 
 test("validateCaliperEvent rejects a non-event type and a missing type", () => {

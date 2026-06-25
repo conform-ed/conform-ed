@@ -279,6 +279,12 @@ const addReferenceTypeIssue = (
     return;
   }
 
+  // `Entity` is Caliper's universal supertype: a rule whose allowed set for this slot is `Entity`
+  // (e.g. FeedbackEvent's object range) accepts any entity type.
+  if (allowedTypes.has("Entity")) {
+    return;
+  }
+
   if (!allowedTypes.has(refType)) {
     ctx.addIssue({
       code: "custom",

@@ -73,9 +73,18 @@ const entity = (id: string, zod: SpecBindingSource["zod"]): SpecBindingSource =>
  *
  * Per ADR-0018 the whole Caliper information model is now modelled (every object type is a binding,
  * reconciling against its deepened conform-ed Zod schema), in support of emergent adopting Caliper as
- * a second analytics rail in both Sensor and Endpoint roles (emergent ADR-0041/0042). The 8
- * cross-profile data-model MUSTs below are the spine; the per-profile event constraints live in the
- * information model + `validateCaliperEvent`, and Sender/Endpoint role requirements are added next.
+ * a second analytics rail in both Sensor and Endpoint roles (emergent ADR-0041/0042). The board has
+ * three tiers: the 8 cross-profile data-model MUSTs (the spine), and the `sender` / `endpoint` role
+ * profiles carrying the transport obligations from the spec's §5.4 / §6 (each at its true RFC-2119
+ * level — MUST vs SHOULD). Per-profile event constraints (which actions/objects each metric profile
+ * permits) live in the information model + `validateCaliperEvent`, sourced from the §3 profile tables.
+ *
+ * Provenance (strengthened, ADR-0018): the structural denominator remains the CaliperBootcamp JSON
+ * schemas (1EdTech publishes no canonical Caliper schema release — see `vendor/.../PROVENANCE.md`),
+ * but the conformance surface is independently grounded in the published Caliper 1.2 prose spec: the
+ * five controlled vocabularies are value-set-verified, the per-profile event rules are transcribed
+ * verbatim from the §3 profile tables, and the transport requirements quote §5.4 / §6. A certifier
+ * thus sees a full-conformance claim resting on the prose spec, not on the bootcamp material alone.
  */
 
 /**
@@ -282,6 +291,93 @@ const conformance: readonly ConformanceRequirement[] = [
       "A Membership's roles MUST be drawn from the Caliper role vocabulary — the eight base roles (Learner, Instructor, …) and their Base#Subrole specialisations.",
     constrains: ["caliper:1.2:def:Membership/roles", "caliper:1.2:def:Membership/roles/[]"],
     source: "Caliper 1.2 §Role vocabulary / Membership — https://www.imsglobal.org/spec/caliper/v1p2",
+  },
+
+  // Sender role — the transport obligations of a conformant Caliper Sensor (Caliper 1.2 §5.4 HTTP
+  // Requests). RFC-2119 levels are quoted verbatim from the spec; constrains anchor to the Envelope
+  // fields each obligation carries (Caliper has no OpenAPI transport axis to cross-link to).
+  {
+    key: "caliper:1.2:conf:sender/CAL-SND-1",
+    profile: "sender",
+    reqId: "CAL-SND-1",
+    level: "MUST",
+    statement:
+      "A Caliper Sensor MUST be capable of transmitting Caliper data successfully to a Caliper Endpoint over HTTP with the connection encrypted using Transport Layer Security (TLS).",
+    constrains: ["caliper:1.2:def:Envelope/sensor", "caliper:1.2:def:Envelope/data"],
+    source: "Caliper 1.2 §5.4 HTTP Requests — https://www.imsglobal.org/spec/caliper/v1p2",
+  },
+  {
+    key: "caliper:1.2:conf:sender/CAL-SND-2",
+    profile: "sender",
+    reqId: "CAL-SND-2",
+    level: "MUST",
+    statement:
+      "Each message request a Sensor sends MUST consist of a single JSON representation of a Caliper Envelope, and messages MUST be sent using the HTTP POST request method.",
+    constrains: ["caliper:1.2:def:Envelope/data", "caliper:1.2:def:Envelope/dataVersion"],
+    source: "Caliper 1.2 §5.4 HTTP Requests — https://www.imsglobal.org/spec/caliper/v1p2",
+  },
+  {
+    key: "caliper:1.2:conf:sender/CAL-SND-3",
+    profile: "sender",
+    reqId: "CAL-SND-3",
+    level: "MUST",
+    statement:
+      'A Sensor MUST set the HTTP Host and Content-Type request header fields; the Content-Type value MUST be the IANA media type "application/json".',
+    constrains: ["caliper:1.2:def:Envelope/dataVersion"],
+    source: "Caliper 1.2 §5.4 HTTP Requests (request headers) — https://www.imsglobal.org/spec/caliper/v1p2",
+  },
+  {
+    key: "caliper:1.2:conf:sender/CAL-SND-4",
+    profile: "sender",
+    reqId: "CAL-SND-4",
+    level: "SHOULD",
+    statement:
+      'A Sensor SHOULD set the Authorization request header field using the "Bearer" authentication scheme (RFC 6750 §2.1); the b64token credential sent MUST be one the Endpoint can validate, although it MAY be opaque to the Sensor.',
+    constrains: ["caliper:1.2:def:Envelope/sensor"],
+    source: "Caliper 1.2 §5.4 HTTP Requests (Authorization) — https://www.imsglobal.org/spec/caliper/v1p2",
+  },
+
+  // Endpoint role — the receipt + response obligations of a conformant Caliper Endpoint (Caliper 1.2
+  // §6 Endpoint, §6.1 HTTP Responses).
+  {
+    key: "caliper:1.2:conf:endpoint/CAL-EP-1",
+    profile: "endpoint",
+    reqId: "CAL-EP-1",
+    level: "MUST",
+    statement:
+      "A Caliper Endpoint MUST be capable of receiving Caliper data sent over HTTP POST by a Sensor over a TLS-secured connection with a valid certificate, and MUST support Bearer (RFC 6750) authentication on the HTTP Authorization request header.",
+    constrains: ["caliper:1.2:def:Envelope/sensor", "caliper:1.2:def:Envelope/data"],
+    source: "Caliper 1.2 §6 Endpoint — https://www.imsglobal.org/spec/caliper/v1p2",
+  },
+  {
+    key: "caliper:1.2:conf:endpoint/CAL-EP-2",
+    profile: "endpoint",
+    reqId: "CAL-EP-2",
+    level: "MUST",
+    statement:
+      "Following receipt of a Sensor request the Endpoint MUST reply with an HTTP response message, and to signal successful receipt MUST reply with a 2xx class status code.",
+    constrains: ["caliper:1.2:def:Envelope/data"],
+    source: "Caliper 1.2 §6.1 HTTP Responses — https://www.imsglobal.org/spec/caliper/v1p2",
+  },
+  {
+    key: "caliper:1.2:conf:endpoint/CAL-EP-3",
+    profile: "endpoint",
+    reqId: "CAL-EP-3",
+    level: "SHOULD",
+    statement:
+      "On success the Endpoint SHOULD use the 200 OK response and SHOULD send back successful responses with an empty body.",
+    constrains: ["caliper:1.2:def:Envelope/data"],
+    source: "Caliper 1.2 §6.1 HTTP Responses — https://www.imsglobal.org/spec/caliper/v1p2",
+  },
+  {
+    key: "caliper:1.2:conf:endpoint/CAL-EP-4",
+    profile: "endpoint",
+    reqId: "CAL-EP-4",
+    level: "MUST",
+    statement:
+      "When an Endpoint replies with a non-2xx response it MUST adhere to the defined status codes: 400 Bad Request for a missing or malformed Envelope, 401 Unauthorized for an unauthorized request, 415 Unsupported Media Type for a non-application/json content type, and 422 Unprocessable Entity when it cannot support the Envelope's dataVersion.",
+    constrains: ["caliper:1.2:def:Envelope/data", "caliper:1.2:def:Envelope/dataVersion"],
+    source: "Caliper 1.2 §6.1 HTTP Responses (error status codes) — https://www.imsglobal.org/spec/caliper/v1p2",
   },
 ];
 

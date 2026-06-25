@@ -9,13 +9,15 @@
  * the event's `type`, `safeParse`s it, and reports the metric profile and whether a per-profile rule
  * applied.
  *
- * Coverage caveat (honest residue): 14 event types carry full per-profile textual rules
- * (`hasProfileRule: true`); the {@link CALIPER_BOOTCAMP_ONLY_EVENT_TYPES} (FeedbackEvent,
- * OutcomeEvent, Questionnaire(Item)Event, ReadingEvent, ResourceManagementEvent, SearchEvent,
- * Survey(Invitation)Event, ToolLaunchEvent, and the generic Event) validate at the STRUCTURAL level
- * only (a well-formed Caliper Event whose action is drawn from the global action vocabulary) —
- * their per-profile action subsets are pending extraction from the Caliper 1.2 prose spec, which is
- * not in the vendored denominator. `hasProfileRule: false` flags exactly those.
+ * Coverage caveat (honest residue): 21 of the 24 event types carry full per-profile textual rules
+ * (`hasProfileRule: true`) — every 1.2 metric profile (incl. Feedback / Search / Survey /
+ * Questionnaire(Item) / ResourceManagement / ToolLaunch, sourced verbatim from the published §3
+ * profile tables in ADR-0018). Only the three {@link CALIPER_BOOTCAMP_ONLY_EVENT_TYPES} validate at
+ * the STRUCTURAL level only (a well-formed Caliper Event whose action is drawn from the global
+ * action vocabulary): the generic `Event` (GeneralProfile — any action), and `ReadingEvent` +
+ * `OutcomeEvent`, which Caliper 1.2 DROPPED (reading is served by NavigationEvent/ViewEvent, grading
+ * by GradeEvent) but which survive in the vendored bootcamp denominator and so must still parse.
+ * `hasProfileRule: false` flags exactly those three.
  */
 
 import type { ZodType } from "zod";
@@ -24,7 +26,7 @@ import { CaliperV1P2JsonSchemaEntryPoints } from "./caliper_v1p2_bootcamp_schema
 import { getReferenceType } from "./shared";
 import { CALIPER_BOOTCAMP_ONLY_EVENT_TYPES, CALIPER_TEXTUAL_EVENT_RULES } from "./textual_requirements";
 
-/** The 24 Caliper 1.2 event types (the 14 profile-ruled + the {@link CALIPER_BOOTCAMP_ONLY_EVENT_TYPES}). */
+/** The 24 Caliper 1.2 event types (the 21 profile-ruled + the 3 {@link CALIPER_BOOTCAMP_ONLY_EVENT_TYPES}). */
 export const CALIPER_EVENT_TYPES: readonly string[] = [
   ...Object.keys(CALIPER_TEXTUAL_EVENT_RULES),
   ...CALIPER_BOOTCAMP_ONLY_EVENT_TYPES,
@@ -39,7 +41,7 @@ export interface CaliperEventValidation {
   readonly eventType: string | null;
   /** The metric profile this event belongs to, when a per-profile textual rule exists. */
   readonly profile: string | null;
-  /** True when a full per-profile actor/action/object rule was applied (the 14 profile-ruled events). */
+  /** True when a full per-profile actor/action/object rule was applied (the 21 profile-ruled events). */
   readonly hasProfileRule: boolean;
   /** Flattened Zod issues (`path: message`); empty when valid. */
   readonly errors: readonly string[];

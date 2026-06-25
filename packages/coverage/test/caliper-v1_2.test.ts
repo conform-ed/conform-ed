@@ -95,8 +95,13 @@ describe("Caliper 1.2 Coverage Map — bundled-bootcamp JSON-Schema walker", () 
 
   test("every conformance requirement cross-links to a real item key", () => {
     const keys = new Set(map.items.map((i) => i.key));
-    expect(map.rollup.conformanceRequirements).toBe(8);
+    // 8 cross-profile data-model MUSTs + the sender/endpoint role profiles (ADR-0018).
+    expect(map.rollup.conformanceRequirements).toBe(16);
     expect(map.conformance.filter((r) => r.profile === "vocabulary")).toHaveLength(3);
+    expect(map.conformance.filter((r) => r.profile === "sender")).toHaveLength(4);
+    expect(map.conformance.filter((r) => r.profile === "endpoint")).toHaveLength(4);
+    // The transport obligations are honestly RFC-2119-levelled, not all forced to MUST.
+    expect(map.conformance.some((r) => r.level === "SHOULD")).toBe(true);
     for (const req of map.conformance) {
       expect(req.constrains.length).toBeGreaterThan(0);
       for (const key of req.constrains) expect(keys.has(key)).toBe(true);

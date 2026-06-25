@@ -72429,6 +72429,52 @@
   ],
   "conformance": [
     {
+      "key": "caliper:1.2:conf:endpoint/CAL-EP-1",
+      "profile": "endpoint",
+      "reqId": "CAL-EP-1",
+      "level": "MUST",
+      "statement": "A Caliper Endpoint MUST be capable of receiving Caliper data sent over HTTP POST by a Sensor over a TLS-secured connection with a valid certificate, and MUST support Bearer (RFC 6750) authentication on the HTTP Authorization request header.",
+      "constrains": [
+        "caliper:1.2:def:Envelope/sensor",
+        "caliper:1.2:def:Envelope/data"
+      ],
+      "source": "Caliper 1.2 §6 Endpoint — https://www.imsglobal.org/spec/caliper/v1p2"
+    },
+    {
+      "key": "caliper:1.2:conf:endpoint/CAL-EP-2",
+      "profile": "endpoint",
+      "reqId": "CAL-EP-2",
+      "level": "MUST",
+      "statement": "Following receipt of a Sensor request the Endpoint MUST reply with an HTTP response message, and to signal successful receipt MUST reply with a 2xx class status code.",
+      "constrains": [
+        "caliper:1.2:def:Envelope/data"
+      ],
+      "source": "Caliper 1.2 §6.1 HTTP Responses — https://www.imsglobal.org/spec/caliper/v1p2"
+    },
+    {
+      "key": "caliper:1.2:conf:endpoint/CAL-EP-3",
+      "profile": "endpoint",
+      "reqId": "CAL-EP-3",
+      "level": "SHOULD",
+      "statement": "On success the Endpoint SHOULD use the 200 OK response and SHOULD send back successful responses with an empty body.",
+      "constrains": [
+        "caliper:1.2:def:Envelope/data"
+      ],
+      "source": "Caliper 1.2 §6.1 HTTP Responses — https://www.imsglobal.org/spec/caliper/v1p2"
+    },
+    {
+      "key": "caliper:1.2:conf:endpoint/CAL-EP-4",
+      "profile": "endpoint",
+      "reqId": "CAL-EP-4",
+      "level": "MUST",
+      "statement": "When an Endpoint replies with a non-2xx response it MUST adhere to the defined status codes: 400 Bad Request for a missing or malformed Envelope, 401 Unauthorized for an unauthorized request, 415 Unsupported Media Type for a non-application/json content type, and 422 Unprocessable Entity when it cannot support the Envelope's dataVersion.",
+      "constrains": [
+        "caliper:1.2:def:Envelope/data",
+        "caliper:1.2:def:Envelope/dataVersion"
+      ],
+      "source": "Caliper 1.2 §6.1 HTTP Responses (error status codes) — https://www.imsglobal.org/spec/caliper/v1p2"
+    },
+    {
       "key": "caliper:1.2:conf:entity/CAL-ENT-1",
       "profile": "entity",
       "reqId": "CAL-ENT-1",
@@ -72588,6 +72634,52 @@
         "caliper:1.2:def:epubVolume/id"
       ],
       "source": "Caliper 1.2 §Event / §Entity identifier — https://www.imsglobal.org/spec/caliper/v1p2"
+    },
+    {
+      "key": "caliper:1.2:conf:sender/CAL-SND-1",
+      "profile": "sender",
+      "reqId": "CAL-SND-1",
+      "level": "MUST",
+      "statement": "A Caliper Sensor MUST be capable of transmitting Caliper data successfully to a Caliper Endpoint over HTTP with the connection encrypted using Transport Layer Security (TLS).",
+      "constrains": [
+        "caliper:1.2:def:Envelope/sensor",
+        "caliper:1.2:def:Envelope/data"
+      ],
+      "source": "Caliper 1.2 §5.4 HTTP Requests — https://www.imsglobal.org/spec/caliper/v1p2"
+    },
+    {
+      "key": "caliper:1.2:conf:sender/CAL-SND-2",
+      "profile": "sender",
+      "reqId": "CAL-SND-2",
+      "level": "MUST",
+      "statement": "Each message request a Sensor sends MUST consist of a single JSON representation of a Caliper Envelope, and messages MUST be sent using the HTTP POST request method.",
+      "constrains": [
+        "caliper:1.2:def:Envelope/data",
+        "caliper:1.2:def:Envelope/dataVersion"
+      ],
+      "source": "Caliper 1.2 §5.4 HTTP Requests — https://www.imsglobal.org/spec/caliper/v1p2"
+    },
+    {
+      "key": "caliper:1.2:conf:sender/CAL-SND-3",
+      "profile": "sender",
+      "reqId": "CAL-SND-3",
+      "level": "MUST",
+      "statement": "A Sensor MUST set the HTTP Host and Content-Type request header fields; the Content-Type value MUST be the IANA media type \"application/json\".",
+      "constrains": [
+        "caliper:1.2:def:Envelope/dataVersion"
+      ],
+      "source": "Caliper 1.2 §5.4 HTTP Requests (request headers) — https://www.imsglobal.org/spec/caliper/v1p2"
+    },
+    {
+      "key": "caliper:1.2:conf:sender/CAL-SND-4",
+      "profile": "sender",
+      "reqId": "CAL-SND-4",
+      "level": "SHOULD",
+      "statement": "A Sensor SHOULD set the Authorization request header field using the \"Bearer\" authentication scheme (RFC 6750 §2.1); the b64token credential sent MUST be one the Endpoint can validate, although it MAY be opaque to the Sensor.",
+      "constrains": [
+        "caliper:1.2:def:Envelope/sensor"
+      ],
+      "source": "Caliper 1.2 §5.4 HTTP Requests (Authorization) — https://www.imsglobal.org/spec/caliper/v1p2"
     },
     {
       "key": "caliper:1.2:conf:vocabulary/CAL-VOCAB-1",
@@ -73363,8 +73455,8 @@
       "caliper:1.2:def:Envelope.__schema3/volumeMin",
       "caliper:1.2:def:Envelope.__schema3/weight",
       "caliper:1.2:def:Envelope.__schema3/withAgents",
-      "caliper:1.2:def:Envelope.__schema48/end",
-      "caliper:1.2:def:Envelope.__schema48/start",
+      "caliper:1.2:def:Envelope.__schema56/end",
+      "caliper:1.2:def:Envelope.__schema56/start",
       "caliper:1.2:doc:BookmarkAnnotation/@context",
       "caliper:1.2:doc:BookmarkAnnotation/dateCreated",
       "caliper:1.2:doc:BookmarkAnnotation/dateModified",
@@ -73447,7 +73539,7 @@
     "modelledPartial": 258,
     "modelledNo": 1,
     "normativeItems": 99,
-    "conformanceRequirements": 8,
+    "conformanceRequirements": 16,
     "normativeStatements": 99,
     "normativeStatementsCited": 99,
     "normalisations": 0,
