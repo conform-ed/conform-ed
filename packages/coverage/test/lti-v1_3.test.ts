@@ -112,10 +112,27 @@ describe("LTI 1.3 + Advantage Coverage Map — hybrid (AGS schema spine + curate
     for (const edge of map.edges) expect(keys.has(edge.to)).toBe(true);
   });
 
-  test("the catalogue spans the six Advantage profiles", () => {
-    expect(map.rollup.conformanceRequirements).toBe(27);
+  test("the catalogue spans the six tool Advantage profiles plus the platform-role profiles", () => {
+    // 27 tool requirements (LTI-*) + 29 platform requirements (PLAT-*, emergent ADR-0040).
+    expect(map.rollup.conformanceRequirements).toBe(56);
     const profiles = new Set(map.conformance.map((r) => r.profile));
-    expect(profiles).toEqual(new Set(["core", "security", "nrps", "ags", "deep-linking", "proctoring"]));
+    expect(profiles).toEqual(
+      new Set([
+        "core",
+        "security",
+        "nrps",
+        "ags",
+        "deep-linking",
+        "proctoring",
+        "platform-core",
+        "platform-security",
+        "platform-nrps",
+        "platform-ags",
+        "platform-deep-linking",
+        "platform-proctoring",
+        "platform-dynamic-registration",
+      ]),
+    );
   });
 
   test("AGS plus the curated Deep Linking / NRPS / roles requirements carry anchors; the rest carry none", () => {
@@ -131,6 +148,10 @@ describe("LTI 1.3 + Advantage Coverage Map — hybrid (AGS schema spine + curate
     // (LTI-NRPS-2/3) and the two proctoring messages (LTI-PROC-1/2). What stays guide-only is the
     // behavioural/transport surface with no payload schema: the OIDC/JWT flow (LTI-CORE-1/2/5),
     // the whole Security profile, the AGS endpoint claim (LTI-AGS-1) and NRPS-1/4.
+    // The platform role (PLAT-*) reuses the same producing-side anchors, so the same
+    // requirement shapes are anchored: core launch claims + roles, NRPS container + member,
+    // every AGS line-item/score/result requirement bar the endpoint claim, DL settings +
+    // content items, and the two proctoring messages.
     expect(anchored).toEqual(
       new Set([
         "LTI-AGS-2",
@@ -148,6 +169,21 @@ describe("LTI 1.3 + Advantage Coverage Map — hybrid (AGS schema spine + curate
         "LTI-NRPS-3",
         "LTI-PROC-1",
         "LTI-PROC-2",
+        "PLAT-AGS-2",
+        "PLAT-AGS-3",
+        "PLAT-AGS-4",
+        "PLAT-AGS-5",
+        "PLAT-AGS-6",
+        "PLAT-AGS-7",
+        "PLAT-AGS-8",
+        "PLAT-CORE-3",
+        "PLAT-CORE-4",
+        "PLAT-DL-1",
+        "PLAT-DL-3",
+        "PLAT-NRPS-2",
+        "PLAT-NRPS-3",
+        "PLAT-PROC-1",
+        "PLAT-PROC-2",
       ]),
     );
   });
