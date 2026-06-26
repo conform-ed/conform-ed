@@ -14,4 +14,7 @@ export * from "./document-loader";
 export * from "./status";
 export * from "./schema";
 export * from "./shacl-validate";
+export * from "./x509-chain";
+export * from "./rfc3161";
+export * from "./jades";
 export * from "./verify";
