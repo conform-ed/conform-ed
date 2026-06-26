@@ -61,6 +61,11 @@ ELM reuses conform-ed's credential rail beyond the contracts:
 - **JAdES e-seal** — `verifyJadesSeal` verifies the JWS (RFC-7797, `b64:false` → the `payload` is the
   literal credential JSON), the `x5c` certificate chain (with a pinnable verification time), and the
   RFC-3161 `adoTst` timestamp. Trust anchors are host-injected.
+- **Combined EDC verdict** — `verifyEdc` composes the seal, SHACL, validity-window and status checks
+  into one `EdcVerdict`, so a host (wallet/displayer) makes a single call. `trustAnchored` is reported
+  as a **separate honest axis** — an intact-but-unanchored EDC is `verified` with
+  `trustAnchored: false` ("seal intact, EU-qualified trust not verified"), never a misleading
+  "verified & trusted".
 - **Reference rendering** — `@conform-ed/elm-render` `renderEdc` produces framework-light semantic
   HTML and a view-model from the credential's `displayParameter`.
 

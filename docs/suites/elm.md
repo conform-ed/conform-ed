@@ -16,6 +16,7 @@ conformance denominator.
 | Structural verify       | `credential-verification` `validateAgainstProfile` | real SHACL over JSON-LD→RDF; **profile-agnostic** (EDC + LOQ/AMS/PID)                                                                                                               |
 | JAdES e-seal            | `credential-verification` `verifyJadesSeal`        | JWS (RFC-7797) + x5c chain (pinnable time) + RFC-3161 `adoTst`; trust anchor host-injected                                                                                          |
 | Status / revocation     | `credential-verification` `evaluateRevocation`     | generic, injected resolver (EDC carries no `credentialStatus` in the EU samples)                                                                                                    |
+| EDC verify (combined)   | `credential-verification` `verifyEdc`              | one call composing seal + SHACL + validity window + status into an `EdcVerdict`; `trustAnchored` is a separate honest axis that never downgrades the rollup (ADR-0019 §3)           |
 | Reference Renderer      | `@conform-ed/elm-render`                           | framework-light semantic HTML + view-model from `displayParameter`                                                                                                                  |
 
 ## Application profiles
@@ -33,7 +34,8 @@ conformance denominator.
 
 - Per-commit: contracts round-trip (`packages/contracts/test/elm-v3_3.test.ts`), coverage map +
   walker (`coverage/test/{shacl,elm-v3_3}.test.ts`), SHACL verify + JAdES seal + status + dataset
-  fixtures (`credential-verification/test/elm-{shacl,jades,status,dataset-fixtures}.test.ts`),
+  fixtures + the combined `verifyEdc` orchestrator
+  (`credential-verification/test/elm-{shacl,jades,verify-edc,status,dataset-fixtures}.test.ts`),
   renderer (`elm-render/test/render-edc.test.ts`). All artifacts are committed and the checks are
   fast, so — unlike the QTI official-XSD lane (ADR-0011) — they run per-commit rather than on a
   separate nightly lane.
