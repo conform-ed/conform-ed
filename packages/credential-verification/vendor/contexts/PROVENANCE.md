@@ -9,6 +9,8 @@ any other IRI).
 | File                            | Source IRI                                                   | Retrieved  |
 | ------------------------------- | ------------------------------------------------------------ | ---------- |
 | `vc-data-model-v2.context.json` | `https://www.w3.org/ns/credentials/v2`                       | 2026-06-24 |
+| `vc-data-model-v1.context.json` | `https://www.w3.org/2018/credentials/v1`                     | 2026-06-26 |
+| `elm-edc-ap.context.json`       | `http://data.europa.eu/snb/model/context/edc-ap`             | 2026-06-26 |
 | `open-badges-v3p0.context.json` | `https://purl.imsglobal.org/spec/ob/v3p0/context-3.0.3.json` | 2026-06-24 |
 | `clr-v2p0.context.json`         | `https://purl.imsglobal.org/spec/clr/v2p0/context.json`      | 2026-06-24 |
 

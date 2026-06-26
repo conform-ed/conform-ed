@@ -13,4 +13,5 @@ export * from "./base58";
 export * from "./document-loader";
 export * from "./status";
 export * from "./schema";
+export * from "./shacl-validate";
 export * from "./verify";
