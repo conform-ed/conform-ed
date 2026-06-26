@@ -46,6 +46,7 @@ export const ConceptSchema = passthroughObject({
   id: z.string().optional(),
   type: TypeTag.optional(),
   prefLabel: LangStringSchema.optional(),
+  altLabel: LangStringSchema.optional(),
   notation: U.optional(),
   inScheme: link(() => ConceptSchemeSchema).optional(),
   definition: LangStringSchema.optional(),
@@ -56,6 +57,7 @@ export const NoteSchema = passthroughObject({
   type: TypeTag.optional(),
   noteLiteral: LangStringSchema,
   noteFormat: link(() => ConceptSchema).optional(),
+  language: link(() => ConceptSchema).optional(),
   subject: link(() => ConceptSchema).optional(),
 });
 
@@ -570,6 +572,7 @@ export const LearningOpportunitySchema = passthroughObject({
   schedule: U.optional(),
   scheduleInformation: U.optional(),
   learningSchedule: U.optional(),
+  additionalNote: link(() => NoteSchema).optional(),
   admissionProcedure: link(() => NoteSchema).optional(),
   applicationDeadline: Dt.optional(),
   priceDetail: link(() => PriceDetailSchema).optional(),

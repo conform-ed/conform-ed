@@ -4,6 +4,7 @@
  */
 
 import type { SpecSource } from "../src/source";
+import type { CoverageMap } from "../src/types";
 import { caliperV1_2 } from "./caliper/v1_2";
 import { caseV1_1 } from "./case/v1_1";
 import { catV1_0 } from "./cat/v1_0";
@@ -11,6 +12,7 @@ import { clrV2_0 } from "./clr/v2_0";
 import { cmi5V1_0 } from "./cmi5/v1_0";
 import { commonCartridgeV1_3 } from "./common-cartridge/v1_3";
 import { commonCartridgeV1_4 } from "./common-cartridge/v1_4";
+import { ELM_COVERAGE_ENTRIES } from "./elm/v3_3";
 import { h5pV1 } from "./h5p/v1";
 import { ltiV1_3 } from "./lti/v1_3";
 import { oneRosterV1_2 } from "./oneroster/v1_2";
@@ -22,8 +24,14 @@ import { vcDataModelV2_0 } from "./vc-data-model/v2_0";
 import { xapiV1_0_3 } from "./xapi/v1_0_3";
 import { xapiV2_0 } from "./xapi/v2_0";
 
+/**
+ * A Coverage Map entry is either a {@link SpecSource} built by the generic `buildCoverageMap`,
+ * or a self-contained `build` function for a denominator with bespoke reconciliation (ELM's
+ * class-based SHACL join, ADR-0019). Exactly one of `source` / `build` is set.
+ */
 export interface CoverageMapEntry {
-  readonly source: SpecSource;
+  readonly source?: SpecSource;
+  readonly build?: (now?: string) => CoverageMap;
   readonly file: string;
 }
 
@@ -45,4 +53,5 @@ export const COVERAGE_MAPS: readonly CoverageMapEntry[] = [
   { source: h5pV1, file: "h5p-v1.json" },
   { source: vcDataModelV2_0, file: "vc-data-model-v2.0.json" },
   { source: catV1_0, file: "cat-v1.0.json" },
+  ...ELM_COVERAGE_ENTRIES,
 ];

@@ -13,6 +13,7 @@ import { join } from "node:path";
 
 import { COVERAGE_MAPS } from "../specs/index";
 import { buildCoverageMap } from "../src/generate";
+import type { SpecSource } from "../src/source";
 
 const mapsDir = join(import.meta.dir, "..", "maps");
 const checkOnly = process.argv.includes("--check");
@@ -40,13 +41,18 @@ function serialize(value: unknown): string {
 
 let drift = false;
 
-for (const { source, file } of COVERAGE_MAPS) {
+for (const entry of COVERAGE_MAPS) {
+  const { file } = entry;
+  // Either a bespoke builder (ELM's class-based SHACL join, ADR-0019) or the generic one.
+  const source = entry.source;
+  const build =
+    entry.build ?? ((now?: string) => buildCoverageMap(source as SpecSource, now !== undefined ? { now } : {}));
   const target = join(mapsDir, file);
   const priorDate = existingDate(target);
   const current = existsSync(target) ? readFileSync(target, "utf8") : "";
 
   // Build with the prior date first, so an unchanged map produces byte-identical output.
-  const stable = buildCoverageMap(source, priorDate !== undefined ? { now: priorDate } : {});
+  const stable = build(priorDate);
   const stableJson = serialize(stable);
   const unchanged = stableJson === current;
 
@@ -58,7 +64,7 @@ for (const { source, file } of COVERAGE_MAPS) {
     continue;
   }
 
-  const map = unchanged ? stable : buildCoverageMap(source);
+  const map = unchanged ? stable : build();
   const json = unchanged ? stableJson : serialize(map);
   if (json !== current) {
     writeFileSync(target, json);

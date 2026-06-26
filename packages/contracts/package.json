@@ -5,6 +5,7 @@
   "module": "src/index.ts",
   "exports": {
     ".": "./src/index.ts",
+    "./elm/v3_3": "./src/elm/v3_3/index.ts",
     "./caliper/v1_2": "./src/caliper/v1_2/index.ts",
     "./case/v1_1": "./src/case/v1_1/index.ts",
     "./cat/v1_0": "./src/cat/v1_0/index.ts",

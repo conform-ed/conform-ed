@@ -1,0 +1,1502 @@
+{
+  "meta": {
+    "spec": "elm",
+    "version": "3.3",
+    "generatedAt": "2026-06-26",
+    "sources": [
+      {
+        "binding": "pid:base",
+        "language": "shacl",
+        "id": "http://data.europa.eu/snb/model/ap/pid-constraints",
+        "sha256": "46760ca73d962515cd12bc088fb1ec59516b63c55e4ba09758cc735c2b9e23f9"
+      }
+    ]
+  },
+  "items": [
+    {
+      "key": "elm:3.3:def:Address",
+      "kind": "definition",
+      "path": "",
+      "description": "An address.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Address/countryCode",
+      "kind": "property",
+      "path": "countryCode",
+      "required": true,
+      "description": "The address’ country code. It should be provided using the Country Named Authority List.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Address/fullAddress",
+      "kind": "property",
+      "path": "fullAddress",
+      "description": "The complete address with or without formatting.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Address/identifier",
+      "kind": "property",
+      "path": "identifier",
+      "description": "An address identifier.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Agent",
+      "kind": "definition",
+      "path": "",
+      "description": "An entity that is able to carry out actions.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Agent/additionalNote",
+      "kind": "property",
+      "path": "additionalNote",
+      "description": "An additional free text note about the agent.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Agent/altLabel",
+      "kind": "property",
+      "path": "altLabel",
+      "description": "The alternative name of the agent.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Agent/contactPoint",
+      "kind": "property",
+      "path": "contactPoint",
+      "description": "The contact information of the agent.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Agent/groupMemberOf",
+      "kind": "property",
+      "path": "groupMemberOf",
+      "description": "The group the agent is a member of.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Agent/identifier",
+      "kind": "property",
+      "path": "identifier",
+      "description": "An identifier of the agent.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Agent/location",
+      "kind": "property",
+      "path": "location",
+      "description": "The location of the agent.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Agent/modified",
+      "kind": "property",
+      "path": "modified",
+      "jsonType": "string",
+      "description": "The date when the agent was last modified.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Agent/prefLabel",
+      "kind": "property",
+      "path": "prefLabel",
+      "required": true,
+      "description": "The preferred name of the agent.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Concept",
+      "kind": "definition",
+      "path": "",
+      "description": "A term from a controlled vocabulary modelled as a skos:Concept.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Concept/inScheme",
+      "kind": "property",
+      "path": "inScheme",
+      "description": "The concept scheme this concept belongs to. The identification of the controlled vocabulary.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Concept/notation",
+      "kind": "property",
+      "path": "notation",
+      "jsonType": "string",
+      "description": "A notation, also known as classification code, is a string of characters used to uniquely identify a concept within the scope of a given concept scheme.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Concept/prefLabel",
+      "kind": "property",
+      "path": "prefLabel",
+      "description": "The text equivalent of the code content component. One value per language is permitted.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:ConceptScheme",
+      "kind": "definition",
+      "path": "",
+      "description": "A controlled vocabulary modelled as a Concept Scheme.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:ContactPoint",
+      "kind": "definition",
+      "path": "",
+      "description": "A contact point for an agent.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:ContactPoint/additionalNote",
+      "kind": "property",
+      "path": "additionalNote",
+      "description": "An additional free text note about the contact point.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:ContactPoint/address",
+      "kind": "property",
+      "path": "address",
+      "description": "A postal address used for contacting the agent.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:ContactPoint/contactForm",
+      "kind": "property",
+      "path": "contactForm",
+      "description": "A contact form used for contacting the agent.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:ContactPoint/description",
+      "kind": "property",
+      "path": "description",
+      "description": "A free text description of the contact details.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:ContactPoint/emailAddress",
+      "kind": "property",
+      "path": "emailAddress",
+      "description": "An e-mail address used for contacting the agent.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:ContactPoint/phone",
+      "kind": "property",
+      "path": "phone",
+      "description": "A phone number used for contacting the agent.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Geometry",
+      "kind": "definition",
+      "path": "",
+      "description": "This class defines the geometry at the conceptual level, and it can be encoded by using different formats.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Geometry/latitude",
+      "kind": "property",
+      "path": "latitude",
+      "jsonType": "string",
+      "description": "The geographic coordinate that specifies the north / south position of the Geomerty on the Earth's surface.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Geometry/longitude",
+      "kind": "property",
+      "path": "longitude",
+      "jsonType": "string",
+      "description": "The geographic coordinate that specifies the east / west position of the Geometry on the Earth's surface.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Group",
+      "kind": "definition",
+      "path": "",
+      "description": "An entity that represents collection of Agents.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Group/additionalNote",
+      "kind": "property",
+      "path": "additionalNote",
+      "description": "An additional free text note about the group.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Group/altLabel",
+      "kind": "property",
+      "path": "altLabel",
+      "description": "The alternative name of the group.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Group/contactPoint",
+      "kind": "property",
+      "path": "contactPoint",
+      "description": "The contact information of the group.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Group/location",
+      "kind": "property",
+      "path": "location",
+      "description": "The location of the group.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Group/member",
+      "kind": "property",
+      "path": "member",
+      "description": "An agent being a member of the group.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Group/prefLabel",
+      "kind": "property",
+      "path": "prefLabel",
+      "required": true,
+      "description": "The name of the group.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Group/type",
+      "kind": "property",
+      "path": "type",
+      "description": "The type of the group. It should be provided using a controlled vocabulary.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Identifier",
+      "kind": "definition",
+      "path": "",
+      "description": "A character string used to identify a resource. An identifier is a character string used to uniquely identify one instance of an object within an identification scheme that is managed by an agency. The Identifier class is a critical aspect of the ELM. It is used to identify persons and organisations. In these cases, and more, the identifier itself will be some sort of alpha-numeric string but that string only has meaning if it is contextualised.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Identifier/creator",
+      "kind": "property",
+      "path": "creator",
+      "description": "Identification of the agent that manages the identifier scheme. The agent that issued the identifier. (e.g., a URI).",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Identifier/issued",
+      "kind": "property",
+      "path": "issued",
+      "jsonType": "string",
+      "description": "The date on which the identifier was issued.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Identifier/notation",
+      "kind": "property",
+      "path": "notation",
+      "jsonType": "string",
+      "required": true,
+      "description": "Content string which is the identifier.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Identifier/schemeAgency",
+      "kind": "property",
+      "path": "schemeAgency",
+      "description": "The name of the agent that manages the identifier scheme.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Identifier/schemeName",
+      "kind": "property",
+      "path": "schemeName",
+      "jsonType": "string",
+      "description": "The name of the identifier scheme.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Identifier/schemeVersion",
+      "kind": "property",
+      "path": "schemeVersion",
+      "jsonType": "string",
+      "description": "Identification of the version of the identifier scheme.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Identifier/type",
+      "kind": "property",
+      "path": "type",
+      "description": "The type of the identifier.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:LegalIdentifier",
+      "kind": "definition",
+      "path": "",
+      "description": "A legal identifier. A legal identifier is a formally issued identifier by a given authority within a given jurisdiction. The identifier has a spatial context. Legal Identifier is a subclass of Identifier.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:LegalIdentifier/creator",
+      "kind": "property",
+      "path": "creator",
+      "description": "Identification of the agent that manages the identifier scheme. The agent that issued the identifier. (e.g., a URI).",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:LegalIdentifier/issued",
+      "kind": "property",
+      "path": "issued",
+      "jsonType": "string",
+      "description": "The date on which the identifier was issued.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:LegalIdentifier/notation",
+      "kind": "property",
+      "path": "notation",
+      "jsonType": "string",
+      "required": true,
+      "description": "Content string which is the identifier.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:LegalIdentifier/schemeAgency",
+      "kind": "property",
+      "path": "schemeAgency",
+      "description": "The name of the agent that manages the identifier scheme.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:LegalIdentifier/schemeName",
+      "kind": "property",
+      "path": "schemeName",
+      "jsonType": "string",
+      "description": "The name of the identifier scheme.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:LegalIdentifier/schemeVersion",
+      "kind": "property",
+      "path": "schemeVersion",
+      "jsonType": "string",
+      "description": "Identification of the version of the identifier scheme.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:LegalIdentifier/spatial",
+      "kind": "property",
+      "path": "spatial",
+      "required": true,
+      "description": "A spatial identifier. The identifier of the country and/or jurisdiction. It should be provided using the Country Named Authority List.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:LegalIdentifier/type",
+      "kind": "property",
+      "path": "type",
+      "description": "The type of the identifier.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Location",
+      "kind": "definition",
+      "path": "",
+      "description": "An identifiable geographic place.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Location/address",
+      "kind": "property",
+      "path": "address",
+      "required": true,
+      "description": "An address associated with the location.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Location/description",
+      "kind": "property",
+      "path": "description",
+      "description": "A free text description of the location.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Location/geographicName",
+      "kind": "property",
+      "path": "geographicName",
+      "description": "A proper noun applied to a spatial object.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Location/geometry",
+      "kind": "property",
+      "path": "geometry",
+      "description": "Associates the Location with the corresponding Geometry.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Location/identifier",
+      "kind": "property",
+      "path": "identifier",
+      "description": "A location identifier.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Location/spatialCode",
+      "kind": "property",
+      "path": "spatialCode",
+      "description": "A code identifying a spatial scope in which this physical location is located. It should be provided using the Administrative territorial unit Authority Table (ATU).",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Mailbox",
+      "kind": "definition",
+      "path": "",
+      "description": "A mailbox.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "no"
+    },
+    {
+      "key": "elm:3.3:def:MediaObject",
+      "kind": "definition",
+      "path": "",
+      "description": "A media object.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:MediaObject/content",
+      "kind": "property",
+      "path": "content",
+      "jsonType": "string",
+      "required": true,
+      "description": "The binary data of the media object.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:MediaObject/contentEncoding",
+      "kind": "property",
+      "path": "contentEncoding",
+      "required": true,
+      "description": "The encoding used to encode the binary data. It should be provided using the EDC Controlled List of Content Encoding Types.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:MediaObject/contentSize",
+      "kind": "property",
+      "path": "contentSize",
+      "jsonType": "number",
+      "description": "The content size of the media object.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:MediaObject/contentUrl",
+      "kind": "property",
+      "path": "contentUrl",
+      "jsonType": "string",
+      "description": "The public access URL.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:MediaObject/type",
+      "kind": "property",
+      "path": "type",
+      "required": true,
+      "description": "The type of the media object. It should be provided using the Filetype Named Authority List.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Note",
+      "kind": "definition",
+      "path": "",
+      "description": "Free text metadata fields, such as the description, a historical or additional note of a qualification can contain a plain text or a XHTML fragment as literal value. By using a Note both the datatype of the literal and the language can be specified.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Note/language",
+      "kind": "property",
+      "path": "language",
+      "description": "The language of the note. It should be provided using Language Named Authority List.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Note/noteFormat",
+      "kind": "property",
+      "path": "noteFormat",
+      "description": "The format of the note. It should be provided using the IANA types for text, text/plain, text/html etc.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Note/noteLiteral",
+      "kind": "property",
+      "path": "noteLiteral",
+      "jsonType": "string",
+      "required": true,
+      "description": "The textual content of the note.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Note/subject",
+      "kind": "property",
+      "path": "subject",
+      "description": "The subject of the note. It should be provided using a controlled vocabulary.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Organisation",
+      "kind": "definition",
+      "path": "",
+      "description": "A legal person / registered organisation. Organisation is a subclass of Agent.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Organisation/additionalNote",
+      "kind": "property",
+      "path": "additionalNote",
+      "description": "An additional free text note about the organisation.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Organisation/altLabel",
+      "kind": "property",
+      "path": "altLabel",
+      "description": "The alternative name of the organisation.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Organisation/contactPoint",
+      "kind": "property",
+      "path": "contactPoint",
+      "description": "The contact information of an organisation.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Organisation/eidasLegalIdentifier",
+      "kind": "property",
+      "path": "eidasLegalIdentifier",
+      "description": "The official identification number of the organisation, as awarded by the relevant national authority.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Organisation/groupMemberOf",
+      "kind": "property",
+      "path": "groupMemberOf",
+      "description": "The group the organisation is a member of.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Organisation/hasSubOrganization",
+      "kind": "property",
+      "path": "hasSubOrganization",
+      "description": "A smaller organisation of which forms part of this organisation, e.g., a department within a larger organisation.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Organisation/homepage",
+      "kind": "property",
+      "path": "homepage",
+      "description": "The homepage of the organisation.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Organisation/identifier",
+      "kind": "property",
+      "path": "identifier",
+      "description": "An alternative identifier of the organisation.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Organisation/legalName",
+      "kind": "property",
+      "path": "legalName",
+      "required": true,
+      "description": "The legal name of the organisation.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Organisation/location",
+      "kind": "property",
+      "path": "location",
+      "required": true,
+      "description": "The location of the organisation.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Organisation/logo",
+      "kind": "property",
+      "path": "logo",
+      "description": "The logo of the organisation.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Organisation/modified",
+      "kind": "property",
+      "path": "modified",
+      "jsonType": "string",
+      "description": "The date when the organisation was last modified.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Organisation/registration",
+      "kind": "property",
+      "path": "registration",
+      "description": "The legal identifier of an organisation. The identifier given to a registered organisation by the authority with which it is registered. The legal status of a registered organisation is conferred on it by an authority within a given jurisdiction. The Legal Identifier is therefore a fundamental relationship between an organisation and the authority with which it is registered.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Organisation/subOrganizationOf",
+      "kind": "property",
+      "path": "subOrganizationOf",
+      "description": "Indicates a larger organisation of which this organisation is a part of, e.g., the organisation within which a department operates.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Organisation/taxIdentifier",
+      "kind": "property",
+      "path": "taxIdentifier",
+      "description": "Fiscal ID of the organisation.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Organisation/type",
+      "kind": "property",
+      "path": "type",
+      "description": "The type of the organisation.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Organisation/vatIdentifier",
+      "kind": "property",
+      "path": "vatIdentifier",
+      "description": "The Value-Added Tax ID.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Person",
+      "kind": "definition",
+      "path": "",
+      "description": "A human being. Person is a subclass of Agent.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Person/birthName",
+      "kind": "property",
+      "path": "birthName",
+      "description": "The name of the person at birth. Birth names tend to be persistent and for this reason they are recorded by some public sector information systems. There is no granularity for birth name - the full name should be recorded in a single field.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Person/citizenshipCountry",
+      "kind": "property",
+      "path": "citizenshipCountry",
+      "description": "The country (or countries) that conferred citizenship rights on the person. It should be provided using the Country Named Authority List.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Person/contactPoint",
+      "kind": "property",
+      "path": "contactPoint",
+      "description": "The contact information of the person.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Person/dateOfBirth",
+      "kind": "property",
+      "path": "dateOfBirth",
+      "jsonType": "string",
+      "description": "The date of birth of the person.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Person/familyName",
+      "kind": "property",
+      "path": "familyName",
+      "description": "The family name of the person.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Person/fullName",
+      "kind": "property",
+      "path": "fullName",
+      "description": "The complete name of the person as one string.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Person/gender",
+      "kind": "property",
+      "path": "gender",
+      "description": "The gender of the person. It should be provided using the Human Sex Named Authority List.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Person/givenName",
+      "kind": "property",
+      "path": "givenName",
+      "description": "The given name of the person.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Person/groupMemberOf",
+      "kind": "property",
+      "path": "groupMemberOf",
+      "description": "The group the person is a member of.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Person/identifier",
+      "kind": "property",
+      "path": "identifier",
+      "description": "An identifier of the person.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Person/location",
+      "kind": "property",
+      "path": "location",
+      "description": "The location of the person.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Person/memberOf",
+      "kind": "property",
+      "path": "memberOf",
+      "description": "The organisation of which the person is a member.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Person/modified",
+      "kind": "property",
+      "path": "modified",
+      "jsonType": "string",
+      "description": "The date when the person (information) was last modified.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Person/nationalId",
+      "kind": "property",
+      "path": "nationalId",
+      "description": "The 'primary' national identifier of the person.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Person/patronimycName",
+      "kind": "property",
+      "path": "patronimycName",
+      "description": "Patronymic names are important in some countries. Iceland does not have a concept of 'family name' in the way that many other European countries do, for example, Erik Magnusson and Erika Magnusdottir are siblings, both offspring of Mangnus, irrespective of his patronymic name. In Bulgaria and Russia, patronymic names are in everyday usage, for example, the Sergeyevich in 'Mikhail Sergeyevich Gorbachev.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "no"
+    },
+    {
+      "key": "elm:3.3:def:Person/placeOfBirth",
+      "kind": "property",
+      "path": "placeOfBirth",
+      "description": "The place of birth of the person.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Phone",
+      "kind": "definition",
+      "path": "",
+      "description": "A phone.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Phone/areaDialing",
+      "kind": "property",
+      "path": "areaDialing",
+      "jsonType": "string",
+      "description": "The area dialling code for a contact number.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Phone/countryDialing",
+      "kind": "property",
+      "path": "countryDialing",
+      "jsonType": "string",
+      "description": "The country dialling code for a contact number.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Phone/dialNumber",
+      "kind": "property",
+      "path": "dialNumber",
+      "jsonType": "string",
+      "description": "The contact number, not including country dialling or area dialling codes. (e.g., '3445654', '1234567', etc.).",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:Phone/phoneNumber",
+      "kind": "property",
+      "path": "phoneNumber",
+      "jsonType": "string",
+      "description": "The full phone number as a string.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:WebResource",
+      "kind": "definition",
+      "path": "",
+      "description": "A public web resource.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:WebResource/contentUrl",
+      "kind": "property",
+      "path": "contentUrl",
+      "jsonType": "string",
+      "required": true,
+      "description": "The public access URL.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:WebResource/language",
+      "kind": "property",
+      "path": "language",
+      "description": "The language of the web resource. It should be provided using Language Named Authority List.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    },
+    {
+      "key": "elm:3.3:def:WebResource/title",
+      "kind": "property",
+      "path": "title",
+      "description": "The title of the web resource. One value per language is permitted.",
+      "variants": [
+        "base"
+      ],
+      "modelled": "yes"
+    }
+  ],
+  "edges": [
+    {
+      "from": "elm:3.3:def:Address/countryCode",
+      "to": "elm:3.3:def:Concept"
+    },
+    {
+      "from": "elm:3.3:def:Address/fullAddress",
+      "to": "elm:3.3:def:Note"
+    },
+    {
+      "from": "elm:3.3:def:Address/identifier",
+      "to": "elm:3.3:def:Identifier"
+    },
+    {
+      "from": "elm:3.3:def:Agent/additionalNote",
+      "to": "elm:3.3:def:Note"
+    },
+    {
+      "from": "elm:3.3:def:Agent/contactPoint",
+      "to": "elm:3.3:def:ContactPoint"
+    },
+    {
+      "from": "elm:3.3:def:Agent/groupMemberOf",
+      "to": "elm:3.3:def:Group"
+    },
+    {
+      "from": "elm:3.3:def:Agent/identifier",
+      "to": "elm:3.3:def:Identifier"
+    },
+    {
+      "from": "elm:3.3:def:Agent/location",
+      "to": "elm:3.3:def:Location"
+    },
+    {
+      "from": "elm:3.3:def:Concept/inScheme",
+      "to": "elm:3.3:def:ConceptScheme"
+    },
+    {
+      "from": "elm:3.3:def:ContactPoint/additionalNote",
+      "to": "elm:3.3:def:Note"
+    },
+    {
+      "from": "elm:3.3:def:ContactPoint/address",
+      "to": "elm:3.3:def:Address"
+    },
+    {
+      "from": "elm:3.3:def:ContactPoint/contactForm",
+      "to": "elm:3.3:def:WebResource"
+    },
+    {
+      "from": "elm:3.3:def:ContactPoint/emailAddress",
+      "to": "elm:3.3:def:Mailbox"
+    },
+    {
+      "from": "elm:3.3:def:ContactPoint/phone",
+      "to": "elm:3.3:def:Phone"
+    },
+    {
+      "from": "elm:3.3:def:Group/additionalNote",
+      "to": "elm:3.3:def:Note"
+    },
+    {
+      "from": "elm:3.3:def:Group/contactPoint",
+      "to": "elm:3.3:def:ContactPoint"
+    },
+    {
+      "from": "elm:3.3:def:Group/location",
+      "to": "elm:3.3:def:Location"
+    },
+    {
+      "from": "elm:3.3:def:Group/member",
+      "to": "elm:3.3:def:Agent"
+    },
+    {
+      "from": "elm:3.3:def:Group/type",
+      "to": "elm:3.3:def:Concept"
+    },
+    {
+      "from": "elm:3.3:def:Identifier/type",
+      "to": "elm:3.3:def:Concept"
+    },
+    {
+      "from": "elm:3.3:def:LegalIdentifier/spatial",
+      "to": "elm:3.3:def:Concept"
+    },
+    {
+      "from": "elm:3.3:def:LegalIdentifier/type",
+      "to": "elm:3.3:def:Concept"
+    },
+    {
+      "from": "elm:3.3:def:Location/address",
+      "to": "elm:3.3:def:Address"
+    },
+    {
+      "from": "elm:3.3:def:Location/geometry",
+      "to": "elm:3.3:def:Geometry"
+    },
+    {
+      "from": "elm:3.3:def:Location/identifier",
+      "to": "elm:3.3:def:Identifier"
+    },
+    {
+      "from": "elm:3.3:def:Location/spatialCode",
+      "to": "elm:3.3:def:Concept"
+    },
+    {
+      "from": "elm:3.3:def:MediaObject/contentEncoding",
+      "to": "elm:3.3:def:Concept"
+    },
+    {
+      "from": "elm:3.3:def:MediaObject/type",
+      "to": "elm:3.3:def:Concept"
+    },
+    {
+      "from": "elm:3.3:def:Note/language",
+      "to": "elm:3.3:def:Concept"
+    },
+    {
+      "from": "elm:3.3:def:Note/noteFormat",
+      "to": "elm:3.3:def:Concept"
+    },
+    {
+      "from": "elm:3.3:def:Note/subject",
+      "to": "elm:3.3:def:Concept"
+    },
+    {
+      "from": "elm:3.3:def:Organisation/additionalNote",
+      "to": "elm:3.3:def:Note"
+    },
+    {
+      "from": "elm:3.3:def:Organisation/contactPoint",
+      "to": "elm:3.3:def:ContactPoint"
+    },
+    {
+      "from": "elm:3.3:def:Organisation/eidasLegalIdentifier",
+      "to": "elm:3.3:def:LegalIdentifier"
+    },
+    {
+      "from": "elm:3.3:def:Organisation/groupMemberOf",
+      "to": "elm:3.3:def:Group"
+    },
+    {
+      "from": "elm:3.3:def:Organisation/hasSubOrganization",
+      "to": "elm:3.3:def:Organisation"
+    },
+    {
+      "from": "elm:3.3:def:Organisation/homepage",
+      "to": "elm:3.3:def:WebResource"
+    },
+    {
+      "from": "elm:3.3:def:Organisation/identifier",
+      "to": "elm:3.3:def:Identifier"
+    },
+    {
+      "from": "elm:3.3:def:Organisation/location",
+      "to": "elm:3.3:def:Location"
+    },
+    {
+      "from": "elm:3.3:def:Organisation/logo",
+      "to": "elm:3.3:def:MediaObject"
+    },
+    {
+      "from": "elm:3.3:def:Organisation/registration",
+      "to": "elm:3.3:def:LegalIdentifier"
+    },
+    {
+      "from": "elm:3.3:def:Organisation/subOrganizationOf",
+      "to": "elm:3.3:def:Organisation"
+    },
+    {
+      "from": "elm:3.3:def:Organisation/taxIdentifier",
+      "to": "elm:3.3:def:LegalIdentifier"
+    },
+    {
+      "from": "elm:3.3:def:Organisation/type",
+      "to": "elm:3.3:def:Concept"
+    },
+    {
+      "from": "elm:3.3:def:Organisation/vatIdentifier",
+      "to": "elm:3.3:def:LegalIdentifier"
+    },
+    {
+      "from": "elm:3.3:def:Person/citizenshipCountry",
+      "to": "elm:3.3:def:Concept"
+    },
+    {
+      "from": "elm:3.3:def:Person/contactPoint",
+      "to": "elm:3.3:def:ContactPoint"
+    },
+    {
+      "from": "elm:3.3:def:Person/gender",
+      "to": "elm:3.3:def:Concept"
+    },
+    {
+      "from": "elm:3.3:def:Person/groupMemberOf",
+      "to": "elm:3.3:def:Group"
+    },
+    {
+      "from": "elm:3.3:def:Person/identifier",
+      "to": "elm:3.3:def:Identifier"
+    },
+    {
+      "from": "elm:3.3:def:Person/location",
+      "to": "elm:3.3:def:Location"
+    },
+    {
+      "from": "elm:3.3:def:Person/memberOf",
+      "to": "elm:3.3:def:Organisation"
+    },
+    {
+      "from": "elm:3.3:def:Person/nationalId",
+      "to": "elm:3.3:def:LegalIdentifier"
+    },
+    {
+      "from": "elm:3.3:def:Person/placeOfBirth",
+      "to": "elm:3.3:def:Location"
+    },
+    {
+      "from": "elm:3.3:def:WebResource/language",
+      "to": "elm:3.3:def:Concept"
+    }
+  ],
+  "conformance": [],
+  "normativeStatements": [],
+  "residues": {
+    "silentGaps": [
+      "elm:3.3:def:Person/patronimycName"
+    ],
+    "extensions": [
+      "elm:3.3:def:Address/id",
+      "elm:3.3:def:Address/type",
+      "elm:3.3:def:Agent/id",
+      "elm:3.3:def:Agent/type",
+      "elm:3.3:def:Concept/altLabel",
+      "elm:3.3:def:Concept/definition",
+      "elm:3.3:def:Concept/id",
+      "elm:3.3:def:Concept/type",
+      "elm:3.3:def:ConceptScheme/id",
+      "elm:3.3:def:ConceptScheme/type",
+      "elm:3.3:def:ContactPoint/id",
+      "elm:3.3:def:ContactPoint/type",
+      "elm:3.3:def:Geometry/id",
+      "elm:3.3:def:Geometry/type",
+      "elm:3.3:def:Group/id",
+      "elm:3.3:def:Identifier/id",
+      "elm:3.3:def:Identifier/schemeId",
+      "elm:3.3:def:LegalIdentifier/id",
+      "elm:3.3:def:LegalIdentifier/schemeId",
+      "elm:3.3:def:Location/id",
+      "elm:3.3:def:Location/type",
+      "elm:3.3:def:MediaObject/attachmentType",
+      "elm:3.3:def:MediaObject/contentType",
+      "elm:3.3:def:MediaObject/description",
+      "elm:3.3:def:MediaObject/id",
+      "elm:3.3:def:MediaObject/title",
+      "elm:3.3:def:Note/id",
+      "elm:3.3:def:Note/type",
+      "elm:3.3:def:Organisation/accreditation",
+      "elm:3.3:def:Organisation/hasMember",
+      "elm:3.3:def:Organisation/id",
+      "elm:3.3:def:Person/hasClaim",
+      "elm:3.3:def:Person/hasCredential",
+      "elm:3.3:def:Person/id",
+      "elm:3.3:def:Person/patronymicName",
+      "elm:3.3:def:Person/type",
+      "elm:3.3:def:Phone/id",
+      "elm:3.3:def:Phone/type",
+      "elm:3.3:def:WebResource/id",
+      "elm:3.3:def:WebResource/type"
+    ],
+    "normalisations": []
+  },
+  "valueSets": [],
+  "rollup": {
+    "items": 116,
+    "modelledYes": 114,
+    "modelledPartial": 0,
+    "modelledNo": 2,
+    "normativeItems": 0,
+    "conformanceRequirements": 0,
+    "normativeStatements": 0,
+    "normativeStatementsCited": 0,
+    "normalisations": 0,
+    "valueSetMembers": 0,
+    "valueSetModelled": 0,
+    "valueSetGaps": 0
+  }
+}

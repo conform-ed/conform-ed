@@ -26,3 +26,5 @@ export { type BuildOptions, buildCoverageMap } from "./generate";
 export { applyModelled, type ReconcileResult, reconcile } from "./reconcile";
 export { type JsonSchema, refDefName, type WalkContext, type WalkResult, walkSchemaTree } from "./walkers/json-schema";
 export { type CuratedWalkResult, walkCurated } from "./walkers/curated";
+export { type ElmBuildOptions, type ElmClassRegistry, type ElmProfileSource, buildElmCoverageMap } from "./elm";
+export { type ShaclVariantInput, type ShaclWalkResult, walkShacl } from "./walkers/shacl";
