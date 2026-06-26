@@ -16,7 +16,7 @@
  * curated denominator for a machine-extracted one, and every node must cite its spec section
  * (enforced by `walkers/curated.ts`).
  */
-export type SchemaLanguage = "json-schema" | "xsd" | "openapi" | "caliper" | "curated";
+export type SchemaLanguage = "json-schema" | "xsd" | "openapi" | "caliper" | "curated" | "shacl";
 
 /**
  * The kind of node an inventory item represents.
@@ -71,6 +71,21 @@ export interface CoverageItem {
   readonly description?: string;
   /** L2 reconciliation verdict (filled by {@link reconcile}). */
   readonly modelled?: ModelledStatus;
+  /**
+   * SHACL only: which shape-graph variant(s) declare this constraint, e.g.
+   * `["generic-no-cv", "accredited"]`. A profile's coverage map is the union of its variant
+   * shapes (ADR-0019); this records provenance so a reader can compute the closure that
+   * applies to one variant without a separate map per variant. Omitted for non-SHACL maps.
+   */
+  readonly variants?: readonly string[];
+  /**
+   * SHACL only: the controlled-vocabulary scheme this leaf constrains its value to (the
+   * `data.europa.eu/snb/<scheme>/` authority), and whether conform-ed enforces membership.
+   * `opaque` marks the large open schemes (ESCO) checked only for scheme/namespace, per the
+   * hybrid CV decision (ADR-0019 §5). Omitted for non-CV leaves.
+   */
+  readonly cvScheme?: string;
+  readonly cvEnforcement?: "membership" | "opaque";
 }
 
 /** A usage edge: a property references a shared definition via `$ref`. */
