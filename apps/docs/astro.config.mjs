@@ -35,7 +35,7 @@ export default defineConfig({
         starlightLlmsTxt({
           projectName: "conform-ed",
           description:
-            "conform-ed is open-source tooling to build and verify conformance to digital-education standards (xAPI, QTI, LTI 1.3, Common Cartridge, OneRoster, CASE, CLR, Open Badges, Caliper, and more). It provides typed Zod contracts, a headless QTI delivery runtime, and conformance runner images for engineers building or verifying ed-tech interoperability.",
+            "conform-ed is open-source tooling to build and verify conformance to digital-education standards (xAPI, QTI, LTI 1.3, Common Cartridge, OneRoster, CASE, CLR, Open Badges, Caliper, ELM / Europass European Digital Credentials, and more). It provides typed Zod contracts, a headless QTI delivery runtime, credential verification (including JAdES e-seals), and conformance runner images for engineers building or verifying ed-tech interoperability.",
         }),
         qtiReactTypeDoc({
           entryPoints: ["../../packages/qti-react/src/index.ts", "../../packages/qti-react/src/headless.ts"],

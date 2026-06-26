@@ -54,3 +54,4 @@ literal published schema.
 | CAT 1.0                    | [CAT](/contracts/cat/)                           | `@conform-ed/contracts/cat/v1_0`                            |
 | VC Data Model 2.0          | [VC Data Model](/contracts/vc-data-model/)       | `@conform-ed/contracts/vc-data-model/v2_0`                  |
 | h5p                        | [h5p](/contracts/h5p/)                           | `@conform-ed/contracts/h5p/v1`                              |
+| ELM / EDC 3.3              | [ELM / EDC](/contracts/elm/)                     | `@conform-ed/contracts/elm/v3_3`                            |
