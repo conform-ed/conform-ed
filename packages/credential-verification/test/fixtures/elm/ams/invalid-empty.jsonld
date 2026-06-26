@@ -1,0 +1,5 @@
+{
+  "@context": "http://data.europa.eu/snb/model/context/edc-ap",
+  "@type": "Accreditation",
+  "@id": "urn:elm:fixture:accreditation:1"
+}

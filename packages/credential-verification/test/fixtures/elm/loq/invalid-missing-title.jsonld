@@ -1,0 +1,5 @@
+{
+  "@context": "http://data.europa.eu/snb/model/context/edc-ap",
+  "@type": "Qualification",
+  "@id": "urn:elm:fixture:qualification:1"
+}

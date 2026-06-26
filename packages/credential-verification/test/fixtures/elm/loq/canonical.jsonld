@@ -1,0 +1,20 @@
+{
+  "@context": "http://data.europa.eu/snb/model/context/edc-ap",
+  "@type": "LearningOpportunity",
+  "@id": "urn:elm:fixture:lo:1",
+  "title": { "en": ["Introduction to Digital Credentials"] },
+  "providedBy": {
+    "@type": "Organisation",
+    "@id": "urn:elm:fixture:org:provider",
+    "legalName": { "en": ["Open Learning Institute"] },
+    "location": {
+      "@type": "Location",
+      "@id": "urn:elm:fixture:loc:2",
+      "address": {
+        "@type": "Address",
+        "@id": "urn:elm:fixture:addr:2",
+        "countryCode": { "@id": "http://publications.europa.eu/resource/authority/country/BEL", "@type": "Concept" }
+      }
+    }
+  }
+}

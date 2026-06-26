@@ -1,0 +1,8 @@
+{
+  "@context": "http://data.europa.eu/snb/model/context/edc-ap",
+  "@type": "Person",
+  "@id": "urn:elm:fixture:person:1",
+  "identifier": { "@type": "Identifier", "@id": "urn:elm:fixture:id:1", "notation": "AB-123" },
+  "givenName": { "en": ["Ana"] },
+  "familyName": { "en": ["Andromeda"] }
+}
