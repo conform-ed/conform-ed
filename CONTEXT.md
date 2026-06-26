@@ -200,3 +200,62 @@ consumers that cannot expose ingested state. The lane records which of three
 honesty tiers a SUT reached: full diff → import-report check → coarse
 "didn't crash".
 _Avoid_: out-of-band DB inspection (the Runner/Adapter contracts disown it).
+
+## Language — ELM / European Digital Credentials
+
+**European Learning Model (ELM)**:
+The EU's single multilingual ontology (`data.europa.eu/snb/model/elm`) for describing
+learning — the shared vocabulary under every Europass credential/data profile. One
+ontology; the profiles only add restrictions. conform-ed targets **v3.3**
+(distribution `snb-model/20230928-0`, application-profile version `1.1.0`).
+_Avoid_: Europass (the parent brand/platform), EDCI (the retired infrastructure name).
+
+**Application Profile (AP)**:
+A SHACL constraint layer over the one ELM ontology, expressing one use case's rules.
+v3.3 has exactly four: **EDC**, **LOQ**, **AMS**, **PID**. The AP's SHACL shape graph is
+the **authoritative conformance denominator** (a credential even self-declares it via
+`credentialSchema: { type: "ShaclValidator2017" }`).
+_Avoid_: schema, profile (unqualified), "the ELM schema" (there is no single one).
+
+**ELM Core**:
+conform-ed's VC-agnostic Zod model of the shared ontology classes (Agent, Organisation,
+Person, Address, the Claim/Specification/Outcome families), reused by all four profile
+layers. An architectural term of ours, not an EU one.
+_Avoid_: "the EDC model" (the core is profile-neutral; EDC is one layer over it).
+
+**European Digital Credentials for Learning (EDC)**:
+The only **sealed, W3C-VC-shaped** ELM profile — root class `EuropeanDigitalCredential`,
+a subclass of `VerifiableCredential` (VC Data Model **1.1**). The credential is the
+interop artifact conform-ed verifies. Sub-variants: `generic-full`, `generic-no-cv`,
+`accredited`, `converted`, `issued-by-mandate`, `diploma-supplement`.
+_Avoid_: EDCI (infrastructure), EDCL when you mean the profile, "Europass credential".
+
+**LOQ / AMS / PID**:
+The three **unsealed, plain-dataset** ELM profiles (no VC envelope, no seal):
+**LOQ** = Learning Opportunities and Qualifications (multi-rooted: `LearningOpportunity`,
+`Qualification`, the Specification classes); **AMS** = Accreditation Metadata Schema
+(root `Accreditation`); **PID** = Person Identity (root `Person`). conform-ed models and
+coverage-maps these; it does **not** verify or seal them.
+_Avoid_: "PID = eIDAS Person Identification Data" (a name collision; ELM PID is unrelated).
+
+**e-Seal (JAdES)**:
+The mandatory eIDAS electronic seal on an EDC: a **detached JWS** (JAdES, `b64:false`)
+in a `signatures` array carrying an X.509 chain (`x5c`) and RFC-3161 timestamp tokens
+(`adoTst`). conform-ed verifies it cryptographically (signature + chain + timestamp); the
+**trust-root decision and "qualified" status are host-injected resolvers**.
+_Avoid_: signature (a seal is legally distinct), proof / Data Integrity proof (that is the
+VC cryptosuite path EDC does **not** use).
+
+**Controlled Vocabulary (CV)**:
+An EU SKOS value-set (EQF, ISCED-F, NAL country/language, credential/assessment types, …)
+constraining ELM coded fields. conform-ed **enforces membership** for the bounded EU
+lists and treats large open schemes (**ESCO**) as **opaque IRIs** (scheme-checked only) —
+i.e. `edc-generic-full` where tractable, `-no-cv` behaviour only for ESCO.
+_Avoid_: enum, code list (use CV).
+
+**EDC Reference Renderer**:
+The credential analogue of the QTI **Reference Skin** — a framework-light, accessible
+**semantic-HTML** rendering of an EDC driven by its `displayParameter`/`individualDisplay`,
+shipped so credentials can be exercised/demoed/conformance-tested without a downstream
+product. Not a product UI; no React; no PDF/pixel parity with the EU Viewer.
+_Avoid_: viewer, themed/product renderer.
