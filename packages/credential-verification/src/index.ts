@@ -19,3 +19,4 @@ export * from "./rfc3161";
 export * from "./jades";
 export * from "./verify";
 export * from "./verify-edc";
+export * from "./elm-shapes";

@@ -3,15 +3,16 @@ import { X509Certificate } from "node:crypto";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
+import { edcGenericFullShapes } from "../src/elm-shapes";
 import { type SealedEdc } from "../src/jades";
 import { deriveEdcVerdict, verifyEdc } from "../src/verify-edc";
 
-// The vendored ELM SHACL shapes + the real EU EDC corpus live in the coverage package.
+// The real EU EDC corpus lives in the coverage package; the shapes are dogfooded from this
+// package's own shipped export (the full closure: edc-generic-full + its owl:imports base).
 const elmDir = join(import.meta.dir, "../../coverage/vendor/elm");
-const shape = (name: string): string => readFileSync(join(elmDir, "shapes", name), "utf8");
 const load = (f: string): SealedEdc => JSON.parse(readFileSync(join(elmDir, "examples/edc", f), "utf8")) as SealedEdc;
 
-const SHAPES = [shape("edc-generic-full.ttl")];
+const SHAPES = edcGenericFullShapes();
 // The EU TEST SEAL certs were valid 2023–2025; pin to signing time so the (now-expired) windows pass.
 const AT_SIGNING = new Date("2025-02-12T12:09:45Z");
 

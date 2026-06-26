@@ -21,11 +21,23 @@
  */
 
 import { existsSync } from "node:fs";
-import { mkdir, writeFile } from "node:fs/promises";
+import { copyFile, mkdir, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 
 const repoRoot = resolve(import.meta.dir, "..");
 const vendorDir = resolve(repoRoot, "packages/coverage/vendor/elm");
+
+// `@conform-ed/credential-verification` re-ships the consumer subset of the SHACL shapes (the ones
+// `verifyEdc` / `validateAgainstProfile` need at runtime) so downstream consumers don't vendor them
+// themselves — see that package's `src/elm-shapes.ts`. Keep it in sync with the coverage copy here.
+const credVerifShapesDir = resolve(repoRoot, "packages/credential-verification/vendor/elm/shapes");
+const consumerShapeSubset = [
+  "edc-generic-full.ttl",
+  "edc-generic-no-cv.ttl",
+  "loq-constraints.ttl",
+  "ams-constraints.ttl",
+  "pid-constraints.ttl",
+];
 
 const force = process.argv.includes("--force");
 
@@ -139,6 +151,14 @@ Model v3.3** (application-profile version \`1.1.0\`, distribution snapshot
 `;
   await writeFile(resolve(vendorDir, "PROVENANCE.md"), provenance);
   console.log(`\nvendored ${all.length} artifacts (${total} new bytes) -> packages/coverage/vendor/elm/`);
+
+  // Mirror the consumer shape subset into credential-verification so its `elm-shapes` export and the
+  // coverage copy never drift (both regenerate from the same pinned fetch).
+  await mkdir(credVerifShapesDir, { recursive: true });
+  for (const name of consumerShapeSubset) {
+    await copyFile(resolve(vendorDir, "shapes", name), resolve(credVerifShapesDir, name));
+  }
+  console.log(`synced ${consumerShapeSubset.length} shapes -> packages/credential-verification/vendor/elm/shapes/`);
 }
 
 await main();
