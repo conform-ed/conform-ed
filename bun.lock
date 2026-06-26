@@ -150,6 +150,10 @@
         "@types/rdf-ext": "^2.5.2",
       },
     },
+    "packages/elm-render": {
+      "name": "@conform-ed/elm-render",
+      "version": "0.0.0",
+    },
     "packages/pci-math-entry": {
       "name": "@conform-ed/pci-math-entry",
       "version": "0.0.0",
@@ -334,6 +338,8 @@
     "@conform-ed/credential-verification": ["@conform-ed/credential-verification@workspace:packages/credential-verification"],
 
     "@conform-ed/docs": ["@conform-ed/docs@workspace:apps/docs"],
+
+    "@conform-ed/elm-render": ["@conform-ed/elm-render@workspace:packages/elm-render"],
 
     "@conform-ed/lrs-runner": ["@conform-ed/lrs-runner@workspace:apps/lrs-runner"],
 

@@ -1,0 +1,16 @@
+{
+  "name": "@conform-ed/elm-render",
+  "version": "0.0.0",
+  "type": "module",
+  "module": "src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "build": "tsgo --noEmit",
+    "format": "oxfmt --config ../../.oxfmtrc.jsonc --check .",
+    "lint": "oxlint --config ../../.oxlintrc.jsonc .",
+    "test": "bun test",
+    "typecheck": "tsgo --noEmit"
+  }
+}
