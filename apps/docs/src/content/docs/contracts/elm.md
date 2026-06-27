@@ -58,6 +58,11 @@ ELM reuses conform-ed's credential rail beyond the contracts:
 - **Structural validation** — `@conform-ed/credential-verification` `validateAgainstProfile` runs the
   real **SHACL** shapes over the JSON-LD→RDF dataset. It is **profile-agnostic**, so the EDC and the
   LOQ / AMS / PID profiles all validate through the same engine pointed at their shapes.
+- **Shipped shapes (no vendoring)** — the package re-ships the consumer subset of the SHACL shapes and
+  exposes them, so a downstream wallet/verifier need not vendor them: `edcGenericFullShapes()` (the EDC
+  `owl:imports` closure — pass it straight to `verifyEdc({ shapes })` / `validateAgainstProfile`) and
+  `elmPlainProfileShapes("loq" | "ams" | "pid")` (the plain-dataset profiles). The engine itself stays
+  vendor-free — the caller supplies the shapes — and these exports are the batteries-included default.
 - **JAdES e-seal** — `verifyJadesSeal` verifies the JWS (RFC-7797, `b64:false` → the `payload` is the
   literal credential JSON), the `x5c` certificate chain (with a pinnable verification time), and the
   RFC-3161 `adoTst` timestamp. Trust anchors are host-injected.
