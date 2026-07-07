@@ -108,25 +108,14 @@ Use collection schemas for bulk data transfer:
 ```typescript
 // CFAssociationSet
 const assocSet = {
-  association: [
-    {
-      /* CFAssociation 1 */
-    },
-    {
-      /* CFAssociation 2 */
-    },
-  ],
+  association: [{/* CFAssociation 1 */}, {/* CFAssociation 2 */}],
 };
 
 const result = CaseV1_1.Schemas.CFAssociationSet.safeParse(assocSet);
 
 // CFConceptSet
 const conceptSet = {
-  conceptSet: [
-    {
-      /* CFConcept 1 */
-    },
-  ],
+  conceptSet: [{/* CFConcept 1 */}],
 };
 
 const result = CaseV1_1.Schemas.CFConceptSet.safeParse(conceptSet);

@@ -37,7 +37,7 @@
     "typecheck": "tsgo --noEmit"
   },
   "dependencies": {
-    "@cortex-js/compute-engine": "^0.66.0",
+    "@cortex-js/compute-engine": "^0.68.0",
     "mathlive": "^0.110.0"
   },
   "devDependencies": {

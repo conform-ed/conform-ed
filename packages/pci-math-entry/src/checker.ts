@@ -4,13 +4,15 @@
  * advisory client-side verdict and the platform's authoritative re-score, so the two
  * can only disagree across package versions, never across code paths.
  *
- * Modes: "equivalent" accepts any mathematically equal form (symbolic equality with
- * compute-engine's numeric probing); "literal" compares the non-canonical parse trees,
- * so the written form matters (\frac{2}{4} ≠ \frac{1}{2}). An absolute `tolerance`
- * widens numeric comparison in equivalent mode (float answers like the sine-rule item).
+ * Modes: "equivalent" accepts any mathematically equal form — `isEqual` first, then
+ * (since compute-engine 0.67 it returns undefined for indeterminate equality over free
+ * variables) an evaluated `Equal` relation, which still probes those cases to a definite
+ * True/False; "literal" compares the non-canonical parse trees, so the written form
+ * matters (\frac{2}{4} ≠ \frac{1}{2}). An absolute `tolerance` widens numeric
+ * comparison in equivalent mode (float answers like the sine-rule item).
  */
 
-import { ComputeEngine } from "@cortex-js/compute-engine";
+import { ComputeEngine, isSymbol } from "@cortex-js/compute-engine";
 import type { Expression } from "@cortex-js/compute-engine";
 
 export type MathCheckMode = "equivalent" | "literal";
@@ -138,5 +140,22 @@ export function checkMathExpression(candidate: string, correct: string, options?
 
   const equal = candidateExpression.isEqual(correctExpression);
 
-  return equal === undefined ? { verdict: null, reason: "undecidable" } : { verdict: equal };
+  if (equal !== undefined) {
+    return { verdict: equal };
+  }
+
+  // isEqual is undefined for indeterminate equality over free variables (compute-engine
+  // 0.67+); the evaluated Equal relation still decides those. Only when it too stays
+  // symbolic is the input genuinely unjudgeable.
+  const relation = ce.expr(["Equal", candidateExpression, correctExpression]).evaluate();
+
+  if (isSymbol(relation, "True")) {
+    return { verdict: true };
+  }
+
+  if (isSymbol(relation, "False")) {
+    return { verdict: false };
+  }
+
+  return { verdict: null, reason: "undecidable" };
 }
