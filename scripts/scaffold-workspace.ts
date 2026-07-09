@@ -22,8 +22,8 @@ function pkgJson(name: string, extraScripts: Record<string, string> = {}): strin
         ".": "./src/index.ts",
       },
       scripts: {
-        build: "tsgo --noEmit",
-        typecheck: "tsgo --noEmit",
+        build: "tsc --noEmit",
+        typecheck: "tsc --noEmit",
         lint: "oxlint --config ../../.oxlintrc.jsonc .",
         format: "oxfmt --config ../../.oxfmtrc.jsonc --check .",
         test: "bun test",

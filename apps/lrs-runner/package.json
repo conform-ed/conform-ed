@@ -3,12 +3,12 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "tsgo --noEmit",
+    "build": "tsc --noEmit",
     "dev": "bun --watch src/cli.ts",
     "format": "oxfmt --config ../../.oxfmtrc.jsonc --check .",
     "lint": "oxlint --config ../../.oxlintrc.jsonc .",
     "test": "bun test",
-    "typecheck": "tsgo --noEmit"
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@conform-ed/contracts": "workspace:*",

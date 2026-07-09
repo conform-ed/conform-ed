@@ -7,11 +7,11 @@
     ".": "./src/index.ts"
   },
   "scripts": {
-    "build": "tsgo --noEmit",
+    "build": "tsc --noEmit",
     "format": "oxfmt --config ../../.oxfmtrc.jsonc --check .",
     "lint": "oxlint --config ../../.oxlintrc.jsonc .",
     "test": "bun test",
-    "typecheck": "tsgo --noEmit"
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@conform-ed/qti-xml": "workspace:*"

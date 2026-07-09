@@ -1,5 +1,5 @@
 {
-  "js/ts.experimental.useTsgo": true,
+  "typescript.tsdk": "node_modules/typescript/lib",
   "editor.formatOnSave": true,
   "editor.formatOnSaveMode": "file",
   "editor.codeActionsOnSave": {

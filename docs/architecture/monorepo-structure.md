@@ -40,7 +40,7 @@ The runner apps are protocol-focused entrypoints. The adapter apps are intention
 
 - Bun workspaces define package relationships.
 - Turbo orchestrates `format`, `lint`, `typecheck`, `test`, and `build` tasks.
-- Type checking is done through `tsgo`.
+- Type checking is done through `tsc` (TypeScript 7).
 - Linting/formatting are done through `oxlint` and `oxfmt`.
 
 ## Dependency Rules

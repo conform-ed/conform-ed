@@ -20,11 +20,11 @@
     }
   },
   "scripts": {
-    "build": "bun build ./src/index.ts ./src/headless.ts --outdir dist --format esm --target browser --external react --external react-dom --external zod && tsgo -p tsconfig.build.json",
+    "build": "bun build ./src/index.ts ./src/headless.ts --outdir dist --format esm --target browser --external react --external react-dom --external zod && tsc -p tsconfig.build.json",
     "format": "oxfmt --config ../../.oxfmtrc.jsonc --check .",
     "lint": "oxlint --config ../../.oxlintrc.jsonc .",
     "test": "bun test",
-    "typecheck": "tsgo --noEmit"
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "xspattern": "^3.1.0"

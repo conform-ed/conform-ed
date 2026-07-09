@@ -8,13 +8,13 @@
     "./maps/open-badges/v3_0": "./maps/open-badges-v3.0.json"
   },
   "scripts": {
-    "build": "tsgo --noEmit",
+    "build": "tsc --noEmit",
     "coverage:check": "bun run scripts/generate.ts --check",
     "coverage:generate": "bun run scripts/generate.ts",
     "format": "oxfmt --config ../../.oxfmtrc.jsonc --check src test specs scripts",
     "lint": "oxlint --config ../../.oxlintrc.jsonc src test specs scripts",
     "test": "bun test",
-    "typecheck": "tsgo --noEmit"
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@conform-ed/contracts": "workspace:*",

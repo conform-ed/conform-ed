@@ -74,7 +74,7 @@ Import patterns and usage examples are documented in `packages/contracts/<standa
 
 - Bun workspaces
 - Turbo
-- TypeScript Native (`tsgo`)
+- TypeScript 7 (`tsc`)
 - `oxlint` + `oxfmt`
 - Podman for local container workflows
 

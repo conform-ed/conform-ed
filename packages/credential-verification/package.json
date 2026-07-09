@@ -16,11 +16,11 @@
     }
   },
   "scripts": {
-    "build": "bun build ./src/index.ts --outdir dist --format esm --target node --external @conform-ed/contracts --external jose --external jsonld --external zod && tsgo -p tsconfig.build.json",
+    "build": "bun build ./src/index.ts --outdir dist --format esm --target node --external @conform-ed/contracts --external jose --external jsonld --external zod && tsc -p tsconfig.build.json",
     "format": "oxfmt --config ../../.oxfmtrc.jsonc --check .",
     "lint": "oxlint --config ../../.oxlintrc.jsonc .",
     "test": "bun test",
-    "typecheck": "tsgo --noEmit"
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@conform-ed/contracts": "workspace:*",

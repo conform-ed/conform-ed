@@ -37,7 +37,7 @@ is no version-bump and no release commit.
 
 Always prefer package scripts over direct tool invocation:
 
-- `bun run typecheck` — not `tsgo`, `bunx tsgo`, or `tsc` directly
+- `bun run typecheck` — not `tsc` directly
 - `bun run lint` — not `oxlint` directly
 - `bun run format` — not `oxfmt` directly
 - `bun run validate` for full validation if the script exists
