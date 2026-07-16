@@ -6,8 +6,9 @@
  *
  * Modes: "equivalent" accepts any mathematically equal form — `isEqual` first, then
  * (since compute-engine 0.67 it returns undefined for indeterminate equality over free
- * variables) an evaluated `Equal` relation, which still probes those cases to a definite
- * True/False; "literal" compares the non-canonical parse trees, so the written form
+ * variables) an evaluated `Equal` relation, then (since compute-engine 0.79 that relation
+ * no longer probes numerically and stays symbolic) a deterministic sampling probe over
+ * the unknowns; "literal" compares the non-canonical parse trees, so the written form
  * matters (\frac{2}{4} ≠ \frac{1}{2}). An absolute `tolerance` widens numeric
  * comparison in equivalent mode (float answers like the sine-rule item).
  */
@@ -98,6 +99,56 @@ function parseLatex(latex: string, form: "canonical" | "structural"): Expression
   return expression.isValid ? expression : null;
 }
 
+/**
+ * compute-engine 0.79 stopped probing indeterminate `Equal` relations numerically
+ * (0.68 decided "x+2 = 2x" to False that way), so the checker runs the probe itself:
+ * substitute sample points for the unknowns and compare complex values. A differing
+ * sample is a counterexample — definitely not equal; agreement across samples is the
+ * same probabilistic "equal" the engine used to return. The points are fixed, never
+ * random, so the advisory and authoritative verdicts cannot diverge on one input, and
+ * irrational-ish so incidental intersections (x+2 = 2x at x=2) are not sampled.
+ */
+const samplePoints = [0.6180339887, -1.4142135624, 2.2360679775, -0.3183098862, 3.1415926536, -2.7182818285];
+
+const sampleTrials = 3;
+
+function sampleEquality(a: Expression, b: Expression): boolean | null {
+  const unknowns = [...new Set([...a.unknowns, ...b.unknowns])];
+
+  if (unknowns.length === 0) {
+    return null;
+  }
+
+  let agreeing = 0;
+
+  for (let trial = 0; trial < sampleTrials; trial += 1) {
+    const assignment = Object.fromEntries(
+      unknowns.map((symbol, index) => [
+        symbol,
+        samplePoints[(trial * unknowns.length + index) % samplePoints.length] ?? 0,
+      ]),
+    );
+    const aValue = a.subs(assignment).N();
+    const bValue = b.subs(assignment).N();
+    const parts = [aValue.re, aValue.im, bValue.re, bValue.im];
+
+    // A sample outside the shared domain (complex blow-up, unresolved symbols) judges nothing.
+    if (!parts.every(Number.isFinite)) {
+      continue;
+    }
+
+    const scale = Math.max(1, ...parts.map(Math.abs));
+
+    if (Math.abs(aValue.re - bValue.re) + Math.abs(aValue.im - bValue.im) > 1e-9 * scale) {
+      return false;
+    }
+
+    agreeing += 1;
+  }
+
+  return agreeing >= 2 ? true : null;
+}
+
 /** Finite real value of an expression, or null when it is not plainly numeric. */
 function realValue(expression: Expression): number | null {
   const numeric = expression.N();
@@ -145,8 +196,8 @@ export function checkMathExpression(candidate: string, correct: string, options?
   }
 
   // isEqual is undefined for indeterminate equality over free variables (compute-engine
-  // 0.67+); the evaluated Equal relation still decides those. Only when it too stays
-  // symbolic is the input genuinely unjudgeable.
+  // 0.67+); an evaluated Equal relation decides some of those. When it too stays
+  // symbolic (all disequalities, since 0.79), fall through to the sampling probe.
   const relation = ce.expr(["Equal", candidateExpression, correctExpression]).evaluate();
 
   if (isSymbol(relation, "True")) {
@@ -155,6 +206,12 @@ export function checkMathExpression(candidate: string, correct: string, options?
 
   if (isSymbol(relation, "False")) {
     return { verdict: false };
+  }
+
+  const sampled = sampleEquality(candidateExpression, correctExpression);
+
+  if (sampled !== null) {
+    return { verdict: sampled };
   }
 
   return { verdict: null, reason: "undecidable" };
