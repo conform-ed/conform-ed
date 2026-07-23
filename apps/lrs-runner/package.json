@@ -12,9 +12,9 @@
   },
   "dependencies": {
     "@conform-ed/contracts": "workspace:*",
-    "@hono/node-server": "^2.0.10",
-    "hono": "^4.12.30",
-    "jose": "^6.1.0",
+    "@hono/node-server": "^2.0.11",
+    "hono": "^4.12.31",
+    "jose": "^6.2.4",
     "zod": "^4.4.3"
   }
 }
