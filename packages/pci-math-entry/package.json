@@ -37,7 +37,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@cortex-js/compute-engine": "^0.92.1",
+    "@cortex-js/compute-engine": "^0.94.0",
     "mathlive": "^0.110.0"
   },
   "devDependencies": {
