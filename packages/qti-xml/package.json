@@ -12,10 +12,15 @@
       "development": "./src/index.ts",
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
+    },
+    "./node": {
+      "development": "./src/node.ts",
+      "types": "./dist/node.d.ts",
+      "default": "./dist/node.js"
     }
   },
   "scripts": {
-    "build": "bun build ./src/index.ts --outdir dist --format esm --target node --external @conform-ed/contracts --external fast-xml-parser --external fast-xml-validator --external fflate && tsc -p tsconfig.build.json",
+    "build": "bun build ./src/index.ts --outdir dist --format esm --target browser --external @conform-ed/contracts --external fast-xml-parser --external fflate && bun build ./src/node.ts --outdir dist --format esm --target node --external @conform-ed/contracts --external fast-xml-parser --external fflate && bun run scripts/assert-bundle-boundaries.ts && tsc -p tsconfig.build.json",
     "format": "oxfmt --config ../../.oxfmtrc.jsonc --check .",
     "lint": "oxlint --config ../../.oxlintrc.jsonc .",
     "test": "bun test",
@@ -24,7 +29,6 @@
   "dependencies": {
     "@conform-ed/contracts": "workspace:*",
     "fast-xml-parser": "^5.10.1",
-    "fast-xml-validator": "^1.4.0",
     "fflate": "^0.8.3"
   },
   "devDependencies": {

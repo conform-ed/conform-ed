@@ -11,7 +11,7 @@ import { readdir } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { validateQtiXmlFile } from "@conform-ed/qti-xml";
+import { validateQtiXmlFile } from "@conform-ed/qti-xml/node";
 
 import { qtiCoreInteractions } from "../src/interactions";
 import {

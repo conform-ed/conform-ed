@@ -10,8 +10,9 @@
 
 import { expect, test } from "bun:test";
 
-import { serializeQtiDocument, validateQtiXmlContent } from "../src";
+import { serializeQtiDocument } from "../src";
 import type { QtiSchemaSelectionKey } from "../src";
+import { validateQtiXmlContent } from "../src/node";
 
 async function roundTrip(xml: string, key: QtiSchemaSelectionKey): Promise<void> {
   const original = await validateQtiXmlContent(xml);

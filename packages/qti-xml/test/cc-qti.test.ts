@@ -8,7 +8,8 @@
 
 import { expect, test } from "bun:test";
 
-import { convertCcQtiV1ToV3, validateQtiXmlContent } from "../src";
+import { convertCcQtiV1ToV3 } from "../src";
+import { validateQtiXmlContent } from "../src/node";
 
 const ccHeader = 'xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2"';
 

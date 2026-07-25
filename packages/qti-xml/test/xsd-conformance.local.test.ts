@@ -16,7 +16,8 @@ import { expect, test } from "bun:test";
 import { readdir } from "node:fs/promises";
 import path from "node:path";
 
-import { serializeQtiDocument, validateQtiXmlFile } from "../src";
+import { serializeQtiDocument } from "../src";
+import { validateQtiXmlFile } from "../src/node";
 import { corpusRoot, hasCorpus } from "./support/corpus";
 import { hasQtiSchemas, validateAsiDocuments, type XsdDocument } from "./support/qti-xsd";
 

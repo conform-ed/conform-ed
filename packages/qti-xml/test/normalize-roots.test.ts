@@ -11,7 +11,7 @@
 import { expect, test } from "bun:test";
 import path from "node:path";
 
-import { validateQtiXmlContent, validateQtiXmlFile } from "../src";
+import { validateQtiXmlContent, validateQtiXmlFile } from "../src/node";
 import { corpusRoot, hasCorpus } from "./support/corpus";
 
 // Corpus-backed tests run when the corpus is available (cloned by the test preload when

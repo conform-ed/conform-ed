@@ -7,7 +7,8 @@
 import { expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
 
-import { convertCcQtiV1ToV3, validateQtiXmlContent } from "@conform-ed/qti-xml";
+import { convertCcQtiV1ToV3 } from "@conform-ed/qti-xml";
+import { validateQtiXmlContent } from "@conform-ed/qti-xml/node";
 
 import { decomposeCommonCartridge } from "../src";
 

@@ -8,7 +8,8 @@ import { expect, test } from "bun:test";
 
 import type { QtiAccessForAllPnpDocument, QtiAccessForAllPnpRecordsDocument } from "@conform-ed/contracts/qti/v3_0_1";
 
-import { serializeQtiAccessForAllPnp, serializeQtiAccessForAllPnpRecords, validateQtiXmlContent } from "../src";
+import { serializeQtiAccessForAllPnp, serializeQtiAccessForAllPnpRecords } from "../src";
+import { validateQtiXmlContent } from "../src/node";
 
 const document: QtiAccessForAllPnpDocument = {
   accessForAllPnp: {

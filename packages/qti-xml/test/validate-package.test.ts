@@ -16,7 +16,7 @@ import path from "node:path";
 
 import { zipSync, strToU8 } from "fflate";
 
-import { validateQtiPackageArchive, validateQtiPackagePath } from "../src";
+import { validateQtiPackageArchive, validateQtiPackagePath } from "../src/node";
 
 /** Build a ZIP, write it to a throwaway temp file, run `fn`, then remove the dir. */
 async function withZipFile(entries: Record<string, Uint8Array>, fn: (zipPath: string) => Promise<void>): Promise<void> {

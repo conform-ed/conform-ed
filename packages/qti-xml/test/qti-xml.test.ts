@@ -3,7 +3,8 @@ import { mkdir, mkdtemp, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
 
-import { buildQtiExampleInventory, detectQtiRoot, validateQtiXmlFile } from "../src";
+import { detectQtiRoot } from "../src";
+import { buildQtiExampleInventory, validateQtiXmlFile } from "../src/node";
 
 const createdDirectories: string[] = [];
 

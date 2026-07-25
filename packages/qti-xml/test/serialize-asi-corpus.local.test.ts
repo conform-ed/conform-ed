@@ -14,7 +14,8 @@ import { expect, test } from "bun:test";
 import { readdir } from "node:fs/promises";
 import path from "node:path";
 
-import { serializeQtiDocument, validateQtiXmlContent, validateQtiXmlFile } from "../src";
+import { serializeQtiDocument } from "../src";
+import { validateQtiXmlContent, validateQtiXmlFile } from "../src/node";
 import { corpusRoot, hasCorpus } from "./support/corpus";
 
 const corpusTest = hasCorpus() ? test : test.skip;

@@ -243,7 +243,8 @@ describe("assessmentResultFromNormalized (import)", () => {
 
 describe("end-to-end: session → document → XML → re-validated", () => {
   test("the serialized session report is a valid RR instance and round-trips", async () => {
-    const { serializeQtiAssessmentResult, validateQtiXmlContent } = await import("@conform-ed/qti-xml");
+    const { serializeQtiAssessmentResult } = await import("@conform-ed/qti-xml");
+    const { validateQtiXmlContent } = await import("@conform-ed/qti-xml/node");
     const { controller, state } = runSession();
     const document = buildAssessmentResult({
       test: reported,
@@ -296,7 +297,8 @@ describe("buildAssessmentResult: PNP supports", () => {
     const parsed = QtiAssessmentResultDocumentSchema.safeParse(document);
     expect(parsed.success ? [] : parsed.error.issues).toEqual([]);
 
-    const { serializeQtiAssessmentResult, validateQtiXmlContent } = await import("@conform-ed/qti-xml");
+    const { serializeQtiAssessmentResult } = await import("@conform-ed/qti-xml");
+    const { validateQtiXmlContent } = await import("@conform-ed/qti-xml/node");
     const xml = serializeQtiAssessmentResult(document as never);
     const verdict = await validateQtiXmlContent(xml);
 

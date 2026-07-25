@@ -23,7 +23,7 @@ import {
   stimulusContentFromNormalized,
   type StimulusContentView,
 } from "../packages/qti-react/src";
-import { validateQtiXmlFile } from "../packages/qti-xml/src";
+import { validateQtiXmlFile } from "../packages/qti-xml/src/node";
 
 type DeliveryStatus = "deliverable" | "undeliverable" | "schema-invalid" | "normalization-gap" | "unsupported-root";
 type DocumentType = "item" | "test";

@@ -8,7 +8,7 @@
 
 import { expect, test } from "bun:test";
 
-import { validateQtiXmlContent } from "../src";
+import { validateQtiXmlContent } from "../src/node";
 
 const pnpOpen = '<access-for-all-pnp xmlns="http://www.imsglobal.org/xsd/qti/qtiv3p0/imsafa3p0pnp_v1p0">';
 

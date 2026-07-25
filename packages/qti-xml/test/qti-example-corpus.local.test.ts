@@ -1,7 +1,7 @@
 import { expect, test } from "bun:test";
 import path from "node:path";
 
-import { validateQtiXmlFile } from "../src";
+import { validateQtiXmlFile } from "../src/node";
 import { corpusRoot as officialExamplesRoot, hasCorpus } from "./support/corpus";
 
 const corpusTest = hasCorpus() ? test : test.skip;
@@ -35,7 +35,8 @@ corpusTest("official result documents survive the export round trip byte-for-sha
   // RR export conformance: the instance "MUST be valid with respect to the official
   // XSD" — gated here by re-ingesting our own serialization of the official
   // examples and requiring the identical normalized document.
-  const { serializeQtiAssessmentResult, validateQtiXmlContent } = await import("../src");
+  const { serializeQtiAssessmentResult } = await import("../src");
+  const { validateQtiXmlContent } = await import("../src/node");
   const files = ["qtiv3-examples/results/report.xml", "qtiv3-examples/results/conformance-use-case-1.xml"];
 
   for (const file of files) {

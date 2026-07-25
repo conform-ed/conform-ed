@@ -1,4 +1,4 @@
-import { validateQtiXmlFile } from "@conform-ed/qti-xml";
+import { validateQtiXmlFile } from "@conform-ed/qti-xml/node";
 
 export async function qtiValidateFileCommand(filePath: string) {
   return validateQtiXmlFile(filePath);

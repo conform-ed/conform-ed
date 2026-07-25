@@ -1,4 +1,4 @@
-import { buildQtiExampleInventory } from "@conform-ed/qti-xml";
+import { buildQtiExampleInventory } from "@conform-ed/qti-xml/node";
 
 export async function qtiInventoryExamplesCommand(rootPath: string) {
   return buildQtiExampleInventory(rootPath);

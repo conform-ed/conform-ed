@@ -44,7 +44,8 @@ export default defineConfig({
           sidebar: { label: "qti-react" },
         }),
         qtiXmlTypeDoc({
-          entryPoints: ["../../packages/qti-xml/src/index.ts"],
+          // Both published entries: the browser-safe root and the Node-only `./node` subpath.
+          entryPoints: ["../../packages/qti-xml/src/index.ts", "../../packages/qti-xml/src/node.ts"],
           tsconfig: "../../packages/qti-xml/tsconfig.typedoc.json",
           output: "api/qti-xml",
           sidebar: { label: "qti-xml" },

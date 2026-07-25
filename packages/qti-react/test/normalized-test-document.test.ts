@@ -2,7 +2,8 @@ import { expect, test } from "bun:test";
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import path from "node:path";
 
-import { serializeQtiAssessmentTest, validateQtiXmlContent } from "@conform-ed/qti-xml";
+import { serializeQtiAssessmentTest } from "@conform-ed/qti-xml";
+import { validateQtiXmlContent } from "@conform-ed/qti-xml/node";
 
 import { assessmentTestDocumentFromView, assessmentTestViewFromNormalized } from "../src/headless";
 

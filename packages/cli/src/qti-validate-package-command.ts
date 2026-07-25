@@ -1,4 +1,4 @@
-import { validateQtiPackagePath } from "@conform-ed/qti-xml";
+import { validateQtiPackagePath } from "@conform-ed/qti-xml/node";
 
 export async function qtiValidatePackageCommand(packagePath: string) {
   return validateQtiPackagePath(packagePath);

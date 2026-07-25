@@ -9,7 +9,7 @@ import { mkdtemp, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
 
-import { validateQtiXmlFile } from "../src";
+import { validateQtiXmlFile } from "../src/node";
 
 const createdDirectories: string[] = [];
 

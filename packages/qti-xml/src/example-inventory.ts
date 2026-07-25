@@ -2,7 +2,11 @@ import { createHash } from "node:crypto";
 import { readdir, readFile } from "node:fs/promises";
 import path from "node:path";
 
-import { SyntaxValidator } from "fast-xml-validator";
+// fast-xml-parser's own validator, used in preference to the `fast-xml-validator`
+// package it is deprecated in favour of: that package's dependency tree
+// (detailed-xml-validator@2.2 → @nodable/flexible-xml-parser) relies on Node's `Buffer`
+// global and breaks browser bundles. Full rationale + reopen trigger: ./parse-xml.ts.
+import { XMLValidator } from "fast-xml-parser";
 
 import { detectQtiRoot } from "./root-detection";
 import { isNormalizationImplemented, selectQtiSchema } from "./schema-selection";
@@ -70,7 +74,10 @@ function xmlStatusForContent(fileKind: QtiFileKind, content: string): QtiXmlStat
     return "not-xml";
   }
 
-  return SyntaxValidator.validate(content) === true ? "well-formed" : "malformed";
+  // Return-based contract: `true`, or an error object. Nothing is thrown, so a malformed
+  // example is classified rather than aborting the whole inventory walk.
+  // oxlint-disable-next-line typescript/no-deprecated -- deliberate; see the import above.
+  return XMLValidator.validate(content) === true ? "well-formed" : "malformed";
 }
 
 function supportStatusForEntry(entry: {

@@ -9,7 +9,8 @@ import path from "node:path";
 
 import type { QtiUsageDataDocument } from "@conform-ed/contracts/qti/v3_0_1";
 
-import { serializeQtiUsageData, validateQtiXmlContent, validateQtiXmlFile } from "../src";
+import { serializeQtiUsageData } from "../src";
+import { validateQtiXmlContent, validateQtiXmlFile } from "../src/node";
 import { corpusRoot, hasCorpus } from "./support/corpus";
 
 const corpusTest = hasCorpus() ? test : test.skip;

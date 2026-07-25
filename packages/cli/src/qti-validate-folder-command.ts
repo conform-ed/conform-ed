@@ -1,4 +1,4 @@
-import { buildQtiExampleInventory, validateQtiXmlFile } from "@conform-ed/qti-xml";
+import { buildQtiExampleInventory, validateQtiXmlFile } from "@conform-ed/qti-xml/node";
 
 export interface QtiFolderValidationSummary {
   rootPath: string;

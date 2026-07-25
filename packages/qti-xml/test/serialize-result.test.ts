@@ -10,7 +10,8 @@ import { describe, expect, test } from "bun:test";
 
 import type { QtiAssessmentResultDocument } from "@conform-ed/contracts/qti/v3_0_1";
 
-import { serializeQtiAssessmentResult, validateQtiXmlContent } from "../src";
+import { serializeQtiAssessmentResult } from "../src";
+import { validateQtiXmlContent } from "../src/node";
 
 const document: QtiAssessmentResultDocument = {
   assessmentResult: {

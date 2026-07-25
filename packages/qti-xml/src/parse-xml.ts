@@ -1,5 +1,39 @@
-import { XMLParser } from "fast-xml-parser";
-import { SyntaxValidator } from "fast-xml-validator";
+/**
+ * XML → `QtiXmlNode` tree, gated by a well-formedness check.
+ *
+ * ## Why the deprecated `XMLValidator` is deliberate
+ *
+ * fast-xml-parser >= 5.8 marks `XMLValidator` `@deprecated` in favour of the separate
+ * `fast-xml-validator` package, and commit 67e43cc followed that advice — purely to
+ * satisfy the `typescript/no-deprecated` lint rule, with no other motivation. That was a
+ * mistake, reverted here, for two reasons.
+ *
+ * 1. Bundling. Every published `fast-xml-validator` (>= 1.2 at the time of writing)
+ *    depends on `detailed-xml-validator@2.2` → `@nodable/flexible-xml-parser`, which
+ *    relies on Node's `Buffer` global. `fast-xml-validator`'s barrel re-exports that tree
+ *    unconditionally (`BusinessRulesValidator`), so any browser bundle carrying this
+ *    package's barrel breaks unless the consumer's bundler tree-shakes the barrel
+ *    perfectly — not a guarantee we can make on their behalf. fast-xml-parser's validator
+ *    adds nothing to the dependency graph we already have.
+ * 2. Behaviour. `fast-xml-validator@1.4.0` accepts a document with two sibling root
+ *    elements (returns `true`); fast-xml-parser rejects it. Since `detectQtiRoot` only
+ *    ever inspects the first element, the former silently validates a document whose
+ *    second half was discarded. Rejecting multiple roots is the deliberate policy —
+ *    pinned in test/xml-well-formedness.test.ts.
+ *
+ * So the deprecated API is used on purpose, with a scoped suppression at each call site
+ * (the rule does not fire on the import — verified with `bun run lint`). Note the runtime
+ * contracts differ and are NOT interchangeable: `SyntaxValidator.validate` *throws* a
+ * `ValidationError`, while `XMLValidator.validate` *returns* `true | { err: { code, msg,
+ * line, col } }` — the shape `parseValidationError` below was written for.
+ *
+ * Reopen trigger: fast-xml-parser v6 removing `XMLValidator`. At that point either
+ * `fast-xml-validator` has shed the `detailed-xml-validator` dependency from its barrel
+ * (adopt it, and convert the callers back to try/catch), or we vendor the ~300-line
+ * syntax validator.
+ */
+
+import { XMLParser, XMLValidator } from "fast-xml-parser";
 
 export interface QtiXmlTextNode {
   type: "text";
@@ -131,7 +165,8 @@ function buildXmlNodes(entries: unknown, parentScope: Record<string, string>): Q
 }
 
 export function parseXmlDocument(xml: string): QtiXmlElementNode {
-  const validationResult = SyntaxValidator.validate(xml);
+  // oxlint-disable-next-line typescript/no-deprecated -- deliberate; see the module comment.
+  const validationResult = XMLValidator.validate(xml);
   if (validationResult !== true) {
     throw new Error(parseValidationError(validationResult));
   }
