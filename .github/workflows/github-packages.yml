@@ -5,15 +5,18 @@ name: GitHub Packages
 # authenticated same-org consumers (e.g. the emergent app), not the public. npmjs.com stays the
 # public-facing registry (mirrored manually via `bun run release:npm <tag>`).
 #
-#   push to main  -> dev channel:    <version>-dev.<shortSha>  @ dist-tag `dev`
-#   semver tag    -> release parity: the tagged version        @ dist-tag `latest`
+#   push to develop -> dev channel:    <version>-dev.<shortSha>  @ dist-tag `dev`
+#   semver tag      -> release parity: the tagged version        @ dist-tag `latest`
+#
+# `develop` is freely rewritable (force-pushes re-publish the new tip); `main` is stable, never
+# rewritten, and publishes nothing on push (ADR-0016 amendment, 2026-07-27).
 #
 # Publishing is gated on validation (ADR-0016 §7): the publish job needs a green `validate:full`.
 # conform-ed's interop/container lanes (lrs/cmi5/lti13) keep their ADR-0015 cadence and are NOT in
 # this gate (they depend on external systems).
 on:
   push:
-    branches: [main]
+    branches: [develop]
     tags: ["[0-9]*.[0-9]*.[0-9]*"]
   workflow_dispatch:
 
