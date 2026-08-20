@@ -7,8 +7,8 @@
 
 import {
   createElement,
-  useCallback,
   useEffect,
+  useEffectEvent,
   useRef,
   type PointerEvent as ReactPointerEvent,
   type ReactNode,
@@ -32,36 +32,33 @@ export function DrawingReferenceSkin(props: InteractionRenderProps): ReactNode {
 
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const drawingRef = useRef(false);
-  const propsRef = useRef(props);
-  propsRef.current = props;
 
-  // Paint the stage image as the drawing background (and again after a clear).
+  // Paint the stage image as the drawing background (and again after a clear). An Effect Event, so the
+  // always-current `props.resolveAsset` is read without arming the effect below: a repaint clears the
+  // canvas, so it must happen only when the stage image itself changes, never because a parent re-rendered.
   const stageData = node.object.data;
-  const paintBackground = useCallback(
-    (canvas: HTMLCanvasElement): void => {
-      const context = canvas.getContext("2d");
+  const paintBackground = useEffectEvent((canvas: HTMLCanvasElement): void => {
+    const context = canvas.getContext("2d");
 
-      if (!context) {
-        return;
-      }
+    if (!context) {
+      return;
+    }
 
-      context.clearRect(0, 0, canvas.width, canvas.height);
+    context.clearRect(0, 0, canvas.width, canvas.height);
 
-      const image = new Image();
+    const image = new Image();
 
-      image.onload = () => {
-        context.drawImage(image, 0, 0, canvas.width, canvas.height);
-      };
-      image.src = propsRef.current.resolveAsset(stageData);
-    },
-    [stageData],
-  );
+    image.onload = () => {
+      context.drawImage(image, 0, 0, canvas.width, canvas.height);
+    };
+    image.src = props.resolveAsset(stageData);
+  });
 
   useEffect(() => {
     if (canvasRef.current) {
       paintBackground(canvasRef.current);
     }
-  }, [paintBackground]);
+  }, [stageData]);
 
   const pointerPosition = (event: ReactPointerEvent<HTMLCanvasElement>): { x: number; y: number } => {
     const canvas = event.currentTarget;
@@ -139,6 +136,9 @@ export function DrawingReferenceSkin(props: InteractionRenderProps): ReactNode {
     "div",
     { "data-qti-interaction": "drawingInteraction", "data-status": props.status },
     node.prompt ? createElement("div", { "data-qti-prompt": true }, props.renderContent(node.prompt.content)) : null,
+    // `react/refs` only recognises refs in JSX props; these are `createElement` props objects, not a
+    // ref (or a ref-reading handler) escaping into render.
+    // oxlint-disable-next-line react/refs
     createElement("canvas", {
       ref: canvasRef,
       width,
@@ -153,6 +153,9 @@ export function DrawingReferenceSkin(props: InteractionRenderProps): ReactNode {
     }),
     createElement(
       "button",
+      // As above: `handleClear` reads `canvasRef` inside a `createElement` props object, which the rule
+      // cannot tell apart from a render-time ref access.
+      // oxlint-disable-next-line react/refs
       { type: "button", onClick: handleClear, disabled: props.disabled, "aria-disabled": props.disabled },
       "Clear",
     ),

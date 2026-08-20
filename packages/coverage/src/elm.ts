@@ -114,25 +114,21 @@ export function buildElmCoverageMap(source: ElmProfileSource, options: ElmBuildO
     .filter(
       (i): i is CoverageItem & { description: string } => i.normative === true && typeof i.description === "string",
     )
-    .map(
-      (i): NormativeStatement => ({
-        item: i.key,
-        level: (/\b(MUST NOT|SHALL NOT)\b/.test(i.description) ? "MUST NOT" : "MUST") as NormativeLevel,
-        statement: i.description,
-        cited: false,
-      }),
-    )
+    .map((i): NormativeStatement => ({
+      item: i.key,
+      level: (/\b(MUST NOT|SHALL NOT)\b/.test(i.description) ? "MUST NOT" : "MUST") as NormativeLevel,
+      statement: i.description,
+      cited: false,
+    }))
     .sort((a, b) => a.item.localeCompare(b.item));
 
   const sources: SourceArtifact[] = source.variants
-    .map(
-      (v): SourceArtifact => ({
-        binding: `${source.profile}:${v.variant}`,
-        language: "shacl",
-        id: walk.sourceId,
-        sha256: createHash("sha256").update(readFileSync(v.path)).digest("hex"),
-      }),
-    )
+    .map((v): SourceArtifact => ({
+      binding: `${source.profile}:${v.variant}`,
+      language: "shacl",
+      id: walk.sourceId,
+      sha256: createHash("sha256").update(readFileSync(v.path)).digest("hex"),
+    }))
     .sort((a, b) => a.binding.localeCompare(b.binding));
 
   const rollup: CoverageRollup = {
