@@ -30,8 +30,6 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - uses: oven-sh/setup-bun@v2
-        with:
-          bun-version: 1.3.14
       - run: bun install
       - run: bun run validate:full
 
@@ -46,8 +44,6 @@ jobs:
         with:
           fetch-depth: 0 # fetch all tags so the dev channel can sort above the latest release
       - uses: oven-sh/setup-bun@v2
-        with:
-          bun-version: 1.3.14
       - run: bun install
       - run: bun run build
       - name: Configure GitHub Packages registry + auth

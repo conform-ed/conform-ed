@@ -2,7 +2,7 @@
 
 ## Prerequisites
 
-- Bun 1.3.14
+- Bun 1.4.0
 - Podman
 
 ## Development loop

@@ -29,8 +29,6 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y podman
       - uses: oven-sh/setup-bun@v2
-        with:
-          bun-version: 1.3.14
       - run: bun install
       - name: Resolve image version tag
         env:
