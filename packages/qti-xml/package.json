@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "@conform-ed/contracts": "workspace:*",
-    "fast-xml-parser": "^5.11.0",
+    "fast-xml-parser": "^5.11.1",
     "fflate": "^0.8.3"
   },
   "devDependencies": {

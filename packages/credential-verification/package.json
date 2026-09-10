@@ -26,17 +26,17 @@
     "@conform-ed/contracts": "workspace:*",
     "@zazuko/env-node": "^3.1.0",
     "asn1js": "^3.0.10",
-    "jose": "^6.2.9",
+    "jose": "^6.2.12",
     "jsonld": "^9.0.0",
-    "n3": "^2.2.5",
+    "n3": "^2.7.12",
     "pkijs": "^3.4.0",
     "rdf-ext": "^2.6.0",
     "rdf-validate-shacl": "^0.6.5",
-    "zod": "^4.4.3"
+    "zod": "^4.6.1"
   },
   "devDependencies": {
     "@types/jsonld": "^1.5.15",
-    "@types/n3": "^1.26.1",
+    "@types/n3": "^1.26.3",
     "@types/rdf-ext": "^2.5.2"
   }
 }
