@@ -22,9 +22,9 @@
     "n3": "^2.7.12"
   },
   "devDependencies": {
-    "@types/n3": "^1.26.3"
+    "@types/n3": "^1.26.4"
   },
   "peerDependencies": {
-    "zod": ">=4.6.1"
+    "zod": ">=4.6.2"
   }
 }
