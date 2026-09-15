@@ -25,6 +25,6 @@
     "@types/n3": "^1.26.4"
   },
   "peerDependencies": {
-    "zod": ">=4.6.2"
+    "zod": ">=4.6.5"
   }
 }
