@@ -16,7 +16,7 @@ changes.
 
 ## Stack
 
-Bun workspaces, Turbo, TypeScript 7 (`tsc`), `oxlint` + `oxfmt`, and Podman for
+Bun workspaces, Turbo, TypeScript 7 (`tsc`), `oxlint` + `bun fmt`, and Podman for
 container-backed workflows.
 
 ## Source & decisions

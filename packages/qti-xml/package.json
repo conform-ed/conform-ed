@@ -21,7 +21,7 @@
   },
   "scripts": {
     "build": "bun build ./src/index.ts --outdir dist --format esm --target browser --external @conform-ed/contracts --external fast-xml-parser --external fflate && bun build ./src/node.ts --outdir dist --format esm --target node --external @conform-ed/contracts --external fast-xml-parser --external fflate && bun run scripts/assert-bundle-boundaries.ts && tsc -p tsconfig.build.json",
-    "format": "oxfmt --config ../../.oxfmtrc.jsonc --check .",
+    "format": "bun fmt --no-script --config ../../.oxfmtrc.jsonc --check .",
     "lint": "oxlint --config ../../.oxlintrc.jsonc .",
     "test": "bun test",
     "typecheck": "tsc --noEmit"

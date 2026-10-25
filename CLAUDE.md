@@ -39,7 +39,7 @@ Always prefer package scripts over direct tool invocation:
 
 - `bun run typecheck` — not `tsc` directly
 - `bun run lint` — not `oxlint` directly
-- `bun run format` — not `oxfmt` directly
+- `bun run format` — not `bun fmt` directly
 - `bun run validate` for full validation if the script exists
 
 Package scripts encode project-specific flags, paths, and composite steps. Direct invocation silently bypasses them.

@@ -8,8 +8,8 @@
   "scripts": {
     "build": "turbo run build",
     "check": "bun run typecheck && bun run lint && bun run test",
-    "format": "oxfmt --config .oxfmtrc.jsonc --check . && turbo run format",
-    "format:write": "oxfmt --config .oxfmtrc.jsonc --write . && turbo run format",
+    "format": "bun fmt --no-script --config .oxfmtrc.jsonc --check . && turbo run format",
+    "format:write": "bun fmt --no-script --config .oxfmtrc.jsonc --write . && turbo run format",
     "images:build": "bun run scripts/build-images.ts",
     "images:manifest": "bun run scripts/write-release-manifest.ts",
     "images:publish:ghcr": "bun run scripts/publish-ghcr.ts",

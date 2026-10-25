@@ -25,6 +25,8 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version-file: package.json
       - run: bun install
       - run: bun run --cwd apps/docs build
       - uses: peaceiris/actions-gh-pages@v4

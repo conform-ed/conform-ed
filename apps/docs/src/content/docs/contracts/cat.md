@@ -36,4 +36,4 @@ Namespace: `CatV1_0` (schemas under `.Schemas`).
   UTC offsets; enums allow `ext:*` extension tokens; errors normalize to
   `{ error, message, statusCode, details? }`.
 - Engine-specific custom payload fragments are intentionally open (`z.record(z.string(),
-z.unknown())`) where the spec does not standardize vendor structures.
+  z.unknown())`) where the spec does not standardize vendor structures.

@@ -2,7 +2,7 @@
 
 Status: approved baseline
 
-- Stack: Bun + Turbo + TypeScript 7 + oxlint + oxfmt
+- Stack: Bun + Turbo + TypeScript 7 + oxlint + bun fmt
 - CI: GitHub Actions
 - Release: Changesets
 - Distribution for first release: OCI only (GHCR primary)

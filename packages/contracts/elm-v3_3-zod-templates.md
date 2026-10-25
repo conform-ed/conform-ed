@@ -27,7 +27,7 @@ so names are faithful; value types are pragmatic (see below).
 - **Language-tagged text is `{ "<lang>": ["value", …] }`** — a locale → `string[]` map
   (`LangStringSchema`), not OB's `string | { tag: string }`.
 - **`type` is a bare class-name string/array** discriminator (`["VerifiableCredential",
-"EuropeanDigitalCredential"]`), not a node object.
+  "EuropeanDigitalCredential"]`), not a node object.
 - **The pre-issuance delivery form omits `@context` and `issuer`** (added at issuance/sealing).
   The Zod keeps both optional; the SHACL `edc-generic-full` shape enforces `issuer` at verify-time.
 - Unsigned EU examples are delivery-wrapped (`{ credential, deliveryDetails }`); the EDC is

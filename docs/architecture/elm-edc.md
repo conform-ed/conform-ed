@@ -35,7 +35,7 @@ binding.
   `issuanceDate` (1.1) + `validFrom` (2.0) + ELM's `issued`. `credentialStatus`/`termsOfUse` are
   optional and absent from the EU samples.
 - **Self-declared schema:** `credentialSchema: { id: "…/ap/edc-generic-full", type:
-"ShaclValidator2017" }`.
+  "ShaclValidator2017" }`.
 - **Seal:** JAdES — a `signatures` array of detached JWS (`b64:false`, RFC-7797), protected header
   `alg:RS256`, `typ:jose+json`, `x5c` (full chain), `x5t#S256`, `kid`, `sigT`, plus `adoTst`
   (RFC-3161 timestamp tokens). Not VC Data Integrity, not plain VC-JOSE.

@@ -5,7 +5,7 @@
   "scripts": {
     "build": "tsc --noEmit",
     "dev": "bun --hot src/server.ts",
-    "format": "oxfmt --config ../../.oxfmtrc.jsonc --check .",
+    "format": "bun fmt --no-script --config ../../.oxfmtrc.jsonc --check .",
     "lint": "oxlint --config ../../.oxlintrc.jsonc .",
     "start": "bun src/server.ts",
     "test": "bun test",

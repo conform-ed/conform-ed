@@ -22,7 +22,7 @@ function appPackage(name: string, withAdapters = false): string {
         build: "tsc --noEmit",
         typecheck: "tsc --noEmit",
         lint: "oxlint --config ../../.oxlintrc.jsonc .",
-        format: "oxfmt --config ../../.oxfmtrc.jsonc --check .",
+        format: "bun fmt --no-script --config ../../.oxfmtrc.jsonc --check .",
         test: "bun test",
       },
       dependencies: {

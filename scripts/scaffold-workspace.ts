@@ -25,7 +25,7 @@ function pkgJson(name: string, extraScripts: Record<string, string> = {}): strin
         build: "tsc --noEmit",
         typecheck: "tsc --noEmit",
         lint: "oxlint --config ../../.oxlintrc.jsonc .",
-        format: "oxfmt --config ../../.oxfmtrc.jsonc --check .",
+        format: "bun fmt --no-script --config ../../.oxfmtrc.jsonc --check .",
         test: "bun test",
         ...extraScripts,
       },

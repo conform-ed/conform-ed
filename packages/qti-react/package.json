@@ -21,7 +21,7 @@
   },
   "scripts": {
     "build": "bun build ./src/index.ts ./src/headless.ts --outdir dist --format esm --target browser --external react --external react-dom --external zod && tsc -p tsconfig.build.json",
-    "format": "oxfmt --config ../../.oxfmtrc.jsonc --check .",
+    "format": "bun fmt --no-script --config ../../.oxfmtrc.jsonc --check .",
     "lint": "oxlint --config ../../.oxlintrc.jsonc .",
     "test": "bun test",
     "typecheck": "tsc --noEmit"
