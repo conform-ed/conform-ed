@@ -58,12 +58,12 @@
   },
   "devDependencies": {
     "@types/bun": "^1.4.5",
-    "oxfmt": "^0.68.0",
-    "oxlint": "^1.83.0",
-    "oxlint-tsgolint": "^7.0.2001",
-    "turbo": "^2.10.13",
+    "oxfmt": "^0.79.0",
+    "oxlint": "^1.94.0",
+    "oxlint-tsgolint": "^7.0.2007",
+    "turbo": "^2.11.13",
     "typescript": "^7.0.2",
-    "zod": "^4.6.5"
+    "zod": "^4.6.7"
   },
   "packageManager": "bun@1.4.5"
 }

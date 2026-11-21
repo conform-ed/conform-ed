@@ -18,11 +18,11 @@
   },
   "dependencies": {
     "@conform-ed/contracts": "workspace:*",
-    "fast-xml-parser": "^5.11.1",
-    "n3": "^2.7.12"
+    "fast-xml-parser": "^5.12.1",
+    "n3": "^2.13.12"
   },
   "devDependencies": {
-    "@types/n3": "^1.26.4"
+    "@types/n3": "^1.26.6"
   },
   "peerDependencies": {
     "zod": ">=4.6.5"

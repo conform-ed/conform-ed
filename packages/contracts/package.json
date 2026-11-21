@@ -39,7 +39,7 @@
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
-    "fast-xml-parser": "^5.11.1"
+    "fast-xml-parser": "^5.12.1"
   },
   "peerDependencies": {
     "zod": ">=4.6.5"
